@@ -101,6 +101,54 @@
               <span class="m-doc-wrap-bumper">void <a href="#af213178a7c26884f18d3f11ae105ae3c" class="m-doc">set_height</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> height) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Sets the height.</dd>
+            <dt id="a03ce1969b8236b7759029d24e108a843">
+              <span class="m-doc-wrap-bumper">auto <a href="#a03ce1969b8236b7759029d24e108a843" class="m-doc-self">multiplication</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this size by the given integer value.</dd>
+            <dt id="ad35b960e63147bbac5dac6bc493f0331">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad35b960e63147bbac5dac6bc493f0331" class="m-doc-self">multiplication</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this size by the given fixed point value, using half precision to try to avoid overflow.</dd>
+            <dt id="a8367c003f6bf3da1a06b87f95a7cfe80">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8367c003f6bf3da1a06b87f95a7cfe80" class="m-doc-self">safe_multiplication</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this size by the given integer value.</dd>
+            <dt id="aba804b2af5f4c70fb3660035e24dae61">
+              <span class="m-doc-wrap-bumper">auto <a href="#aba804b2af5f4c70fb3660035e24dae61" class="m-doc-self">safe_multiplication</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this size by the given fixed point value, casting them to int64_t to try to avoid overflow.</dd>
+            <dt id="adaedb21036f4a394b0ada50ffb3b61d7">
+              <span class="m-doc-wrap-bumper">auto <a href="#adaedb21036f4a394b0ada50ffb3b61d7" class="m-doc-self">unsafe_multiplication</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this size by the given integer value.</dd>
+            <dt id="ab32cb30b41b6fb381eb7eb9350071f4e">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab32cb30b41b6fb381eb7eb9350071f4e" class="m-doc-self">unsafe_multiplication</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this size by the given fixed point value without trying to avoid overflow.</dd>
+            <dt id="aefb240dd58644381d8d6670064b6f612">
+              <span class="m-doc-wrap-bumper">auto <a href="#aefb240dd58644381d8d6670064b6f612" class="m-doc-self">division</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this size by the given integer value.</dd>
+            <dt id="a1bec3478ce72a2713e9bd48916cd29b3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1bec3478ce72a2713e9bd48916cd29b3" class="m-doc-self">division</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this size by the given fixed point value, using half precision to try to avoid overflow.</dd>
+            <dt id="a30fed1aa95386e6c7ccf34a8e94a8c45">
+              <span class="m-doc-wrap-bumper">auto <a href="#a30fed1aa95386e6c7ccf34a8e94a8c45" class="m-doc-self">safe_division</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this value by the given integer value.</dd>
+            <dt id="a7d6e45b9b17195f9ca5fbac37f8e30de">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7d6e45b9b17195f9ca5fbac37f8e30de" class="m-doc-self">safe_division</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this size by the given fixed point value, casting them to int64_t to try to avoid overflow.</dd>
+            <dt id="a4be69eddc9b7aedd888b9cba14a5c418">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4be69eddc9b7aedd888b9cba14a5c418" class="m-doc-self">unsafe_division</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this value by the given integer value.</dd>
+            <dt id="a18fb3f54e5ffe6bb6593fc08a2e83201">
+              <span class="m-doc-wrap-bumper">auto <a href="#a18fb3f54e5ffe6bb6593fc08a2e83201" class="m-doc-self">unsafe_division</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> value) const -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this size by the given fixed point value without trying to avoid overflow.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#af2b6712a86c236587b0426cddd7c37d2" class="m-doc">operator+=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; other) -&gt; <a href="classbn_1_1fixed__size.html" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>

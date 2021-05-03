@@ -54,6 +54,8 @@ public:
         _width(size.width()),
         _height(size.height())
     {
+        BN_ASSERT(_width >= 0, "Invalid width: ", _width);
+        BN_ASSERT(_height >= 0, "Invalid height: ", _height);
     }
 
     /**
@@ -95,14 +97,116 @@ public:
     }
 
     /**
+     * @brief Returns the multiplication of this size by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_size multiplication(int value) const
+    {
+        return fixed_size(_width.multiplication(value), _height.multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this size by the given fixed point value,
+     * using half precision to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_size multiplication(fixed value) const
+    {
+        return fixed_size(_width.multiplication(value), _height.multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this size by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_size safe_multiplication(int value) const
+    {
+        return fixed_size(_width.safe_multiplication(value), _height.safe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this size by the given fixed point value,
+     * casting them to int64_t to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_size safe_multiplication(fixed value) const
+    {
+        return fixed_size(_width.safe_multiplication(value), _height.safe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this size by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_size unsafe_multiplication(int value) const
+    {
+        return fixed_size(_width.unsafe_multiplication(value), _height.unsafe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this size by the given fixed point value
+     * without trying to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_size unsafe_multiplication(fixed value) const
+    {
+        return fixed_size(_width.unsafe_multiplication(value), _height.unsafe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the division of this size by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_size division(int value) const
+    {
+        return fixed_size(_width.division(value), _height.division(value));
+    }
+
+    /**
+     * @brief Returns the division of this size by the given fixed point value,
+     * using half precision to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_size division(fixed value) const
+    {
+        return fixed_size(_width.division(value), _height.division(value));
+    }
+
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_size safe_division(int value) const
+    {
+        return fixed_size(_width.safe_division(value), _height.safe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this size by the given fixed point value,
+     * casting them to int64_t to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_size safe_division(fixed value) const
+    {
+        return fixed_size(_width.safe_division(value), _height.safe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_size unsafe_division(int value) const
+    {
+        return fixed_size(_width.unsafe_division(value), _height.unsafe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this size by the given fixed point value
+     * without trying to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_size unsafe_division(fixed value) const
+    {
+        return fixed_size(_width.unsafe_division(value), _height.unsafe_division(value));
+    }
+
+    /**
      * @brief Adds the given fixed_size to this one.
      * @param other fixed_size to add.
      * @return Reference to this.
      */
     constexpr fixed_size& operator+=(const fixed_size& other)
     {
-        _width += other._width;
-        _height += other._height;
+        set_width(_width + other._width);
+        set_height(_height + other._height);
         return *this;
     }
 
@@ -113,12 +217,8 @@ public:
      */
     constexpr fixed_size& operator-=(const fixed_size& other)
     {
-        _width -= other._width;
-        BN_ASSERT(_width >= 0, "Invalid width: ", _width);
-
-        _height -= other._height;
-        BN_ASSERT(_height >= 0, "Invalid height: ", _height);
-
+        set_width(_width - other._width);
+        set_height(_height - other._height);
         return *this;
     }
 
@@ -129,10 +229,8 @@ public:
      */
     constexpr fixed_size& operator*=(int value)
     {
-        BN_ASSERT(value >= 0, "Invalid value: ", value);
-
-        _width *= value;
-        _height *= value;
+        set_width(_width * value);
+        set_height(_height * value);
         return *this;
     }
 
@@ -143,10 +241,8 @@ public:
      */
     constexpr fixed_size& operator*=(fixed value)
     {
-        BN_ASSERT(value >= 0, "Invalid value: ", value);
-
-        _width *= value;
-        _height *= value;
+        set_width(_width * value);
+        set_height(_height * value);
         return *this;
     }
 
@@ -157,10 +253,8 @@ public:
      */
     constexpr fixed_size& operator/=(int value)
     {
-        BN_ASSERT(value > 0, "Invalid value: ", value);
-
-        _width /= value;
-        _height /= value;
+        set_width(_width / value);
+        set_height(_height / value);
         return *this;
     }
 
@@ -171,10 +265,8 @@ public:
      */
     constexpr fixed_size& operator/=(fixed value)
     {
-        BN_ASSERT(value > 0, "Invalid value: ", value);
-
-        _width /= value;
-        _height /= value;
+        set_width(_width / value);
+        set_height(_height / value);
         return *this;
     }
 
@@ -199,8 +291,6 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator*(const fixed_size& a, int b)
     {
-        BN_ASSERT(b >= 0, "Invalid value: ", b);
-
         return fixed_size(a._width * b, a._height * b);
     }
 
@@ -209,8 +299,6 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator*(const fixed_size& a, fixed b)
     {
-        BN_ASSERT(b >= 0, "Invalid value: ", b);
-
         return fixed_size(a._width * b, a._height * b);
     }
 
@@ -219,8 +307,6 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, int b)
     {
-        BN_ASSERT(b > 0, "Invalid value: ", b);
-
         return fixed_size(a._width / b, a._height / b);
     }
 
@@ -229,8 +315,6 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, fixed b)
     {
-        BN_ASSERT(b > 0, "Invalid value: ", b);
-
         return fixed_size(a._width / b, a._height / b);
     }
 

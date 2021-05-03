@@ -87,6 +87,108 @@ public:
     }
 
     /**
+     * @brief Returns the multiplication of this point by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_point multiplication(int value) const
+    {
+        return fixed_point(_x.multiplication(value), _y.multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this point by the given fixed point value,
+     * using half precision to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_point multiplication(fixed value) const
+    {
+        return fixed_point(_x.multiplication(value), _y.multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this point by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_point safe_multiplication(int value) const
+    {
+        return fixed_point(_x.safe_multiplication(value), _y.safe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this point by the given fixed point value,
+     * casting them to int64_t to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_point safe_multiplication(fixed value) const
+    {
+        return fixed_point(_x.safe_multiplication(value), _y.safe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this point by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_point unsafe_multiplication(int value) const
+    {
+        return fixed_point(_x.unsafe_multiplication(value), _y.unsafe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this point by the given fixed point value
+     * without trying to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_point unsafe_multiplication(fixed value) const
+    {
+        return fixed_point(_x.unsafe_multiplication(value), _y.unsafe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the division of this point by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_point division(int value) const
+    {
+        return fixed_point(_x.division(value), _y.division(value));
+    }
+
+    /**
+     * @brief Returns the division of this point by the given fixed point value,
+     * using half precision to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_point division(fixed value) const
+    {
+        return fixed_point(_x.division(value), _y.division(value));
+    }
+
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_point safe_division(int value) const
+    {
+        return fixed_point(_x.safe_division(value), _y.safe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this point by the given fixed point value,
+     * casting them to int64_t to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_point safe_division(fixed value) const
+    {
+        return fixed_point(_x.safe_division(value), _y.safe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_point unsafe_division(int value) const
+    {
+        return fixed_point(_x.unsafe_division(value), _y.unsafe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this point by the given fixed point value
+     * without trying to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_point unsafe_division(fixed value) const
+    {
+        return fixed_point(_x.unsafe_division(value), _y.unsafe_division(value));
+    }
+
+    /**
      * @brief Returns a fixed_point that is formed by changing the sign of both coordinates.
      */
     [[nodiscard]] constexpr fixed_point operator-() const

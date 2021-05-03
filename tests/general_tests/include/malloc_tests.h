@@ -33,12 +33,6 @@ public:
         bn::free(ptr);
         BN_ASSERT(bn::memory::used_alloc_ewram() == 0);
     }
-
-private:
-    struct private_struct
-    {
-        int integers[4];
-    };
 };
 
 #endif

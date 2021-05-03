@@ -1586,7 +1586,8 @@
  *
  * @section changelog_6_12_0 6.12.0 (next release)
  *
- * Unsigned operator overloads removed.
+ * * Multiplication and division methods added to bn::fixed_point and bn::fixed_size.
+ * * Unsigned operator overloads removed.
  *
  *
  * @section changelog_6_11_0 6.11.0

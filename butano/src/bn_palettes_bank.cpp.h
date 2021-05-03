@@ -72,8 +72,9 @@ int palettes_bank::used_colors_count() const
             if(pal.usages)
             {
                 BN_LOG(pal.bpp_8 ? "bpp_8" : "bpp_4",
-                        " - slots_count: ", pal.slots_count,
-                        " - usages: ", pal.usages);
+                       " - slots_count: ", pal.slots_count,
+                       " - colors_count: ", pal.slots_count * hw::palettes::colors_per_palette(),
+                       " - usages: ", pal.usages);
             }
         }
 

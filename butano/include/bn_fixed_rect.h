@@ -273,6 +273,108 @@ public:
     }
 
     /**
+     * @brief Returns the multiplication of this rect by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_rect multiplication(int value) const
+    {
+        return fixed_rect(_position, _dimensions.multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this rect by the given fixed point value,
+     * using half precision to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_rect multiplication(fixed value) const
+    {
+        return fixed_rect(_position, _dimensions.multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this rect by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_rect safe_multiplication(int value) const
+    {
+        return fixed_rect(_position, _dimensions.safe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this rect by the given fixed point value,
+     * casting them to int64_t to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_rect safe_multiplication(fixed value) const
+    {
+        return fixed_rect(_position, _dimensions.safe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this rect by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_rect unsafe_multiplication(int value) const
+    {
+        return fixed_rect(_position, _dimensions.unsafe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the multiplication of this rect by the given fixed point value
+     * without trying to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_rect unsafe_multiplication(fixed value) const
+    {
+        return fixed_rect(_position, _dimensions.unsafe_multiplication(value));
+    }
+
+    /**
+     * @brief Returns the division of this rect by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_rect division(int value) const
+    {
+        return fixed_rect(_position, _dimensions.division(value));
+    }
+
+    /**
+     * @brief Returns the division of this rect by the given fixed point value,
+     * using half precision to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_rect division(fixed value) const
+    {
+        return fixed_rect(_position, _dimensions.division(value));
+    }
+
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_rect safe_division(int value) const
+    {
+        return fixed_rect(_position, _dimensions.safe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this rect by the given fixed point value,
+     * casting them to int64_t to try to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_rect safe_division(fixed value) const
+    {
+        return fixed_rect(_position, _dimensions.safe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_rect unsafe_division(int value) const
+    {
+        return fixed_rect(_position, _dimensions.unsafe_division(value));
+    }
+
+    /**
+     * @brief Returns the division of this rect by the given fixed point value
+     * without trying to avoid overflow.
+     */
+    [[nodiscard]] constexpr fixed_rect unsafe_division(fixed value) const
+    {
+        return fixed_rect(_position, _dimensions.unsafe_division(value));
+    }
+
+    /**
      * @brief Multiplies both width and height of the rectangle by the given factor.
      * @param value Valid integer multiplication factor (>= 0).
      * @return Reference to this.

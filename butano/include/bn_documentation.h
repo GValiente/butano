@@ -1586,7 +1586,7 @@
  *
  * @section changelog_6_12_0 6.12.0 (next release)
  *
- * * Multiplication and division methods added to bn::fixed_point and bn::fixed_size.
+ * * Multiplication and division methods added to bn::fixed_point, bn::fixed_size and bn::fixed_rect.
  * * Unsigned operator overloads removed.
  *
  *

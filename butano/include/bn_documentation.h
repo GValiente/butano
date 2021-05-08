@@ -1586,7 +1586,8 @@
  *
  * @section changelog_6_13_0 6.13.0 (next release)
  *
- * bn::type_id marked as `constexpr`.
+ * * bn::fixed_t::floor_integer and bn::fixed_t::ceil_integer added.
+ * * bn::type_id marked as `constexpr`.
  *
  *
  * @section changelog_6_12_0 6.12.0

@@ -55,24 +55,26 @@ public:
         BN_ASSERT(bn::to_string<8>(bn::fixed(0.03125)) == bn::string_view("0.03125"),
                    "Fixed to string conversion failed: ", bn::to_string<8>(bn::fixed(0.03125)));
 
-        _truncate_and_round_test(-2.5);
-        _truncate_and_round_test(-2);
-        _truncate_and_round_test(-1.5);
-        _truncate_and_round_test(-1);
-        _truncate_and_round_test(-0.5);
-        _truncate_and_round_test(0);
-        _truncate_and_round_test(0.5);
-        _truncate_and_round_test(1);
-        _truncate_and_round_test(1.5);
-        _truncate_and_round_test(2);
-        _truncate_and_round_test(2.5);
+        _integer_tests(-3);
+        _integer_tests(-2.5);
+        _integer_tests(-2);
+        _integer_tests(-1.5);
+        _integer_tests(-1);
+        _integer_tests(-0.5);
+        _integer_tests(0);
+        _integer_tests(0.5);
+        _integer_tests(1);
+        _integer_tests(1.5);
+        _integer_tests(2);
+        _integer_tests(2.5);
+        _integer_tests(3);
 
         BN_ASSERT(bn::fixed(unsigned(4)) == bn::fixed(4));
         BN_ASSERT(bn::fixed(4).unsigned_integer() == 4);
     }
 
 private:
-    static void _truncate_and_round_test(float value)
+    static void _integer_tests(float value)
     {
         bn::fixed fixed_value = bn::fixed::from_data(int(value * bn::fixed().scale()));
 
@@ -81,6 +83,12 @@ private:
 
         BN_ASSERT(fixed_value.round_integer() == int(std::round(value)), "Fixed round failed: ",
                    fixed_value, " - ", fixed_value.round_integer(), " - ", int(std::round(value)));
+
+        BN_ASSERT(fixed_value.floor_integer() == int(std::floor(value)), "Fixed floor failed: ",
+                   fixed_value, " - ", fixed_value.floor_integer(), " - ", int(std::floor(value)));
+
+        BN_ASSERT(fixed_value.ceil_integer() == int(std::ceil(value)), "Fixed ceil failed: ",
+                   fixed_value, " - ", fixed_value.ceil_integer(), " - ", int(std::ceil(value)));
     }
 };
 

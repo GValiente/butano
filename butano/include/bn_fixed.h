@@ -168,6 +168,38 @@ public:
     }
 
     /**
+     * @brief Returns the largest integer value not greater than this value.
+     */
+    [[nodiscard]] constexpr int floor_integer() const
+    {
+        int data = _data;
+        int result = data / scale();
+
+        if(data < 0 && data % scale())
+        {
+            --result;
+        }
+
+        return result;
+    }
+
+    /**
+     * @brief Returns the smallest integer value not less than this value.
+     */
+    [[nodiscard]] constexpr int ceil_integer() const
+    {
+        int data = _data;
+        int result = data / scale();
+
+        if(data >= 0 && data % scale())
+        {
+            ++result;
+        }
+
+        return result;
+    }
+
+    /**
      * @brief Returns the fractional part.
      */
     [[nodiscard]] constexpr int fraction() const

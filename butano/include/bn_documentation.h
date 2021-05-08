@@ -1584,6 +1584,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_13_0 6.13.0 (next release)
+ *
+ * bn::type_id marked as `constexpr`.
+ *
+ *
  * @section changelog_6_12_0 6.12.0
  *
  * * Multiplication and division methods added to bn::fixed_point, bn::fixed_size and bn::fixed_rect.

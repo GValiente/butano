@@ -52,7 +52,7 @@ public:
     using id_type = type_id_t(); //!< Internal id type alias.
 
     template<typename Type>
-    friend type_id_t type_id();
+    friend constexpr type_id_t type_id();
 
     /**
      * @brief Default constructor.
@@ -86,7 +86,7 @@ private:
  * @brief Returns the type_id_t of the specified type.
  */
 template<typename Type>
-[[nodiscard]] type_id_t type_id()
+[[nodiscard]] constexpr type_id_t type_id()
 {
     return type_id_t(&type_id<Type>);
 }

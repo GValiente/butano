@@ -31,6 +31,7 @@
 #include "../hw/include/bn_hw_core.h"
 #include "../hw/include/bn_hw_sram.h"
 #include "../hw/include/bn_hw_timer.h"
+#include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_game_pak.h"
 
 #if BN_CFG_ASSERT_ENABLED
@@ -243,6 +244,7 @@ void init(const string_view& keypad_commands)
 {
     // Init storage systems:
     hw::game_pak::init();
+    hw::memory::init();
     hw::sram::init();
 
     // Init gpio:

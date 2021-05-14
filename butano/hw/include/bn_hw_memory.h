@@ -6,10 +6,22 @@
 #ifndef BN_HW_MEMORY_H
 #define BN_HW_MEMORY_H
 
+#include "bn_config_ewram.h"
 #include "bn_hw_tonc.h"
 
 namespace bn::hw::memory
 {
+    static_assert(BN_CFG_EWRAM_WAIT_STATE == BN_EWRAM_WAIT_STATE_2 ||
+            BN_CFG_EWRAM_WAIT_STATE == BN_EWRAM_WAIT_STATE_1);
+
+    #if BN_CFG_EWRAM_WAIT_STATE == BN_EWRAM_WAIT_STATE_1
+        BN_CODE_IWRAM void init();
+    #else
+        inline void init()
+        {
+        }
+    #endif
+
     [[nodiscard]] int used_static_iwram();
 
     [[nodiscard]] int used_static_ewram();

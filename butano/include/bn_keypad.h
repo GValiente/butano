@@ -203,6 +203,21 @@ namespace bn::keypad
      * @brief Indicates if the `L` key has been released in the current frame or not.
      */
     [[nodiscard]] bool l_released();
+
+    /**
+     * @brief Indicates if any key is held or not.
+     */
+    [[nodiscard]] bool any_held();
+
+    /**
+     * @brief Indicates if any key has been pressed in the current frame or not.
+     */
+    [[nodiscard]] bool any_pressed();
+
+    /**
+     * @brief Indicates if any key has been released in the current frame or not.
+     */
+    [[nodiscard]] bool any_released();
 }
 
 #endif

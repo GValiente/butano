@@ -101,6 +101,21 @@ bool released(key_type key)
     return data.released_keys & unsigned(key);
 }
 
+bool any_held()
+{
+    return data.held_keys;
+}
+
+bool any_pressed()
+{
+    return data.pressed_keys;
+}
+
+bool any_released()
+{
+    return data.released_keys;
+}
+
 void update()
 {
     unsigned previous_keys = data.held_keys;

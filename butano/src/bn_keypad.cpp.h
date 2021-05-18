@@ -175,4 +175,19 @@ bool l_released()
     return keypad_manager::released(key_type::L);
 }
 
+bool any_held()
+{
+    return keypad_manager::any_held();
+}
+
+bool any_pressed()
+{
+    return keypad_manager::any_pressed();
+}
+
+bool any_released()
+{
+    return keypad_manager::any_released();
+}
+
 }

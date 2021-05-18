@@ -26,6 +26,12 @@ namespace bn::keypad_manager
 
     [[nodiscard]] bool released(key_type key);
 
+    [[nodiscard]] bool any_held();
+
+    [[nodiscard]] bool any_pressed();
+
+    [[nodiscard]] bool any_released();
+
     void update();
 
     void set_interrupt(const span<const key_type>& keys);

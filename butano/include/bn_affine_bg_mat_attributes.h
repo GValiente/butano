@@ -457,7 +457,7 @@ public:
     }
 
 private:
-    static constexpr const int _right_shift = fixed::precision() - 8;
+    static constexpr int _right_shift = fixed::precision() - 8;
 
     fixed_point _position;
     fixed_size _half_dimensions;

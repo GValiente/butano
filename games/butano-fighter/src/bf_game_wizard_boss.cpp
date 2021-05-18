@@ -23,14 +23,14 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int state_0_1_life = 600;   // 21 seconds
-    constexpr const int state_2_3_life = 400;   // 20 seconds
-    constexpr const int state_4_5_life = 500;   // 18 seconds
-    constexpr const int total_life = state_0_1_life + state_2_3_life + state_4_5_life;
+    constexpr int state_0_1_life = 600;   // 21 seconds
+    constexpr int state_2_3_life = 400;   // 20 seconds
+    constexpr int state_4_5_life = 500;   // 18 seconds
+    constexpr int total_life = state_0_1_life + state_2_3_life + state_4_5_life;
 
-    constexpr const int limit_x = 38;
-    constexpr const int limit_y = 46;
-    constexpr const bn::fixed rotate_speed = 0.5;
+    constexpr int limit_x = 38;
+    constexpr int limit_y = 46;
+    constexpr bn::fixed rotate_speed = 0.5;
 
     void _add_wizard_sprite(const bn::camera_ptr& camera, bn::ivector<bn::sprite_ptr>& sprites)
     {

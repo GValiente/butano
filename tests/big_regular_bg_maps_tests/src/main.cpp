@@ -21,7 +21,7 @@ namespace
     void big_map_scene(const bn::string_view& title, const bn::regular_bg_item& item,
                        bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: move BG",
             "A: move BG faster",
             "",

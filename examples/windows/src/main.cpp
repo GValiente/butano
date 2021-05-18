@@ -24,7 +24,7 @@ namespace
 {
     void window_visibility_scene(bn::regular_bg_ptr& clouds_bg, bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: toggle window visibility",
             "",
             "START: go to next scene",
@@ -54,7 +54,7 @@ namespace
 
     void window_boundaries_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: move window boundaries",
             "",
             "START: go to next scene",
@@ -96,7 +96,7 @@ namespace
 
     void sprite_window_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: move circle sprite",
             "",
             "START: go to next scene",
@@ -134,7 +134,7 @@ namespace
 
     void window_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -163,7 +163,7 @@ namespace
 
     void window_hbe_scene(bn::regular_bg_ptr& clouds_bg, bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

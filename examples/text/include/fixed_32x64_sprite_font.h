@@ -9,11 +9,11 @@
 #include "bn_sprite_font.h"
 #include "bn_sprite_items_fixed_32x64_font.h"
 
-constexpr const bn::string_view fixed_32x64_sprite_font_utf8_characters[] = {
+constexpr bn::string_view fixed_32x64_sprite_font_utf8_characters[] = {
     "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
 };
 
-constexpr const bn::sprite_font fixed_32x64_sprite_font(
+constexpr bn::sprite_font fixed_32x64_sprite_font(
         bn::sprite_items::fixed_32x64_font, fixed_32x64_sprite_font_utf8_characters);
 
 #endif

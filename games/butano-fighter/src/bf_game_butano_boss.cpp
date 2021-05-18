@@ -25,13 +25,13 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int state_0_1_2_3_life = 900;   // 15 seconds
-    constexpr const int state_4_life = 1100;        // 30 seconds
-    constexpr const int state_5_6_life = 600;       // 17 seconds
-    constexpr const int total_life = state_0_1_2_3_life + state_4_life + state_5_6_life;
+    constexpr int state_0_1_2_3_life = 900;   // 15 seconds
+    constexpr int state_4_life = 1100;        // 30 seconds
+    constexpr int state_5_6_life = 600;       // 17 seconds
+    constexpr int total_life = state_0_1_2_3_life + state_4_life + state_5_6_life;
 
-    constexpr const bn::fixed scale_margin = 0.1;
-    constexpr const bn::fixed x_limit = (bn::display::width() + 256) / 2;
+    constexpr bn::fixed scale_margin = 0.1;
+    constexpr bn::fixed x_limit = (bn::display::width() + 256) / 2;
 
     [[nodiscard]] bn::sprite_animate_action<7> _create_mini_explosion(bn::fixed x, bn::fixed y,
                                                                        const bn::camera_ptr& camera)

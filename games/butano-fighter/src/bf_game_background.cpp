@@ -18,7 +18,7 @@ namespace bf::game
 
 namespace
 {
-    constexpr const bn::fixed blending_transparency = 0.4;
+    constexpr bn::fixed blending_transparency = 0.4;
 
     bn::regular_bg_ptr _create_bottom_bg(const stage& stage, const bn::camera_ptr& camera)
     {

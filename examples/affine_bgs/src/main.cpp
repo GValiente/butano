@@ -35,7 +35,7 @@ namespace
 {
     void affine_bgs_visibility_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: hide/show BG",
             "",
             "START: go to next scene",
@@ -59,7 +59,7 @@ namespace
 
     void affine_bgs_visibility_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -78,7 +78,7 @@ namespace
 
     void affine_bgs_position_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: move BG",
             "",
             "START: go to next scene",
@@ -115,7 +115,7 @@ namespace
 
     void affine_bgs_position_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -135,7 +135,7 @@ namespace
 
     void affine_bgs_rotation_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease rotation angle",
             "RIGHT: increase rotation angle",
             "",
@@ -167,7 +167,7 @@ namespace
 
     void affine_bgs_rotation_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -186,7 +186,7 @@ namespace
 
     void affine_bgs_scale_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease horizontal scale",
             "RIGHT: increase horizontal scale",
             "DOWN: decrease vertical scale",
@@ -231,7 +231,7 @@ namespace
 
     void affine_bgs_scale_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -252,7 +252,7 @@ namespace
 
     void affine_bgs_shear_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease horizontal shear",
             "RIGHT: increase horizontal shear",
             "DOWN: decrease vertical shear",
@@ -297,7 +297,7 @@ namespace
 
     void affine_bgs_shear_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -318,7 +318,7 @@ namespace
 
     void affine_bgs_flip_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: disable horizontal flip",
             "RIGHT: enable horizontal flip",
             "DOWN: disable vertical flip",
@@ -359,7 +359,7 @@ namespace
 
     void affine_bgs_flip_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -378,7 +378,7 @@ namespace
 
     void affine_bgs_pivot_position_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: move BG",
             "",
             "START: go to next scene",
@@ -420,7 +420,7 @@ namespace
 
     void affine_bgs_pivot_position_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -445,7 +445,7 @@ namespace
 
     void affine_bgs_pivot_position_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -493,7 +493,7 @@ namespace
 
     void affine_bgs_mat_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -552,7 +552,7 @@ namespace
 
     void affine_bgs_wrapping_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: enable/disable wrapping",
             "",
             "START: go to next scene",
@@ -576,7 +576,7 @@ namespace
 
     void affine_bgs_wrapping_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -595,7 +595,7 @@ namespace
 
     void affine_bgs_priority_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease red BG priority",
             "RIGHT: increase red BG priority",
             "",
@@ -631,7 +631,7 @@ namespace
 
     void affine_bgs_z_order_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease red BG Z order",
             "RIGHT: increase red BG Z order",
             "",
@@ -667,7 +667,7 @@ namespace
 
     void affine_bgs_put_above_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: put blue BG above red BG",
             "A: put red BG above blue BG",
             "",
@@ -698,7 +698,7 @@ namespace
 
     void affine_bgs_attributes_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: copy blue attributes to red",
             "A: restore red attributes",
             "",
@@ -733,7 +733,7 @@ namespace
 
     void affine_bgs_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -773,7 +773,7 @@ namespace
 
     void affine_bgs_mat_attributes_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: copy blue attributes to red",
             "A: restore red attributes",
             "",
@@ -812,7 +812,7 @@ namespace
 
     void affine_bg_builder_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

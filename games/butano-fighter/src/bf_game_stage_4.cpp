@@ -29,10 +29,10 @@ namespace bf::game::stage_4
 
 namespace
 {
-    constexpr const int start_y_small = -(bn::display::height() + 32) / 2;
-    constexpr const int start_y_big = -(bn::display::height() + 64) / 2;
+    constexpr int start_y_small = -(bn::display::height() + 32) / 2;
+    constexpr int start_y_big = -(bn::display::height() + 64) / 2;
 
-    constexpr const bn::span<const enemy_bullet_event> no_bullets;
+    constexpr bn::span<const enemy_bullet_event> no_bullets;
 
     [[nodiscard]] constexpr bn::fixed move_y(bn::fixed y)
     {
@@ -52,17 +52,17 @@ namespace
 
     // small_octopus:
 
-    constexpr const enemy_data small_octopus(
+    constexpr enemy_data small_octopus(
         bn::sprite_items::stage_4_octopus, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::enemy_death_ninja_14, bn::fixed_size(26, 24), _create_graphics_indexes(0), 12, 22);
 
-    constexpr const enemy_move_event small_octopus_moves[] = {
+    constexpr enemy_move_event small_octopus_moves[] = {
         enemy_move_event(bn::fixed_point(0.75, move_y(0.25)),  50, false),
         enemy_move_event(bn::fixed_point(0.75, 0),             40, false),
         enemy_move_event(bn::fixed_point(0.75, move_y(-1)),    1,  false),
     };
 
-    constexpr const enemy_move_event small_octopus_flipped_moves[] = {
+    constexpr enemy_move_event small_octopus_flipped_moves[] = {
         small_octopus_moves[0].flipped(),
         small_octopus_moves[1].flipped(),
         small_octopus_moves[2].flipped(),
@@ -71,90 +71,90 @@ namespace
 
     // small_brown_meteor:
 
-    constexpr const enemy_data small_brown_meteor(
+    constexpr enemy_data small_brown_meteor(
         bn::sprite_items::stage_4_meteors_small, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::space_shooter_1, bn::fixed_size(17, 15), _create_graphics_indexes(2), 30, 20);
 
-    constexpr const enemy_move_event small_brown_meteor_moves[] = {
+    constexpr enemy_move_event small_brown_meteor_moves[] = {
         enemy_move_event(bn::fixed_point(0.2, move_y(0.15)),  1,  false),
     };
 
-    constexpr const enemy_move_event small_brown_meteor_flipped_moves[] = {
+    constexpr enemy_move_event small_brown_meteor_flipped_moves[] = {
         small_brown_meteor_moves[0].flipped(),
     };
 
 
     // medium_brown_meteor:
 
-    constexpr const enemy_data medium_brown_meteor(
+    constexpr enemy_data medium_brown_meteor(
         bn::sprite_items::stage_4_meteors_small, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::space_shooter_3, bn::fixed_size(26, 26), _create_graphics_indexes(1), 40, 34);
 
-    constexpr const enemy_move_event medium_brown_meteor_moves[] = {
+    constexpr enemy_move_event medium_brown_meteor_moves[] = {
         enemy_move_event(bn::fixed_point(0.15, move_y(0.1)),  1,  false),
     };
 
-    constexpr const enemy_move_event medium_brown_meteor_flipped_moves[] = {
+    constexpr enemy_move_event medium_brown_meteor_flipped_moves[] = {
         medium_brown_meteor_moves[0].flipped(),
     };
 
 
     // big_brown_meteor:
 
-    constexpr const enemy_data big_brown_meteor(
+    constexpr enemy_data big_brown_meteor(
         bn::sprite_items::stage_4_meteors_big, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::space_shooter_5, bn::fixed_size(30, 36), _create_graphics_indexes(1), 50, 40);
 
-    constexpr const enemy_move_event big_brown_meteor_moves[] = {
+    constexpr enemy_move_event big_brown_meteor_moves[] = {
         enemy_move_event(bn::fixed_point(0.1, move_y(0.05)),  1,  false),
     };
 
-    constexpr const enemy_move_event big_brown_meteor_flipped_moves[] = {
+    constexpr enemy_move_event big_brown_meteor_flipped_moves[] = {
         big_brown_meteor_moves[0].flipped(),
     };
 
 
     // small_red_meteor:
 
-    constexpr const enemy_data small_red_meteor(
+    constexpr enemy_data small_red_meteor(
         bn::sprite_items::stage_4_meteors_small, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::space_shooter_3, bn::fixed_size(22, 20), _create_graphics_indexes(0), 36, 32);
 
-    constexpr const enemy_move_event small_red_meteor_moves[] = {
+    constexpr enemy_move_event small_red_meteor_moves[] = {
         enemy_move_event(bn::fixed_point(0.25, move_y(0.15)),  1,  false),
     };
 
-    constexpr const enemy_move_event small_red_meteor_flipped_moves[] = {
+    constexpr enemy_move_event small_red_meteor_flipped_moves[] = {
         small_red_meteor_moves[0].flipped(),
     };
 
 
     // big_red_meteor:
 
-    constexpr const enemy_data big_red_meteor(
+    constexpr enemy_data big_red_meteor(
         bn::sprite_items::stage_4_meteors_big, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::space_shooter_5, bn::fixed_size(42, 38), _create_graphics_indexes(0), 56, 48);
 
-    constexpr const enemy_move_event big_red_meteor_moves[] = {
+    constexpr enemy_move_event big_red_meteor_moves[] = {
         enemy_move_event(bn::fixed_point(0.15, move_y(0.05)),  1,  false),
     };
 
-    constexpr const enemy_move_event big_red_meteor_flipped_moves[] = {
+    constexpr enemy_move_event big_red_meteor_flipped_moves[] = {
         big_red_meteor_moves[0].flipped(),
     };
 
 
     // white_astronaut:
 
-    constexpr const enemy_data white_astronaut(
+    constexpr enemy_data white_astronaut(
         bn::sprite_items::stage_4_enemies_3_2, enemy_data::death_anim_type::VERTICAL_SCALE,
         bn::sound_items::scream_4, bn::fixed_size(22, 24), _create_graphics_indexes(0), 18, 28);
 
-    constexpr const enemy_move_event white_astronaut_moves[] = {
+    constexpr enemy_move_event white_astronaut_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.2)),  1,  false),
     };
 
-    constexpr const enemy_bullet_event white_astronaut_bullets[] = {
+    constexpr enemy_bullet_event white_astronaut_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_SMALL,  direction_vector(0, 1, 1),  45),
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_SMALL,  direction_vector(0, 1, 1),  32),
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_SMALL,  direction_vector(0, 1, 1),  32),
@@ -163,15 +163,15 @@ namespace
 
     // blue_astronaut:
 
-    constexpr const enemy_data blue_astronaut(
+    constexpr enemy_data blue_astronaut(
         bn::sprite_items::stage_4_enemies_4, enemy_data::death_anim_type::VERTICAL_SCALE,
         bn::sound_items::scream_3, bn::fixed_size(22, 24), _create_graphics_indexes(0), 26, 36);
 
-    constexpr const enemy_move_event blue_astronaut_moves[] = {
+    constexpr enemy_move_event blue_astronaut_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.2)),  1,  false),
     };
 
-    constexpr const enemy_bullet_event blue_astronaut_bullets[] = {
+    constexpr enemy_bullet_event blue_astronaut_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_BIG,    direction_vector(0, 1, 1),  45),
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_BIG,    direction_vector(0, 1, 1),  32),
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_BIG,    direction_vector(0, 1, 1),  32),
@@ -180,15 +180,15 @@ namespace
 
     // red_astronaut:
 
-    constexpr const enemy_data red_astronaut(
+    constexpr enemy_data red_astronaut(
         bn::sprite_items::stage_4_enemies_4, enemy_data::death_anim_type::VERTICAL_SCALE,
         bn::sound_items::scream_5, bn::fixed_size(22, 24), _create_graphics_indexes(1), 20, 30);
 
-    constexpr const enemy_move_event red_astronaut_moves[] = {
+    constexpr enemy_move_event red_astronaut_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.2)),  1,  false),
     };
 
-    constexpr const enemy_bullet_event red_astronaut_bullets[] = {
+    constexpr enemy_bullet_event red_astronaut_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_SMALL,  direction_vector(0, 1, 1),      45),
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_SMALL,  direction_vector(-0.5, 1, 1),   1),
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_SMALL,  direction_vector(0.5, 1, 1),    1),
@@ -197,15 +197,15 @@ namespace
 
     // yellow_astronaut:
 
-    constexpr const enemy_data yellow_astronaut(
+    constexpr enemy_data yellow_astronaut(
         bn::sprite_items::stage_4_enemies_4, enemy_data::death_anim_type::VERTICAL_SCALE,
         bn::sound_items::scream_6, bn::fixed_size(22, 24), _create_graphics_indexes(2), 16, 26);
 
-    constexpr const enemy_move_event yellow_astronaut_moves[] = {
+    constexpr enemy_move_event yellow_astronaut_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.2)),  1,  false),
     };
 
-    constexpr const enemy_bullet_event yellow_astronaut_bullets[] = {
+    constexpr enemy_bullet_event yellow_astronaut_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_SMALL,  1,  60),
         enemy_bullet_event(enemy_bullet_type::ASTRONAUT_SMALL,  1,  60),
     };
@@ -213,19 +213,19 @@ namespace
 
     // yellow_spaceship:
 
-    constexpr const enemy_data yellow_spaceship(
+    constexpr enemy_data yellow_spaceship(
         bn::sprite_items::stage_4_enemies_3_1, enemy_data::death_anim_type::MINI_EXPLOSION,
         bn::sound_items::explosion_3, bn::fixed_size(46, 44), _create_graphics_indexes(0), 36, 46);
 
-    constexpr const enemy_move_event yellow_spaceship_moves[] = {
+    constexpr enemy_move_event yellow_spaceship_moves[] = {
         enemy_move_event(bn::fixed_point(0.1, move_y(0.1)),  1,  false),
     };
 
-    constexpr const enemy_move_event yellow_spaceship_flipped_moves[] = {
+    constexpr enemy_move_event yellow_spaceship_flipped_moves[] = {
         yellow_spaceship_moves[0].flipped(),
     };
 
-    constexpr const enemy_bullet_event yellow_spaceship_bullets[] = {
+    constexpr enemy_bullet_event yellow_spaceship_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::YELLOW_SPACESHIP_SMALL,   direction_vector(0, 1, 0.9),  45),
         enemy_bullet_event(enemy_bullet_type::YELLOW_SPACESHIP_SMALL,   direction_vector(0, 1, 0.9),  45),
         enemy_bullet_event(enemy_bullet_type::YELLOW_SPACESHIP_SMALL,   direction_vector(0, 1, 0.9),  45),
@@ -234,24 +234,24 @@ namespace
 
     // green_spaceship:
 
-    constexpr const enemy_data green_spaceship(
+    constexpr enemy_data green_spaceship(
         bn::sprite_items::stage_4_enemies_2, enemy_data::death_anim_type::MINI_EXPLOSION,
         bn::sound_items::explosion_2, bn::fixed_size(62, 46), _create_graphics_indexes(0), 40, 50);
 
-    constexpr const bn::fixed_point green_spaceship_start_position(-(bn::display::width() + 50) / 2, start_y_big);
+    constexpr bn::fixed_point green_spaceship_start_position(-(bn::display::width() + 50) / 2, start_y_big);
 
-    constexpr const bn::fixed_point green_spaceship_flipped_start_position(
+    constexpr bn::fixed_point green_spaceship_flipped_start_position(
         -green_spaceship_start_position.x(), green_spaceship_start_position.y());
 
-    constexpr const enemy_move_event green_spaceship_moves[] = {
+    constexpr enemy_move_event green_spaceship_moves[] = {
         enemy_move_event(bn::fixed_point(1, move_y(0)),  1,  false),
     };
 
-    constexpr const enemy_move_event green_spaceship_flipped_moves[] = {
+    constexpr enemy_move_event green_spaceship_flipped_moves[] = {
         green_spaceship_moves[0].flipped(),
     };
 
-    constexpr const enemy_bullet_event green_spaceship_bullets[] = {
+    constexpr enemy_bullet_event green_spaceship_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::GREEN_SPACESHIP_SMALL,   direction_vector(0, 1, 0.9),  60),
         enemy_bullet_event(enemy_bullet_type::GREEN_SPACESHIP_SMALL,   direction_vector(0, 1, 0.9),  60),
         enemy_bullet_event(enemy_bullet_type::GREEN_SPACESHIP_SMALL,   direction_vector(0, 1, 0.9),  60),
@@ -261,18 +261,18 @@ namespace
 
     // brain:
 
-    constexpr const enemy_data brain(
+    constexpr enemy_data brain(
         bn::sprite_items::stage_4_brain, enemy_data::death_anim_type::EXPLOSION,
         bn::sound_items::boss_shoot, bn::fixed_size(34, 54), _create_graphics_indexes(0), 500, 300);
 
-    constexpr const enemy_move_event brain_moves[] = {
+    constexpr enemy_move_event brain_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(-0.25)), 250, false),
         enemy_move_event(bn::fixed_point(-0.25, 0),         320, false),
         enemy_move_event(bn::fixed_point(0.25, 0),          320, false),
         enemy_move_event(bn::fixed_point(0, move_y(-0.25)), 1,   false),
     };
 
-    constexpr const enemy_bullet_event brain_bullets[] = {
+    constexpr enemy_bullet_event brain_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::BRAIN_BIG,    1,  100),
         enemy_bullet_event(enemy_bullet_type::BRAIN_SMALL,  1,  6),
         enemy_bullet_event(enemy_bullet_type::BRAIN_SMALL,  1,  6),
@@ -336,34 +336,34 @@ namespace
 
     // pink_spaceship:
 
-    constexpr const enemy_data pink_spaceship(
+    constexpr enemy_data pink_spaceship(
         bn::sprite_items::stage_4_enemies_1, enemy_data::death_anim_type::MINI_EXPLOSION,
         bn::sound_items::explosion_1, bn::fixed_size(34, 32), _create_graphics_indexes(0), 36, 46);
 
-    constexpr const enemy_move_event pink_spaceship_moves[] = {
+    constexpr enemy_move_event pink_spaceship_moves[] = {
         enemy_move_event(bn::fixed_point(0.1, move_y(1)),  1,  false),
     };
 
-    constexpr const enemy_move_event pink_spaceship_flipped_moves[] = {
+    constexpr enemy_move_event pink_spaceship_flipped_moves[] = {
         pink_spaceship_moves[0].flipped(),
     };
 
 
     // red_spaceship:
 
-    constexpr const enemy_data red_spaceship(
+    constexpr enemy_data red_spaceship(
         bn::sprite_items::stage_4_enemies_1, enemy_data::death_anim_type::MINI_EXPLOSION,
         bn::sound_items::explosion_3, bn::fixed_size(42, 34), _create_graphics_indexes(1), 38, 50);
 
-    constexpr const enemy_move_event red_spaceship_moves[] = {
+    constexpr enemy_move_event red_spaceship_moves[] = {
         enemy_move_event(bn::fixed_point(0.1, move_y(0.3)),  1,  false),
     };
 
-    constexpr const enemy_move_event red_spaceship_flipped_moves[] = {
+    constexpr enemy_move_event red_spaceship_flipped_moves[] = {
         red_spaceship_moves[0].flipped(),
     };
 
-    constexpr const enemy_bullet_event red_spaceship_bullets[] = {
+    constexpr enemy_bullet_event red_spaceship_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::RED_SPACESHIP_BIG,   direction_vector(0, 1, 1),  45),
         enemy_bullet_event(enemy_bullet_type::RED_SPACESHIP_BIG,   direction_vector(0, 1, 1),  75),
         enemy_bullet_event(enemy_bullet_type::RED_SPACESHIP_BIG,   direction_vector(0, 1, 1),  75),
@@ -372,29 +372,29 @@ namespace
 
     // blue_spaceship:
 
-    constexpr const enemy_data blue_spaceship(
+    constexpr enemy_data blue_spaceship(
         bn::sprite_items::stage_4_enemies_1, enemy_data::death_anim_type::MINI_EXPLOSION,
         bn::sound_items::explosion_3, bn::fixed_size(50, 62), _create_graphics_indexes(2), 30, 60);
 
-    constexpr const bn::fixed_point blue_spaceship_start_position(-(constants::play_width + 32), -start_y_big);
+    constexpr bn::fixed_point blue_spaceship_start_position(-(constants::play_width + 32), -start_y_big);
 
-    constexpr const bn::fixed_point blue_spaceship_flipped_start_position(
+    constexpr bn::fixed_point blue_spaceship_flipped_start_position(
         -blue_spaceship_start_position.x(), blue_spaceship_start_position.y());
 
-    constexpr const enemy_move_event blue_spaceship_moves[] = {
+    constexpr enemy_move_event blue_spaceship_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(-1.5)),  1,  false),
     };
 
-    constexpr const enemy_move_event blue_spaceship_flipped_moves[] = {
+    constexpr enemy_move_event blue_spaceship_flipped_moves[] = {
         blue_spaceship_moves[0].flipped(),
     };
 
-    constexpr const enemy_bullet_event blue_spaceship_bullets[] = {
+    constexpr enemy_bullet_event blue_spaceship_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::BLUE_SPACESHIP_SMALL, direction_vector(1, 0, 1),  120),
         enemy_bullet_event(enemy_bullet_type::BLUE_SPACESHIP_SMALL, direction_vector(1, 0, 1),  60),
     };
 
-    constexpr const enemy_bullet_event blue_spaceship_flipped_bullets[] = {
+    constexpr enemy_bullet_event blue_spaceship_flipped_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::BLUE_SPACESHIP_FLIPPED_SMALL, direction_vector(-1, 0, 1), 120),
         enemy_bullet_event(enemy_bullet_type::BLUE_SPACESHIP_FLIPPED_SMALL, direction_vector(-1, 0, 1), 60),
     };
@@ -402,11 +402,11 @@ namespace
 
     // big_octopus:
 
-    constexpr const enemy_data big_octopus(
+    constexpr enemy_data big_octopus(
         bn::sprite_items::stage_4_enemies_2, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::enemy_death_ninja_11, bn::fixed_size(54, 50), _create_graphics_indexes(1), 42, 56);
 
-    constexpr const enemy_move_event big_octopus_moves[] = {
+    constexpr enemy_move_event big_octopus_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.3)),  80, false),
 
         enemy_move_event(bn::fixed_point(0, move_y(0.1)),  4,  false),
@@ -421,7 +421,7 @@ namespace
         enemy_move_event(bn::fixed_point(0, move_y(0.3)),  1,  false),
     };
 
-    constexpr const enemy_bullet_event big_octopus_bullets[] = {
+    constexpr enemy_bullet_event big_octopus_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::BIG,      direction_vector(1, 1, 0.9),   80),
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-1, 1, 0.9),  4),
         enemy_bullet_event(enemy_bullet_type::BIG,      direction_vector(0, 1, 0.9),   4),
@@ -435,7 +435,7 @@ namespace
 
     // enemy events:
 
-    constexpr const enemy_event enemy_events[] = {
+    constexpr enemy_event enemy_events[] = {
 
         // level 7 (51s)
 
@@ -676,7 +676,7 @@ namespace
 
     // stage (start with level 7, exp 5600):
 
-    constexpr const stage stage_4(
+    constexpr stage stage_4(
         bn::regular_bg_items::stage_4, bn::fixed_point(0, constants::background_speed / 8),
         bn::regular_bg_items::stars, bn::fixed_point(0, constants::background_speed),
         bn::sprite_items::stage_4_intro, bn::sprite_items::stage_4_intro_alt, "STAGE 4", "FAR FAR AWAY",

@@ -27,7 +27,7 @@ int main()
 {
     bn::core::init();
 
-    constexpr const bn::string_view info_text_lines[] = {
+    constexpr bn::string_view info_text_lines[] = {
         "PAD: move ninja",
         "PAD+A: move ninja faster",
         "",

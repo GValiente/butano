@@ -22,7 +22,7 @@ namespace
 {
     void music_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease volume",
             "RIGHT: increase volume",
             "A: pause/resume music",
@@ -72,7 +72,7 @@ namespace
 
     void music_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -95,7 +95,7 @@ namespace
 
     void sound_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: play sound",
             "",
             "",
@@ -123,7 +123,7 @@ namespace
 
     void sound_panning_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

@@ -23,7 +23,7 @@
 
 namespace
 {
-    constexpr const bn::string_view info_text_lines[] = {
+    constexpr bn::string_view info_text_lines[] = {
         "",
         "",
         "Polygons rendering with HDMA sprites",
@@ -124,7 +124,7 @@ int main()
     polygon_sprite user_polygon_sprite(user_polygon, 0, 0);
 
     bn::random random;
-    constexpr const int demo_polygons_count = 16;
+    constexpr int demo_polygons_count = 16;
     bn::unique_ptr<bn::vector<demo_polygon, demo_polygons_count>> demo_polygons(
                 new bn::vector<demo_polygon, demo_polygons_count>());
     bn::unique_ptr<bn::vector<polygon_sprite, demo_polygons_count / 2>> demo_polygon_sprites(

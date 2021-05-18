@@ -24,7 +24,7 @@ namespace bn
  *
  * @ingroup math
  */
-constexpr const array<fixed_t<20>, 1025> reciprocal_lut = []{
+constexpr array<fixed_t<20>, 1025> reciprocal_lut = []{
     array<fixed_t<20>, 1025> result;
     int one = fixed_t<20>(1).data();
 

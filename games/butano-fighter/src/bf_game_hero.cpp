@@ -31,14 +31,14 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int body_delta_y = 48;
-    constexpr const int weapon_delta_x = 2;
-    constexpr const int weapon_delta_y = -13;
-    constexpr const int shoot_frames = 5;
-    constexpr const int scale_weapon_frames = 30;
-    constexpr const int scale_weapon_half_frames = scale_weapon_frames / 2;
-    constexpr const int body_shadows_multiplier = 4;
-    constexpr const bn::fixed_size dimensions(12, 12);
+    constexpr int body_delta_y = 48;
+    constexpr int weapon_delta_x = 2;
+    constexpr int weapon_delta_y = -13;
+    constexpr int shoot_frames = 5;
+    constexpr int scale_weapon_frames = 30;
+    constexpr int scale_weapon_half_frames = scale_weapon_frames / 2;
+    constexpr int body_shadows_multiplier = 4;
+    constexpr bn::fixed_size dimensions(12, 12);
 
     bn::vector<bn::sprite_ptr, 3> _create_body_shadows(const bn::sprite_item& body_sprite_item,
                                                          const bn::camera_ptr& camera)

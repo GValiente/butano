@@ -26,9 +26,9 @@ namespace bf::game::stage_3
 
 namespace
 {
-    constexpr const int start_y = -(bn::display::height() + 64) / 2;
+    constexpr int start_y = -(bn::display::height() + 64) / 2;
 
-    constexpr const bn::span<const enemy_bullet_event> no_bullets;
+    constexpr bn::span<const enemy_bullet_event> no_bullets;
 
     [[nodiscard]] constexpr bn::fixed move_y(bn::fixed y)
     {
@@ -53,16 +53,16 @@ namespace
 
     // blonde:
 
-    constexpr const enemy_data blonde(
+    constexpr enemy_data blonde(
         bn::sprite_items::stage_3_blonde, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::enemy_death_ninja_14, bn::fixed_size(46, 62), _create_graphics_indexes(0), 10, 10);
 
-    constexpr const enemy_move_event blonde_moves[] = {
+    constexpr enemy_move_event blonde_moves[] = {
         enemy_move_event(bn::fixed_point(0.75, move_y(0.15)), 75, false),
         enemy_move_event(bn::fixed_point(0.75, move_y(-1.1)), 1,  false),
     };
 
-    constexpr const enemy_move_event blonde_flipped_moves[] = {
+    constexpr enemy_move_event blonde_flipped_moves[] = {
         blonde_moves[0].flipped(),
         blonde_moves[1].flipped(),
     };
@@ -70,18 +70,18 @@ namespace
 
     // white_caveman:
 
-    constexpr const bn::array<enemy_data::graphics_indexes_group, 4> white_caveman_graphics_indexes = {
+    constexpr bn::array<enemy_data::graphics_indexes_group, 4> white_caveman_graphics_indexes = {
         enemy_data::graphics_indexes_group{ 0, 1, 0, 2 },
         enemy_data::graphics_indexes_group{ 5, 5, 5, 5 },
         enemy_data::graphics_indexes_group{ 3, 3, 4, 4 },
         enemy_data::graphics_indexes_group{ 0, 1, 0, 2 }
     };
 
-    constexpr const enemy_data white_caveman(
+    constexpr enemy_data white_caveman(
         bn::sprite_items::stage_3_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
         bn::sound_items::scream_4, bn::fixed_size(38, 52), white_caveman_graphics_indexes, 22, 22);
 
-    constexpr const enemy_move_event white_caveman_moves[] = {
+    constexpr enemy_move_event white_caveman_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  30, 0,  false),
         enemy_move_event(bn::fixed_point(0, move_y(0)),    5,  1,  false),
         enemy_move_event(bn::fixed_point(1, move_y(0.5)),  60, 2,  false),
@@ -89,7 +89,7 @@ namespace
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  1,  0,  false),
     };
 
-    constexpr const enemy_move_event white_caveman_flipped_moves[] = {
+    constexpr enemy_move_event white_caveman_flipped_moves[] = {
         white_caveman_moves[0].flipped(),
         white_caveman_moves[1].flipped(),
         white_caveman_moves[2].flipped(),
@@ -100,36 +100,36 @@ namespace
 
     // black_caveman:
 
-    constexpr const bn::array<enemy_data::graphics_indexes_group, 4> black_caveman_graphics_indexes = {
+    constexpr bn::array<enemy_data::graphics_indexes_group, 4> black_caveman_graphics_indexes = {
         enemy_data::graphics_indexes_group{ 6, 7, 6, 8 },
         enemy_data::graphics_indexes_group{ 9, 10, 11, 11 },
         enemy_data::graphics_indexes_group{ 6, 7, 6, 8 },
         enemy_data::graphics_indexes_group{ 6, 7, 6, 8 }
     };
 
-    constexpr const enemy_data black_caveman(
+    constexpr enemy_data black_caveman(
         bn::sprite_items::stage_3_characters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
         bn::sound_items::scream_5, bn::fixed_size(38, 52), black_caveman_graphics_indexes, 12, 16);
 
-    constexpr const enemy_move_event black_caveman_moves[] = {
+    constexpr enemy_move_event black_caveman_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  45, 0,  false),
         enemy_move_event(bn::fixed_point(0, move_y(0)),    30, 1,  false),
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  1,  0,  false),
     };
 
-    constexpr const enemy_move_event black_caveman_flipped_moves[] = {
+    constexpr enemy_move_event black_caveman_flipped_moves[] = {
         black_caveman_moves[0].flipped(),
         black_caveman_moves[1].flipped(),
         black_caveman_moves[2].flipped(),
     };
 
-    constexpr const enemy_bullet_event black_caveman_bullets[] = {
+    constexpr enemy_bullet_event black_caveman_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_BIG,      0.9,    45 + 15),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,    0.9,    8),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,    0.9,    8),
     };
 
-    constexpr const enemy_bullet_event black_caveman_flipped_bullets[] = {
+    constexpr enemy_bullet_event black_caveman_flipped_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_BIG,      0.9,    45 + 15),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    0.9,    8),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    0.9,    8),
@@ -138,18 +138,18 @@ namespace
 
     // green_cavegirl:
 
-    constexpr const bn::array<enemy_data::graphics_indexes_group, 4> green_cavegirl_graphics_indexes = {
+    constexpr bn::array<enemy_data::graphics_indexes_group, 4> green_cavegirl_graphics_indexes = {
         enemy_data::graphics_indexes_group{ 12, 13, 12, 14 },
         enemy_data::graphics_indexes_group{ 15, 15, 15, 15 },
         enemy_data::graphics_indexes_group{ 12, 13, 12, 14 },
         enemy_data::graphics_indexes_group{ 12, 13, 12, 14 },
     };
 
-    constexpr const enemy_data green_cavegirl(
+    constexpr enemy_data green_cavegirl(
         bn::sprite_items::stage_3_characters_1, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::enemy_death_ninja_11, bn::fixed_size(46, 60), green_cavegirl_graphics_indexes, 12, 12);
 
-    constexpr const enemy_move_event green_cavegirl_moves[] = {
+    constexpr enemy_move_event green_cavegirl_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  60, 0,  false),
 
         enemy_move_event(bn::fixed_point(0, move_y(0.1)),  4,  1,  false),
@@ -164,7 +164,7 @@ namespace
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  1,  0,  false),
     };
 
-    constexpr const enemy_move_event green_cavegirl_flipped_moves[] = {
+    constexpr enemy_move_event green_cavegirl_flipped_moves[] = {
         green_cavegirl_moves[0].flipped(),
 
         green_cavegirl_moves[1].flipped(),
@@ -179,7 +179,7 @@ namespace
         green_cavegirl_moves[9].flipped(),
     };
 
-    constexpr const enemy_bullet_event green_cavegirl_few_bullets[] = {
+    constexpr enemy_bullet_event green_cavegirl_few_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 1, 0.9),   60),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 0.9),   4),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 0, 0.9),  4),
@@ -187,7 +187,7 @@ namespace
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, -1, 0.9),  4),
     };
 
-    constexpr const enemy_bullet_event green_cavegirl_more_bullets[] = {
+    constexpr enemy_bullet_event green_cavegirl_more_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(1, 1, 0.9),   60),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 1, 0.9),  4),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 0.9),   4),
@@ -201,18 +201,18 @@ namespace
 
     // cavebat:
 
-    constexpr const enemy_data cavebat(bn::sprite_items::stage_3_monsters_1, enemy_data::death_anim_type::ROTATE,
+    constexpr enemy_data cavebat(bn::sprite_items::stage_3_monsters_1, enemy_data::death_anim_type::ROTATE,
                                        bn::sound_items::dinosaur_5, bn::fixed_size(26, 18), 0, 1, 8, 10);
 
-    constexpr const enemy_move_event cavebat_moves[] = {
+    constexpr enemy_move_event cavebat_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.25)), 1, false),
     };
 
-    constexpr const enemy_move_event cavebat_flipped_moves[] = {
+    constexpr enemy_move_event cavebat_flipped_moves[] = {
         cavebat_moves[0].flipped()
     };
 
-    constexpr const enemy_bullet_event cavebat_bullets[] = {
+    constexpr enemy_bullet_event cavebat_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL, 0.9,                           60),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(0, 1, 0.9),   4),
         enemy_bullet_event(enemy_bullet_type::SMALL, direction_vector(-1, 1, 0.9),  4),
@@ -222,18 +222,18 @@ namespace
 
     // grasshopper:
 
-    constexpr const bn::array<enemy_data::graphics_indexes_group, 4> grasshopper_graphics_indexes = {
+    constexpr bn::array<enemy_data::graphics_indexes_group, 4> grasshopper_graphics_indexes = {
         enemy_data::graphics_indexes_group{ 2, 2, 2, 2 },
         enemy_data::graphics_indexes_group{ 3, 4, 3, 4 },
         enemy_data::graphics_indexes_group{ 2, 2, 2, 2 },
         enemy_data::graphics_indexes_group{ 2, 2, 2, 2 },
     };
 
-    constexpr const enemy_data grasshopper(
+    constexpr enemy_data grasshopper(
         bn::sprite_items::stage_3_monsters_1, enemy_data::death_anim_type::VERTICAL_SCALE,
         bn::sound_items::dinosaur_4, bn::fixed_size(56, 22), grasshopper_graphics_indexes, 22, 22);
 
-    constexpr const enemy_move_event grasshopper_moves[] = {
+    constexpr enemy_move_event grasshopper_moves[] = {
         enemy_move_event(bn::fixed_point(0,    move_y(0)),     30, 0,  false),
 
         enemy_move_event(bn::fixed_point(1.5,  move_y(0.7)),   30, 1,  false),
@@ -249,7 +249,7 @@ namespace
         enemy_move_event(bn::fixed_point(0,    move_y(0)),     30, 0,  true),
     };
 
-    constexpr const enemy_move_event grasshopper_flipped_moves[] = {
+    constexpr enemy_move_event grasshopper_flipped_moves[] = {
         grasshopper_moves[0].flipped(),
 
         grasshopper_moves[1].flipped(),
@@ -268,33 +268,33 @@ namespace
 
     // lizard:
 
-    constexpr const enemy_data lizard(
+    constexpr enemy_data lizard(
         bn::sprite_items::stage_3_monsters_1, enemy_data::death_anim_type::HORIZONTAL_SCALE,
         bn::sound_items::dinosaur_3, bn::fixed_size(62, 42), _create_graphics_indexes(5), 28, 28);
 
-    constexpr const enemy_move_event lizard_moves[] = {
+    constexpr enemy_move_event lizard_moves[] = {
         enemy_move_event(bn::fixed_point(0.3,  move_y(0.5)),   1,  false),
     };
 
-    constexpr const enemy_move_event lizard_flipped_moves[] = {
+    constexpr enemy_move_event lizard_flipped_moves[] = {
         lizard_moves[0].flipped()
     };
 
 
     // dragon_man:
 
-    constexpr const enemy_data dragon_man(
+    constexpr enemy_data dragon_man(
         bn::sprite_items::stage_3_dragon_man, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::dinosaur_2, bn::fixed_size(42, 62), _create_graphics_indexes(0), 280, 200);
 
-    constexpr const enemy_move_event dragon_man_moves[] = {
+    constexpr enemy_move_event dragon_man_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(-0.25)), 270, true),
         enemy_move_event(bn::fixed_point(-0.2, 0),          240, true),
         enemy_move_event(bn::fixed_point(-0.2, 0),          240, false),
         enemy_move_event(bn::fixed_point(0, move_y(-0.25)), 1,   false),
     };
 
-    constexpr const enemy_bullet_event dragon_man_bullets[] = {
+    constexpr enemy_bullet_event dragon_man_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0, 1, 1),     100),
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 1, 1),  1),
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 1, 1),   1),
@@ -324,18 +324,18 @@ namespace
 
     // red_cavegirl:
 
-    constexpr const bn::array<enemy_data::graphics_indexes_group, 4> red_cavegirl_graphics_indexes = {
+    constexpr bn::array<enemy_data::graphics_indexes_group, 4> red_cavegirl_graphics_indexes = {
         enemy_data::graphics_indexes_group{ 0, 1, 0, 2 },
         enemy_data::graphics_indexes_group{ 4, 4, 4, 4 },
         enemy_data::graphics_indexes_group{ 5, 5, 5, 5 },
         enemy_data::graphics_indexes_group{ 0, 1, 0, 2 },
     };
 
-    constexpr const enemy_data red_cavegirl(
+    constexpr enemy_data red_cavegirl(
         bn::sprite_items::stage_3_characters_2, enemy_data::death_anim_type::ROTATE,
         bn::sound_items::enemy_death_ninja_14, bn::fixed_size(46, 60), red_cavegirl_graphics_indexes, 14, 16);
 
-    constexpr const enemy_move_event red_cavegirl_moves[] = {
+    constexpr enemy_move_event red_cavegirl_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  60, 0,  false),
 
         enemy_move_event(bn::fixed_point(0, move_y(0)),    10, 2,  false),
@@ -345,7 +345,7 @@ namespace
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  50, 0,  false),
     };
 
-    constexpr const enemy_move_event red_cavegirl_flipped_moves[] = {
+    constexpr enemy_move_event red_cavegirl_flipped_moves[] = {
         red_cavegirl_moves[0].flipped(),
 
         red_cavegirl_moves[1].flipped(),
@@ -355,44 +355,44 @@ namespace
         red_cavegirl_moves[4].flipped(),
     };
 
-    constexpr const enemy_bullet_event red_cavegirl_bullets[] = {
+    constexpr enemy_bullet_event red_cavegirl_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL,    1, 60),
         enemy_bullet_event(enemy_bullet_type::BIG,      1, 60),
     };
 
     // egg_caveman:
 
-    constexpr const bn::array<enemy_data::graphics_indexes_group, 4> egg_caveman_graphics_indexes = {
+    constexpr bn::array<enemy_data::graphics_indexes_group, 4> egg_caveman_graphics_indexes = {
         enemy_data::graphics_indexes_group{ 6, 7, 6, 8 },
         enemy_data::graphics_indexes_group{ 9, 10, 11, 11 },
         enemy_data::graphics_indexes_group{ 6, 7, 6, 8 },
         enemy_data::graphics_indexes_group{ 6, 7, 6, 8 }
     };
 
-    constexpr const enemy_data egg_caveman(
+    constexpr enemy_data egg_caveman(
         bn::sprite_items::stage_3_characters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
         bn::sound_items::scream_6, bn::fixed_size(42, 62), egg_caveman_graphics_indexes, 18, 18);
 
-    constexpr const enemy_move_event egg_caveman_moves[] = {
+    constexpr enemy_move_event egg_caveman_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  45, 0,  false),
         enemy_move_event(bn::fixed_point(0, move_y(0)),    30, 1,  false),
         enemy_move_event(bn::fixed_point(0, move_y(0.5)),  1,  0,  false),
     };
 
-    constexpr const enemy_move_event egg_caveman_flipped_moves[] = {
+    constexpr enemy_move_event egg_caveman_flipped_moves[] = {
         egg_caveman_moves[0].flipped(),
         egg_caveman_moves[1].flipped(),
         egg_caveman_moves[2].flipped(),
     };
 
-    constexpr const enemy_bullet_event egg_caveman_bullets[] = {
+    constexpr enemy_bullet_event egg_caveman_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,            direction_vector(1, 0, 0.9),        45 + 15),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,            direction_vector(0.5, 0.5, 0.9),    1),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,            direction_vector(0, 1, 0.9),        1),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_SMALL,            0.9,                                1),
     };
 
-    constexpr const enemy_bullet_event egg_caveman_flipped_bullets[] = {
+    constexpr enemy_bullet_event egg_caveman_flipped_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    direction_vector(-1, 0, 0.9),       45 + 15),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    direction_vector(-0.5, 0.5, 0.9),   1),
         enemy_bullet_event(enemy_bullet_type::CAVEMAN_FLIPPED_SMALL,    direction_vector(0, 1, 0.9),        1),
@@ -402,24 +402,24 @@ namespace
 
     // minidino:
 
-    constexpr const enemy_data minidino(bn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+    constexpr enemy_data minidino(bn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
                                         bn::sound_items::dinosaur_2, bn::fixed_size(58, 46), _create_graphics_indexes(0), 23, 26);
 
-    constexpr const enemy_move_event minidino_moves[] = {
+    constexpr enemy_move_event minidino_moves[] = {
         enemy_move_event(bn::fixed_point(1.2, move_y(0.6)), 60, false),
         enemy_move_event(bn::fixed_point(-1.2, move_y(0.6)), 60, true),
         enemy_move_event(bn::fixed_point(1.2, move_y(0.6)), 60, false),
         enemy_move_event(bn::fixed_point(-1.2, move_y(0.6)), 1, true),
     };
 
-    constexpr const enemy_move_event minidino_flipped_moves[] = {
+    constexpr enemy_move_event minidino_flipped_moves[] = {
         minidino_moves[0].flipped(),
         minidino_moves[1].flipped(),
         minidino_moves[2].flipped(),
         minidino_moves[3].flipped(),
     };
 
-    constexpr const enemy_bullet_event minidino_bullets[] = {
+    constexpr enemy_bullet_event minidino_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, 0.5, 0.9),     60),
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-1, 0, 0.9),         1),
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(-0.5, -0.5, 0.9),    1),
@@ -431,7 +431,7 @@ namespace
         enemy_bullet_event(enemy_bullet_type::SMALL,    0.9,                                  1),
     };
 
-    constexpr const enemy_bullet_event minidino_flipped_bullets[] = {
+    constexpr enemy_bullet_event minidino_flipped_bullets[] = {
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, 0.5, 0.9),      60),
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(1, 0, 0.9),          1),
         enemy_bullet_event(enemy_bullet_type::SMALL,    direction_vector(0.5, -0.5, 0.9),     1),
@@ -446,21 +446,21 @@ namespace
 
     // turtle:
 
-    constexpr const enemy_data turtle(bn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
+    constexpr enemy_data turtle(bn::sprite_items::stage_3_monsters_2, enemy_data::death_anim_type::VERTICAL_SCALE,
                                       bn::sound_items::enemy_death_rpg_12, bn::fixed_size(52, 30), _create_graphics_indexes(3), 22, 22);
 
-    constexpr const enemy_move_event turtle_moves[] = {
+    constexpr enemy_move_event turtle_moves[] = {
         enemy_move_event(bn::fixed_point(0, move_y(0.4)), 1, false),
     };
 
-    constexpr const enemy_move_event turtle_flipped_moves[] = {
+    constexpr enemy_move_event turtle_flipped_moves[] = {
         turtle_moves[0].flipped()
     };
 
 
     // enemy events:
 
-    constexpr const enemy_event enemy_events[] = {
+    constexpr enemy_event enemy_events[] = {
 
         // level 5 slow (22s)
 
@@ -645,7 +645,7 @@ namespace
 
     // stage (start with level 5, exp 2350):
 
-    constexpr const stage stage_3(
+    constexpr stage stage_3(
         bn::regular_bg_items::stage_3, bn::fixed_point(0, constants::background_speed),
         bn::regular_bg_items::mountain_clouds, bn::fixed_point(-1.0 / 16, constants::background_speed),
         bn::sprite_items::stage_3_intro, bn::sprite_items::stage_3_intro_alt, "STAGE 3", "GIANT MOUNTAIN",

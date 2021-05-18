@@ -77,12 +77,12 @@ namespace bn::hblank_effects_manager
 
 namespace
 {
-    constexpr const int max_items = BN_CFG_HBES_MAX_ITEMS;
+    constexpr int max_items = BN_CFG_HBES_MAX_ITEMS;
 
     static_assert(max_items > 0 && max_items <= 8);
 
-    constexpr const int max_uint32_output_values = hw::hblank_effects::max_uint32_entries();
-    constexpr const int max_uint16_output_values = max(max_items - max_uint32_output_values, 1);
+    constexpr int max_uint32_output_values = hw::hblank_effects::max_uint32_entries();
+    constexpr int max_uint16_output_values = max(max_items - max_uint32_output_values, 1);
 
     using last_value_type = any<4 * sizeof(int)>;
     using hw_entries = hw::hblank_effects::entries;

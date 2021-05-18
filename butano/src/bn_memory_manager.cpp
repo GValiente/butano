@@ -22,7 +22,7 @@ namespace
     static_assert(BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS > 0);
 
 
-    constexpr const int max_items = BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS;
+    constexpr int max_items = BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS;
 
 
     class item_type
@@ -54,12 +54,12 @@ namespace
 
     BN_DATA_EWRAM static_data data;
 
-    constexpr const auto lower_bound_comparator = [](const items_iterator& items_it, int size)
+    constexpr auto lower_bound_comparator = [](const items_iterator& items_it, int size)
     {
         return items_it->size < size;
     };
 
-    constexpr const auto upper_bound_comparator = [](int size, const items_iterator& items_it)
+    constexpr auto upper_bound_comparator = [](int size, const items_iterator& items_it)
     {
         return size < items_it->size;
     };

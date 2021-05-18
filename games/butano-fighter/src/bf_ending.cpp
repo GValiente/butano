@@ -17,10 +17,10 @@ namespace bf
 
 namespace
 {
-    constexpr const bn::fixed bg_y_inc_start = 30;
-    constexpr const bn::fixed bg_y_inc_end = 1;
-    constexpr const bn::fixed bg_y_inc_dec = 0.125;
-    constexpr const bn::fixed transparency_alpha_inc = 1 / ((bg_y_inc_start - bg_y_inc_end) / bg_y_inc_dec);
+    constexpr bn::fixed bg_y_inc_start = 30;
+    constexpr bn::fixed bg_y_inc_end = 1;
+    constexpr bn::fixed bg_y_inc_dec = 0.125;
+    constexpr bn::fixed transparency_alpha_inc = 1 / ((bg_y_inc_start - bg_y_inc_end) / bg_y_inc_dec);
 }
 
 ending::ending(bn::sprite_text_generator& text_generator, butano_background& butano_background) :

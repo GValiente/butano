@@ -19,8 +19,8 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int amplitude = 32;
-    constexpr const bool skip = false;
+    constexpr int amplitude = 32;
+    constexpr bool skip = false;
 
     [[nodiscard]] bn::sprite_ptr _create_sprite(int x, int graphics_index,
                                                  const bn::sprite_affine_mat_ptr& affine_mat)
@@ -32,7 +32,7 @@ namespace
         return builder.release_build();
     }
 
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hbe_attributes = []{
+    constexpr bn::array<bn::affine_mat_attributes, bn::display::height()> _hbe_attributes = []{
         bn::affine_mat_attributes base_attributes;
         base_attributes.set_scale(0.001);
 

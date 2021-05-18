@@ -152,9 +152,9 @@ namespace
             int max_id_width = 0;
             int max_ticks_width = 0;
 
-            constexpr const int margin = 8;
-            constexpr const int index_margin = 4;
-            constexpr const int max_visible_entries = 8;
+            const int margin = 8;
+            const int index_margin = 4;
+            const int max_visible_entries = 8;
             int current_index = 0;
             int init_x;
             int init_y;

@@ -20,7 +20,7 @@ namespace
 {
     void cpu_usage_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -58,7 +58,7 @@ namespace
 
     void sleep_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: sleep",
             "B: wake up",
             "",
@@ -86,7 +86,7 @@ namespace
 
     [[noreturn]] void reset_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: reset",
         };
 

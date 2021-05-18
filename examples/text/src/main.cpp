@@ -24,8 +24,8 @@
 
 namespace
 {
-    constexpr const bn::fixed text_y_inc = 14;
-    constexpr const bn::fixed text_y_limit = (bn::display::height() / 2) - text_y_inc;
+    constexpr bn::fixed text_y_inc = 14;
+    constexpr bn::fixed text_y_limit = (bn::display::height() / 2) - text_y_inc;
 
     void text_scene()
     {

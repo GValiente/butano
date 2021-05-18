@@ -12,7 +12,7 @@
 
 namespace bn::hw::bgs
 {
-    constexpr const int affine_precision = 8;
+    constexpr int affine_precision = 8;
 
     using affine_attributes = BG_AFFINE;
 

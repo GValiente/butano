@@ -25,7 +25,7 @@ namespace bn::hw::sprite_affine_mats
 
     inline void setup(handle& affine_mat)
     {
-        constexpr const affine_mat_attributes default_attributes;
+        constexpr affine_mat_attributes default_attributes;
         affine_mat.pa = int16_t(default_attributes.pa_register_value());
         affine_mat.pb = int16_t(default_attributes.pb_register_value());
         affine_mat.pc = int16_t(default_attributes.pc_register_value());

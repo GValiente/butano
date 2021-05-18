@@ -34,12 +34,12 @@ namespace bf
 
 namespace
 {
-    constexpr const bn::fixed left_text_sprites_x = -70;
-    constexpr const bn::fixed right_text_sprites_x = 60;
-    constexpr const int blending_frames = 30;
-    constexpr const int left_move_x = blending_frames;
-    constexpr const int right_move_x = -blending_frames;
-    constexpr const int pages = 5;
+    constexpr bn::fixed left_text_sprites_x = -70;
+    constexpr bn::fixed right_text_sprites_x = 60;
+    constexpr int blending_frames = 30;
+    constexpr int left_move_x = blending_frames;
+    constexpr int right_move_x = -blending_frames;
+    constexpr int pages = 5;
 
     void _enable_blending(bn::ivector<bn::sprite_ptr>& sprites)
     {

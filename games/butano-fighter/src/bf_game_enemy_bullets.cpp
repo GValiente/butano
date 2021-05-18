@@ -18,7 +18,7 @@ namespace bf::game
 
 namespace
 {
-    constexpr const bn::fixed_size dimensions[3] = {
+    constexpr bn::fixed_size dimensions[3] = {
         bn::fixed_size(8, 8),
         bn::fixed_size(14, 14),
         bn::fixed_size(28, 28)

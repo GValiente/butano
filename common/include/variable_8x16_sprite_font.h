@@ -9,11 +9,11 @@
 #include "bn_sprite_font.h"
 #include "bn_sprite_items_variable_8x16_font.h"
 
-constexpr const bn::string_view variable_8x16_sprite_font_utf8_characters[] = {
+constexpr bn::string_view variable_8x16_sprite_font_utf8_characters[] = {
     "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
 };
 
-constexpr const int8_t variable_8x16_sprite_font_character_widths[] = {
+constexpr int8_t variable_8x16_sprite_font_character_widths[] = {
     6,  // 32
     4,  // 33 !
     7,  // 34 "
@@ -127,7 +127,7 @@ constexpr const int8_t variable_8x16_sprite_font_character_widths[] = {
     7,  // ¿
 };
 
-constexpr const bn::sprite_font variable_8x16_sprite_font(
+constexpr bn::sprite_font variable_8x16_sprite_font(
         bn::sprite_items::variable_8x16_font, variable_8x16_sprite_font_utf8_characters,
         variable_8x16_sprite_font_character_widths);
 

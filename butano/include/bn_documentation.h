@@ -1590,6 +1590,7 @@
  * * bn::fixed_t::floor_integer and bn::fixed_t::ceil_integer added.
  * * bn::keypad::any_held, bn::keypad::any_pressed and bn::keypad::any_released added.
  * * bn::type_id marked as `constexpr`.
+ * * `constexpr const` replaced with `constexpr` where it makes sense.
  *
  *
  * @section changelog_6_12_0 6.12.0

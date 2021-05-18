@@ -14,8 +14,8 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int wait_frames = 180;
-    constexpr const int move_y = -wait_frames / 4;
+    constexpr int wait_frames = 180;
+    constexpr int move_y = -wait_frames / 4;
 
     [[nodiscard]] bn::sprite_move_to_action _create_move_action(const bn::fixed_point& position, int graphics_index,
                                                                  const bn::camera_ptr& camera)

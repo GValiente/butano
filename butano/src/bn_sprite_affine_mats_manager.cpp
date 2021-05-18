@@ -18,7 +18,7 @@ namespace bn::sprite_affine_mats_manager
 
 namespace
 {
-    constexpr const int max_items = hw::sprite_affine_mats::count();
+    constexpr int max_items = hw::sprite_affine_mats::count();
 
     static_assert(max_items <= numeric_limits<int8_t>::max());
 

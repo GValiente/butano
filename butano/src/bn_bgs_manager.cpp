@@ -1374,7 +1374,7 @@ void fill_hblank_effect_regular_positions(int base_position, const fixed* positi
 
 void fill_hblank_effect_pivot_horizontal_positions(id_type id, const fixed* positions_ptr, unsigned* dest_ptr)
 {
-    constexpr const int right_shift = fixed::precision() - hw::bgs::affine_precision;
+    constexpr int right_shift = fixed::precision() - hw::bgs::affine_precision;
 
     auto item = static_cast<item_type*>(id);
     int base_dx = item->affine_mat_attributes.dx_register_value();
@@ -1391,7 +1391,7 @@ void fill_hblank_effect_pivot_horizontal_positions(id_type id, const fixed* posi
 
 void fill_hblank_effect_pivot_vertical_positions(id_type id, const fixed* positions_ptr, unsigned* dest_ptr)
 {
-    constexpr const int right_shift = fixed::precision() - hw::bgs::affine_precision;
+    constexpr int right_shift = fixed::precision() - hw::bgs::affine_precision;
 
     auto item = static_cast<item_type*>(id);
     int base_dy = item->affine_mat_attributes.dy_register_value();

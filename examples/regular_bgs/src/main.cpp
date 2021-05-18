@@ -30,7 +30,7 @@ namespace
 {
     void regular_bgs_visibility_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: hide/show BG",
             "",
             "START: go to next scene",
@@ -54,7 +54,7 @@ namespace
 
     void regular_bgs_visibility_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -73,7 +73,7 @@ namespace
 
     void regular_bgs_position_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: move BG",
             "",
             "START: go to next scene",
@@ -110,7 +110,7 @@ namespace
 
     void regular_bgs_position_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -130,7 +130,7 @@ namespace
 
     void regular_bgs_position_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -177,7 +177,7 @@ namespace
 
     void regular_bgs_priority_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease red BG priority",
             "RIGHT: increase red BG priority",
             "",
@@ -221,7 +221,7 @@ namespace
 
     void regular_bgs_z_order_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease red BG Z order",
             "RIGHT: increase red BG Z order",
             "",
@@ -265,7 +265,7 @@ namespace
 
     void regular_bgs_put_above_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: put blue BG above red BG",
             "A: put yellow BG above red BG",
             "L: put green BG above red BG",
@@ -310,7 +310,7 @@ namespace
 
     void regular_bgs_attributes_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: copy blue attributes to red",
             "A: copy yellow attributes to red",
             "L: copy green attributes to red",
@@ -356,7 +356,7 @@ namespace
 
     void regular_bgs_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -395,7 +395,7 @@ namespace
 
     void regular_bg_builder_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

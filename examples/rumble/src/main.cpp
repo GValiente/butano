@@ -19,7 +19,7 @@ int main()
     bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
-    constexpr const bn::string_view info_text_lines[] = {
+    constexpr bn::string_view info_text_lines[] = {
         "A: hold to rumble",
     };
 

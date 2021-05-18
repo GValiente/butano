@@ -11,8 +11,8 @@
 
 namespace
 {
-    constexpr const bn::fixed y_inc = 14;
-    constexpr const bn::fixed start_y = (-bn::display::height() / 2) + y_inc + 1;
+    constexpr bn::fixed y_inc = 14;
+    constexpr bn::fixed start_y = (-bn::display::height() / 2) + y_inc + 1;
 }
 
 info::info(const bn::span<const bn::string_view>& text_lines, bn::sprite_text_generator& text_generator) :

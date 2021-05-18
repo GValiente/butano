@@ -26,15 +26,15 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int jelly_x = 31;
-    constexpr const int jelly_damage_frames = 60;
-    constexpr const int vibration_frames = 10;
+    constexpr int jelly_x = 31;
+    constexpr int jelly_damage_frames = 60;
+    constexpr int vibration_frames = 10;
 
-    constexpr const int state_0_1_life = 190;   // 13 seconds
-    constexpr const int state_2_life = 100;     // 7 seconds
-    constexpr const int state_3_4_life = 190;   // 30 seconds
-    constexpr const int state_4_5_life = 190;   // 13 seconds
-    constexpr const int total_life = state_0_1_life + state_2_life + state_3_4_life + state_4_5_life;
+    constexpr int state_0_1_life = 190;   // 13 seconds
+    constexpr int state_2_life = 100;     // 7 seconds
+    constexpr int state_3_4_life = 190;   // 30 seconds
+    constexpr int state_4_5_life = 190;   // 13 seconds
+    constexpr int total_life = state_0_1_life + state_2_life + state_3_4_life + state_4_5_life;
 
     [[nodiscard]] bn::fixed _fix_rotation_angle(bn::fixed rotation_angle)
     {

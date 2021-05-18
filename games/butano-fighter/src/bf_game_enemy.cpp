@@ -20,7 +20,7 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int damage_frames = 12;
+    constexpr int damage_frames = 12;
 
     [[nodiscard]] bn::sprite_ptr _create_sprite(const enemy_event& event, const bn::camera_ptr& camera)
     {

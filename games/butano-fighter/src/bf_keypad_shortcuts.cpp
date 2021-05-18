@@ -19,7 +19,7 @@ namespace bf
 
 namespace
 {
-    constexpr const bn::fixed max_brightness(0.4);
+    constexpr bn::fixed max_brightness(0.4);
 
     [[nodiscard]] bn::sprite_ptr _create_brightness_sprite()
     {

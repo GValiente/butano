@@ -103,8 +103,8 @@ namespace
     }
 
 
-    constexpr const int max_items = BN_CFG_BG_BLOCKS_MAX_ITEMS;
-    constexpr const int max_list_items = max_items + 1;
+    constexpr int max_items = BN_CFG_BG_BLOCKS_MAX_ITEMS;
+    constexpr int max_list_items = max_items + 1;
 
 
     enum class status_type

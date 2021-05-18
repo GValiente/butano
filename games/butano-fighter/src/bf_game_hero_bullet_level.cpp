@@ -14,19 +14,19 @@ namespace bf::game
 namespace
 {
     // 20 frames per bullet
-    constexpr const hero_bullet_event _level0_events[] = {
+    constexpr hero_bullet_event _level0_events[] = {
         hero_bullet_event(direction_vector(0,       -1,     2.5),   1,  0,  true),
     };
 
     // 13 frames per bullet
-    constexpr const hero_bullet_event _level1_events[] = {
+    constexpr hero_bullet_event _level1_events[] = {
         hero_bullet_event(direction_vector(0,       -1,     2.5),   1,  1,  true),
         hero_bullet_event(direction_vector(-0.075,  -1,     2.5),   11, 0,  true),
         hero_bullet_event(direction_vector(0.075,   -1,     2.5),   31, 0,  true),
     };
 
     // 10 frames per bullet
-    constexpr const hero_bullet_event _level2_events[] = {
+    constexpr hero_bullet_event _level2_events[] = {
         hero_bullet_event(direction_vector(0,       -1,     1.75),  1,  2,  true),
         hero_bullet_event(direction_vector(-0.085,  -1,     2.5),   11, 0,  false),
         hero_bullet_event(direction_vector(0.05,    -1,     2.5),   21, 1,  true),
@@ -39,7 +39,7 @@ namespace
     };
 
     // 8 frames per bullet
-    constexpr const hero_bullet_event _level3_events[] = {
+    constexpr hero_bullet_event _level3_events[] = {
         hero_bullet_event(direction_vector(-0.025,  -1,     1.75),  1,  2,  true),
         hero_bullet_event(direction_vector(-0.1,    -1,     2.5),   9,  0,  false),
         hero_bullet_event(direction_vector(0.075,   -1,     2.5),   17, 1,  false),
@@ -54,7 +54,7 @@ namespace
     };
 
     // 7 frames per bullet
-    constexpr const hero_bullet_event _level4_events[] = {
+    constexpr hero_bullet_event _level4_events[] = {
         hero_bullet_event(direction_vector(-0.05,   -1,     1.75),  1,  2,  false),
         hero_bullet_event(direction_vector(-0.115,  -1,     2.5),   8,  0,  false),
         hero_bullet_event(direction_vector(0.085,   -1,     2.5),   15, 1,  false),
@@ -71,7 +71,7 @@ namespace
     };
 
     // 6 frames per bullet
-    constexpr const hero_bullet_event _level5_events[] = {
+    constexpr hero_bullet_event _level5_events[] = {
         hero_bullet_event(direction_vector(-0.05,   -1,     1.75),  1,  2,  false),
         hero_bullet_event(direction_vector(-0.13,   -1,     2.5),   7,  0,  false),
         hero_bullet_event(direction_vector(0.115,   -1,     2.5),   13, 5,  true),
@@ -92,7 +92,7 @@ namespace
     };
 
     // 5 frames per bullet
-    constexpr const hero_bullet_event _level6_events[] = {
+    constexpr hero_bullet_event _level6_events[] = {
         hero_bullet_event(direction_vector(-0.05,   -1,     1.75),  1,  2,  false),
         hero_bullet_event(direction_vector(-0.145,  -1,     2.5),   6,  0,  false),
         hero_bullet_event(direction_vector(0.13,    -1,     2.5),   11, 5,  true),
@@ -117,7 +117,7 @@ namespace
     };
 
     // 4 frames per bullet
-    constexpr const hero_bullet_event _level7_events[] = {
+    constexpr hero_bullet_event _level7_events[] = {
         hero_bullet_event(direction_vector(0,       -1,     2.75),  1,  7,  true),
         hero_bullet_event(direction_vector(-0.075,  -1,     1.75),  5,  2,  false),
         hero_bullet_event(direction_vector(-0.16,   -1,     2.5),   9,  0,  false),
@@ -144,7 +144,7 @@ namespace
     };
 
     // 3 frames per bullet
-    constexpr const hero_bullet_event _level8_events[] = {
+    constexpr hero_bullet_event _level8_events[] = {
         hero_bullet_event(direction_vector(0.025,   -1,     2.75),  1,  7,  true),
         hero_bullet_event(direction_vector(-0.1,    -1,     1.75),  4,  2,  false),
         hero_bullet_event(direction_vector(-0.175,  -1,     2.5),   7,  0,  false),
@@ -172,7 +172,7 @@ namespace
         hero_bullet_event(direction_vector(0.145,   -1,     3),     70, 6,  false),
     };
 
-    constexpr const hero_bullet_level _levels[] = {
+    constexpr hero_bullet_level _levels[] = {
         hero_bullet_level(_level0_events,   bn::fixed_size(9, 9),      bn::sound_items::gun_5,            4,
                 bn::color(31, 28, 5),  20,     1),
         hero_bullet_level(_level1_events,   bn::fixed_size(16, 16),    bn::sound_items::gun_5,            250,

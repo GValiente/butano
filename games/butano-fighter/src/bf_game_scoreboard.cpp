@@ -20,12 +20,12 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int level_text_x = 19 - (bn::display::width() / 2);
-    constexpr const int level_text_y = (bn::display::height() / 2) - 12;
-    constexpr const int experience_bar_x = (bn::display::width() / 2) - 22;
-    constexpr const int experience_bar_y = (bn::display::height() / 2) - 16;
-    constexpr const int experience_text_x = experience_bar_x - 8;
-    constexpr const int experience_text_y = (bn::display::height() / 2) - 32;
+    constexpr int level_text_x = 19 - (bn::display::width() / 2);
+    constexpr int level_text_y = (bn::display::height() / 2) - 12;
+    constexpr int experience_bar_x = (bn::display::width() / 2) - 22;
+    constexpr int experience_bar_y = (bn::display::height() / 2) - 16;
+    constexpr int experience_text_x = experience_bar_x - 8;
+    constexpr int experience_text_y = (bn::display::height() / 2) - 32;
 
     void _set_visible(bool visible, bn::ivector<bn::sprite_ptr>& sprites)
     {

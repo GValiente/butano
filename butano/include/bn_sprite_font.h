@@ -39,7 +39,7 @@ class sprite_font
 {
 
 public:
-    static constexpr const int minimum_graphics = 94; //!< Minimum number of sprite tile sets that must contain a sprite_tiles_item of a sprite_font.
+    static constexpr int minimum_graphics = 94; //!< Minimum number of sprite tile sets that must contain a sprite_tiles_item of a sprite_font.
 
     /**
      * @brief Constructor.

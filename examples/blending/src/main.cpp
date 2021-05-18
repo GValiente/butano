@@ -26,7 +26,7 @@ namespace
     void transparency_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                             bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease transparency alpha",
             "RIGHT: increase transparency alpha",
             "",
@@ -63,7 +63,7 @@ namespace
     void intensity_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                          bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease intensity alpha",
             "RIGHT: increase intensity alpha",
             "",
@@ -100,7 +100,7 @@ namespace
     void fade_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                     bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease fade alpha",
             "RIGHT: increase fade alpha",
             "A: toggle fade color",
@@ -151,7 +151,7 @@ namespace
     void transparency_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                                       bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -175,7 +175,7 @@ namespace
     void intensity_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                                  bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -199,7 +199,7 @@ namespace
     void fade_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                             bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -223,7 +223,7 @@ namespace
     void transparency_hbe_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                                 bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -254,7 +254,7 @@ namespace
     void fade_hbe_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                         bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

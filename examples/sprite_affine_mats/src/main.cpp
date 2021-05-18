@@ -28,7 +28,7 @@ namespace
     void sprite_affine_mats_rotation_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                            bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease rotation angle",
             "RIGHT: increase rotation angle",
             "",
@@ -62,7 +62,7 @@ namespace
     void sprite_affine_mats_rotation_actions_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                                    bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -83,7 +83,7 @@ namespace
     void sprite_affine_mats_scale_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                         bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease horizontal scale",
             "RIGHT: increase horizontal scale",
             "DOWN: decrease vertical scale",
@@ -130,7 +130,7 @@ namespace
     void sprite_affine_mats_scale_actions_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                                 bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -153,7 +153,7 @@ namespace
     void sprite_affine_mats_shear_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                         bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease horizontal shear",
             "RIGHT: increase horizontal shear",
             "DOWN: decrease vertical shear",
@@ -200,7 +200,7 @@ namespace
     void sprite_affine_mats_shear_actions_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                                 bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -223,7 +223,7 @@ namespace
     void sprite_affine_mats_flip_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                        bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: disable horizontal flip",
             "RIGHT: enable horizontal flip",
             "DOWN: disable vertical flip",
@@ -267,7 +267,7 @@ namespace
     void sprite_affine_mats_flip_actions_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                                bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -288,7 +288,7 @@ namespace
     void sprite_affine_mats_attributes_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                              bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: change scale",
             "L: decrease rotation angle",
             "R: increase rotation angle",
@@ -347,7 +347,7 @@ namespace
     void sprite_affine_mats_attributes_hbe_scene(bn::sprite_affine_mat_ptr& affine_mat,
                                                  bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

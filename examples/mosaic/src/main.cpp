@@ -25,7 +25,7 @@ namespace
 {
     void sprites_mosaic_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease horizontal stretch",
             "RIGHT: increase horizontal stretch",
             "DOWN: decrease vertical stretch",
@@ -73,7 +73,7 @@ namespace
 
     void bgs_mosaic_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease horizontal stretch",
             "RIGHT: increase horizontal stretch",
             "DOWN: decrease vertical stretch",
@@ -121,7 +121,7 @@ namespace
 
     void sprites_mosaic_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -144,7 +144,7 @@ namespace
 
     void bgs_mosaic_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -167,7 +167,7 @@ namespace
 
     void mosaic_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

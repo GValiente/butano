@@ -23,7 +23,7 @@
 
 namespace
 {
-    constexpr const bn::string_view info_text_lines[] = {
+    constexpr bn::string_view info_text_lines[] = {
         "A: choose vertex to move",
         "PAD: move vertex",
     };

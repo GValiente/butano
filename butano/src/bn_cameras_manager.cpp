@@ -19,7 +19,7 @@ namespace bn::cameras_manager
 
 namespace
 {
-    constexpr const int max_items = BN_CFG_CAMERA_MAX_ITEMS;
+    constexpr int max_items = BN_CFG_CAMERA_MAX_ITEMS;
 
     static_assert(max_items > 0 && max_items <= numeric_limits<int8_t>::max());
 

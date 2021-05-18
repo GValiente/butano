@@ -25,10 +25,10 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int open_frames = 50;
-    constexpr const int close_frames = 130;
+    constexpr int open_frames = 50;
+    constexpr int close_frames = 130;
 
-    constexpr const bn::array<bn::fixed, bn::display::height()> wave_hbe_deltas = []{
+    constexpr bn::array<bn::fixed, bn::display::height()> wave_hbe_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         wave_generator().generate(result);
         return result;

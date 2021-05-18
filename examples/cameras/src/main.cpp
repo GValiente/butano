@@ -23,7 +23,7 @@ namespace
 {
     void camera_scene(bn::camera_ptr& camera, bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: move camera",
             "",
             "START: go to next scene",
@@ -60,7 +60,7 @@ namespace
 
     void camera_actions_scene(bn::camera_ptr& camera, bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

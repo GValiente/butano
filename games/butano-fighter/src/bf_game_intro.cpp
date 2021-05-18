@@ -19,11 +19,11 @@ namespace
 {
     constexpr bool skip = false;
 
-    constexpr const int wait_1_frames = 30;
-    constexpr const int scale_frames = 40;
-    constexpr const int wait_2_frames = 120;
-    constexpr const int wait_3_frames = 40;
-    constexpr const int background_move_frames = wait_2_frames + wait_3_frames + (scale_frames * 2);
+    constexpr int wait_1_frames = 30;
+    constexpr int scale_frames = 40;
+    constexpr int wait_2_frames = 120;
+    constexpr int wait_3_frames = 40;
+    constexpr int background_move_frames = wait_2_frames + wait_3_frames + (scale_frames * 2);
 
     bn::vector<bn::sprite_ptr, 2> _create_background_sprites(const stage& stage)
     {

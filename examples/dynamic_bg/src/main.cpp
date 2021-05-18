@@ -66,7 +66,7 @@ int main()
 
     bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
 
-    constexpr const bn::string_view info_text_lines[] = {
+    constexpr bn::string_view info_text_lines[] = {
         "PAD: move cursor",
         "",
         "START: reset BG",

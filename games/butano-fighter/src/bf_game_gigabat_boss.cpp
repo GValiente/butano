@@ -23,13 +23,13 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int state_0_1_life = 350;   // 16 seconds
-    constexpr const int state_2_life = 440;     // 24 seconds
-    constexpr const int state_3_4_life = 350;   // 20 seconds
-    constexpr const int total_life = state_0_1_life + state_2_life + state_3_4_life;
+    constexpr int state_0_1_life = 350;   // 16 seconds
+    constexpr int state_2_life = 440;     // 24 seconds
+    constexpr int state_3_4_life = 350;   // 20 seconds
+    constexpr int total_life = state_0_1_life + state_2_life + state_3_4_life;
 
-    constexpr const int mouth_y = 10;
-    constexpr const bn::fixed rotate_speed = 0.35;
+    constexpr int mouth_y = 10;
+    constexpr bn::fixed rotate_speed = 0.35;
 
     [[nodiscard]] bn::sprite_animate_action<5> _create_mini_explosion(bn::fixed x, bn::fixed y,
                                                                        const bn::camera_ptr& camera)

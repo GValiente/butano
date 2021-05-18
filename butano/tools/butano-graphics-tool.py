@@ -218,7 +218,7 @@ class SpriteItem:
             header_file.write('\n')
             header_file.write('namespace bn::sprite_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const sprite_item ' + name + '(' +
+            header_file.write('    constexpr sprite_item ' + name + '(' +
                               'sprite_shape_size(sprite_shape::' + self.__shape + ', ' +
                               'sprite_size::' + self.__size + '), ' + '\n            ' +
                               'sprite_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
@@ -358,12 +358,12 @@ class SpriteTilesItem:
             header_file.write('\n')
             header_file.write('namespace bn::sprite_tiles_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const sprite_tiles_item ' + name + '(span<const tile>(' +
+            header_file.write('    constexpr sprite_tiles_item ' + name + '(span<const tile>(' +
                               name + '_bn_graphicsTiles, ' + str(tiles_count) + '), ' + '\n            ' +
                               bpp_mode_label + ', ' + compression_label(compression) + ', ' +
                               str(self.__graphics) + ');' + '\n')
             header_file.write('\n')
-            header_file.write('    constexpr const sprite_shape_size ' + name +
+            header_file.write('    constexpr sprite_shape_size ' + name +
                               '_shape_size(sprite_shape::' + self.__shape + ', ' +
                               'sprite_size::' + self.__size + ');' + '\n')
             header_file.write('}' + '\n')
@@ -465,7 +465,7 @@ class SpritePaletteItem:
             header_file.write('\n')
             header_file.write('namespace bn::sprite_palette_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const sprite_palette_item ' + name + '(' +
+            header_file.write('    constexpr sprite_palette_item ' + name + '(' +
                               'span<const color>(' + name + '_bn_graphicsPal, ' +
                               str(self.__colors_count) + '), ' + '\n            ' +
                               bpp_mode_label + ', ' + compression_label(compression) + ');' + '\n')
@@ -673,7 +673,7 @@ class RegularBgItem:
             header_file.write('\n')
             header_file.write('namespace bn::regular_bg_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const regular_bg_item ' + name + '(' + '\n            ' +
+            header_file.write('    constexpr regular_bg_item ' + name + '(' + '\n            ' +
                               'regular_bg_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
                               str(tiles_count) + '), ' + bpp_mode_label + ', ' + compression_label(tiles_compression) +
                               '), ' + '\n            ' +
@@ -897,7 +897,7 @@ class AffineBgItem:
             header_file.write('\n')
             header_file.write('namespace bn::affine_bg_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const affine_bg_item ' + name + '(' + '\n            ' +
+            header_file.write('    constexpr affine_bg_item ' + name + '(' + '\n            ' +
                               'affine_bg_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
                               str(tiles_count * 2) + '), ' + compression_label(tiles_compression) +
                               '), ' + '\n            ' +
@@ -1028,7 +1028,7 @@ class BgPaletteItem:
             header_file.write('\n')
             header_file.write('namespace bn::bg_palette_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr const bg_palette_item ' + name + '(' +
+            header_file.write('    constexpr bg_palette_item ' + name + '(' +
                               'span<const color>(' + name + '_bn_graphicsPal, ' +
                               str(self.__colors_count) + '), ' + '\n            ' +
                               bpp_mode_label + ', ' + compression_label(compression) + ');' + '\n')

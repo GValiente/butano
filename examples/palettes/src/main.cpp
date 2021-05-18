@@ -29,7 +29,7 @@ namespace
 {
     void palette_swap_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: swap palette",
             "",
             "START: go to next scene",
@@ -64,7 +64,7 @@ namespace
 
     void inverted_palette_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: invert palette",
             "",
             "START: go to next scene",
@@ -90,7 +90,7 @@ namespace
 
     void inverted_palette_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -110,7 +110,7 @@ namespace
 
     void palette_grayscale_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease grayscale intensity",
             "RIGHT: increase grayscale intensity",
             "",
@@ -143,7 +143,7 @@ namespace
 
     void palette_grayscale_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -163,7 +163,7 @@ namespace
 
     void palette_fade_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease fade intensity",
             "RIGHT: increase fade intensity",
             "",
@@ -196,7 +196,7 @@ namespace
 
     void palette_fade_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -218,7 +218,7 @@ namespace
 
     void palette_rotate_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease colors shift",
             "RIGHT: increase colors shift",
             "",
@@ -251,7 +251,7 @@ namespace
 
     void palette_rotate_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -271,7 +271,7 @@ namespace
 
     void global_brightness_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease brightness",
             "RIGHT: increase brightness",
             "",
@@ -305,7 +305,7 @@ namespace
 
     void global_brightness_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -326,7 +326,7 @@ namespace
 
     void global_contrast_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease contrast",
             "RIGHT: increase contrast",
             "",
@@ -360,7 +360,7 @@ namespace
 
     void global_contrast_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -381,7 +381,7 @@ namespace
 
     void global_intensity_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease intensity",
             "RIGHT: increase intensity",
             "",
@@ -415,7 +415,7 @@ namespace
 
     void global_intensity_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -436,7 +436,7 @@ namespace
 
     void transparent_color_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -465,7 +465,7 @@ namespace
 
     void palette_color_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

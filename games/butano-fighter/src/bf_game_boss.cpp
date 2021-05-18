@@ -29,8 +29,8 @@ namespace bf::game
 
 namespace
 {
-    constexpr const int damage_frames = 12;
-    constexpr const int death_flash_frames = 50;
+    constexpr int damage_frames = 12;
+    constexpr int death_flash_frames = 50;
 }
 
 bn::unique_ptr<boss> boss::create(type type, const bn::fixed_point& hero_position,

@@ -35,7 +35,7 @@ public:
     }
 };
 
-constexpr const nullopt_t nullopt{0}; //!< Constant of type nullopt_t used to indicate an optional type with uninitialized state.
+constexpr nullopt_t nullopt{0}; //!< Constant of type nullopt_t used to indicate an optional type with uninitialized state.
 
 template<typename Type>
 class optional

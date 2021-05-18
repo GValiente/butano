@@ -17,9 +17,9 @@ namespace bf
 
 namespace
 {
-    constexpr const int show_hide_frames = 10;
+    constexpr int show_hide_frames = 10;
 
-    constexpr const bn::array<bn::color, bn::display::height()> palette_hbe_colors = []{
+    constexpr bn::array<bn::color, bn::display::height()> palette_hbe_colors = []{
         bn::array<bn::color, bn::display::height()> result;
         bn::color color(14, 0, 0);
         int redInc = 16;

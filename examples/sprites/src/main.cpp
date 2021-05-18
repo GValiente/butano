@@ -43,7 +43,7 @@ namespace
 {
     void sprites_visibility_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: hide/show sprite",
             "",
             "START: go to next scene",
@@ -67,7 +67,7 @@ namespace
 
     void sprites_visibility_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -86,7 +86,7 @@ namespace
 
     void sprites_position_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: move sprite",
             "",
             "START: go to next scene",
@@ -123,7 +123,7 @@ namespace
 
     void sprites_position_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -143,7 +143,7 @@ namespace
 
     void sprites_position_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -191,7 +191,7 @@ namespace
 
     void sprites_animation_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: change sprite's direction",
             "",
             "START: go to next scene",
@@ -228,7 +228,7 @@ namespace
 
     void sprites_animation_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "PAD: change sprite's direction",
             "",
             "START: go to next scene",
@@ -272,7 +272,7 @@ namespace
 
     void sprites_rotation_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease rotation angle",
             "RIGHT: increase rotation angle",
             "",
@@ -304,7 +304,7 @@ namespace
 
     void sprites_rotation_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -323,7 +323,7 @@ namespace
 
     void sprites_scale_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease horizontal scale",
             "RIGHT: increase horizontal scale",
             "DOWN: decrease vertical scale",
@@ -368,7 +368,7 @@ namespace
 
     void sprites_scale_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -389,7 +389,7 @@ namespace
 
     void sprites_shear_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease horizontal shear",
             "RIGHT: increase horizontal shear",
             "DOWN: decrease vertical shear",
@@ -434,7 +434,7 @@ namespace
 
     void sprites_shear_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -455,7 +455,7 @@ namespace
 
     void sprites_flip_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: disable horizontal flip",
             "RIGHT: enable horizontal flip",
             "DOWN: disable vertical flip",
@@ -496,7 +496,7 @@ namespace
 
     void sprites_flip_actions_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -515,7 +515,7 @@ namespace
 
     void sprites_double_size_mode_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "A: toggle double size mode",
             "B: enable auto double size mode",
             "",
@@ -554,7 +554,7 @@ namespace
 
     void sprites_bg_priority_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease caveman BG priority",
             "RIGHT: increase caveman BG priority",
             "",
@@ -599,7 +599,7 @@ namespace
 
     void sprites_z_order_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease red sprite Z order",
             "RIGHT: increase red sprite Z order",
             "",
@@ -640,7 +640,7 @@ namespace
 
     void sprites_put_above_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: put blue sprite above red sprite",
             "A: put yellow sprite above red sprite",
             "L: put green sprite above red sprite",
@@ -685,7 +685,7 @@ namespace
 
     void sprites_first_attributes_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: copy blue attributes to red",
             "A: copy yellow attributes to red",
             "L: copy green attributes to red",
@@ -737,7 +737,7 @@ namespace
 
     void sprites_first_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -784,7 +784,7 @@ namespace
 
     void sprites_regular_second_attributes_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: copy blue attributes to red",
             "A: copy yellow attributes to red",
             "L: copy green attributes to red",
@@ -832,7 +832,7 @@ namespace
 
     void sprites_regular_second_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -871,7 +871,7 @@ namespace
 
     void sprites_affine_second_attributes_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: copy blue attributes to red",
             "A: copy yellow attributes to red",
             "L: copy green attributes to red",
@@ -922,7 +922,7 @@ namespace
 
     void sprites_affine_second_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -965,7 +965,7 @@ namespace
 
     void sprites_third_attributes_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "B: copy blue attributes to red",
             "A: copy yellow attributes to red",
             "L: copy green attributes to red",
@@ -1011,7 +1011,7 @@ namespace
 
     void sprites_third_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
@@ -1052,7 +1052,7 @@ namespace
 
     void sprite_builder_scene(bn::sprite_text_generator& text_generator)
     {
-        constexpr const bn::string_view info_text_lines[] = {
+        constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 

@@ -44,9 +44,9 @@ namespace bf
 
 namespace
 {
-    constexpr const bn::fixed text_y_inc = 0.5;
-    constexpr const bn::fixed text_y_limit = (bn::display::height() + 16) / 2;
-    constexpr const int blending_frames = 90;
+    constexpr bn::fixed text_y_inc = 0.5;
+    constexpr bn::fixed text_y_limit = (bn::display::height() + 16) / 2;
+    constexpr int blending_frames = 90;
 
     struct background_sprite_item
     {
@@ -57,7 +57,7 @@ namespace
         int graphics_index_3;
     };
 
-    constexpr const bn::string_view text_items[] = {
+    constexpr bn::string_view text_items[] = {
         "BUTANO FIGHTER",
         "",
         "",
@@ -186,7 +186,7 @@ namespace
         "for details)",
     };
 
-    constexpr const background_sprite_item background_sprite_items[] = {
+    constexpr background_sprite_item background_sprite_items[] = {
         { &bn::sprite_items::stage_1_animals, 0, 1, 0, 1 },
         { &bn::sprite_items::stage_1_animals, 2, 3, 2, 3 },
         { &bn::sprite_items::stage_1_animals, 4, 5, 4, 5 },
@@ -251,7 +251,7 @@ namespace
         { &bn::sprite_items::stage_4_meteors_small, 2, 2, 2, 2 },
     };
 
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> _hbe_attributes = []{
+    constexpr bn::array<bn::affine_mat_attributes, bn::display::height()> _hbe_attributes = []{
         bn::array<bn::affine_mat_attributes, bn::display::height()> result;
 
         for(int index = 0; index < bn::display::height(); ++index)

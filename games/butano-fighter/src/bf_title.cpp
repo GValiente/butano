@@ -30,7 +30,7 @@ namespace bf
 
 namespace
 {
-    constexpr const bn::fixed _text_x = -28;
+    constexpr bn::fixed _text_x = -28;
 
     [[nodiscard]] bn::sprite_ptr _create_butano_up_sprite()
     {
@@ -76,7 +76,7 @@ namespace
         return result;
     }
 
-    constexpr const bn::array<bn::fixed, bn::display::height()> butano_character_hbe_deltas = []{
+    constexpr bn::array<bn::fixed, bn::display::height()> butano_character_hbe_deltas = []{
         bn::array<bn::fixed, bn::display::height()> result;
         int start = 64;
 
@@ -88,7 +88,7 @@ namespace
         return result;
     }();
 
-    constexpr const bn::array<bn::affine_mat_attributes, bn::display::height()> fighter_character_hbe_attributes = []{
+    constexpr bn::array<bn::affine_mat_attributes, bn::display::height()> fighter_character_hbe_attributes = []{
         bn::array<bn::affine_mat_attributes, bn::display::height()> result;
         int start = 90;
 

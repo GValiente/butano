@@ -51,9 +51,9 @@ namespace bn
 {
     // https://github.com/AntonioND/ugba/blob/master/libugba/source/fp_math.c
 
-    constexpr const int FP_PI = 0x8000;
-    constexpr const int FP_PI_2 = FP_PI / 2;
-    constexpr const int FP_2_PI = 2 * FP_PI;
+    constexpr int FP_PI = 0x8000;
+    constexpr int FP_PI_2 = FP_PI / 2;
+    constexpr int FP_2_PI = 2 * FP_PI;
 
     // First, use symmetry to clamp to -pi/2 to +pi/2 (-0x4000 to 0x4000)
 
@@ -67,10 +67,10 @@ namespace bn
 
     // Calculate result
 
-    constexpr const double pi = 3.1415926535897932384626433832795;
-    constexpr const auto A = int32_t(((2.0 * pi) * (1 << 24))); // 8.24
-    constexpr const auto B = int32_t((1 << 7) * (12.0 / pi - 1.0 - pi) * (1 << 24)); // 8.24
-    constexpr const auto C = int32_t((1 << 9) * 3.0 * (2.0 + pi - 16.0 / pi) * (1 << 24)); // 8.24
+    constexpr double pi = 3.1415926535897932384626433832795;
+    constexpr auto A = int32_t(((2.0 * pi) * (1 << 24))); // 8.24
+    constexpr auto B = int32_t((1 << 7) * (12.0 / pi - 1.0 - pi) * (1 << 24)); // 8.24
+    constexpr auto C = int32_t((1 << 9) * 3.0 * (2.0 + pi - 16.0 / pi) * (1 << 24)); // 8.24
 
     int64_t X2 = x * x; // 16.0 * 16.0 = 32.0
 
@@ -97,7 +97,7 @@ namespace bn
  *
  * @ingroup math
  */
-constexpr const array<int16_t, 2049> sin_lut = []{
+constexpr array<int16_t, 2049> sin_lut = []{
     array<int16_t, 2049> result;
     int lut_angle = 0;
 

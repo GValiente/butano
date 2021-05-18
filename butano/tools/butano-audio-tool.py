@@ -71,7 +71,7 @@ def write_output_file(items, include_guard, include_file, namespace, item_class,
             output_file.write('{' + '\n')
 
             for item in items:
-                output_file.write('    constexpr const ' + item_class + ' ' + item[0] + '(' + item[1] + ');' + '\n')
+                output_file.write('    constexpr ' + item_class + ' ' + item[0] + '(' + item[1] + ');' + '\n')
 
             output_file.write('}' + '\n')
             output_file.write('\n')

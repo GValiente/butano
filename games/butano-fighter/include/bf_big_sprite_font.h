@@ -11,11 +11,11 @@
 
 namespace bf
 {
-    constexpr const bn::string_view big_sprite_font_utf8_characters[] = {
+    constexpr bn::string_view big_sprite_font_utf8_characters[] = {
         "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
     };
 
-    constexpr const int8_t big_sprite_font_character_widths[] = {
+    constexpr int8_t big_sprite_font_character_widths[] = {
         6,  // 32
         4,  // 33 !
         7,  // 34 "
@@ -129,8 +129,8 @@ namespace bf
         7,  // ¿
     };
 
-    constexpr const bn::sprite_font big_sprite_font(bn::sprite_items::big_font, big_sprite_font_utf8_characters,
-                                                     big_sprite_font_character_widths);
+    constexpr bn::sprite_font big_sprite_font(bn::sprite_items::big_font, big_sprite_font_utf8_characters,
+                                              big_sprite_font_character_widths);
 }
 
 #endif

@@ -80,7 +80,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = false;
+        static constexpr bool can_fail = false;
 
         explicit fixed_width_no_space_between_characters_painter(int character_width) :
             _character_width(character_width)
@@ -118,7 +118,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = false;
+        static constexpr bool can_fail = false;
 
         fixed_width_space_between_characters_painter(int character_width, int space_between_characters) :
             _character_width(character_width),
@@ -158,7 +158,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = false;
+        static constexpr bool can_fail = false;
 
         explicit variable_width_no_space_between_characters_painter(const int8_t* character_widths) :
             _character_widths(character_widths)
@@ -196,7 +196,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = false;
+        static constexpr bool can_fail = false;
 
         variable_width_space_between_characters_painter(const int8_t* character_widths, int space_between_characters) :
             _character_widths(character_widths),
@@ -237,7 +237,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = allow_failure;
+        static constexpr bool can_fail = allow_failure;
 
         fixed_one_sprite_per_character_painter(
                 const sprite_text_generator& generator, sprite_palette_ptr&& palette,
@@ -333,7 +333,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = allow_failure;
+        static constexpr bool can_fail = allow_failure;
 
         variable_one_sprite_per_character_painter(
                 const sprite_text_generator& generator, sprite_palette_ptr&& palette, const fixed_point& position,
@@ -437,7 +437,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = allow_failure;
+        static constexpr bool can_fail = allow_failure;
 
         fixed_height_8_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette,
                                const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
@@ -496,9 +496,9 @@ namespace
         }
 
     private:
-        static constexpr const int _max_columns_per_sprite = 32;
-        static constexpr const int _tiles_per_character = character_width / 8;
-        static constexpr const int _max_characters_per_sprite = _max_columns_per_sprite / character_width;
+        static constexpr int _max_columns_per_sprite = 32;
+        static constexpr int _tiles_per_character = character_width / 8;
+        static constexpr int _max_characters_per_sprite = _max_columns_per_sprite / character_width;
 
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
@@ -530,7 +530,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = allow_failure;
+        static constexpr bool can_fail = allow_failure;
 
         variable_8x8_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette,
                              const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
@@ -596,8 +596,8 @@ namespace
         }
 
     private:
-        static constexpr const int _character_height = 8;
-        static constexpr const int _max_columns_per_sprite = 32;
+        static constexpr int _character_height = 8;
+        static constexpr int _max_columns_per_sprite = 32;
 
         const sprite_text_generator& _generator;
         const int8_t* _character_widths;
@@ -615,7 +615,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = allow_failure;
+        static constexpr bool can_fail = allow_failure;
 
         fixed_height_16_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette,
                                 const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
@@ -679,10 +679,10 @@ namespace
         }
 
     private:
-        static constexpr const int _max_columns_per_sprite = 32;
-        static constexpr const int _max_characters_per_sprite = _max_columns_per_sprite / character_width;
-        static constexpr const int _half_tiles = _max_columns_per_sprite / 8;
-        static constexpr const int _half_tiles_per_character = character_width / 8;
+        static constexpr int _max_columns_per_sprite = 32;
+        static constexpr int _max_characters_per_sprite = _max_columns_per_sprite / character_width;
+        static constexpr int _half_tiles = _max_columns_per_sprite / 8;
+        static constexpr int _half_tiles_per_character = character_width / 8;
 
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
@@ -718,7 +718,7 @@ namespace
     {
 
     public:
-        static constexpr const bool can_fail = allow_failure;
+        static constexpr bool can_fail = allow_failure;
 
         variable_8x16_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette,
                               const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
@@ -788,8 +788,8 @@ namespace
         }
 
     private:
-        static constexpr const int _character_height = 16;
-        static constexpr const int _max_columns_per_sprite = 32;
+        static constexpr int _character_height = 16;
+        static constexpr int _max_columns_per_sprite = 32;
 
         const sprite_text_generator& _generator;
         const int8_t* _character_widths;

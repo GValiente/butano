@@ -570,7 +570,7 @@ public:
 protected:
     /// @cond DO_NOT_DOCUMENT
 
-    static constexpr const int bits_per_element = 8;
+    static constexpr int bits_per_element = 8;
 
     [[nodiscard]] constexpr static bool _is_equal(const ibitset& a, const ibitset& b)
     {
@@ -588,8 +588,8 @@ protected:
     /// @endcond
 
 private:
-    static constexpr const element_t all_bits_set = numeric_limits<element_t>::max();
-    static constexpr const element_t all_bits_clear = 0;
+    static constexpr element_t all_bits_set = numeric_limits<element_t>::max();
+    static constexpr element_t all_bits_clear = 0;
 
     int _num_bits;
     int _num_elements;
@@ -624,7 +624,7 @@ class bitset : public ibitset
     static_assert(Size > 0);
 
 private:
-    static constexpr const int num_elements = (Size % bits_per_element == 0) ?
+    static constexpr int num_elements = (Size % bits_per_element == 0) ?
                 Size / bits_per_element :
                 Size / bits_per_element + 1;
 

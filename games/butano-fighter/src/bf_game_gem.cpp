@@ -15,8 +15,8 @@ namespace bf::game
 
 namespace
 {
-    constexpr const bn::fixed_size dimensions(15, 15);
-    constexpr const int flash_frames = 60;
+    constexpr bn::fixed_size dimensions(15, 15);
+    constexpr int flash_frames = 60;
 
     [[nodiscard]] bn::sprite_ptr _create_sprite(
         const bn::fixed_point& position, const bn::span<bn::sprite_tiles_ptr>& tiles,

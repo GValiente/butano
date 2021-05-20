@@ -1589,6 +1589,7 @@
  * * EWRAM wait states count can be specified with @ref BN_CFG_EWRAM_WAIT_STATE.
  * * bn::fixed_t::floor_integer and bn::fixed_t::ceil_integer added.
  * * bn::keypad::any_held, bn::keypad::any_pressed and bn::keypad::any_released added.
+ * * Unnecessary GPIO register writes avoided.
  * * bn::type_id marked as `constexpr`.
  * * `constexpr const` replaced with `constexpr` where it makes sense.
  *

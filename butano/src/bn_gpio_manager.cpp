@@ -37,8 +37,11 @@ bool rumble_enabled()
 
 void set_rumble_enabled(bool enabled)
 {
-    data.rumble_enabled = enabled;
-    data.commit_rumble = true;
+    if(data.rumble_enabled != enabled)
+    {
+        data.rumble_enabled = enabled;
+        data.commit_rumble = true;
+    }
 }
 
 void commit()

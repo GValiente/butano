@@ -103,7 +103,7 @@ public:
  * @ingroup regular_bg
  * @ingroup action
  */
-class bg_position_manager
+class regular_bg_position_manager
 {
 
 public:
@@ -132,7 +132,7 @@ public:
  * @ingroup action
  */
 class regular_bg_move_by_action :
-        public by_value_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
+        public by_value_template_action<regular_bg_ptr, fixed_point, regular_bg_position_manager>
 {
 
 public:
@@ -206,7 +206,8 @@ public:
  * @ingroup regular_bg
  * @ingroup action
  */
-class regular_bg_move_to_action : public to_value_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
+class regular_bg_move_to_action :
+        public to_value_template_action<regular_bg_ptr, fixed_point, regular_bg_position_manager>
 {
 
 public:
@@ -290,7 +291,8 @@ public:
  * @ingroup regular_bg
  * @ingroup action
  */
-class regular_bg_move_loop_action : public loop_value_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
+class regular_bg_move_loop_action :
+        public loop_value_template_action<regular_bg_ptr, fixed_point, regular_bg_position_manager>
 {
 
 public:
@@ -376,7 +378,7 @@ public:
  * @ingroup action
  */
 class regular_bg_move_toggle_action :
-        public toggle_value_template_action<regular_bg_ptr, fixed_point, bg_position_manager>
+        public toggle_value_template_action<regular_bg_ptr, fixed_point, regular_bg_position_manager>
 {
 
 public:

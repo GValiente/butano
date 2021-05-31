@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn::bg_position_manager class | Butano Docs</title>
+  <title>bn::regular_bg_position_manager class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,10 +47,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>bg_position_manager <span class="m-thin">class</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__actions_8h.html">&lt;bn_affine_bg_actions.h&gt;</a></div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>regular_bg_position_manager <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__regular__bg__actions_8h.html">&lt;bn_regular_bg_actions.h&gt;</a></div>
         </h1>
-        <p>Manages the position of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</p>
+        <p>Manages the position of a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</p>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -62,47 +62,19 @@
             </li>
           </ul>
         </div>
-<p>Manages the position of a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</p>
         <section id="pub-static-methods">
           <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
-            <dt id="a812b4c7a4b9ae65552ba8eb0936aefd6">
-              <span class="m-doc-wrap-bumper">static auto <a href="#a812b4c7a4b9ae65552ba8eb0936aefd6" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bg) -&gt; const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp;</span>
-            </dt>
-            <dd>Returns the position of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
-            <dt id="ae0b9ea3e5c46ecf12bc9f8081663cbb3">
-              <span class="m-doc-wrap-bumper">static void <a href="#ae0b9ea3e5c46ecf12bc9f8081663cbb3" class="m-doc-self">set</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
-              <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>&amp; bg)</span>
-            </dt>
-            <dd>Sets the position of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">static auto <a href="#a89caefa85a2117bacf06299362536f98" class="m-doc">get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg) -&gt; const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp;</span>
+            <dt id="af7ab03d2abcb496b7d0304a69cc92e00">
+              <span class="m-doc-wrap-bumper">static auto <a href="#af7ab03d2abcb496b7d0304a69cc92e00" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg) -&gt; const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp;</span>
             </dt>
             <dd>Returns the position of the given <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">static void <a href="#a00029f6566c2644e50d493092aa524aa" class="m-doc">set</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
+            <dt id="ac8f61875d0319adeb5ccd5b9f4d17a92">
+              <span class="m-doc-wrap-bumper">static void <a href="#ac8f61875d0319adeb5ccd5b9f4d17a92" class="m-doc-self">set</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
               <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg)</span>
             </dt>
             <dd>Sets the position of the given <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</dd>
           </dl>
-        </section>
-        <section>
-          <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a89caefa85a2117bacf06299362536f98"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">static const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; bn::<wbr />bg_position_manager::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a89caefa85a2117bacf06299362536f98" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__regular__bg__actions_8h.html">&lt;bn_regular_bg_actions.h&gt;</a></div>
-            </h3>
-            <p>Returns the position of the given <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</p>
-          </div></section>
-          <section class="m-doc-details" id="a00029f6566c2644e50d493092aa524aa"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">static void bn::<wbr />bg_position_manager::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a00029f6566c2644e50d493092aa524aa" class="m-doc-self">set</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position,
-              <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg)</span></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__regular__bg__actions_8h.html">&lt;bn_regular_bg_actions.h&gt;</a></div>
-            </h3>
-            <p>Sets the position of the given <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</p>
-          </div></section>
         </section>
       </div>
     </div>

@@ -103,7 +103,7 @@ public:
  * @ingroup affine_bg
  * @ingroup action
  */
-class bg_position_manager
+class affine_bg_position_manager
 {
 
 public:
@@ -132,7 +132,7 @@ public:
  * @ingroup action
  */
 class affine_bg_move_by_action :
-        public by_value_template_action<affine_bg_ptr, fixed_point, bg_position_manager>
+        public by_value_template_action<affine_bg_ptr, fixed_point, affine_bg_position_manager>
 {
 
 public:
@@ -206,7 +206,8 @@ public:
  * @ingroup affine_bg
  * @ingroup action
  */
-class affine_bg_move_to_action : public to_value_template_action<affine_bg_ptr, fixed_point, bg_position_manager>
+class affine_bg_move_to_action :
+        public to_value_template_action<affine_bg_ptr, fixed_point, affine_bg_position_manager>
 {
 
 public:
@@ -291,7 +292,7 @@ public:
  * @ingroup action
  */
 class affine_bg_move_loop_action :
-        public loop_value_template_action<affine_bg_ptr, fixed_point, bg_position_manager>
+        public loop_value_template_action<affine_bg_ptr, fixed_point, affine_bg_position_manager>
 {
 
 public:
@@ -377,7 +378,7 @@ public:
  * @ingroup action
  */
 class affine_bg_move_toggle_action :
-        public toggle_value_template_action<affine_bg_ptr, fixed_point, bg_position_manager>
+        public toggle_value_template_action<affine_bg_ptr, fixed_point, affine_bg_position_manager>
 {
 
 public:
@@ -2093,7 +2094,7 @@ public:
  * @ingroup affine_bg
  * @ingroup action
  */
-class bg_pivot_position_manager
+class affine_bg_pivot_position_manager
 {
 
 public:
@@ -2122,7 +2123,7 @@ public:
  * @ingroup action
  */
 class affine_bg_move_pivot_by_action :
-        public by_value_template_action<affine_bg_ptr, fixed_point, bg_pivot_position_manager>
+        public by_value_template_action<affine_bg_ptr, fixed_point, affine_bg_pivot_position_manager>
 {
 
 public:
@@ -2200,7 +2201,7 @@ public:
  * @ingroup action
  */
 class affine_bg_move_pivot_to_action :
-        public to_value_template_action<affine_bg_ptr, fixed_point, bg_pivot_position_manager>
+        public to_value_template_action<affine_bg_ptr, fixed_point, affine_bg_pivot_position_manager>
 {
 
 public:
@@ -2288,7 +2289,7 @@ public:
  * @ingroup action
  */
 class affine_bg_move_pivot_loop_action :
-        public loop_value_template_action<affine_bg_ptr, fixed_point, bg_pivot_position_manager>
+        public loop_value_template_action<affine_bg_ptr, fixed_point, affine_bg_pivot_position_manager>
 {
 
 public:
@@ -2376,7 +2377,7 @@ public:
  * @ingroup action
  */
 class affine_bg_move_pivot_toggle_action :
-        public toggle_value_template_action<affine_bg_ptr, fixed_point, bg_pivot_position_manager>
+        public toggle_value_template_action<affine_bg_ptr, fixed_point, affine_bg_pivot_position_manager>
 {
 
 public:

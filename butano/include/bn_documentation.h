@@ -1591,6 +1591,7 @@
  * * bn::keypad::any_held, bn::keypad::any_pressed and bn::keypad::any_released added.
  * * Unnecessary GPIO register writes avoided.
  * * bn::type_id marked as `constexpr`.
+ * * Background move actions fixed.
  * * `constexpr const` replaced with `constexpr` where it makes sense.
  *
  *

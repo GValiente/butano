@@ -1584,7 +1584,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_13_0 6.13.0 (next release)
+ * @section changelog_6_13_0 6.13.0
  *
  * * EWRAM wait states count can be specified with @ref BN_CFG_EWRAM_WAIT_STATE.
  * * bn::fixed_t::floor_integer and bn::fixed_t::ceil_integer added.

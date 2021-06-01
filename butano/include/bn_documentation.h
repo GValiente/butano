@@ -1584,6 +1584,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_13_1 6.13.1 (next release)
+ *
+ * bn::sprite_text_generator documentation fixed.
+ *
+ *
  * @section changelog_6_13_0 6.13.0
  *
  * * EWRAM wait states count can be specified with @ref BN_CFG_EWRAM_WAIT_STATE.

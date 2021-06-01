@@ -29,7 +29,7 @@ class fixed_point;
 /**
  * @brief Generates sprites containing text from a given sprite_font.
  *
- * Currently, it supports 8x8 and 8x16 characters of 16 colors (4 bits per pixel).
+ * Currently, it supports 4 bits per pixel (16 colors) fixed width AND variable width characters.
  *
  * Text can be printed in one sprite per character or multiple characters per sprite.
  *

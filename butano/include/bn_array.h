@@ -374,18 +374,54 @@ public:
     Type _data[Size]; //!< (Not so) internal data.
 };
 
-
-/**
- * @brief Creates a bn::array object from the given built-in array.
- *
- * @ingroup array
- */
-template<typename Type, int Size>
-constexpr array<remove_cv_t<Type>, Size> to_array(Type (&base_array)[Size])
-{
-    return array(base_array);
 }
 
+
+/// @cond DO_NOT_DOCUMENT
+
+namespace _bn
+{
+    template<typename Type, int Size, unsigned... Indexes>
+    constexpr bn::array<bn::remove_cv_t<Type>, Size>
+        to_array_impl(Type (&base_array)[Size], bn::index_sequence<Indexes...>)
+    {
+        return { { base_array[Indexes]...} };
+    }
+
+    template<typename Type, int Size, unsigned... Indexes>
+    constexpr bn::array<bn::remove_cv_t<Type>, Size>
+        to_array_impl(Type (&&base_array)[Size], bn::index_sequence<Indexes...>)
+    {
+        return { { bn::move(base_array[Indexes])... } };
+    }
+}
+
+/// @endcond
+
+
+namespace bn
+{
+    /**
+     * @brief Creates a bn::array object from the given built-in array.
+     *
+     * @ingroup array
+     */
+    template<typename Type, int Size>
+    constexpr array<remove_cv_t<Type>, Size> to_array(Type (&base_array)[Size])
+    {
+        return _bn::to_array_impl(base_array, make_index_sequence<unsigned(Size)>{});
+    }
+
+    /**
+     * @brief Creates a bn::array object from the given built-in array.
+     *
+     * @ingroup array
+     */
+    template<typename Type, int Size>
+    constexpr array<remove_cv_t<Type>, Size> to_array(Type (&&base_array)[Size])
+    {
+        return _bn::to_array_impl(move(base_array), make_index_sequence<unsigned(Size)>{});
+    }
 }
 
 #endif

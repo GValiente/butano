@@ -25,6 +25,9 @@ namespace bn
 
     using std::swap;
 
+    using std::index_sequence;
+    using std::make_index_sequence;
+
 
     /**
      * @brief Provides a way to store two heterogeneous objects as a single unit.

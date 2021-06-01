@@ -1584,7 +1584,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_13_1 6.13.1 (next release)
+ * @section changelog_6_13_1 6.13.1
  *
  * * bn::to_array fixed.
  * * bn::sprite_text_generator documentation fixed.

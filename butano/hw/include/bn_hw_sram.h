@@ -23,7 +23,7 @@ namespace bn::hw::sram
 
     inline void read(void* destination, int size, int offset)
     {
-        const uint8_t* source_ptr = reinterpret_cast<const uint8_t*>(MEM_SRAM) + offset;
+        auto source_ptr = reinterpret_cast<const uint8_t*>(MEM_SRAM) + offset;
         auto destination_ptr = reinterpret_cast<uint8_t*>(destination);
         _copy(source_ptr, size, destination_ptr);
     }

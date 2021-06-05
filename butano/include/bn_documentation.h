@@ -1584,6 +1584,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_14_0 6.14.0 (next release)
+ *
+ * Asserts ROM usage reduced.
+ *
+ *
  * @section changelog_6_13_1 6.13.1
  *
  * * bn::to_array fixed.

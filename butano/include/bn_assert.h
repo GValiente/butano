@@ -99,7 +99,7 @@
                 { \
                     if(! (condition)) [[unlikely]] \
                     { \
-                        _bn::assert::constexpr_check(true, #condition, _bn::assert::base_name(__FILE__), __func__, \
+                        _bn::assert::show_args(#condition, _bn::assert::base_name(__FILE__), __func__, \
                                 __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                     } \
                 } \
@@ -118,7 +118,7 @@
                 } \
                 else \
                 { \
-                    _bn::assert::constexpr_check(true, "", _bn::assert::base_name(__FILE__), __func__, \
+                    _bn::assert::show_args("", _bn::assert::base_name(__FILE__), __func__, \
                             __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                 } \
             } while(false)
@@ -162,16 +162,6 @@
             bn::ostringstream string_stream(istring);
             string_stream.append_args(args...);
             _bn::assert::show(condition_msg, file, function, line, istring);
-        }
-
-        template<typename... Args>
-        constexpr void constexpr_check(bool condition_failed, const char* condition_msg, const char* file,
-                                       const char* function, int line, const Args&... args)
-        {
-            if(condition_failed) [[likely]]
-            {
-                show_args(condition_msg, file, function, line, args...);
-            }
         }
     }
 

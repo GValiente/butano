@@ -707,8 +707,8 @@ public:
     {
         BN_ASSERT(! full(), "Deque is full");
 
-        ::new(_data + _begin) value_type(value);
         _push_front();
+        ::new(_data + _begin) value_type(value);
     }
 
     /**
@@ -719,8 +719,8 @@ public:
     {
         BN_ASSERT(! full(), "Deque is full");
 
-        ::new(_data + _begin) value_type(move(value));
         _push_front();
+        ::new(_data + _begin) value_type(move(value));
     }
 
     /**
@@ -733,9 +733,10 @@ public:
     {
         BN_ASSERT(! full(), "Deque is full");
 
+        _push_front();
+
         Type* result = _data + _begin;
         ::new(result) value_type(forward<Args>(args)...);
-        _push_front();
         return *result;
     }
 
@@ -849,8 +850,8 @@ public:
 
         if(index == 0)
         {
-            ::new(_data + _begin) value_type(move(value));
             _push_front();
+            ::new(_data + _begin) value_type(move(value));
         }
         else
         {
@@ -887,8 +888,8 @@ public:
 
         if(index == 0)
         {
-            ::new(_data + _begin) value_type(forward<Args>(args)...);
             _push_front();
+            ::new(_data + _begin) value_type(forward<Args>(args)...);
         }
         else
         {

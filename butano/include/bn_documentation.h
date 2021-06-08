@@ -1584,7 +1584,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_14_0 6.14.0 (next release)
+ * @section changelog_6_14_0 6.14.0
  *
  * * Asserts ROM usage reduced.
  * * bn::deque::push_front, bn::deque::emplace_front and bn::deque::insert fixed.

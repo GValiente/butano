@@ -1584,6 +1584,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_15_0 6.15.0 (next release)
+ *
+ * GPIO register is not setup unless needed (avoids mGBA warning at startup).
+ *
+ *
  * @section changelog_6_14_0 6.14.0
  *
  * * Asserts ROM usage reduced.

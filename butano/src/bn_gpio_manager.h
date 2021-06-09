@@ -10,8 +10,6 @@
 
 namespace bn::gpio_manager
 {
-    void init();
-
     [[nodiscard]] bool rumble_enabled();
 
     void set_rumble_enabled(bool enabled);

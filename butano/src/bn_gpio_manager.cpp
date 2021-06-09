@@ -18,16 +18,21 @@ namespace
     {
 
     public:
+        bool first_commit = true;
         bool rumble_enabled = false;
         bool commit_rumble = false;
     };
 
     BN_DATA_EWRAM static_data data;
-}
 
-void init()
-{
-    hw::gpio::init();
+    void _check_first_commit()
+    {
+        if(data.first_commit)
+        {
+            hw::gpio::init();
+            data.first_commit = false;
+        }
+    }
 }
 
 bool rumble_enabled()
@@ -48,6 +53,7 @@ void commit()
 {
     if(data.commit_rumble)
     {
+        _check_first_commit();
         hw::gpio::set_rumble_enabled(data.rumble_enabled);
         data.commit_rumble = false;
     }
@@ -57,17 +63,15 @@ void sleep()
 {
     if(data.rumble_enabled)
     {
+        _check_first_commit();
         hw::gpio::set_rumble_enabled(false);
+        data.commit_rumble = true;
     }
 }
 
 void wake_up()
 {
-    if(data.rumble_enabled)
-    {
-        hw::gpio::set_rumble_enabled(true);
-        data.commit_rumble = false;
-    }
+    commit();
 }
 
 void stop()

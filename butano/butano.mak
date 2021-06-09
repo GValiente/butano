@@ -158,7 +158,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).elfbin $(TARGET).gba 
+	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).gba 
 
 #---------------------------------------------------------------------------------------------------------------------
 else
@@ -167,14 +167,10 @@ else
 # Main targets:
 #---------------------------------------------------------------------------------------------------------------------
 
-$(OUTPUT).gba       :   $(OUTPUT).elfbin
-	@echo Fixing $(notdir $(OUTPUT).elfbin) ...
-	$(SILENTCMD)gbafix -t"$(ROMTITLE)" -c"$(ROMCODE)" $(OUTPUT).elfbin
-	$(SILENTCMD)@cp $(OUTPUT).elfbin $(OUTPUT).gba
-	@echo Output file: $(notdir $(OUTPUT).gba)
-	
-$(OUTPUT).elfbin    :   $(OUTPUT).elf
+$(OUTPUT).gba       :   $(OUTPUT).elf
 	$(SILENTCMD)$(OBJCOPY) -O binary $< $@
+	@echo Fixing $(notdir $@) ...
+	$(SILENTCMD)gbafix -t"$(ROMTITLE)" -c"$(ROMCODE)" $@
 
 $(OUTPUT).elf       :	$(OFILES)
 

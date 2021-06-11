@@ -57,6 +57,12 @@ namespace bn
     using std::is_trivially_destructible;
     using std::is_trivially_destructible_v;
 
+    using std::is_signed;
+    using std::is_signed_v;
+
+    using std::is_unsigned;
+    using std::is_unsigned_v;
+
     using std::is_swappable;
     using std::is_swappable_v;
 

@@ -69,6 +69,18 @@ namespace bn
     }
 
     /**
+     * @brief Returns the absolute value of the given value.
+     *
+     * @ingroup math
+     */
+    template<typename Type>
+    [[nodiscard]] constexpr Type abs(Type value)
+    requires(is_unsigned_v<Type>)
+    {
+        return value;
+    }
+
+    /**
      * @brief Returns the integer square root of the given value.
      *
      * @ingroup math

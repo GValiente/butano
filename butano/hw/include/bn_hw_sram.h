@@ -12,7 +12,7 @@ namespace bn::hw::sram
 {
     void init();
 
-    BN_CODE_EWRAM void _copy(const uint8_t* source, int size, uint8_t* destination);
+    void _copy(const uint8_t* source, int size, uint8_t* destination);
 
     inline void write(const void* source, int size, int offset)
     {

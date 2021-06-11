@@ -1587,6 +1587,7 @@
  * @section changelog_6_15_0 6.15.0 (next release)
  *
  * * GPIO register is not setup unless needed (avoids mGBA warning at startup).
+ * * SRAM code moved from EWRAM to ROM in order to avoid a No$gba error.
  * * `*.elfbin` output files renamed to `*.elf` as it should.
  *
  *

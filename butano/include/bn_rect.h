@@ -192,14 +192,6 @@ public:
     }
 
     /**
-     * @brief Returns the position of the top-left of the rectangle.
-     */
-    [[nodiscard]] constexpr point top_left() const
-    {
-        return point(left(), top());
-    }
-
-    /**
      * @brief Returns the position of the bottom boundary of the rectangle.
      */
     [[nodiscard]] constexpr int bottom() const
@@ -216,7 +208,31 @@ public:
     }
 
     /**
-     * @brief Returns the position of the bottom-right of the rectangle.
+     * @brief Returns the position of the top-left corner of the rectangle.
+     */
+    [[nodiscard]] constexpr point top_left() const
+    {
+        return point(left(), top());
+    }
+
+    /**
+     * @brief Returns the position of the top-right corner of the rectangle.
+     */
+    [[nodiscard]] constexpr point top_right() const
+    {
+        return point(right(), top());
+    }
+
+    /**
+     * @brief Returns the position of the bottom-left corner of the rectangle.
+     */
+    [[nodiscard]] constexpr point bottom_left() const
+    {
+        return point(left(), bottom());
+    }
+
+    /**
+     * @brief Returns the position of the bottom-right corner of the rectangle.
      */
     [[nodiscard]] constexpr point bottom_right() const
     {

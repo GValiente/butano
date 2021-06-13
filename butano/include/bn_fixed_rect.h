@@ -203,14 +203,6 @@ public:
     }
 
     /**
-     * @brief Returns the position of the top-left of the rectangle.
-     */
-    [[nodiscard]] constexpr fixed_point top_left() const
-    {
-        return fixed_point(left(), top());
-    }
-
-    /**
      * @brief Returns the position of the bottom boundary of the rectangle.
      */
     [[nodiscard]] constexpr fixed bottom() const
@@ -227,7 +219,31 @@ public:
     }
 
     /**
-     * @brief Returns the position of the bottom-right of the rectangle.
+     * @brief Returns the position of the top-left corner of the rectangle.
+     */
+    [[nodiscard]] constexpr fixed_point top_left() const
+    {
+        return fixed_point(left(), top());
+    }
+
+    /**
+     * @brief Returns the position of the top-right corner of the rectangle.
+     */
+    [[nodiscard]] constexpr fixed_point top_right() const
+    {
+        return fixed_point(right(), top());
+    }
+
+    /**
+     * @brief Returns the position of the bottom-left corner of the rectangle.
+     */
+    [[nodiscard]] constexpr fixed_point bottom_left() const
+    {
+        return fixed_point(left(), bottom());
+    }
+
+    /**
+     * @brief Returns the position of the bottom-right corner of the rectangle.
      */
     [[nodiscard]] constexpr fixed_point bottom_right() const
     {

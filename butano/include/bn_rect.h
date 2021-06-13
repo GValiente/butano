@@ -224,6 +224,22 @@ public:
     }
 
     /**
+     * @brief Returns the position of the top-right of the rectangle.
+     */
+    [[nodiscard]] constexpr point top_right() const
+    {
+        return point(right(), top());
+    }
+
+    /**
+     * @brief Returns the position of the bottom-left of the rectangle.
+     */
+    [[nodiscard]] constexpr point bottom_left() const
+    {
+        return point(left(), bottom());
+    }
+
+    /**
      * @brief Indicates if the given point is inside the rectangle or not.
      *
      * If the point is in the edge of the rectangle, it returns `false`.

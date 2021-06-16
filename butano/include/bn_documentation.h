@@ -1045,7 +1045,7 @@
  * You can use this item to create sprite tiles with only one line of C++ code:
  *
  * @code{.cpp}
- * bn::sprite_tiles_ptr sprite_tiles = bn::sprite_tiles_item::image.create_tiles();
+ * bn::sprite_tiles_ptr sprite_tiles = bn::sprite_tiles_items::image.create_tiles();
  * @endcode
  *
  *

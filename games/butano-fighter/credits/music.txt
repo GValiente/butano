@@ -1,0 +1,39 @@
+- battle_clean.it
+	By Spring in collaboration with VinsCool
+	Licensed under the CC0 license
+	https://opengameart.org/content/haydenwoffle-it-soundtrack
+
+- cyberrid.mod
+	By jester/sanity
+	Licensed under the Attribution Non-commercial Share Alike license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=40293
+
+- minor_boss_r.it
+	By Spring/Spring Enterprises
+	Licensed under the CC-BY 4.0 license
+	https://opengameart.org/content/minor-boss-r
+
+- soda7_xcopy_ohc.s3m
+	By Soda7
+	Licensed under the Attribution Non-commercial No Derivatives license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=174106
+	
+- stardstm.mod
+	By jester/sanity
+	Licensed under the Attribution Non-commercial Share Alike license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=59344
+	
+- galgox_snowheart_melody.xm
+	By Galgox, Robyn, MiDoRi, and ViLXDRYAD
+	Licensed under the Attribution Non-commercial Share Alike license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=182155
+	
+- basic_instinct.mod
+	By jes ^ ter
+	Licensed under the Attribution Non-commercial Share Alike license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=34603
+
+- fruit.mod
+	By jester/sanity
+	Licensed under the Attribution Non-commercial Share Alike license
+	https://modarchive.org/index.php?request=view_by_moduleid&query=43649

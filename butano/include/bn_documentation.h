@@ -1584,7 +1584,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_15_0 6.15.0 (next release)
+ * @section changelog_6_15_0 6.15.0
  *
  * * bn::rect::top_right, bn::rect::bottom_left, bn::fixed_rect::top_right and bn::fixed_rect::bottom_left added.
  * * GPIO register is not setup unless needed (avoids mGBA warning at startup).

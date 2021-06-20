@@ -1591,6 +1591,7 @@
  * * SRAM code moved from EWRAM to ROM in order to avoid a No$gba error.
  * * bn::abs for unsigned arguments improved.
  * * `*.elfbin` output files renamed to `*.elf` as it should.
+ * * bn::unordered_map::erase and bn::unordered_set::erase fixed.
  *
  *
  * @section changelog_6_14_0 6.14.0

@@ -924,67 +924,71 @@ public:
         allocated[index] = false;
         --_size;
 
-        if(_size == 0)
+        if(! _size)
         {
             _first_valid_index = max_size();
             _last_valid_index = 0;
             return end();
         }
 
-        hasher hasher_functor;
-        size_type current_index = index;
-        size_type next_index = _index(index + 1);
-
-        while(allocated[next_index] && _index(hasher_functor(storage[next_index].first)) != next_index)
-        {
-            ::new(storage + current_index) value_type(move(storage[next_index]));
-            storage[next_index].~value_type();
-            allocated[current_index] = true;
-            allocated[next_index] = false;
-            current_index = next_index;
-            next_index = _index(next_index + 1);
-        }
-
-        if(_size == 1)
-        {
-            if(index == _first_valid_index)
-            {
-                index = _last_valid_index;
-                _first_valid_index = _last_valid_index;
-            }
-            else
-            {
-                index = _first_valid_index;
-                _last_valid_index = _first_valid_index;
-            }
-
-            return iterator(index, *this);
-        }
-
         size_type first_valid_index = _first_valid_index;
 
-        while(! allocated[first_valid_index])
+        if(index == first_valid_index)
         {
-            ++first_valid_index;
-        }
+            while(! allocated[first_valid_index])
+            {
+                ++first_valid_index;
+            }
 
-        _first_valid_index = first_valid_index;
+            _first_valid_index = first_valid_index;
+        }
 
         size_type last_valid_index = _last_valid_index;
 
-        while(! allocated[last_valid_index])
+        if(index == last_valid_index)
         {
-            --last_valid_index;
+            while(! allocated[last_valid_index])
+            {
+                --last_valid_index;
+            }
+
+            _last_valid_index = last_valid_index;
         }
 
-        _last_valid_index = last_valid_index;
+        size_type next_index = _index(index + 1);
+        int reinsert_count = 0;
 
-        while(index <= last_valid_index && ! allocated[index])
+        while(allocated[next_index])
         {
+            ++reinsert_count;
+            next_index = _index(next_index + 1);
+        }
+
+        next_index = _index(index + 1);
+        _size -= reinsert_count;
+
+        for(int reinsert_index = 0; reinsert_index < reinsert_count; ++reinsert_index)
+        {
+            value_type temp_value(move(storage[next_index]));
+            storage[next_index].~value_type();
+            allocated[next_index] = false;
+            insert(move(temp_value));
+            next_index = _index(next_index + 1);
+        }
+
+        last_valid_index = _last_valid_index;
+
+        while(index <= last_valid_index)
+        {
+            if(allocated[index])
+            {
+                return iterator(index, *this);
+            }
+
             ++index;
         }
 
-        return iterator(index, *this);
+        return end();
     }
 
     /**

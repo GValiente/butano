@@ -1584,7 +1584,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_16_0 6.16.0 (next release)
+ * @section changelog_6_16_0 6.16.0
  *
  * * bn::sin_lut is not copied to every translation unit.
  * * bn::reciprocal_lut is not copied to every translation unit.

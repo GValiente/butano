@@ -1584,6 +1584,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_16_0 6.16.0 (next release)
+ *
+ * GBA keypad is read after playing all keypad commands.
+ *
+ *
  * @section changelog_6_15_0 6.15.0
  *
  * * bn::rect::top_right, bn::rect::bottom_left, bn::fixed_rect::top_right and bn::fixed_rect::bottom_left added.

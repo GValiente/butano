@@ -121,11 +121,12 @@ void update()
     unsigned previous_keys = data.held_keys;
     unsigned current_keys;
 
-    if(data.read_commands)
+    if(data.read_commands) [[unlikely]]
     {
-        if(data.commands.empty())
+        if(data.commands.empty()) [[unlikely]]
         {
-            current_keys = 0;
+            current_keys = hw::keypad::get();
+            data.read_commands = false;
         }
         else
         {

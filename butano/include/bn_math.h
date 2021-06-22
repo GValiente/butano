@@ -170,9 +170,18 @@ namespace bn
      */
     [[nodiscard]] constexpr fixed lut_sin(int lut_angle)
     {
-        BN_ASSERT(lut_angle >= 0 && lut_angle <= 2048, "Angle must be in the range [0, 2048]: ", lut_angle);
+        BN_ASSERT(lut_angle >= 0 && lut_angle < sin_lut_size,
+                  "Angle must be in the range [0, ", sin_lut_size - 1, "]: ", lut_angle);
 
-        return fixed::from_data(sin_lut._data[lut_angle]);
+        if(is_constant_evaluated())
+        {
+            int sin_lut_value = calculate_sin_lut_value((lut_angle * 65536) / (sin_lut_size - 1));
+            return fixed::from_data(sin_lut_value);
+        }
+        else
+        {
+            return fixed::from_data(sin_lut[lut_angle]);
+        }
     }
 
     /**
@@ -186,9 +195,18 @@ namespace bn
     {
         BN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360, "Angle must be in the range [0, 360]: ", degrees_angle);
 
-        constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), 2048);
+        constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), sin_lut_size - 1);
         int lut_angle = rule_of_three.calculate(degrees_angle.data());
-        return fixed::from_data(sin_lut._data[lut_angle]);
+
+        if(is_constant_evaluated())
+        {
+            int sin_lut_value = calculate_sin_lut_value((lut_angle * 65536) / (sin_lut_size - 1));
+            return fixed::from_data(sin_lut_value);
+        }
+        else
+        {
+            return fixed::from_data(sin_lut[lut_angle]);
+        }
     }
 
     /**
@@ -227,10 +245,20 @@ namespace bn
      */
     [[nodiscard]] constexpr fixed lut_cos(int lut_angle)
     {
-        BN_ASSERT(lut_angle >= 0 && lut_angle <= 2048, "Angle must be in the range [0, 2048]: ", lut_angle);
+    BN_ASSERT(lut_angle >= 0 && lut_angle < sin_lut_size,
+              "Angle must be in the range [0, ", sin_lut_size - 1, "]: ", lut_angle);
 
-        lut_angle = (lut_angle + 512) & (2048 - 1);
-        return fixed::from_data(sin_lut._data[lut_angle]);
+        lut_angle = (lut_angle + ((sin_lut_size - 1) / 4)) & (sin_lut_size - 2);
+
+        if(is_constant_evaluated())
+        {
+            int sin_lut_value = calculate_sin_lut_value((lut_angle * 65536) / (sin_lut_size - 1));
+            return fixed::from_data(sin_lut_value);
+        }
+        else
+        {
+            return fixed::from_data(sin_lut[lut_angle]);
+        }
     }
 
     /**
@@ -242,10 +270,19 @@ namespace bn
      */
     [[nodiscard]] constexpr fixed degrees_lut_cos(fixed degrees_angle)
     {
-        constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), 2048);
+        constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), sin_lut_size - 1);
         int lut_angle = rule_of_three.calculate(degrees_angle.data());
-        lut_angle = (lut_angle + 512) & (2048 - 1);
-        return fixed::from_data(sin_lut._data[lut_angle]);
+        lut_angle = (lut_angle + ((sin_lut_size - 1) / 4)) & (sin_lut_size - 2);
+
+        if(is_constant_evaluated())
+        {
+            int sin_lut_value = calculate_sin_lut_value((lut_angle * 65536) / (sin_lut_size - 1));
+            return fixed::from_data(sin_lut_value);
+        }
+        else
+        {
+            return fixed::from_data(sin_lut[lut_angle]);
+        }
     }
 
     /**

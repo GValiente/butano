@@ -35,7 +35,7 @@
  * @ingroup math
  */
 
-#include "bn_array.h"
+#include "bn_common.h"
 
 namespace bn
 {
@@ -93,22 +93,18 @@ namespace bn
 }
 
 /**
- * @brief A sine LUT of 16bit values in 4.12 format.
+ * @brief Size of the sine LUT of 16bit values in 4.12 format.
  *
  * @ingroup math
  */
-constexpr array<int16_t, 2049> sin_lut = []{
-    array<int16_t, 2049> result;
-    int lut_angle = 0;
+constexpr int sin_lut_size = 2049;
 
-    for(int index = 0; index < 2049; ++index)
-    {
-        result[index] = int16_t(calculate_sin_lut_value(lut_angle));
-        lut_angle += 65536 / 2048;
-    }
-
-    return result;
-}();
+/**
+ * @brief Pointer to the sine LUT of 16bit values in 4.12 format.
+ *
+ * @ingroup math
+ */
+extern const int16_t* sin_lut;
 
 }
 

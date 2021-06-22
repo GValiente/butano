@@ -1586,7 +1586,8 @@
  *
  * @section changelog_6_16_0 6.16.0 (next release)
  *
- * GBA keypad is read after playing all keypad commands.
+ * * bn::reciprocal_lut is not copied to every translation unit.
+ * * GBA keypad is read after playing all keypad commands.
  *
  *
  * @section changelog_6_15_0 6.15.0

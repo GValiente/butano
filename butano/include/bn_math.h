@@ -280,9 +280,17 @@ namespace bn
      */
     [[nodiscard]] constexpr fixed_t<20> lut_reciprocal(int lut_value)
     {
-        BN_ASSERT(lut_value >= 1 && lut_value <= 1024, "Value must be in the range [1, 1024]: ", lut_value);
+        BN_ASSERT(lut_value >= 1 && lut_value < reciprocal_lut_size,
+                  "Value must be in the range [1, ", reciprocal_lut_size - 1, "]: ", lut_value);
 
-        return reciprocal_lut._data[lut_value];
+        if(is_constant_evaluated())
+        {
+            return calculate_reciprocal_lut_value(lut_value);
+        }
+        else
+        {
+            return reciprocal_lut[lut_value];
+        }
     }
 }
 

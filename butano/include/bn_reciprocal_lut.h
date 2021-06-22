@@ -13,28 +13,39 @@
  * @ingroup math
  */
 
-#include "bn_array.h"
 #include "bn_fixed.h"
+#include "bn_assert.h"
 
 namespace bn
 {
 
 /**
- * @brief LUT used to calculate the reciprocal of the given value (1 / value).
+ * @brief Calculates the value to store in reciprocal_lut for the given value.
+ * @param lut_value reciprocal_lut value (>= 1).
+ * @return Reciprocal of the given value (1 / value).
  *
  * @ingroup math
  */
-constexpr array<fixed_t<20>, 1025> reciprocal_lut = []{
-    array<fixed_t<20>, 1025> result;
-    int one = fixed_t<20>(1).data();
+[[nodiscard]] constexpr fixed_t<20> calculate_reciprocal_lut_value(int lut_value)
+{
+    BN_ASSERT(lut_value > 0, "Value must be greater than 0: ", lut_value);
 
-    for(int index = 1; index < 1025; ++index)
-    {
-        result[index] = fixed_t<20>::from_data(one / index);
-    }
+    return fixed_t<20>::from_data(fixed_t<20>(1).data() / lut_value);
+}
 
-    return result;
-}();
+/**
+ * @brief Reciprocal LUT size.
+ *
+ * @ingroup math
+ */
+constexpr int reciprocal_lut_size = 1025;
+
+/**
+ * @brief Pointer to the reciprocal LUT.
+ *
+ * @ingroup math
+ */
+extern const fixed_t<20>* reciprocal_lut;
 
 }
 

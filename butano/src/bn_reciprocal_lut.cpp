@@ -19,6 +19,6 @@ namespace
     }();
 }
 
-const fixed_t<20>* reciprocal_lut = reciprocal_lut_impl._data;
+const array<fixed_t<20>, reciprocal_lut_size>& reciprocal_lut = reciprocal_lut_impl;
 
 }

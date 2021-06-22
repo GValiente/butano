@@ -407,7 +407,7 @@ private:
         if(scale_8_data < reciprocal_lut_size)
         {
             fixed_t<20> reciprocal = is_constant_evaluated() ?
-                        calculate_reciprocal_lut_value(scale_8_data) : reciprocal_lut[scale_8_data];
+                        calculate_reciprocal_lut_value(scale_8_data) : reciprocal_lut._data[scale_8_data];
 
             return uint16_t(reciprocal.data() >> 4);
         }

@@ -13,6 +13,7 @@
  * @ingroup math
  */
 
+#include "bn_array.h"
 #include "bn_fixed.h"
 #include "bn_sin_lut.h"
 #include "bn_reciprocal_lut.h"
@@ -180,7 +181,7 @@ namespace bn
         }
         else
         {
-            return fixed::from_data(sin_lut[lut_angle]);
+            return fixed::from_data(sin_lut._data[lut_angle]);
         }
     }
 
@@ -206,7 +207,7 @@ namespace bn
         }
         else
         {
-            return fixed::from_data(sin_lut[lut_angle]);
+            return fixed::from_data(sin_lut._data[lut_angle]);
         }
     }
 
@@ -258,7 +259,7 @@ namespace bn
         }
         else
         {
-            return fixed::from_data(sin_lut[lut_angle]);
+            return fixed::from_data(sin_lut._data[lut_angle]);
         }
     }
 
@@ -285,7 +286,7 @@ namespace bn
         }
         else
         {
-            return fixed::from_data(sin_lut[lut_angle]);
+            return fixed::from_data(sin_lut._data[lut_angle]);
         }
     }
 
@@ -330,7 +331,7 @@ namespace bn
         }
         else
         {
-            return reciprocal_lut[lut_value];
+            return reciprocal_lut._data[lut_value];
         }
     }
 }

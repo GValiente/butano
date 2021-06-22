@@ -35,7 +35,7 @@
  * @ingroup math
  */
 
-#include "bn_common.h"
+#include "bn_array_fwd.h"
 
 namespace bn
 {
@@ -100,11 +100,11 @@ namespace bn
 constexpr int sin_lut_size = 2049;
 
 /**
- * @brief Pointer to the sine LUT of 16bit values in 4.12 format.
+ * @brief Sine LUT of 16bit values in 4.12 format.
  *
  * @ingroup math
  */
-extern const int16_t* sin_lut;
+extern const array<int16_t, sin_lut_size>& sin_lut;
 
 }
 

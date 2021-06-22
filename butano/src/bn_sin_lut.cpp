@@ -21,6 +21,6 @@ namespace
     }();
 }
 
-const int16_t* sin_lut = sin_lut_impl._data;
+const array<int16_t, sin_lut_size>& sin_lut = sin_lut_impl;
 
 }

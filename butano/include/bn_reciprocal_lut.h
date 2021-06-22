@@ -15,6 +15,7 @@
 
 #include "bn_fixed.h"
 #include "bn_assert.h"
+#include "bn_array_fwd.h"
 
 namespace bn
 {
@@ -41,11 +42,11 @@ namespace bn
 constexpr int reciprocal_lut_size = 1025;
 
 /**
- * @brief Pointer to the reciprocal LUT.
+ * @brief Reciprocal LUT.
  *
  * @ingroup math
  */
-extern const fixed_t<20>* reciprocal_lut;
+extern const array<fixed_t<20>, reciprocal_lut_size>& reciprocal_lut;
 
 }
 

@@ -417,15 +417,17 @@ private:
 
     constexpr void _update_rotation_angle()
     {
-        if(_rotation_angle == 0)
+        fixed rotation_angle = _rotation_angle;
+
+        if(rotation_angle == 0)
         {
             _sin = 0;
             _cos = int16_t(fixed(1).data());
         }
         else
         {
-            _sin = int16_t(degrees_lut_sin(_rotation_angle).data());
-            _cos = int16_t(degrees_lut_cos(_rotation_angle).data());
+            _sin = int16_t(degrees_lut_sin(rotation_angle).data());
+            _cos = int16_t(degrees_lut_cos(rotation_angle).data());
         }
     }
 

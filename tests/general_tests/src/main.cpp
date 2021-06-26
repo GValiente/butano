@@ -29,6 +29,8 @@ int main()
 {
     bn::core::init();
 
+    int used_stack_iwram = bn::memory::used_stack_iwram();
+
     bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
     text_generator.set_center_alignment();
 
@@ -42,7 +44,7 @@ int main()
     sqrt_tests();
     any_tests();
     format_tests();
-    malloc_tests();
+    malloc_tests malloc_tests(used_stack_iwram);
     sram_tests sram_tests;
 
     if(sram_tests.again())

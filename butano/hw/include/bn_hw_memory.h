@@ -12,6 +12,15 @@ namespace bn::hw::memory
 {
     void init();
 
+    [[nodiscard]] inline int stack_address()
+    {
+        unsigned result = 0;
+        asm volatile("mov %0, sp" : "=r" (result));
+        return int(result);
+    }
+
+    [[nodiscard]] int used_stack_iwram(int current_stack_address);
+
     [[nodiscard]] int used_static_iwram();
 
     [[nodiscard]] int used_static_ewram();

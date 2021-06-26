@@ -1584,6 +1584,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_17_0 6.17.0 (next release)
+ *
+ * bn::memory::used_stack_iwram added.
+ *
+ *
  * @section changelog_6_16_0 6.16.0
  *
  * * bn::sin_lut is not copied to every translation unit.

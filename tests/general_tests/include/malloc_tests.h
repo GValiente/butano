@@ -14,9 +14,14 @@ class malloc_tests : public tests
 {
 
 public:
-    malloc_tests() :
+    explicit malloc_tests(int initial_used_stack_iwram) :
         tests("malloc")
     {
+        BN_ASSERT(initial_used_stack_iwram >= 0);
+
+        int current_used_stack_iwram = bn::memory::used_stack_iwram();
+        BN_ASSERT(current_used_stack_iwram > initial_used_stack_iwram);
+
         BN_ASSERT(bn::memory::used_alloc_ewram() == 0);
 
         void* ptr = bn::malloc(4);

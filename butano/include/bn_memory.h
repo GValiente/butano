@@ -493,6 +493,11 @@ namespace bn::memory
     [[nodiscard]] int available_items_ewram();
 
     /**
+     * @brief Returns the IWRAM used by the stack in bytes.
+     */
+    [[nodiscard]] int used_stack_iwram();
+
+    /**
      * @brief Returns the bytes of all static objects in IWRAM.
      */
     [[nodiscard]] int used_static_iwram();

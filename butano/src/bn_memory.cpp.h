@@ -113,6 +113,11 @@ int available_items_ewram()
     return memory_manager::available_items_ewram();
 }
 
+int used_stack_iwram()
+{
+    return hw::memory::used_stack_iwram(hw::memory::stack_address());
+}
+
 int used_static_iwram()
 {
     return hw::memory::used_static_iwram();

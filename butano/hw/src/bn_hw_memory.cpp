@@ -9,6 +9,7 @@
 #include "bn_config_ewram.h"
 
 extern unsigned __iwram_start__;
+extern unsigned __iwram_top;
 extern unsigned __fini_array_end;
 extern unsigned __ewram_start;
 extern unsigned __ewram_end;
@@ -48,6 +49,13 @@ void init()
             }
         }
     #endif
+}
+
+int used_stack_iwram(int current_stack_address)
+{
+    auto iwram_top = reinterpret_cast<uint8_t*>(&__iwram_top);
+    auto iwram_stack = reinterpret_cast<uint8_t*>(&current_stack_address);
+    return iwram_top - iwram_stack;
 }
 
 int used_static_iwram()

@@ -3,19 +3,19 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef MALLOC_TESTS_H
-#define MALLOC_TESTS_H
+#ifndef MEMORY_TESTS_H
+#define MEMORY_TESTS_H
 
 #include "bn_memory.h"
 #include "bn_cstdlib.h"
 #include "tests.h"
 
-class malloc_tests : public tests
+class memory_tests : public tests
 {
 
 public:
-    explicit malloc_tests(int initial_used_stack_iwram) :
-        tests("malloc")
+    explicit memory_tests(int initial_used_stack_iwram) :
+        tests("memory")
     {
         BN_ASSERT(initial_used_stack_iwram >= 0);
 

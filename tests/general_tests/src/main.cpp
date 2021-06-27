@@ -17,7 +17,7 @@
 #include "sqrt_tests.h"
 #include "any_tests.h"
 #include "format_tests.h"
-#include "malloc_tests.h"
+#include "memory_tests.h"
 #include "sram_tests.h"
 #include "variable_8x16_sprite_font.h"
 
@@ -44,7 +44,7 @@ int main()
     sqrt_tests();
     any_tests();
     format_tests();
-    malloc_tests malloc_tests(used_stack_iwram);
+    memory_tests memory_tests(used_stack_iwram);
     sram_tests sram_tests;
 
     if(sram_tests.again())

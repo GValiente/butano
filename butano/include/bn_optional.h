@@ -448,14 +448,14 @@ public:
     {
         if(_valid)
         {
-            _value = Type(forward<Args>(args)...);
+            destroy_at(&_value);
         }
         else
         {
-            construct_at(&_value, forward<Args>(args)...);
             _valid = true;
         }
 
+        construct_at(&_value, forward<Args>(args)...);
         return _value;
     }
 

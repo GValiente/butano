@@ -15,6 +15,7 @@
 #include "fixed_tests.h"
 #include "math_tests.h"
 #include "sqrt_tests.h"
+#include "optional_tests.h"
 #include "any_tests.h"
 #include "format_tests.h"
 #include "memory_tests.h"
@@ -42,6 +43,7 @@ int main()
     fixed_tests();
     math_tests();
     sqrt_tests();
+    optional_tests();
     any_tests();
     format_tests();
     memory_tests memory_tests(used_stack_iwram);

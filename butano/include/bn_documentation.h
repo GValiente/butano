@@ -1634,6 +1634,24 @@
  * You could try to create a new issue in its
  * <a href="https://github.com/devkitPro/maxmod/issues">GitHub issues</a> page,
  * but since it seems the library was abandoned long time ago, don't hold your hopes up too much.
+ *
+ *
+ * @subsection faq_audio_quality How can I improve audio quality?
+ *
+ * If you have some free CPU left, you can increase audio mixing rate to improve its quality.
+ *
+ * The easiest way to specify the audio mixing rate for a specific project is
+ * to define it in the `USERFLAGS` of its `Makefile`.
+ *
+ * For example, to set the audio mixing rate to 21KHz:
+ *
+ * @code{.cpp}
+ * USERFLAGS := -DBN_CFG_AUDIO_MIXING_RATE=BN_AUDIO_MIXING_RATE_21_KHZ
+ * @endcode
+ *
+ * Remember to rebuild your project from scratch after modifying a `Makefile`.
+ *
+ * Available mixing rates are @ref audio "here".
  */
 
 

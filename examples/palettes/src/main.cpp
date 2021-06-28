@@ -19,7 +19,7 @@
 
 #include "bn_sprite_items_cavegirl.h"
 #include "bn_regular_bg_items_village.h"
-#include "bn_sprite_items_cavegirl_alt.h"
+#include "bn_sprite_palette_items_cavegirl_alt.h"
 #include "bn_sprite_items_cavegirl_green.h"
 
 #include "info.h"
@@ -39,7 +39,7 @@ namespace
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
         const bn::sprite_palette_item& palette_item = bn::sprite_items::cavegirl.palette_item();
-        const bn::sprite_palette_item& alt_palette_item = bn::sprite_items::cavegirl_alt.palette_item();
+        const bn::sprite_palette_item& alt_palette_item = bn::sprite_palette_items::cavegirl_alt;
         bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
         cavegirl_palette.set_colors(alt_palette_item);
 

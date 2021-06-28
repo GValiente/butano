@@ -1587,6 +1587,7 @@
  * @section changelog_6_17_0 6.17.0 (next release)
  *
  * * bn::memory::used_stack_iwram added.
+ * * bn::sort optimized.
  * * bn::optional::emplace copy avoided.
  *
  *

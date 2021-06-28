@@ -1501,6 +1501,25 @@
  * * <a href="https://docs.microsoft.com/en-us/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=msvc-160">A std::shared_ptr usage guide</a>.
  *
  *
+ * @subsection faq_destroy_optional That's cool, but how can I destroy and reload sprites and backgrounds as easy as possible?
+ *
+ * bn::optional helps unloading and reloading things easily:
+ *
+ * @code{.cpp}
+ * // bg_optional is empty:
+ * bn::optional<bn::regular_bg_ptr> bg_optional;
+ *
+ * // bg_optional now contains the background specified by bn::regular_bg_items::bg1:
+ * bg_optional = bn::regular_bg_items::bg1.create_bg(0, 0);
+ *
+ * // bg_optional is empty again:
+ * bg_optional.reset();
+ *
+ * // bg_optional now contains the background specified by bn::regular_bg_items::bg2:
+ * bg_optional = bn::regular_bg_items::bg2.create_bg(0, 0);
+ * @endcode
+ *
+ *
  * @subsection faq_global_objects Does Butano allow to declare bn::sprite_ptr or bn::regular_bg_ptr objects globally?
  *
  * In general, you should not do anything with Butano before calling bn::core::init,
@@ -1631,6 +1650,7 @@
  * * VRAM allocation error messages improved.
  * * bn::optional::emplace copy avoided.
  * * @ref import guide improved.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_6_16_0 6.16.0

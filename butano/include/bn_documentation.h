@@ -1004,9 +1004,15 @@
  *
  * If the conversion process has finished successfully,
  * a bn::sprite_item should have been generated in the `build` folder.
- * You can use this item to create a sprite with only one line of C++ code:
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_sprite_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create a sprite with only one line of C++ code:
  *
  * @code{.cpp}
+ * #include "bn_sprite_items_image.h"
+ *
  * bn::sprite_ptr sprite = bn::sprite_items::image.create_sprite(0, 0);
  * @endcode
  *
@@ -1042,9 +1048,15 @@
  *
  * If the conversion process has finished successfully,
  * a bn::sprite_tiles_item should have been generated in the `build` folder.
- * You can use this item to create sprite tiles with only one line of C++ code:
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_sprite_tiles_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create sprite tiles with only one line of C++ code:
  *
  * @code{.cpp}
+ * #include "bn_sprite_tiles_items_image.h"
+ *
  * bn::sprite_tiles_ptr sprite_tiles = bn::sprite_tiles_items::image.create_tiles();
  * @endcode
  *
@@ -1069,9 +1081,15 @@
  *
  * If the conversion process has finished successfully,
  * a bn::sprite_palette_item should have been generated in the `build` folder.
- * You can use this item to create a sprite palette with only one line of C++ code:
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_sprite_palette_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create a sprite palette with only one line of C++ code:
  *
  * @code{.cpp}
+ * #include "bn_sprite_palette_items_image.h"
+ *
  * bn::sprite_palette_ptr sprite_palette = bn::sprite_palette_items::image.create_palette();
  * @endcode
  *
@@ -1128,9 +1146,15 @@
  *
  * If the conversion process has finished successfully,
  * a bn::regular_bg_item should have been generated in the `build` folder.
- * You can use this item to create a regular background with only one line of C++ code:
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_regular_bg_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create a regular background with only one line of C++ code:
  *
  * @code{.cpp}
+ * #include "bn_regular_bg_items_image.h"
+ *
  * bn::regular_bg_ptr regular_bg = bn::regular_bg_items::image.create_bg(0, 0);
  * @endcode
  *
@@ -1177,9 +1201,15 @@
  *
  * If the conversion process has finished successfully,
  * a bn::affine_bg_item should have been generated in the `build` folder.
- * You can use this item to create an affine background with only one line of C++ code:
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_affine_bg_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create an affine background with only one line of C++ code:
  *
  * @code{.cpp}
+ * #include "bn_affine_bg_items_image.h"
+ *
  * bn::affine_bg_ptr affine_bg = bn::affine_bg_items::image.create_bg(0, 0);
  * @endcode
  *
@@ -1208,9 +1238,15 @@
  *
  * If the conversion process has finished successfully,
  * a bn::bg_palette_item should have been generated in the `build` folder.
- * You can use this item to create a background palette with only one line of C++ code:
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_bg_palette_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create a background palette with only one line of C++ code:
  *
  * @code{.cpp}
+ * #include "bn_bg_palette_items_image.h"
+ *
  * bn::bg_palette_ptr bg_palette = bn::bg_palette_items::image.create_palette();
  * @endcode
  *
@@ -1241,6 +1277,8 @@
  * You can use these items to play music with only one line of C++ code:
  *
  * @code{.cpp}
+ * #include "bn_music_items.h"
+ *
  * bn::music_items::song.play();
  * @endcode
  *
@@ -1258,6 +1296,8 @@
  * You can use these items to play sound effects with only one line of C++ code:
  *
  * @code{.cpp}
+ * #include "bn_sound_items.h"
+ *
  * bn::sound_items::sfx.play();
  * @endcode
  */
@@ -1590,6 +1630,7 @@
  * * bn::sort optimized.
  * * VRAM allocation error messages improved.
  * * bn::optional::emplace copy avoided.
+ * * @ref import guide improved.
  *
  *
  * @section changelog_6_16_0 6.16.0

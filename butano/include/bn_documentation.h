@@ -1661,7 +1661,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_17_0 6.17.0 (next release)
+ * @section changelog_6_17_0 6.17.0
  *
  * * bn::memory::used_stack_iwram added.
  * * bn::sort optimized.

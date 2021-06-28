@@ -1588,6 +1588,7 @@
  *
  * * bn::memory::used_stack_iwram added.
  * * bn::sort optimized.
+ * * VRAM allocation error messages improved.
  * * bn::optional::emplace copy avoided.
  *
  *

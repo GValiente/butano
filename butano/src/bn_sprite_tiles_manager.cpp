@@ -6,6 +6,7 @@
 #include "bn_sprite_tiles_manager.h"
 
 #include "bn_vector.h"
+#include "bn_string_view.h"
 #include "bn_unordered_map.h"
 #include "bn_config_sprite_tiles.h"
 #include "../hw/include/bn_hw_sprite_tiles.h"
@@ -32,6 +33,13 @@ namespace
     static_assert(BN_CFG_SPRITE_TILES_MAX_ITEMS > 0 &&
                   BN_CFG_SPRITE_TILES_MAX_ITEMS <= hw::sprite_tiles::tiles_count());
     static_assert(power_of_two(BN_CFG_SPRITE_TILES_MAX_ITEMS));
+
+
+    #if BN_CFG_LOG_ENABLED
+        constexpr bn::string_view _status_log_message = "\nSprite tiles manager status has been logged.";
+    #else
+        constexpr bn::string_view _status_log_message = "";
+    #endif
 
 
     constexpr int max_items = BN_CFG_SPRITE_TILES_MAX_ITEMS;
@@ -741,14 +749,13 @@ int create(const span<const tile>& tiles_ref, compression_type compression)
 
         #if BN_CFG_LOG_ENABLED
             log_status();
-
-            BN_ERROR("Sprite tiles create failed:",
-                      "\n\tTiles data: ", tiles_data,
-                      "\n\tTiles count: ", tiles_count,
-                      "\n\nSprite tiles manager status has been logged.");
-        #else
-            BN_ERROR("Sprite tiles create failed. Tiles count: ", tiles_count);
         #endif
+
+        BN_ERROR("Sprite tiles create failed:",
+                 "\n\tTiles data: ", tiles_data,
+                 "\n\tTiles count: ", tiles_count,
+                 "\n\nIt seems there's no more available VRAM.",
+                 _status_log_message);
     }
 
     return result;
@@ -780,14 +787,13 @@ int create_new(const span<const tile>& tiles_ref, compression_type compression)
 
         #if BN_CFG_LOG_ENABLED
             log_status();
-
-            BN_ERROR("Sprite tiles create new failed:",
-                      "\n\tTiles data: ", tiles_data,
-                      "\n\tTiles count: ", tiles_count,
-                      "\n\nSprite tiles manager status has been logged.");
-        #else
-            BN_ERROR("Sprite tiles create new failed. Tiles count: ", tiles_count);
         #endif
+
+        BN_ERROR("Sprite tiles create new failed:",
+                 "\n\tTiles data: ", tiles_data,
+                 "\n\tTiles count: ", tiles_count,
+                 "\n\nIt seems there's no more available VRAM.",
+                 _status_log_message);
     }
 
     return result;
@@ -813,12 +819,11 @@ int allocate(int tiles_count, bpp_mode bpp)
 
         #if BN_CFG_LOG_ENABLED
             log_status();
-
-            BN_ERROR("Sprite tiles allocate failed. Tiles count: ", tiles_count,
-                     "\n\nSprite tiles manager status has been logged.");
-        #else
-            BN_ERROR("Sprite tiles allocate failed. Tiles count: ", tiles_count);
         #endif
+
+        BN_ERROR("Sprite tiles allocate failed. Tiles count: ", tiles_count,
+                 "\n\nIt seems there's no more available VRAM.",
+                 _status_log_message);
     }
 
     return result;

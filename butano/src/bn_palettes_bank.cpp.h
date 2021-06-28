@@ -170,9 +170,11 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, uint16_t hash, 
             log_status();
 
             BN_ERROR("BPP4 palette create failed. Colors count: ", colors_count,
-                      "\n\nPalettes manager status has been logged.");
+                     "\n\nIt seems there's no more available VRAM.",
+                     "\nPalettes manager status has been logged.");
         #else
-            BN_ERROR("BPP4 palette create failed. Colors count: ", colors_count);
+            BN_ERROR("BPP4 palette create failed. Colors count: ", colors_count,
+                     "\n\nIt seems there's no more available VRAM.");
         #endif
     }
 
@@ -249,9 +251,11 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, compression_typ
             log_status();
 
             BN_ERROR("BPP8 palette create failed. Colors count: ", colors_count,
-                      "\n\nPalettes manager status has been logged.");
+                     "\n\nIt seems there's no more available VRAM.",
+                     "\nPalettes manager status has been logged.");
         #else
-            BN_ERROR("BPP8 palette create failed. Colors count: ", colors_count);
+            BN_ERROR("BPP8 palette create failed. Colors count: ", colors_count,
+                     "\n\nIt seems there's no more available VRAM.");
         #endif
     }
 

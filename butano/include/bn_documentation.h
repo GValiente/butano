@@ -1663,7 +1663,7 @@
  *
  * @section changelog_6_17_1 6.17.1 (next release)
  *
- * * bn::sort with 64bit sort keys fixed.
+ * * bn::sort with 128bit sort keys fixed.
  * * IRQs setup during startup improved.
  *
  *

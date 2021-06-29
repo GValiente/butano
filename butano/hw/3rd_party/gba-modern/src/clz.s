@@ -44,13 +44,6 @@ __clzsi2:
     .global __clzdi2
     .type __clzdi2 STT_FUNC
 __clzdi2:
-
-    .section .iwram, "ax", %progbits
-    .align 2
-    .arm
-    .global __clzti2
-    .type __clzti2 STT_FUNC
-__clzti2:
     @ if the high side is nonzero, just clz it
     cmp     r1, #0
     movne   r0, r1

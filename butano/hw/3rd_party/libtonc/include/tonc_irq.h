@@ -102,6 +102,7 @@ void irq_init(fnptr isr);
 fnptr irq_set_master(fnptr isr);
 
 fnptr irq_add(enum eIrqIndex irq_id, fnptr isr);
+fnptr irq_add_disabled(enum eIrqIndex irq_id, fnptr isr);
 fnptr irq_delete(enum eIrqIndex irq_id);
 
 fnptr irq_set(enum eIrqIndex irq_id, fnptr isr, u32 opts);

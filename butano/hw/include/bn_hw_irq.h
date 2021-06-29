@@ -33,9 +33,14 @@ namespace bn::hw::irq
         irq_init(nullptr);
     }
 
-    inline void replace_or_push_back(id irq_id, void(*isr)())
+    inline void replace_or_push_back_enabled(id irq_id, void(*isr)())
     {
         irq_add(eIrqIndex(irq_id), isr);
+    }
+
+    inline void replace_or_push_back_disabled(id irq_id, void(*isr)())
+    {
+        irq_add_disabled(eIrqIndex(irq_id), isr);
     }
 
     inline void remove(id irq_id)

@@ -43,9 +43,9 @@ namespace bn::hw::link
     {
         linkConnection = &connection_ref;
         connection_ref.init();
-        irq::replace_or_push_back(irq::id::SERIAL, _serial_intr);
-        irq::replace_or_push_back(irq::id::TIMER1, _timer_intr);
-        disable();
+        irq::replace_or_push_back_disabled(irq::id::SERIAL, _serial_intr);
+        irq::replace_or_push_back_disabled(irq::id::TIMER1, _timer_intr);
+        linkConnection->deactivate();
     }
 
     inline void block()

@@ -1661,6 +1661,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_6_17_1 6.17.1 (next release)
+ *
+ * IRQs setup during startup improved.
+ *
+ *
  * @section changelog_6_17_0 6.17.0
  *
  * * bn::memory::used_stack_iwram added.

@@ -371,7 +371,7 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
 
     // Enable keypad interrupt with the specified wake up keys:
     keypad_manager::set_interrupt(wake_up_keys);
-    hw::irq::replace_or_push_back(hw::irq::id::KEYPAD, nullptr);
+    hw::irq::replace_or_push_back_enabled(hw::irq::id::KEYPAD, nullptr);
 
     // Enable sleep mode:
     hw::core::sleep();

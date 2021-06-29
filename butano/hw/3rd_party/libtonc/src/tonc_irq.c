@@ -209,6 +209,37 @@ fnptr irq_add(enum eIrqIndex irq_id, fnptr isr)
 	return old_isr;
 }
 
+//! Add a specific ISR without enabling it
+/*! Special case of \c irq_set. If the interrupt has an ISR already
+    it'll be replaced; if not it will add it in the back.
+    \param irq_id	Index of irq.
+    \param isr	Interrupt service routine for this irq; can be NULL
+    \return	Previous ISR
+    \note	\a irq_id is \e NOT a bit-mask, it is an index!
+*/
+fnptr irq_add_disabled(enum eIrqIndex irq_id, fnptr isr)
+{
+    u16 ime= REG_IME;
+    REG_IME= 0;
+
+    int ii;
+    u16 irq_flag= BIT(irq_id);
+    fnptr old_isr;
+    IRQ_REC	*pir= __isr_table;
+
+    // Search for previous occurance, or empty slot
+    for(ii=0; pir[ii].flag; ii++)
+        if(pir[ii].flag == irq_flag)
+            break;
+
+    old_isr= pir[ii].isr;
+    pir[ii].isr= isr;
+    pir[ii].flag= irq_flag;
+
+    REG_IME= ime;
+    return old_isr;
+}
+
 //! Remove an ISR
 /*! it'll be replaced; if not it will add it in the back.
 	\param irq_id	Index of irq.

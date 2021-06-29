@@ -1661,7 +1661,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_17_1 6.17.1 (next release)
+ * @section changelog_6_17_1 6.17.1
  *
  * * bn::sort with 128bit sort keys fixed.
  * * IRQs setup during startup improved.

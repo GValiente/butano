@@ -650,7 +650,7 @@ void put_above(id_type id)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(sorted_sprites::sorter::put_in_front_of_layer(*item))
+    if(data.sorter.put_in_front_of_layer(*item))
     {
         data.rebuild_handles = true;
     }
@@ -660,7 +660,7 @@ void put_below(id_type id)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(sorted_sprites::sorter::put_in_back_of_layer(*item))
+    if(data.sorter.put_in_back_of_layer(*item))
     {
         data.rebuild_handles = true;
     }

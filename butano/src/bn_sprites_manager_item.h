@@ -46,11 +46,11 @@ public:
     point hw_position;
     unsigned usages = 1;
     sort_key sprite_sort_key;
-    bn::sorted_sprites::layer* sort_layer_ptr;
     optional<sprite_tiles_ptr> tiles;
     optional<sprite_palette_ptr> palette;
     optional<sprite_affine_mat_ptr> affine_mat;
     optional<camera_ptr> camera;
+    int16_t sort_layer_ptr_diff;
     int8_t handles_index = -1;
     int8_t half_width;
     int8_t half_height;

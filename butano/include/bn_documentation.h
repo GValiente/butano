@@ -1663,7 +1663,8 @@
  *
  * @section changelog_6_18_0 6.18.0 (next release)
  *
- * Generated items are now `constexpr inline` to avoid being copied to every translation unit.
+ * * Generated items are now `constexpr inline` to avoid being copied to every translation unit.
+ * * Sprites EWRAM usage reduced.
  *
  *
  * @section changelog_6_17_1 6.17.1

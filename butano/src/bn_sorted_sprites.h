@@ -79,14 +79,16 @@ namespace bn::sorted_sprites
                 layers_it = layers.insert(layers_it, pool_layer);
             }
 
-            layer& layer = *layers_it;
-            layer.items().push_front(item);
-            item.sort_layer_ptr = &layer;
+            layer& layer_ref = *layers_it;
+            layer_ref.items().push_front(item);
+
+            int diff = &layer_ref - reinterpret_cast<layer*>(&layers);
+            item.sort_layer_ptr_diff = diff;
         }
 
         void erase(sprites_manager_item& item)
         {
-            layer* layer = item.sort_layer_ptr;
+            layer* layer = _layer_ptr(item.sort_layer_ptr_diff);
             intrusive_list<sprites_manager_item>& layer_items = layer->items();
             layer_items.erase(item);
 
@@ -97,9 +99,9 @@ namespace bn::sorted_sprites
             }
         }
 
-        [[nodiscard]] static bool put_in_front_of_layer(sprites_manager_item& item)
+        [[nodiscard]] bool put_in_front_of_layer(sprites_manager_item& item)
         {
-            layer* layer = item.sort_layer_ptr;
+            layer* layer = _layer_ptr(item.sort_layer_ptr_diff);
             intrusive_list<sprites_manager_item>& layer_items = layer->items();
             bool sort = &layer_items.front() != &item;
 
@@ -112,9 +114,9 @@ namespace bn::sorted_sprites
             return sort;
         }
 
-        [[nodiscard]] static bool put_in_back_of_layer(sprites_manager_item& item)
+        [[nodiscard]] bool put_in_back_of_layer(sprites_manager_item& item)
         {
-            layer* layer = item.sort_layer_ptr;
+            layer* layer = _layer_ptr(item.sort_layer_ptr_diff);
             intrusive_list<sprites_manager_item>& layer_items = layer->items();
             bool sort = &layer_items.back() != &item;
 
@@ -130,6 +132,11 @@ namespace bn::sorted_sprites
     private:
         pool<layer, BN_CFG_SPRITES_MAX_SORT_LAYERS> _layer_pool;
         layers_type _layer_ptrs;
+
+        [[nodiscard]] layer* _layer_ptr(int diff)
+        {
+            return reinterpret_cast<layer*>(&_layer_ptrs) + diff;
+        }
     };
 }
 

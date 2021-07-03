@@ -1661,7 +1661,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_6_18_0 6.18.0 (next release)
+ * @section changelog_6_18_0 6.18.0
  *
  * * Generated items are now `constexpr inline` to avoid being copied to every translation unit.
  * * Sprites EWRAM usage reduced.

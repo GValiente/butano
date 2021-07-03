@@ -135,6 +135,17 @@ void set_bg_enabled(int bg, bool enabled)
     }
 }
 
+void disable_all_bgs()
+{
+    for(bool& enabled_bg : data.enabled_bgs)
+    {
+        enabled_bg = false;
+    }
+
+    data.commit_display = true;
+    data.commit = true;
+}
+
 fixed sprites_mosaic_horizontal_stretch()
 {
     return data.sprites_mosaic_horizontal_stretch;

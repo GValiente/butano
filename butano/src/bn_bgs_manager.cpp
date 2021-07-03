@@ -1467,46 +1467,60 @@ void update()
 
         BN_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
 
-        int available_bgs = hw::bgs::count() - affine_bgs_count;
-        int id = hw::bgs::count() - 1;
+        int regular_id;
+        int affine_id;
+        display_manager::set_mode(affine_bgs_count);
+        display_manager::disable_all_bgs();
+        display_manager::update_windows_visible_bgs();
 
-        if(affine_bgs_count == 1)
+        switch(affine_bgs_count)
         {
-            --id;
+
+        case 0:
+            regular_id = hw::bgs::count() - 1;
+            affine_id = -1;
+            break;
+
+        case 1:
+            regular_id = hw::bgs::count() - 3;
+            affine_id = hw::bgs::count() - 2;
+            break;
+
+        default:
+            regular_id = -1;
+            affine_id = hw::bgs::count() - 1;
+            break;
         }
 
         for(item_type* item : data.items_vector)
         {
             if(item->visible)
             {
-                BN_ASSERT(available_bgs, "Too much BGs on screen");
+                int id;
+
+                if(item->affine_map)
+                {
+                    id = affine_id;
+                    --affine_id;
+                }
+                else
+                {
+                    BN_ASSERT(regular_id >= 0, "Too much regular BGs on screen");
+
+                    id = regular_id;
+                    --regular_id;
+                }
 
                 item->handles_index = int8_t(id);
                 data.handles[id] = item->handle;
                 display_manager::set_bg_enabled(id, true);
                 display_manager::set_blending_bg_enabled(id, item->blending_enabled);
-                --id;
-                --available_bgs;
             }
             else
             {
                 item->handles_index = -1;
             }
         }
-
-        display_manager::set_mode(affine_bgs_count);
-
-        for(int index = 0; index <= id; ++index)
-        {
-            display_manager::set_bg_enabled(index, false);
-        }
-
-        if(affine_bgs_count == 1)
-        {
-            display_manager::set_bg_enabled(hw::bgs::count() - 1, false);
-        }
-
-        display_manager::update_windows_visible_bgs();
     }
 }
 

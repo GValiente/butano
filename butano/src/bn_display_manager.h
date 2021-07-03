@@ -31,6 +31,8 @@ namespace bn::display_manager
 
     void set_bg_enabled(int bg, bool enabled);
 
+    void disable_all_bgs();
+
     [[nodiscard]] fixed sprites_mosaic_horizontal_stretch();
 
     void set_sprites_mosaic_horizontal_stretch(fixed stretch);

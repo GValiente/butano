@@ -1665,6 +1665,7 @@
  *
  * * Generated items are now `constexpr inline` to avoid being copied to every translation unit.
  * * Sprites EWRAM usage reduced.
+ * * Different type backgrounds sorting fixed.
  *
  *
  * @section changelog_6_17_1 6.17.1

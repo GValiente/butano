@@ -15,8 +15,8 @@
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_double_size_mode.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 #include "bn_sprite_items_bullet.h"
 #include "bn_sprite_items_texture.h"
@@ -154,8 +154,8 @@ int main()
     bn::core::init();
     bn::bg_palettes::set_transparent_color(bn::color(8, 8, 8));
 
-    bn::sprite_text_generator big_text_generator(variable_8x16_sprite_font);
-    info info("Textured polygons with sprites", info_text_lines, big_text_generator);
+    bn::sprite_text_generator big_text_generator(common::variable_8x16_sprite_font);
+    common::info info("Textured polygons with sprites", info_text_lines, big_text_generator);
 
     bn::point p0(-32, 32);
     bn::point p1(32, 24);

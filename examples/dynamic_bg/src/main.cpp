@@ -12,8 +12,8 @@
 #include "bn_sprite_items_cursor.h"
 #include "bn_affine_bg_items_tiles.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -64,7 +64,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
 
     constexpr bn::string_view info_text_lines[] = {
         "PAD: move cursor",
@@ -72,7 +72,7 @@ int main()
         "START: reset BG",
     };
 
-    info info("Dynamic BG", info_text_lines, text_generator);
+    common::info info("Dynamic BG", info_text_lines, text_generator);
 
     int cursor_x = bg_map::columns / 2;
     int cursor_y = bg_map::rows / 2;

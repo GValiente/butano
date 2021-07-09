@@ -9,8 +9,8 @@
 #include "bn_regular_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 #include "bn_regular_bg_items_big_map_4.h"
 #include "bn_regular_bg_items_big_map_8.h"
@@ -28,7 +28,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info(title, info_text_lines, text_generator);
+        common::info info(title, info_text_lines, text_generator);
 
         bn::regular_bg_ptr bg = item.create_bg(0, 0);
         int x_limit = (bg.dimensions().width() - bn::display::width()) / 2;
@@ -66,7 +66,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
 
     while(true)
     {
@@ -76,7 +76,7 @@ int main()
         big_map_scene("1280x768 BPP4 regular BG", bn::regular_bg_items::big_map_4, text_generator);
         bn::core::update();
 
-        big_map_scene("512x1024 BPP4 regular BG", bn::regular_bg_items::border_map, text_generator);
+        big_map_scene("512x1024 borders BPP4 regular BG", bn::regular_bg_items::border_map, text_generator);
         bn::core::update();
     }
 }

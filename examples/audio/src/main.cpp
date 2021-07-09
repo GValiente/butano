@@ -15,8 +15,8 @@
 #include "bn_sound_items.h"
 #include "bn_sprite_items_bullet.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -33,7 +33,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Music", info_text_lines, text_generator);
+        common::info info("Music", info_text_lines, text_generator);
         info.set_show_always(true);
 
         bn::music_items::cyberrid.play(0.5);
@@ -76,7 +76,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Music actions", info_text_lines, text_generator);
+        common::info info("Music actions", info_text_lines, text_generator);
         info.set_show_always(true);
 
         bn::music_items::cyberrid.play(0);
@@ -106,7 +106,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sound", info_text_lines, text_generator);
+        common::info info("Sound", info_text_lines, text_generator);
         info.set_show_always(true);
 
         while(! bn::keypad::start_pressed())
@@ -127,7 +127,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sound panning", info_text_lines, text_generator);
+        common::info info("Sound panning", info_text_lines, text_generator);
         info.set_show_always(true);
 
         int sprite_x_range = 96;
@@ -157,7 +157,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     while(true)

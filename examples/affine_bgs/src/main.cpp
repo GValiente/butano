@@ -28,8 +28,8 @@
 #include "bn_affine_bg_items_red_small.h"
 #include "bn_affine_bg_items_blue_small.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -41,7 +41,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs visibility", info_text_lines, text_generator);
+        common::info info("Affine BGs visibility", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
 
@@ -63,7 +63,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs visibility actions", info_text_lines, text_generator);
+        common::info info("Affine BGs visibility actions", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
         bn::affine_bg_visible_toggle_action action(blue_bg, 60);
@@ -84,7 +84,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs position", info_text_lines, text_generator);
+        common::info info("Affine BGs position", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
 
@@ -119,7 +119,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs position actions", info_text_lines, text_generator);
+        common::info info("Affine BGs position actions", info_text_lines, text_generator);
 
         bn::fixed amplitude = 30;
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
@@ -142,7 +142,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs rotation", info_text_lines, text_generator);
+        common::info info("Affine BGs rotation", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
         red_bg.set_rotation_angle(45);
@@ -171,7 +171,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs rotation actions", info_text_lines, text_generator);
+        common::info info("Affine BGs rotation actions", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
         bn::affine_bg_rotate_loop_action action(blue_bg, 180, 360);
@@ -195,7 +195,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs scale", info_text_lines, text_generator);
+        common::info info("Affine BGs scale", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
         red_bg.set_horizontal_scale(1.5);
@@ -235,7 +235,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs scale actions", info_text_lines, text_generator);
+        common::info info("Affine BGs scale actions", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
         blue_bg.set_scale(0.01);
@@ -261,7 +261,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs shear", info_text_lines, text_generator);
+        common::info info("Affine BGs shear", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
         red_bg.set_horizontal_shear(0.5);
@@ -301,7 +301,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs shear actions", info_text_lines, text_generator);
+        common::info info("Affine BGs shear actions", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
         blue_bg.set_shear(-0.5);
@@ -327,7 +327,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs flip", info_text_lines, text_generator);
+        common::info info("Affine BGs flip", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
         red_bg.set_horizontal_flip(true);
@@ -363,7 +363,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs flip actions", info_text_lines, text_generator);
+        common::info info("Affine BGs flip actions", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
         bn::affine_bg_horizontal_flip_toggle_action action(blue_bg, 60);
@@ -384,7 +384,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs pivot position", info_text_lines, text_generator);
+        common::info info("Affine BGs pivot position", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
         red_bg.set_rotation_angle(45);
@@ -424,7 +424,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs pivot position actions", info_text_lines, text_generator);
+        common::info info("Affine BGs pivot position actions", info_text_lines, text_generator);
 
         bn::fixed amplitude = 30;
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
@@ -449,7 +449,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs pivot H-Blank effect", info_text_lines, text_generator);
+        common::info info("Affine BGs pivot H-Blank effect", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
         red_bg.set_rotation_angle(45);
@@ -497,7 +497,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs matrix H-Blank effect", info_text_lines, text_generator);
+        common::info info("Affine BGs matrix H-Blank effect", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(0, 0);
 
@@ -558,7 +558,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs wrapping", info_text_lines, text_generator);
+        common::info info("Affine BGs wrapping", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red_small.create_bg(0, 0);
 
@@ -580,7 +580,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs wrapping actions", info_text_lines, text_generator);
+        common::info info("Affine BGs wrapping actions", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue_small.create_bg(0, 0);
         bn::affine_bg_wrapping_toggle_action action(blue_bg, 60);
@@ -602,7 +602,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs priority", info_text_lines, text_generator);
+        common::info info("Affine BGs priority", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(-64, 64);
         blue_bg.set_priority(1);
@@ -638,7 +638,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs Z order", info_text_lines, text_generator);
+        common::info info("Affine BGs Z order", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(-64, 64);
         blue_bg.set_z_order(1);
@@ -674,7 +674,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs put above", info_text_lines, text_generator);
+        common::info info("Affine BGs put above", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue.create_bg(-64, 64);
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red.create_bg(0, 0);
@@ -705,7 +705,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs attributes", info_text_lines, text_generator);
+        common::info info("Affine BGs attributes", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue_small.create_bg(-64, 64);
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red_small.create_bg(0, 0);
@@ -737,7 +737,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs attributes H-Blank effect", info_text_lines, text_generator);
+        common::info info("Affine BGs attributes H-Blank effect", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red_small.create_bg(0, 0);
         bn::affine_bg_map_ptr blue_map = bn::affine_bg_items::blue_small.create_map();
@@ -780,7 +780,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BGs matrix attributes", info_text_lines, text_generator);
+        common::info info("Affine BGs matrix attributes", info_text_lines, text_generator);
 
         bn::affine_bg_ptr blue_bg = bn::affine_bg_items::blue_small.create_bg(-64, 64);
         blue_bg.set_wrapping_enabled(false);
@@ -816,7 +816,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine BG builder", info_text_lines, text_generator);
+        common::info info("Affine BG builder", info_text_lines, text_generator);
 
         bn::affine_bg_ptr red_bg = bn::affine_bg_items::red_small.create_bg(0, 0);
         bn::bgs_mosaic::set_stretch(0.2);
@@ -847,7 +847,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     while(true)

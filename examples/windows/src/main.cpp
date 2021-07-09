@@ -17,8 +17,8 @@
 #include "bn_regular_bg_items_land.h"
 #include "bn_regular_bg_items_clouds.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -30,7 +30,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Window", info_text_lines, text_generator);
+        common::info info("Window", info_text_lines, text_generator);
 
         bn::rect_window internal_window = bn::rect_window::internal();
         internal_window.set_boundaries(-48, -96, 48, 96);
@@ -60,7 +60,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Window boundaries", info_text_lines, text_generator);
+        common::info info("Window boundaries", info_text_lines, text_generator);
 
         bn::rect_window internal_window = bn::rect_window::internal();
         bn::fixed_point internal_window_position;
@@ -102,7 +102,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite window", info_text_lines, text_generator);
+        common::info info("Sprite window", info_text_lines, text_generator);
 
         bn::sprite_ptr circle_sprite = bn::sprite_items::circle.create_sprite(0, 0);
         circle_sprite.set_window_enabled(true);
@@ -138,7 +138,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Window actions", info_text_lines, text_generator);
+        common::info info("Window actions", info_text_lines, text_generator);
 
         bn::rect_window internal_window = bn::rect_window::internal();
         internal_window.set_boundaries(-48, -96, 48, 96);
@@ -167,7 +167,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Window H-Blank effect", info_text_lines, text_generator);
+        common::info info("Window H-Blank effect", info_text_lines, text_generator);
 
         bn::rect_window internal_window = bn::rect_window::internal();
         int amplitude = 56;
@@ -231,7 +231,7 @@ int main()
     bn::blending::set_transparency_alpha(0.5);
     clouds_bg.set_blending_enabled(true);
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
 
     while(true)
     {

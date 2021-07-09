@@ -3,11 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#include "info.h"
+#include "common_info.h"
 
 #include "bn_keypad.h"
 #include "bn_display.h"
 #include "bn_sprite_text_generator.h"
+
+namespace common
+{
 
 namespace
 {
@@ -118,4 +121,6 @@ void info::_update_sprites()
     {
         sprite.set_visible(enabled);
     }
+}
+
 }

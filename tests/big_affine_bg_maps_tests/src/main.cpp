@@ -9,8 +9,8 @@
 #include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 #include "bn_affine_bg_items_big_map.h"
 #include "bn_affine_bg_items_border_map.h"
@@ -27,7 +27,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info(title, info_text_lines, text_generator);
+        common::info info(title, info_text_lines, text_generator);
 
         bn::affine_bg_ptr bg = item.create_bg(0, 0);
         int x_limit = (bg.dimensions().width() - bn::display::width()) / 2;
@@ -65,14 +65,14 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
 
     while(true)
     {
         big_map_scene("4096x4096 affine BG", bn::affine_bg_items::big_map, text_generator);
         bn::core::update();
 
-        big_map_scene("512x1024 affine BG", bn::affine_bg_items::border_map, text_generator);
+        big_map_scene("512x1024 borders affine BG", bn::affine_bg_items::border_map, text_generator);
         bn::core::update();
     }
 }

@@ -18,8 +18,8 @@
 #include "bn_sprite_items_blonde.h"
 #include "bn_regular_bg_items_land.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -34,7 +34,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites mosaic", info_text_lines, text_generator);
+        common::info info("Sprites mosaic", info_text_lines, text_generator);
 
         bn::sprite_ptr blonde_sprite = bn::sprite_items::blonde.create_sprite(0, 0);
         blonde_sprite.set_mosaic_enabled(true);
@@ -82,7 +82,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Backgrounds mosaic", info_text_lines, text_generator);
+        common::info info("Backgrounds mosaic", info_text_lines, text_generator);
 
         bn::regular_bg_ptr land_bg = bn::regular_bg_items::land.create_bg(0, 0);
         land_bg.set_mosaic_enabled(true);
@@ -125,7 +125,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites mosaic actions", info_text_lines, text_generator);
+        common::info info("Sprites mosaic actions", info_text_lines, text_generator);
 
         bn::sprite_ptr blonde_sprite = bn::sprite_items::blonde.create_sprite(0, 0);
         blonde_sprite.set_mosaic_enabled(true);
@@ -148,7 +148,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Backgrounds mosaic actions", info_text_lines, text_generator);
+        common::info info("Backgrounds mosaic actions", info_text_lines, text_generator);
 
         bn::regular_bg_ptr land_bg = bn::regular_bg_items::land.create_bg(0, 0);
         land_bg.set_mosaic_enabled(true);
@@ -171,7 +171,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Mosaic H-Blank effect", info_text_lines, text_generator);
+        common::info info("Mosaic H-Blank effect", info_text_lines, text_generator);
 
         bn::regular_bg_ptr land_bg = bn::regular_bg_items::land.create_bg(0, 0);
         land_bg.set_mosaic_enabled(true);
@@ -203,7 +203,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     while(true)

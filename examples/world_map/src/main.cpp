@@ -16,9 +16,10 @@
 #include "bn_affine_bg_dx_register_hbe_ptr.h"
 #include "bn_affine_bg_dy_register_hbe_ptr.h"
 
-#include "info.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
+
 #include "load_attributes.h"
-#include "variable_8x16_sprite_font.h"
 
 #include "bn_sprite_items_ninja.h"
 #include "bn_affine_bg_items_land.h"
@@ -34,8 +35,8 @@ int main()
         "START: go to next scene",
     };
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
-    info info("World map", info_text_lines, text_generator);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
+    common::info info("World map", info_text_lines, text_generator);
 
     bn::affine_bg_ptr land_bg = bn::affine_bg_items::land.create_bg(0, 0);
     land_bg.set_pivot_position(1432, 874);

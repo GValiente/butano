@@ -13,8 +13,8 @@
 
 #include "bn_music_items.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -24,7 +24,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("CPU usage", info_text_lines, text_generator);
+        common::info info("CPU usage", info_text_lines, text_generator);
 
         bn::vector<bn::sprite_ptr, 2> text_sprites;
         bn::fixed max_cpu_usage;
@@ -69,7 +69,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sleep", info_text_lines, text_generator);
+        common::info info("Sleep", info_text_lines, text_generator);
         info.set_show_always(true);
 
         while(! bn::keypad::start_pressed())
@@ -90,7 +90,7 @@ namespace
             "START: reset",
         };
 
-        info info("Reset", info_text_lines, text_generator);
+        common::info info("Reset", info_text_lines, text_generator);
 
         while(true)
         {
@@ -109,7 +109,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     cpu_usage_scene(text_generator);

@@ -12,15 +12,16 @@
 #include "bn_bg_palettes.h"
 #include "bn_sprite_text_generator.h"
 
-#include "fixed_8x8_sprite_font.h"
-#include "fixed_8x16_sprite_font.h"
 #include "fixed_32x64_sprite_font.h"
-#include "variable_8x8_sprite_font.h"
-#include "variable_8x16_sprite_font.h"
 
 #include "bn_sprite_items_variable_8x16_font_red.h"
 #include "bn_sprite_items_variable_8x16_font_blue.h"
 #include "bn_sprite_items_variable_8x16_font_yellow.h"
+
+#include "common_fixed_8x8_sprite_font.h"
+#include "common_fixed_8x16_sprite_font.h"
+#include "common_variable_8x8_sprite_font.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -29,7 +30,7 @@ namespace
 
     void text_scene()
     {
-        bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+        bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
         text_generator.set_center_alignment();
 
         bn::vector<bn::sprite_ptr, 32> text_sprites;
@@ -44,16 +45,16 @@ namespace
 
     void text_fonts_scene()
     {
-        bn::sprite_text_generator small_fixed_text_generator(fixed_8x8_sprite_font);
+        bn::sprite_text_generator small_fixed_text_generator(common::fixed_8x8_sprite_font);
         small_fixed_text_generator.set_center_alignment();
 
-        bn::sprite_text_generator small_variable_text_generator(variable_8x8_sprite_font);
+        bn::sprite_text_generator small_variable_text_generator(common::variable_8x8_sprite_font);
         small_variable_text_generator.set_center_alignment();
 
-        bn::sprite_text_generator big_fixed_text_generator(fixed_8x16_sprite_font);
+        bn::sprite_text_generator big_fixed_text_generator(common::fixed_8x16_sprite_font);
         big_fixed_text_generator.set_center_alignment();
 
-        bn::sprite_text_generator big_variable_text_generator(variable_8x16_sprite_font);
+        bn::sprite_text_generator big_variable_text_generator(common::variable_8x16_sprite_font);
         big_variable_text_generator.set_center_alignment();
 
         bn::vector<bn::sprite_ptr, 32> text_sprites;
@@ -81,7 +82,7 @@ namespace
 
     void text_alignment_scene()
     {
-        bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+        bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
 
         bn::vector<bn::sprite_ptr, 32> text_sprites;
         text_generator.set_center_alignment();
@@ -107,7 +108,7 @@ namespace
 
     void text_colors_scene()
     {
-        bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+        bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
         bn::sprite_palette_item original_palette_item = text_generator.palette_item();
         text_generator.set_center_alignment();
 
@@ -134,7 +135,7 @@ namespace
 
     void sprite_per_character_text_scene()
     {
-        bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+        bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
         text_generator.set_center_alignment();
 
         bn::vector<bn::sprite_ptr, 32> text_sprites;
@@ -179,7 +180,7 @@ namespace
 
     void huge_text_scene()
     {
-        bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+        bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
         text_generator.set_center_alignment();
 
         bn::vector<bn::sprite_ptr, 32> text_sprites;
@@ -200,7 +201,7 @@ namespace
 
     void utf8_text_scene()
     {
-        bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+        bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
         text_generator.set_center_alignment();
 
         bn::vector<bn::sprite_ptr, 32> text_sprites;

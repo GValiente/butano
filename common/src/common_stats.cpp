@@ -3,12 +3,15 @@
  * zlib License, see LICENSE file.
  */
 
-#include "stats.h"
+#include "common_stats.h"
 
 #include "bn_core.h"
 #include "bn_string.h"
 #include "bn_display.h"
 #include "bn_sprite_text_generator.h"
+
+namespace common
+{
 
 stats::stats(bn::sprite_text_generator& text_generator) :
     _text_generator(text_generator)
@@ -131,4 +134,6 @@ void stats::update()
     }
 
     --_counter;
+}
+
 }

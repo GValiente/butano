@@ -9,21 +9,21 @@
 #include "bn_bg_palettes.h"
 #include "bn_sprite_text_generator.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     constexpr bn::string_view info_text_lines[] = {
         "A: hold to rumble",
     };
 
-    info info("Rumble", info_text_lines, text_generator);
+    common::info info("Rumble", info_text_lines, text_generator);
 
     bn::vector<bn::sprite_ptr, 4> text_sprites;
 

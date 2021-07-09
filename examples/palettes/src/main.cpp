@@ -22,8 +22,8 @@
 #include "bn_sprite_palette_items_cavegirl_alt.h"
 #include "bn_sprite_items_cavegirl_green.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -35,7 +35,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Palette swap", info_text_lines, text_generator);
+        common::info info("Palette swap", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
         const bn::sprite_palette_item& palette_item = bn::sprite_items::cavegirl.palette_item();
@@ -70,7 +70,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Inverted palette", info_text_lines, text_generator);
+        common::info info("Inverted palette", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
         bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
@@ -94,7 +94,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Inverted palette actions", info_text_lines, text_generator);
+        common::info info("Inverted palette actions", info_text_lines, text_generator);
 
         bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
         bn::bg_palette_ptr village_palette = village_bg.palette();
@@ -117,7 +117,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Palette grayscale", info_text_lines, text_generator);
+        common::info info("Palette grayscale", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
         bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
@@ -147,7 +147,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Palette grayscale actions", info_text_lines, text_generator);
+        common::info info("Palette grayscale actions", info_text_lines, text_generator);
 
         bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
         bn::bg_palette_ptr village_palette = village_bg.palette();
@@ -170,7 +170,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Palette fade", info_text_lines, text_generator);
+        common::info info("Palette fade", info_text_lines, text_generator);
 
         bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
         bn::bg_palette_ptr village_palette = village_bg.palette();
@@ -200,7 +200,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Palette fade actions", info_text_lines, text_generator);
+        common::info info("Palette fade actions", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
         bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
@@ -225,7 +225,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Palette rotate", info_text_lines, text_generator);
+        common::info info("Palette rotate", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl_green.create_sprite(0, 0);
         bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
@@ -255,7 +255,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Palette rotate actions", info_text_lines, text_generator);
+        common::info info("Palette rotate actions", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl_green.create_sprite(0, 0);
         bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
@@ -278,7 +278,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Global brightness", info_text_lines, text_generator);
+        common::info info("Global brightness", info_text_lines, text_generator);
 
         bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
         bn::bg_palettes::set_brightness(0.5);
@@ -309,7 +309,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Global brightness actions", info_text_lines, text_generator);
+        common::info info("Global brightness actions", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
         bn::sprite_palettes_brightness_loop_action brightness_action(120, 1);
@@ -333,7 +333,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Global contrast", info_text_lines, text_generator);
+        common::info info("Global contrast", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
         bn::sprite_palettes::set_contrast(1);
@@ -364,7 +364,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Global contrast actions", info_text_lines, text_generator);
+        common::info info("Global contrast actions", info_text_lines, text_generator);
 
         bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
         bn::bg_palettes_contrast_loop_action contrast_action(120, 1);
@@ -388,7 +388,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Global intensity", info_text_lines, text_generator);
+        common::info info("Global intensity", info_text_lines, text_generator);
 
         bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
         bn::bg_palettes::set_intensity(0.5);
@@ -419,7 +419,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Global intensity actions", info_text_lines, text_generator);
+        common::info info("Global intensity actions", info_text_lines, text_generator);
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
         bn::sprite_palettes_intensity_loop_action intensity_action(120, 1);
@@ -440,7 +440,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Transparent color H-Blank effect", info_text_lines, text_generator);
+        common::info info("Transparent color H-Blank effect", info_text_lines, text_generator);
 
         bn::array<bn::color, bn::display::height()> colors;
         bn::fixed max_red_inc(16);
@@ -469,7 +469,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Palette color H-Blank effect", info_text_lines, text_generator);
+        common::info info("Palette color H-Blank effect", info_text_lines, text_generator);
 
         bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
         bn::array<bn::color, bn::display::height()> colors;
@@ -498,7 +498,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     while(true)

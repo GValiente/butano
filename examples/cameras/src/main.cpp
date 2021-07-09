@@ -16,8 +16,8 @@
 #include "bn_regular_bg_items_land.h"
 #include "bn_regular_bg_items_clouds.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -29,7 +29,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Camera position", info_text_lines, text_generator);
+        common::info info("Camera position", info_text_lines, text_generator);
 
         while(! bn::keypad::start_pressed())
         {
@@ -64,7 +64,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Camera actions", info_text_lines, text_generator);
+        common::info info("Camera actions", info_text_lines, text_generator);
 
         bn::fixed amplitude = 30;
         camera.set_position(-amplitude, -amplitude);
@@ -86,7 +86,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
 
     bn::regular_bg_ptr land_bg = bn::regular_bg_items::land.create_bg(0, 0);
 

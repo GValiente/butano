@@ -23,8 +23,8 @@
 #include "bn_regular_bg_items_green.h"
 #include "bn_regular_bg_items_yellow.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -36,7 +36,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs visibility", info_text_lines, text_generator);
+        common::info info("Regular BGs visibility", info_text_lines, text_generator);
 
         bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
 
@@ -58,7 +58,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs visibility actions", info_text_lines, text_generator);
+        common::info info("Regular BGs visibility actions", info_text_lines, text_generator);
 
         bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(0, 0);
         bn::regular_bg_visible_toggle_action action(green_bg, 60);
@@ -79,7 +79,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs position", info_text_lines, text_generator);
+        common::info info("Regular BGs position", info_text_lines, text_generator);
 
         bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(0, 0);
 
@@ -114,7 +114,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs position actions", info_text_lines, text_generator);
+        common::info info("Regular BGs position actions", info_text_lines, text_generator);
 
         bn::fixed amplitude = 30;
         bn::regular_bg_ptr yellow_bg = bn::regular_bg_items::yellow.create_bg(-amplitude, -amplitude);
@@ -134,7 +134,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs position H-Blank effect", info_text_lines, text_generator);
+        common::info info("Regular BGs position H-Blank effect", info_text_lines, text_generator);
 
         bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
 
@@ -184,7 +184,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs priority", info_text_lines, text_generator);
+        common::info info("Regular BGs priority", info_text_lines, text_generator);
 
         bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(-64, -64);
         green_bg.set_priority(0);
@@ -228,7 +228,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs Z order", info_text_lines, text_generator);
+        common::info info("Regular BGs Z order", info_text_lines, text_generator);
 
         bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(-64, -64);
         green_bg.set_z_order(0);
@@ -274,7 +274,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs put above", info_text_lines, text_generator);
+        common::info info("Regular BGs put above", info_text_lines, text_generator);
 
         bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(-64, -64);
         bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(-64, 64);
@@ -319,7 +319,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs attributes", info_text_lines, text_generator);
+        common::info info("Regular BGs attributes", info_text_lines, text_generator);
 
         bn::regular_bg_ptr green_bg = bn::regular_bg_items::green.create_bg(-64, -64);
         bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(-64, 64);
@@ -360,7 +360,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BGs attributes H-Blank effect", info_text_lines, text_generator);
+        common::info info("Regular BGs attributes H-Blank effect", info_text_lines, text_generator);
 
         bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
         bn::regular_bg_map_ptr green_map = bn::regular_bg_items::green.create_map();
@@ -399,7 +399,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular BG builder", info_text_lines, text_generator);
+        common::info info("Regular BG builder", info_text_lines, text_generator);
 
         bn::regular_bg_ptr red_bg = bn::regular_bg_items::red.create_bg(0, 0);
         bn::bgs_mosaic::set_stretch(0.2);
@@ -427,7 +427,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     while(true)

@@ -3,8 +3,8 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef INFO_H
-#define INFO_H
+#ifndef COMMON_INFO_H
+#define COMMON_INFO_H
 
 #include "bn_vector.h"
 #include "bn_span_fwd.h"
@@ -15,6 +15,9 @@ namespace bn
     class string_view;
     class sprite_text_generator;
 }
+
+namespace common
+{
 
 class info
 {
@@ -44,5 +47,7 @@ private:
 
     void _update_sprites();
 };
+
+}
 
 #endif

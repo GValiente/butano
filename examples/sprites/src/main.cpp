@@ -36,8 +36,8 @@
 #include "bn_regular_bg_items_green_bg.h"
 #include "bn_regular_bg_items_yellow_bg.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -49,7 +49,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites visibility", info_text_lines, text_generator);
+        common::info info("Sprites visibility", info_text_lines, text_generator);
 
         bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
 
@@ -71,7 +71,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites visibility actions", info_text_lines, text_generator);
+        common::info info("Sprites visibility actions", info_text_lines, text_generator);
 
         bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(0, 0);
         bn::sprite_visible_toggle_action action(green_sprite, 60);
@@ -92,7 +92,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites position", info_text_lines, text_generator);
+        common::info info("Sprites position", info_text_lines, text_generator);
 
         bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(0, 0);
 
@@ -127,7 +127,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites position actions", info_text_lines, text_generator);
+        common::info info("Sprites position actions", info_text_lines, text_generator);
 
         bn::fixed amplitude = 30;
         bn::sprite_ptr yellow_sprite = bn::sprite_items::yellow_sprite.create_sprite(-amplitude, -amplitude);
@@ -147,7 +147,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites position H-Blank effect", info_text_lines, text_generator);
+        common::info info("Sprites position H-Blank effect", info_text_lines, text_generator);
 
         bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
 
@@ -197,7 +197,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites animation", info_text_lines, text_generator);
+        common::info info("Sprites animation", info_text_lines, text_generator);
 
         bn::sprite_ptr ninja_sprite = bn::sprite_items::ninja.create_sprite(0, 0);
 
@@ -234,7 +234,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites animation actions", info_text_lines, text_generator);
+        common::info info("Sprites animation actions", info_text_lines, text_generator);
 
         bn::sprite_ptr ninja_sprite = bn::sprite_items::ninja.create_sprite(0, 0);
         bn::sprite_animate_action<4> action = bn::create_sprite_animate_action_forever(
@@ -279,7 +279,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites rotation", info_text_lines, text_generator);
+        common::info info("Sprites rotation", info_text_lines, text_generator);
 
         bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(0, 0);
         green_sprite.set_rotation_angle(45);
@@ -308,7 +308,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites rotation actions", info_text_lines, text_generator);
+        common::info info("Sprites rotation actions", info_text_lines, text_generator);
 
         bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(0, 0);
         bn::sprite_rotate_loop_action action(blue_sprite, 180, 360);
@@ -332,7 +332,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites scale", info_text_lines, text_generator);
+        common::info info("Sprites scale", info_text_lines, text_generator);
 
         bn::sprite_ptr yellow_sprite = bn::sprite_items::yellow_sprite.create_sprite(0, 0);
         yellow_sprite.set_horizontal_scale(1.5);
@@ -372,7 +372,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites scale actions", info_text_lines, text_generator);
+        common::info info("Sprites scale actions", info_text_lines, text_generator);
 
         bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
         red_sprite.set_scale(0.01);
@@ -398,7 +398,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites shear", info_text_lines, text_generator);
+        common::info info("Sprites shear", info_text_lines, text_generator);
 
         bn::sprite_ptr yellow_sprite = bn::sprite_items::yellow_sprite.create_sprite(0, 0);
         yellow_sprite.set_horizontal_shear(0.5);
@@ -438,7 +438,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites shear actions", info_text_lines, text_generator);
+        common::info info("Sprites shear actions", info_text_lines, text_generator);
 
         bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
         red_sprite.set_shear(-0.5);
@@ -464,7 +464,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites flip", info_text_lines, text_generator);
+        common::info info("Sprites flip", info_text_lines, text_generator);
 
         bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(0, 0);
         green_sprite.set_horizontal_flip(true);
@@ -500,7 +500,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites flip actions", info_text_lines, text_generator);
+        common::info info("Sprites flip actions", info_text_lines, text_generator);
 
         bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(0, 0);
         bn::sprite_horizontal_flip_toggle_action action(blue_sprite, 60);
@@ -522,7 +522,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites double size mode", info_text_lines, text_generator);
+        common::info info("Sprites double size mode", info_text_lines, text_generator);
 
         bn::sprite_ptr yellow_sprite = bn::sprite_items::yellow_sprite.create_sprite(0, 0);
         yellow_sprite.set_scale(2);
@@ -561,7 +561,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites BG priority", info_text_lines, text_generator);
+        common::info info("Sprites BG priority", info_text_lines, text_generator);
 
         bn::regular_bg_ptr green_bg = bn::regular_bg_items::green_bg.create_bg(-56, -56);
         green_bg.set_priority(0);
@@ -606,7 +606,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites Z order", info_text_lines, text_generator);
+        common::info info("Sprites Z order", info_text_lines, text_generator);
 
         bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(-32, -32);
         green_sprite.set_z_order(0);
@@ -649,7 +649,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprites put above", info_text_lines, text_generator);
+        common::info info("Sprites put above", info_text_lines, text_generator);
 
         bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(-32, -32);
         bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(-32, 32);
@@ -694,7 +694,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("First attributes", info_text_lines, text_generator);
+        common::info info("First attributes", info_text_lines, text_generator);
 
         bn::sprites_mosaic::set_stretch(0.1);
 
@@ -741,7 +741,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("First attributes H-Blank effect", info_text_lines, text_generator);
+        common::info info("First attributes H-Blank effect", info_text_lines, text_generator);
 
         bn::sprites_mosaic::set_stretch(0.2);
         bn::blending::set_transparency_alpha(0.6);
@@ -793,7 +793,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Regular second attributes", info_text_lines, text_generator);
+        common::info info("Regular second attributes", info_text_lines, text_generator);
 
         bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(-32, -32);
         bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(-32, 32);
@@ -836,7 +836,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Reg. second attribs. H-Blank effect", info_text_lines, text_generator);
+        common::info info("Reg. second attribs. H-Blank effect", info_text_lines, text_generator);
 
         bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
         bn::sprite_regular_second_attributes red_attributes = red_sprite.regular_second_attributes();
@@ -880,7 +880,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine second attributes", info_text_lines, text_generator);
+        common::info info("Affine second attributes", info_text_lines, text_generator);
 
         bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(-32, -32);
         bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(-32, 32);
@@ -926,7 +926,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Affine second attribs. H-Blank effect", info_text_lines, text_generator);
+        common::info info("Affine second attribs. H-Blank effect", info_text_lines, text_generator);
 
         bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
         red_sprite.set_scale(2);
@@ -974,7 +974,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Third attributes", info_text_lines, text_generator);
+        common::info info("Third attributes", info_text_lines, text_generator);
 
         bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(-32, -32);
         bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(-32, 32);
@@ -1015,7 +1015,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Third attributes H-Blank effect", info_text_lines, text_generator);
+        common::info info("Third attributes H-Blank effect", info_text_lines, text_generator);
 
         bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
         red_sprite.set_scale(2);
@@ -1056,7 +1056,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite builder", info_text_lines, text_generator);
+        common::info info("Sprite builder", info_text_lines, text_generator);
 
         bn::regular_bg_ptr red_bg = bn::regular_bg_items::red_bg.create_bg(0, 0);
         bn::sprites_mosaic::set_stretch(0.1);
@@ -1087,7 +1087,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     while(true)

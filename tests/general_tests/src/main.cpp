@@ -11,6 +11,8 @@
 #include "bn_config_assert.h"
 #include "bn_sprite_text_generator.h"
 
+#include "common_variable_8x16_sprite_font.h"
+
 #include "string_tests.h"
 #include "fixed_tests.h"
 #include "math_tests.h"
@@ -20,7 +22,6 @@
 #include "format_tests.h"
 #include "memory_tests.h"
 #include "sram_tests.h"
-#include "variable_8x16_sprite_font.h"
 
 #if ! BN_CFG_ASSERT_ENABLED
     static_assert(false, "Enable asserts in bn_config_assert.h to run tests");
@@ -32,7 +33,7 @@ int main()
 
     int used_stack_iwram = bn::memory::used_stack_iwram();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     text_generator.set_center_alignment();
 
     auto text = text_generator.generate<8>(0, 0, "Running tests...");

@@ -1663,7 +1663,8 @@
  *
  * @section changelog_7_0_0 7.0.0 (next release)
  *
- * Maximum number of active H-Blank effects reduced to 6.
+ * * Maximum number of active H-Blank effects reduced to 6.
+ * * Common files moved to `common` namespace.
  *
  *
  * @section changelog_6_18_0 6.18.0

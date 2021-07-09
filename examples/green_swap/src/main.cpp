@@ -13,8 +13,8 @@
 
 #include "bn_regular_bg_items_village.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -26,7 +26,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Green swap", info_text_lines, text_generator);
+        common::info info("Green swap", info_text_lines, text_generator);
 
         bn::green_swap::set_enabled(true);
 
@@ -50,7 +50,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Green swap actions", info_text_lines, text_generator);
+        common::info info("Green swap actions", info_text_lines, text_generator);
 
         bn::green_swap_toggle_action action(60);
 
@@ -70,7 +70,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Green swap H-Blank effect", info_text_lines, text_generator);
+        common::info info("Green swap H-Blank effect", info_text_lines, text_generator);
 
         bn::array<bool, bn::display::height()> green_swap_states;
         bn::green_swap_hbe_ptr green_swap_states_hbe = bn::green_swap_hbe_ptr::create(green_swap_states);
@@ -111,7 +111,7 @@ int main()
     bn::core::init();
 
     bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
 
     while(true)
     {

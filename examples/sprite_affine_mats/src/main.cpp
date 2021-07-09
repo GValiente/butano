@@ -20,8 +20,8 @@
 #include "bn_sprite_items_green_sprite.h"
 #include "bn_sprite_items_yellow_sprite.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -35,7 +35,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats rotation", info_text_lines, text_generator);
+        common::info info("Sprite affine mats rotation", info_text_lines, text_generator);
 
         affine_mat.set_rotation_angle(45);
 
@@ -66,7 +66,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats rotation actions", info_text_lines, text_generator);
+        common::info info("Sprite affine mats rotation actions", info_text_lines, text_generator);
 
         bn::sprite_affine_mat_rotate_loop_action action(affine_mat, 180, 360);
 
@@ -92,7 +92,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats scale", info_text_lines, text_generator);
+        common::info info("Sprite affine mats scale", info_text_lines, text_generator);
 
         affine_mat.set_horizontal_scale(1.5);
         affine_mat.set_vertical_scale(0.75);
@@ -134,7 +134,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats scale actions", info_text_lines, text_generator);
+        common::info info("Sprite affine mats scale actions", info_text_lines, text_generator);
 
         affine_mat.set_scale(0.01);
 
@@ -162,7 +162,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats shear", info_text_lines, text_generator);
+        common::info info("Sprite affine mats shear", info_text_lines, text_generator);
 
         affine_mat.set_horizontal_shear(0.5);
         affine_mat.set_vertical_shear(-0.75);
@@ -204,7 +204,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats shear actions", info_text_lines, text_generator);
+        common::info info("Sprite affine mats shear actions", info_text_lines, text_generator);
 
         affine_mat.set_shear(-0.5);
 
@@ -232,7 +232,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats flip", info_text_lines, text_generator);
+        common::info info("Sprite affine mats flip", info_text_lines, text_generator);
 
         affine_mat.set_horizontal_flip(true);
 
@@ -271,7 +271,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats flip actions", info_text_lines, text_generator);
+        common::info info("Sprite affine mats flip actions", info_text_lines, text_generator);
 
         bn::sprite_affine_mat_horizontal_flip_toggle_action action(affine_mat, 120);
 
@@ -296,7 +296,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Sprite affine mats attributes", info_text_lines, text_generator);
+        common::info info("Sprite affine mats attributes", info_text_lines, text_generator);
 
         affine_mat.set_rotation_angle(45);
         affine_mat.set_horizontal_scale(1.5);
@@ -351,7 +351,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Attributes H-Blank effect", info_text_lines, text_generator);
+        common::info info("Attributes H-Blank effect", info_text_lines, text_generator);
 
         bn::affine_mat_attributes attributes[bn::display::height()];
 
@@ -396,7 +396,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     bn::sprite_affine_mat_ptr affine_mat = bn::sprite_affine_mat_ptr::create();

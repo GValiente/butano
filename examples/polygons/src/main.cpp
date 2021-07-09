@@ -11,12 +11,13 @@
 #include "bn_optional.h"
 #include "bn_bg_palettes.h"
 #include "bn_sprite_text_generator.h"
-#include "info.h"
-#include "stats.h"
-#include "variable_8x8_sprite_font.h"
-#include "variable_8x16_sprite_font.h"
 #include "demo_polygon.h"
 #include "polygon_sprite.h"
+
+#include "common_info.h"
+#include "common_stats.h"
+#include "common_variable_8x8_sprite_font.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -112,11 +113,11 @@ int main()
     bn::core::init();
     bn::bg_palettes::set_transparent_color(bn::color(8, 8, 8));
 
-    bn::sprite_text_generator big_text_generator(variable_8x16_sprite_font);
-    info info(info_text_lines, big_text_generator);
+    bn::sprite_text_generator big_text_generator(common::variable_8x16_sprite_font);
+    common::info info(info_text_lines, big_text_generator);
 
-    bn::sprite_text_generator small_text_generator(variable_8x8_sprite_font);
-    stats stats(small_text_generator);
+    bn::sprite_text_generator small_text_generator(common::variable_8x8_sprite_font);
+    common::stats stats(small_text_generator);
 
     const bn::fixed_point vertices[] = {
         bn::fixed_point(120 - 31, 1),
@@ -129,8 +130,8 @@ int main()
     polygon_sprite user_polygon_sprite(user_polygon, 0, 0);
 
     bn::random random;
-    bn::vector<demo_polygon, 6> demo_polygons;
-    bn::unique_ptr<bn::vector<polygon_sprite, 3>> demo_polygon_sprites(new bn::vector<polygon_sprite, 3>());
+    bn::vector<demo_polygon, 4> demo_polygons;
+    bn::unique_ptr<bn::vector<polygon_sprite, 2>> demo_polygon_sprites(new bn::vector<polygon_sprite, 2>());
     bool demo_shown = false;
 
     while(true)
@@ -157,8 +158,7 @@ int main()
             if(demo_polygons.empty())
             {
                 _create_demo_polygon_sprite(16, demo_polygons, *demo_polygon_sprites);
-                _create_demo_polygon_sprite(bn::display::width() - 64 - 8 - 32, demo_polygons, *demo_polygon_sprites);
-                _create_demo_polygon_sprite(bn::display::width() - 64 - 8, demo_polygons, *demo_polygon_sprites);
+                _create_demo_polygon_sprite(bn::display::width() - 64 - 16, demo_polygons, *demo_polygon_sprites);
                 demo_shown = true;
             }
             else

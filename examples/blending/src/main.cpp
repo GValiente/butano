@@ -18,8 +18,8 @@
 #include "bn_regular_bg_items_mountain.h"
 #include "bn_sprite_items_variable_8x16_font_yellow.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -33,7 +33,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Transparency", info_text_lines, text_generator);
+        common::info info("Transparency", info_text_lines, text_generator);
 
         mountain_bg.set_blending_enabled(false);
         dinosaur_sprite.set_blending_enabled(true);
@@ -70,7 +70,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Intensity", info_text_lines, text_generator);
+        common::info info("Intensity", info_text_lines, text_generator);
 
         mountain_bg.set_blending_enabled(false);
         dinosaur_sprite.set_blending_enabled(true);
@@ -108,7 +108,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Fade", info_text_lines, text_generator);
+        common::info info("Fade", info_text_lines, text_generator);
 
         mountain_bg.set_blending_enabled(true);
         dinosaur_sprite.set_blending_enabled(true);
@@ -155,7 +155,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Transparency actions", info_text_lines, text_generator);
+        common::info info("Transparency actions", info_text_lines, text_generator);
 
         mountain_bg.set_blending_enabled(false);
         dinosaur_sprite.set_blending_enabled(true);
@@ -179,7 +179,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("intensity actions", info_text_lines, text_generator);
+        common::info info("intensity actions", info_text_lines, text_generator);
 
         mountain_bg.set_blending_enabled(false);
         dinosaur_sprite.set_blending_enabled(true);
@@ -203,7 +203,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Fade actions", info_text_lines, text_generator);
+        common::info info("Fade actions", info_text_lines, text_generator);
 
         mountain_bg.set_blending_enabled(true);
         dinosaur_sprite.set_blending_enabled(true);
@@ -227,7 +227,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Transparency H-Blank effect", info_text_lines, text_generator);
+        common::info info("Transparency H-Blank effect", info_text_lines, text_generator);
 
         mountain_bg.set_blending_enabled(false);
         dinosaur_sprite.set_blending_enabled(true);
@@ -258,7 +258,7 @@ namespace
             "START: go to next scene",
         };
 
-        info info("Fade H-Blank effect", info_text_lines, text_generator);
+        common::info info("Fade H-Blank effect", info_text_lines, text_generator);
 
         mountain_bg.set_blending_enabled(true);
         dinosaur_sprite.set_blending_enabled(true);
@@ -289,7 +289,7 @@ int main()
     bn::regular_bg_ptr mountain_bg = bn::regular_bg_items::mountain.create_bg(0, 0);
     bn::sprite_ptr dinosaur_sprite = bn::sprite_items::dinosaur.create_sprite(0, 0);
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     text_generator.set_palette_item(bn::sprite_items::variable_8x16_font_yellow.palette_item());
 
     while(true)

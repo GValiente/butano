@@ -3,11 +3,14 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef VARIABLE_8x16_SPRITE_FONT_H
-#define VARIABLE_8x16_SPRITE_FONT_H
+#ifndef COMMON_VARIABLE_8x16_SPRITE_FONT_H
+#define COMMON_VARIABLE_8x16_SPRITE_FONT_H
 
 #include "bn_sprite_font.h"
-#include "bn_sprite_items_variable_8x16_font.h"
+#include "bn_sprite_items_common_variable_8x16_font.h"
+
+namespace common
+{
 
 constexpr bn::string_view variable_8x16_sprite_font_utf8_characters[] = {
     "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
@@ -128,7 +131,9 @@ constexpr int8_t variable_8x16_sprite_font_character_widths[] = {
 };
 
 constexpr bn::sprite_font variable_8x16_sprite_font(
-        bn::sprite_items::variable_8x16_font, variable_8x16_sprite_font_utf8_characters,
+        bn::sprite_items::common_variable_8x16_font, variable_8x16_sprite_font_utf8_characters,
         variable_8x16_sprite_font_character_widths);
+
+}
 
 #endif

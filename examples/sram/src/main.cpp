@@ -10,8 +10,8 @@
 #include "bn_bg_palettes.h"
 #include "bn_sprite_text_generator.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -26,7 +26,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     bn::string_view info_text_lines[4];
@@ -65,7 +65,7 @@ int main()
 
     bn::sram::write(cart_sram_data);
 
-    info info("SRAM", info_text_lines, text_generator);
+    common::info info("SRAM", info_text_lines, text_generator);
     info.set_show_always(true);
 
     while(true)

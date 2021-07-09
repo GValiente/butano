@@ -16,8 +16,8 @@
 
 #include "bn_affine_bg_items_land.h"
 
-#include "info.h"
-#include "variable_8x16_sprite_font.h"
+#include "common_info.h"
+#include "common_variable_8x16_sprite_font.h"
 
 namespace
 {
@@ -128,7 +128,7 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(variable_8x16_sprite_font);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
 
     constexpr bn::string_view info_text_lines[] = {
         "Left/Right: move camera x",
@@ -137,7 +137,7 @@ int main()
         "L/R: move camera phi",
     };
 
-    info info("Mode 7", info_text_lines, text_generator);
+    common::info info("Mode 7", info_text_lines, text_generator);
 
     bn::affine_bg_ptr bg = bn::affine_bg_items::land.create_bg(-376, -336);
 

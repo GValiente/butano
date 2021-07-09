@@ -26,7 +26,7 @@
  * @ingroup hblank_effect
  */
 #ifndef BN_CFG_HBES_MAX_ITEMS
-    #define BN_CFG_HBES_MAX_ITEMS 8
+    #define BN_CFG_HBES_MAX_ITEMS 6
 #endif
 
 #endif

@@ -1661,6 +1661,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_0_0 7.0.0 (next release)
+ *
+ * Maximum number of active H-Blank effects reduced to 6.
+ *
+ *
  * @section changelog_6_18_0 6.18.0
  *
  * * Generated items are now `constexpr inline` to avoid being copied to every translation unit.

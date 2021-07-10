@@ -1,0 +1,41 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# CA3
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib stands_right.mtl
+o Plane
+v -35.000000 -11.559046 -39.388626
+v -35.000000 38.190895 35.611404
+v -29.994963 34.633755 30.248817
+v -29.994963 -8.001898 -34.026100
+v 35.000000 -11.559046 -39.388626
+v 35.000000 -8.001898 -34.026100
+v 35.000000 38.190895 35.611404
+v 35.000000 34.633755 30.248857
+v 35.000000 -28.559050 -39.388641
+v -35.000000 -28.559050 -39.388641
+v -35.000000 -28.559099 35.611359
+v 35.000000 -28.559099 35.611359
+v 35.000000 23.245043 30.248812
+v 35.000000 -19.390602 -34.026112
+v -29.994963 -19.390602 -34.026112
+v -29.994963 23.245043 30.248812
+usemtl border_up
+s off
+f 1 2 3 4
+f 5 1 4 6
+f 2 7 8 3
+usemtl border_front
+f 5 9 10 1
+usemtl border_side
+f 1 10 11 2
+usemtl border_down
+f 12 11 10 9
+usemtl interior_up
+f 13 14 15 16
+usemtl interior_top
+f 3 8 13 16
+usemtl interior_side
+f 4 3 16 15
+usemtl interior_bottom
+f 6 4 15 14

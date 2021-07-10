@@ -2,7 +2,7 @@
 
 Butano is a modern C++ high level engine for the [Game Boy Advance](https://en.wikipedia.org/wiki/Game_Boy_Advance).
 
-![](docs_tools/images/examples_mode_7.gif) ![](docs_tools/images/bf_title.gif) ![](docs_tools/images/examples_world_map.gif)
+![](docs_tools/images/examples_mode_7.gif) ![](docs_tools/images/bf_title.gif) ![](docs_tools/images/vr3d_race.gif)
 
 
 ## Features
@@ -16,7 +16,8 @@ Butano is a modern C++ high level engine for the [Game Boy Advance](https://en.w
 * Based on modern C++ concepts like shared ownership and RAII.
 * Detailed [documentation](https://gvaliente.github.io/butano).
 * Multiple [examples](https://gvaliente.github.io/butano/examples.html) of most aspects of the engine.
-* The source code of a full game ([Butano Fighter](#butano-fighter)) is provided with this project.
+* The source code and assets of two full games ([Butano Fighter](#butano-fighter) 
+and [Varooom 3D](#varooom-3d)) are provided with this project.
 
 
 ## Supported platforms
@@ -54,7 +55,7 @@ Butano would have not been possible without these libraries:
 
 ## Butano Fighter
 
-Stay alive while you shoot at everything that moves!
+Stay alive while you shoot at everything that moves! What else do you need?
 
 The full source code and the creative commons assets of this game are in [its project folder](games/butano-fighter).
 
@@ -63,9 +64,28 @@ Get the latest Butano Fighter ROM from [itch.io](https://gvaliente.itch.io/butan
 ![](docs_tools/images/bf_title.gif) ![](docs_tools/images/bf_intro.gif) ![](docs_tools/images/bf_bomb.gif)
 
 
-## Related projects
+## Varooom 3D
+
+Action-packed with revolutionary 60FPS 3D technology and 3D glasses (not included) that will have you believing 
+you're in the middle of a circuit race at speeds of 200 KMH!
+
+The full source code and the creative commons assets of this game are in [its project folder](games/varooom-3d).
+
+Get the latest Varooom 3D ROMs from [itch.io](https://gvaliente.itch.io/varooom-3d).
+
+![](docs_tools/images/vr3d_title.gif) ![](docs_tools/images/vr3d_race.gif) ![](docs_tools/images/vr3d_viewer.gif)
+
+
+## Also made with Butano
 
 * [GBA-NICCC](https://github.com/GValiente/gba-niccc): Game Boy Advance port of the Atari ST demo STNICCC 2000.
+
+![](docs_tools/images/gba-niccc_1.png) ![](docs_tools/images/gba-niccc_2.png)
+
+* [Feline](https://foopod.itch.io/feline): explore the world as a cat, meet new people, learn new languages, 
+face difficult foes and save your family!
+
+![](docs_tools/images/feline_title.png) ![](docs_tools/images/feline_gameplay.png)
 
 
 ## Contact and support
@@ -75,6 +95,11 @@ the best you can do is to head over to the [issues page](https://github.com/GVal
 and to the [gbadev Discord server](https://discord.gg/2WS7bpJ).
 
 
-## License
+## Licenses
 
 Butano is licensed under the zlib license, see the [LICENSE](LICENSE) file for details.
+
+Third party libraries are licensed under other licenses, please check [licenses](licenses) folder for details.
+
+Assets used in games, examples and other projects are licensed under other licenses, 
+please check the `credits` folders for details.

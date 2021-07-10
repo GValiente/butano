@@ -1,0 +1,54 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# CA3
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib arbutus_tree.mtl
+o Cube.001
+v 6.137300 -28.000000 4.888290
+v -3.588476 -28.000000 4.767750
+v -3.635710 -28.000000 -4.930620
+v 6.090065 -28.000000 -4.810064
+v -1.903915 11.078022 -3.065017
+v 4.262780 11.078022 -3.065017
+v -10.217755 16.000002 -11.417645
+v 12.579754 16.000002 -11.417645
+v 4.262780 11.078020 3.101693
+v -1.903915 11.078020 3.101693
+v -10.217755 15.999998 11.379864
+v -9.336400 20.999998 10.498509
+v -9.336400 21.000002 -10.536289
+v 12.579754 15.999998 11.379864
+v 11.698385 20.999998 10.498509
+v 11.698385 21.000002 -10.536289
+v 0.000000 28.000000 0.000004
+usemtl green_up_a
+s off
+f 13 12 17
+usemtl green_up_b
+f 12 15 17
+f 16 13 17
+usemtl green_up_c
+f 15 16 17
+usemtl green_side_a
+f 7 11 12 13
+usemtl green_side_b
+f 11 14 15 12
+f 8 7 13 16
+usemtl green_side_c
+f 14 8 16 15
+usemtl green_down_a
+f 5 10 11 7
+usemtl green_down_b
+f 6 5 7 8
+f 10 9 14 11
+usemtl green_down_c
+f 9 6 8 14
+usemtl brown_side_a
+f 2 10 5 3
+usemtl brown_side_b
+f 2 1 9 10
+f 4 3 5 6
+usemtl brown_side_c
+f 1 4 6 9
+usemtl brown_down
+f 3 4 1 2

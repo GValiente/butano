@@ -1,0 +1,30 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib mountain_flipped.mtl
+o Plane
+v 35.000000 -39.999977 -40.000008
+v 2.000000 -39.999977 -40.000008
+v -11.000000 22.000008 -17.999996
+v 35.000000 2.000012 -27.000000
+v -35.000000 -39.999977 -40.000046
+v -35.000000 -15.999992 -23.000000
+v 13.000000 17.999996 14.000005
+v 35.000000 -6.000000 2.000002
+v -35.000000 6.999999 3.800002
+v -3.000000 26.999966 66.000015
+v 35.000000 26.999964 66.000015
+v -35.000000 26.999964 66.000015
+usemtl a1
+s off
+f 1 2 3 4
+usemtl a2
+f 5 6 3 2
+usemtl b1
+f 7 8 4 3
+usemtl b2
+f 9 7 3 6
+usemtl c1
+f 10 11 8 7
+usemtl c2
+f 12 10 7 9

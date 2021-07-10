@@ -1,0 +1,49 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# CA3
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib big_tree.mtl
+o Cube.002
+v 0.607717 55.288280 -37.443424
+v 8.111641 62.712097 26.086821
+v -22.273832 23.065212 44.225033
+v 27.575644 21.844540 40.822830
+v -27.789108 12.234229 -40.897671
+v -24.930958 31.559835 4.360910
+v 24.937143 31.410036 1.016510
+v 22.079018 12.084432 -44.242046
+v -6.194358 -6.999997 -6.782784
+v -7.572659 -5.000004 14.119816
+v 6.990517 -6.999997 -7.667034
+v 5.607292 -5.000004 13.220291
+v -6.396684 -63.986122 -0.667288
+v -6.396684 -63.986126 12.552464
+v 6.823066 -63.986126 12.552464
+v 6.823066 -63.986122 -0.667288
+usemtl green_a
+s off
+f 1 6 7
+f 8 5 1
+f 2 6 3
+f 4 7 2
+usemtl green_b
+f 6 2 7
+f 2 3 4
+f 8 1 7
+f 6 1 5
+usemtl green_down_a
+f 9 10 3 6
+f 11 9 5 8
+f 7 4 12
+usemtl green_down_b
+f 6 5 9
+f 8 7 12 11
+f 12 4 3 10
+usemtl brown_a
+f 10 9 13 14
+f 15 16 11 12
+usemtl brown_b
+f 10 14 15 12
+f 16 13 9 11
+usemtl brown_down
+f 14 13 16 15

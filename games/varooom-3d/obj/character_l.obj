@@ -1,0 +1,34 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib character_l.mtl
+o Cube.001
+v 3.000000 14.999999 3.000003
+v 3.000000 14.999996 9.000006
+v 3.000000 -15.000004 8.999994
+v 3.000000 -9.000002 2.999998
+v 3.000000 -14.999996 -9.000006
+v 3.000000 -8.999997 -9.000002
+v -3.000000 14.999999 3.000003
+v -3.000000 14.999996 9.000006
+v -3.000000 -14.999996 -9.000006
+v -3.000000 -8.999997 -9.000002
+v -3.000000 -9.000002 2.999998
+v -3.000000 -15.000004 8.999994
+usemtl front
+s off
+f 1 2 3 4
+f 3 5 6 4
+usemtl back
+f 7 11 12 8
+f 12 11 10 9
+usemtl up
+f 4 6 10 11
+f 2 1 7 8
+usemtl left
+f 2 8 12 3
+usemtl right
+f 4 11 7 1
+f 6 5 9 10
+usemtl down
+f 5 3 12 9

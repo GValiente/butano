@@ -1,0 +1,43 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# CA3
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib fat_tree.mtl
+o Cube.001
+v -25.876839 17.280773 -25.876837
+v -25.876839 17.280766 25.876841
+v 0.000000 51.090965 0.000008
+v 25.876839 17.280766 25.876841
+v 25.876839 17.280773 -25.876837
+v -6.841703 -0.751337 -6.841704
+v -6.841703 -0.751339 6.841703
+v 6.841703 -0.751337 -6.841704
+v 6.841703 -0.751339 6.841703
+v -6.841703 -39.069565 -6.841711
+v -6.841703 -39.069565 6.841697
+v 6.841703 -39.069565 -6.841711
+v 6.841703 -39.069565 6.841697
+usemtl green_up_front
+s off
+f 1 2 3
+usemtl green_up_side
+f 4 3 2
+f 5 1 3
+usemtl green_up_back
+f 3 4 5
+usemtl green_down_front
+f 1 6 7 2
+usemtl green_down_side
+f 6 1 5 8
+f 4 2 7 9
+usemtl green_down_back
+f 8 5 4 9
+usemtl brown_front
+f 7 6 10 11
+usemtl brown_side
+f 6 8 12 10
+f 9 7 11 13
+usemtl brown_back
+f 8 9 13 12
+usemtl brown_down
+f 10 12 13 11

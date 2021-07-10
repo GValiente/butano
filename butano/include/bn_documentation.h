@@ -1663,6 +1663,7 @@
  *
  * @section changelog_7_0_0 7.0.0 (next release)
  *
+ * * <a href="https://gvaliente.itch.io/varooom-3d">Varooom 3D</a> source code and assets added.
  * * Maximum number of active H-Blank effects reduced to 6.
  * * Common files moved to `common` namespace.
  *

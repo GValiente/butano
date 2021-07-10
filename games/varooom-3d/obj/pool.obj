@@ -1,0 +1,45 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib pool.mtl
+o Plane
+v -25.000000 4.500008 -49.999996
+v -25.000000 4.499992 50.000011
+v -21.000000 4.499992 46.000000
+v -21.000000 4.500008 -46.000000
+v 25.000000 4.500008 -49.999996
+v 21.000000 4.500008 -46.000000
+v 25.000000 4.499992 50.000011
+v 21.000000 4.499992 46.000000
+v 25.000000 -10.499978 -50.000004
+v -25.000000 -10.499978 -50.000004
+v 25.000000 -10.500022 49.999989
+v -25.000000 -10.500022 49.999989
+v 21.000000 1.499992 46.000000
+v 21.000000 1.500008 -46.000000
+v -21.000000 1.500008 -46.000000
+v -21.000000 1.499992 46.000000
+usemtl border_up
+s off
+f 1 2 3 4
+f 5 1 4 6
+f 2 7 8 3
+f 7 5 6 8
+usemtl border_front
+f 5 9 10 1
+usemtl border_side
+f 7 11 9 5
+f 1 10 12 2
+usemtl border_back
+f 7 2 12 11
+usemtl border_down
+f 11 12 10 9
+usemtl interior_up
+f 13 14 15 16
+usemtl interior_top
+f 3 8 13 16
+usemtl interior_side
+f 4 3 16 15
+f 8 6 14 13
+usemtl interior_bottom
+f 6 4 15 14

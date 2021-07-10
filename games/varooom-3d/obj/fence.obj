@@ -1,0 +1,21 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib fence.mtl
+o Plane
+v -35.000000 -10.000001 4.999999
+v 35.000000 -10.000001 4.999999
+v 35.000000 7.000000 0.000001
+v -35.000000 7.000000 0.000001
+v 35.000000 -9.999999 -5.000001
+v -35.000000 -9.999999 -5.000001
+usemtl a
+s off
+f 1 2 3 4
+usemtl b
+f 4 3 5 6
+usemtl lateral
+f 3 2 5
+f 4 6 1
+usemtl down
+f 1 6 5 2

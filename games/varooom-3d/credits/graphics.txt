@@ -1,0 +1,51 @@
+- 3D models
+    By GValiente and CA3
+    Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+
+- Course ground and clouds
+    By GValiente
+    Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+    https://github.com/GValiente/butano
+
+- Default and dawn color palettes
+    By GValiente
+    Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+    https://github.com/GValiente/butano
+
+- Desert and snow color palettes
+    By Tempest
+    Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+    https://soundcloud.com/janne-suni
+
+- Varooom 3D logo
+    By Kaappis
+    Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+	https://twitter.com/kaappis
+
+- GBA Jam 2021 intro
+    By Jeremy Clarke
+    Permission is hereby granted for you to use this logo in your submission(s) for GBA Jam 2021 on itch.io. No attribution required.
+    https://twitter.com/exelotl
+
+- GBA Jam 2021 intro Noto Sans text font
+    By Google
+    Licensed under the Apache License, Version 2.0
+    https://fonts.google.com/specimen/Noto+Sans
+
+- GBA Jam 2021 intro Rajdhani text font
+    By Indian Type Foundry
+    Licensed under the Open Font License
+    https://fonts.google.com/specimen/Rajdhani
+
+- GBA Jam 2021 intro backdrop
+    By Lukasz Lada
+    Licensed under the Unsplash License (https://unsplash.com/license)
+    https://unsplash.com/photos/LtWFFVi1RXQ
+
+- Everything else
+    The assets in this repository are created at Sparklin Labs by Pixel-boy: https://twitter.com/2pblog1
+    Their creation is funded by your support on Patreon (http://patreon.com/SparklinLabs) and through donations (http://sparklinlabs.itch.io/superpowers) Thanks!
+
+    Attribution/Licensing:
+            Creative Commons Zero: http://creativecommons.org/publicdomain/zero/1.0/
+            Attribution is not required but appreciated. Placing a link to http://superpowers-html5.com/ somewhere would be awesome :)

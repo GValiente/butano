@@ -1,0 +1,30 @@
+# Copyright (c) 2021
+# Gustavo Valiente gustavo.valiente@protonmail.com
+# Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) license
+mtllib mountain.mtl
+o Plane
+v 35.000000 -39.999985 -40.000038
+v -3.000000 -39.999985 -40.000000
+v 10.000000 22.000004 -18.000000
+v 35.000000 -15.999996 -22.999998
+v -35.000000 -39.999985 -40.000000
+v -35.000000 2.000008 -27.000000
+v 35.000000 7.000000 3.800001
+v -14.000000 17.999998 14.000002
+v -35.000000 -6.000000 2.000003
+v 35.000000 26.999975 66.000008
+v 3.000000 26.999977 66.000008
+v -35.000000 26.999975 66.000008
+usemtl a1
+s off
+f 1 2 3 4
+usemtl a2
+f 5 6 3 2
+usemtl b1
+f 7 4 3 8
+usemtl b2
+f 8 3 6 9
+usemtl c1
+f 10 7 8 11
+usemtl c2
+f 11 8 9 12

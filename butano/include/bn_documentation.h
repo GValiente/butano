@@ -1661,7 +1661,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_0_1 7.0.1 (next release)
+ * @section changelog_7_0_1 7.0.1
  *
  * bn::format build fix.
  *

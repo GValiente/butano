@@ -1661,6 +1661,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_0_1 7.0.1 (next release)
+ *
+ * bn::format build fix.
+ *
+ *
  * @section changelog_7_0_0 7.0.0
  *
  * * <a href="https://gvaliente.itch.io/varooom-3d">Varooom 3D</a> source code and assets added.

@@ -88,6 +88,11 @@ because enemies and an evil tree boss will try to stop you!
 
 ![](docs_tools/images/bridge_quest_title.png) ![](docs_tools/images/bridge_quest_gameplay.png)
 
+* [Advance! Adventures Of The Math & Logic Club](https://kva64.itch.io/advance-demo-adventures-of-the-math-logic-club): 
+small demo/prototype of a visual novel about joining an ordinary math club.
+
+![](docs_tools/images/advance_amlc_title.png) ![](docs_tools/images/advance_amlc_gameplay.png)
+
 * [GBA-NICCC](https://github.com/GValiente/gba-niccc): Game Boy Advance port of the Atari ST demo STNICCC 2000.
 
 ![](docs_tools/images/gba-niccc_1.png) ![](docs_tools/images/gba-niccc_2.png)

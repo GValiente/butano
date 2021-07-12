@@ -1670,7 +1670,8 @@
  *
  * @section changelog_7_1_0 7.1.0 (next release)
  *
- * @ref faq page improved.
+ * * @ref faq page improved.
+ * * Games made with Butano added to `README.md`.
  *
  *
  * @section changelog_7_0_1 7.0.1

@@ -83,6 +83,11 @@ face difficult foes and save your family!
 
 ![](docs_tools/images/feline_title.png) ![](docs_tools/images/feline_gameplay.png)
 
+* [Symbol★Merged](https://copyrat90.itch.io/sym-merged): a puzzle platformer game where you can merge items 
+(symbols) in hands, and use the superpower of the merged symbol.
+
+![](docs_tools/images/symbol_merged_title.png) ![](docs_tools/images/symbol_merged_gameplay.png)
+
 * [Bridge Quest](https://fixxiefixx.itch.io/bridge-quest): find the way to the desert, but beware, 
 because enemies and an evil tree boss will try to stop you!
 

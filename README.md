@@ -98,6 +98,11 @@ small demo/prototype of a visual novel about joining an ordinary math club.
 
 ![](docs_tools/images/advance_amlc_title.png) ![](docs_tools/images/advance_amlc_gameplay.png)
 
+* [Knight Owls](https://blaise-rascal.itch.io/knight-owls): build up a powerful spellbook and take on many enemies, 
+gather owls and upgrades while managing your health and money and defeat the final boss to win!
+
+![](docs_tools/images/knight_owls_title.png) ![](docs_tools/images/knight_owls_gameplay.png)
+
 * [GBA-NICCC](https://github.com/GValiente/gba-niccc): Game Boy Advance port of the Atari ST demo STNICCC 2000.
 
 ![](docs_tools/images/gba-niccc_1.png) ![](docs_tools/images/gba-niccc_2.png)

@@ -1696,6 +1696,7 @@
  *
  * @section changelog_7_1_0 7.1.0 (next release)
  *
+ * * bn::hdma commit fixed.
  * * @ref faq page improved.
  * * Games made with Butano added to `README.md`.
  *

@@ -93,8 +93,10 @@ namespace
             data.cpu_usage_timer.restart();
             data.restart_cpu_usage_timer = false;
         }
-
-        hdma_manager::commit();
+        else
+        {
+            hdma_manager::commit();
+        }
     }
 
     void enable()
@@ -201,6 +203,10 @@ namespace
 
         BN_PROFILER_ENGINE_START("eng_palettes_commit");
         palettes_manager::commit();
+        BN_PROFILER_ENGINE_STOP();
+
+        BN_PROFILER_ENGINE_START("eng_hdma_commit");
+        hdma_manager::commit();
         BN_PROFILER_ENGINE_STOP();
 
         BN_PROFILER_ENGINE_START("eng_spr_tiles_commit");

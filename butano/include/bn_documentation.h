@@ -1680,9 +1680,7 @@
  *
  * For example, to set the audio mixing rate to 21KHz:
  *
- * @code{.cpp}
- * USERFLAGS := -DBN_CFG_AUDIO_MIXING_RATE=BN_AUDIO_MIXING_RATE_21_KHZ
- * @endcode
+ * `USERFLAGS := -DBN_CFG_AUDIO_MIXING_RATE=BN_AUDIO_MIXING_RATE_21_KHZ`
  *
  * Remember to rebuild your project from scratch after modifying a `Makefile`.
  *

@@ -1694,7 +1694,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_1_0 7.1.0 (next release)
+ * @section changelog_7_1_0 7.1.0
  *
  * * bn::hdma commit fixed.
  * * @ref faq page improved.

@@ -1700,7 +1700,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_2_0 7.2.0 (next release)
+ * @section changelog_7_2_0 7.2.0
  *
  * * bn::regular_bg_map_cell_info and bn::affine_bg_map_cell_info added.
  * * bn::regular_bg_map_item::cell_index and bn::regular_bg_map_item::cell added.

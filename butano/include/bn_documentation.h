@@ -1694,6 +1694,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_1_1 7.1.1 (next release)
+ *
+ * bn::vector, bn::unordered_map and bn::unordered_set move constructors and assignment operators fixed.
+ *
+ *
  * @section changelog_7_1_0 7.1.0
  *
  * * bn::hdma commit fixed.

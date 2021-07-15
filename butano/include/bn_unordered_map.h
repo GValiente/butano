@@ -1081,15 +1081,13 @@ public:
             {
                 if(other_allocated[index])
                 {
-                    value_type&& other_value = other_storage[index];
-
                     if(allocated[index])
                     {
-                        storage[index] = move(other_value);
+                        storage[index] = move(other_storage[index]);
                     }
                     else
                     {
-                        ::new(storage + index) value_type(move(other_value));
+                        ::new(storage + index) value_type(move(other_storage[index]));
                         ++size;
                     }
                 }
@@ -1098,12 +1096,7 @@ public:
             _size = size;
             _first_valid_index = first_valid_index;
             _last_valid_index = last_valid_index;
-
-            int other_max_size = other.max_size();
-            memory::clear(other_max_size, *other._allocated);
-            other._first_valid_index = other_max_size;
-            other._last_valid_index = 0;
-            other._size = 0;
+            other.clear();
         }
     }
 
@@ -1398,19 +1391,14 @@ protected:
         {
             if(allocated[index])
             {
-                value_type& other_value = other_storage[index];
-                ::new(storage + index) value_type(move(other_value));
+                ::new(storage + index) value_type(move(other_storage[index]));
             }
         }
 
         _first_valid_index = other._first_valid_index;
         _last_valid_index = other._last_valid_index;
         _size = other._size;
-
-        memory::clear(other_max_size, *other._allocated);
-        other._first_valid_index = other_max_size;
-        other._last_valid_index = 0;
-        other._size = 0;
+        other.clear();
     }
 
     /// @endcond

@@ -839,11 +839,10 @@ protected:
 
         for(size_type index = 0; index < other_size; ++index)
         {
-            value_type& other_value = other_data[index];
-            ::new(data + index) value_type(move(other_value));
+            ::new(data + index) value_type(move(other_data[index]));
         }
 
-        other._size = 0;
+        other.clear();
     }
 
     void _assign(size_type count)
@@ -1034,7 +1033,7 @@ public:
             BN_ASSERT(other.size() <= MaxSize, "Not enough space in vector: ", MaxSize, " - ", other.size());
 
             this->clear();
-            this->_assign(other);
+            this->_assign(move(other));
         }
 
         return *this;

@@ -1705,6 +1705,7 @@
  * * bn::regular_bg_map_cell_info and bn::affine_bg_map_cell_info added.
  * * bn::regular_bg_map_item::cell_index and bn::regular_bg_map_item::cell added.
  * * bn::affine_bg_map_item::cell_index and bn::affine_bg_map_item::cell added.
+ * * Maps commit optimized by more than 200% in some cases.
  * * `dynamic_regular_bg` example added.
  * * `dynamic_bg` example renamed to `dynamic_affine_bg` and improved.
  *

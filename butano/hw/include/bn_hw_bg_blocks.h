@@ -72,39 +72,18 @@ namespace bn::hw::bg_blocks
         }
     }
 
-    inline void copy_regular_bg_map_cell_tiles_offset(unsigned source_cell, unsigned tiles_offset,
-                                                      uint16_t& destination_cell)
+    [[nodiscard]] inline uint16_t regular_map_cells_offset(unsigned tiles_offset, unsigned palette_offset)
     {
-        unsigned tile_id = BFN_GET(source_cell, SE_ID);
-        BFN_SET(source_cell, tile_id + tiles_offset, SE_ID);
-        destination_cell = uint16_t(source_cell);
+        return uint16_t((palette_offset << 12) + tiles_offset);
     }
 
-    inline void copy_affine_bg_map_cells_tiles_offset(unsigned first_source_cell, unsigned second_source_cell,
-                                                      unsigned tiles_offset, uint16_t& destination_cell)
+    [[nodiscard]] inline uint16_t affine_map_cells_offset(unsigned tiles_offset)
     {
-        first_source_cell += tiles_offset;
-        second_source_cell += tiles_offset;
-        destination_cell = uint16_t((second_source_cell << 8) + first_source_cell);
+        return uint16_t((tiles_offset << 8) + tiles_offset);
     }
 
-    inline void copy_regular_bg_map_cell_palette_offset(unsigned source_cell, unsigned palette_offset,
-                                                        uint16_t& destination_cell)
-    {
-        unsigned palette_bank = BFN_GET(source_cell, SE_PALBANK);
-        BFN_SET(source_cell, palette_bank + palette_offset, SE_PALBANK);
-        destination_cell = uint16_t(source_cell);
-    }
-
-    inline void copy_regular_bg_map_cell_offset(unsigned source_cell, unsigned tiles_offset,
-                                                unsigned palette_offset, uint16_t& destination_cell)
-    {
-        unsigned tile_id = BFN_GET(source_cell, SE_ID);
-        unsigned palette_bank = BFN_GET(source_cell, SE_PALBANK);
-        BFN_SET(source_cell, tile_id + tiles_offset, SE_ID);
-        BFN_SET(source_cell, palette_bank + palette_offset, SE_PALBANK);
-        destination_cell = uint16_t(source_cell);
-    }
+    BN_CODE_IWRAM void commit_offset(const uint16_t* source_data_ptr, int half_words, uint16_t offset,
+                                     uint16_t* destination_vram_ptr);
 }
 
 #endif

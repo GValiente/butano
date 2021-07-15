@@ -713,12 +713,8 @@ namespace
                     source_data_ptr = destination_vram_ptr;
                 }
 
-                uint16_t half_word_tiles_offset = (tiles_offset << 8) + tiles_offset;
-
-                for(int index = 0; index < half_words; ++index)
-                {
-                    destination_vram_ptr[index] = source_data_ptr[index] + half_word_tiles_offset;
-                }
+                uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
+                hw::bg_blocks::commit_offset(source_data_ptr, half_words, offset, destination_vram_ptr);
             }
             else
             {
@@ -745,40 +741,14 @@ namespace
                 source_data_ptr = destination_vram_ptr;
             }
 
-            if(tiles_offset)
+            if(tiles_offset || palette_offset)
             {
-                if(palette_offset)
-                {
-                    for(int index = 0; index < half_words; ++index)
-                    {
-                        hw::bg_blocks::copy_regular_bg_map_cell_offset(
-                                    source_data_ptr[index], tiles_offset, palette_offset,
-                                    destination_vram_ptr[index]);
-                    }
-                }
-                else
-                {
-                    for(int index = 0; index < half_words; ++index)
-                    {
-                        hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(
-                                    source_data_ptr[index], tiles_offset, destination_vram_ptr[index]);
-                    }
-                }
+                uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
+                hw::bg_blocks::commit_offset(source_data_ptr, half_words, offset, destination_vram_ptr);
             }
             else
             {
-                if(palette_offset)
-                {
-                    for(int index = 0; index < half_words; ++index)
-                    {
-                        hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(
-                                    source_data_ptr[index], palette_offset, destination_vram_ptr[index]);
-                    }
-                }
-                else
-                {
-                    hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
-                }
+                hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
             }
         }
     }
@@ -2383,83 +2353,45 @@ void update_regular_map_col(int id, int x, int y)
 
     int y_separator = y & 31;
     uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + ((y_separator * 32) + (x & 31));
+    auto tiles_offset = unsigned(item.regular_tiles_offset());
+    auto palette_offset = unsigned(item.palette_offset());
 
-    if(auto tiles_offset = unsigned(item.regular_tiles_offset()))
+    if(tiles_offset || palette_offset)
     {
-        if(auto palette_offset = unsigned(item.palette_offset()))
+        uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
+
+        for(int iy = y_separator; iy < 32; ++iy)
         {
-            for(int iy = y_separator; iy < 32; ++iy)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset, *dest_data);
-                dest_data += 32;
-                source_data += map_width;
-            }
-
-            dest_data -= 1024;
-
-            for(int iy = 0; iy < y_separator; ++iy)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset, *dest_data);
-                dest_data += 32;
-                source_data += map_width;
-            }
+            *dest_data = *source_data + offset;
+            dest_data += 32;
+            source_data += map_width;
         }
-        else
+
+        dest_data -= 1024;
+
+        for(int iy = 0; iy < y_separator; ++iy)
         {
-            for(int iy = y_separator; iy < 32; ++iy)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
-                dest_data += 32;
-                source_data += map_width;
-            }
-
-            dest_data -= 1024;
-
-            for(int iy = 0; iy < y_separator; ++iy)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
-                dest_data += 32;
-                source_data += map_width;
-            }
+            *dest_data = *source_data + offset;
+            dest_data += 32;
+            source_data += map_width;
         }
     }
     else
     {
-        if(auto palette_offset = unsigned(item.palette_offset()))
+        for(int iy = y_separator; iy < 32; ++iy)
         {
-            for(int iy = y_separator; iy < 32; ++iy)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
-                dest_data += 32;
-                source_data += map_width;
-            }
-
-            dest_data -= 1024;
-
-            for(int iy = 0; iy < y_separator; ++iy)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
-                dest_data += 32;
-                source_data += map_width;
-            }
+            *dest_data = *source_data;
+            dest_data += 32;
+            source_data += map_width;
         }
-        else
+
+        dest_data -= 1024;
+
+        for(int iy = 0; iy < y_separator; ++iy)
         {
-            for(int iy = y_separator; iy < 32; ++iy)
-            {
-                *dest_data = *source_data;
-                dest_data += 32;
-                source_data += map_width;
-            }
-
-            dest_data -= 1024;
-
-            for(int iy = 0; iy < y_separator; ++iy)
-            {
-                *dest_data = *source_data;
-                dest_data += 32;
-                source_data += map_width;
-            }
+            *dest_data = *source_data;
+            dest_data += 32;
+            source_data += map_width;
         }
     }
 }
@@ -2590,80 +2522,32 @@ void update_regular_map_row(int id, int x, int y)
     source_data += ((y * item.width) + x);
 
     int x_separator = x & 31;
+    int elements = 32 - x_separator;
     uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
+    auto tiles_offset = unsigned(item.regular_tiles_offset());
+    auto palette_offset = unsigned(item.palette_offset());
 
-    if(auto tiles_offset = unsigned(item.regular_tiles_offset()))
+    if(tiles_offset || palette_offset)
     {
-        if(auto palette_offset = unsigned(item.palette_offset()))
-        {
-            for(int ix = x_separator; ix < 32; ++ix)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset, *dest_data);
-                ++source_data;
-                ++dest_data;
-            }
-
-            dest_data -= 32;
-
-            for(int ix = 0; ix < x_separator; ++ix)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset, *dest_data);
-                ++source_data;
-                ++dest_data;
-            }
-        }
-        else
-        {
-            for(int ix = x_separator; ix < 32; ++ix)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
-                ++source_data;
-                ++dest_data;
-            }
-
-            dest_data -= 32;
-
-            for(int ix = 0; ix < x_separator; ++ix)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
-                ++source_data;
-                ++dest_data;
-            }
-        }
+        uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
+        hw::bg_blocks::commit_offset(source_data, elements, offset, dest_data);
+        source_data += elements;
+        dest_data -= x_separator;
+        hw::bg_blocks::commit_offset(source_data, x_separator, offset, dest_data);
     }
     else
     {
-        if(auto palette_offset = unsigned(item.palette_offset()))
-        {
-            for(int ix = x_separator; ix < 32; ++ix)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
-                ++source_data;
-                ++dest_data;
-            }
-
-            dest_data -= 32;
-
-            for(int ix = 0; ix < x_separator; ++ix)
-            {
-                hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
-                ++source_data;
-                ++dest_data;
-            }
-        }
-        else
-        {
-            int elements = 32 - x_separator;
-            hw::memory::copy_half_words(source_data, elements, dest_data);
-            source_data += elements;
-            dest_data -= x_separator;
-            hw::memory::copy_half_words(source_data, x_separator, dest_data);
-        }
+        hw::memory::copy_half_words(source_data, elements, dest_data);
+        source_data += elements;
+        dest_data -= x_separator;
+        hw::memory::copy_half_words(source_data, x_separator, dest_data);
     }
 }
 
 void update_affine_map_row(int id, int x, int y)
 {
+    // BN_ASSERT(x % 2 == 0, "Invalid x: ", x);
+
     const item_type& item = data.items.item(id);
     auto source_data = reinterpret_cast<const uint8_t*>(item.data);
 
@@ -2675,38 +2559,26 @@ void update_affine_map_row(int id, int x, int y)
     source_data += ((y * item.width) + x);
 
     int x_separator = x & 31;
+    int elements = 32 - x_separator;
     auto dest_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
     dest_data += ((y & 31) * 32) + x_separator;
 
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
-        auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-
-        for(int ix = x_separator; ix < 32; ix += 2)
-        {
-            hw::bg_blocks::copy_affine_bg_map_cells_tiles_offset(
-                        source_data[0], source_data[1], tiles_offset, *u16_dest_data);
-            source_data += 2;
-            ++u16_dest_data;
-        }
-
-        u16_dest_data -= 16;
-
-        for(int ix = 0; ix < x_separator; ix += 2)
-        {
-            hw::bg_blocks::copy_affine_bg_map_cells_tiles_offset(
-                        source_data[0], source_data[1], tiles_offset, *u16_dest_data);
-            source_data += 2;
-            ++u16_dest_data;
-        }
+        uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
+        hw::bg_blocks::commit_offset(reinterpret_cast<const uint16_t*>(source_data), elements / 2, offset,
+                                     reinterpret_cast<uint16_t*>(dest_data));
+        source_data += elements;
+        dest_data -= x_separator;
+        hw::bg_blocks::commit_offset(reinterpret_cast<const uint16_t*>(source_data), x_separator / 2, offset,
+                                     reinterpret_cast<uint16_t*>(dest_data));
     }
     else
     {
-        int elements = 32 - x_separator;
-        hw::memory::copy_bytes(source_data, elements, dest_data);
+        hw::memory::copy_half_words(source_data, elements / 2, dest_data);
         source_data += elements;
         dest_data -= x_separator;
-        hw::memory::copy_bytes(source_data, x_separator, dest_data);
+        hw::memory::copy_half_words(source_data, x_separator / 2, dest_data);
     }
 }
 
@@ -2723,104 +2595,42 @@ void set_regular_map_position(int id, int x, int y)
     uint16_t* vram_data = hw::bg_blocks::vram(item.start_block);
     int map_width = item.width;
     int x_separator = x & 31;
+    int elements = 32 - x_separator;
+    auto tiles_offset = unsigned(item.regular_tiles_offset());
+    auto palette_offset = unsigned(item.palette_offset());
 
-    if(auto tiles_offset = unsigned(item.regular_tiles_offset()))
+    if(tiles_offset || palette_offset)
     {
-        if(auto palette_offset = unsigned(item.palette_offset()))
+        uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
+
+        for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            for(int row = y, row_limit = y + 22; row < row_limit; ++row)
-            {
-                const uint16_t* source_data = item_data + ((row * map_width) + x);
-                uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-
-                for(int ix = x_separator; ix < 32; ++ix)
-                {
-                    hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset,
-                                                                   *dest_data);
-                    ++source_data;
-                    ++dest_data;
-                }
-
-                dest_data -= 32;
-
-                for(int ix = 0; ix < x_separator; ++ix)
-                {
-                    hw::bg_blocks::copy_regular_bg_map_cell_offset(*source_data, tiles_offset, palette_offset,
-                                                                   *dest_data);
-                    ++source_data;
-                    ++dest_data;
-                }
-            }
-        }
-        else
-        {
-            for(int row = y, row_limit = y + 22; row < row_limit; ++row)
-            {
-                const uint16_t* source_data = item_data + ((row * map_width) + x);
-                uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-
-                for(int ix = x_separator; ix < 32; ++ix)
-                {
-                    hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
-                    ++source_data;
-                    ++dest_data;
-                }
-
-                dest_data -= 32;
-
-                for(int ix = 0; ix < x_separator; ++ix)
-                {
-                    hw::bg_blocks::copy_regular_bg_map_cell_tiles_offset(*source_data, tiles_offset, *dest_data);
-                    ++source_data;
-                    ++dest_data;
-                }
-            }
+            const uint16_t* source_data = item_data + ((row * map_width) + x);
+            uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+            hw::bg_blocks::commit_offset(source_data, elements, offset, dest_data);
+            source_data += elements;
+            dest_data -= x_separator;
+            hw::bg_blocks::commit_offset(source_data, x_separator, offset, dest_data);
         }
     }
     else
     {
-        if(auto palette_offset = unsigned(item.palette_offset()))
+        for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            for(int row = y, row_limit = y + 22; row < row_limit; ++row)
-            {
-                const uint16_t* source_data = item_data + ((row * map_width) + x);
-                uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-
-                for(int ix = x_separator; ix < 32; ++ix)
-                {
-                    hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
-                    ++source_data;
-                    ++dest_data;
-                }
-
-                dest_data -= 32;
-
-                for(int ix = 0; ix < x_separator; ++ix)
-                {
-                    hw::bg_blocks::copy_regular_bg_map_cell_palette_offset(*source_data, palette_offset, *dest_data);
-                    ++source_data;
-                    ++dest_data;
-                }
-            }
-        }
-        else
-        {
-            for(int row = y, row_limit = y + 22; row < row_limit; ++row)
-            {
-                const uint16_t* source_data = item_data + ((row * map_width) + x);
-                uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-                int elements = 32 - x_separator;
-                hw::memory::copy_half_words(source_data, elements, dest_data);
-                source_data += elements;
-                dest_data -= x_separator;
-                hw::memory::copy_half_words(source_data, x_separator, dest_data);
-            }
+            const uint16_t* source_data = item_data + ((row * map_width) + x);
+            uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+            hw::memory::copy_half_words(source_data, elements, dest_data);
+            source_data += elements;
+            dest_data -= x_separator;
+            hw::memory::copy_half_words(source_data, x_separator, dest_data);
         }
     }
 }
 
 void set_affine_map_position(int id, int x, int y)
 {
+    // BN_ASSERT(x % 2 == 0, "Invalid x: ", x);
+
     const item_type& item = data.items.item(id);
     auto item_data = reinterpret_cast<const uint8_t*>(item.data);
 
@@ -2832,32 +2642,22 @@ void set_affine_map_position(int id, int x, int y)
     auto vram_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
     int map_width = item.width;
     int x_separator = x & 31;
+    int elements = 32 - x_separator;
 
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
+        uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
+
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
             const uint8_t* source_data = item_data + ((row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-
-            for(int ix = x_separator; ix < 32; ix += 2)
-            {
-                hw::bg_blocks::copy_affine_bg_map_cells_tiles_offset(
-                            source_data[0], source_data[1], tiles_offset, *u16_dest_data);
-                source_data += 2;
-                ++u16_dest_data;
-            }
-
-            u16_dest_data -= 16;
-
-            for(int ix = 0; ix < x_separator; ix += 2)
-            {
-                hw::bg_blocks::copy_affine_bg_map_cells_tiles_offset(
-                            source_data[0], source_data[1], tiles_offset, *u16_dest_data);
-                source_data += 2;
-                ++u16_dest_data;
-            }
+            hw::bg_blocks::commit_offset(reinterpret_cast<const uint16_t*>(source_data), elements / 2, offset,
+                                         reinterpret_cast<uint16_t*>(dest_data));
+            source_data += elements;
+            dest_data -= x_separator;
+            hw::bg_blocks::commit_offset(reinterpret_cast<const uint16_t*>(source_data), x_separator / 2, offset,
+                                         reinterpret_cast<uint16_t*>(dest_data));
         }
     }
     else
@@ -2866,11 +2666,10 @@ void set_affine_map_position(int id, int x, int y)
         {
             const uint8_t* source_data = item_data + ((row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            int elements = 32 - x_separator;
-            hw::memory::copy_bytes(source_data, elements, dest_data);
+            hw::memory::copy_half_words(source_data, elements / 2, dest_data);
             source_data += elements;
             dest_data -= x_separator;
-            hw::memory::copy_bytes(source_data, x_separator, dest_data);
+            hw::memory::copy_half_words(source_data, x_separator / 2, dest_data);
         }
     }
 }

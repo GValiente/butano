@@ -16,6 +16,7 @@
  */
 
 #include "bn_size.h"
+#include "bn_point.h"
 #include "bn_alignment.h"
 #include "bn_optional_fwd.h"
 #include "bn_compression_type.h"
@@ -115,6 +116,79 @@ public:
     [[nodiscard]] constexpr compression_type compression() const
     {
         return _compression;
+    }
+
+    /**
+     * @brief Returns the index of the referenced map cell in the specified map coordinates.
+     *
+     * The map cells are not copied but referenced, so they should outlive the regular_bg_map_item
+     * to avoid dangling references.
+     *
+     * @param map_x Horizontal position of the map cell [0..dimensions().width()).
+     * @param map_y Vertical position of the map cell [0..dimensions().height()).
+     * @return The index of the referenced map cell.
+     */
+    [[nodiscard]] constexpr int cell_index(int map_x, int map_y) const
+    {
+        int width = _dimensions.width();
+        int height = _dimensions.height();
+        BN_ASSERT(map_x >= 0 && map_x < width, "Invalid map x: ", map_x, " - ", width);
+        BN_ASSERT(map_y >= 0 && map_y < height, "Invalid map y: ", map_y, " - ", height);
+        BN_ASSERT(_compression == compression_type::NONE, "Compressed maps not supported");
+
+        if((width == 32 && height == 64) || (width == 64 && height == 32) || (width == 64 && height == 64))
+        {
+            auto tx = unsigned(map_x);
+            auto ty = unsigned(map_y);
+            auto pitch = unsigned(width);
+            unsigned sbb = ((ty / 32) * (pitch / 32)) + (tx / 32);
+            return int((sbb * 1024) + ((ty % 32) * 32) + (tx % 32));
+        }
+
+        return (map_y * width) + map_x;
+    }
+
+    /**
+     * @brief Returns the index of the referenced map cell in the specified map coordinates.
+     *
+     * The map cells are not copied but referenced, so they should outlive the regular_bg_map_item
+     * to avoid dangling references.
+     *
+     * @param map_position Position of the map cell.
+     * @return The index of the referenced map cell.
+     */
+    [[nodiscard]] constexpr int cell_index(const point& map_position) const
+    {
+        return cell_index(map_position.x(), map_position.y());
+    }
+
+    /**
+     * @brief Returns the referenced map cell in the specified map coordinates.
+     *
+     * The map cells are not copied but referenced, so they should outlive the regular_bg_map_item
+     * to avoid dangling references.
+     *
+     * @param map_x Horizontal position of the map cell [0..dimensions().width()).
+     * @param map_y Vertical position of the map cell [0..dimensions().height()).
+     * @return The referenced map cell.
+     */
+    [[nodiscard]] constexpr regular_bg_map_cell cell(int map_x, int map_y) const
+    {
+        return _cells_ptr[cell_index(map_x, map_y)];
+    }
+
+    /**
+     * @brief Returns the referenced map cell in the specified map coordinates.
+     *
+     * The map cells are not copied but referenced, so they should outlive the regular_bg_map_item
+     * to avoid dangling references.
+     *
+     * @param map_position Position of the map cell.
+     * @return The referenced map cell.
+     */
+    [[nodiscard]] constexpr regular_bg_map_cell cell(const point& map_position) const
+    {
+        return _cells_ptr[cell_index(map_position)];
     }
 
     /**

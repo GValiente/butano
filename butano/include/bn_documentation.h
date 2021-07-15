@@ -785,13 +785,19 @@
  *
  * Shows how to sleep and reset the GBA among other things.
  *
- * <td> **Dynamic background**
+ * <td> **Dynamic affine background**
  *
- * @image html examples_dynamic_bg.png
+ * @image html examples_dynamic_affine_bg.png
  *
- * Basic dynamic background example.
+ * Basic dynamic affine background example.
  *
- * <tr><td> **External tool**
+ * <tr><td> **Dynamic regular background**
+ *
+ * @image html examples_dynamic_regular_bg.png
+ *
+ * Basic dynamic regular background example.
+ *
+ * <td> **External tool**
  *
  * @image html examples_external_tool.png
  *
@@ -803,13 +809,13 @@
  *
  * See how it looks this undocumented graphic effect.
  *
- * <td> @ref keypad
+ * <tr><td> @ref keypad
  *
  * @image html examples_keypad.png
  *
  * Simple keypad status demo.
  *
- * <tr><td> @ref link
+ * <td> @ref link
  *
  * @image html examples_link.png
  *
@@ -821,13 +827,13 @@
  *
  * Integration of emulator logging into Butano.
  *
- * <td> **Mode 7**
+ * <tr><td> **Mode 7**
  *
  * @image html examples_mode_7.png
  *
  * Basic SNES mode 7 like background example.
  *
- * <tr><td> @ref mosaic
+ * <td> @ref mosaic
  *
  * @image html examples_mosaic.png
  *
@@ -839,13 +845,13 @@
  *
  * Showcases multiple color palette effects.
  *
- * <td> **Flat polygons**
+ * <tr><td> **Flat polygons**
  *
  * @image html examples_polygons.png
  *
  * Showcases flat polygons rendering with sprites.
  *
- * <tr><td> @ref profiler
+ * <td> @ref profiler
  *
  * @image html examples_profiler.png
  *
@@ -857,13 +863,13 @@
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <td> @ref rumble
+ * <tr><td> @ref rumble
  *
  * @image html examples_rumble.png
  *
  * Vibration showcase (if your cart supports it).
  *
- * <tr><td> @ref affine_mat "Sprite affine matrices"
+ * <td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
@@ -875,13 +881,13 @@
  *
  * Simple sprites examples.
  *
- * <td> @ref sram
+ * <tr><td> @ref sram
  *
  * @image html examples_sram.png
  *
  * SRAM reads and writes with Butano.
  *
- * <tr><td> @ref text
+ * <td> @ref text
  *
  * @image html examples_text.png
  *
@@ -893,13 +899,13 @@
  *
  * Showcases textured polygons rendering with sprites.
  *
- * <td> @ref window
+ * <tr><td> @ref window
  *
  * @image html examples_windows.png
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <tr><td> **World map**
+ * <td> **World map**
  *
  * @image html examples_world_map.png
  *
@@ -1692,6 +1698,15 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_7_2_0 7.2.0 (next release)
+ *
+ * * bn::regular_bg_map_cell_info and bn::affine_bg_map_cell_info added.
+ * * bn::regular_bg_map_item::cell_index and bn::regular_bg_map_item::cell added.
+ * * bn::affine_bg_map_item::cell_index and bn::affine_bg_map_item::cell added.
+ * * `dynamic_regular_bg` example added.
+ * * `dynamic_bg` example renamed to `dynamic_affine_bg` and improved.
  *
  *
  * @section changelog_7_1_1 7.1.1

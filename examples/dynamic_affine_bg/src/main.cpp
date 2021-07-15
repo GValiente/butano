@@ -8,12 +8,13 @@
 #include "bn_affine_bg_ptr.h"
 #include "bn_affine_bg_map_ptr.h"
 #include "bn_sprite_text_generator.h"
-
-#include "bn_sprite_items_cursor.h"
-#include "bn_affine_bg_items_tiles.h"
+#include "bn_affine_bg_map_cell_info.h"
 
 #include "common_info.h"
 #include "common_variable_8x16_sprite_font.h"
+
+#include "bn_sprite_items_cursor.h"
+#include "bn_affine_bg_items_tiles.h"
 
 namespace
 {
@@ -24,23 +25,37 @@ namespace
         static const int cells_count = columns * rows;
 
         bn::affine_bg_map_cell cells[cells_count];
+        bn::affine_bg_map_item map_item;
 
-        bg_map()
+        bg_map() :
+            map_item(cells[0], bn::size(bg_map::columns, bg_map::rows))
         {
             reset();
         }
 
-        void dig(int x, int y)
+        bool dig(int x, int y)
         {
-            bn::affine_bg_map_cell& current_cell = cells[(y * columns) + x];
-            current_cell = 1;
+            bn::affine_bg_map_cell& current_cell = cells[map_item.cell_index(x, y)];
+            bn::affine_bg_map_cell_info cell_info(current_cell);
 
-            bn::affine_bg_map_cell& up_cell = cells[((y - 1) * columns) + x];
-
-            if(up_cell == 0)
+            if(cell_info.tile_index() == 1)
             {
-                up_cell = 2;
+                return false;
             }
+
+            cell_info.set_tile_index(1);
+            current_cell = cell_info.cell();
+
+            bn::affine_bg_map_cell& up_cell = cells[map_item.cell_index(x, y - 1)];
+            cell_info.set_cell(up_cell);
+
+            if(cell_info.tile_index() == 0)
+            {
+                cell_info.set_tile_index(2);
+                up_cell = cell_info.cell();
+            }
+
+            return true;
         }
 
         void reset()
@@ -72,20 +87,20 @@ int main()
         "START: reset BG",
     };
 
-    common::info info("Dynamic BG", info_text_lines, text_generator);
+    common::info info("Dynamic affine BG", info_text_lines, text_generator);
 
-    int cursor_x = bg_map::columns / 2;
-    int cursor_y = bg_map::rows / 2;
     bn::unique_ptr<bg_map> bg_map_ptr(new bg_map());
-    bg_map_ptr->dig(cursor_x, cursor_y);
-
-    bn::affine_bg_map_item bg_map_item(bg_map_ptr->cells[0], bn::size(bg_map::columns, bg_map::rows));
-    bn::affine_bg_item bg_item(bn::affine_bg_items::tiles.tiles_item(), bn::affine_bg_items::tiles.palette_item(),
-                               bg_map_item);
+    bn::affine_bg_item bg_item(
+                bn::affine_bg_items::tiles.tiles_item(), bn::affine_bg_items::tiles.palette_item(),
+                bg_map_ptr->map_item);
     bn::affine_bg_ptr bg = bg_item.create_bg(0, 0);
     bn::affine_bg_map_ptr bg_map = bg.map();
 
+    int cursor_x = bg_map::columns / 2;
+    int cursor_y = bg_map::rows / 2;
     bn::sprite_ptr cursor_sprite = bn::sprite_items::cursor.create_sprite(sprite_x(cursor_x), sprite_y(cursor_y));
+    bg_map_ptr->dig(cursor_x, cursor_y);
+    bg_map.reload_cells_ref();
 
     while(true)
     {
@@ -94,8 +109,12 @@ int main()
             if(cursor_x > 4)
             {
                 --cursor_x;
-                bg_map_ptr->dig(cursor_x, cursor_y);
-                bg_map.reload_cells_ref();
+
+                if(bg_map_ptr->dig(cursor_x, cursor_y))
+                {
+                    bg_map.reload_cells_ref();
+                    bg.set_scale(1.2);
+                }
             }
         }
         else if(bn::keypad::right_pressed())
@@ -103,8 +122,12 @@ int main()
             if(cursor_x < bg_map::columns - 4 - 1)
             {
                 ++cursor_x;
-                bg_map_ptr->dig(cursor_x, cursor_y);
-                bg_map.reload_cells_ref();
+
+                if(bg_map_ptr->dig(cursor_x, cursor_y))
+                {
+                    bg_map.reload_cells_ref();
+                    bg.set_scale(1.2);
+                }
             }
         }
 
@@ -113,8 +136,12 @@ int main()
             if(cursor_y > 10)
             {
                 --cursor_y;
-                bg_map_ptr->dig(cursor_x, cursor_y);
-                bg_map.reload_cells_ref();
+
+                if(bg_map_ptr->dig(cursor_x, cursor_y))
+                {
+                    bg_map.reload_cells_ref();
+                    bg.set_scale(1.2);
+                }
             }
         }
         else if(bn::keypad::down_pressed())
@@ -122,19 +149,28 @@ int main()
             if(cursor_y < bg_map::rows - 10 - 1)
             {
                 ++cursor_y;
-                bg_map_ptr->dig(cursor_x, cursor_y);
-                bg_map.reload_cells_ref();
+
+                if(bg_map_ptr->dig(cursor_x, cursor_y))
+                {
+                    bg_map.reload_cells_ref();
+                    bg.set_scale(1.2);
+                }
             }
         }
 
         if(bn::keypad::start_pressed())
         {
+            bg_map_ptr->reset();
+
             cursor_x = bg_map::columns / 2;
             cursor_y = bg_map::rows / 2;
-            bg_map_ptr->reset();
-            bg_map_ptr->dig(cursor_x, cursor_y);
-            bg_map.reload_cells_ref();
             cursor_sprite.set_position(sprite_x(cursor_x), sprite_y(cursor_y));
+
+            if(bg_map_ptr->dig(cursor_x, cursor_y))
+            {
+                bg_map.reload_cells_ref();
+                bg.set_scale(1.2);
+            }
         }
         else
         {
@@ -161,6 +197,8 @@ int main()
             {
                 cursor_sprite.set_y(cursor_sprite_y - 1);
             }
+
+            bg.set_scale(bn::max(bg.horizontal_scale() - 0.05, bn::fixed(1)));
         }
 
         info.update();

@@ -101,6 +101,24 @@
             </dt>
             <dd>Returns the compression type.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0a883d59d794d1cd293e538716a0bc69" class="m-doc">cell_index</a>(</span><span class="m-doc-wrap">int map_x,
+              int map_y) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the index of the referenced map cell in the specified map coordinates.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3c5e0f94f80349d8e5b833d4efd96a7f" class="m-doc">cell_index</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; map_position) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the index of the referenced map cell in the specified map coordinates.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6a17fc2c0e71cc4d6848ef53ab87cca1" class="m-doc">cell</a>(</span><span class="m-doc-wrap">int map_x,
+              int map_y) const -&gt; <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the referenced map cell in the specified map coordinates.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac5d6b4c35a6b452b7fded57a4274c2c4" class="m-doc">cell</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; map_position) const -&gt; <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the referenced map cell in the specified map coordinates.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#addec7bdbc9d8ce5f6963abb0f69b72e4" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; uncompressed_cells_ref,
               const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; uncompressed_dimensions) const -&gt; <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a></span>
             </dt>
@@ -201,6 +219,112 @@
             </h3>
             <p>Indicates if maps generated with this item are big or not.</p>
 <p>Big backgrounds are slower CPU wise and don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0a883d59d794d1cd293e538716a0bc69"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0a883d59d794d1cd293e538716a0bc69" class="m-doc-self">cell_index</a>(</span><span class="m-doc-wrap">int map_x,
+              int map_y) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the index of the referenced map cell in the specified map coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_x</td>
+                  <td>Horizontal position of the map cell [0..<a href="classbn_1_1affine__bg__map__item.html#a5dbbbb8add83579ee6a6f145da92dc22" class="m-doc">dimensions()</a>.<a href="namespacebn_1_1display.html#a4ed2b0d634e500881b0ce160cfeada21" class="m-doc">width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>map_y</td>
+                  <td>Vertical position of the map cell [0..<a href="classbn_1_1affine__bg__map__item.html#a5dbbbb8add83579ee6a6f145da92dc22" class="m-doc">dimensions()</a>.<a href="namespacebn_1_1display.html#aae0fa31daf76adf1ce66583433965159" class="m-doc">height()</a>).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The index of the referenced map cell.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3c5e0f94f80349d8e5b833d4efd96a7f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3c5e0f94f80349d8e5b833d4efd96a7f" class="m-doc-self">cell_index</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; map_position) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the index of the referenced map cell in the specified map coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_position</td>
+                  <td>Position of the map cell.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The index of the referenced map cell.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6a17fc2c0e71cc4d6848ef53ab87cca1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6a17fc2c0e71cc4d6848ef53ab87cca1" class="m-doc-self">cell</a>(</span><span class="m-doc-wrap">int map_x,
+              int map_y) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the referenced map cell in the specified map coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_x</td>
+                  <td>Horizontal position of the map cell [0..<a href="classbn_1_1affine__bg__map__item.html#a5dbbbb8add83579ee6a6f145da92dc22" class="m-doc">dimensions()</a>.<a href="namespacebn_1_1display.html#a4ed2b0d634e500881b0ce160cfeada21" class="m-doc">width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>map_y</td>
+                  <td>Vertical position of the map cell [0..<a href="classbn_1_1affine__bg__map__item.html#a5dbbbb8add83579ee6a6f145da92dc22" class="m-doc">dimensions()</a>.<a href="namespacebn_1_1display.html#aae0fa31daf76adf1ce66583433965159" class="m-doc">height()</a>).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced map cell.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac5d6b4c35a6b452b7fded57a4274c2c4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac5d6b4c35a6b452b7fded57a4274c2c4" class="m-doc-self">cell</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; map_position) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the referenced map cell in the specified map coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_position</td>
+                  <td>Position of the map cell.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced map cell.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="addec7bdbc9d8ce5f6963abb0f69b72e4"><div>
             <h3>

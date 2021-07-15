@@ -1694,7 +1694,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_1_1 7.1.1 (next release)
+ * @section changelog_7_1_1 7.1.1
  *
  * bn::vector, bn::unordered_map and bn::unordered_set move constructors and assignment operators fixed.
  *

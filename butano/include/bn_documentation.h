@@ -1700,6 +1700,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_3_0 7.3.0 (next release)
+ *
+ * bn::sprite_text_generator now can plot multiple 16x16 variable width characters in a single sprite.
+ *
+ *
  * @section changelog_7_2_0 7.2.0
  *
  * * bn::regular_bg_map_cell_info and bn::affine_bg_map_cell_info added.

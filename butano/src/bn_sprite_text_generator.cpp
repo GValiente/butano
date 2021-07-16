@@ -473,23 +473,31 @@ namespace
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
+            tile* tiles_vram;
+
             if(_sprite_character_index == _max_characters_per_sprite)
             {
-                _tiles_vram = _build_sprite<sprite_size::NORMAL, allow_failure>(
+                tiles_vram = _build_sprite<sprite_size::NORMAL, allow_failure>(
                             _generator, _palette, _current_position, _output_sprites);
+                _tiles_vram = tiles_vram;
 
-                if(allow_failure && ! _tiles_vram)
+                if(allow_failure && ! tiles_vram)
                 {
                     return false;
                 }
 
                 _sprite_character_index = 0;
             }
+            else
+            {
+                tiles_vram = _tiles_vram;
+            }
 
             const sprite_item& item = _generator.font().item();
             const tile* source_tiles_data = item.tiles_item().graphics_tiles_ref(graphics_index).data();
             hw::sprite_tiles::copy_tiles(source_tiles_data, _tiles_per_character,
-                                         _tiles_vram + (_sprite_character_index * _tiles_per_character));
+                                         tiles_vram + (_sprite_character_index * _tiles_per_character));
+
             _current_position.set_x(_current_position.x() + character_width + _space_between_characters);
             ++_sprite_character_index;
             return true;
@@ -561,20 +569,26 @@ namespace
         {
             if(int width = _character_widths[graphics_index + 1])
             {
+                tile* tiles_vram;
                 int width_with_space = width + _space_between_characters;
 
                 if(_sprite_column + width_with_space > _max_columns_per_sprite)
                 {
-                    _tiles_vram = _build_sprite<sprite_size::NORMAL, allow_failure>(
+                    tiles_vram = _build_sprite<sprite_size::NORMAL, allow_failure>(
                                 _generator, _palette, _current_position, _output_sprites);
+                    _tiles_vram = tiles_vram;
 
-                    if(allow_failure && ! _tiles_vram)
+                    if(allow_failure && ! tiles_vram)
                     {
                         return false;
                     }
 
-                    hw::sprite_tiles::clear_tiles(4, _tiles_vram);
+                    hw::sprite_tiles::clear_tiles(4, tiles_vram);
                     _sprite_column = 0;
+                }
+                else
+                {
+                    tiles_vram = _tiles_vram;
                 }
 
                 const sprite_tiles_item& tiles_item = _generator.font().item().tiles_item();
@@ -582,7 +596,8 @@ namespace
                 int source_height = tiles_item.graphics_count() * _character_height;
                 int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height, source_y, _sprite_column,
-                                             _tiles_vram);
+                                             tiles_vram);
+
                 _current_position.set_x(_current_position.x() + width_with_space);
                 _sprite_column += width_with_space;
             }
@@ -651,22 +666,29 @@ namespace
 
         [[nodiscard]] bool paint_character(int graphics_index)
         {
+            tile* tiles_vram;
+
             if(_sprite_character_index == _max_characters_per_sprite)
             {
-                _tiles_vram = _build_sprite<sprite_size::BIG, allow_failure>(
+                tiles_vram = _build_sprite<sprite_size::BIG, allow_failure>(
                             _generator, _palette, _current_position, _output_sprites);
+                _tiles_vram = tiles_vram;
 
-                if(allow_failure && ! _tiles_vram)
+                if(allow_failure && ! tiles_vram)
                 {
                     return false;
                 }
 
                 _sprite_character_index = 0;
             }
+            else
+            {
+                tiles_vram = _tiles_vram;
+            }
 
             const sprite_item& item = _generator.font().item();
             const tile* source_tiles_data = item.tiles_item().graphics_tiles_ref(graphics_index).data();
-            tile* up_tiles_vram_ptr = _tiles_vram + (_sprite_character_index * _half_tiles_per_character);
+            tile* up_tiles_vram_ptr = tiles_vram + (_sprite_character_index * _half_tiles_per_character);
             hw::sprite_tiles::copy_tiles(source_tiles_data, _half_tiles_per_character, up_tiles_vram_ptr);
 
             tile* down_tiles_vram_ptr = up_tiles_vram_ptr + _half_tiles;
@@ -749,20 +771,26 @@ namespace
         {
             if(int width = _character_widths[graphics_index + 1])
             {
+                tile* tiles_vram;
                 int width_with_space = width + _space_between_characters;
 
                 if(_sprite_column + width_with_space > _max_columns_per_sprite)
                 {
-                    _tiles_vram = _build_sprite<sprite_size::BIG, allow_failure>(
+                    tiles_vram = _build_sprite<sprite_size::BIG, allow_failure>(
                                 _generator, _palette, _current_position, _output_sprites);
+                    _tiles_vram = tiles_vram;
 
-                    if(allow_failure && ! _tiles_vram)
+                    if(allow_failure && ! tiles_vram)
                     {
                         return false;
                     }
 
-                    hw::sprite_tiles::clear_tiles(4 * 2, _tiles_vram);
+                    hw::sprite_tiles::clear_tiles(4 * 2, tiles_vram);
                     _sprite_column = 0;
+                }
+                else
+                {
+                    tiles_vram = _tiles_vram;
                 }
 
                 const sprite_tiles_item& tiles_item = _generator.font().item().tiles_item();
@@ -771,10 +799,121 @@ namespace
                 int source_y = graphics_index * _character_height;
                 hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
                                              source_y,
-                                             _sprite_column, _tiles_vram);
+                                             _sprite_column, tiles_vram);
                 hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
                                              source_y + (_character_height / 2),
-                                             _sprite_column + (_character_height * 2), _tiles_vram);
+                                             _sprite_column + (_character_height * 2), tiles_vram);
+
+                _current_position.set_x(_current_position.x() + width_with_space);
+                _sprite_column += width_with_space;
+            }
+            else
+            {
+                _current_position.set_x(_current_position.x() + _space_between_characters);
+                _sprite_column += _space_between_characters;
+            }
+
+            return true;
+        }
+
+    private:
+        static constexpr int _character_height = 16;
+        static constexpr int _max_columns_per_sprite = 32;
+
+        const sprite_text_generator& _generator;
+        const int8_t* _character_widths;
+        ivector<sprite_ptr>& _output_sprites;
+        sprite_palette_ptr _palette;
+        fixed_point _current_position;
+        tile* _tiles_vram = nullptr;
+        int _space_between_characters;
+        int _sprite_column = _max_columns_per_sprite;
+    };
+
+
+    template<bool allow_failure>
+    class variable_16x16_painter
+    {
+
+    public:
+        static constexpr bool can_fail = allow_failure;
+
+        variable_16x16_painter(const sprite_text_generator& generator, sprite_palette_ptr&& palette,
+                               const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
+            _generator(generator),
+            _character_widths(generator.font().character_widths_ref().data()),
+            _output_sprites(output_sprites),
+            _palette(move(palette)),
+            _current_position(position.x() + (_max_columns_per_sprite / 2), position.y()),
+            _space_between_characters(generator.font().space_between_characters())
+        {
+        }
+
+        void paint_space()
+        {
+            int width_with_space = _character_widths[0] + _space_between_characters;
+            _sprite_column += width_with_space;
+            _current_position.set_x(_current_position.x() + width_with_space);
+        }
+
+        void paint_tab()
+        {
+            int width_with_space = (_character_widths[0] * 4) + _space_between_characters;
+            _sprite_column += width_with_space;
+            _current_position.set_x(_current_position.x() + width_with_space);
+        }
+
+        [[nodiscard]] bool paint_character(int graphics_index)
+        {
+            if(int width = _character_widths[graphics_index + 1])
+            {
+                tile* tiles_vram;
+                int width_with_space = width + _space_between_characters;
+
+                if(_sprite_column + width_with_space > _max_columns_per_sprite)
+                {
+                    tiles_vram = _build_sprite<sprite_size::BIG, allow_failure>(
+                                _generator, _palette, _current_position, _output_sprites);
+                    _tiles_vram = tiles_vram;
+
+                    if(allow_failure && ! tiles_vram)
+                    {
+                        return false;
+                    }
+
+                    hw::sprite_tiles::clear_tiles(4 * 2, tiles_vram);
+                    _sprite_column = 0;
+                }
+                else
+                {
+                    tiles_vram = _tiles_vram;
+                }
+
+                const sprite_tiles_item& tiles_item = _generator.font().item().tiles_item();
+                const tile* source_tiles_data = tiles_item.tiles_ref().data();
+                int source_height = tiles_item.graphics_count() * _character_height;
+                int source_y = graphics_index * _character_height * 2;
+
+                if(width > 8)
+                {
+                    hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
+                                                 source_y,
+                                                 _sprite_column, tiles_vram);
+                    hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
+                                                 source_y + _character_height,
+                                                 _sprite_column + (_character_height * 2), tiles_vram);
+                    source_tiles_data += 1;
+                    tiles_vram += 1;
+                    width -= 8;
+                }
+
+                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
+                                             source_y,
+                                             _sprite_column, tiles_vram);
+                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
+                                             source_y + _character_height,
+                                             _sprite_column + (_character_height * 2), tiles_vram);
+
                 _current_position.set_x(_current_position.x() + width_with_space);
                 _sprite_column += width_with_space;
             }
@@ -966,9 +1105,18 @@ namespace
                 }
                 else
                 {
-                    variable_8x16_painter<allow_failure> painter(
-                                generator, move(*palette), aligned_position, output_sprites);
-                    success = paint(text, utf8_characters_map, painter);
+                    if(max_character_width == 8)
+                    {
+                        variable_8x16_painter<allow_failure> painter(
+                                    generator, move(*palette), aligned_position, output_sprites);
+                        success = paint(text, utf8_characters_map, painter);
+                    }
+                    else
+                    {
+                        variable_16x16_painter<allow_failure> painter(
+                                    generator, move(*palette), aligned_position, output_sprites);
+                        success = paint(text, utf8_characters_map, painter);
+                    }
                 }
             }
         }
@@ -1123,7 +1271,8 @@ void sprite_text_generator::_init()
     }
     else
     {
-        _font_one_sprite_per_character = width > 8 || height > 16;
+        bool vwf = (width == 8 && height == 8) || (width == 8 && height == 16) || (width == 16 && height == 16);
+        _font_one_sprite_per_character = ! vwf;
     }
 }
 

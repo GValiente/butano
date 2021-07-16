@@ -1702,7 +1702,8 @@
  *
  * @section changelog_7_3_0 7.3.0 (next release)
  *
- * bn::sprite_text_generator now can plot multiple 16x16 variable width characters in a single sprite.
+ * * bn::sprite_text_generator now can plot multiple 16x16 variable width characters in a single sprite.
+ * * bn::sprite_text_generator IWRAM usage reduced.
  *
  *
  * @section changelog_7_2_0 7.2.0

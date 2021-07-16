@@ -27,12 +27,12 @@ namespace bn::hw::sprite_tiles
 
     inline void copy_tiles(const tile* source_tiles_ptr, int count, tile* destination_tiles_ptr)
     {
-        hw::memory::copy_words(source_tiles_ptr, count * (sizeof(tile) / 4), destination_tiles_ptr);
+        hw::memory::copy_words(source_tiles_ptr, count * int(sizeof(tile) / 4), destination_tiles_ptr);
     }
 
     inline void clear_tiles(int count, tile* tiles_ptr)
     {
-        hw::memory::set_words(0, count * (sizeof(tile) / 4), tiles_ptr);
+        hw::memory::set_words(0, count * int(sizeof(tile) / 4), tiles_ptr);
     }
 
     [[nodiscard]] inline tile* vram(int index)
@@ -48,7 +48,7 @@ namespace bn::hw::sprite_tiles
         {
 
         case compression_type::NONE:
-            hw::memory::copy_words(source_tiles_ptr, count * (sizeof(tile) / 4), destination_tiles_ptr);
+            hw::memory::copy_words(source_tiles_ptr, count * int(sizeof(tile) / 4), destination_tiles_ptr);
             break;
 
         case compression_type::LZ77:
@@ -65,8 +65,11 @@ namespace bn::hw::sprite_tiles
         }
     }
 
-    BN_CODE_IWRAM void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int source_y,
-                                  int destination_y, tile* destination_tiles_ptr);
+    void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int source_y, int destination_y,
+                    tile* destination_tiles_ptr);
+
+    BN_CODE_IWRAM void _plot_hideous_tiles(int width, int source_height, const unsigned* srcD, int dstX0,
+                                           unsigned* dstD);
 }
 
 #endif

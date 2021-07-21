@@ -147,10 +147,14 @@ export LIBPATHS         :=  $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
 .PHONY: $(BUILD) clean
  
-#---------------------------------------------------------------------------------------------------------------------
-$(BUILD):
-	@[ -d $@ ] || mkdir -p $@
+#---------------------------------------------------------------------------------
+all:
+	@[ -d $(BUILD) ] || mkdir -p $(BUILD)
 	@$(EXTTOOL)
+	@$(MAKE) --no-print-directory $(BUILD)
+	
+#---------------------------------------------------------------------------------
+$(BUILD):
 	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano-audio-tool.py --audio="$(AUDIO)" --build=$(BUILD)
 	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano-graphics-tool.py --graphics="$(GRAPHICS)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
@@ -158,7 +162,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).gba 
+	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).gba $(USERBUILD)
 
 #---------------------------------------------------------------------------------------------------------------------
 else

@@ -16,6 +16,7 @@
 # USERLIBDIRS is a list of additional directories containing libraries.
 #     Each libraries directory must contains include and lib subdirectories.
 # USERLIBS is a list of additional libraries to link with the project.
+# USERBUILD is a list of additional directories to remove when cleaning the project.
 # EXTTOOL is an optional command executed before processing audio, graphics and code files.
 #
 # All directories are specified relative to the project directory where the makefile is found.
@@ -24,8 +25,8 @@ TARGET      :=  $(notdir $(CURDIR))
 BUILD       :=  build
 LIBBUTANO   :=  ../../butano
 PYTHON      :=  python
-SOURCES     :=  src ../../common/src
-INCLUDES    :=  include ../../common/include
+SOURCES     :=  src ../../common/src external/src
+INCLUDES    :=  include ../../common/include external/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
@@ -34,7 +35,8 @@ ROMCODE     :=  SBTP
 USERFLAGS   :=  
 USERLIBDIRS :=  
 USERLIBS    :=  
-EXTTOOL     :=  @$(PYTHON) -B python-script.py --build=$(BUILD)
+USERBUILD   :=  external
+EXTTOOL     :=  @$(PYTHON) -B python-script.py --build=$(USERBUILD)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

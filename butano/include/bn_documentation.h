@@ -1705,6 +1705,8 @@
  * * bn::sprite_text_generator now can plot multiple 16x16 variable width characters in a single sprite.
  * * bn::sprite_text_generator IWRAM usage reduced.
  * * Third party libraries to link can be specified in the project's `Makefile`.
+ * * Project's `Makefile` allows to build source files generated with an external tool.
+ * See the `external_tool` example to learn how to do it.
  *
  *
  * @section changelog_7_2_0 7.2.0

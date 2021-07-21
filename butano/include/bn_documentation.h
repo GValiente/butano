@@ -722,7 +722,7 @@
  * If you were able to build and run some examples, congrats! Now you can make your own GBA game with Butano.
  * To do that:
  * * Copy the template project located in `/path/to/butano/template/` to a path without spaces nor weird characters.
- * * Change the ROM title, the path in which Butano is located and more in the `Makefile` file.
+ * * Change the ROM title, the path in which Butano is located and more in the `Makefile`.
  * * `cd` to the new folder.
  * * Type `make -j#cpu_cores#` again.
  *
@@ -801,7 +801,7 @@
  *
  * @image html examples_external_tool.png
  *
- * Shows how to call an external tool from the project's Makefile.
+ * Shows how to call an external tool from the project's `Makefile`.
  *
  * <td> @ref green_swap
  *
@@ -1704,6 +1704,7 @@
  *
  * * bn::sprite_text_generator now can plot multiple 16x16 variable width characters in a single sprite.
  * * bn::sprite_text_generator IWRAM usage reduced.
+ * * Third party libraries to link can be specified in the project's `Makefile`.
  *
  *
  * @section changelog_7_2_0 7.2.0
@@ -1813,7 +1814,7 @@
  *
  * @section changelog_6_11_0 6.11.0
  *
- * * An external tool can be called from the project's Makefile.
+ * * An external tool can be called from the project's `Makefile`.
  * See the `external_tool` example to learn how to call it.
  * * Affine background tiles offset optimized.
  * * Big numbers to string conversion optimized.

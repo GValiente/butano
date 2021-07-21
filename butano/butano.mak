@@ -62,12 +62,12 @@ LDFLAGS     =	-g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project:
 #---------------------------------------------------------------------------------------------------------------------
-LIBS        := -lmm
+LIBS        := -lmm $(USERLIBS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing libraries, this must be the top level containing include and lib directories:
 #---------------------------------------------------------------------------------------------------------------------
-LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBGBA)
+LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBGBA) $(USERLIBDIRS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing all butano source files:

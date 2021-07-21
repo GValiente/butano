@@ -13,6 +13,9 @@
 # USERFLAGS is a list of additional compiler flags:
 #     Pass -flto to enable link-time optimization.
 #     Pass -O0 to improve debugging.
+# USERLIBDIRS is a list of additional directories containing libraries.
+#     Each libraries directory must contains include and lib subdirectories.
+# USERLIBS is a list of additional libraries to link with the project.
 # EXTTOOL is an optional command executed before processing audio, graphics and code files.
 #
 # All directories are specified relative to the project directory where the makefile is found.
@@ -28,8 +31,10 @@ GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
 ROMTITLE    :=  BUTANO KEYPD
 ROMCODE     :=  SBTP
-USERFLAGS   :=
-EXTTOOL     :=
+USERFLAGS   :=  
+USERLIBDIRS :=  
+USERLIBS    :=  
+EXTTOOL     :=  
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

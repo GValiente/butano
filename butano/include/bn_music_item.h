@@ -23,7 +23,7 @@ namespace bn
 /**
  * @brief Contains the required information to play music.
  *
- * The assets conversion tools generate an object of this type in the build folder for each module file
+ * The assets conversion tools generate an object of this type in the build folder for each module file.
  *
  * Supported module files have *.mod, *.xm, *.s3m or *.it extensions.
  *

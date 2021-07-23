@@ -1707,6 +1707,7 @@
  * * Third party libraries to link can be specified in the project's `Makefile`.
  * * Project's `Makefile` allows to build source files generated with an external tool.
  * See the `external_tool` example to learn how to do it.
+ * * `butano-audio-tool.py` generates a list of all available music and sound items with their name.
  *
  *
  * @section changelog_7_2_0 7.2.0
@@ -1954,7 +1955,7 @@
  *
  * * bn::sprite_ptr::put_below, bn::regular_bg_ptr::put_below and bn::affine_bg_ptr::put_below added.
  * * H-Blank effects IWRAM usage reduced.
- * * butano-graphics-tool.py errors reporting improved.
+ * * `butano-graphics-tool.py` errors reporting improved.
  *
  *
  * @section changelog_5_1_0 5.1.0
@@ -1965,7 +1966,7 @@
  * * Some methods to indicate if a background or a background map are big or not have been added.
  * * bn::calculate_sin_lut_value precision improved.
  * * @ref faq page added.
- * * butano-graphics-tool.py now uses all CPU cores.
+ * * `butano-graphics-tool.py` now uses all CPU cores.
  * * Missing third party license files included.
  *
  *

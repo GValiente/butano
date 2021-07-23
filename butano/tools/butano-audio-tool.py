@@ -84,6 +84,41 @@ def write_output_file(items, include_guard, include_file, namespace, item_class,
             os.remove(output_file_path)
 
 
+def write_output_info_file(items, include_guard, include_file, namespace, item_class, output_file_path):
+    with open(output_file_path, 'w') as output_file:
+        output_file.write('#ifndef ' + include_guard + '\n')
+        output_file.write('#define ' + include_guard + '\n')
+        output_file.write('\n')
+        output_file.write('#include "bn_span.h"' + '\n')
+        output_file.write('#include "' + include_file + '"' + '\n')
+        output_file.write('#include "bn_string_view.h"' + '\n')
+        output_file.write('\n')
+        output_file.write('namespace ' + namespace + '\n')
+        output_file.write('{' + '\n')
+
+        pair_class = 'pair<' + item_class + ', string_view>'
+
+        if len(items) > 0:
+            output_file.write('    constexpr inline ' + pair_class + ' array[] = {' + '\n')
+
+            for item in items:
+                output_file.write('        make_pair(' + item_class + '(' + item[1] +
+                                  '), string_view("' + item[0] + '")),' + '\n')
+
+            output_file.write('    };' + '\n')
+            output_file.write('\n')
+            output_file.write('    constexpr inline span<const ' + pair_class + '> span(array);' + '\n')
+        else:
+            output_file.write('    constexpr inline span<const ' + pair_class + '> span;' + '\n')
+
+        output_file.write('}' + '\n')
+        output_file.write('\n')
+        output_file.write('#endif' + '\n')
+        output_file.write('\n')
+
+    print('    ' + item_class + 's_info file written in ' + output_file_path)
+
+
 def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path):
     music_items_list = []
     sound_items_list = []
@@ -120,6 +155,12 @@ def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_fol
 
     write_output_file(sound_items_list, 'BN_SOUND_ITEMS_H', 'bn_sound_item.h', 'bn::sound_items', 'sound_item',
                       build_folder_path + '/bn_sound_items.h')
+
+    write_output_info_file(music_items_list, 'BN_MUSIC_ITEMS_INFO_H', 'bn_music_item.h', 'bn::music_items_info',
+                           'music_item', build_folder_path + '/bn_music_items_info.h')
+
+    write_output_info_file(sound_items_list, 'BN_SOUND_ITEMS_INFO_H', 'bn_sound_item.h', 'bn::sound_items_info',
+                           'sound_item', build_folder_path + '/bn_sound_items_info.h')
 
 
 def process(audio_folder_paths, build_folder_path):

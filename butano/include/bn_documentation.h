@@ -767,13 +767,19 @@
  *
  * Shows how to play music and sound effects with Butano.
  *
- * <td> @ref blending
+ * <td> **Audio player**
+ *
+ * @image html examples_audio_player.png
+ *
+ * Basic audio player example.
+ *
+ * <tr><td> @ref blending
  *
  * @image html examples_blending.png
  *
  * Demonstrates usage of transparency, intensity and fade blending.
  *
- * <tr><td> @ref camera
+ * <td> @ref camera
  *
  * @image html examples_cameras.png
  *
@@ -785,13 +791,13 @@
  *
  * Shows how to sleep and reset the GBA among other things.
  *
- * <td> **Dynamic affine background**
+ * <tr><td> **Dynamic affine background**
  *
  * @image html examples_dynamic_affine_bg.png
  *
  * Basic dynamic affine background example.
  *
- * <tr><td> **Dynamic regular background**
+ * <td> **Dynamic regular background**
  *
  * @image html examples_dynamic_regular_bg.png
  *
@@ -803,13 +809,13 @@
  *
  * Shows how to call an external tool from the project's `Makefile`.
  *
- * <td> @ref green_swap
+ * <tr><td> @ref green_swap
  *
  * @image html examples_green_swap.png
  *
  * See how it looks this undocumented graphic effect.
  *
- * <tr><td> @ref keypad
+ * <td> @ref keypad
  *
  * @image html examples_keypad.png
  *
@@ -821,13 +827,13 @@
  *
  * Multiplayer communication through a link cable.
  *
- * <td> @ref log
+ * <tr><td> @ref log
  *
  * @image html examples_log.png
  *
  * Integration of emulator logging into Butano.
  *
- * <tr><td> **Mode 7**
+ * <td> **Mode 7**
  *
  * @image html examples_mode_7.png
  *
@@ -839,13 +845,13 @@
  *
  * Sprites and backgrounds mosaic effects.
  *
- * <td> @ref palette
+ * <tr><td> @ref palette
  *
  * @image html examples_palettes.png
  *
  * Showcases multiple color palette effects.
  *
- * <tr><td> **Flat polygons**
+ * <td> **Flat polygons**
  *
  * @image html examples_polygons.png
  *
@@ -857,13 +863,13 @@
  *
  * Basic code blocks profiling.
  *
- * <td> @ref regular_bg
+ * <tr><td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <tr><td> @ref rumble
+ * <td> @ref rumble
  *
  * @image html examples_rumble.png
  *
@@ -875,13 +881,13 @@
  *
  * Demonstrates usage of one affine matrix for multiple sprites.
  *
- * <td> @ref sprite
+ * <tr><td> @ref sprite
  *
  * @image html examples_sprites.png
  *
  * Simple sprites examples.
  *
- * <tr><td> @ref sram
+ * <td> @ref sram
  *
  * @image html examples_sram.png
  *
@@ -893,13 +899,13 @@
  *
  * Showcase of Butano sprite text rendering.
  *
- * <td> **Textured polygons**
+ * <tr><td> **Textured polygons**
  *
  * @image html examples_texture_polygons.png
  *
  * Showcases textured polygons rendering with sprites.
  *
- * <tr><td> @ref window
+ * <td> @ref window
  *
  * @image html examples_windows.png
  *
@@ -1708,6 +1714,7 @@
  * * Project's `Makefile` allows to build source files generated with an external tool.
  * See the `external_tool` example to learn how to do it.
  * * `butano-audio-tool.py` generates a list of all available music and sound items with their name.
+ * * `audio_player` example added.
  *
  *
  * @section changelog_7_2_0 7.2.0

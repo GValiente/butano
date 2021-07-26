@@ -12,8 +12,8 @@
 namespace fr::model_3d_items
 {
     constexpr inline vertex_3d mountain_flipped_vertices[] = {
-        vertex_3d(35.0, -40.0, -40.0),
-        vertex_3d(2.0, -40.0, -40.0),
+        vertex_3d(35.0, -40.0, -35.0),
+        vertex_3d(2.0, -40.0, -30.0),
         vertex_3d(-11.0, 22.0, -18.0),
         vertex_3d(35.0, 2.0, -27.0),
         vertex_3d(-35.0, -40.0, -40.0),
@@ -53,7 +53,7 @@ namespace fr::model_3d_items
         face_3d(mountain_flipped_vertices, vertex_3d(0.0, 0.9853505058554479, -0.1705414337057506), 11, 9, 6, 8, mountain_flipped_c2_color, mountain_flipped_c2_shading),
     };
 
-    constexpr inline face_3d mountain_flipped_collision_face(mountain_flipped_vertices, vertex_3d(0, 0, 0), 0, 4, 11, 10, 0, -1);
+    constexpr inline face_3d mountain_flipped_collision_face(mountain_flipped_vertices, vertex_3d(0, 0, 0), 0, 1, 4, 11, 0, -1);
 
     constexpr inline model_3d_item mountain_flipped(mountain_flipped_vertices, mountain_flipped_faces, &mountain_flipped_collision_face);
 }

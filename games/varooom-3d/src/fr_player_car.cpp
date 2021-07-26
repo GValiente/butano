@@ -180,7 +180,7 @@ void player_car::update(const stage& stage, const race_state& state, bool read_k
     bn::fixed power;
     bn::fixed reverse;
 
-    if(engine_enabled && turbo_energy == 1 && bn::keypad::r_pressed())
+    if(read_keypad && turbo_energy == 1 && bn::keypad::r_pressed())
     {
         turbo_energy = -turbo_energy_length;
         _rumble_frames = turbo_enabled_rumble_frames;

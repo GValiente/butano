@@ -36,7 +36,7 @@ bn::optional<scene_type> race_outro::update(const stage& stage, const race_state
     {
         if(state.current_lap() >= stage.total_laps())
         {
-            common_stuff.set_finish_position(state.current_position());
+            common_stuff.set_finish_position_and_time(state.current_position(), state.current_time());
             _win_active = true;
 
             bn::bg_palettes::set_fade(bn::colors::white, 1);

@@ -119,6 +119,7 @@ void race_state::update(const stage& stage, const player_car& player_car, const 
     _update_rival_checkpoints(stage, rival_cars);
     _update_player_position(stage, player_car, rival_cars, announcer);
     _update_pending_time(announcer);
+    _current_time += 2;
 }
 
 void race_state::_update_player_checkpoint(const stage& stage, const player_car& player_car, announcer& announcer)

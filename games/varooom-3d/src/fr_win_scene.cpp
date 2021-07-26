@@ -315,12 +315,24 @@ namespace
         difficulty_level difficulty = storage.difficulty();
         bool reverse_race = storage.reverse_race();
 
-        bn::optional<int> best_position = stages.best_position(difficulty, reverse_race);
+        int best_position = stages.best_position(difficulty, reverse_race).value_or(bn::numeric_limits<int>::max());
+        int best_time = stages.best_time(difficulty, reverse_race).value_or(bn::numeric_limits<int>::max());
         int finish_position = common_stuff.finish_position();
+        int finish_time = common_stuff.finish_time();
 
-        if(! best_position || best_position > finish_position)
+        if(best_position > finish_position || best_time > finish_time)
         {
-            stages.set_best_position(difficulty, reverse_race, finish_position);
+            if(best_position < finish_position)
+            {
+                finish_position = best_position;
+            }
+
+            if(best_time < finish_time)
+            {
+                finish_time = best_time;
+            }
+
+            stages.set_best_position_and_time(difficulty, reverse_race, finish_position, finish_time);
         }
 
         storage.write();
@@ -355,7 +367,15 @@ win_scene::win_scene(common_stuff& common_stuff) :
     {
 
     case 0:
-        text_generator.generate(0, text_y, "YOU FINISHED 1ST!", _position_text_sprites);
+        if(stages_status::dollar_time(common_stuff.storage.difficulty(), common_stuff.storage.reverse_race(),
+                                      common_stuff.finish_time()))
+        {
+            text_generator.generate(0, text_y, "YOU FINISHED 1$ST!", _position_text_sprites);
+        }
+        else
+        {
+            text_generator.generate(0, text_y, "YOU FINISHED 1ST!", _position_text_sprites);
+        }
         break;
 
     case 1:

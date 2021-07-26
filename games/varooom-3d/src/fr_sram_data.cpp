@@ -17,7 +17,7 @@ namespace fr
 
 namespace
 {
-    constexpr bn::string_view valid_label = "vr010";
+    constexpr bn::string_view valid_label = "vr012";
 }
 
 void sram_data::init()

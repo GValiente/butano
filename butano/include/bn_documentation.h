@@ -1715,6 +1715,7 @@
  * See the `external_tool` example to learn how to do it.
  * * `butano-audio-tool.py` generates a list of all available music and sound items with their name.
  * * `audio_player` example added.
+ * * <a href="https://gvaliente.itch.io/varooom-3d">Varooom 3D</a> improved.
  *
  *
  * @section changelog_7_2_0 7.2.0

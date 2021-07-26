@@ -164,9 +164,9 @@ title_race_menu::title_race_menu(common_stuff& common_stuff)
         cursor_sprite.set_x(cursor_sprite.x() + animation_desp_total);
     }
 
-    for(bn::sprite_ptr& position_sprite : _position_sprites)
+    for(bn::sprite_ptr& position_time_sprite : _position_time_sprites)
     {
-        position_sprite.set_x(position_sprite.x() + animation_desp_total);
+        position_time_sprite.set_x(position_time_sprite.x() + animation_desp_total);
     }
 
     set_visible(false);
@@ -184,9 +184,9 @@ void title_race_menu::set_visible(bool visible)
         label_sprite.set_visible(visible);
     }
 
-    for(bn::sprite_ptr& position_sprite : _position_sprites)
+    for(bn::sprite_ptr& position_time_sprite : _position_time_sprites)
     {
-        position_sprite.set_visible(visible);
+        position_time_sprite.set_visible(visible);
     }
 
     for(bn::sprite_ptr& locked_sprite : _locked_sprites)
@@ -344,20 +344,57 @@ void title_race_menu::_update_cursor(common_stuff& common_stuff)
     bn::fixed y = reverse ? backwards_y : forwards_y;
     _cursor_sprites[0].set_position(x - 17, y);
     _cursor_sprites[1].set_position(x + 17, y);
-    _position_sprites.clear();
+    _position_time_sprites.clear();
 
     if(stages_status.unlocked_stage(difficulty, reverse))
     {
         if(bn::optional<int> best_position = stages_status.best_position(difficulty, reverse))
         {
+            int best_time = *stages_status.best_time(difficulty, reverse);
+            int frames = best_time;
+            int minutes = frames / 3600;
+            frames -= minutes * 3600;
+
+            int seconds = frames / 60;
+            frames -= seconds * 60;
+
+            int hundredths = (frames * 100) / 60;
+
             bn::string<16> string("BEST: ");
             bn::ostringstream string_stream(string);
             string_stream.append(*best_position + 1);
 
+            if(stages_status::dollar_time(difficulty, reverse, best_time))
+            {
+                string_stream.append('$');
+            }
+
             bn::sprite_text_generator& text_generator = common_stuff.small_variable_text_generator;
             text_generator.set_center_alignment();
             text_generator.set_palette_item(_text_palette_item(stages_status, difficulty, reverse));
-            text_generator.generate(x, y, string, _position_sprites);
+            text_generator.generate(x, y - 6, string, _position_time_sprites);
+
+            string.clear();
+            string_stream.append(minutes);
+            string_stream.append(':');
+
+            if(seconds < 10)
+            {
+                string_stream.append('0');
+            }
+
+            string_stream.append(seconds);
+            string_stream.append('.');
+
+            if(hundredths < 10)
+            {
+                string_stream.append('0');
+            }
+
+            string_stream.append(hundredths);
+
+            text_generator.generate(x, y + 6, string, _position_time_sprites);
+
             text_generator.set_left_alignment();
             text_generator.set_palette_item(bn::sprite_items::small_variable_font.palette_item());
         }
@@ -385,9 +422,9 @@ void title_race_menu::_show(bn::regular_bg_ptr& backdrop)
         label_sprite.set_x(label_sprite.x() - animation_desp_inc);
     }
 
-    for(bn::sprite_ptr& position_sprite : _position_sprites)
+    for(bn::sprite_ptr& position_time_sprite : _position_time_sprites)
     {
-        position_sprite.set_x(position_sprite.x() - animation_desp_inc);
+        position_time_sprite.set_x(position_time_sprite.x() - animation_desp_inc);
     }
 
     for(bn::sprite_ptr& locked_sprite : _locked_sprites)
@@ -411,9 +448,9 @@ void title_race_menu::_hide(bn::regular_bg_ptr& backdrop)
         label_sprite.set_x(label_sprite.x() + animation_desp_inc);
     }
 
-    for(bn::sprite_ptr& position_sprite : _position_sprites)
+    for(bn::sprite_ptr& position_time_sprite : _position_time_sprites)
     {
-        position_sprite.set_x(position_sprite.x() + animation_desp_inc);
+        position_time_sprite.set_x(position_time_sprite.x() + animation_desp_inc);
     }
 
     for(bn::sprite_ptr& locked_sprite : _locked_sprites)

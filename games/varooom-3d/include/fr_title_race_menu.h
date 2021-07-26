@@ -42,7 +42,7 @@ private:
     bn::vector<bn::sprite_ptr, 6> _locked_sprites;
     bn::vector<bn::sprite_ptr, 2> _cursor_sprites;
     bn::vector<bn::sprite_ptr, 16> _label_sprites;
-    bn::vector<bn::sprite_ptr, 4> _position_sprites;
+    bn::vector<bn::sprite_ptr, 8> _position_time_sprites;
     menu_keypad _menu_keypad;
     int _show_frames = 0;
     int _hide_frames = 0;

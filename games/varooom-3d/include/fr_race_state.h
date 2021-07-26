@@ -37,6 +37,11 @@ public:
         return _current_position;
     }
 
+    [[nodiscard]] int current_time() const
+    {
+        return _current_time;
+    }
+
     [[nodiscard]] int inverse_frames() const
     {
         return _inverse_frames;
@@ -64,6 +69,7 @@ private:
 
     rival_position _rival_positions[constants_3d::max_rival_cars];
     int _current_position;
+    int _current_time = 0;
     int _pending_time;
     int _pending_updates = 30;
     int _current_lap = 0;

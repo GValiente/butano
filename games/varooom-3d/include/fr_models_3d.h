@@ -52,8 +52,8 @@ public:
 
 private:
     static constexpr int _max_models = constants_3d::max_static_models + constants_3d::max_dynamic_models;
-    static constexpr int _max_vertices = 224;
-    static constexpr int _max_faces = 160;
+    static constexpr int _max_vertices = 256;
+    static constexpr int _max_faces = 176;
 
     static_assert(_max_faces <= bn::numeric_limits<uint8_t>::max());
 

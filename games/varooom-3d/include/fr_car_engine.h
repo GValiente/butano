@@ -23,7 +23,7 @@ public:
         _max_reverse_power(max_power / 4),
         _acceleration(acceleration),
         _turbo_acceleration(acceleration * 8),
-        _reverse_acceleration(acceleration / 2)
+        _reverse_acceleration(acceleration.unsafe_multiplication(bn::fixed(0.65)))
     {
     }
 

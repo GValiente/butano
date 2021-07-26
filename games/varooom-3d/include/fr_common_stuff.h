@@ -29,15 +29,22 @@ public:
         return _finish_position;
     }
 
-    void set_finish_position(int position)
+    [[nodiscard]] int finish_time() const
+    {
+        return _finish_time;
+    }
+
+    void set_finish_position_and_time(int position, int time)
     {
         _finish_position = position;
+        _finish_time = time;
     }
 
     void update();
 
 private:
     int _finish_position = 0;
+    int _finish_time = 0;
     bool _reset_ready = false;
 };
 

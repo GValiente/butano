@@ -13,10 +13,10 @@ namespace fr::model_3d_items
 {
     constexpr inline vertex_3d mountain_vertices[] = {
         vertex_3d(35.0, -40.0, -40.0),
-        vertex_3d(-3.0, -40.0, -40.0),
+        vertex_3d(-3.0, -40.0, -30.0),
         vertex_3d(10.0, 22.0, -18.0),
         vertex_3d(35.0, -16.0, -23.0),
-        vertex_3d(-35.0, -40.0, -40.0),
+        vertex_3d(-35.0, -40.0, -35.0),
         vertex_3d(-35.0, 2.0, -27.0),
         vertex_3d(35.0, 7.0, 3.8),
         vertex_3d(-14.0, 18.0, 14.0),
@@ -53,7 +53,7 @@ namespace fr::model_3d_items
         face_3d(mountain_vertices, vertex_3d(-0.7799981148267789, 0.6075774789177015, 0.14984174311146017), 10, 7, 8, 11, mountain_c2_color, mountain_c2_shading),
     };
 
-    constexpr inline face_3d mountain_collision_face(mountain_vertices, vertex_3d(0, 0, 0), 0, 4, 11, 9, 0, -1);
+    constexpr inline face_3d mountain_collision_face(mountain_vertices, vertex_3d(0, 0, 0), 0, 1, 4, 11, 0, -1);
 
     constexpr inline model_3d_item mountain(mountain_vertices, mountain_faces, &mountain_collision_face);
 }

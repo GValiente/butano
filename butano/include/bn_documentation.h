@@ -1706,7 +1706,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_3_0 7.3.0 (next release)
+ * @section changelog_7_3_0 7.3.0
  *
  * * bn::sprite_text_generator now can plot multiple 16x16 variable width characters in a single sprite.
  * * bn::sprite_text_generator IWRAM usage reduced.
@@ -1715,7 +1715,8 @@
  * See the `external_tool` example to learn how to do it.
  * * `butano-audio-tool.py` generates a list of all available music and sound items with their name.
  * * `audio_player` example added.
- * * <a href="https://gvaliente.itch.io/varooom-3d">Varooom 3D</a> improved.
+ * * <a href="https://gvaliente.itch.io/varooom-3d">Varooom 3D</a> improved
+ * (check its `readme.txt` file for details).
  *
  *
  * @section changelog_7_2_0 7.2.0

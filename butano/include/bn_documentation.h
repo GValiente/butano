@@ -1706,6 +1706,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_4_0 7.4.0 (next release)
+ *
+ * Run-length is preferred to LZ77 when choosing best compression mode.
+ *
+ *
  * @section changelog_7_3_0 7.3.0
  *
  * * bn::sprite_text_generator now can plot multiple 16x16 variable width characters in a single sprite.

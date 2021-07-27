@@ -141,14 +141,14 @@ class SpriteItem:
 
         if tiles_compression == 'auto':
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
 
         if palette_compression == 'auto':
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
                                                                              file_size)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
 
         self.__execute_command(tiles_compression, palette_compression)
         return self.__write_header(tiles_compression, palette_compression, False)
@@ -296,8 +296,8 @@ class SpriteTilesItem:
 
         if compression == 'auto':
             compression, file_size = self.__test_compression(compression, 'none', None)
-            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
             compression, file_size = self.__test_compression(compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
 
         self.__execute_command(compression)
         return self.__write_header(compression, False)
@@ -415,8 +415,8 @@ class SpritePaletteItem:
 
         if compression == 'auto':
             compression, file_size = self.__test_compression(compression, 'none', None)
-            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
             compression, file_size = self.__test_compression(compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
 
         self.__execute_command(compression)
         return self.__write_header(compression, False)
@@ -578,19 +578,19 @@ class RegularBgItem:
 
         if tiles_compression == 'auto':
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
 
         if palette_compression == 'auto':
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
                                                                              file_size)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
 
         if map_compression == 'auto':
             map_compression, file_size = self.__test_map_compression(map_compression, 'none', None)
-            map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
             map_compression, file_size = self.__test_map_compression(map_compression, 'run_length', file_size)
+            map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
 
         self.__execute_command(tiles_compression, palette_compression, map_compression)
         return self.__write_header(tiles_compression, palette_compression, map_compression, False)
@@ -808,19 +808,19 @@ class AffineBgItem:
 
         if tiles_compression == 'auto':
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
 
         if palette_compression == 'auto':
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
                                                                              file_size)
+            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
 
         if map_compression == 'auto':
             map_compression, file_size = self.__test_map_compression(map_compression, 'none', None)
-            map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
             map_compression, file_size = self.__test_map_compression(map_compression, 'run_length', file_size)
+            map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
 
         self.__execute_command(tiles_compression, palette_compression, map_compression)
         return self.__write_header(tiles_compression, palette_compression, map_compression, False)
@@ -978,8 +978,8 @@ class BgPaletteItem:
 
         if compression == 'auto':
             compression, file_size = self.__test_compression(compression, 'none', None)
-            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
             compression, file_size = self.__test_compression(compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
 
         self.__execute_command(compression)
         return self.__write_header(compression, False)

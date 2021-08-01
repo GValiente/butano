@@ -1539,6 +1539,18 @@
  * @endcode
  *
  *
+ * @subsection faq_float_double Can I use float or double when coding for the GBA?
+ *
+ * Normally CPUs have dedicated hardware for processing `float`s and `double`s, called an FPU.
+ * The GBA doesn't have one, so you're left with 2 choices:
+ *
+ * * Using soft float, which is floating point emulated in software (*very* slow).
+ * * Using fixed point arithmetic, which is just integer arithmetic with a few extra steps.
+ *
+ * Butano provides bn::fixed, which tries to be as close as possible to a `float` with fixed point arithmetic.
+ * Use it when you want to work with numbers with decimal points.
+ *
+ *
  * @subsection faq_global_objects Does Butano allow to declare bn::sprite_ptr or bn::regular_bg_ptr objects globally?
  *
  * In general, you should not do anything with Butano before calling bn::core::init,
@@ -1708,7 +1720,8 @@
  *
  * @section changelog_7_4_0 7.4.0 (next release)
  *
- * Run-length is preferred to LZ77 when choosing best compression mode.
+ * * Run-length is preferred to LZ77 when choosing best compression mode.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_7_3_0 7.3.0

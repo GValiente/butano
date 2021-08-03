@@ -86,7 +86,7 @@ namespace
         item.affine_mat = move(affine_mat);
         sprite_affine_mats_manager::attach_sprite(affine_mat_id, item.affine_mat_attach_node);
 
-        bool new_double_size = item.new_double_size();
+        bool new_double_size = item.new_double_size(affine_mat_id);
         hw::sprites::set_affine_mat(affine_mat_id, item.handle);
         hw::sprites::show_affine(new_double_size, item.handle);
 
@@ -382,7 +382,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
 
             if(item->affine_mat)
             {
-                update_affine_mat_double_size(id);
+                update_affine_mat_double_size(id, item->affine_mat->id());
             }
         }
         else
@@ -419,7 +419,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
 
             if(item->affine_mat)
             {
-                update_affine_mat_double_size(id);
+                update_affine_mat_double_size(id, item->affine_mat->id());
             }
         }
         else
@@ -504,7 +504,7 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
 
             if(item->affine_mat)
             {
-                update_affine_mat_double_size(id);
+                update_affine_mat_double_size(id, item->affine_mat->id());
             }
         }
         else
@@ -819,7 +819,7 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
 
         if(item->affine_mat)
         {
-            update_affine_mat_double_size(id);
+            update_affine_mat_double_size(id, item->affine_mat->id());
         }
     }
 }
@@ -1212,10 +1212,10 @@ void remove_identity_affine_mat_if_not_needed(id_type id)
     }
 }
 
-void update_affine_mat_double_size(id_type id)
+void update_affine_mat_double_size(id_type id, int affine_mat_id)
 {
     auto item = static_cast<item_type*>(id);
-    bool new_double_size = item->new_double_size();
+    bool new_double_size = item->new_double_size(affine_mat_id);
 
     if(item->double_size != new_double_size)
     {

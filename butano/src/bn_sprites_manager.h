@@ -209,7 +209,7 @@ namespace sprites_manager
 
     void remove_identity_affine_mat_if_not_needed(id_type id);
 
-    void update_affine_mat_double_size(id_type id);
+    void update_affine_mat_double_size(id_type id, int affine_mat_id);
 
     void update();
 

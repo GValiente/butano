@@ -123,7 +123,7 @@ public:
             else
             {
                 int affine_mat_id = affine_mat_ref.id();
-                double_size = new_double_size();
+                double_size = new_double_size(affine_mat_id);
                 hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp(),
                                           display_manager::blending_fade_enabled(), handle);
                 hw::sprites::set_affine_mat(affine_mat_id, handle);
@@ -140,7 +140,7 @@ public:
         update_half_dimensions();
     }
 
-    [[nodiscard]] bool new_double_size() const
+    [[nodiscard]] bool new_double_size(int affine_mat_id) const
     {
         switch(sprite_double_size_mode(double_size_mode))
         {
@@ -149,7 +149,7 @@ public:
             {
                 pair<int, int> base_dimensions = hw::sprites::base_dimensions(handle);
                 return sprite_affine_mats_manager::sprite_double_size(
-                            affine_mat->id(), base_dimensions.first, base_dimensions.second);
+                            affine_mat_id, base_dimensions.first, base_dimensions.second);
             }
 
         case sprite_double_size_mode::ENABLED:

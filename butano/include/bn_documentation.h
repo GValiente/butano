@@ -1722,6 +1722,7 @@
  *
  * * Run-length is preferred to LZ77 when choosing best compression mode.
  * * @ref faq page improved.
+ * * Sprites automatic double size mode and affine matrix management fixed.
  *
  *
  * @section changelog_7_3_0 7.3.0

@@ -88,13 +88,7 @@ namespace
     BN_DATA_EWRAM static_data data;
 
 
-    void _update_indexes_to_commit(int index)
-    {
-        data.first_index_to_commit = min(data.first_index_to_commit, index);
-        data.last_index_to_commit = max(data.last_index_to_commit, index);
-    }
-
-    void _update(int index)
+    void _update_flipped_identity(int index)
     {
         item_type& item = data.items[index];
         const affine_mat_attributes& attributes = item.attributes;
@@ -119,13 +113,24 @@ namespace
             item.flipped_identity = false;
             item.remove_if_not_needed = false;
         }
+    }
 
+    void _update_indexes_to_commit(int index)
+    {
+        data.first_index_to_commit = min(data.first_index_to_commit, index);
+        data.last_index_to_commit = max(data.last_index_to_commit, index);
+    }
+
+    void _update(int index)
+    {
+        item_type& item = data.items[index];
+        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[index]);
         _update_indexes_to_commit(index);
 
         for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
         {
             sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-            sprites_manager::update_affine_mat_double_size(&sprite_item);
+            sprites_manager::update_affine_mat_double_size(&sprite_item, index);
         }
     }
 
@@ -251,10 +256,10 @@ void set_rotation_angle(int id, fixed rotation_angle)
     {
         registers old_registers(item.attributes);
         item.attributes.set_rotation_angle(rotation_angle);
+        _update_flipped_identity(id);
 
         if(registers(item.attributes) != old_registers)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -274,10 +279,10 @@ void set_horizontal_scale(int id, fixed horizontal_scale)
         int pa = item.attributes.pa_register_value();
         int pb = item.attributes.pb_register_value();
         item.attributes.set_horizontal_scale(horizontal_scale);
+        _update_flipped_identity(id);
 
         if(item.attributes.pa_register_value() != pa || item.attributes.pb_register_value() != pb)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -297,10 +302,10 @@ void set_vertical_scale(int id, fixed vertical_scale)
         int pc = item.attributes.pc_register_value();
         int pd = item.attributes.pd_register_value();
         item.attributes.set_vertical_scale(vertical_scale);
+        _update_flipped_identity(id);
 
         if(item.attributes.pc_register_value() != pc || item.attributes.pd_register_value() != pd)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -314,10 +319,10 @@ void set_scale(int id, fixed scale)
     {
         registers old_registers(item.attributes);
         item.attributes.set_scale(scale);
+        _update_flipped_identity(id);
 
         if(registers(item.attributes) != old_registers)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -331,10 +336,10 @@ void set_scale(int id, fixed horizontal_scale, fixed vertical_scale)
     {
         registers old_registers(item.attributes);
         item.attributes.set_scale(horizontal_scale, vertical_scale);
+        _update_flipped_identity(id);
 
         if(registers(item.attributes) != old_registers)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -353,10 +358,10 @@ void set_horizontal_shear(int id, fixed horizontal_shear)
     {
         int pb = item.attributes.pb_register_value();
         item.attributes.set_horizontal_shear(horizontal_shear);
+        _update_flipped_identity(id);
 
         if(item.attributes.pb_register_value() != pb)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -375,10 +380,10 @@ void set_vertical_shear(int id, fixed vertical_shear)
     {
         int pc = item.attributes.pc_register_value();
         item.attributes.set_vertical_shear(vertical_shear);
+        _update_flipped_identity(id);
 
         if(item.attributes.pc_register_value() != pc)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -393,10 +398,10 @@ void set_shear(int id, fixed shear)
         int pb = item.attributes.pb_register_value();
         int pc = item.attributes.pc_register_value();
         item.attributes.set_shear(shear);
+        _update_flipped_identity(id);
 
         if(item.attributes.pb_register_value() != pb || item.attributes.pc_register_value() != pc)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -411,10 +416,10 @@ void set_shear(int id, fixed horizontal_shear, fixed vertical_shear)
         int pb = item.attributes.pb_register_value();
         int pc = item.attributes.pc_register_value();
         item.attributes.set_shear(horizontal_shear, vertical_shear);
+        _update_flipped_identity(id);
 
         if(item.attributes.pb_register_value() != pb || item.attributes.pc_register_value() != pc)
         {
-            hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
             _update(id);
         }
     }
@@ -464,10 +469,10 @@ void set_attributes(int id, const affine_mat_attributes& attributes)
     item_type& item = data.items[id];
     registers old_registers(item.attributes);
     item.attributes = attributes;
+    _update_flipped_identity(id);
 
     if(registers(attributes) != old_registers)
     {
-        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
         _update(id);
     }
 }
@@ -498,6 +503,17 @@ bool sprite_double_size(int id, int sprite_width, int sprite_height)
     int pb = attributes.pb_register_value();
     int pc = attributes.pc_register_value();
     int pd = attributes.pd_register_value();
+
+    if(pb == 0 && pc == 0)
+    {
+        return (pa > -257 && pa < 256) || (pd > -257 && pd < 256);
+    }
+
+    if(pa == 0 && pd == 0)
+    {
+        return (pb > -257 && pb < 256) || (pc > -257 && pc < 256);
+    }
+
     int divisor = (pa * pd) - (pb * pc);
 
     if(! divisor)

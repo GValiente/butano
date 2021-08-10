@@ -6,28 +6,29 @@
 #ifndef BN_HW_UNCOMPRESS_H
 #define BN_HW_UNCOMPRESS_H
 
-#include "bn_hw_tonc.h"
+#include "bn_common.h"
+#include "../3rd_party/cult-of-gba-bios/include/cult-of-gba-bios.h"
 
 namespace bn::hw::uncompress
 {
     inline void lz77_wram(const void* src, void* dst)
     {
-        LZ77UnCompWram(src, dst);
+        swi_LZ77UnCompWrite8bit(src, dst);
     }
 
     inline void lz77_vram(const void* src, void* dst)
     {
-        LZ77UnCompVram(src, dst);
+        swi_LZ77UnCompWrite16bit(src, dst);
     }
 
     inline void rl_wram(const void* src, void* dst)
     {
-        RLUnCompWram(src, dst);
+        swi_RLUnCompReadNormalWrite8bit(src, dst);
     }
 
     inline void rl_vram(const void* src, void* dst)
     {
-        RLUnCompVram(src, dst);
+        swi_RLUnCompReadNormalWrite16bit(src, dst);
     }
 }
 

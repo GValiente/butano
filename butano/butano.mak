@@ -79,6 +79,7 @@ BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
                                 $(LIBBUTANOABS)/hw/3rd_party/libtonc/src/tte \
                                 $(LIBBUTANOABS)/hw/3rd_party/posprintf/src \
                                 $(LIBBUTANOABS)/hw/3rd_party/gba-modern/src \
+                                $(LIBBUTANOABS)/hw/3rd_party/cult-of-gba-bios/src \
                                 $(LIBBUTANOABS)/hw/3rd_party/dldi/src
 
 #---------------------------------------------------------------------------------------------------------------------

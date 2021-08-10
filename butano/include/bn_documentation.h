@@ -1718,6 +1718,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_5_0 7.5.0 (next release)
+ *
+ * Sprites and backgrounds decompression optimized thanks to
+ * <a href="https://github.com/Cult-of-GBA/BIOS">Cult-of-GBA BIOS</a>.
+ *
+ *
  * @section changelog_7_4_0 7.4.0
  *
  * * Run-length is preferred to LZ77 when choosing best compression mode.

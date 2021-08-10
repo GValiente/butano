@@ -47,6 +47,7 @@ Butano would have not been possible without these libraries:
 * Fast number to string conversion provided by [posprintf](http://danposluns.com/danposluns/gbadev/posprintf/index.html).
 * Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern) and
 [Universal GBA Library](https://github.com/AntonioND/ugba).
+* Fast decompression routines provided by [Cult-of-GBA BIOS](https://github.com/Cult-of-GBA/BIOS).
 * Multiplayer support provided by [gba-link-connection](https://github.com/rodri042/gba-link-connection).
 * SuperCard SD detection provided by [DLDI](http://www.chishm.com/DLDI/).
 * Pool containers provided by [ETL](https://www.etlcpp.com/).

@@ -489,7 +489,7 @@ bool flipped_identity(int id)
     return item.flipped_identity;
 }
 
-bool sprite_double_size(int id, int sprite_width, int sprite_height)
+bool sprite_double_size(int id)
 {
     const item_type& item = data.items[id];
 
@@ -521,8 +521,8 @@ bool sprite_double_size(int id, int sprite_width, int sprite_height)
         return true;
     }
 
-    int half_width = sprite_width / 2;
-    int half_height = sprite_height / 2;
+    constexpr int half_width = 32;
+    constexpr int half_height = 32;
     int ix1 = ((-256 * half_height * pb) - (256 * half_width * pd) + (256 * pb)) / divisor;
 
     if(ix1 < -half_width || ix1 >= half_width)
@@ -556,10 +556,11 @@ void reload(int id)
 
 void update()
 {
-    if(data.first_index_to_remove_if_not_needed < max_items)
+    int first_index_to_remove = data.first_index_to_remove_if_not_needed;
+
+    if(first_index_to_remove < max_items)
     {
-        for(int index = data.first_index_to_remove_if_not_needed, last = data.last_index_to_remove_if_not_needed;
-            index <= last; ++index)
+        for(int index = first_index_to_remove, last = data.last_index_to_remove_if_not_needed; index <= last; ++index)
         {
             item_type& item = data.items[index];
 

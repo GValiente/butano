@@ -146,11 +146,7 @@ public:
         {
 
         case sprite_double_size_mode::AUTO:
-            {
-                pair<int, int> base_dimensions = hw::sprites::base_dimensions(handle);
-                return sprite_affine_mats_manager::sprite_double_size(
-                            affine_mat_id, base_dimensions.first, base_dimensions.second);
-            }
+            return sprite_affine_mats_manager::sprite_double_size(affine_mat_id);
 
         case sprite_double_size_mode::ENABLED:
             return true;

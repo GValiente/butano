@@ -38,6 +38,19 @@
 #endif
 
 /**
+ * @def BN_CFG_PROFILER_LOG_ENGINE_DETAILED
+ *
+ * Specifies if each Butano subsystem must be profiled separately or not.
+ *
+ * @ref BN_CFG_PROFILER_LOG_ENGINE must be `true` to enable Butano subsystems profiling.
+ *
+ * @ingroup profiler
+ */
+#ifndef BN_CFG_PROFILER_LOG_ENGINE_DETAILED
+    #define BN_CFG_PROFILER_LOG_ENGINE_DETAILED false
+#endif
+
+/**
  * @def BN_CFG_PROFILER_MAX_ENTRIES
  *
  * Specifies the maximum number of code blocks that can be profiled without too much performance issues.

@@ -1720,7 +1720,8 @@
  *
  * @section changelog_7_5_0 7.5.0 (next release)
  *
- * Sprites and backgrounds decompression optimized thanks to
+ * * @ref BN_CFG_PROFILER_LOG_ENGINE_DETAILED added.
+ * * Sprites and backgrounds decompression optimized thanks to
  * <a href="https://github.com/Cult-of-GBA/BIOS">Cult-of-GBA BIOS</a>.
  *
  *

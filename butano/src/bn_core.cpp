@@ -43,18 +43,56 @@
 #endif
 
 #if BN_CFG_PROFILER_ENABLED && BN_CFG_PROFILER_LOG_ENGINE
-    #define BN_PROFILER_ENGINE_START(id) \
-        BN_PROFILER_START(id)
+    #if BN_CFG_PROFILER_LOG_ENGINE_DETAILED
+        #define BN_PROFILER_ENGINE_GENERAL_START(id) \
+            do \
+            { \
+            } while(false)
 
-    #define BN_PROFILER_ENGINE_STOP() \
-        BN_PROFILER_STOP()
+        #define BN_PROFILER_ENGINE_GENERAL_STOP() \
+            do \
+            { \
+            } while(false)
+
+        #define BN_PROFILER_ENGINE_DETAILED_START(id) \
+            BN_PROFILER_START(id)
+
+        #define BN_PROFILER_ENGINE_DETAILED_STOP() \
+            BN_PROFILER_STOP()
+    #else
+        #define BN_PROFILER_ENGINE_GENERAL_START(id) \
+            BN_PROFILER_START(id)
+
+        #define BN_PROFILER_ENGINE_GENERAL_STOP() \
+            BN_PROFILER_STOP()
+
+        #define BN_PROFILER_ENGINE_DETAILED_START(id) \
+            do \
+            { \
+            } while(false)
+
+        #define BN_PROFILER_ENGINE_DETAILED_STOP() \
+            do \
+            { \
+            } while(false)
+    #endif
 #else
-    #define BN_PROFILER_ENGINE_START(id) \
+    #define BN_PROFILER_ENGINE_GENERAL_START(id) \
         do \
         { \
         } while(false)
 
-    #define BN_PROFILER_ENGINE_STOP() \
+    #define BN_PROFILER_ENGINE_GENERAL_STOP() \
+        do \
+        { \
+        } while(false)
+
+    #define BN_PROFILER_ENGINE_DETAILED_START(id) \
+        do \
+        { \
+        } while(false)
+
+    #define BN_PROFILER_ENGINE_DETAILED_STOP() \
         do \
         { \
         } while(false)
@@ -142,41 +180,45 @@ namespace
     {
         ticks result;
 
-        BN_PROFILER_ENGINE_START("eng_cameras_update");
+        BN_PROFILER_ENGINE_GENERAL_START("eng_update");
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_cameras_update");
         cameras_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_sprites_update");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_sprites_update");
         sprites_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_spr_tiles_update");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_spr_tiles_update");
         sprite_tiles_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_bgs_update");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_bgs_update");
         bgs_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_bg_blocks_update");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_bg_blocks_update");
         bg_blocks_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_palettes_update");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_palettes_update");
         palettes_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_display_update");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_display_update");
         display_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_hblank_fx_update");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_hblank_fx_update");
         hblank_effects_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_hdma_update");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_update");
         hdma_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_GENERAL_STOP();
 
         audio_manager::disable_vblank_handler();
 
@@ -185,57 +227,61 @@ namespace
 
         hw::core::wait_for_vblank();
 
-        BN_PROFILER_ENGINE_START("eng_hblank_fx_commit");
+        BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_hblank_fx_commit");
         hblank_effects_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_display_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_display_commit");
         display_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_sprites_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_sprites_commit");
         sprites_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_bgs_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_bgs_commit");
         bgs_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_palettes_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_palettes_commit");
         palettes_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_hdma_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_commit");
         hdma_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_spr_tiles_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_spr_tiles_commit");
         sprite_tiles_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_big_maps_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_big_maps_commit");
         bgs_manager::commit_big_maps();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_bg_blocks_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_bg_blocks_commit");
         bg_blocks_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_cpu_usage");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
         result.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_audio_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commit");
         audio_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_gpio_commit");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_gpio_commit");
         gpio_manager::commit();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_START("eng_keypad");
+        BN_PROFILER_ENGINE_DETAILED_START("eng_keypad");
         keypad_manager::update();
-        BN_PROFILER_ENGINE_STOP();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_GENERAL_STOP();
 
         return result;
     }
@@ -395,9 +441,9 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
     hw::core::wait_for_vblank();
 
     // Restart CPU usage timer:
-    BN_PROFILER_ENGINE_START("eng_cpu_usage");
+    BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
     data.cpu_usage_timer.restart();
-    BN_PROFILER_ENGINE_STOP();
+    BN_PROFILER_ENGINE_DETAILED_STOP();
 
     // Wake up display:
     display_manager::wake_up();

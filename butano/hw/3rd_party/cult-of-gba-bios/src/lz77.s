@@ -103,7 +103,7 @@ swi_LZ77UnCompWrite16bit:
     tst r1, #1
     moveq r7, r4
     orrne r7, r4, lsl #8
-    strneh r7, [r1]
+    strneh r7, [r1, #-1]
     add r1, #1
 
     @ check if decompressed length has been reached.
@@ -133,7 +133,7 @@ swi_LZ77UnCompWrite16bit:
     tst r1, #1
     moveq r7, r6
     orrne r7, r6, lsl #8
-    strneh r7, [r1]
+    strneh r7, [r1, #-1]
     add r1, #1
 
     @ check if decompressed length has been reached

@@ -127,10 +127,15 @@ namespace
         hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[index]);
         _update_indexes_to_commit(index);
 
-        for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
+        if(! item.attached_nodes.empty())
         {
-            sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-            sprites_manager::update_affine_mat_double_size(&sprite_item, index);
+            bool double_size = sprite_double_size(index);
+
+            for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
+            {
+                sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
+                sprites_manager::update_affine_mat_double_size(&sprite_item, double_size);
+            }
         }
     }
 

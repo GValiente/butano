@@ -140,6 +140,26 @@ public:
         update_half_dimensions();
     }
 
+    [[nodiscard]] bool new_double_size() const
+    {
+        switch(sprite_double_size_mode(double_size_mode))
+        {
+
+        case sprite_double_size_mode::AUTO:
+            return sprite_affine_mats_manager::sprite_double_size(affine_mat->id());
+
+        case sprite_double_size_mode::ENABLED:
+            return true;
+
+        case sprite_double_size_mode::DISABLED:
+            return false;
+
+        default:
+            BN_ERROR("Invalid double size mode: ", int(double_size_mode));
+            return false;
+        }
+    }
+
     [[nodiscard]] bool new_double_size(int affine_mat_id) const
     {
         switch(sprite_double_size_mode(double_size_mode))

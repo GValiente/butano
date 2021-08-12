@@ -8,6 +8,7 @@
 
 #include "bn_affine_bg_builder.h"
 #include "bn_regular_bg_builder.h"
+#include "bn_hw_bfn.h"
 #include "bn_hw_tonc.h"
 
 namespace bn::hw::bgs
@@ -59,7 +60,7 @@ namespace bn::hw::bgs
 
     inline void set_tiles_cbb(int tiles_cbb, uint16_t& bg_cnt)
     {
-        BFN_SET(bg_cnt, tiles_cbb, BG_CBB);
+        BN_BFN_SET(bg_cnt, tiles_cbb, BG_CBB);
     }
 
     inline void set_tiles_cbb(int tiles_cbb, handle& bg)
@@ -69,7 +70,7 @@ namespace bn::hw::bgs
 
     inline void set_map_sbb(int map_sbb, uint16_t& bg_cnt)
     {
-        BFN_SET(bg_cnt, map_sbb, BG_SBB);
+        BN_BFN_SET(bg_cnt, map_sbb, BG_SBB);
     }
 
     inline void set_map_sbb(int map_sbb, handle& bg)
@@ -79,7 +80,7 @@ namespace bn::hw::bgs
 
     inline void set_map_dimensions(int size, handle& bg)
     {
-        BFN_SET(bg.cnt, size, BG_SIZE);
+        BN_BFN_SET(bg.cnt, size, BG_SIZE);
     }
 
     [[nodiscard]] inline bpp_mode bpp(const handle& bg)
@@ -134,7 +135,7 @@ namespace bn::hw::bgs
 
     inline void set_priority(int priority, uint16_t& bg_cnt)
     {
-        BFN_SET(bg_cnt, priority, BG_PRIO);
+        BN_BFN_SET(bg_cnt, priority, BG_PRIO);
     }
 
     inline void set_priority(int priority, handle& bg)

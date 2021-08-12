@@ -7,6 +7,7 @@
 #define BN_HW_SPRITES_H
 
 #include "bn_sprite_builder.h"
+#include "bn_hw_bfn.h"
 #include "bn_hw_tonc.h"
 #include "bn_hw_memory.h"
 
@@ -98,17 +99,18 @@ namespace bn::hw::sprites
 
     [[nodiscard]] inline int view_mode(const handle_type& sprite)
     {
-        return BFN_GET2(sprite.attr0, ATTR0_MODE);
+        return BN_BFN_GET_SHIFTED(sprite.attr0, ATTR0_MODE);
     }
 
     inline void show_regular(handle_type& sprite)
     {
-        BFN_SET2(sprite.attr0, ATTR0_REG, ATTR0_MODE);
+        BN_BFN_SET_SHIFTED(sprite.attr0, ATTR0_REG, ATTR0_MODE);
     }
 
     inline void show_affine(bool double_size, uint16_t& attr0)
     {
-        BFN_SET2(attr0, double_size ? ATTR0_AFF_DBL : ATTR0_AFF, ATTR0_MODE);
+        int mode = ATTR0_AFF + (int(double_size) << 9);
+        BN_BFN_SET_SHIFTED(attr0, mode, ATTR0_MODE);
     }
 
     inline void show_affine(bool double_size, handle_type& sprite)
@@ -118,7 +120,7 @@ namespace bn::hw::sprites
 
     inline void hide(uint16_t& attr0)
     {
-        BFN_SET2(attr0, ATTR0_HIDE, ATTR0_MODE);
+        BN_BFN_SET_SHIFTED(attr0, ATTR0_HIDE, ATTR0_MODE);
     }
 
     inline void hide(handle_type& sprite)
@@ -172,18 +174,18 @@ namespace bn::hw::sprites
 
     inline void set_shape_size(const sprite_shape_size& shape_size, handle_type& sprite)
     {
-        BFN_SET(sprite.attr0, int(shape_size.shape()), ATTR0_SHAPE);
-        BFN_SET(sprite.attr1, int(shape_size.size()), ATTR1_SIZE);
+        BN_BFN_SET(sprite.attr0, int(shape_size.shape()), ATTR0_SHAPE);
+        BN_BFN_SET(sprite.attr1, int(shape_size.size()), ATTR1_SIZE);
     }
 
     inline void set_tiles(int tiles_id, handle_type& sprite)
     {
-        BFN_SET(sprite.attr2, tiles_id, ATTR2_ID);
+        BN_BFN_SET(sprite.attr2, tiles_id, ATTR2_ID);
     }
 
     inline void set_palette(int palette_id, handle_type& sprite)
     {
-        BFN_SET(sprite.attr2, palette_id, ATTR2_PALBANK);
+        BN_BFN_SET(sprite.attr2, palette_id, ATTR2_PALBANK);
     }
 
     inline void set_bpp(bpp_mode bpp, handle_type& sprite)
@@ -200,12 +202,12 @@ namespace bn::hw::sprites
 
     inline void set_affine_mat(int affine_mat_id, handle_type& sprite)
     {
-        BFN_SET(sprite.attr1, affine_mat_id, ATTR1_AFF_ID);
+        BN_BFN_SET(sprite.attr1, affine_mat_id, ATTR1_AFF_ID);
     }
 
     inline void set_x(int x, uint16_t& attr1)
     {
-        BFN_SET(attr1, x, ATTR1_X);
+        BN_BFN_SET(attr1, x & 511, ATTR1_X);
     }
 
     inline void set_x(int x, handle_type& sprite)
@@ -215,7 +217,7 @@ namespace bn::hw::sprites
 
     inline void set_y(int y, uint16_t& attr0)
     {
-        BFN_SET(attr0, y, ATTR0_Y);
+        BN_BFN_SET(attr0, y & 255, ATTR0_Y);
     }
 
     inline void set_y(int y, handle_type& sprite)
@@ -225,7 +227,7 @@ namespace bn::hw::sprites
 
     inline void set_bg_priority(int bg_priority, handle_type& sprite)
     {
-        BFN_SET(sprite.attr2, bg_priority, ATTR2_PRIO);
+        BN_BFN_SET(sprite.attr2, bg_priority, ATTR2_PRIO);
     }
 
     [[nodiscard]] inline bool horizontal_flip(const handle_type& sprite)

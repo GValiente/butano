@@ -1723,6 +1723,7 @@
  * * @ref BN_CFG_PROFILER_LOG_ENGINE_DETAILED added.
  * * Sprites and backgrounds decompression optimized thanks to
  * <a href="https://github.com/Cult-of-GBA/BIOS">Cult-of-GBA BIOS</a>.
+ * * Sprites and backgrounds hardware setup optimized.
  * * Sprites automatic double size mode optimized.
  *
  *

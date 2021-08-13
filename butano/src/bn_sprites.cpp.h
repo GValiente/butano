@@ -20,6 +20,16 @@ int available_items_count()
     return sprites_manager::available_items_count();
 }
 
+int reserved_handles_count()
+{
+    return sprites_manager::reserved_handles_count();
+}
+
+void set_reserved_handles_count(int reserved_handles_count)
+{
+    return sprites_manager::set_reserved_handles_count(reserved_handles_count);
+}
+
 void reload()
 {
     sprites_manager::reload_all();

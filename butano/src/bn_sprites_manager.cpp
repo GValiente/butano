@@ -28,6 +28,8 @@ namespace
     using item_type = sprites_manager_item;
     using sorted_items_type = vector<item_type*, BN_CFG_SPRITES_MAX_ITEMS>;
 
+    constexpr int affine_mat_id_multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
+
     class static_data
     {
 
@@ -35,6 +37,7 @@ namespace
         pool<item_type, BN_CFG_SPRITES_MAX_ITEMS> items_pool;
         hw::sprites::handle_type handles[hw::sprites::count()];
         sorted_sprites::sorter sorter;
+        int reserved_handles_count = 0;
         int first_index_to_commit = 0;
         int last_index_to_commit = hw::sprites::count() - 1;
         int last_visible_items_count = 0;
@@ -126,16 +129,29 @@ namespace
         if(data.rebuild_handles)
         {
             hw::sprites::handle_type* handles = data.handles;
+            int reserved_handles_count = data.reserved_handles_count;
             int last_visible_items_count = data.last_visible_items_count;
-            int visible_items_count = _rebuild_handles_impl(last_visible_items_count, handles, data.sorter.layers());
-            int to_commit_items_count = max(visible_items_count, last_visible_items_count);
+            int visible_items_count = _rebuild_handles_impl(
+                        reserved_handles_count, last_visible_items_count, handles, data.sorter.layers());
+            BN_ASSERT(visible_items_count != -1, "Too much on screen sprites");
+
+            int to_commit_items_count;
             data.rebuild_handles = false;
             data.last_visible_items_count = visible_items_count;
 
+            if(visible_items_count < last_visible_items_count)
+            {
+                to_commit_items_count = min(last_visible_items_count, hw::sprites::count() - reserved_handles_count);
+            }
+            else
+            {
+                to_commit_items_count = visible_items_count;
+            }
+
             if(to_commit_items_count)
             {
-                data.first_index_to_commit = 0;
-                data.last_index_to_commit = to_commit_items_count - 1;
+                data.first_index_to_commit = reserved_handles_count;
+                data.last_index_to_commit = reserved_handles_count + to_commit_items_count - 1;
             }
         }
     }
@@ -1002,6 +1018,41 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
+int reserved_handles_count()
+{
+    return data.reserved_handles_count;
+}
+
+void set_reserved_handles_count(int reserved_handles_count)
+{
+    int old_reserved_handles_count = data.reserved_handles_count;
+
+    if(reserved_handles_count != old_reserved_handles_count)
+    {
+        BN_ASSERT(reserved_handles_count >= 0 && reserved_handles_count < hw::sprites::count(),
+                  "Invalid reserved handles count: ", reserved_handles_count);
+
+        if(reserved_handles_count > old_reserved_handles_count)
+        {
+            BN_ASSERT(reserved_handles_count <=
+                      sprite_affine_mats_manager::minimum_active_id() * affine_mat_id_multiplier,
+                      "Reserved handles used by affine mats: ", reserved_handles_count, " - ",
+                      sprite_affine_mats_manager::minimum_active_id());
+
+            for(sorted_sprites::layer& layer : data.sorter.layers())
+            {
+                for(item_type& item : layer.items())
+                {
+                    item.handles_index = -1;
+                }
+            }
+        }
+
+        data.reserved_handles_count = reserved_handles_count;
+        reload_all();
+    }
+}
+
 void reload(id_type id)
 {
     auto item = static_cast<item_type*>(id);
@@ -1233,7 +1284,7 @@ void commit()
 
     if(auto affine_mats_commit_data = sprite_affine_mats_manager::retrieve_commit_data())
     {
-        int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
+        int multiplier = affine_mat_id_multiplier;
         int first_mat_index_to_commit = affine_mats_commit_data->offset * multiplier;
         int last_mat_index_to_commit = first_mat_index_to_commit + (affine_mats_commit_data->count * multiplier) - 1;
         first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);

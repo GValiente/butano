@@ -34,6 +34,8 @@ namespace bn::sprite_affine_mats_manager
 
     [[nodiscard]] int available_count();
 
+    [[nodiscard]] int minimum_active_id();
+
     [[nodiscard]] int create();
 
     [[nodiscard]] int create(const affine_mat_attributes& attributes);

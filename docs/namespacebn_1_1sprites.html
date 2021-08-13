@@ -90,6 +90,14 @@
             </dt>
             <dd></dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a157adb21a3201411ac3e2c90f98358bb" class="m-doc">reserved_handles_count</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the number of hardware sprite handles not used by Butano&#x27;s sprites manager.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#adce0d08b581d9cd4287cd1170a88586c" class="m-doc">set_reserved_handles_count</a>(</span><span class="m-doc-wrap">int reserved_handles_count)</span>
+            </dt>
+            <dd>Sets the number of hardware sprite handles not used by Butano&#x27;s sprites manager.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a423fcac2c89998836ca237ee1f4c65d0" class="m-doc">reload</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Reloads the internal attributes of all sprites.</dd>
@@ -163,12 +171,26 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="a157adb21a3201411ac3e2c90f98358bb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />sprites::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a157adb21a3201411ac3e2c90f98358bb" class="m-doc-self">reserved_handles_count</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Returns the number of hardware sprite handles not used by Butano&#x27;s sprites manager.</p>
+<p>Normally you should not need to reserve handles, but it can be useful for messing with HDMA for example.</p>
+          </div></section>
+          <section class="m-doc-details" id="adce0d08b581d9cd4287cd1170a88586c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprites::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adce0d08b581d9cd4287cd1170a88586c" class="m-doc-self">set_reserved_handles_count</a>(</span><span class="m-doc-wrap">int reserved_handles_count)</span></span>
+            </h3>
+            <p>Sets the number of hardware sprite handles not used by Butano&#x27;s sprites manager.</p>
+<p>Normally you should not need to reserve handles, but it can be useful for messing with HDMA for example.</p>
+          </div></section>
           <section class="m-doc-details" id="a423fcac2c89998836ca237ee1f4c65d0"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />sprites::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a423fcac2c89998836ca237ee1f4c65d0" class="m-doc-self">reload</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Reloads the internal attributes of all sprites.</p>
-<p>Normally you should not call this function, but it can be useful after messing with HDMA for example.</p>
+<p>Normally you should not need to call this function, but it can be useful after messing with HDMA for example.</p>
           </div></section>
         </section>
       </div>

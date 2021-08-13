@@ -181,6 +181,10 @@ namespace sprites_manager
 
     void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes);
 
+    int reserved_handles_count();
+
+    void set_reserved_handles_count(int reserved_handles_count);
+
     void reload(id_type id);
 
     void reload_blending();
@@ -220,7 +224,8 @@ namespace sprites_manager
             int& first_index_to_commit, int& last_index_to_commit);
 
     [[nodiscard]] BN_CODE_IWRAM int _rebuild_handles_impl(
-            int last_visible_items_count, void* hw_handles, intrusive_list<sorted_sprites::layer>& layers);
+            int reserved_handles_count, int last_visible_items_count, void* hw_handles,
+            intrusive_list<sorted_sprites::layer>& layers);
 
     [[nodiscard]] BN_CODE_IWRAM bool _update_cameras_impl(intrusive_list<sorted_sprites::layer>& layers);
 }

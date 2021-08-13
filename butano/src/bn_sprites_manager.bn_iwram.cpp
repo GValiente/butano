@@ -109,7 +109,7 @@ int _rebuild_handles_impl(int reserved_handles_count, int last_visible_items_cou
             if(item.on_screen)
             {
                 #if BN_CFG_ASSERT_ENABLED
-                    if(visible_items_count > hw::sprites::count()) [[unlikely]]
+                    if(visible_items_count == hw::sprites::count()) [[unlikely]]
                     {
                         return -1;
                     }

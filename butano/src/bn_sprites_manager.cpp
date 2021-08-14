@@ -28,8 +28,6 @@ namespace
     using item_type = sprites_manager_item;
     using sorted_items_type = vector<item_type*, BN_CFG_SPRITES_MAX_ITEMS>;
 
-    constexpr int affine_mat_id_multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
-
     class static_data
     {
 
@@ -1034,10 +1032,7 @@ void set_reserved_handles_count(int reserved_handles_count)
 
         if(reserved_handles_count > old_reserved_handles_count)
         {
-            BN_ASSERT(reserved_handles_count <=
-                      sprite_affine_mats_manager::minimum_active_id() * affine_mat_id_multiplier,
-                      "Reserved handles used by affine mats: ", reserved_handles_count, " - ",
-                      sprite_affine_mats_manager::minimum_active_id());
+            sprite_affine_mats_manager::reserve_sprite_handles(reserved_handles_count);
 
             for(sorted_sprites::layer& layer : data.sorter.layers())
             {
@@ -1284,7 +1279,7 @@ void commit()
 
     if(auto affine_mats_commit_data = sprite_affine_mats_manager::retrieve_commit_data())
     {
-        int multiplier = affine_mat_id_multiplier;
+        int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
         int first_mat_index_to_commit = affine_mats_commit_data->offset * multiplier;
         int last_mat_index_to_commit = first_mat_index_to_commit + (affine_mats_commit_data->count * multiplier) - 1;
         first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);

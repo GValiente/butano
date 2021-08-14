@@ -34,8 +34,6 @@ namespace bn::sprite_affine_mats_manager
 
     [[nodiscard]] int available_count();
 
-    [[nodiscard]] int minimum_active_id();
-
     [[nodiscard]] int create();
 
     [[nodiscard]] int create(const affine_mat_attributes& attributes);
@@ -97,6 +95,8 @@ namespace bn::sprite_affine_mats_manager
     [[nodiscard]] bool flipped_identity(int id);
 
     [[nodiscard]] bool sprite_double_size(int id);
+
+    void reserve_sprite_handles(int sprite_handles_count);
 
     void reload(int id);
 

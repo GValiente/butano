@@ -19,6 +19,7 @@ namespace bn::sprite_affine_mats_manager
 namespace
 {
     constexpr int max_items = hw::sprite_affine_mats::count();
+    constexpr int affine_mat_id_multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
 
     static_assert(max_items <= numeric_limits<int8_t>::max());
 
@@ -147,13 +148,11 @@ namespace
 
             if(int reserved_sprite_handles_count = sprites_manager::reserved_handles_count()) [[unlikely]]
             {
-                constexpr int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
-
                 for(int free_items_index = free_items_count - 1; free_items_index >= 0; --free_items_index)
                 {
                     int current_index = free_item_indexes_data[free_items_index];
 
-                    if(current_index * multiplier >= reserved_sprite_handles_count)
+                    if(current_index * affine_mat_id_multiplier >= reserved_sprite_handles_count)
                     {
                         int result = current_index;
                         data.free_item_indexes.erase(data.free_item_indexes.begin() + free_items_index);
@@ -191,24 +190,6 @@ int used_count()
 int available_count()
 {
     return data.free_item_indexes.size();
-}
-
-int minimum_active_id()
-{
-    int first_index_to_commit = data.first_index_to_commit;
-
-    if(used_count())
-    {
-        for(int index = 0; index < first_index_to_commit; ++index)
-        {
-            if(data.items[index].usages)
-            {
-                return index;
-            }
-        }
-    }
-
-    return first_index_to_commit;
 }
 
 int create()
@@ -591,6 +572,37 @@ bool sprite_double_size(int id)
     int iy2 = (256 * ((half_height * pa) - (half_width * pc) - pa + pc)) / divisor;
 
     return iy2 < -half_height || iy2 >= half_height;
+}
+
+void reserve_sprite_handles([[maybe_unused]] int sprite_handles_count)
+{
+    if(used_count())
+    {
+        int first_active_index = max_items;
+
+        for(int index = 0; index < max_items; ++index)
+        {
+            if(data.items[index].usages)
+            {
+                first_active_index = index;
+                break;
+            }
+        }
+
+        BN_ASSERT(sprite_handles_count <= first_active_index * affine_mat_id_multiplier,
+                  "Reserved sprite handles used by affine mats: ", sprite_handles_count, " - ", first_active_index);
+
+        if(data.first_index_to_commit < first_active_index)
+        {
+            data.first_index_to_commit = first_active_index;
+            data.last_index_to_commit = min(data.last_index_to_commit, first_active_index);
+        }
+    }
+    else
+    {
+        data.first_index_to_commit = max_items;
+        data.last_index_to_commit = 0;
+    }
 }
 
 void reload(int id)

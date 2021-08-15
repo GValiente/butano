@@ -96,8 +96,7 @@ bool _check_items_on_screen_impl(void* hw_handles, intrusive_list<sorted_sprites
     return rebuild_handles;
 }
 
-int _rebuild_handles_impl(int reserved_handles_count, int last_visible_items_count, void* hw_handles,
-                          intrusive_list<sorted_sprites::layer>& layers)
+int _rebuild_handles_impl(int reserved_handles_count, void* hw_handles, intrusive_list<sorted_sprites::layer>& layers)
 {
     auto handles = reinterpret_cast<hw::sprites::handle_type*>(hw_handles);
     int visible_items_count = reserved_handles_count;
@@ -124,11 +123,6 @@ int _rebuild_handles_impl(int reserved_handles_count, int last_visible_items_cou
                 item.handles_index = -1;
             }
         }
-    }
-
-    for(int index = visible_items_count; index < last_visible_items_count; ++index)
-    {
-        hw::sprites::hide_and_destroy(handles[index]);
     }
 
     return visible_items_count;

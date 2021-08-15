@@ -41,6 +41,7 @@ namespace
         int last_visible_items_count = 0;
         bool check_items_on_screen = false;
         bool rebuild_handles = false;
+        bool reload_all_handles = false;
     };
 
     BN_DATA_EWRAM static_data data;
@@ -128,28 +129,58 @@ namespace
         {
             hw::sprites::handle_type* handles = data.handles;
             int reserved_handles_count = data.reserved_handles_count;
-            int last_visible_items_count = data.last_visible_items_count;
-            int visible_items_count = _rebuild_handles_impl(
-                        reserved_handles_count, last_visible_items_count, handles, data.sorter.layers());
+            bool reload_all_handles = data.reload_all_handles;
+
+            if(reload_all_handles) [[unlikely]]
+            {
+                data.reload_all_handles = false;
+
+                for(int index = 0; index < reserved_handles_count; ++index)
+                {
+                    hw::sprites::hide_and_destroy(handles[index]);
+                }
+            }
+
+            int visible_items_count = _rebuild_handles_impl(reserved_handles_count, handles, data.sorter.layers());
             BN_ASSERT(visible_items_count != -1, "Too much on screen sprites");
 
-            int to_commit_items_count;
+            int last_visible_items_count = data.last_visible_items_count;
             data.rebuild_handles = false;
             data.last_visible_items_count = visible_items_count;
 
-            if(visible_items_count < last_visible_items_count)
+            for(int index = visible_items_count; index < last_visible_items_count; ++index)
             {
-                to_commit_items_count = min(last_visible_items_count, hw::sprites::count() - reserved_handles_count);
+                hw::sprites::hide_and_destroy(handles[index]);
+            }
+
+            if(reload_all_handles) [[unlikely]]
+            {
+                data.first_index_to_commit = 0;
+                data.last_index_to_commit = hw::sprites::count() - 1;
             }
             else
             {
-                to_commit_items_count = visible_items_count;
-            }
+                int to_commit_items_count;
 
-            if(to_commit_items_count)
-            {
-                data.first_index_to_commit = reserved_handles_count;
-                data.last_index_to_commit = reserved_handles_count + to_commit_items_count - 1;
+                if(visible_items_count < last_visible_items_count)
+                {
+                    to_commit_items_count = min(last_visible_items_count, hw::sprites::count() - reserved_handles_count);
+                }
+                else
+                {
+                    to_commit_items_count = visible_items_count;
+                }
+
+                if(to_commit_items_count)
+                {
+                    data.first_index_to_commit = reserved_handles_count;
+                    data.last_index_to_commit = reserved_handles_count + to_commit_items_count - 1;
+                }
+                else
+                {
+                    data.first_index_to_commit = hw::sprites::count();
+                    data.last_index_to_commit = 0;
+                }
             }
         }
     }
@@ -1072,6 +1103,7 @@ void reload_all()
 {
     data.last_visible_items_count = hw::sprites::count();
     data.rebuild_handles = true;
+    data.reload_all_handles = true;
 }
 
 void fill_hblank_effect_horizontal_positions(id_type id, int hw_x, const fixed* positions_ptr, uint16_t* dest_ptr)

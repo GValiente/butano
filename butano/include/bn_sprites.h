@@ -81,11 +81,13 @@ namespace bn::sprites
      * @brief Sets the number of hardware sprite handles not used by Butano's sprites manager.
      *
      * Normally you should not need to reserve handles, but it can be useful for messing with HDMA for example.
+     *
+     * Changing reserved handles count reloads the internal attributes of all sprites (including the reserved ones).
      */
     void set_reserved_handles_count(int reserved_handles_count);
 
     /**
-     * @brief Reloads the internal attributes of all sprites.
+     * @brief Reloads the internal attributes of all sprites (including the reserved ones).
      *
      * Normally you should not need to call this function, but it can be useful after messing with HDMA for example.
      */

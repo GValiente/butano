@@ -1726,6 +1726,7 @@
  * <a href="https://github.com/Cult-of-GBA/BIOS">Cult-of-GBA BIOS</a>.
  * * Sprites and backgrounds hardware setup optimized.
  * * Sprites automatic double size mode optimized.
+ * * Affine sprites hiding fixed.
  *
  *
  * @section changelog_7_4_0 7.4.0

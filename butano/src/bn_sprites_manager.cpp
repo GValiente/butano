@@ -90,7 +90,11 @@ namespace
 
         bool new_double_size = item.new_double_size(affine_mat_id);
         hw::sprites::set_affine_mat(affine_mat_id, item.handle);
-        hw::sprites::show_affine(new_double_size, item.handle);
+
+        if(item.visible)
+        {
+            hw::sprites::show_affine(new_double_size, item.handle);
+        }
 
         if(item.double_size != new_double_size)
         {
@@ -108,7 +112,12 @@ namespace
         sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
         hw::sprites::set_horizontal_flip(affine_mat.horizontal_flip(), item.handle);
         hw::sprites::set_vertical_flip(affine_mat.vertical_flip(), item.handle);
-        hw::sprites::show_regular(item.handle);
+
+        if(item.visible)
+        {
+            hw::sprites::show_regular(item.handle);
+        }
+
         sprite_affine_mats_manager::dettach_sprite(affine_mat.id(), item.affine_mat_attach_node);
         item.affine_mat.reset();
 
@@ -854,7 +863,12 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
             if(item->double_size != new_double_size)
             {
                 item->double_size = new_double_size;
-                hw::sprites::show_affine(new_double_size, item->handle);
+
+                if(item->visible)
+                {
+                    hw::sprites::show_affine(new_double_size, item->handle);
+                }
+
                 _update_item_dimensions(*item);
             }
         }
@@ -1291,7 +1305,12 @@ void update_affine_mat_double_size(id_type id, bool affine_mat_double_size)
         if(item->double_size != affine_mat_double_size)
         {
             item->double_size = affine_mat_double_size;
-            hw::sprites::show_affine(affine_mat_double_size, item->handle);
+
+            if(item->visible)
+            {
+                hw::sprites::show_affine(affine_mat_double_size, item->handle);
+            }
+
             _update_item_dimensions(*item);
         }
     }

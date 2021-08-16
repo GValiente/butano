@@ -1718,7 +1718,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_5_0 7.5.0 (next release)
+ * @section changelog_7_5_0 7.5.0
  *
  * * bn::sprites::reserved_handles_count and bn::sprites::set_reserved_handles_count added.
  * * @ref BN_CFG_PROFILER_LOG_ENGINE_DETAILED added.

@@ -42,9 +42,7 @@ namespace bn::hw::audio
 
     void disable_vblank_handler();
 
-    void commit();
-
-    void enable_vblank_handler();
+    void update();
 }
 
 #endif

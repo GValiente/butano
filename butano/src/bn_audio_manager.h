@@ -52,7 +52,7 @@ namespace bn::audio_manager
 
     void disable_vblank_handler();
 
-    void commit();
+    void update();
 
     void stop();
 }

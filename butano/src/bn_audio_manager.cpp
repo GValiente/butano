@@ -312,9 +312,9 @@ void disable_vblank_handler()
     hw::audio::disable_vblank_handler();
 }
 
-void commit()
+void update()
 {
-    hw::audio::commit();
+    hw::audio::update();
 
     for(const command& command : data.commands)
     {
@@ -327,8 +327,6 @@ void commit()
     {
         data.music_position = hw::audio::music_position();
     }
-
-    hw::audio::enable_vblank_handler();
 }
 
 void stop()

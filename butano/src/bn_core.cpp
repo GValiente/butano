@@ -129,6 +129,32 @@ namespace
         if(data.restart_cpu_usage_timer)
         {
             data.cpu_usage_timer.restart();
+
+            hdma_manager::update();
+            audio_manager::update();
+
+            BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
+
+            BN_PROFILER_ENGINE_DETAILED_START("eng_display_commit");
+            display_manager::commit();
+            BN_PROFILER_ENGINE_DETAILED_STOP();
+
+            BN_PROFILER_ENGINE_DETAILED_START("eng_sprites_commit");
+            sprites_manager::commit();
+            BN_PROFILER_ENGINE_DETAILED_STOP();
+
+            BN_PROFILER_ENGINE_DETAILED_START("eng_bgs_commit");
+            bgs_manager::commit();
+            BN_PROFILER_ENGINE_DETAILED_STOP();
+
+            BN_PROFILER_ENGINE_DETAILED_START("eng_palettes_commit");
+            palettes_manager::commit();
+            BN_PROFILER_ENGINE_DETAILED_STOP();
+
+            BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_commit");
+            hdma_manager::commit();
+            BN_PROFILER_ENGINE_DETAILED_STOP();
+
             data.restart_cpu_usage_timer = false;
         }
         else
@@ -161,9 +187,14 @@ namespace
     void stop(bool disable_audio)
     {
         audio_manager::stop();
-        audio_manager::disable_vblank_handler();
+
+        if(disable_audio)
+        {
+            audio_manager::disable_vblank_handler();
+        }
+
         hw::core::wait_for_vblank();
-        audio_manager::commit();
+        audio_manager::update();
 
         hdma_manager::force_stop();
 
@@ -214,43 +245,15 @@ namespace
         hblank_effects_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_update");
-        hdma_manager::update();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
         BN_PROFILER_ENGINE_GENERAL_STOP();
-
-        audio_manager::disable_vblank_handler();
 
         result.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
         data.restart_cpu_usage_timer = true;
 
         hw::core::wait_for_vblank();
 
-        BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
-
         BN_PROFILER_ENGINE_DETAILED_START("eng_hblank_fx_commit");
         hblank_effects_manager::commit();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        BN_PROFILER_ENGINE_DETAILED_START("eng_display_commit");
-        display_manager::commit();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        BN_PROFILER_ENGINE_DETAILED_START("eng_sprites_commit");
-        sprites_manager::commit();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        BN_PROFILER_ENGINE_DETAILED_START("eng_bgs_commit");
-        bgs_manager::commit();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        BN_PROFILER_ENGINE_DETAILED_START("eng_palettes_commit");
-        palettes_manager::commit();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_commit");
-        hdma_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_spr_tiles_commit");
@@ -267,10 +270,6 @@ namespace
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
         result.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commit");
-        audio_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_gpio_commit");
@@ -481,7 +480,7 @@ fixed last_vblank_usage()
     {
         void show(const char* condition, const char* file_name, const char* function, int line, const char* message)
         {
-            bn::core::stop(false);
+            bn::core::stop(true);
             bn::hw::show::error(condition, file_name, function, line, message);
 
             while(true)
@@ -493,7 +492,7 @@ fixed last_vblank_usage()
         void show(const char* condition, const char* file_name, const char* function, int line,
                   const bn::istring_base& message)
         {
-            bn::core::stop(false);
+            bn::core::stop(true);
             bn::hw::show::error(condition, file_name, function, line, message);
 
             while(true)

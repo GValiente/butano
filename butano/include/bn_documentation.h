@@ -1718,6 +1718,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_5_1 7.5.1 (next release)
+ *
+ * Audio and HDMA issues when updating at less than 60FPS fixed.
+ *
+ *
  * @section changelog_7_5_0 7.5.0
  *
  * * bn::sprites::reserved_handles_count and bn::sprites::set_reserved_handles_count added.
@@ -1766,7 +1771,7 @@
  *
  * @section changelog_7_1_0 7.1.0
  *
- * * bn::hdma commit fixed.
+ * * HDMA commit fixed.
  * * @ref faq page improved.
  * * Games made with Butano added to `README.md`.
  *
@@ -2064,7 +2069,7 @@
  * * bn::lut_reciprocal() added.
  * * bn::core::current_cpu_usage() added.
  * * <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> updated to v2.1.4.
- * * bn::hdma is disabled when needed, like before sleeping or before an assert screen.
+ * * HDMA is disabled when needed, like before sleeping or before an assert screen.
  * * bn::regular_bg_tiles_item::valid_tiles_count() fixed.
  * * bn::nullopt documentation links fixed.
  *

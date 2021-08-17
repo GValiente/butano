@@ -1718,7 +1718,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_5_1 7.5.1 (next release)
+ * @section changelog_7_5_1 7.5.1
  *
  * Audio and HDMA issues when updating at less than 60FPS fixed.
  *

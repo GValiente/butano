@@ -1718,6 +1718,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_6_0 7.6.0 (next release)
+ *
+ * Display and audio hardware commit optimized.
+ *
+ *
  * @section changelog_7_5_1 7.5.1
  *
  * Audio and HDMA issues when updating at less than 60FPS fixed.

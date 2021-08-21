@@ -648,11 +648,12 @@ void update()
 optional<commit_data> retrieve_commit_data()
 {
     optional<commit_data> result;
+    int first_index_to_commit = data.first_index_to_commit;
 
-    if(data.first_index_to_commit < max_items)
+    if(first_index_to_commit < max_items)
     {
-        int offset = data.first_index_to_commit;
-        int count = data.last_index_to_commit - data.first_index_to_commit + 1;
+        int offset = first_index_to_commit;
+        int count = data.last_index_to_commit - first_index_to_commit + 1;
         result = commit_data{ offset, count };
         data.first_index_to_commit = max_items;
         data.last_index_to_commit = 0;

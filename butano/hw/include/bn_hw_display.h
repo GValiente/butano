@@ -41,7 +41,8 @@ namespace bn::hw::display
         return 2;
     }
 
-    inline void setup(int mode, const bool* enabled_bgs, const bool* enabled_inside_windows)
+    inline void set_display(
+            int mode, const bool* enabled_bgs, const bool* enabled_inside_windows, uint16_t& display_cnt)
     {
         unsigned dispcnt = unsigned(mode) | DCNT_OBJ | DCNT_OBJ_1D;
 
@@ -61,7 +62,12 @@ namespace bn::hw::display
             }
         }
 
-        REG_DISPCNT_U16 = uint16_t(dispcnt);
+        display_cnt = uint16_t(dispcnt);
+    }
+
+    inline void commit_display(uint16_t display_cnt)
+    {
+        REG_DISPCNT_U16 = display_cnt;
     }
 
     inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
@@ -71,11 +77,9 @@ namespace bn::hw::display
                               (bgs_vertical_stretch << 4) | bgs_horizontal_stretch);
     }
 
-    inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,
-                           int bgs_horizontal_stretch, int bgs_vertical_stretch)
+    inline void commit_mosaic(uint16_t mosaic_cnt)
     {
-        set_mosaic(sprites_horizontal_stretch, sprites_vertical_stretch, bgs_horizontal_stretch, bgs_vertical_stretch,
-                   REG_MOSAIC_U16);
+        REG_MOSAIC_U16 = mosaic_cnt;
     }
 
     [[nodiscard]] inline uint16_t* mosaic_register()
@@ -106,11 +110,16 @@ namespace bn::hw::display
         return int(result);
     }
 
-    inline void set_blending_cnt(int layers, blending_mode mode)
+    inline void set_blending_cnt(int layers, blending_mode mode, uint16_t& blending_cnt)
     {
         int top = layers;
         int bottom = BLD_ALL | BLD_BACKDROP;
-        REG_BLDCNT = uint16_t((bottom << 8) | (int(mode) << 6) | top);
+        blending_cnt = uint16_t((bottom << 8) | (int(mode) << 6) | top);
+    }
+
+    inline void commit_blending_cnt(uint16_t blending_cnt)
+    {
+        REG_BLDCNT = blending_cnt;
     }
 
     inline void set_blending_transparency(int transparency_alpha, int intensity_alpha,
@@ -121,9 +130,9 @@ namespace bn::hw::display
         blending_transparency_cnt = uint16_t(eva | (evb << 8));
     }
 
-    inline void set_blending_transparency(int transparency_alpha, int intensity_alpha)
+    inline void commit_blending_transparency(uint16_t blending_transparency_cnt)
     {
-        set_blending_transparency(transparency_alpha, intensity_alpha, const_cast<uint16_t&>(REG_BLDALPHA));
+        REG_BLDALPHA = blending_transparency_cnt;
     }
 
     [[nodiscard]] inline uint16_t* blending_transparency_register()

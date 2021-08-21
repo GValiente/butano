@@ -7,6 +7,7 @@
 #define BN_HW_AUDIO_H
 
 #include "bn_common.h"
+#include "maxmod.h"
 
 namespace bn::hw::audio
 {
@@ -18,21 +19,51 @@ namespace bn::hw::audio
 
     void disable();
 
-    [[nodiscard]] bool music_playing();
+    [[nodiscard]] inline bool music_playing()
+    {
+        return mmActive();
+    }
 
-    void play_music(int id, int volume, bool loop);
+    inline void play_music(int id, int volume, bool loop)
+    {
+        if(mmActive())
+        {
+            mmStop();
+        }
 
-    void stop_music();
+        mmStart(mm_word(id), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
+        mmSetModuleVolume(mm_word(volume));
+    }
 
-    void pause_music();
+    inline void stop_music()
+    {
+        mmStop();
+    }
 
-    void resume_music();
+    inline void pause_music()
+    {
+        mmPause();
+    }
 
-    [[nodiscard]] int music_position();
+    inline void resume_music()
+    {
+        mmResume();
+    }
 
-    void set_music_position(int position);
+    [[nodiscard]] inline int music_position()
+    {
+        return int(mmGetPosition());
+    }
 
-    void set_music_volume(int volume);
+    inline void set_music_position(int position)
+    {
+        mmSetPosition(mm_word(position));
+    }
+
+    inline void set_music_volume(int volume)
+    {
+        mmSetModuleVolume(mm_word(volume));
+    }
 
     void play_sound(int priority, int id);
 

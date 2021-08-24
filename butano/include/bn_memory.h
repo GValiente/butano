@@ -381,7 +381,7 @@ public:
 
 private:
     pointer _ptr = nullptr;
-    deleter_type _deleter;
+    [[no_unique_address]] deleter_type _deleter;
 };
 
 

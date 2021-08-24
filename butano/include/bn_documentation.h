@@ -1720,7 +1720,8 @@
  *
  * @section changelog_7_6_0 7.6.0 (next release)
  *
- * Display and audio hardware commit optimized.
+ * * Display and audio hardware commit optimized.
+ * * bn::unique_ptr size reduced.
  *
  *
  * @section changelog_7_5_1 7.5.1

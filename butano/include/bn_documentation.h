@@ -1589,6 +1589,15 @@
  * @endcode
  *
  *
+ * @subsection faq_wait_updates Is there a way to stop running my code for a certain amount of time?
+ *
+ * Since you can usually assume than your game is running at 60FPS, you can wait a second for example with this:
+ *
+ * @code{.cpp}
+ * bn::core::update(60);
+ * @endcode
+ *
+ *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *
  * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.
@@ -1722,6 +1731,7 @@
  *
  * * Display and audio hardware commit optimized.
  * * bn::unique_ptr size reduced.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_7_5_1 7.5.1

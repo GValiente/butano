@@ -1594,7 +1594,10 @@
  * Since you can usually assume than your game is running at 60FPS, you can wait a second for example with this:
  *
  * @code{.cpp}
- * bn::core::update(60);
+ * for(int index = 0; index < 60; ++index)
+ * {
+ *     bn::core::update();
+ * }
  * @endcode
  *
  *

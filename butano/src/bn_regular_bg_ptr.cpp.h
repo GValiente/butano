@@ -220,6 +220,7 @@ void regular_bg_ptr::set_item(const regular_bg_item& item)
 {
     if(optional<regular_bg_map_ptr> map = item.map_item().find_map(tiles(), palette()))
     {
+        map->set_tiles_and_palette(item.tiles_item(), item.palette_item());
         bgs_manager::set_regular_map(_handle, move(*map));
     }
     else

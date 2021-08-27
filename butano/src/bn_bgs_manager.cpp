@@ -1317,7 +1317,9 @@ void update_regular_map_tiles_cbb(int map_id, int tiles_cbb)
 {
     for(item_type* item : data.items_vector)
     {
-        if(item->regular_map->id() == map_id)
+        optional<regular_bg_map_ptr>& regular_map = item->regular_map;
+
+        if(regular_map && regular_map->id() == map_id)
         {
             hw::bgs::set_tiles_cbb(tiles_cbb, item->handle);
             _update_item(*item);
@@ -1329,7 +1331,9 @@ void update_affine_map_tiles_cbb(int map_id, int tiles_cbb)
 {
     for(item_type* item : data.items_vector)
     {
-        if(item->affine_map->id() == map_id)
+        optional<affine_bg_map_ptr>& affine_map = item->affine_map;
+
+        if(affine_map && affine_map->id() == map_id)
         {
             hw::bgs::set_tiles_cbb(tiles_cbb, item->handle);
             _update_item(*item);
@@ -1341,7 +1345,9 @@ void update_regular_map_palette_bpp(int map_id, bpp_mode bpp)
 {
     for(item_type* item : data.items_vector)
     {
-        if(item->regular_map->id() == map_id)
+        optional<regular_bg_map_ptr>& regular_map = item->regular_map;
+
+        if(regular_map && regular_map->id() == map_id)
         {
             hw::bgs::set_bpp(bpp, item->handle);
             _update_item(*item);

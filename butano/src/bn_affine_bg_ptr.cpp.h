@@ -207,6 +207,8 @@ void affine_bg_ptr::set_item(const affine_bg_item& item)
 {
     if(optional<affine_bg_map_ptr> map = item.map_item().find_map(tiles(), palette()))
     {
+        map->set_tiles(item.tiles_item());
+        map->set_palette(item.palette_item());
         bgs_manager::set_affine_map(_handle, move(*map));
     }
     else

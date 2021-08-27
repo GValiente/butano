@@ -1733,6 +1733,7 @@
  *
  * * Display and audio hardware commit optimized.
  * * bn::unique_ptr size reduced.
+ * * bn::regular_bg_ptr::set_item and bn::affine_bg_ptr::set_item fixed.
  * * @ref faq page improved.
  * * @ref main_licenses section improved.
  *

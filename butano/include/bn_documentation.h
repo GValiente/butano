@@ -1729,7 +1729,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_6_0 7.6.0 (next release)
+ * @section changelog_7_6_0 7.6.0
  *
  * * Display and audio hardware commit optimized.
  * * bn::unique_ptr size reduced.

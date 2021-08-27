@@ -604,7 +604,7 @@
  * After that, there are various @ref examples "examples" explaining most aspects of the engine.
  * At last, check how to @ref import "import" your own assets in a game and
  * take a look at the <a href="modules.html">modules</a> page.
- * The <a href="faq.html">frequently asked questions (FAQ)</a> are worth a look too.
+ * The @ref faq "frequently asked questions (FAQ)" are worth a look too.
  *
  *
  * @section main_contact_support Contact and support
@@ -729,7 +729,7 @@
  * If everything went as expected, a `*.gba` file should have been generated in the project folder!
  * Now learn how to @ref import "import your assets" in the game and
  * also take a look at the <a href="modules.html">modules</a> page.
- * The <a href="faq.html">frequently asked questions (FAQ)</a> are worth a look too.
+ * The @ref faq "frequently asked questions (FAQ)" are worth a look too.
  */
 
 
@@ -1449,6 +1449,16 @@
  *
  *
  * @section faq_programming Programming
+ *
+ *
+ * @subsection faq_cpp Can I use Butano without knowing C++?
+ *
+ * While Butano is easy to use if you have some C++ skills,
+ * it is going to be hard to work with it if you don't know nothing about C++,
+ * so you should learn a bit of C++ before diving into Butano.
+ *
+ * After that, maybe you can learn both C++ and Butano at the same time while you make a game,
+ * but if you don't want to have a hard time with Butano you should know the basics of C++ before messing with it.
  *
  *
  * @subsection faq_ide Is there any good free IDE for Butano projects out there?

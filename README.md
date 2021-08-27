@@ -120,7 +120,7 @@ and to the [gbadev Discord server](https://discord.gg/2WS7bpJ).
 
 Butano is licensed under the zlib license, see the [LICENSE](LICENSE) file for details.
 
-Third party libraries are licensed under other licenses, please check [licenses](licenses) folder for details.
+Third party libraries are licensed under other licenses, please check the [licenses](licenses) folder for details.
 
 Assets used in games, examples and other projects are licensed under other licenses, 
 please check the `credits` folders for details.

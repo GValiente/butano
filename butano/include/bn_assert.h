@@ -153,6 +153,35 @@
             return base_name_impl(char_array, 2);
         }
 
+        [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
+                                           int line)
+        {
+            _bn::assert::show(condition_msg, file, function, line, "");
+        }
+
+        template<typename Arg>
+        [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
+                                           int line, const Arg& arg)
+        {
+            char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
+            bn::istring_base istring(istring_buffer);
+            bn::ostringstream string_stream(istring);
+            string_stream.append(arg);
+            _bn::assert::show(condition_msg, file, function, line, istring);
+        }
+
+        template<typename Arg1, typename Arg2>
+        [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
+                                           int line, const Arg1& arg1, const Arg2& arg2)
+        {
+            char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
+            bn::istring_base istring(istring_buffer);
+            bn::ostringstream string_stream(istring);
+            string_stream.append(arg1);
+            string_stream.append(arg2);
+            _bn::assert::show(condition_msg, file, function, line, istring);
+        }
+
         template<typename... Args>
         [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
                                            int line, const Args&... args)

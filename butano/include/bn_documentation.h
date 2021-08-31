@@ -1729,6 +1729,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_7_0 7.7.0 (next release)
+ *
+ * Asserts ROM usage reduced.
+ *
+ *
  * @section changelog_7_6_0 7.6.0
  *
  * * Display and audio hardware commit optimized.

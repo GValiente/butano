@@ -433,131 +433,134 @@ namespace
 
         [[nodiscard]] bool check_update()
         {
+            bool updated = update;
+            update = false;
+
             switch(handler)
             {
 
             case handler_type::BG_PALETTE_COLOR:
-                return _check_update_impl<bg_palette_color_hbe_handler>();
+                return _check_update_impl<bg_palette_color_hbe_handler>(updated);
 
             case handler_type::BG_PALETTES_TRANSPARENT_COLOR:
-                return _check_update_impl<bg_palettes_transparent_color_hbe_handler>();
+                return _check_update_impl<bg_palettes_transparent_color_hbe_handler>(updated);
 
             case handler_type::BLENDING_FADE_ALPHA:
-                return _check_update_impl<blending_fade_alpha_hbe_handler>();
+                return _check_update_impl<blending_fade_alpha_hbe_handler>(updated);
 
             case handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES:
-                return _check_update_impl<blending_transparency_attributes_hbe_handler>();
+                return _check_update_impl<blending_transparency_attributes_hbe_handler>(updated);
 
             case handler_type::GREEN_SWAP:
-                return _check_update_impl<green_swap_hbe_handler>();
+                return _check_update_impl<green_swap_hbe_handler>(updated);
 
             case handler_type::MOSAIC_ATTRIBUTES:
-                return _check_update_impl<mosaic_attributes_hbe_handler>();
+                return _check_update_impl<mosaic_attributes_hbe_handler>(updated);
 
             case handler_type::RECT_WINDOW_HORIZONTAL_BOUNDARIES:
-                return _check_update_impl<rect_window_horizontal_boundaries_hbe_handler>();
+                return _check_update_impl<rect_window_horizontal_boundaries_hbe_handler>(updated);
 
             case handler_type::RECT_WINDOW_VERTICAL_BOUNDARIES:
-                return _check_update_impl<rect_window_vertical_boundaries_hbe_handler>();
+                return _check_update_impl<rect_window_vertical_boundaries_hbe_handler>(updated);
 
             case handler_type::REGULAR_BG_ATTRIBUTES:
-                return _check_update_impl<regular_bg_attributes_hbe_handler>();
+                return _check_update_impl<regular_bg_attributes_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_ATTRIBUTES:
-                return _check_update_impl<affine_bg_attributes_hbe_handler>();
+                return _check_update_impl<affine_bg_attributes_hbe_handler>(updated);
 
             case handler_type::REGULAR_BG_HORIZONTAL_POSITION:
-                return _check_update_impl<regular_bg_horizontal_position_hbe_handler>();
+                return _check_update_impl<regular_bg_horizontal_position_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PIVOT_HORIZONTAL_POSITION:
-                return _check_update_impl<affine_bg_pivot_horizontal_position_hbe_handler>();
+                return _check_update_impl<affine_bg_pivot_horizontal_position_hbe_handler>(updated);
 
             case handler_type::REGULAR_BG_VERTICAL_POSITION:
-                return _check_update_impl<regular_bg_vertical_position_hbe_handler>();
+                return _check_update_impl<regular_bg_vertical_position_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PIVOT_VERTICAL_POSITION:
-                return _check_update_impl<affine_bg_pivot_vertical_position_hbe_handler>();
+                return _check_update_impl<affine_bg_pivot_vertical_position_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PA_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_pa_register_attributes_hbe_handler>();
+                return _check_update_impl<affine_bg_pa_register_attributes_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PA_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_pa_register_values_hbe_handler>();
+                return _check_update_impl<affine_bg_pa_register_values_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PB_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_pb_register_attributes_hbe_handler>();
+                return _check_update_impl<affine_bg_pb_register_attributes_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PB_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_pb_register_values_hbe_handler>();
+                return _check_update_impl<affine_bg_pb_register_values_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PC_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_pc_register_attributes_hbe_handler>();
+                return _check_update_impl<affine_bg_pc_register_attributes_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PC_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_pc_register_values_hbe_handler>();
+                return _check_update_impl<affine_bg_pc_register_values_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PD_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_pd_register_attributes_hbe_handler>();
+                return _check_update_impl<affine_bg_pd_register_attributes_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_PD_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_pd_register_values_hbe_handler>();
+                return _check_update_impl<affine_bg_pd_register_values_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_DX_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_dx_register_attributes_hbe_handler>();
+                return _check_update_impl<affine_bg_dx_register_attributes_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_DX_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_dx_register_values_hbe_handler>();
+                return _check_update_impl<affine_bg_dx_register_values_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_DY_REGISTER_ATTRIBUTES:
-                return _check_update_impl<affine_bg_dy_register_attributes_hbe_handler>();
+                return _check_update_impl<affine_bg_dy_register_attributes_hbe_handler>(updated);
 
             case handler_type::AFFINE_BG_DY_REGISTER_VALUES:
-                return _check_update_impl<affine_bg_dy_register_values_hbe_handler>();
+                return _check_update_impl<affine_bg_dy_register_values_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_ATTRIBUTES:
-                return _check_update_impl<sprite_affine_mat_pa_register_attributes_hbe_handler>();
+                return _check_update_impl<sprite_affine_mat_pa_register_attributes_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_MAT_PA_REGISTER_VALUES:
-                return _check_update_impl<sprite_affine_mat_pa_register_values_hbe_handler>();
+                return _check_update_impl<sprite_affine_mat_pa_register_values_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_ATTRIBUTES:
-                return _check_update_impl<sprite_affine_mat_pb_register_attributes_hbe_handler>();
+                return _check_update_impl<sprite_affine_mat_pb_register_attributes_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_MAT_PB_REGISTER_VALUES:
-                return _check_update_impl<sprite_affine_mat_pb_register_values_hbe_handler>();
+                return _check_update_impl<sprite_affine_mat_pb_register_values_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_ATTRIBUTES:
-                return _check_update_impl<sprite_affine_mat_pc_register_attributes_hbe_handler>();
+                return _check_update_impl<sprite_affine_mat_pc_register_attributes_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_MAT_PC_REGISTER_VALUES:
-                return _check_update_impl<sprite_affine_mat_pc_register_values_hbe_handler>();
+                return _check_update_impl<sprite_affine_mat_pc_register_values_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_ATTRIBUTES:
-                return _check_update_impl<sprite_affine_mat_pd_register_attributes_hbe_handler>();
+                return _check_update_impl<sprite_affine_mat_pd_register_attributes_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_MAT_PD_REGISTER_VALUES:
-                return _check_update_impl<sprite_affine_mat_pd_register_values_hbe_handler>();
+                return _check_update_impl<sprite_affine_mat_pd_register_values_hbe_handler>(updated);
 
             case handler_type::SPRITE_FIRST_ATTRIBUTES:
-                return _check_update_impl<sprite_first_attributes_hbe_handler>();
+                return _check_update_impl<sprite_first_attributes_hbe_handler>(updated);
 
             case handler_type::SPRITE_REGULAR_SECOND_ATTRIBUTES:
-                return _check_update_impl<sprite_regular_second_attributes_hbe_handler>();
+                return _check_update_impl<sprite_regular_second_attributes_hbe_handler>(updated);
 
             case handler_type::SPRITE_AFFINE_SECOND_ATTRIBUTES:
-                return _check_update_impl<sprite_affine_second_attributes_hbe_handler>();
+                return _check_update_impl<sprite_affine_second_attributes_hbe_handler>(updated);
 
             case handler_type::SPRITE_THIRD_ATTRIBUTES:
-                return _check_update_impl<sprite_third_attributes_hbe_handler>();
+                return _check_update_impl<sprite_third_attributes_hbe_handler>(updated);
 
             case handler_type::SPRITE_HORIZONTAL_POSITION:
-                return _check_update_impl<sprite_horizontal_position_hbe_handler>();
+                return _check_update_impl<sprite_horizontal_position_hbe_handler>(updated);
 
             case handler_type::SPRITE_VERTICAL_POSITION:
-                return _check_update_impl<sprite_vertical_position_hbe_handler>();
+                return _check_update_impl<sprite_vertical_position_hbe_handler>(updated);
 
             case handler_type::SPRITE_PALETTE_COLOR:
-                return _check_update_impl<sprite_palette_color_hbe_handler>();
+                return _check_update_impl<sprite_palette_color_hbe_handler>(updated);
 
             default:
                 BN_ERROR("Unknown handler: ", int(handler));
@@ -946,12 +949,43 @@ namespace
         }
 
     private:
-        template<class Handler>
-        [[nodiscard]] bool _check_update_impl()
+        [[nodiscard]] __attribute__((noinline)) uint16_t* _output_values_ptr()
         {
-            bool updated = update;
-            update = false;
+            uint16_t* output_values_ptr;
 
+            if(uint16_output_values)
+            {
+                if(uint16_output_values->a_active)
+                {
+                    output_values_ptr = uint16_output_values->b;
+                    uint16_output_values->a_active = false;
+                }
+                else
+                {
+                    output_values_ptr = uint16_output_values->a;
+                    uint16_output_values->a_active = true;
+                }
+            }
+            else
+            {
+                if(uint32_output_values->a_active)
+                {
+                    output_values_ptr = uint32_output_values->b;
+                    uint32_output_values->a_active = false;
+                }
+                else
+                {
+                    output_values_ptr = uint32_output_values->a;
+                    uint32_output_values->a_active = true;
+                }
+            }
+
+            return output_values_ptr;
+        }
+
+        template<class Handler>
+        [[nodiscard]] bool _check_update_impl(bool updated)
+        {
             bool old_on_screen = on_screen;
             bool new_on_screen = Handler::target_visible(target_id);
             on_screen = new_on_screen;
@@ -968,35 +1002,7 @@ namespace
 
                 if(updated)
                 {
-                    uint16_t* output_values_ptr;
-
-                    if(uint16_output_values)
-                    {
-                        if(uint16_output_values->a_active)
-                        {
-                            output_values_ptr = uint16_output_values->b;
-                            uint16_output_values->a_active = false;
-                        }
-                        else
-                        {
-                            output_values_ptr = uint16_output_values->a;
-                            uint16_output_values->a_active = true;
-                        }
-                    }
-                    else
-                    {
-                        if(uint32_output_values->a_active)
-                        {
-                            output_values_ptr = uint32_output_values->b;
-                            uint32_output_values->a_active = false;
-                        }
-                        else
-                        {
-                            output_values_ptr = uint32_output_values->a;
-                            uint32_output_values->a_active = true;
-                        }
-                    }
-
+                    uint16_t* output_values_ptr = _output_values_ptr();
                     Handler::write_output_values(target_id, target_last_value, values_ptr, output_values_ptr);
                 }
 

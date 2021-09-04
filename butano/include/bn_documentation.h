@@ -1729,7 +1729,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_7_0 7.7.0 (next release)
+ * @section changelog_7_7_0 7.7.0
  *
  * * bn::audio::update_on_vblank and bn::audio::set_update_on_vblank added.
  * * Sprite tiles update and commit optimized.

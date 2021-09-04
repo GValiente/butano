@@ -275,6 +275,7 @@ namespace
         unordered_map<const tile*, int, max_items * 2> items_map;
         vector<uint16_t, max_items> free_items;
         vector<uint16_t, max_items> to_remove_items;
+        vector<uint16_t, max_items> to_commit_items;
         int free_tiles_count = 0;
         int to_remove_tiles_count = 0;
         bool check_commit = false;
@@ -645,6 +646,90 @@ namespace
         }
 
         return -1;
+    }
+
+    void _remove_items()
+    {
+        if(data.to_remove_tiles_count)
+        {
+            auto begin = data.items.begin();
+            auto end = data.items.end();
+
+            for(int to_remove_item_index : data.to_remove_items)
+            {
+                auto iterator = data.items.it(to_remove_item_index);
+                item_type& item = *iterator;
+
+                if(item.data)
+                {
+                    data.items_map.erase(item.data);
+                }
+
+                item.data = nullptr;
+                item.set_status(status_type::FREE);
+                item.commit = false;
+                data.free_tiles_count += int(item.tiles_count);
+
+                auto next_iterator = iterator;
+                ++next_iterator;
+
+                if(next_iterator != end)
+                {
+                    item_type& next_item = *next_iterator;
+
+                    if(next_item.status() == status_type::FREE)
+                    {
+                        int next_id = next_iterator.id();
+                        item.tiles_count += next_item.tiles_count;
+                        _erase_free_item(next_id);
+                        data.items.erase(next_id);
+                    }
+                }
+
+                if(iterator != begin)
+                {
+                    auto previous_iterator = iterator;
+                    --previous_iterator;
+
+                    item_type& previous_item = *previous_iterator;
+
+                    if(previous_item.status() == status_type::FREE)
+                    {
+                        int previous_id = previous_iterator.id();
+                        item.start_tile = previous_item.start_tile;
+                        item.tiles_count += previous_item.tiles_count;
+                        _erase_free_item(previous_id);
+                        data.items.erase(previous_id);
+                    }
+                }
+
+                _insert_free_item(to_remove_item_index);
+            }
+
+            data.to_remove_items.clear();
+            data.to_remove_tiles_count = 0;
+        }
+    }
+
+    void _retrieve_to_commit_items()
+    {
+        if(data.check_commit)
+        {
+            data.check_commit = false;
+
+            for(item_type& item : data.items)
+            {
+                if(item.commit)
+                {
+                    item.commit = false;
+
+                    if(item.status() == status_type::USED)
+                    {
+                        data.to_commit_items.push_back(data.items.index(item));
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -1030,96 +1115,35 @@ optional<span<tile>> vram(int id)
 
 void update()
 {
-    if(data.to_remove_tiles_count)
+    if(data.to_remove_tiles_count || data.check_commit)
     {
         BN_SPRITE_TILES_LOG("sprite_tiles_manager - UPDATE");
 
-        auto begin = data.items.begin();
-        auto end = data.items.end();
-
-        for(int to_remove_item_index : data.to_remove_items)
-        {
-            auto iterator = data.items.it(to_remove_item_index);
-            item_type& item = *iterator;
-
-            if(item.data)
-            {
-                data.items_map.erase(item.data);
-            }
-
-            item.data = nullptr;
-            item.set_status(status_type::FREE);
-            item.commit = false;
-            data.free_tiles_count += int(item.tiles_count);
-
-            auto next_iterator = iterator;
-            ++next_iterator;
-
-            if(next_iterator != end)
-            {
-                item_type& next_item = *next_iterator;
-
-                if(next_item.status() == status_type::FREE)
-                {
-                    int next_id = next_iterator.id();
-                    item.tiles_count += next_item.tiles_count;
-                    _erase_free_item(next_id);
-                    data.items.erase(next_id);
-                }
-            }
-
-            if(iterator != begin)
-            {
-                auto previous_iterator = iterator;
-                --previous_iterator;
-
-                item_type& previous_item = *previous_iterator;
-
-                if(previous_item.status() == status_type::FREE)
-                {
-                    int previous_id = previous_iterator.id();
-                    item.start_tile = previous_item.start_tile;
-                    item.tiles_count += previous_item.tiles_count;
-                    _erase_free_item(previous_id);
-                    data.items.erase(previous_id);
-                }
-            }
-
-            _insert_free_item(to_remove_item_index);
-        }
-
-        data.to_remove_items.clear();
-        data.to_remove_tiles_count = 0;
-
-        BN_SPRITE_TILES_LOG_STATUS();
-    }
-}
-
-void commit()
-{
-    if(data.check_commit)
-    {
-        BN_SPRITE_TILES_LOG("sprite_tiles_manager - COMMIT");
-
-        data.check_commit = false;
-
-        for(item_type& item : data.items)
-        {
-            if(item.commit)
-            {
-                item.commit = false;
-
-                if(item.status() == status_type::USED)
-                {
-                    hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
-                }
-            }
-        }
+        _remove_items();
+        _retrieve_to_commit_items();
 
         BN_SPRITE_TILES_LOG_STATUS();
     }
 
     data.delay_commit = false;
+}
+
+void commit()
+{
+    if(! data.to_commit_items.empty())
+    {
+        BN_SPRITE_TILES_LOG("sprite_tiles_manager - COMMIT");
+
+        for(int item_index : data.to_commit_items)
+        {
+            const item_type& item = data.items.item(item_index);
+            hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
+        }
+
+        data.to_commit_items.clear();
+
+        BN_SPRITE_TILES_LOG_STATUS();
+    }
 }
 
 }

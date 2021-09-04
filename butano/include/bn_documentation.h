@@ -1729,6 +1729,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_7_8_0 7.8.0 (next release)
+ *
+ * Tiles and maps managers optimized.
+ *
+ *
  * @section changelog_7_7_0 7.7.0
  *
  * * bn::audio::update_on_vblank and bn::audio::set_update_on_vblank added.

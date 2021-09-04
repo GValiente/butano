@@ -499,20 +499,6 @@ namespace
         return -1;
     }
 
-    void _commit_item(int id, const tile* tiles_data, bool delay_commit, item_type& item)
-    {
-        item.data = tiles_data;
-
-        if(delay_commit)
-        {
-            _insert_to_commit_item(id, item);
-        }
-        else
-        {
-            hw::sprite_tiles::commit(tiles_data, item.compression(), int(item.start_tile), int(item.tiles_count));
-        }
-    }
-
     [[nodiscard]] optional<int> _create_item(int id, const tile* tiles_data, compression_type compression,
                                              int tiles_count, bool delay_commit)
     {
@@ -548,7 +534,14 @@ namespace
 
         if(tiles_data)
         {
-            _commit_item(id, tiles_data, delay_commit, item);
+            if(delay_commit)
+            {
+                _insert_to_commit_item(id, item);
+            }
+            else
+            {
+                hw::sprite_tiles::commit(tiles_data, compression, int(item.start_tile), tiles_count);
+            }
         }
 
         optional<int> new_free_item_id;
@@ -1004,16 +997,18 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
                   "Multiple copies of the same tiles data not supported");
 
         data.items_map.erase(old_tiles_data);
-        item.set_compression(compression);
-        _commit_item(id, new_tiles_data, true, item);
         data.items_map.insert(new_tiles_data, id);
+
+        item.data = new_tiles_data;
+        item.set_compression(compression);
+        _insert_to_commit_item(id, item);
 
         BN_SPRITE_TILES_LOG_STATUS();
     }
     else if(compression != item.compression())
     {
         item.set_compression(compression);
-        _commit_item(id, new_tiles_data, true, item);
+        _insert_to_commit_item(id, item);
 
         BN_SPRITE_TILES_LOG_STATUS();
     }

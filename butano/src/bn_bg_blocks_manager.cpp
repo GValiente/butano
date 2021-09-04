@@ -759,22 +759,6 @@ namespace
         }
     }
 
-    void _check_commit_item(int id, const uint16_t* data_ptr, bool delay_commit)
-    {
-        item_type& item = data.items.item(id);
-        item.data = data_ptr;
-
-        if(delay_commit)
-        {
-            item.commit = true;
-            data.check_commit = true;
-        }
-        else
-        {
-            _commit_item(item);
-        }
-    }
-
     [[nodiscard]] int _create_item(int id, int padding_blocks_count, bool delay_commit, create_data&& create_data)
     {
         item_type* item = &data.items.item(id);
@@ -862,13 +846,25 @@ namespace
         item->set_status(status_type::USED);
         item->is_tiles = is_tiles;
         item->is_affine = create_data.is_affine;
-        item->commit = false;
+
+        bool commit_item = false;
 
         if(data_ptr)
         {
             data.items_map.insert(data_ptr, id);
-            _check_commit_item(id, data_ptr, delay_commit);
+
+            if(delay_commit)
+            {
+                commit_item = true;
+                data.check_commit = true;
+            }
+            else
+            {
+                _commit_item(*item);
+            }
         }
+
+        item->commit = commit_item;
 
         return id;
     }
@@ -1937,15 +1933,19 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
 
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
+
+        item.data = data_ptr;
         item.set_compression(compression);
-        _check_commit_item(id, data_ptr, true);
+        item.commit = true;
+        data.check_commit = true;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else if(compression != item.compression())
     {
         item.set_compression(compression);
-        _check_commit_item(id, data_ptr, true);
+        item.commit = true;
+        data.check_commit = true;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
@@ -1974,15 +1974,19 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
 
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
+
+        item.data = data_ptr;
         item.set_compression(compression);
-        _check_commit_item(id, data_ptr, true);
+        item.commit = true;
+        data.check_commit = true;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else if(compression != item.compression())
     {
         item.set_compression(compression);
-        _check_commit_item(id, data_ptr, true);
+        item.commit = true;
+        data.check_commit = true;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
@@ -2014,15 +2018,19 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
 
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
+
+        item.data = data_ptr;
         item.set_compression(compression);
-        _check_commit_item(id, data_ptr, true);
+        item.commit = true;
+        data.check_commit = true;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else if(compression != item.compression())
     {
         item.set_compression(compression);
-        _check_commit_item(id, data_ptr, true);
+        item.commit = true;
+        data.check_commit = true;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
@@ -2054,15 +2062,19 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
 
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
+
+        item.data = data_ptr;
         item.set_compression(compression);
-        _check_commit_item(id, data_ptr, true);
+        item.commit = true;
+        data.check_commit = true;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else if(compression != item.compression())
     {
         item.set_compression(compression);
-        _check_commit_item(id, data_ptr, true);
+        item.commit = true;
+        data.check_commit = true;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }

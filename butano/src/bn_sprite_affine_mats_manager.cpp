@@ -66,10 +66,10 @@ namespace
         [[nodiscard]] friend bool operator==(const registers& a, const registers& b) = default;
 
     private:
-        int _pa;
-        int _pb;
-        int _pc;
-        int _pd;
+        int16_t _pa;
+        int16_t _pb;
+        int16_t _pc;
+        int16_t _pd;
     };
 
 

@@ -332,10 +332,10 @@ namespace
         [[nodiscard]] friend bool operator==(const affine_mat_registers& a, const affine_mat_registers& b) = default;
 
     private:
-        int _pa;
-        int _pb;
-        int _pc;
-        int _pd;
+        int16_t _pa;
+        int16_t _pb;
+        int16_t _pc;
+        int16_t _pd;
     };
 
 
@@ -904,13 +904,14 @@ fixed rotation_angle(id_type id)
 void set_rotation_angle(id_type id, fixed rotation_angle)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(rotation_angle != item->affine_mat_attributes.rotation_angle())
+    if(rotation_angle != mat_attributes.rotation_angle())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_rotation_angle(rotation_angle);
+        affine_mat_registers old_registers(mat_attributes);
+        mat_attributes.set_rotation_angle(rotation_angle);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(affine_mat_registers(mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -927,13 +928,15 @@ fixed horizontal_scale(id_type id)
 void set_horizontal_scale(id_type id, fixed horizontal_scale)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(horizontal_scale != item->affine_mat_attributes.horizontal_scale())
+    if(horizontal_scale != mat_attributes.horizontal_scale())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_horizontal_scale(horizontal_scale);
+        int pa = mat_attributes.pa_register_value();
+        int pb = mat_attributes.pb_register_value();
+        mat_attributes.set_horizontal_scale(horizontal_scale);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(mat_attributes.pa_register_value() != pa || mat_attributes.pb_register_value() != pb)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -950,13 +953,15 @@ fixed vertical_scale(id_type id)
 void set_vertical_scale(id_type id, fixed vertical_scale)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(vertical_scale != item->affine_mat_attributes.vertical_scale())
+    if(vertical_scale != mat_attributes.vertical_scale())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_vertical_scale(vertical_scale);
+        int pc = mat_attributes.pc_register_value();
+        int pd = mat_attributes.pd_register_value();
+        mat_attributes.set_vertical_scale(vertical_scale);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(mat_attributes.pc_register_value() != pc || mat_attributes.pd_register_value() != pd)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -967,14 +972,14 @@ void set_vertical_scale(id_type id, fixed vertical_scale)
 void set_scale(id_type id, fixed scale)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(scale != item->affine_mat_attributes.horizontal_scale() ||
-            scale != item->affine_mat_attributes.vertical_scale())
+    if(scale != mat_attributes.horizontal_scale() || scale != mat_attributes.vertical_scale())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_scale(scale);
+        affine_mat_registers old_registers(mat_attributes);
+        mat_attributes.set_scale(scale);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(affine_mat_registers(mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -985,14 +990,14 @@ void set_scale(id_type id, fixed scale)
 void set_scale(id_type id, fixed horizontal_scale, fixed vertical_scale)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(horizontal_scale != item->affine_mat_attributes.horizontal_scale() ||
-            vertical_scale != item->affine_mat_attributes.vertical_scale())
+    if(horizontal_scale != mat_attributes.horizontal_scale() || vertical_scale != mat_attributes.vertical_scale())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_scale(horizontal_scale, vertical_scale);
+        affine_mat_registers old_registers(mat_attributes);
+        mat_attributes.set_scale(horizontal_scale, vertical_scale);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(affine_mat_registers(mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -1009,13 +1014,14 @@ fixed horizontal_shear(id_type id)
 void set_horizontal_shear(id_type id, fixed horizontal_shear)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(horizontal_shear != item->affine_mat_attributes.horizontal_shear())
+    if(horizontal_shear != mat_attributes.horizontal_shear())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_horizontal_shear(horizontal_shear);
+        int pb = mat_attributes.pb_register_value();
+        mat_attributes.set_horizontal_shear(horizontal_shear);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(mat_attributes.pb_register_value() != pb)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -1032,13 +1038,14 @@ fixed vertical_shear(id_type id)
 void set_vertical_shear(id_type id, fixed vertical_shear)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(vertical_shear != item->affine_mat_attributes.vertical_shear())
+    if(vertical_shear != mat_attributes.vertical_shear())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_vertical_shear(vertical_shear);
+        int pc = mat_attributes.pc_register_value();
+        mat_attributes.set_vertical_shear(vertical_shear);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(mat_attributes.pc_register_value() != pc)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -1049,14 +1056,15 @@ void set_vertical_shear(id_type id, fixed vertical_shear)
 void set_shear(id_type id, fixed shear)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(shear != item->affine_mat_attributes.horizontal_shear() ||
-            shear != item->affine_mat_attributes.vertical_shear())
+    if(shear != mat_attributes.horizontal_shear() || shear != mat_attributes.vertical_shear())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_shear(shear);
+        int pb = mat_attributes.pb_register_value();
+        int pc = mat_attributes.pc_register_value();
+        mat_attributes.set_shear(shear);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(mat_attributes.pb_register_value() != pb || mat_attributes.pc_register_value() != pc)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -1067,14 +1075,15 @@ void set_shear(id_type id, fixed shear)
 void set_shear(id_type id, fixed horizontal_shear, fixed vertical_shear)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(horizontal_shear != item->affine_mat_attributes.horizontal_shear() ||
-            vertical_shear != item->affine_mat_attributes.vertical_shear())
+    if(horizontal_shear != mat_attributes.horizontal_shear() || vertical_shear != mat_attributes.vertical_shear())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_shear(horizontal_shear, vertical_shear);
+        int pb = mat_attributes.pb_register_value();
+        int pc = mat_attributes.pc_register_value();
+        mat_attributes.set_shear(horizontal_shear, vertical_shear);
 
-        if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
+        if(mat_attributes.pb_register_value() != pb || mat_attributes.pc_register_value() != pc)
         {
             item->update_affine_mat_attributes();
             _update_item(*item);
@@ -1091,10 +1100,11 @@ bool horizontal_flip(id_type id)
 void set_horizontal_flip(id_type id, bool horizontal_flip)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(horizontal_flip != item->affine_mat_attributes.horizontal_flip())
+    if(horizontal_flip != mat_attributes.horizontal_flip())
     {
-        item->affine_mat_attributes.set_horizontal_flip(horizontal_flip);
+        mat_attributes.set_horizontal_flip(horizontal_flip);
         item->update_affine_mat_attributes();
         _update_item(*item);
     }
@@ -1109,11 +1119,11 @@ bool vertical_flip(id_type id)
 void set_vertical_flip(id_type id, bool vertical_flip)
 {
     auto item = static_cast<item_type*>(id);
+    affine_bg_mat_attributes& mat_attributes = item->affine_mat_attributes;
 
-    if(vertical_flip != item->affine_mat_attributes.vertical_flip())
+    if(vertical_flip != mat_attributes.vertical_flip())
     {
-        affine_mat_registers old_registers(item->affine_mat_attributes);
-        item->affine_mat_attributes.set_vertical_flip(vertical_flip);
+        mat_attributes.set_vertical_flip(vertical_flip);
         item->update_affine_mat_attributes();
         _update_item(*item);
     }

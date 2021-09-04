@@ -287,6 +287,11 @@ namespace
             return _items[index];
         }
 
+        [[nodiscard]] int index(const item_type& item) const
+        {
+            return &item - _items;
+        }
+
         [[nodiscard]] iterator before_begin()
         {
             return iterator(0, *this);
@@ -411,6 +416,7 @@ namespace
     public:
         items_list items;
         unordered_map<const void*, int, max_items * 2> items_map;
+        vector<uint16_t, max_items> to_commit_items;
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
         bool check_commit = false;
@@ -1048,6 +1054,89 @@ namespace
         }
 
         return remove;
+    }
+
+    void _remove_blocks()
+    {
+        if(data.to_remove_blocks_count)
+        {
+            auto end = data.items.end();
+            auto before_previous_iterator = end;
+            auto previous_iterator = data.items.before_begin();
+            auto iterator = previous_iterator;
+            ++iterator;
+            data.to_remove_blocks_count = 0;
+
+            while(iterator != end)
+            {
+                item_type& item = *iterator;
+
+                if(item.status() == status_type::TO_REMOVE)
+                {
+                    if(item.data)
+                    {
+                        data.items_map.erase(item.data);
+                    }
+
+                    item.data = nullptr;
+                    item.width = 0;
+                    item.height = 0;
+                    item.set_status(status_type::FREE);
+                    item.commit = false;
+                    data.free_blocks_count += item.blocks_count;
+
+                    auto next_iterator = iterator;
+                    ++next_iterator;
+
+                    while(next_iterator != end)
+                    {
+                        if(_remove_adjacent_item(next_iterator.id(), item))
+                        {
+                            next_iterator = data.items.erase_after(iterator.id());
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    if(before_previous_iterator != end)
+                    {
+                        if(_remove_adjacent_item(previous_iterator.id(), item))
+                        {
+                            item.start_block = previous_iterator->start_block;
+                            data.items.erase_after(before_previous_iterator.id());
+                            previous_iterator = before_previous_iterator;
+                        }
+                    }
+                }
+
+                before_previous_iterator = previous_iterator;
+                previous_iterator = iterator;
+                ++iterator;
+            }
+        }
+    }
+
+    void _retrieve_to_commit_items()
+    {
+        if(data.check_commit)
+        {
+            data.check_commit = false;
+
+            for(item_type& item : data.items)
+            {
+                if(item.commit)
+                {
+                    item.commit = false;
+
+                    if(item.status() == status_type::USED)
+                    {
+                        data.to_commit_items.push_back(data.items.index(item));
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -2676,98 +2765,36 @@ void set_affine_map_position(int id, int x, int y)
 
 void update()
 {
-    if(data.to_remove_blocks_count)
+    if(data.to_remove_blocks_count || data.check_commit)
     {
         BN_BG_BLOCKS_LOG("bg_blocks_manager - UPDATE");
 
-        auto end = data.items.end();
-        auto before_previous_iterator = end;
-        auto previous_iterator = data.items.before_begin();
-        auto iterator = previous_iterator;
-        ++iterator;
-        data.to_remove_blocks_count = 0;
-
-        while(iterator != end)
-        {
-            item_type& item = *iterator;
-
-            if(item.status() == status_type::TO_REMOVE)
-            {
-                if(item.data)
-                {
-                    data.items_map.erase(item.data);
-                }
-
-                item.data = nullptr;
-                item.width = 0;
-                item.height = 0;
-                item.set_status(status_type::FREE);
-                item.commit = false;
-                data.free_blocks_count += item.blocks_count;
-
-                auto next_iterator = iterator;
-                ++next_iterator;
-
-                while(next_iterator != end)
-                {
-                    if(_remove_adjacent_item(next_iterator.id(), item))
-                    {
-                        next_iterator = data.items.erase_after(iterator.id());
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                if(before_previous_iterator != end)
-                {
-                    if(_remove_adjacent_item(previous_iterator.id(), item))
-                    {
-                        item.start_block = previous_iterator->start_block;
-                        data.items.erase_after(before_previous_iterator.id());
-                        previous_iterator = before_previous_iterator;
-                    }
-                }
-            }
-
-            before_previous_iterator = previous_iterator;
-            previous_iterator = iterator;
-            ++iterator;
-        }
+        _remove_blocks();
+        _retrieve_to_commit_items();
+        data.delay_commit = false;
 
         BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else
+    {
+        data.delay_commit = false;
     }
 }
 
 void commit()
 {
-    bool do_commit = data.check_commit;
-
-    if(do_commit)
+    if(! data.to_commit_items.empty())
     {
         BN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT");
 
-        data.check_commit = false;
-
-        for(item_type& item : data.items)
+        for(int item_index : data.to_commit_items)
         {
-            if(item.commit)
-            {
-                item.commit = false;
-
-                if(item.status() == status_type::USED)
-                {
-                    _commit_item(item);
-                }
-            }
+            const item_type& item = data.items.item(item_index);
+            _commit_item(item);
         }
-    }
 
-    data.delay_commit = false;
+        data.to_commit_items.clear();
 
-    if(do_commit)
-    {
         BN_BG_BLOCKS_LOG_STATUS();
     }
 }

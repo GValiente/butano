@@ -1121,11 +1121,14 @@ void update()
 
         _remove_items();
         _retrieve_to_commit_items();
+        data.delay_commit = false;
 
         BN_SPRITE_TILES_LOG_STATUS();
     }
-
-    data.delay_commit = false;
+    else
+    {
+        data.delay_commit = false;
+    }
 }
 
 void commit()

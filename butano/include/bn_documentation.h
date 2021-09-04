@@ -1731,6 +1731,7 @@
  *
  * @section changelog_7_7_0 7.7.0 (next release)
  *
+ * * Big maps commit optimized.
  * * Asserts ROM usage reduced.
  * * H-Blank effects ROM usage reduced.
  * * bn::sprite_text_generator ROM usage reduced.

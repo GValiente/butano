@@ -49,6 +49,8 @@ namespace
         optional<camera_ptr> camera;
         uint16_t old_big_map_x = 0;
         uint16_t old_big_map_y = 0;
+        uint16_t new_big_map_x = 0;
+        uint16_t new_big_map_y = 0;
         int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
@@ -413,6 +415,134 @@ namespace
         {
             data.handles[item.handles_index] = item.handle;
             data.commit = true;
+        }
+    }
+
+    void _rebuild_handles()
+    {
+        if(data.rebuild_handles)
+        {
+            int affine_bgs_count = 0;
+            data.rebuild_handles = false;
+            data.commit = true;
+
+            for(item_type* item : data.items_vector)
+            {
+                if(item->affine_map && item->visible)
+                {
+                    ++affine_bgs_count;
+                }
+            }
+
+            BN_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
+
+            int regular_id;
+            int affine_id;
+            display_manager::set_mode(affine_bgs_count);
+            display_manager::disable_all_bgs();
+            display_manager::update_windows_visible_bgs();
+
+            switch(affine_bgs_count)
+            {
+
+            case 0:
+                regular_id = hw::bgs::count() - 1;
+                affine_id = -1;
+                break;
+
+            case 1:
+                regular_id = hw::bgs::count() - 3;
+                affine_id = hw::bgs::count() - 2;
+                break;
+
+            default:
+                regular_id = -1;
+                affine_id = hw::bgs::count() - 1;
+                break;
+            }
+
+            for(item_type* item : data.items_vector)
+            {
+                if(item->visible)
+                {
+                    int id;
+
+                    if(item->affine_map)
+                    {
+                        id = affine_id;
+                        --affine_id;
+                    }
+                    else
+                    {
+                        BN_ASSERT(regular_id >= 0, "Too much regular BGs on screen");
+
+                        id = regular_id;
+                        --regular_id;
+                    }
+
+                    item->handles_index = int8_t(id);
+                    data.handles[id] = item->handle;
+                    display_manager::set_bg_enabled(id, true);
+                    display_manager::set_blending_bg_enabled(id, item->blending_enabled);
+                }
+                else
+                {
+                    item->handles_index = -1;
+                }
+            }
+        }
+    }
+
+    void _update_big_maps()
+    {
+        for(item_type* item : data.items_vector)
+        {
+            if(item->big_map)
+            {
+                bool is_regular = item->regular_map.has_value();
+                int old_map_x = item->old_big_map_x;
+                int old_map_y = item->old_big_map_y;
+                int new_map_x;
+                int new_map_y;
+
+                if(is_regular)
+                {
+                    new_map_x = item->hw_position.x() >> 3;
+                    new_map_y = item->hw_position.y() >> 3;
+                }
+                else
+                {
+                    point affine_map_position = item->affine_map_position();
+                    new_map_x = affine_map_position.x();
+                    new_map_y = affine_map_position.y();
+
+                    if(new_map_x % 2)
+                    {
+                        --new_map_x;
+                    }
+                }
+
+                new_map_x = min(new_map_x, (item->half_dimensions.width() / 4) - 32);
+                new_map_y = min(new_map_y, (item->half_dimensions.height() / 4) - 22);
+
+                int map_handle = is_regular ? item->regular_map->handle() : item->affine_map->handle();
+                bool full_commit_big_map = item->full_commit_big_map || bg_blocks_manager::must_commit(map_handle);
+                bool commit_big_map = full_commit_big_map;
+
+                if(! commit_big_map && item->commit_big_map && item->visible)
+                {
+                    commit_big_map = old_map_x != new_map_x || old_map_y != new_map_y;
+                }
+
+                if(commit_big_map)
+                {
+                    item->new_big_map_x = uint16_t(new_map_x);
+                    item->new_big_map_y = uint16_t(new_map_y);
+                    item->commit_big_map = true;
+                    item->full_commit_big_map = full_commit_big_map || bn::abs(new_map_x - old_map_x) > 8 ||
+                            bn::abs(new_map_y - old_map_y) > 8;
+                }
+            }
         }
     }
 }
@@ -1457,77 +1587,8 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
 
 void update()
 {
-    if(data.rebuild_handles)
-    {
-        int affine_bgs_count = 0;
-        data.rebuild_handles = false;
-        data.commit = true;
-
-        for(item_type* item : data.items_vector)
-        {
-            if(item->affine_map && item->visible)
-            {
-                ++affine_bgs_count;
-            }
-        }
-
-        BN_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
-
-        int regular_id;
-        int affine_id;
-        display_manager::set_mode(affine_bgs_count);
-        display_manager::disable_all_bgs();
-        display_manager::update_windows_visible_bgs();
-
-        switch(affine_bgs_count)
-        {
-
-        case 0:
-            regular_id = hw::bgs::count() - 1;
-            affine_id = -1;
-            break;
-
-        case 1:
-            regular_id = hw::bgs::count() - 3;
-            affine_id = hw::bgs::count() - 2;
-            break;
-
-        default:
-            regular_id = -1;
-            affine_id = hw::bgs::count() - 1;
-            break;
-        }
-
-        for(item_type* item : data.items_vector)
-        {
-            if(item->visible)
-            {
-                int id;
-
-                if(item->affine_map)
-                {
-                    id = affine_id;
-                    --affine_id;
-                }
-                else
-                {
-                    BN_ASSERT(regular_id >= 0, "Too much regular BGs on screen");
-
-                    id = regular_id;
-                    --regular_id;
-                }
-
-                item->handles_index = int8_t(id);
-                data.handles[id] = item->handle;
-                display_manager::set_bg_enabled(id, true);
-                display_manager::set_blending_bg_enabled(id, item->blending_enabled);
-            }
-            else
-            {
-                item->handles_index = -1;
-            }
-        }
-    }
+    _rebuild_handles();
+    _update_big_maps();
 }
 
 void commit()
@@ -1543,114 +1604,83 @@ void commit_big_maps()
 {
     for(item_type* item : data.items_vector)
     {
-        if(item->big_map)
+        if(item->commit_big_map)
         {
             bool is_regular = item->regular_map.has_value();
+            int map_handle = is_regular ? item->regular_map->handle() : item->affine_map->handle();
             int old_map_x = item->old_big_map_x;
             int old_map_y = item->old_big_map_y;
-            int new_map_x;
-            int new_map_y;
+            int new_map_x = item->new_big_map_x;
+            int new_map_y = item->new_big_map_y;
+            item->old_big_map_x = uint16_t(new_map_x);
+            item->old_big_map_y = uint16_t(new_map_y);
+            item->commit_big_map = false;
 
-            if(is_regular)
+            if(item->full_commit_big_map)
             {
-                new_map_x = item->hw_position.x() >> 3;
-                new_map_y = item->hw_position.y() >> 3;
+                item->full_commit_big_map = false;
+
+                if(is_regular)
+                {
+                    bg_blocks_manager::set_regular_map_position(map_handle, new_map_x, new_map_y);
+                }
+                else
+                {
+                    bg_blocks_manager::set_affine_map_position(map_handle, new_map_x, new_map_y);
+                }
             }
             else
             {
-                point affine_map_position = item->affine_map_position();
-                new_map_x = affine_map_position.x();
-                new_map_y = affine_map_position.y();
-
-                if(new_map_x % 2)
+                if(is_regular)
                 {
-                    --new_map_x;
-                }
-            }
-
-            new_map_x = min(new_map_x, (item->half_dimensions.width() / 4) - 32);
-            new_map_y = min(new_map_y, (item->half_dimensions.height() / 4) - 22);
-
-            int map_handle = is_regular ? item->regular_map->handle() : item->affine_map->handle();
-            bool full_commit_big_map = item->full_commit_big_map || bg_blocks_manager::must_commit(map_handle);
-            bool commit_big_map = full_commit_big_map;
-
-            if(! commit_big_map && item->commit_big_map && item->visible)
-            {
-                commit_big_map = old_map_x != new_map_x || old_map_y != new_map_y;
-            }
-
-            if(commit_big_map)
-            {
-                item->old_big_map_x = uint16_t(new_map_x);
-                item->old_big_map_y = uint16_t(new_map_y);
-                item->commit_big_map = false;
-                item->full_commit_big_map = false;
-
-                if(full_commit_big_map || bn::abs(new_map_x - old_map_x) > 8 || bn::abs(new_map_y - old_map_y) > 8)
-                {
-                    if(is_regular)
+                    while(new_map_x < old_map_x)
                     {
-                        bg_blocks_manager::set_regular_map_position(map_handle, new_map_x, new_map_y);
+                        --old_map_x;
+                        bg_blocks_manager::update_regular_map_col(map_handle, old_map_x, new_map_y);
                     }
-                    else
+
+                    while(new_map_x > old_map_x)
                     {
-                        bg_blocks_manager::set_affine_map_position(map_handle, new_map_x, new_map_y);
+                        ++old_map_x;
+                        bg_blocks_manager::update_regular_map_col(map_handle, old_map_x + 31, new_map_y);
+                    }
+
+                    while(new_map_y < old_map_y)
+                    {
+                        --old_map_y;
+                        bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, old_map_y);
+                    }
+
+                    while(new_map_y > old_map_y)
+                    {
+                        ++old_map_y;
+                        bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, old_map_y + 21);
                     }
                 }
                 else
                 {
-                    if(is_regular)
+                    while(new_map_x < old_map_x)
                     {
-                        while(new_map_x < old_map_x)
-                        {
-                            --old_map_x;
-                            bg_blocks_manager::update_regular_map_col(map_handle, old_map_x, new_map_y);
-                        }
-
-                        while(new_map_x > old_map_x)
-                        {
-                            ++old_map_x;
-                            bg_blocks_manager::update_regular_map_col(map_handle, old_map_x + 31, new_map_y);
-                        }
-
-                        while(new_map_y < old_map_y)
-                        {
-                            --old_map_y;
-                            bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, old_map_y);
-                        }
-
-                        while(new_map_y > old_map_y)
-                        {
-                            ++old_map_y;
-                            bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, old_map_y + 21);
-                        }
+                        --old_map_x;
+                        bg_blocks_manager::update_affine_map_col(map_handle, old_map_x, new_map_y);
                     }
-                    else
+
+                    while(new_map_x > old_map_x)
                     {
-                        while(new_map_x < old_map_x)
-                        {
-                            --old_map_x;
-                            bg_blocks_manager::update_affine_map_col(map_handle, old_map_x, new_map_y);
-                        }
+                        ++old_map_x;
+                        bg_blocks_manager::update_affine_map_col(map_handle, old_map_x + 31, new_map_y);
+                    }
 
-                        while(new_map_x > old_map_x)
-                        {
-                            ++old_map_x;
-                            bg_blocks_manager::update_affine_map_col(map_handle, old_map_x + 31, new_map_y);
-                        }
+                    while(new_map_y < old_map_y)
+                    {
+                        --old_map_y;
+                        bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, old_map_y);
+                    }
 
-                        while(new_map_y < old_map_y)
-                        {
-                            --old_map_y;
-                            bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, old_map_y);
-                        }
-
-                        while(new_map_y > old_map_y)
-                        {
-                            ++old_map_y;
-                            bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, old_map_y + 21);
-                        }
+                    while(new_map_y > old_map_y)
+                    {
+                        ++old_map_y;
+                        bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, old_map_y + 21);
                     }
                 }
             }

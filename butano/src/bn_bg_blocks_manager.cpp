@@ -1808,6 +1808,7 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
+        item.commit = false;
         item.set_status(status_type::TO_REMOVE);
         data.to_remove_blocks_count += item.blocks_count;
 
@@ -1924,16 +1925,17 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
                      int(compression));
 
     item_type& item = data.items.item(id);
-    BN_ASSERT(item.data, "Item has no data");
+    const uint16_t* item_data = item.data;
     BN_ASSERT(tiles_ref.size() == item.tiles_count(), "Tiles count does not match item tiles count: ",
               tiles_ref.size(), " - ", item.tiles_count());
 
-    if(item.data != data_ptr)
+    if(item_data != data_ptr)
     {
+        BN_ASSERT(item_data, "Item has no data");
         BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                   "Multiple copies of the same data not supported");
 
-        data.items_map.erase(item.data);
+        data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
         item.set_compression(compression);
         _check_commit_item(id, data_ptr, true);
@@ -1960,16 +1962,17 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
                      int(compression));
 
     item_type& item = data.items.item(id);
-    BN_ASSERT(item.data, "Item has no data");
+    const uint16_t* item_data = item.data;
     BN_ASSERT(tiles_ref.size() == item.tiles_count(), "Tiles count does not match item tiles count: ",
               tiles_ref.size(), " - ", item.tiles_count());
 
-    if(item.data != data_ptr)
+    if(item_data != data_ptr)
     {
+        BN_ASSERT(item_data, "Item has no data");
         BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                   "Multiple copies of the same data not supported");
 
-        data.items_map.erase(item.data);
+        data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
         item.set_compression(compression);
         _check_commit_item(id, data_ptr, true);
@@ -1995,7 +1998,7 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
                      map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", int(compression));
 
     item_type& item = data.items.item(id);
-    BN_ASSERT(item.data, "Item has no data");
+    const uint16_t* item_data = item.data;
     BN_ASSERT(map_item.dimensions().width() == item.width, "Map width does not match item map width: ",
               map_item.dimensions().width(), " - ", item.width);
     BN_ASSERT(map_item.dimensions().height() == item.height, "Map height does not match item map height: ",
@@ -2003,12 +2006,13 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
     BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(item.width, item.height),
               "Compressed big regular maps are not supported");
 
-    if(item.data != data_ptr)
+    if(item_data != data_ptr)
     {
+        BN_ASSERT(item_data, "Item has no data");
         BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                   "Multiple copies of the same data not supported");
 
-        data.items_map.erase(item.data);
+        data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
         item.set_compression(compression);
         _check_commit_item(id, data_ptr, true);
@@ -2034,7 +2038,7 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
                      map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", int(compression));
 
     item_type& item = data.items.item(id);
-    BN_ASSERT(item.data, "Item has no data");
+    const uint16_t* item_data = item.data;
     BN_ASSERT(map_item.dimensions().width() == item.width, "Map width does not match item map width: ",
               map_item.dimensions().width(), " - ", item.width);
     BN_ASSERT(map_item.dimensions().height() == item.height, "Map height does not match item map height: ",
@@ -2042,12 +2046,13 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
     BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(item.width, item.height),
               "Compressed big affine maps are not supported");
 
-    if(item.data != data_ptr)
+    if(item_data != data_ptr)
     {
+        BN_ASSERT(item_data, "Item has no data");
         BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                   "Multiple copies of the same data not supported");
 
-        data.items_map.erase(item.data);
+        data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
         item.set_compression(compression);
         _check_commit_item(id, data_ptr, true);
@@ -2710,7 +2715,6 @@ void update()
                 item.width = 0;
                 item.height = 0;
                 item.set_status(status_type::FREE);
-                item.commit = false;
                 data.free_blocks_count += item.blocks_count;
 
                 auto next_iterator = iterator;
@@ -2741,11 +2745,7 @@ void update()
             else if(item.commit)
             {
                 item.commit = false;
-
-                if(item_status == status_type::USED)
-                {
-                    data.to_commit_items.push_back(data.items.index(item));
-                }
+                data.to_commit_items.push_back(data.items.index(item));
             }
 
             before_previous_iterator = previous_iterator;

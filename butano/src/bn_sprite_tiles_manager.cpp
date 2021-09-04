@@ -278,7 +278,6 @@ namespace
         vector<uint16_t, max_items> to_commit_items;
         int free_tiles_count = 0;
         int to_remove_tiles_count = 0;
-        bool check_commit = false;
         bool delay_commit = false;
     };
 
@@ -350,7 +349,6 @@ namespace
 
             BN_LOG("free_tiles_count: ", data.free_tiles_count);
             BN_LOG("to_remove_tiles_count: ", data.to_remove_tiles_count);
-            BN_LOG("check_commit: ", (data.check_commit ? "true" : "false"));
             BN_LOG("delay_commit: ", (data.delay_commit ? "true" : "false"));
         }
 
@@ -371,12 +369,12 @@ namespace
     #endif
 
 
-    constexpr auto lower_bound_comparator = [](int item_index, unsigned tiles_count)
+    constexpr auto tiles_count_lower_bound_comparator = [](int item_index, unsigned tiles_count)
     {
         return data.items.item(item_index).tiles_count < tiles_count;
     };
 
-    constexpr auto upper_bound_comparator = [](unsigned tiles_count, int item_index)
+    constexpr auto tiles_count_upper_bound_comparator = [](unsigned tiles_count, int item_index)
     {
         return tiles_count < data.items.item(item_index).tiles_count;
     };
@@ -385,7 +383,7 @@ namespace
     {
         const item_type& item = data.items.item(id);
         auto free_items_it = upper_bound(data.free_items.begin(), free_items_last, item.tiles_count,
-                                         upper_bound_comparator);
+                                         tiles_count_upper_bound_comparator);
         data.free_items.insert(free_items_it, id);
     }
 
@@ -397,9 +395,8 @@ namespace
     void _erase_free_item(int id)
     {
         const item_type& item = data.items.item(id);
-        auto free_items_end = data.free_items.end();
-        auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, item.tiles_count,
-                                         lower_bound_comparator);
+        auto free_items_it = lower_bound(data.free_items.begin(), data.free_items.end(), item.tiles_count,
+                                         tiles_count_lower_bound_comparator);
 
         while(*free_items_it != id)
         {
@@ -413,16 +410,15 @@ namespace
     {
         const item_type& item = data.items.item(id);
         auto to_remove_items_it = upper_bound(data.to_remove_items.begin(), data.to_remove_items.end(),
-                                              item.tiles_count, upper_bound_comparator);
+                                              item.tiles_count, tiles_count_upper_bound_comparator);
         data.to_remove_items.insert(to_remove_items_it, id);
     }
 
     void _erase_to_remove_item(int id)
     {
         const item_type& item = data.items.item(id);
-        auto to_remove_items_end = data.to_remove_items.end();
-        auto to_remove_items_it = lower_bound(data.to_remove_items.begin(), to_remove_items_end, item.tiles_count,
-                                              lower_bound_comparator);
+        auto to_remove_items_it = lower_bound(data.to_remove_items.begin(),  data.to_remove_items.end(),
+                                              item.tiles_count, tiles_count_lower_bound_comparator);
 
         while(*to_remove_items_it != id)
         {
@@ -430,6 +426,26 @@ namespace
         }
 
         data.to_remove_items.erase(to_remove_items_it);
+    }
+
+    void _insert_to_commit_item(int id, item_type& item)
+    {
+        if(! item.commit)
+        {
+            auto to_commit_items_it = upper_bound(data.to_commit_items.begin(), data.to_commit_items.end(), id);
+            data.to_commit_items.insert(to_commit_items_it, id);
+            item.commit = true;
+        }
+    }
+
+    void _erase_to_commit_item(int id, item_type& item)
+    {
+        if(item.commit)
+        {
+            auto to_commit_items_it = lower_bound(data.to_commit_items.begin(), data.to_commit_items.end(), id);
+            data.to_commit_items.erase(to_commit_items_it);
+            item.commit = false;
+        }
     }
 
     [[nodiscard]] int _find_impl(const tile* tiles_data, [[maybe_unused]] compression_type compression,
@@ -483,14 +499,13 @@ namespace
         return -1;
     }
 
-    void _commit_item(const tile* tiles_data, bool delay_commit, item_type& item)
+    void _commit_item(int id, const tile* tiles_data, bool delay_commit, item_type& item)
     {
         item.data = tiles_data;
 
         if(delay_commit)
         {
-            item.commit = true;
-            data.check_commit = true;
+            _insert_to_commit_item(id, item);
         }
         else
         {
@@ -529,12 +544,11 @@ namespace
         item.set_compression(compression);
         item.tiles_count = uint16_t(tiles_count);
         item.usages = 1;
-        item.commit = false;
         item.set_status(status_type::USED);
 
         if(tiles_data)
         {
-            _commit_item(tiles_data, delay_commit, item);
+            _commit_item(id, tiles_data, delay_commit, item);
         }
 
         optional<int> new_free_item_id;
@@ -562,7 +576,8 @@ namespace
         {
             auto to_remove_items_end = data.to_remove_items.end();
             auto to_remove_items_it = lower_bound(
-                        data.to_remove_items.begin(), to_remove_items_end, tiles_count, lower_bound_comparator);
+                        data.to_remove_items.begin(), to_remove_items_end, tiles_count,
+                        tiles_count_lower_bound_comparator);
 
             if(to_remove_items_it != to_remove_items_end)
             {
@@ -588,7 +603,7 @@ namespace
         {
             auto free_items_end = data.free_items.end();
             auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, tiles_count,
-                                             lower_bound_comparator);
+                                             tiles_count_lower_bound_comparator);
 
             if(free_items_it != free_items_end)
             {
@@ -627,7 +642,7 @@ namespace
         {
             auto free_items_end = data.free_items.end();
             auto free_items_it = lower_bound(data.free_items.begin(), free_items_end, tiles_count,
-                                             lower_bound_comparator);
+                                             tiles_count_lower_bound_comparator);
 
             if(free_items_it != free_items_end)
             {
@@ -646,90 +661,6 @@ namespace
         }
 
         return -1;
-    }
-
-    void _remove_items()
-    {
-        if(data.to_remove_tiles_count)
-        {
-            auto begin = data.items.begin();
-            auto end = data.items.end();
-
-            for(int to_remove_item_index : data.to_remove_items)
-            {
-                auto iterator = data.items.it(to_remove_item_index);
-                item_type& item = *iterator;
-
-                if(item.data)
-                {
-                    data.items_map.erase(item.data);
-                }
-
-                item.data = nullptr;
-                item.set_status(status_type::FREE);
-                item.commit = false;
-                data.free_tiles_count += int(item.tiles_count);
-
-                auto next_iterator = iterator;
-                ++next_iterator;
-
-                if(next_iterator != end)
-                {
-                    item_type& next_item = *next_iterator;
-
-                    if(next_item.status() == status_type::FREE)
-                    {
-                        int next_id = next_iterator.id();
-                        item.tiles_count += next_item.tiles_count;
-                        _erase_free_item(next_id);
-                        data.items.erase(next_id);
-                    }
-                }
-
-                if(iterator != begin)
-                {
-                    auto previous_iterator = iterator;
-                    --previous_iterator;
-
-                    item_type& previous_item = *previous_iterator;
-
-                    if(previous_item.status() == status_type::FREE)
-                    {
-                        int previous_id = previous_iterator.id();
-                        item.start_tile = previous_item.start_tile;
-                        item.tiles_count += previous_item.tiles_count;
-                        _erase_free_item(previous_id);
-                        data.items.erase(previous_id);
-                    }
-                }
-
-                _insert_free_item(to_remove_item_index);
-            }
-
-            data.to_remove_items.clear();
-            data.to_remove_tiles_count = 0;
-        }
-    }
-
-    void _retrieve_to_commit_items()
-    {
-        if(data.check_commit)
-        {
-            data.check_commit = false;
-
-            for(item_type& item : data.items)
-            {
-                if(item.commit)
-                {
-                    item.commit = false;
-
-                    if(item.status() == status_type::USED)
-                    {
-                        data.to_commit_items.push_back(data.items.index(item));
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -1018,6 +949,7 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         item.set_status(status_type::TO_REMOVE);
+        _erase_to_commit_item(id, item);
         _insert_to_remove_item(id);
         data.to_remove_tiles_count += int(item.tiles_count);
     }
@@ -1067,12 +999,13 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
 
     if(old_tiles_data != new_tiles_data)
     {
+        BN_ASSERT(old_tiles_data, "Item has no data");
         BN_ASSERT(data.items_map.find(new_tiles_data) == data.items_map.end(),
                   "Multiple copies of the same tiles data not supported");
 
         data.items_map.erase(old_tiles_data);
         item.set_compression(compression);
-        _commit_item(new_tiles_data, true, item);
+        _commit_item(id, new_tiles_data, true, item);
         data.items_map.insert(new_tiles_data, id);
 
         BN_SPRITE_TILES_LOG_STATUS();
@@ -1080,7 +1013,7 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
     else if(compression != item.compression())
     {
         item.set_compression(compression);
-        _commit_item(new_tiles_data, true, item);
+        _commit_item(id, new_tiles_data, true, item);
 
         BN_SPRITE_TILES_LOG_STATUS();
     }
@@ -1094,8 +1027,7 @@ void reload_tiles_ref(int id)
 
     BN_ASSERT(item.data, "Item has no data");
 
-    item.commit = true;
-    data.check_commit = true;
+    _insert_to_commit_item(id, item);
 
     BN_SPRITE_TILES_LOG_STATUS();
 }
@@ -1115,20 +1047,70 @@ optional<span<tile>> vram(int id)
 
 void update()
 {
-    if(data.to_remove_tiles_count || data.check_commit)
+    if(data.to_remove_tiles_count)
     {
         BN_SPRITE_TILES_LOG("sprite_tiles_manager - UPDATE");
 
-        _remove_items();
-        _retrieve_to_commit_items();
-        data.delay_commit = false;
+        auto begin = data.items.begin();
+        auto end = data.items.end();
+
+        for(int to_remove_item_index : data.to_remove_items)
+        {
+            auto iterator = data.items.it(to_remove_item_index);
+            item_type& item = *iterator;
+
+            if(item.data)
+            {
+                data.items_map.erase(item.data);
+            }
+
+            item.data = nullptr;
+            item.set_status(status_type::FREE);
+            data.free_tiles_count += int(item.tiles_count);
+
+            auto next_iterator = iterator;
+            ++next_iterator;
+
+            if(next_iterator != end)
+            {
+                item_type& next_item = *next_iterator;
+
+                if(next_item.status() == status_type::FREE)
+                {
+                    int next_id = next_iterator.id();
+                    item.tiles_count += next_item.tiles_count;
+                    _erase_free_item(next_id);
+                    data.items.erase(next_id);
+                }
+            }
+
+            if(iterator != begin)
+            {
+                auto previous_iterator = iterator;
+                --previous_iterator;
+
+                item_type& previous_item = *previous_iterator;
+
+                if(previous_item.status() == status_type::FREE)
+                {
+                    int previous_id = previous_iterator.id();
+                    item.start_tile = previous_item.start_tile;
+                    item.tiles_count += previous_item.tiles_count;
+                    _erase_free_item(previous_id);
+                    data.items.erase(previous_id);
+                }
+            }
+
+            _insert_free_item(to_remove_item_index);
+        }
+
+        data.to_remove_items.clear();
+        data.to_remove_tiles_count = 0;
 
         BN_SPRITE_TILES_LOG_STATUS();
     }
-    else
-    {
-        data.delay_commit = false;
-    }
+
+    data.delay_commit = false;
 }
 
 void commit()
@@ -1139,8 +1121,9 @@ void commit()
 
         for(int item_index : data.to_commit_items)
         {
-            const item_type& item = data.items.item(item_index);
+            item_type& item = data.items.item(item_index);
             hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
+            item.commit = false;
         }
 
         data.to_commit_items.clear();

@@ -39,6 +39,8 @@ namespace
         func_type lp_vblank_function = nullptr;
         uint16_t stat_value = 0;
         uint16_t direct_sound_control_value = 0;
+        bool update_on_vblank = false;
+        bool delay_commit = false;
     };
 
     BN_DATA_EWRAM static_data data;
@@ -119,13 +121,20 @@ namespace
         data.sounds_queue.insert_after(before_it, sound_type{ handle, int16_t(priority) });
     }
 
-    void _update_frame()
+    void _commit()
+    {
+        mmFrame();
+        data.lp_vblank_function();
+    }
+
+    void _vblank_handler()
     {
         data.hp_vblank_function();
 
-        mmFrame();
-
-        data.lp_vblank_function();
+        if(! data.delay_commit)
+        {
+            _commit();
+        }
     }
 }
 
@@ -150,7 +159,7 @@ void init(func_type hp_vblank_function, func_type lp_vblank_function)
     maxmod_info.soundbank = mm_addr(_bn_audio_soundbank_bin);
     mmInit(&maxmod_info);
 
-    mmSetVBlankHandler(reinterpret_cast<void*>(_update_frame));
+    mmSetVBlankHandler(reinterpret_cast<void*>(_vblank_handler));
 }
 
 void enable()
@@ -193,6 +202,16 @@ void stop_all_sounds()
     data.sounds_queue.clear();
 }
 
+bool update_on_vblank()
+{
+    return data.update_on_vblank;
+}
+
+void set_update_on_vblank(bool update_on_vblank)
+{
+    data.update_on_vblank = update_on_vblank;
+}
+
 void disable_vblank_handler()
 {
     mmSetVBlankHandler(reinterpret_cast<void*>(data.hp_vblank_function));
@@ -203,6 +222,7 @@ void update()
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
     auto end = data.sounds_queue.end();
+    data.delay_commit = ! data.update_on_vblank;
 
     while(it != end)
     {
@@ -217,6 +237,15 @@ void update()
         {
             it = data.sounds_queue.erase_after(before_it);
         }
+    }
+}
+
+void commit()
+{
+    if(data.delay_commit)
+    {
+        _commit();
+        data.delay_commit = false;
     }
 }
 

@@ -71,9 +71,15 @@ namespace bn::hw::audio
 
     void stop_all_sounds();
 
+    [[nodiscard]] bool update_on_vblank();
+
+    void set_update_on_vblank(bool update_on_vblank);
+
     void disable_vblank_handler();
 
     void update();
+
+    void commit();
 }
 
 #endif

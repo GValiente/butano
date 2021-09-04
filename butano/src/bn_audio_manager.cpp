@@ -9,6 +9,7 @@
 #include "bn_config_audio.h"
 #include "../hw/include/bn_hw_audio.h"
 
+#include "bn_audio.cpp.h"
 #include "bn_music.cpp.h"
 #include "bn_sound.cpp.h"
 #include "bn_music_item.cpp.h"
@@ -307,6 +308,16 @@ void stop_all_sounds()
     data.commands.push_back(command::sound_stop_all());
 }
 
+bool update_on_vblank()
+{
+    return hw::audio::update_on_vblank();
+}
+
+void set_update_on_vblank(bool update_on_vblank)
+{
+    hw::audio::set_update_on_vblank(update_on_vblank);
+}
+
 void disable_vblank_handler()
 {
     hw::audio::disable_vblank_handler();
@@ -327,6 +338,11 @@ void update()
     {
         data.music_position = hw::audio::music_position();
     }
+}
+
+void commit()
+{
+    hw::audio::commit();
 }
 
 void stop()

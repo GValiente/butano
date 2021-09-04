@@ -1521,7 +1521,7 @@
  *
  * @subsection faq_destroy_optional That's cool, but how can I destroy and reload sprites and backgrounds as easy as possible?
  *
- * bn::optional helps unloading and reloading things easily:
+ * bn::optional helps to unload and reload hardware resources easily:
  *
  * @code{.cpp}
  * // bg_optional is empty:
@@ -1731,6 +1731,7 @@
  *
  * @section changelog_7_7_0 7.7.0 (next release)
  *
+ * * bn::audio::update_on_vblank and bn::audio::set_update_on_vblank added.
  * * Sprite tiles update and commit optimized.
  * * Background tiles and maps update and commit optimized.
  * * Big maps commit optimized.

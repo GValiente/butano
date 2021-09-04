@@ -272,6 +272,10 @@ namespace
         result.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
+        BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commit");
+        audio_manager::commit();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
         BN_PROFILER_ENGINE_DETAILED_START("eng_gpio_commit");
         gpio_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();

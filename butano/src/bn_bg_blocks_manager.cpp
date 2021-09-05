@@ -287,11 +287,6 @@ namespace
             return _items[index];
         }
 
-        [[nodiscard]] int index(const item_type& item) const
-        {
-            return &item - _items;
-        }
-
         [[nodiscard]] iterator before_begin()
         {
             return iterator(0, *this);
@@ -2757,7 +2752,7 @@ void update()
             else if(item.commit)
             {
                 item.commit = false;
-                data.to_commit_items.push_back(data.items.index(item));
+                data.to_commit_items.push_back(iterator.id());
             }
 
             before_previous_iterator = previous_iterator;

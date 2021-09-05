@@ -23,17 +23,17 @@
 namespace bn::audio
 {
     /**
-     * @brief Indicates if audio is updated on V-Blank or not.
+     * @brief Indicates if audio is updated on the V-Blank interrupt or not.
      *
-     * Updating audio on V-Blank helps to reduce audio noise
+     * Updating audio on the V-Blank interrupt helps to reduce audio noise
      * but increases the possibility of visual bugs because of lack of V-Blank time.
      */
     [[nodiscard]] bool update_on_vblank();
 
     /**
-     * @brief Sets if audio must be updated on V-Blank or not.
+     * @brief Sets if audio must be updated on the V-Blank interrupt or not.
      *
-     * Updating audio on V-Blank helps to reduce audio noise
+     * Updating audio on the V-Blank interrupt helps to reduce audio noise
      * but increases the possibility of visual bugs because of lack of V-Blank time.
      */
     void set_update_on_vblank(bool update_on_vblank);

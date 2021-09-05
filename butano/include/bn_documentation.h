@@ -1733,6 +1733,7 @@
  *
  * * Affine matrices update optimized.
  * * Tiles and maps managers optimized.
+ * * bn::audio::update_on_vblank and bn::audio::set_update_on_vblank documentation improved.
  *
  *
  * @section changelog_7_7_0 7.7.0

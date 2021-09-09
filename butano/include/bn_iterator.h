@@ -25,6 +25,8 @@ namespace bn
     using std::random_access_iterator_tag;
 
     using std::reverse_iterator;
+
+    using std::distance;
 }
 
 #endif

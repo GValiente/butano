@@ -1600,6 +1600,13 @@
  * @endcode
  *
  *
+ * @subsection faq_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
+ *
+ * bn::sprite_text_generator already supports UTF-8 characters rendering,
+ * but the bn::sprite_font instances used in the examples don't provide japanese nor chinese characters,
+ * so you will have to make a new one with them.
+ *
+ *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *
  * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.
@@ -1734,6 +1741,7 @@
  * * Affine matrices update optimized.
  * * Tiles and maps managers optimized.
  * * bn::audio::update_on_vblank and bn::audio::set_update_on_vblank documentation improved.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_7_7_0 7.7.0

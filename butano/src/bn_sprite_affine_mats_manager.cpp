@@ -56,10 +56,10 @@ namespace
 
     public:
         explicit registers(const affine_mat_attributes& attributes) :
-            _pa(attributes.pa_register_value()),
-            _pb(attributes.pb_register_value()),
-            _pc(attributes.pc_register_value()),
-            _pd(attributes.pd_register_value())
+            _pa(int16_t(attributes.pa_register_value())),
+            _pb(int16_t(attributes.pb_register_value())),
+            _pc(int16_t(attributes.pc_register_value())),
+            _pd(int16_t(attributes.pd_register_value()))
         {
         }
 

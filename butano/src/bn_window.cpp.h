@@ -5,6 +5,7 @@
 
 #include "bn_window.h"
 
+#include "bn_bgs_manager.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_display_manager.h"
@@ -15,25 +16,25 @@ namespace bn
 bool window::show_bg(const regular_bg_ptr& regular_bg) const
 {
     auto bg_handle = const_cast<void*>(regular_bg.handle());
-    return display_manager::show_bg_in_window(_id, bg_handle);
+    return bgs_manager::show_in_window(bg_handle, _id);
 }
 
 bool window::show_bg(const affine_bg_ptr& affine_bg) const
 {
     auto bg_handle = const_cast<void*>(affine_bg.handle());
-    return display_manager::show_bg_in_window(_id, bg_handle);
+    return bgs_manager::show_in_window(bg_handle, _id);
 }
 
 void window::set_show_bg(const regular_bg_ptr& regular_bg, bool show)
 {
     auto bg_handle = const_cast<void*>(regular_bg.handle());
-    display_manager::set_show_bg_in_window(_id, bg_handle, show);
+    bgs_manager::set_show_in_window(bg_handle, _id, show);
 }
 
 void window::set_show_bg(const affine_bg_ptr& affine_bg, bool show)
 {
     auto bg_handle = const_cast<void*>(affine_bg.handle());
-    display_manager::set_show_bg_in_window(_id, bg_handle, show);
+    bgs_manager::set_show_in_window(bg_handle, _id, show);
 }
 
 bool window::show_sprites() const

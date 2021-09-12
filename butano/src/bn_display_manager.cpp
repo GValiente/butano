@@ -5,7 +5,6 @@
 
 #include "bn_display_manager.h"
 
-#include "bn_vector.h"
 #include "bn_display.h"
 #include "bn_mosaic_attributes.h"
 #include "bn_bgs_manager.h"
@@ -43,7 +42,6 @@ namespace
         int blending_fade_usages = 0;
         int blending_layers = 0;
         hw::display::blending_mode blending_mode;
-        vector<bg_handle_type, hw::bgs::count()> windows_visible_bgs[hw::display::windows_count()];
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
         point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
@@ -386,45 +384,6 @@ void fill_blending_fade_hblank_effect_alphas(const class blending_fade_alpha* bl
     {
         const class blending_fade_alpha& alpha = blending_fade_alphas_ptr[index];
         hw::display::set_blending_fade(fixed_t<4>(alpha.value()).data(), dest_ptr[index]);
-    }
-}
-
-bool show_bg_in_window(int window, bg_handle_type bg_handle)
-{
-    const ivector<bg_handle_type>& windows_visible_bgs = data.windows_visible_bgs[window];
-    auto end = windows_visible_bgs.end();
-    return find(windows_visible_bgs.begin(), end, bg_handle) != end;
-}
-
-void set_show_bg_in_window(int window, bg_handle_type bg_handle, bool show)
-{
-    ivector<bg_handle_type>& windows_visible_bgs = data.windows_visible_bgs[window];
-    auto end = windows_visible_bgs.end();
-    auto it = find(windows_visible_bgs.begin(), end, bg_handle);
-
-    if(show)
-    {
-        if(it == end)
-        {
-            windows_visible_bgs.push_back(bg_handle);
-            data.update_windows_visible_bgs = true;
-        }
-    }
-    else
-    {
-        if(it != end)
-        {
-            windows_visible_bgs.erase(it);
-            data.update_windows_visible_bgs = true;
-        }
-    }
-}
-
-void set_show_bg_in_all_windows(bg_handle_type bg_handle, bool show)
-{
-    for(int window = 0; window < hw::display::windows_count(); ++window)
-    {
-        set_show_bg_in_window(window, bg_handle, show);
     }
 }
 
@@ -783,29 +742,10 @@ void update()
 
     if(data.update_windows_visible_bgs)
     {
+        bgs_manager::update_windows_flags(data.windows_flags);
         data.update_windows_visible_bgs = false;
         data.commit_windows_flags = true;
         data.commit = true;
-
-        for(int window = 0; window < hw::display::windows_count(); ++window)
-        {
-            unsigned& windows_flags = data.windows_flags[window];
-
-            for(int bg = 0; bg < hw::bgs::count(); ++bg)
-            {
-                windows_flags &= ~(unsigned(hw::display::window_flag::BG_0) << bg);
-            }
-
-            const ivector<bg_handle_type>& windows_visible_bgs = data.windows_visible_bgs[window];
-
-            for(bg_handle_type bg_handle : windows_visible_bgs)
-            {
-                if(optional<int> bg = bgs_manager::hw_id(bg_handle))
-                {
-                    windows_flags |= (unsigned(hw::display::window_flag::BG_0) << *bg);
-                }
-            }
-        }
     }
 
     if(data.commit)

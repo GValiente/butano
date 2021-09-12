@@ -1740,6 +1740,7 @@
  *
  * * Affine matrices update optimized.
  * * Tiles and maps managers optimized.
+ * * Background windows optimized.
  * * bn::audio::update_on_vblank and bn::audio::set_update_on_vblank documentation improved.
  * * @ref faq page improved.
  *

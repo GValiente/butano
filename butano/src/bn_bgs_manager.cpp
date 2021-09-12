@@ -15,6 +15,7 @@
 #include "bn_bg_blocks_manager.h"
 #include "bn_affine_bg_mat_attributes.h"
 #include "../hw/include/bn_hw_bgs.h"
+#include "../hw/include/bn_hw_display.h"
 
 #include "bn_bgs.cpp.h"
 #include "bn_affine_bg_ptr.cpp.h"
@@ -44,6 +45,7 @@ namespace
         unsigned usages = 1;
         sort_key bg_sort_key;
         hw::bgs::handle handle;
+        bool visible_in_windows[hw::display::windows_count()];
         optional<regular_bg_map_ptr> regular_map;
         optional<affine_bg_map_ptr> affine_map;
         optional<camera_ptr> camera;
@@ -68,6 +70,11 @@ namespace
             visible(builder.visible()),
             update(true)
         {
+            for(bool& visible_in_window : visible_in_windows)
+            {
+                visible_in_window = true;
+            }
+
             hw::bgs::setup_regular(builder, handle);
             update_regular_map();
         }
@@ -83,6 +90,11 @@ namespace
             visible(builder.visible()),
             update(true)
         {
+            for(bool& visible_in_window : visible_in_windows)
+            {
+                visible_in_window = true;
+            }
+
             hw::bgs::setup_affine(builder, handle);
             update_affine_map(true);
         }
@@ -322,10 +334,10 @@ namespace
 
     public:
         explicit affine_mat_registers(const affine_bg_mat_attributes& affine_mat_attributes) :
-            _pa(affine_mat_attributes.pa_register_value()),
-            _pb(affine_mat_attributes.pb_register_value()),
-            _pc(affine_mat_attributes.pc_register_value()),
-            _pd(affine_mat_attributes.pd_register_value())
+            _pa(int16_t(affine_mat_attributes.pa_register_value())),
+            _pb(int16_t(affine_mat_attributes.pb_register_value())),
+            _pc(int16_t(affine_mat_attributes.pc_register_value())),
+            _pd(int16_t(affine_mat_attributes.pd_register_value()))
         {
         }
 
@@ -566,7 +578,6 @@ id_type create(regular_bg_builder&& builder)
     BN_ASSERT(_check_unique_regular_big_map(item), "Two or more regular BGs have the same big map");
 
     _insert_item(item);
-    display_manager::set_show_bg_in_all_windows(&item, true);
     return &item;
 }
 
@@ -579,7 +590,6 @@ id_type create(affine_bg_builder&& builder)
     BN_ASSERT(_check_unique_affine_big_map(item), "Two or more affine BGs have the same big map");
 
     _insert_item(item);
-    display_manager::set_show_bg_in_all_windows(&item, true);
     return &item;
 }
 
@@ -601,7 +611,6 @@ id_type create_optional(regular_bg_builder&& builder)
     BN_ASSERT(_check_unique_regular_big_map(item), "Two or more regular BGs have the same big map");
 
     _insert_item(item);
-    display_manager::set_show_bg_in_all_windows(&item, true);
     return &item;
 }
 
@@ -623,7 +632,6 @@ id_type create_optional(affine_bg_builder&& builder)
     BN_ASSERT(_check_unique_affine_big_map(item), "Two or more affine BGs have the same big map");
 
     _insert_item(item);
-    display_manager::set_show_bg_in_all_windows(&item, true);
     return &item;
 }
 
@@ -652,7 +660,6 @@ void decrease_usages(id_type id)
             }
         }
 
-        display_manager::set_show_bg_in_all_windows(item, false);
         erase(data.items_vector, item);
         data.items_pool.destroy(*item);
     }
@@ -1382,6 +1389,54 @@ void set_visible(id_type id, bool visible)
     {
         item->visible = visible;
         data.rebuild_handles = true;
+    }
+}
+
+bool show_in_window(id_type id, int window)
+{
+    auto item = static_cast<item_type*>(id);
+    return item->visible_in_windows[window];
+}
+
+void set_show_in_window(id_type id, int window, bool show)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(item->visible_in_windows[window] != show)
+    {
+        item->visible_in_windows[window] = show;
+        display_manager::update_windows_visible_bgs();
+    }
+}
+
+void update_windows_flags(unsigned* windows_flags)
+{
+    for(int window = 0; window < hw::display::windows_count(); ++window)
+    {
+        unsigned window_flags = windows_flags[window];
+
+        for(int bg = 0; bg < hw::bgs::count(); ++bg)
+        {
+            window_flags &= ~(unsigned(hw::display::window_flag::BG_0) << bg);
+        }
+
+        windows_flags[window] = window_flags;
+    }
+
+    for(item_type* item : data.items_vector)
+    {
+        int handles_index = item->handles_index;
+
+        if(handles_index >= 0)
+        {
+            for(int window = 0; window < hw::display::windows_count(); ++window)
+            {
+                if(item->visible_in_windows[window])
+                {
+                    windows_flags[window] |= unsigned(hw::display::window_flag::BG_0) << handles_index;
+                }
+            }
+        }
     }
 }
 

@@ -169,6 +169,12 @@ namespace bgs_manager
 
     void set_visible(id_type id, bool visible);
 
+    [[nodiscard]] bool show_in_window(id_type id, int window);
+
+    void set_show_in_window(id_type id, int window, bool show);
+
+    void update_windows_flags(unsigned* windows_flags);
+
     [[nodiscard]] const optional<camera_ptr>& camera(id_type id);
 
     void set_camera(id_type id, camera_ptr&& camera);

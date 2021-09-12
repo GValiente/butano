@@ -21,8 +21,6 @@ namespace bn
 
 namespace bn::display_manager
 {
-    using bg_handle_type = void*;
-
     void init();
 
     void set_mode(int mode);
@@ -96,12 +94,6 @@ namespace bn::display_manager
 
     void fill_blending_fade_hblank_effect_alphas(const class blending_fade_alpha* blending_fade_alphas_ptr,
                                                  uint16_t* dest_ptr);
-
-    [[nodiscard]] bool show_bg_in_window(int window, bg_handle_type bg_handle);
-
-    void set_show_bg_in_window(int window, bg_handle_type bg_handle, bool show);
-
-    void set_show_bg_in_all_windows(bg_handle_type bg_handle, bool show);
 
     void update_windows_visible_bgs();
 

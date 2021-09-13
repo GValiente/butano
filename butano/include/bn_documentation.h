@@ -1736,7 +1736,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_8_0 7.8.0 (next release)
+ * @section changelog_7_8_0 7.8.0
  *
  * * Generic slow game pak detection replaces SuperCard SD specific one.
  * * @ref BN_GAME_PAK_WAIT_STATE_FIRST_AUTO and @ref BN_GAME_PAK_WAIT_STATE_SECOND_AUTO enabled by default.

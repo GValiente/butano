@@ -8,34 +8,25 @@
 
 #include "bn_config_game_pak.h"
 #include "bn_hw_tonc.h"
-#include "../3rd_party/dldi/include/io_scsd.h"
 
 namespace bn::hw::game_pak
 {
-    static_assert(BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_4 ||
-            BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_3 ||
-            BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_2 ||
-            BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_8 ||
-            BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_AUTO);
+    BN_CODE_EWRAM bool _slow_game_pak();
 
-    static_assert(BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_2 ||
-            BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_1 ||
-            BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_AUTO);
-
-    inline void init()
+    [[nodiscard]] inline bool init()
     {
         bool first_auto = BN_CFG_GAME_PAK_WAIT_STATE_FIRST == BN_GAME_PAK_WAIT_STATE_FIRST_AUTO;
         bool second_auto = BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_AUTO;
-        bool supercard_sd_inserted = false;
+        bool slow_game_pak = false;
 
         if(first_auto || second_auto)
         {
-            supercard_sd_inserted = _SCSD_isInserted();
+            slow_game_pak = _slow_game_pak();
         }
 
         if(first_auto)
         {
-            if(supercard_sd_inserted)
+            if(slow_game_pak)
             {
                 BIT_SET(REG_WAITCNT_NV, BN_GAME_PAK_WAIT_STATE_FIRST_4);
             }
@@ -51,7 +42,7 @@ namespace bn::hw::game_pak
 
         if(second_auto)
         {
-            if(supercard_sd_inserted)
+            if(slow_game_pak)
             {
                 BIT_SET(REG_WAITCNT_NV, BN_GAME_PAK_WAIT_STATE_SECOND_2);
             }
@@ -73,6 +64,8 @@ namespace bn::hw::game_pak
         {
             BIT_CLEAR(REG_WAITCNT_NV, WS_PREFETCH);
         }
+
+        return slow_game_pak;
     }
 }
 

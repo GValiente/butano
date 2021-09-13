@@ -103,6 +103,11 @@ namespace bn::core
      * before all of GBA display components being updated.
      */
     [[nodiscard]] fixed last_vblank_usage();
+
+    /**
+     * @brief Indicates if a slow game pak like the SuperCard SD has been detected or not.
+     */
+    [[nodiscard]] bool slow_game_pak();
 }
 
 #endif

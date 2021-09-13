@@ -30,9 +30,10 @@ INCLUDES    :=  include ../../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
-ROMTITLE    :=  BUTANO LINKT
+ROMTITLE    :=  BUTANO SLGPK
 ROMCODE     :=  SBTP
-USERFLAGS   :=  -DBN_CFG_LINK_SEND_WAIT=200
+USERFLAGS   :=  -DBN_CFG_GAME_PAK_WAIT_STATE_FIRST=BN_GAME_PAK_WAIT_STATE_FIRST_AUTO \
+                    -DBN_CFG_GAME_PAK_WAIT_STATE_SECOND=BN_GAME_PAK_WAIT_STATE_SECOND_AUTO
 USERLIBDIRS :=  
 USERLIBS    :=  
 USERBUILD   :=  

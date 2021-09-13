@@ -29,7 +29,7 @@
  *
  * Game Pak access time is 3+1 clock cycles for non-sequential accesses.
  *
- * This wait states setting is not supported by older flash carts like the SuperCard SD.
+ * This setting is not supported by slow flash carts like the SuperCard SD.
  *
  * @ingroup game_pak
  */
@@ -40,7 +40,7 @@
  *
  * Game Pak access time is 2+1 clock cycles for non-sequential accesses.
  *
- * This wait states setting is not supported by the Nintendo 3DS nor by older flash carts like the SuperCard SD.
+ * This setting is not supported by the Nintendo 3DS nor slow flash carts like the SuperCard SD.
  *
  * @ingroup game_pak
  */
@@ -58,8 +58,8 @@
 /**
  * @def BN_GAME_PAK_WAIT_STATE_FIRST_AUTO
  *
- * Game Pak access time is 4+1 clock cycles for non-sequential accesses if a SuperCard SD has been detected;
- * 3+1 otherwise.
+ * Game Pak access time is 4+1 clock cycles for non-sequential accesses
+ * if a slow flash cart like the SuperCard SD has been detected; 3+1 otherwise.
  *
  * @ingroup game_pak
  */
@@ -79,7 +79,7 @@
  *
  * Game Pak access time is 1+1 clock cycles for sequential accesses.
  *
- * This wait states setting is not supported by older flash carts like the SuperCard SD.
+ * This setting is not supported by slow flash carts like the SuperCard SD.
  *
  * @ingroup game_pak
  */
@@ -88,8 +88,8 @@
 /**
  * @def BN_GAME_PAK_WAIT_STATE_SECOND_AUTO
  *
- * Game Pak access time is 2+1 clock cycles for sequential accesses if a SuperCard SD has been detected;
- * 1+1 otherwise.
+ * Game Pak access time is 2+1 clock cycles for sequential accesses
+ * if a slow flash cart like the SuperCard SD has been detected; 1+1 otherwise.
  *
  * @ingroup game_pak
  */

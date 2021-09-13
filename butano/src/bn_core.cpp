@@ -119,6 +119,7 @@ namespace
         ticks last_ticks;
         int skip_frames = 0;
         int last_update_frames = 1;
+        bool slow_game_pak = false;
         bool restart_cpu_usage_timer = false;
     };
 
@@ -298,7 +299,7 @@ void init()
 void init(const string_view& keypad_commands)
 {
     // Init storage systems:
-    hw::game_pak::init();
+    data.slow_game_pak = hw::game_pak::init();
     hw::memory::init();
     hw::sram::init();
 
@@ -475,6 +476,11 @@ fixed last_cpu_usage()
 fixed last_vblank_usage()
 {
     return fixed(data.last_ticks.vblank_usage_ticks) / (timers::ticks_per_vblank() * data.last_update_frames);
+}
+
+bool slow_game_pak()
+{
+    return data.slow_game_pak;
 }
 
 }

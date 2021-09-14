@@ -1727,6 +1727,27 @@
  * Remember to rebuild your project from scratch after modifying a `Makefile`.
  *
  * Available mixing rates are @ref audio "here".
+ *
+ *
+ * @section faq_flash_carts Flash carts
+ *
+ *
+ * @subsection faq_flash_carts_start Why my game runs fine on emulators but doesn't work on a real GBA with a flash cart?
+ *
+ * Some flash carts allow to improve commercial games with patches like `saver patch`, `enable restart`,
+ * `enable real time save`, etc.
+ *
+ * These patches can break homebrew games, so try to disable some or all of them if you run into any issues.
+ *
+ *
+ * @subsection faq_flash_carts_sram Why SRAM works on emulators but doesn't work with this old flash cart?
+ *
+ * While SRAM works out-of-the-box with most modern flash carts, it can fail with some older ones.
+ *
+ * To fix it you can try to:
+ * * Set save type as SRAM.
+ * * Disable or enable save patches.
+ * * Update the firmware of the flash cart.
  */
 
 
@@ -1734,6 +1755,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_7_9_0 7.9.0 (next release)
+ *
+ * @ref faq page improved.
  *
  *
  * @section changelog_7_8_0 7.8.0

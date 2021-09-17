@@ -173,7 +173,7 @@ class SpriteItem:
 
     def __write_header(self, tiles_compression, palette_compression, skip_write):
         name = self.__file_name_no_ext
-        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
         header_file_path = self.__build_folder_path + '/bn_sprite_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
@@ -221,10 +221,10 @@ class SpriteItem:
             header_file.write('    constexpr inline sprite_item ' + name + '(' +
                               'sprite_shape_size(sprite_shape::' + self.__shape + ', ' +
                               'sprite_size::' + self.__size + '), ' + '\n            ' +
-                              'sprite_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
+                              'sprite_tiles_item(span<const tile>(' + name + '_bn_gfxTiles, ' +
                               str(tiles_count) + '), ' + bpp_mode_label + ', ' + compression_label(tiles_compression) +
                               ', ' + str(self.__graphics) + '), ' + '\n            ' +
-                              'sprite_palette_item(span<const color>(' + name + '_bn_graphicsPal, ' +
+                              'sprite_palette_item(span<const color>(' + name + '_bn_gfxPal, ' +
                               str(self.__colors_count) + '), ' + bpp_mode_label + ', ' +
                               compression_label(palette_compression) + '));\n')
             header_file.write('}' + '\n')
@@ -252,7 +252,7 @@ class SpriteItem:
         elif palette_compression == 'run_length':
             command.append('-pzr')
 
-        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
         try:
@@ -313,7 +313,7 @@ class SpriteTilesItem:
 
     def __write_header(self, compression, skip_write):
         name = self.__file_name_no_ext
-        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
         header_file_path = self.__build_folder_path + '/bn_sprite_tiles_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
@@ -359,7 +359,7 @@ class SpriteTilesItem:
             header_file.write('namespace bn::sprite_tiles_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline sprite_tiles_item ' + name + '(span<const tile>(' +
-                              name + '_bn_graphicsTiles, ' + str(tiles_count) + '), ' + '\n            ' +
+                              name + '_bn_gfxTiles, ' + str(tiles_count) + '), ' + '\n            ' +
                               bpp_mode_label + ', ' + compression_label(compression) + ', ' +
                               str(self.__graphics) + ');' + '\n')
             header_file.write('\n')
@@ -386,7 +386,7 @@ class SpriteTilesItem:
         elif compression == 'run_length':
             command.append('-gzr')
 
-        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
         try:
@@ -432,7 +432,7 @@ class SpritePaletteItem:
 
     def __write_header(self, compression, skip_write):
         name = self.__file_name_no_ext
-        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
         header_file_path = self.__build_folder_path + '/bn_sprite_palette_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
@@ -466,7 +466,7 @@ class SpritePaletteItem:
             header_file.write('namespace bn::sprite_palette_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline sprite_palette_item ' + name + '(' +
-                              'span<const color>(' + name + '_bn_graphicsPal, ' +
+                              'span<const color>(' + name + '_bn_gfxPal, ' +
                               str(self.__colors_count) + '), ' + '\n            ' +
                               bpp_mode_label + ', ' + compression_label(compression) + ');' + '\n')
             header_file.write('}' + '\n')
@@ -484,7 +484,7 @@ class SpritePaletteItem:
         elif compression == 'run_length':
             command.append('-pzr')
 
-        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
         try:
@@ -624,7 +624,7 @@ class RegularBgItem:
 
     def __write_header(self, tiles_compression, palette_compression, map_compression, skip_write):
         name = self.__file_name_no_ext
-        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
         header_file_path = self.__build_folder_path + '/bn_regular_bg_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
@@ -674,13 +674,13 @@ class RegularBgItem:
             header_file.write('namespace bn::regular_bg_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline regular_bg_item ' + name + '(' + '\n            ' +
-                              'regular_bg_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
+                              'regular_bg_tiles_item(span<const tile>(' + name + '_bn_gfxTiles, ' +
                               str(tiles_count) + '), ' + bpp_mode_label + ', ' + compression_label(tiles_compression) +
                               '), ' + '\n            ' +
-                              'bg_palette_item(span<const color>(' + name + '_bn_graphicsPal, ' +
+                              'bg_palette_item(span<const color>(' + name + '_bn_gfxPal, ' +
                               str(self.__colors_count) + '), ' + bpp_mode_label + ', ' +
                               compression_label(palette_compression) + '),' + '\n            ' +
-                              'regular_bg_map_item(' + name + '_bn_graphicsMap[0], ' +
+                              'regular_bg_map_item(' + name + '_bn_gfxMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
                               compression_label(map_compression) + '));' + '\n')
             header_file.write('}' + '\n')
@@ -736,7 +736,7 @@ class RegularBgItem:
         elif map_compression == 'run_length':
             command.append('-mzr')
 
-        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
         try:
@@ -854,7 +854,7 @@ class AffineBgItem:
 
     def __write_header(self, tiles_compression, palette_compression, map_compression, skip_write):
         name = self.__file_name_no_ext
-        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
         header_file_path = self.__build_folder_path + '/bn_affine_bg_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
@@ -898,13 +898,13 @@ class AffineBgItem:
             header_file.write('namespace bn::affine_bg_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline affine_bg_item ' + name + '(' + '\n            ' +
-                              'affine_bg_tiles_item(span<const tile>(' + name + '_bn_graphicsTiles, ' +
+                              'affine_bg_tiles_item(span<const tile>(' + name + '_bn_gfxTiles, ' +
                               str(tiles_count * 2) + '), ' + compression_label(tiles_compression) +
                               '), ' + '\n            ' +
-                              'bg_palette_item(span<const color>(' + name + '_bn_graphicsPal, ' +
+                              'bg_palette_item(span<const color>(' + name + '_bn_gfxPal, ' +
                               str(self.__colors_count) + '), bpp_mode::BPP_8, ' +
                               compression_label(palette_compression) + '),' + '\n            ' +
-                              'affine_bg_map_item(' + name + '_bn_graphicsMap[0], ' +
+                              'affine_bg_map_item(' + name + '_bn_gfxMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
                               compression_label(map_compression) + '));' + '\n')
             header_file.write('}' + '\n')
@@ -937,7 +937,7 @@ class AffineBgItem:
         elif map_compression == 'run_length':
             command.append('-mzr')
 
-        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
         try:
@@ -995,7 +995,7 @@ class BgPaletteItem:
 
     def __write_header(self, compression, skip_write):
         name = self.__file_name_no_ext
-        grit_file_path = self.__build_folder_path + '/' + name + '_bn_graphics.h'
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
         header_file_path = self.__build_folder_path + '/bn_bg_palette_items_' + name + '.h'
 
         with open(grit_file_path, 'r') as grit_file:
@@ -1029,7 +1029,7 @@ class BgPaletteItem:
             header_file.write('namespace bn::bg_palette_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline bg_palette_item ' + name + '(' +
-                              'span<const color>(' + name + '_bn_graphicsPal, ' +
+                              'span<const color>(' + name + '_bn_gfxPal, ' +
                               str(self.__colors_count) + '), ' + '\n            ' +
                               bpp_mode_label + ', ' + compression_label(compression) + ');' + '\n')
             header_file.write('}' + '\n')
@@ -1047,7 +1047,7 @@ class BgPaletteItem:
         elif compression == 'run_length':
             command.append('-pzr')
 
-        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_graphics')
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
         try:

@@ -128,7 +128,7 @@ endif
 
 export OFILES_BIN       :=  $(addsuffix .o,$(BINFILES))
 
-export OFILES_GRAPHICS	:=  $(GRAPHICSFILES:.bmp=_bn_graphics.o)
+export OFILES_GRAPHICS	:=  $(GRAPHICSFILES:.bmp=_bn_gfx.o)
 
 export OFILES_SOURCES   :=  $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
  

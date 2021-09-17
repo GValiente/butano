@@ -1764,6 +1764,7 @@
  * * <b>(Breaking change)</b> bn::blending_transparency_attributes interface has changed to allow to setup
  *   transparency weights separately.
  * * Actions for blending transparency weights added.
+ * * Internal graphics suffix changed from `bn_graphics` to `bn_gfx`. Remember to rebuild your project after updating.
  * * @ref faq page improved.
  *
  *

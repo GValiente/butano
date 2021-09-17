@@ -60,6 +60,30 @@ namespace
         bn::blending::set_transparency_alpha(1);
     }
 
+    void transparency_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
+                                      bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Transparency actions", info_text_lines, text_generator);
+
+        mountain_bg.set_blending_enabled(false);
+        dinosaur_sprite.set_blending_enabled(true);
+
+        bn::blending_transparency_alpha_loop_action action(120, 0);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+
+        bn::blending::set_transparency_alpha(1);
+    }
+
     void intensity_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                          bn::sprite_text_generator& text_generator)
     {
@@ -95,6 +119,136 @@ namespace
         }
 
         bn::blending::set_intensity_alpha(0);
+    }
+
+    void intensity_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
+                                 bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("intensity actions", info_text_lines, text_generator);
+
+        mountain_bg.set_blending_enabled(false);
+        dinosaur_sprite.set_blending_enabled(true);
+
+        bn::blending_intensity_alpha_loop_action action(120, 1);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+
+        bn::blending::set_intensity_alpha(0);
+    }
+
+    void transparency_weights_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
+                                    bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "UP: decrease top weight",
+            "DOWN: increase top weight",
+            "LEFT: decrease bottom weight",
+            "RIGHT: increase bottom weight",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Transparency weights", info_text_lines, text_generator);
+
+        mountain_bg.set_blending_enabled(false);
+        dinosaur_sprite.set_blending_enabled(true);
+
+        bn::blending::set_transparency_weights(0.1, 0.6);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed transparency_top_weight = bn::blending::transparency_top_weight();
+            bn::fixed transparency_bottom_weight = bn::blending::transparency_bottom_weight();
+
+            if(bn::keypad::down_held())
+            {
+                bn::blending::set_transparency_top_weight(bn::max(transparency_top_weight - 0.01, bn::fixed(0)));
+            }
+            else if(bn::keypad::up_held())
+            {
+                bn::blending::set_transparency_top_weight(bn::min(transparency_top_weight + 0.01, bn::fixed(1)));
+            }
+
+            if(bn::keypad::left_held())
+            {
+                bn::blending::set_transparency_bottom_weight(bn::max(transparency_bottom_weight - 0.01, bn::fixed(0)));
+            }
+            else if(bn::keypad::right_held())
+            {
+                bn::blending::set_transparency_bottom_weight(bn::min(transparency_bottom_weight + 0.01, bn::fixed(1)));
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::blending::set_transparency_weights(1, 0);
+    }
+
+    void transparency_weights_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
+                                            bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Transparency weights actions", info_text_lines, text_generator);
+
+        mountain_bg.set_blending_enabled(false);
+        dinosaur_sprite.set_blending_enabled(true);
+
+        bn::blending::set_transparency_weights(0, 0.5);
+
+        bn::blending_transparency_top_weight_loop_action action(120, 1);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+
+        bn::blending::set_transparency_weights(1, 0);
+    }
+
+    void transparency_hbe_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
+                                bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Transparency H-Blank effect", info_text_lines, text_generator);
+
+        mountain_bg.set_blending_enabled(false);
+        dinosaur_sprite.set_blending_enabled(true);
+
+        bn::array<bn::blending_transparency_attributes, bn::display::height()> transparency_attributes;
+
+        for(int index = 0, amplitude = 32; index < amplitude; ++index)
+        {
+            bn::fixed transparency_alpha = bn::fixed(index) / amplitude;
+            transparency_attributes[(bn::display::height() / 2) + index].set_transparency_alpha(transparency_alpha);
+            transparency_attributes[(bn::display::height() / 2) - index - 1].set_transparency_alpha(transparency_alpha);
+        }
+
+        bn::blending_transparency_attributes_hbe_ptr transparency_attributes_hbe =
+                bn::blending_transparency_attributes_hbe_ptr::create(transparency_attributes);
+
+        while(! bn::keypad::start_pressed())
+        {
+            info.update();
+            bn::core::update();
+        }
     }
 
     void fade_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
@@ -148,54 +302,6 @@ namespace
         bn::blending::set_fade_alpha(0);
     }
 
-    void transparency_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
-                                      bn::sprite_text_generator& text_generator)
-    {
-        constexpr bn::string_view info_text_lines[] = {
-            "START: go to next scene",
-        };
-
-        common::info info("Transparency actions", info_text_lines, text_generator);
-
-        mountain_bg.set_blending_enabled(false);
-        dinosaur_sprite.set_blending_enabled(true);
-
-        bn::blending_transparency_alpha_loop_action action(120, 0);
-
-        while(! bn::keypad::start_pressed())
-        {
-            action.update();
-            info.update();
-            bn::core::update();
-        }
-
-        bn::blending::set_transparency_alpha(1);
-    }
-
-    void intensity_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
-                                 bn::sprite_text_generator& text_generator)
-    {
-        constexpr bn::string_view info_text_lines[] = {
-            "START: go to next scene",
-        };
-
-        common::info info("intensity actions", info_text_lines, text_generator);
-
-        mountain_bg.set_blending_enabled(false);
-        dinosaur_sprite.set_blending_enabled(true);
-
-        bn::blending_intensity_alpha_loop_action action(120, 1);
-
-        while(! bn::keypad::start_pressed())
-        {
-            action.update();
-            info.update();
-            bn::core::update();
-        }
-
-        bn::blending::set_intensity_alpha(0);
-    }
-
     void fade_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
                             bn::sprite_text_generator& text_generator)
     {
@@ -218,37 +324,6 @@ namespace
         }
 
         bn::blending::set_fade_alpha(0);
-    }
-
-    void transparency_hbe_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
-                                bn::sprite_text_generator& text_generator)
-    {
-        constexpr bn::string_view info_text_lines[] = {
-            "START: go to next scene",
-        };
-
-        common::info info("Transparency H-Blank effect", info_text_lines, text_generator);
-
-        mountain_bg.set_blending_enabled(false);
-        dinosaur_sprite.set_blending_enabled(true);
-
-        bn::array<bn::blending_transparency_attributes, bn::display::height()> transparency_attributes;
-
-        for(int index = 0, amplitude = 32; index < amplitude; ++index)
-        {
-            bn::fixed transparency_alpha = bn::fixed(index) / amplitude;
-            transparency_attributes[(bn::display::height() / 2) + index].set_transparency_alpha(transparency_alpha);
-            transparency_attributes[(bn::display::height() / 2) - index - 1].set_transparency_alpha(transparency_alpha);
-        }
-
-        bn::blending_transparency_attributes_hbe_ptr transparency_attributes_hbe =
-                bn::blending_transparency_attributes_hbe_ptr::create(transparency_attributes);
-
-        while(! bn::keypad::start_pressed())
-        {
-            info.update();
-            bn::core::update();
-        }
     }
 
     void fade_hbe_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
@@ -297,22 +372,28 @@ int main()
         transparency_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
 
-        intensity_scene(mountain_bg, dinosaur_sprite, text_generator);
-        bn::core::update();
-
-        fade_scene(mountain_bg, dinosaur_sprite, text_generator);
-        bn::core::update();
-
         transparency_actions_scene(mountain_bg, dinosaur_sprite, text_generator);
+        bn::core::update();
+
+        intensity_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
 
         intensity_actions_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
 
-        fade_actions_scene(mountain_bg, dinosaur_sprite, text_generator);
+        transparency_weights_scene(mountain_bg, dinosaur_sprite, text_generator);
+        bn::core::update();
+
+        transparency_weights_actions_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
 
         transparency_hbe_scene(mountain_bg, dinosaur_sprite, text_generator);
+        bn::core::update();
+
+        fade_scene(mountain_bg, dinosaur_sprite, text_generator);
+        bn::core::update();
+
+        fade_actions_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
 
         fade_hbe_scene(mountain_bg, dinosaur_sprite, text_generator);

@@ -92,12 +92,33 @@
               <span class="m-doc-wrap-bumper">void <a href="#a61dcff5f9f66c2ff63c311664ab73f07" class="m-doc">set_intensity_alpha</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity_alpha)</span>
             </dt>
             <dd>Sets the weight of the intensity blending, with 0 being disabled and 1 being fully applied.</dd>
+            <dt id="a1d19b78b19ee37392fdc2319cec5094d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1d19b78b19ee37392fdc2319cec5094d" class="m-doc-self">transparency_top_weight</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the weight of the transparency blending for the top layers, with 0 being fully transparent and 1 being fully visible.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0f43983f1249a284593362f89b0560dd" class="m-doc">set_transparency_top_weight</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_top_weight)</span>
+            </dt>
+            <dd>Sets the weight of the transparency blending for the top layers, with 0 being fully transparent and 1 being fully visible.</dd>
+            <dt id="ac9143167a5641b3285d10b05366ab012">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac9143167a5641b3285d10b05366ab012" class="m-doc-self">transparency_bottom_weight</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the weight of the transparency blending for the bottom layers, with 0 being fully transparent and 1 being fully visible.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a9884d846a416eda4e30bad11912cbe37" class="m-doc">set_transparency_bottom_weight</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_bottom_weight)</span>
+            </dt>
+            <dd>Sets the weight of the transparency blending for the bottom layers, with 0 being fully transparent and 1 being fully visible.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a42886a96250df2776f8136056620d4ff" class="m-doc">set_transparency_weights</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_top_weight,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_bottom_weight)</span>
+            </dt>
+            <dd>Sets the weights of the transparency blending, with 0 being fully transparent and 1 being fully visible.</dd>
             <dt id="afd5f65fab1e477f3f0c849a1cae0d9b8">
               <span class="m-doc-wrap-bumper">auto <a href="#afd5f65fab1e477f3f0c849a1cae0d9b8" class="m-doc-self">transparency_attributes</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1blending__transparency__attributes.html" class="m-doc">blending_<wbr />transparency_<wbr />attributes</a></span>
             </dt>
             <dd>Returns the attributes to commit to the GBA transparency and intensity blending register.</dd>
-            <dt id="a96412fbd06a2233ffe7efb57af223153">
-              <span class="m-doc-wrap-bumper">void <a href="#a96412fbd06a2233ffe7efb57af223153" class="m-doc-self">set_transparency_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1blending__transparency__attributes.html" class="m-doc">blending_<wbr />transparency_<wbr />attributes</a> transparency_attributes)</span>
+            <dt id="a48148bc7623a68ff868a29712b9e182a">
+              <span class="m-doc-wrap-bumper">void <a href="#a48148bc7623a68ff868a29712b9e182a" class="m-doc-self">set_transparency_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1blending__transparency__attributes.html" class="m-doc">blending_<wbr />transparency_<wbr />attributes</a>&amp; transparency_attributes)</span>
             </dt>
             <dd>Sets the attributes to commit to the GBA transparency and intensity blending register.</dd>
             <dt id="a37377dc7f7eef43a27b85eebc4be93cb">
@@ -185,6 +206,65 @@
               </tbody>
             </table>
 <p>Keep in mind that intensity and fade blendings can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0f43983f1249a284593362f89b0560dd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />blending::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0f43983f1249a284593362f89b0560dd" class="m-doc-self">set_transparency_top_weight</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_top_weight)</span></span>
+            </h3>
+            <p>Sets the weight of the transparency blending for the top layers, with 0 being fully transparent and 1 being fully visible.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">transparency_top_weight</td>
+                  <td>Transparency weight in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Keep in mind that transparency and fade blendings can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9884d846a416eda4e30bad11912cbe37"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />blending::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9884d846a416eda4e30bad11912cbe37" class="m-doc-self">set_transparency_bottom_weight</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_bottom_weight)</span></span>
+            </h3>
+            <p>Sets the weight of the transparency blending for the bottom layers, with 0 being fully transparent and 1 being fully visible.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">transparency_bottom_weight</td>
+                  <td>Transparency weight in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Keep in mind that transparency and fade blendings can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a42886a96250df2776f8136056620d4ff"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />blending::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a42886a96250df2776f8136056620d4ff" class="m-doc-self">set_transparency_weights</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_top_weight,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_bottom_weight)</span></span>
+            </h3>
+            <p>Sets the weights of the transparency blending, with 0 being fully transparent and 1 being fully visible.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">transparency_top_weight</td>
+                  <td>Transparency weight in the range [0..1].</td>
+                </tr>
+                <tr>
+                  <td>transparency_bottom_weight</td>
+                  <td>Transparency weight in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Keep in mind that transparency and fade blendings can&#x27;t be enabled at the same time.</p>
           </div></section>
           <section class="m-doc-details" id="a8e413c709cba47dc4303cf336c3d8528"><div>
             <h3>

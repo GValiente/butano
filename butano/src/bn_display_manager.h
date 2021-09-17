@@ -71,6 +71,16 @@ namespace bn::display_manager
 
     void set_blending_intensity_alpha(fixed intensity_alpha);
 
+    [[nodiscard]] fixed blending_transparency_top_weight();
+
+    void set_blending_transparency_top_weight(fixed top_weight);
+
+    [[nodiscard]] fixed blending_transparency_bottom_weight();
+
+    void set_blending_transparency_bottom_weight(fixed bottom_weight);
+
+    void set_blending_transparency_weights(fixed top_weight, fixed bottom_weight);
+
     void reload_blending_transparency();
 
     void fill_blending_transparency_hblank_effect_attributes(

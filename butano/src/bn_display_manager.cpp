@@ -38,6 +38,8 @@ namespace
         bool blending_bgs[hw::bgs::count()] = {};
         fixed blending_transparency_alpha = 1;
         fixed blending_intensity_alpha = 0;
+        fixed blending_transparency_top_weight = -1;
+        fixed blending_transparency_bottom_weight = -1;
         fixed blending_fade_alpha = 0;
         int blending_fade_usages = 0;
         int blending_layers = 0;
@@ -259,24 +261,88 @@ void set_blending_bg_enabled(int bg, bool enabled)
 
 fixed blending_transparency_alpha()
 {
+    fixed top_weight = data.blending_transparency_top_weight;
+
+    if(top_weight != -1)
+    {
+        return top_weight;
+    }
+
     return data.blending_transparency_alpha;
 }
 
 void set_blending_transparency_alpha(fixed transparency_alpha)
 {
     data.blending_transparency_alpha = transparency_alpha;
+    data.blending_transparency_top_weight = -1;
+    data.blending_transparency_bottom_weight = -1;
     data.commit_blending_transparency = true;
     data.commit = true;
 }
 
 fixed blending_intensity_alpha()
 {
+    fixed bottom_weight = data.blending_transparency_bottom_weight;
+
+    if(bottom_weight != -1)
+    {
+        return bottom_weight;
+    }
+
     return data.blending_intensity_alpha;
 }
 
 void set_blending_intensity_alpha(fixed intensity_alpha)
 {
     data.blending_intensity_alpha = intensity_alpha;
+    data.blending_transparency_top_weight = -1;
+    data.blending_transparency_bottom_weight = -1;
+    data.commit_blending_transparency = true;
+    data.commit = true;
+}
+
+fixed blending_transparency_top_weight()
+{
+    fixed result = data.blending_transparency_top_weight;
+
+    if(result == -1)
+    {
+        result = data.blending_transparency_alpha;
+    }
+
+    return result;
+}
+
+void set_blending_transparency_top_weight(fixed top_weight)
+{
+    data.blending_transparency_top_weight = top_weight;
+    data.commit_blending_transparency = true;
+    data.commit = true;
+}
+
+fixed blending_transparency_bottom_weight()
+{
+    fixed result = data.blending_transparency_bottom_weight;
+
+    if(result == -1)
+    {
+        result = max(1 - data.blending_transparency_alpha, data.blending_intensity_alpha);
+    }
+
+    return result;
+}
+
+void set_blending_transparency_bottom_weight(fixed bottom_weight)
+{
+    data.blending_transparency_bottom_weight = bottom_weight;
+    data.commit_blending_transparency = true;
+    data.commit = true;
+}
+
+void set_blending_transparency_weights(fixed top_weight, fixed bottom_weight)
+{
+    data.blending_transparency_top_weight = top_weight;
+    data.blending_transparency_bottom_weight = bottom_weight;
     data.commit_blending_transparency = true;
     data.commit = true;
 }
@@ -293,8 +359,9 @@ void fill_blending_transparency_hblank_effect_attributes(
     for(int index = 0; index < display::height(); ++index)
     {
         const blending_transparency_attributes& attributes = blending_transparency_attributes_ptr[index];
-        hw::display::set_blending_transparency(fixed_t<4>(attributes.transparency_alpha()).data(),
-                                               fixed_t<4>(attributes.intensity_alpha()).data(), dest_ptr[index]);
+        int top_weight = attributes.transparency_top_weight().data() >> 8;
+        int bottom_weight = attributes.transparency_bottom_weight().data() >> 8;
+        hw::display::set_blending_transparency(top_weight, bottom_weight, dest_ptr[index]);
     }
 }
 
@@ -770,9 +837,9 @@ void update()
 
         if(data.commit_blending_transparency)
         {
-            hw::display::set_blending_transparency(
-                        fixed_t<4>(data.blending_transparency_alpha).data(),
-                        fixed_t<4>(data.blending_intensity_alpha).data(), data.blending_transparency_cnt);
+            int top_weight = blending_transparency_top_weight().data() >> 8;
+            int bottom_weight = blending_transparency_bottom_weight().data() >> 8;
+            hw::display::set_blending_transparency(top_weight, bottom_weight, data.blending_transparency_cnt);
         }
     }
 }

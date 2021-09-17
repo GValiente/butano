@@ -72,8 +72,8 @@
             </dt>
             <dd>Default constructor.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ac49108a75c8de0082d2fff05739883d8" class="m-doc">blending_transparency_attributes</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_alpha,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity_alpha) <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a57a714c5245dd2d10ebec8360c989edd" class="m-doc">blending_transparency_attributes</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_top_weight,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_bottom_weight) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
           </dl>
@@ -81,18 +81,26 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="ab12652ddbd4727f64053063631335c22">
-              <span class="m-doc-wrap-bumper">auto <a href="#ab12652ddbd4727f64053063631335c22" class="m-doc-self">transparency_alpha</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="af376aad96c40a219bbd06505b72c9617">
+              <span class="m-doc-wrap-bumper">auto <a href="#af376aad96c40a219bbd06505b72c9617" class="m-doc-self">transparency_top_weight</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Returns the weight of the transparency blending, with 0 being fully transparent and 1 being fully visible.</dd>
+            <dd>Returns the weight of the transparency blending for the top layers, with 0 being fully transparent and 1 being fully visible.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1dd452decd590c0d2bbc8cc302023105" class="m-doc">set_transparency_top_weight</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_top_weight) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the weight of the transparency blending for the top layers, with 0 being fully transparent and 1 being fully visible.</dd>
+            <dt id="a6a5165f8420c3c0510d785fb57b5ae10">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6a5165f8420c3c0510d785fb57b5ae10" class="m-doc-self">transparency_bottom_weight</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the weight of the transparency blending for the bottom layers, with 0 being fully transparent and 1 being fully visible.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a9d29e6f60892bf02bc10dcdbeaad9279" class="m-doc">set_transparency_bottom_weight</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_bottom_weight) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the weight of the transparency blending for the bottom layers, with 0 being fully transparent and 1 being fully visible.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#af32fe76dc011a36882fc72e061e429d0" class="m-doc">set_transparency_alpha</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_alpha) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Sets the weight of the transparency blending, with 0 being fully transparent and 1 being fully visible.</dd>
-            <dt id="aa4516e31df926139da43ab228019e205">
-              <span class="m-doc-wrap-bumper">auto <a href="#aa4516e31df926139da43ab228019e205" class="m-doc-self">intensity_alpha</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Returns the weight of the intensity blending, with 0 being disabled and 1 being fully applied.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a4f25dec1f1c01d1f49ad56ef21bbee87" class="m-doc">set_intensity_alpha</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity_alpha) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -111,10 +119,10 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ac49108a75c8de0082d2fff05739883d8"><div>
+          <section class="m-doc-details" id="a57a714c5245dd2d10ebec8360c989edd"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />blending_transparency_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac49108a75c8de0082d2fff05739883d8" class="m-doc-self">blending_transparency_attributes</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_alpha,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity_alpha) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />blending_transparency_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a57a714c5245dd2d10ebec8360c989edd" class="m-doc-self">blending_transparency_attributes</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_top_weight,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_bottom_weight) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -123,12 +131,46 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">transparency_alpha</td>
-                  <td>Transparency weight in the range [0..1], with 0 being fully transparent and 1 being fully visible.</td>
+                  <td style="width: 1%">transparency_top_weight</td>
+                  <td>Transparency weight in the range [0..1] for the top layers, with 0 being fully transparent and 1 being fully visible.</td>
                 </tr>
                 <tr>
-                  <td>intensity_alpha</td>
-                  <td>Intensity weight in the range [0..1], with 0 being disabled and 1 being fully applied.</td>
+                  <td>transparency_bottom_weight</td>
+                  <td>Transparency weight in the range [0..1] for the bottom layers, with 0 being fully transparent and 1 being fully visible.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1dd452decd590c0d2bbc8cc302023105"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />blending_transparency_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1dd452decd590c0d2bbc8cc302023105" class="m-doc-self">set_transparency_top_weight</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_top_weight) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the weight of the transparency blending for the top layers, with 0 being fully transparent and 1 being fully visible.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">transparency_top_weight</td>
+                  <td>Transparency weight in the range [0..1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9d29e6f60892bf02bc10dcdbeaad9279"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />blending_transparency_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9d29e6f60892bf02bc10dcdbeaad9279" class="m-doc-self">set_transparency_bottom_weight</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> transparency_bottom_weight) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the weight of the transparency blending for the bottom layers, with 0 being fully transparent and 1 being fully visible.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">transparency_bottom_weight</td>
+                  <td>Transparency weight in the range [0..1].</td>
                 </tr>
               </tbody>
             </table>

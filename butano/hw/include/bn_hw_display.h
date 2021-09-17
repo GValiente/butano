@@ -122,12 +122,9 @@ namespace bn::hw::display
         REG_BLDCNT = blending_cnt;
     }
 
-    inline void set_blending_transparency(int transparency_alpha, int intensity_alpha,
-                                          uint16_t& blending_transparency_cnt)
+    inline void set_blending_transparency(int top_weight, int bottom_weight, uint16_t& blending_transparency_cnt)
     {
-        int eva = transparency_alpha;
-        int evb = max(16 - transparency_alpha, intensity_alpha);
-        blending_transparency_cnt = uint16_t(eva | (evb << 8));
+        blending_transparency_cnt = uint16_t(top_weight | (bottom_weight << 8));
     }
 
     inline void commit_blending_transparency(uint16_t blending_transparency_cnt)

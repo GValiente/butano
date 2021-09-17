@@ -68,6 +68,49 @@ namespace bn::blending
     void set_intensity_alpha(fixed intensity_alpha);
 
     /**
+     * @brief Returns the weight of the transparency blending for the top layers,
+     * with 0 being fully transparent and 1 being fully visible.
+     */
+    [[nodiscard]] fixed transparency_top_weight();
+
+    /**
+     * @brief Sets the weight of the transparency blending for the top layers,
+     * with 0 being fully transparent and 1 being fully visible.
+     *
+     * Keep in mind that transparency and fade blendings can't be enabled at the same time.
+     *
+     * @param transparency_top_weight Transparency weight in the range [0..1].
+     */
+    void set_transparency_top_weight(fixed transparency_top_weight);
+
+    /**
+     * @brief Returns the weight of the transparency blending for the bottom layers,
+     * with 0 being fully transparent and 1 being fully visible.
+     */
+    [[nodiscard]] fixed transparency_bottom_weight();
+
+    /**
+     * @brief Sets the weight of the transparency blending for the bottom layers,
+     * with 0 being fully transparent and 1 being fully visible.
+     *
+     * Keep in mind that transparency and fade blendings can't be enabled at the same time.
+     *
+     * @param transparency_bottom_weight Transparency weight in the range [0..1].
+     */
+    void set_transparency_bottom_weight(fixed transparency_bottom_weight);
+
+    /**
+     * @brief Sets the weights of the transparency blending,
+     * with 0 being fully transparent and 1 being fully visible.
+     *
+     * Keep in mind that transparency and fade blendings can't be enabled at the same time.
+     *
+     * @param transparency_top_weight Transparency weight in the range [0..1].
+     * @param transparency_bottom_weight Transparency weight in the range [0..1].
+     */
+    void set_transparency_weights(fixed transparency_top_weight, fixed transparency_bottom_weight);
+
+    /**
      * @brief Returns the attributes to commit to the GBA transparency and intensity blending register.
      */
     [[nodiscard]] blending_transparency_attributes transparency_attributes();
@@ -75,7 +118,7 @@ namespace bn::blending
     /**
      * @brief Sets the attributes to commit to the GBA transparency and intensity blending register.
      */
-    void set_transparency_attributes(blending_transparency_attributes transparency_attributes);
+    void set_transparency_attributes(const blending_transparency_attributes& transparency_attributes);
 
     /**
      * @brief Returns the color used for fade blending.

@@ -29,10 +29,9 @@ public:
 
     [[nodiscard]] static bool target_updated(intptr_t, iany&)
     {
-        BN_ASSERT(display_manager::blending_transparency_alpha() == 1,
-                   "Transparency and fade blendings can't be enabled at the same time");
-        BN_ASSERT(display_manager::blending_intensity_alpha() == 0,
-                   "Intensity and fade blendings can't be enabled at the same time");
+        BN_ASSERT(display_manager::blending_transparency_top_weight() == 1 &&
+                  display_manager::blending_transparency_bottom_weight() == 0,
+                  "Transparency and fade blendings can't be enabled at the same time");
 
         return false;
     }
@@ -56,7 +55,7 @@ public:
     static void cleanup(intptr_t)
     {
         display_manager::blending_disable_fade();
-        display_manager::reload_blending_transparency();
+        display_manager::reload_blending_fade();
     }
 };
 

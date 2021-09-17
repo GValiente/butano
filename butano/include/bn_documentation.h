@@ -1757,9 +1757,14 @@
  * @tableofcontents
  *
  *
- * @section changelog_7_9_0 7.9.0 (next release)
+ * @section changelog_8_0_0 8.0.0 (next release)
  *
- * @ref faq page improved.
+ * * Blending transparency weights can be setup separately with bn::blending::set_transparency_top_weight and
+ *   bn::blending::set_transparency_bottom_weight.
+ * * <b>(Breaking change)</b> bn::blending_transparency_attributes interface has changed to allow to setup
+ *   transparency weights separately.
+ * * Actions for blending transparency weights added.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_7_8_0 7.8.0

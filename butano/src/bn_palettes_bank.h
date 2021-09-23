@@ -192,7 +192,7 @@ private:
         color fade_color;
         uint16_t hash = 0;
         int16_t rotate_count = 0;
-        int8_t slots_count = 0;
+        int8_t slots_count = 1;
         bool bpp_8: 1 = 0;
         bool inverted: 1 = false;
         bool update: 1 = false;

@@ -623,7 +623,7 @@ void palettes_bank::update()
 
         if(update_global_effects)
         {
-            for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
+            for(int index = 0, limit = hw::palettes::count(); index < limit; )
             {
                 palette& pal = _palettes[index];
 
@@ -633,11 +633,13 @@ void palettes_bank::update()
                     first_index = min(first_index, index);
                     last_index = index;
                 }
+
+                index += pal.slots_count;
             }
         }
         else
         {
-            for(int index = 0, limit = hw::palettes::count(); index < limit; ++index)
+            for(int index = 0, limit = hw::palettes::count(); index < limit; )
             {
                 palette& pal = _palettes[index];
 
@@ -647,6 +649,8 @@ void palettes_bank::update()
                     first_index = min(first_index, index);
                     last_index = index;
                 }
+
+                index += pal.slots_count;
             }
         }
 
@@ -756,7 +760,7 @@ int palettes_bank::_bpp_8_slots_count() const
 
 int palettes_bank::_first_bpp_4_palette_index() const
 {
-    for(int index = 0; index < hw::palettes::count(); ++index)
+    for(int index = 0; index < hw::palettes::count(); )
     {
         const palette& pal = _palettes[index];
 
@@ -764,6 +768,8 @@ int palettes_bank::_first_bpp_4_palette_index() const
         {
             return index;
         }
+
+        index += pal.slots_count;
     }
 
     return hw::palettes::count();

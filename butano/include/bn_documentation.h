@@ -1761,6 +1761,7 @@
  *
  * * bn::memory::decompress added.
  * * All `uncompress` methods renamed to `decompress`.
+ * * Palettes update and search optimized.
  *
  *
  * @section changelog_8_0_0 8.0.0

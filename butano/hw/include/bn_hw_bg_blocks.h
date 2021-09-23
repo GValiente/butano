@@ -9,7 +9,7 @@
 #include "bn_assert.h"
 #include "bn_compression_type.h"
 #include "bn_hw_memory.h"
-#include "bn_hw_uncompress.h"
+#include "bn_hw_decompress.h"
 #include "bn_hw_bg_blocks_constants.h"
 
 namespace bn::hw::bg_blocks
@@ -59,11 +59,11 @@ namespace bn::hw::bg_blocks
             break;
 
         case compression_type::LZ77:
-            hw::uncompress::lz77_vram(source_ptr, destination_ptr);
+            hw::decompress::lz77_vram(source_ptr, destination_ptr);
             break;
 
         case compression_type::RUN_LENGTH:
-            hw::uncompress::rl_vram(source_ptr, destination_ptr);
+            hw::decompress::rl_vram(source_ptr, destination_ptr);
             break;
 
         default:

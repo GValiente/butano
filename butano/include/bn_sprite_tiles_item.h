@@ -207,14 +207,24 @@ public:
     }
 
     /**
-     * @brief Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.
+     * @brief Decompresses the stored data in the tiles referenced by decompressed_tiles_ref.
      *
      * If the source and destination tiles overlap, the behavior is undefined.
      *
-     * @param uncompressed_tiles_ref Destination of the uncompressed tiles.
-     * @return A sprite_tiles_item pointing to the uncompressed tiles.
+     * @param decompressed_tiles_ref Destination of the decompressed tiles.
+     * @return A sprite_tiles_item pointing to the decompressed tiles.
      */
-    [[nodiscard]] sprite_tiles_item uncompress(span<tile> uncompressed_tiles_ref) const;
+    [[nodiscard]] sprite_tiles_item decompress(span<tile> decompressed_tiles_ref) const;
+
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call decompress() instead")]]
+    [[nodiscard]] sprite_tiles_item uncompress(span<tile> uncompressed_tiles_ref) const
+    {
+        return decompress(uncompressed_tiles_ref);
+    }
+
+    /// @endcond
 
     /**
      * @brief Searches for a sprite_tiles_ptr which references the first sprite tile set.

@@ -132,6 +132,13 @@
               void* destination_ptr)</span>
             </dt>
             <dd>Copies the given value into each of the first words of the object pointed to by destination_ptr.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#afec14a07e15f6a18c0ae80f7249dc2a8" class="m-doc">decompress</a>(</span><span class="m-doc-wrap"><a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression,
+              const void* source_ptr,
+              int bytes,
+              void* destination_ptr)</span>
+            </dt>
+            <dd>Decompresses the compressed data pointed to by source_ptr in the first bytes of the object pointed to by destination_ptr.</dd>
           </dl>
         </section>
         <section>
@@ -316,6 +323,39 @@
               </tbody>
             </table>
 <p>If the given size is greater than the size of the object pointed to by destination_ptr or it is not trivial, the behavior is undefined.</p>
+          </div></section>
+          <section class="m-doc-details" id="afec14a07e15f6a18c0ae80f7249dc2a8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afec14a07e15f6a18c0ae80f7249dc2a8" class="m-doc-self">decompress</a>(</span><span class="m-doc-wrap"><a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression,
+              const void* source_ptr,
+              int bytes,
+              void* destination_ptr)</span></span>
+            </h3>
+            <p>Decompresses the compressed data pointed to by source_ptr in the first bytes of the object pointed to by destination_ptr.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">compression</td>
+                  <td>Compression type.</td>
+                </tr>
+                <tr>
+                  <td>source_ptr</td>
+                  <td>Compressed data to decompress.</td>
+                </tr>
+                <tr>
+                  <td>bytes</td>
+                  <td>Number of decompressed bytes.</td>
+                </tr>
+                <tr>
+                  <td>destination_ptr</td>
+                  <td>Destination of the decompressed data.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the source and destination data overlap, the behavior is undefined.</p>
           </div></section>
         </section>
       </div>

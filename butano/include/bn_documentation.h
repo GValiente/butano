@@ -1757,6 +1757,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_8_1_0 8.1.0 (next release)
+ *
+ * * bn::memory::decompress added.
+ * * All `uncompress` methods renamed to `decompress`.
+ *
+ *
  * @section changelog_8_0_0 8.0.0
  *
  * * Blending transparency weights can be setup separately with bn::blending::set_transparency_top_weight and

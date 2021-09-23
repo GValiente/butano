@@ -10,7 +10,7 @@
 #include "bn_assert.h"
 #include "bn_compression_type.h"
 #include "bn_hw_memory.h"
-#include "bn_hw_uncompress.h"
+#include "bn_hw_decompress.h"
 
 namespace bn::hw::sprite_tiles
 {
@@ -52,11 +52,11 @@ namespace bn::hw::sprite_tiles
             break;
 
         case compression_type::LZ77:
-            hw::uncompress::lz77_vram(source_tiles_ptr, destination_tiles_ptr);
+            hw::decompress::lz77_vram(source_tiles_ptr, destination_tiles_ptr);
             break;
 
         case compression_type::RUN_LENGTH:
-            hw::uncompress::rl_vram(source_tiles_ptr, destination_tiles_ptr);
+            hw::decompress::rl_vram(source_tiles_ptr, destination_tiles_ptr);
             break;
 
         default:

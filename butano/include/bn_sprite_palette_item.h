@@ -108,14 +108,24 @@ public:
     }
 
     /**
-     * @brief Uncompresses the stored data in the colors referenced by uncompressed_colors_ref.
+     * @brief Decompresses the stored data in the colors referenced by decompressed_colors_ref.
      *
      * If the source and destination colors overlap, the behavior is undefined.
      *
-     * @param uncompressed_colors_ref Destination of the uncompressed colors.
-     * @return A sprite_palette_item pointing to the uncompressed colors.
+     * @param decompressed_colors_ref Destination of the decompressed colors.
+     * @return A sprite_palette_item pointing to the decompressed colors.
      */
-    [[nodiscard]] sprite_palette_item uncompress(span<color> uncompressed_colors_ref) const;
+    [[nodiscard]] sprite_palette_item decompress(span<color> decompressed_colors_ref) const;
+
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call decompress() instead")]]
+    [[nodiscard]] sprite_palette_item uncompress(span<color> uncompressed_colors_ref) const
+    {
+        return decompress(uncompressed_colors_ref);
+    }
+
+    /// @endcond
 
     /**
      * @brief Searches for a sprite_palette_ptr which contains the colors referenced by this item.

@@ -5,8 +5,10 @@
 
 #include "bn_memory.h"
 
+#include "bn_compression_type.h"
 #include "bn_memory_manager.h"
 #include "../hw/include/bn_hw_memory.h"
+#include "../hw/include/bn_hw_decompress.h"
 
 void* operator new(unsigned bytes)
 {
@@ -152,6 +154,46 @@ void set_words(unsigned value, int words, void* destination_ptr)
     BN_ASSERT(aligned<4>(destination_ptr), "Destination is not aligned");
 
     hw::memory::set_words(value, words, destination_ptr);
+}
+
+void decompress(compression_type compression, const void* source_ptr, int bytes, void* destination_ptr)
+{
+    BN_ASSERT(source_ptr, "Source is null");
+    BN_ASSERT(destination_ptr, "Destination is null");
+
+    switch(compression)
+    {
+
+    case compression_type::NONE:
+        copy(*static_cast<const char*>(source_ptr), bytes, *static_cast<char*>(destination_ptr));
+        break;
+
+    case compression_type::LZ77:
+        if(hw::memory::in_vram(destination_ptr))
+        {
+            hw::decompress::lz77_vram(source_ptr, destination_ptr);
+        }
+        else
+        {
+            hw::decompress::lz77_wram(source_ptr, destination_ptr);
+        }
+        break;
+
+    case compression_type::RUN_LENGTH:
+        if(hw::memory::in_vram(destination_ptr))
+        {
+            hw::decompress::rl_vram(source_ptr, destination_ptr);
+        }
+        else
+        {
+            hw::decompress::rl_wram(source_ptr, destination_ptr);
+        }
+        break;
+
+    default:
+        BN_ERROR("Unknown compression type: ", int(compression));
+        break;
+    }
 }
 
 }

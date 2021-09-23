@@ -108,9 +108,9 @@
             </dt>
             <dd>Returns the compression type.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aaddd4c6a6213f9819d74735fdde03ebb" class="m-doc">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref) const -&gt; <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa06d04c67d8f5310f133f91b9a4392d2" class="m-doc">decompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; decompressed_tiles_ref) const -&gt; <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a></span>
             </dt>
-            <dd>Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.</dd>
+            <dd>Decompresses the stored data in the tiles referenced by decompressed_tiles_ref.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a5d000a9c0a317199e9cb8723d1fef5a8" class="m-doc">find_tiles</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
@@ -208,25 +208,25 @@
             <p>Returns the reference to one or more background tiles.</p>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
           </div></section>
-          <section class="m-doc-details" id="aaddd4c6a6213f9819d74735fdde03ebb"><div>
+          <section class="m-doc-details" id="aa06d04c67d8f5310f133f91b9a4392d2"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaddd4c6a6213f9819d74735fdde03ebb" class="m-doc-self">uncompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; uncompressed_tiles_ref) const</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa06d04c67d8f5310f133f91b9a4392d2" class="m-doc-self">decompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt; decompressed_tiles_ref) const</span></span>
             </h3>
-            <p>Uncompresses the stored data in the tiles referenced by uncompressed_tiles_ref.</p>
+            <p>Decompresses the stored data in the tiles referenced by decompressed_tiles_ref.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">uncompressed_tiles_ref</td>
-                  <td>Destination of the uncompressed tiles.</td>
+                  <td style="width: 1%">decompressed_tiles_ref</td>
+                  <td>Destination of the decompressed tiles.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>A <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> pointing to the uncompressed tiles.</td>
+                  <td>A <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> pointing to the decompressed tiles.</td>
                 </tr>
               </tfoot>
             </table>

@@ -23,6 +23,8 @@
 namespace bn
 {
 
+enum class compression_type : uint8_t;
+
 using std::construct_at;
 using std::destroy_at;
 
@@ -602,6 +604,19 @@ namespace bn::memory
      * @param destination_ptr Pointer to the object to fill.
      */
     void set_words(unsigned value, int words, void* destination_ptr);
+
+    /**
+     * @brief Decompresses the compressed data pointed to by source_ptr
+     * in the first bytes of the object pointed to by destination_ptr.
+     *
+     * If the source and destination data overlap, the behavior is undefined.
+     *
+     * @param compression Compression type.
+     * @param source_ptr Compressed data to decompress.
+     * @param bytes Number of decompressed bytes.
+     * @param destination_ptr Destination of the decompressed data.
+     */
+    void decompress(compression_type compression, const void* source_ptr, int bytes, void* destination_ptr);
 }
 
 #endif

@@ -13,7 +13,7 @@
 #include "bn_algorithm.h"
 #include "bn_compression_type.h"
 #include "../hw/include/bn_hw_memory.h"
-#include "../hw/include/bn_hw_uncompress.h"
+#include "../hw/include/bn_hw_decompress.h"
 
 #if BN_CFG_LOG_ENABLED
     #include "bn_log.h"
@@ -226,12 +226,12 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, compression_typ
                 break;
 
             case compression_type::LZ77:
-                hw::uncompress::lz77_wram(colors.data(), dest_colors_array);
+                hw::decompress::lz77_wram(colors.data(), dest_colors_array);
                 dest_colors_span = span<const color>(dest_colors_array, colors_count);
                 break;
 
             case compression_type::RUN_LENGTH:
-                hw::uncompress::rl_wram(colors.data(), dest_colors_array);
+                hw::decompress::rl_wram(colors.data(), dest_colors_array);
                 dest_colors_span = span<const color>(dest_colors_array, colors_count);
                 break;
 

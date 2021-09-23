@@ -19,6 +19,11 @@ namespace bn::hw::memory
         return int(result);
     }
 
+    [[nodiscard]] inline bool in_vram(void* ptr)
+    {
+        return int(ptr) >= MEM_PAL && int(ptr) < MEM_ROM;
+    }
+
     [[nodiscard]] int used_stack_iwram(int current_stack_address);
 
     [[nodiscard]] int used_static_iwram();

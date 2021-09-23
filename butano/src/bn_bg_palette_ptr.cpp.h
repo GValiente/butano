@@ -90,8 +90,8 @@ optional<bg_palette_ptr> bg_palette_ptr::find(const bg_palette_item& palette_ite
     }
     else
     {
-        color uncompressed_colors[hw::palettes::colors()];
-        result = find(palette_item.uncompress(uncompressed_colors));
+        color decompressed_colors[hw::palettes::colors()];
+        result = find(palette_item.decompress(decompressed_colors));
     }
 
     return result;
@@ -107,8 +107,8 @@ bg_palette_ptr bg_palette_ptr::create(const bg_palette_item& palette_item)
     }
     else
     {
-        color uncompressed_colors[hw::palettes::colors()];
-        id = _create_impl(palette_item.uncompress(uncompressed_colors), true);
+        color decompressed_colors[hw::palettes::colors()];
+        id = _create_impl(palette_item.decompress(decompressed_colors), true);
     }
 
     return bg_palette_ptr(id);
@@ -124,8 +124,8 @@ bg_palette_ptr bg_palette_ptr::create_new(const bg_palette_item& palette_item)
     }
     else
     {
-        color uncompressed_colors[hw::palettes::colors()];
-        id = _create_new_impl(palette_item.uncompress(uncompressed_colors), true);
+        color decompressed_colors[hw::palettes::colors()];
+        id = _create_new_impl(palette_item.decompress(decompressed_colors), true);
     }
 
     return bg_palette_ptr(id);
@@ -141,8 +141,8 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const bg_palette_item& 
     }
     else
     {
-        color uncompressed_colors[hw::palettes::colors()];
-        id = _create_impl(palette_item.uncompress(uncompressed_colors), false);
+        color decompressed_colors[hw::palettes::colors()];
+        id = _create_impl(palette_item.decompress(decompressed_colors), false);
     }
 
     optional<bg_palette_ptr> result;
@@ -165,8 +165,8 @@ optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const bg_palette_it
     }
     else
     {
-        color uncompressed_colors[hw::palettes::colors()];
-        id = _create_new_impl(palette_item.uncompress(uncompressed_colors), false);
+        color decompressed_colors[hw::palettes::colors()];
+        id = _create_new_impl(palette_item.decompress(decompressed_colors), false);
     }
 
     optional<bg_palette_ptr> result;
@@ -219,8 +219,8 @@ void bg_palette_ptr::set_colors(const bg_palette_item& palette_item)
     }
     else
     {
-        color uncompressed_colors[hw::palettes::colors()];
-        set_colors(palette_item.uncompress(uncompressed_colors));
+        color decompressed_colors[hw::palettes::colors()];
+        set_colors(palette_item.decompress(decompressed_colors));
     }
 }
 

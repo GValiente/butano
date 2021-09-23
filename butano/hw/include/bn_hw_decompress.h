@@ -3,13 +3,13 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_HW_UNCOMPRESS_H
-#define BN_HW_UNCOMPRESS_H
+#ifndef BN_HW_DECOMPRESS_H
+#define BN_HW_DECOMPRESS_H
 
 #include "bn_common.h"
 #include "../3rd_party/cult-of-gba-bios/include/cult-of-gba-bios.h"
 
-namespace bn::hw::uncompress
+namespace bn::hw::decompress
 {
     inline void lz77_wram(const void* src, void* dst)
     {

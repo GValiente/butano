@@ -185,16 +185,27 @@ public:
     }
 
     /**
-     * @brief Uncompresses the stored data in the map cells referenced by uncompressed_cells_ref.
+     * @brief Decompresses the stored data in the map cells referenced by decompressed_cells_ref.
      *
      * If the source and destination map cells overlap, the behavior is undefined.
      *
-     * @param uncompressed_cells_ref Destination of the uncompressed map cells.
-     * @param uncompressed_dimensions Size in map cells of the destination data.
-     * @return An affine_bg_map_item pointing to the uncompressed map cells.
+     * @param decompressed_cells_ref Destination of the decompressed map cells.
+     * @param decompressed_dimensions Size in map cells of the destination data.
+     * @return An affine_bg_map_item pointing to the decompressed map cells.
      */
+    [[nodiscard]] affine_bg_map_item decompress(affine_bg_map_cell& decompressed_cells_ref,
+                                                const size& decompressed_dimensions) const;
+
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call decompress() instead")]]
     [[nodiscard]] affine_bg_map_item uncompress(affine_bg_map_cell& uncompressed_cells_ref,
-                                                const size& uncompressed_dimensions) const;
+                                                const size& uncompressed_dimensions) const
+    {
+        return decompress(uncompressed_cells_ref, uncompressed_dimensions);
+    }
+
+    /// @endcond
 
     /**
      * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.

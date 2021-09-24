@@ -663,7 +663,7 @@ void palettes_bank::update()
         if(_global_effects_enabled && first_index != numeric_limits<int>::max())
         {
             color* all_colors_ptr = _final_colors + (first_index * hw::palettes::colors_per_palette());
-            int all_colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
+            int all_colors_count = (last_index - first_index + _palettes[last_index].slots_count) *
                     hw::palettes::colors_per_palette();
             _apply_global_effects(all_colors_count, all_colors_ptr);
         }
@@ -682,7 +682,7 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data() const
         int first_index = _first_index_to_commit;
         int last_index = _last_index_to_commit;
         int colors_offset = first_index * hw::palettes::colors_per_palette();
-        int colors_count = (last_index - first_index + max(int(_palettes[last_index].slots_count), 1)) *
+        int colors_count = (last_index - first_index + _palettes[last_index].slots_count) *
                 hw::palettes::colors_per_palette();
         result = commit_data{ _final_colors, colors_offset, colors_count };
     }

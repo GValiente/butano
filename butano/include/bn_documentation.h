@@ -655,10 +655,12 @@
  * * Install the `GBA Development` component.
  * * Install **all members** in the `gba-dev` group if the installer asks for which members to install.
  * * Make sure that **with the console** you are able to build and run some of the examples
- *   located in `/path/to/devkitpro/examples/gba`. By default, devkitARM is installed in `C:\devkitPro\`
- *   on Windows and in `/opt/devkitpro/` on Ubuntu.
- * * In particular, you should build and run the Maxmod example located in
- *   `/path/to/devkitpro/examples/gba/audio/maxmod` before going on.
+ *   located in `/path/to/devkitpro/examples/gba`:
+ *   * By default, devkitARM is installed in `C:\devkitPro\` on Windows and in `/opt/devkitpro/` on Ubuntu.
+ *   * To build a devkitARM example open the console, `cd` to the folder of the example you want to build
+ *     and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
+ *   * In particular, you should build and run the Maxmod example located in
+ *     `/path/to/devkitpro/examples/gba/audio/maxmod` before going on.
  *
  * @image html devkitpro.png
  *
@@ -693,9 +695,10 @@
  *
  * Butano contains multiple @ref examples "examples" of most aspects of the engine.
  *
- * Make sure that you are able to build and run some of them. They are located in `/path/to/butano/examples/`.
- * To build an example, open the console, `cd` to the folder of the example you want to build and type
- * `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
+ * Make sure that you are able to build and run some of them:
+ * * They are located in `/path/to/butano/examples/`.
+ * * As with devkitARM examples, to build a Butano example open the console, `cd` to the folder of the example
+ *   you want to build and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
  *
  * When trying to build the `sprites` example, if everything went as expected,
  * a `sprites.gba` file should have been generated in the `sprites` folder,

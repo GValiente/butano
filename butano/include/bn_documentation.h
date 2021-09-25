@@ -711,7 +711,10 @@
  * If you were able to build and run some examples, congrats! Now you can make your own GBA game with Butano.
  * To do that:
  * * Copy the template project located in `/path/to/butano/template/` to a path without spaces nor weird characters.
- * * Change the ROM title, the path in which Butano is located and more in the `Makefile`.
+ * * Change in the `Makefile` the path in which Butano library folder is located.
+ *   For example, if Butano is located in `/path/to/butano/`,
+ *   `LIBBUTANO` variable should be set to `/path/to/butano/butano`.
+ * * If you want, change also the ROM title, the ROM code and more in the `Makefile`.
  * * `cd` to the new folder.
  * * Type `make -j#cpu_cores#` again.
  *
@@ -1762,6 +1765,7 @@
  * * bn::memory::decompress added.
  * * All `uncompress` methods renamed to `decompress`.
  * * Palettes update and search optimized.
+ * * @ref getting_started page improved.
  *
  *
  * @section changelog_8_0_0 8.0.0

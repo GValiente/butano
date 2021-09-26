@@ -458,10 +458,10 @@ void palettes_bank::set_brightness(fixed brightness)
 
 void palettes_bank::set_contrast(fixed contrast)
 {
-    BN_ASSERT(contrast >= -1 && contrast <= 1, "Invalid contrast: ", contrast);
+    BN_ASSERT(contrast >= 0 && contrast <= 1, "Invalid contrast: ", contrast);
 
-    fixed_t<8> output_contrast(contrast);
-    bool update = fixed_t<8>(_contrast) != output_contrast;
+    fixed_t<5> output_contrast(contrast);
+    bool update = fixed_t<5>(_contrast) != output_contrast;
     _contrast = contrast;
 
     if(update)
@@ -777,7 +777,7 @@ int palettes_bank::_first_bpp_4_palette_index() const
 
 void palettes_bank::_check_global_effects_enabled()
 {
-    _global_effects_enabled = _inverted || fixed_t<5>(_brightness).data() || fixed_t<8>(_contrast).data() ||
+    _global_effects_enabled = _inverted || fixed_t<5>(_brightness).data() || fixed_t<5>(_contrast).data() ||
             fixed_t<8>(_intensity).data() || fixed_t<5>(_grayscale_intensity).data() ||
             fixed_t<5>(_fade_intensity).data();
 }
@@ -813,7 +813,7 @@ void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_col
         hw::palettes::brightness(dest_colors_ptr, brightness, dest_colors_count, dest_colors_ptr);
     }
 
-    if(int contrast = fixed_t<8>(_contrast).data())
+    if(int contrast = fixed_t<5>(_contrast).data())
     {
         hw::palettes::contrast(dest_colors_ptr, contrast, dest_colors_count, dest_colors_ptr);
     }

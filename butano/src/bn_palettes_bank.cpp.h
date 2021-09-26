@@ -801,8 +801,13 @@ void palettes_bank::_update_palette(int id)
 
     if(pal.rotate_count)
     {
-        color* rotate_colors_ptr = final_pal_colors_ptr + 1;
-        hw::palettes::rotate(rotate_colors_ptr, pal.rotate_count, pal_colors_count - 1, rotate_colors_ptr);
+        auto unsigned_final_pal_colors_ptr = reinterpret_cast<const unsigned*>(final_pal_colors_ptr);
+        unsigned unsigned_temp_buffer[hw::palettes::colors()];
+        hw::memory::copy_words(unsigned_final_pal_colors_ptr, pal_colors_count / 2, unsigned_temp_buffer);
+
+        auto color_temp_buffer_ptr = reinterpret_cast<const color*>(unsigned_temp_buffer);
+        hw::palettes::rotate(color_temp_buffer_ptr + 1, pal.rotate_count, pal_colors_count - 1,
+                             final_pal_colors_ptr + 1);
     }
 }
 

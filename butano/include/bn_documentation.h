@@ -1768,7 +1768,7 @@
  * * bn::memory::decompress added.
  * * All `uncompress` methods renamed to `decompress`.
  * * Palettes update and search optimized.
- * * Brightness, contrast, intensity, grayscale and invert color effects optimized.
+ * * Brightness, contrast, intensity, grayscale, rotate and invert color effects optimized.
  * * @ref getting_started page improved.
  *
  *

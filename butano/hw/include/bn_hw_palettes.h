@@ -93,20 +93,7 @@ namespace bn::hw::palettes
         clr_fade_fast(tonc_src_ptr, uint16_t(fade_color.data()), tonc_dst_ptr, unsigned(count), unsigned(intensity));
     }
 
-    inline void rotate(const color* source_colors_ptr, int rotate_count, int colors_count,
-                       color* destination_colors_ptr)
-    {
-        auto const_tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
-        auto tonc_src_ptr = const_cast<COLOR*>(const_tonc_src_ptr);
-        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
-
-        if(tonc_src_ptr != tonc_dst_ptr)
-        {
-            memory::copy_half_words(tonc_src_ptr, colors_count, tonc_dst_ptr);
-        }
-
-        clr_rotate(tonc_dst_ptr, unsigned(colors_count), rotate_count);
-    }
+    void rotate(const color* source_colors_ptr, int rotate_count, int colors_count, color* destination_colors_ptr);
 
     inline void commit_sprites(const color* colors_ptr, int offset, int count)
     {

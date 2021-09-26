@@ -105,4 +105,25 @@ void intensity(const color* source_colors_ptr, int value, int count, color* dest
     lut_effect(source_colors_ptr, lut, count, destination_colors_ptr);
 }
 
+void rotate(const color* source_colors_ptr, int rotate_count, int colors_count, color* destination_colors_ptr)
+{
+    int destination_index = rotate_count;
+
+    if(destination_index < 0)
+    {
+        destination_index += colors_count;
+    }
+
+    for(int source_index = 0; source_index < colors_count; ++source_index)
+    {
+        if(destination_index >= colors_count)
+        {
+            destination_index -= colors_count;
+        }
+
+        destination_colors_ptr[destination_index] = source_colors_ptr[source_index];
+        ++destination_index;
+    }
+}
+
 }

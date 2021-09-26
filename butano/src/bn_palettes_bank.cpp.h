@@ -434,10 +434,10 @@ void palettes_bank::set_transparent_color(const optional<color>& transparent_col
 
 void palettes_bank::set_brightness(fixed brightness)
 {
-    BN_ASSERT(brightness >= -1 && brightness <= 1, "Invalid brightness: ", brightness);
+    BN_ASSERT(brightness >= 0 && brightness <= 1, "Invalid brightness: ", brightness);
 
-    fixed_t<8> output_brightness(brightness);
-    bool update = fixed_t<8>(_brightness) != output_brightness;
+    fixed_t<5> output_brightness(brightness);
+    bool update = fixed_t<5>(_brightness) != output_brightness;
     _brightness = brightness;
 
     if(update)
@@ -777,7 +777,7 @@ int palettes_bank::_first_bpp_4_palette_index() const
 
 void palettes_bank::_check_global_effects_enabled()
 {
-    _global_effects_enabled = _inverted || fixed_t<8>(_brightness).data() || fixed_t<8>(_contrast).data() ||
+    _global_effects_enabled = _inverted || fixed_t<5>(_brightness).data() || fixed_t<8>(_contrast).data() ||
             fixed_t<8>(_intensity).data() || fixed_t<5>(_grayscale_intensity).data() ||
             fixed_t<5>(_fade_intensity).data();
 }
@@ -808,7 +808,7 @@ void palettes_bank::_update_palette(int id)
 
 void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_colors_ptr) const
 {
-    if(int brightness = fixed_t<8>(_brightness).data())
+    if(int brightness = fixed_t<5>(_brightness).data())
     {
         hw::palettes::brightness(dest_colors_ptr, brightness, dest_colors_count, dest_colors_ptr);
     }

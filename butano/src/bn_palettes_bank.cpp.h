@@ -482,10 +482,10 @@ void palettes_bank::set_contrast(fixed contrast)
 
 void palettes_bank::set_intensity(fixed intensity)
 {
-    BN_ASSERT(intensity >= -1 && intensity <= 1, "Invalid intensity: ", intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    fixed_t<8> output_intensity(intensity);
-    bool update = fixed_t<8>(_intensity) != output_intensity;
+    fixed_t<5> output_intensity(intensity);
+    bool update = fixed_t<5>(_intensity) != output_intensity;
     _intensity = intensity;
 
     if(update)
@@ -778,7 +778,7 @@ int palettes_bank::_first_bpp_4_palette_index() const
 void palettes_bank::_check_global_effects_enabled()
 {
     _global_effects_enabled = _inverted || fixed_t<5>(_brightness).data() || fixed_t<5>(_contrast).data() ||
-            fixed_t<8>(_intensity).data() || fixed_t<5>(_grayscale_intensity).data() ||
+            fixed_t<5>(_intensity).data() || fixed_t<5>(_grayscale_intensity).data() ||
             fixed_t<5>(_fade_intensity).data();
 }
 
@@ -818,7 +818,7 @@ void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_col
         hw::palettes::contrast(dest_colors_ptr, contrast, dest_colors_count, dest_colors_ptr);
     }
 
-    if(int intensity = fixed_t<8>(_intensity).data())
+    if(int intensity = fixed_t<5>(_intensity).data())
     {
         hw::palettes::intensity(dest_colors_ptr, intensity, dest_colors_count, dest_colors_ptr);
     }

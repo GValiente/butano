@@ -42,12 +42,7 @@ namespace bn::hw::palettes
 
     void contrast(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr);
 
-    inline void intensity(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
-    {
-        auto tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
-        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
-        clr_adj_intensity(tonc_dst_ptr, tonc_src_ptr, unsigned(count), value);
-    }
+    void intensity(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr);
 
     inline void invert(const color* source_colors_ptr, int count, color* destination_colors_ptr)
     {

@@ -52,6 +52,26 @@ namespace
         return lut;
     }();
 
+    constexpr array<uint8_t, luts_size> intensity_lut = []{
+        array<uint8_t, luts_size> lut;
+        int lut_index = 0;
+
+        for(int intensity = 0; intensity < 33; ++intensity)
+        {
+            int intensity_256 = intensity * 8;
+            int ia = intensity_256 + 256;
+
+            for(int color = 0; color < 32; ++color)
+            {
+                int result = (ia * color) >> 8;
+                lut[lut_index] = uint8_t(bn::clamp(result, 0, 31));
+                ++lut_index;
+            }
+        }
+
+        return lut;
+    }();
+
     void lut_effect(const color* source_colors_ptr, const uint8_t* lut, int count, color* destination_colors_ptr)
     {
         auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
@@ -76,6 +96,12 @@ void brightness(const color* source_colors_ptr, int value, int count, color* des
 void contrast(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
 {
     const uint8_t* lut = contrast_lut.data() + (value * 32);
+    lut_effect(source_colors_ptr, lut, count, destination_colors_ptr);
+}
+
+void intensity(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
+{
+    const uint8_t* lut = intensity_lut.data() + (value * 32);
     lut_effect(source_colors_ptr, lut, count, destination_colors_ptr);
 }
 

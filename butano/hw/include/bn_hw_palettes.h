@@ -7,7 +7,6 @@
 #define BN_HW_PALETTES_H
 
 #include "bn_color.h"
-#include "bn_alignment.h"
 #include "bn_hw_tonc.h"
 #include "bn_hw_memory.h"
 
@@ -62,26 +61,23 @@ namespace bn::hw::palettes
 
     inline void invert(const color* source_colors_ptr, int count, color* destination_colors_ptr)
     {
-        if(count % 2 == 0 && aligned<sizeof(uint32_t)>(source_colors_ptr) &&
-                aligned<sizeof(uint32_t)>(destination_colors_ptr))
-        {
-            auto u32_src_ptr = reinterpret_cast<const uint32_t*>(source_colors_ptr);
-            auto u32_dst_ptr = reinterpret_cast<uint32_t*>(destination_colors_ptr);
+        auto tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
 
-            for(int index = 0, limit = count / 2; index < limit; ++index)
-            {
-                u32_dst_ptr[index] = ((32767 << 16) + 32767) ^ u32_src_ptr[index];
-            }
+        for(int index = 0; index < count; ++index)
+        {
+            tonc_dst_ptr[index] = 32767 ^ tonc_src_ptr[index];
         }
-        else
-        {
-            auto tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
-            auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+    }
 
-            for(int index = 0; index < count; ++index)
-            {
-                tonc_dst_ptr[index] = 32767 ^ tonc_src_ptr[index];
-            }
+    inline void aligned_invert(const color* source_colors_ptr, int count, color* destination_colors_ptr)
+    {
+        auto u32_src_ptr = reinterpret_cast<const uint32_t*>(source_colors_ptr);
+        auto u32_dst_ptr = reinterpret_cast<uint32_t*>(destination_colors_ptr);
+
+        for(int index = 0, limit = count / 2; index < limit; ++index)
+        {
+            u32_dst_ptr[index] = ((32767 << 16) + 32767) ^ u32_src_ptr[index];
         }
     }
 

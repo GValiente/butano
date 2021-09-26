@@ -825,7 +825,7 @@ void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_col
 
     if(_inverted)
     {
-        hw::palettes::invert(dest_colors_ptr, dest_colors_count, dest_colors_ptr);
+        hw::palettes::aligned_invert(dest_colors_ptr, dest_colors_count, dest_colors_ptr);
     }
 
     if(int grayscale_intensity = fixed_t<5>(_grayscale_intensity).data())
@@ -843,7 +843,7 @@ void palettes_bank::palette::apply_effects(int dest_colors_count, color* dest_co
 {
      if(inverted)
      {
-         hw::palettes::invert(dest_colors_ptr, dest_colors_count, dest_colors_ptr);
+         hw::palettes::aligned_invert(dest_colors_ptr, dest_colors_count, dest_colors_ptr);
      }
 
      if(int pal_grayscale_intensity = fixed_t<5>(grayscale_intensity).data())

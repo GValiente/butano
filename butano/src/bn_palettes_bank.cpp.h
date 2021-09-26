@@ -801,7 +801,8 @@ void palettes_bank::_update_palette(int id)
 
     if(pal.rotate_count)
     {
-        hw::palettes::rotate(pal.rotate_count, pal_colors_count - 1, final_pal_colors_ptr + 1);
+        color* rotate_colors_ptr = final_pal_colors_ptr + 1;
+        hw::palettes::rotate(rotate_colors_ptr, pal.rotate_count, pal_colors_count - 1, rotate_colors_ptr);
     }
 }
 
@@ -809,32 +810,32 @@ void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_col
 {
     if(int brightness = fixed_t<8>(_brightness).data())
     {
-        hw::palettes::brightness(brightness, dest_colors_count, dest_colors_ptr);
+        hw::palettes::brightness(dest_colors_ptr, brightness, dest_colors_count, dest_colors_ptr);
     }
 
     if(int contrast = fixed_t<8>(_contrast).data())
     {
-        hw::palettes::contrast(contrast, dest_colors_count, dest_colors_ptr);
+        hw::palettes::contrast(dest_colors_ptr, contrast, dest_colors_count, dest_colors_ptr);
     }
 
     if(int intensity = fixed_t<8>(_intensity).data())
     {
-        hw::palettes::intensity(intensity, dest_colors_count, dest_colors_ptr);
+        hw::palettes::intensity(dest_colors_ptr, intensity, dest_colors_count, dest_colors_ptr);
     }
 
     if(_inverted)
     {
-        hw::palettes::invert(dest_colors_count, dest_colors_ptr);
+        hw::palettes::invert(dest_colors_ptr, dest_colors_count, dest_colors_ptr);
     }
 
     if(int grayscale_intensity = fixed_t<5>(_grayscale_intensity).data())
     {
-        hw::palettes::grayscale(grayscale_intensity, dest_colors_count, dest_colors_ptr);
+        hw::palettes::grayscale(dest_colors_ptr, grayscale_intensity, dest_colors_count, dest_colors_ptr);
     }
 
     if(int fade_intensity = fixed_t<5>(_fade_intensity).data())
     {
-        hw::palettes::fade(_fade_color, fade_intensity, dest_colors_count, dest_colors_ptr);
+        hw::palettes::fade(dest_colors_ptr, _fade_color, fade_intensity, dest_colors_count, dest_colors_ptr);
     }
 }
 
@@ -842,17 +843,17 @@ void palettes_bank::palette::apply_effects(int dest_colors_count, color* dest_co
 {
      if(inverted)
      {
-         hw::palettes::invert(dest_colors_count, dest_colors_ptr);
+         hw::palettes::invert(dest_colors_ptr, dest_colors_count, dest_colors_ptr);
      }
 
      if(int pal_grayscale_intensity = fixed_t<5>(grayscale_intensity).data())
      {
-         hw::palettes::grayscale(pal_grayscale_intensity, dest_colors_count, dest_colors_ptr);
+         hw::palettes::grayscale(dest_colors_ptr, pal_grayscale_intensity, dest_colors_count, dest_colors_ptr);
      }
 
      if(int pal_fade_intensity = fixed_t<5>(fade_intensity).data())
      {
-         hw::palettes::fade(fade_color, pal_fade_intensity, dest_colors_count, dest_colors_ptr);
+         hw::palettes::fade(dest_colors_ptr, fade_color, pal_fade_intensity, dest_colors_count, dest_colors_ptr);
      }
 }
 

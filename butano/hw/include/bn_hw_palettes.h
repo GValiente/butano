@@ -38,52 +38,78 @@ namespace bn::hw::palettes
         }
     }
 
-    inline void brightness(int value, int count, color* colors_ptr)
+    inline void brightness(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
     {
-        auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
-        clr_adj_brightness(tonc_colors_ptr, tonc_colors_ptr, unsigned(count), value);
+        auto tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+        clr_adj_brightness(tonc_dst_ptr, tonc_src_ptr, unsigned(count), value);
     }
 
-    inline void contrast(int value, int count, color* colors_ptr)
+    inline void contrast(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
     {
-        auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
-        clr_adj_contrast(tonc_colors_ptr, tonc_colors_ptr, unsigned(count), value);
+        auto tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+        clr_adj_contrast(tonc_dst_ptr, tonc_src_ptr, unsigned(count), value);
     }
 
-    inline void intensity(int value, int count, color* colors_ptr)
+    inline void intensity(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
     {
-        auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
-        clr_adj_intensity(tonc_colors_ptr, tonc_colors_ptr, unsigned(count), value);
+        auto tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+        clr_adj_intensity(tonc_dst_ptr, tonc_src_ptr, unsigned(count), value);
     }
 
-    inline void invert(int count, color* colors_ptr)
+    inline void invert(const color* source_colors_ptr, int count, color* destination_colors_ptr)
     {
-        auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
+        auto tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
 
         for(int index = 0; index < count; ++index)
         {
-            tonc_colors_ptr[index] = 32767 ^ tonc_colors_ptr[index];
+            tonc_dst_ptr[index] = 32767 ^ tonc_src_ptr[index];
         }
     }
 
-    inline void grayscale(int intensity, int count, color* colors_ptr)
+    inline void grayscale(const color* source_colors_ptr, int intensity, int count, color* destination_colors_ptr)
     {
-        auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
-        COLOR temp_colors[colors()];
-        clr_grayscale(temp_colors, tonc_colors_ptr, unsigned(count));
-        clr_blend_fast(tonc_colors_ptr, temp_colors, tonc_colors_ptr, unsigned(count), unsigned(intensity));
+        auto const_tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+        auto tonc_src_ptr = const_cast<COLOR*>(const_tonc_src_ptr);
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+
+        if(intensity == 32)
+        {
+            clr_grayscale(tonc_dst_ptr, tonc_src_ptr, unsigned(count));
+        }
+        else
+        {
+            COLOR temp_colors[colors()];
+            clr_grayscale(temp_colors, tonc_src_ptr, unsigned(count));
+            clr_blend_fast(tonc_src_ptr, temp_colors, tonc_dst_ptr, unsigned(count), unsigned(intensity));
+        }
     }
 
-    inline void fade(color fade_color, int intensity, int count, color* colors_ptr)
+    inline void fade(const color* source_colors_ptr, color fade_color, int intensity, int count,
+                     color* destination_colors_ptr)
     {
-        auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
-        clr_fade_fast(tonc_colors_ptr, uint16_t(fade_color.data()), tonc_colors_ptr, unsigned(count), unsigned(intensity));
+        auto const_tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+        auto tonc_src_ptr = const_cast<COLOR*>(const_tonc_src_ptr);
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+        clr_fade_fast(tonc_src_ptr, uint16_t(fade_color.data()), tonc_dst_ptr, unsigned(count), unsigned(intensity));
     }
 
-    inline void rotate(int rotate_count, int colors_count, color* colors_ptr)
+    inline void rotate(const color* source_colors_ptr, int rotate_count, int colors_count,
+                       color* destination_colors_ptr)
     {
-        auto tonc_colors_ptr = reinterpret_cast<COLOR*>(colors_ptr);
-        clr_rotate(tonc_colors_ptr, unsigned(colors_count), rotate_count);
+        auto const_tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+        auto tonc_src_ptr = const_cast<COLOR*>(const_tonc_src_ptr);
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+
+        if(tonc_src_ptr != tonc_dst_ptr)
+        {
+            memory::copy_half_words(tonc_src_ptr, colors_count, tonc_dst_ptr);
+        }
+
+        clr_rotate(tonc_dst_ptr, unsigned(colors_count), rotate_count);
     }
 
     inline void commit_sprites(const color* colors_ptr, int offset, int count)

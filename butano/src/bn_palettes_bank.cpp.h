@@ -12,7 +12,6 @@
 #include "bn_bpp_mode.h"
 #include "bn_algorithm.h"
 #include "bn_compression_type.h"
-#include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_decompress.h"
 
 #if BN_CFG_LOG_ENABLED
@@ -802,7 +801,7 @@ void palettes_bank::_update_palette(int id)
     if(pal.rotate_count)
     {
         auto unsigned_final_pal_colors_ptr = reinterpret_cast<const unsigned*>(final_pal_colors_ptr);
-        unsigned unsigned_temp_buffer[hw::palettes::colors()];
+        unsigned unsigned_temp_buffer[hw::palettes::colors() / 2];
         hw::memory::copy_words(unsigned_final_pal_colors_ptr, pal_colors_count / 2, unsigned_temp_buffer);
 
         auto color_temp_buffer_ptr = reinterpret_cast<const color*>(unsigned_temp_buffer);

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Display &raquo; Colors module | Butano Docs</title>
+  <title>bn_color_effect.h file | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,36 +47,20 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__display.html">Display</a> &raquo;</span>
-          Colors <span class="m-thin">module</span></h1>
+          bn_color_effect.h <span class="m-thin">file</span>
+        </h1>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
                 <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
-                <li><a href="#enum-members">Enums</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p>GBA displays 15 bits colors: 5 bits for the blue component, 5 for the green one and 5 for the red one.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
-          <dl class="m-doc">
-            <dt>file <a href="bn__bpp__mode_8h.html" class="m-doc">bn_bpp_mode.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__color_8h.html" class="m-doc">bn_color.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__color__effect_8h.html" class="m-doc">bn_color_effect.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__colors_8h.html" class="m-doc">bn_colors.h</a></dt>
-            <dd></dd>
-          </dl>
-        </section>
+<p><a href="namespacebn_1_1color__effect.html" class="m-doc">bn::<wbr />color_effect</a> header file.</p>
         <section id="namespaces">
           <h2><a href="#namespaces">Namespaces</a></h2>
           <dl class="m-doc">
@@ -84,60 +68,7 @@
             <dd>Main Butano namespace.</dd>
             <dt>namespace <a href="namespacebn_1_1color__effect.html" class="m-doc">bn::color_effect</a></dt>
             <dd>Color effects related functions.</dd>
-            <dt>namespace <a href="namespacebn_1_1colors.html" class="m-doc">bn::colors</a></dt>
-            <dd>Some constant colors from TONC.</dd>
           </dl>
-        </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1color.html" class="m-doc">bn::color</a>
-            </dt>
-            <dd>Defines a color in the GBA format (15 bits BGR).</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;&gt;</div>
-              struct <a href="structbn_1_1hash_3_01color_01_4.html" class="m-doc">bn::hash&lt;color&gt;</a>
-            </dt>
-            <dd>Hash support for color.</dd>
-          </dl>
-        </section>
-        <section id="enum-members">
-          <h2><a href="#enum-members">Enums</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">enum class <a href="#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_mode</a>: uint8_t { </span><span class="m-doc-wrap"><a href="#ggac2f168d95746d61f442c3d3eadffc77ea4d6c2ba87154df13303a36d2df9d0603" class="m-doc">BPP_4</a>,
-              <a href="#ggac2f168d95746d61f442c3d3eadffc77ea4f648e52e4b46e97723a662b69282c08" class="m-doc">BPP_8</a> }</span>
-            </dt>
-            <dd>Specifies the available bits per pixel modes.</dd>
-          </dl>
-        </section>
-        <section>
-          <h2>Enum documentation</h2>
-          <section class="m-doc-details" id="gac2f168d95746d61f442c3d3eadffc77e"><div>
-            <h3>
-              enum class <a href="#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc-self">bpp_mode</a>: uint8_t
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__bpp__mode_8h.html">&lt;bn_bpp_mode.h&gt;</a></div>
-            </h3>
-            <p>Specifies the available bits per pixel modes.</p>
-            <table class="m-table m-fullwidth m-flat m-doc">
-              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
-              <tbody>
-                <tr>
-                  <td><a href="#ggac2f168d95746d61f442c3d3eadffc77ea4d6c2ba87154df13303a36d2df9d0603" class="m-doc-self" id="ggac2f168d95746d61f442c3d3eadffc77ea4d6c2ba87154df13303a36d2df9d0603">BPP_4</a></td>
-                  <td>
-                  <p>4 bits per pixel (16 colors).</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td><a href="#ggac2f168d95746d61f442c3d3eadffc77ea4f648e52e4b46e97723a662b69282c08" class="m-doc-self" id="ggac2f168d95746d61f442c3d3eadffc77ea4f648e52e4b46e97723a662b69282c08">BPP_8</a></td>
-                  <td>
-                  <p>8 bits per pixel (256 colors).</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div></section>
         </section>
       </div>
     </div>

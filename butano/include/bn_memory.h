@@ -513,7 +513,7 @@ namespace bn::memory
      * @brief Copies the given amount of elements from the object referenced by source_ref
      * to the object referenced by destination_ref.
      *
-     * If the objects overlap, the behavior is undefined.
+     * If the source and destination objects overlap, the behavior is undefined.
      *
      * @param source_ref Const reference to the memory location to copy from.
      * @param elements Number of elements to copy (not bytes).

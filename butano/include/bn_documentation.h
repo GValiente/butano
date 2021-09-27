@@ -1765,6 +1765,7 @@
  *
  * @section changelog_8_1_0 8.1.0 (next release)
  *
+ * * bn::color_effect added.
  * * bn::memory::decompress added.
  * * All `uncompress` methods renamed to `decompress`.
  * * Palettes update and search optimized.

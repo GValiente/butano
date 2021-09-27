@@ -87,10 +87,19 @@ namespace bn::hw::palettes
     inline void fade(const color* source_colors_ptr, color fade_color, int intensity, int count,
                      color* destination_colors_ptr)
     {
-        auto const_tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
-        auto tonc_src_ptr = const_cast<COLOR*>(const_tonc_src_ptr);
         auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
-        clr_fade_fast(tonc_src_ptr, uint16_t(fade_color.data()), tonc_dst_ptr, unsigned(count), unsigned(intensity));
+        auto tonc_fade_color = COLOR(fade_color.data());
+
+        if(intensity == 32)
+        {
+            hw::memory::set_half_words(tonc_fade_color, count, tonc_dst_ptr);
+        }
+        else
+        {
+            auto const_tonc_src_ptr = reinterpret_cast<const COLOR*>(source_colors_ptr);
+            auto tonc_src_ptr = const_cast<COLOR*>(const_tonc_src_ptr);
+            clr_fade_fast(tonc_src_ptr, tonc_fade_color, tonc_dst_ptr, unsigned(count), unsigned(intensity));
+        }
     }
 
     void rotate(const color* source_colors_ptr, int rotate_count, int colors_count, color* destination_colors_ptr);

@@ -1763,7 +1763,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_1_0 8.1.0 (next release)
+ * @section changelog_8_1_0 8.1.0
  *
  * * bn::color_effect added.
  * * bn::memory::decompress added.

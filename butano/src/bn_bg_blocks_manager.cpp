@@ -163,7 +163,7 @@ namespace
 
         void set_status(status_type status)
         {
-            _status = unsigned(status) & 3;
+            _status = unsigned(status);
         }
 
         [[nodiscard]] compression_type compression() const

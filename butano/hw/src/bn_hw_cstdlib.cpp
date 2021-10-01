@@ -9,7 +9,7 @@
 
 void* malloc(std::size_t bytes)
 {
-    return bn::malloc(bytes);
+    return bn::malloc(int(bytes));
 }
 
 void free(void* ptr)

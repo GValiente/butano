@@ -109,16 +109,16 @@ namespace
 
     void _remove_affine_mat(item_type& item)
     {
-        sprite_affine_mat_ptr& affine_mat = *item.affine_mat;
-        hw::sprites::set_horizontal_flip(affine_mat.horizontal_flip(), item.handle);
-        hw::sprites::set_vertical_flip(affine_mat.vertical_flip(), item.handle);
+        sprite_affine_mat_ptr& item_affine_mat = *item.affine_mat;
+        hw::sprites::set_horizontal_flip(item_affine_mat.horizontal_flip(), item.handle);
+        hw::sprites::set_vertical_flip(item_affine_mat.vertical_flip(), item.handle);
 
         if(item.visible)
         {
             hw::sprites::show_regular(item.handle);
         }
 
-        sprite_affine_mats_manager::dettach_sprite(affine_mat.id(), item.affine_mat_attach_node);
+        sprite_affine_mats_manager::dettach_sprite(item_affine_mat.id(), item.affine_mat_attach_node);
         item.affine_mat.reset();
 
         if(item.double_size)
@@ -137,20 +137,20 @@ namespace
         if(data.rebuild_handles)
         {
             hw::sprites::handle_type* handles = data.handles;
-            int reserved_handles_count = data.reserved_handles_count;
+            int reserved_count = data.reserved_handles_count;
             bool reload_all_handles = data.reload_all_handles;
 
             if(reload_all_handles) [[unlikely]]
             {
                 data.reload_all_handles = false;
 
-                for(int index = 0; index < reserved_handles_count; ++index)
+                for(int index = 0; index < reserved_count; ++index)
                 {
                     hw::sprites::hide_and_destroy(handles[index]);
                 }
             }
 
-            int visible_items_count = _rebuild_handles_impl(reserved_handles_count, handles, data.sorter.layers());
+            int visible_items_count = _rebuild_handles_impl(reserved_count, handles, data.sorter.layers());
             BN_ASSERT(visible_items_count != -1, "Too much on screen sprites");
 
             int last_visible_items_count = data.last_visible_items_count;
@@ -173,7 +173,7 @@ namespace
 
                 if(visible_items_count < last_visible_items_count)
                 {
-                    to_commit_items_count = min(last_visible_items_count, hw::sprites::count() - reserved_handles_count);
+                    to_commit_items_count = min(last_visible_items_count, hw::sprites::count() - reserved_count);
                 }
                 else
                 {
@@ -182,8 +182,8 @@ namespace
 
                 if(to_commit_items_count)
                 {
-                    data.first_index_to_commit = reserved_handles_count;
-                    data.last_index_to_commit = reserved_handles_count + to_commit_items_count - 1;
+                    data.first_index_to_commit = reserved_count;
+                    data.last_index_to_commit = reserved_count + to_commit_items_count - 1;
                 }
                 else
                 {
@@ -260,9 +260,7 @@ id_type create(sprite_builder&& builder)
 {
     BN_ASSERT(! data.items_pool.full(), "No more sprite items available");
 
-    sprite_tiles_ptr tiles = builder.release_tiles();
-    sprite_palette_ptr palette = builder.release_palette();
-    item_type& new_item = data.items_pool.create(move(builder), move(tiles), move(palette));
+    item_type& new_item = data.items_pool.create(move(builder));
     data.sorter.insert(new_item);
 
     if(new_item.visible)
@@ -281,21 +279,21 @@ id_type create_optional(sprite_builder&& builder)
         return nullptr;
     }
 
-    optional<sprite_tiles_ptr> tiles = builder.release_tiles_optional();
+    optional<sprite_tiles_ptr> builder_tiles = builder.release_tiles_optional();
 
-    if(! tiles)
+    if(! builder_tiles)
     {
         return nullptr;
     }
 
-    optional<sprite_palette_ptr> palette = builder.release_palette_optional();
+    optional<sprite_palette_ptr> builder_palette = builder.release_palette_optional();
 
-    if(! palette)
+    if(! builder_palette)
     {
         return nullptr;
     }
 
-    item_type& new_item = data.items_pool.create(move(builder), move(*tiles), move(*palette));
+    item_type& new_item = data.items_pool.create(move(builder), move(*builder_tiles), move(*builder_palette));
     data.sorter.insert(new_item);
 
     if(new_item.visible)
@@ -625,12 +623,12 @@ void set_position(id_type id, const fixed_point& position)
 
     if(diff != point())
     {
-        point hw_position = item->hw_position + diff;
-        item->hw_position = hw_position;
+        point new_hw_position = item->hw_position + diff;
+        item->hw_position = new_hw_position;
 
         hw::sprites::handle_type& handle = item->handle;
-        hw::sprites::set_x(hw_position.x(), handle);
-        hw::sprites::set_y(hw_position.y(), handle);
+        hw::sprites::set_x(new_hw_position.x(), handle);
+        hw::sprites::set_y(new_hw_position.y(), handle);
 
         if(item->visible)
         {
@@ -1032,10 +1030,10 @@ void set_regular_second_attributes(id_type id, const sprite_regular_second_attri
 sprite_affine_second_attributes affine_second_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    const optional<sprite_affine_mat_ptr>& affine_mat = item->affine_mat;
-    BN_ASSERT(affine_mat, "Item is not affine");
+    const optional<sprite_affine_mat_ptr>& item_affine_mat = item->affine_mat;
+    BN_ASSERT(item_affine_mat, "Item is not affine");
 
-    return sprite_affine_second_attributes(item->position.x(), *affine_mat);
+    return sprite_affine_second_attributes(item->position.x(), *item_affine_mat);
 }
 
 void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes)
@@ -1055,9 +1053,8 @@ sprite_third_attributes third_attributes(id_type id)
 
 void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes)
 {
-    bn::sprite_tiles_ptr tiles = third_attributes.tiles();
-    bn::sprite_palette_ptr palette = third_attributes.palette();
-    set_tiles_and_palette(id, shape_size(id), move(tiles), move(palette));
+    set_tiles_and_palette(id, shape_size(id), bn::sprite_tiles_ptr(third_attributes.tiles()),
+                          bn::sprite_palette_ptr(third_attributes.palette()));
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
@@ -1179,14 +1176,14 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode 
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            const sprite_first_attributes& first_attributes = first_attributes_ptr[index];
+            const sprite_first_attributes& attributes = first_attributes_ptr[index];
 
-            if(first_attributes.visible())
+            if(attributes.visible())
             {
-                int y = first_attributes.y().right_shift_integer();
+                int y = attributes.y().right_shift_integer();
                 int dest_value = hw::sprites::first_attributes(
-                            y, shape, bpp, view_mode, first_attributes.mosaic_enabled(),
-                            first_attributes.blending_enabled(), first_attributes.window_enabled(), fade_enabled);
+                            y, shape, bpp, view_mode, attributes.mosaic_enabled(), attributes.blending_enabled(),
+                            attributes.window_enabled(), fade_enabled);
                 dest_ptr[index] = uint16_t(dest_value);
             }
             else
@@ -1199,14 +1196,14 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode 
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            const sprite_first_attributes& first_attributes = first_attributes_ptr[index];
+            const sprite_first_attributes& attributes = first_attributes_ptr[index];
 
-            if(first_attributes.visible())
+            if(attributes.visible())
             {
-                int y = hw_y + first_attributes.y().right_shift_integer();
+                int y = hw_y + attributes.y().right_shift_integer();
                 int dest_value = hw::sprites::first_attributes(
-                            y, shape, bpp, view_mode, first_attributes.mosaic_enabled(),
-                            first_attributes.blending_enabled(), first_attributes.window_enabled(), fade_enabled);
+                            y, shape, bpp, view_mode, attributes.mosaic_enabled(), attributes.blending_enabled(),
+                            attributes.window_enabled(), fade_enabled);
                 dest_ptr[index] = uint16_t(dest_value);
             }
             else
@@ -1270,14 +1267,15 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
 {
     for(int index = 0, limit = display::height(); index < limit; ++index)
     {
-        const sprite_third_attributes& third_attributes = third_attributes_ptr[index];
-        const sprite_tiles_ptr& tiles = third_attributes.tiles();
-        const sprite_palette_ptr& palette = third_attributes.palette();
-        BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
-                  "Invalid tiles or palette: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
+        const sprite_third_attributes& attributes = third_attributes_ptr[index];
+        const sprite_tiles_ptr& attributes_tiles = attributes.tiles();
+        const sprite_palette_ptr& attributes_palette = attributes.palette();
+        BN_ASSERT(attributes_tiles.tiles_count() == shape_size.tiles_count(attributes_palette.bpp()),
+                  "Invalid tiles or palette: ", attributes_tiles.tiles_count(), " - ",
+                  shape_size.tiles_count(attributes_palette.bpp()));
 
-        int bg_priority = third_attributes.bg_priority();
-        dest_ptr[index] = uint16_t(hw::sprites::third_attributes(tiles.id(), palette.id(), bg_priority));
+        dest_ptr[index] = uint16_t(hw::sprites::third_attributes(attributes_tiles.id(), attributes_palette.id(),
+                                                                 attributes.bg_priority()));
     }
 }
 

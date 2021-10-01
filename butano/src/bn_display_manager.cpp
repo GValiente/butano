@@ -551,11 +551,12 @@ pair<int, int> rect_window_hw_vertical_boundaries(int window)
 void set_rect_window_top_left(int window, const fixed_point& top_left)
 {
     int index = window * 2;
-    fixed_point& rect_window_top_left = data.rect_windows_boundaries[index];
-    point old_integer_top_left(rect_window_top_left.x().right_shift_integer(),
-                               rect_window_top_left.y().right_shift_integer());
-    point new_integer_top_left(top_left.x().right_shift_integer(), top_left.y().right_shift_integer());
-    rect_window_top_left = top_left;
+    fixed_point& old_top_left = data.rect_windows_boundaries[index];
+    point old_integer_top_left(old_top_left.x().right_shift_integer(),
+                               old_top_left.y().right_shift_integer());
+    point new_integer_top_left(top_left.x().right_shift_integer(),
+                               top_left.y().right_shift_integer());
+    old_top_left = top_left;
 
     if(old_integer_top_left != new_integer_top_left)
     {
@@ -566,11 +567,12 @@ void set_rect_window_top_left(int window, const fixed_point& top_left)
 void set_rect_window_bottom_right(int window, const fixed_point& bottom_right)
 {
     int index = (window * 2) + 1;
-    fixed_point& rect_window_bottom_right = data.rect_windows_boundaries[index];
-    point old_integer_bottom_right(rect_window_bottom_right.x().right_shift_integer(),
-                                   rect_window_bottom_right.y().right_shift_integer());
-    point new_integer_bottom_right(bottom_right.x().right_shift_integer(), bottom_right.y().right_shift_integer());
-    rect_window_bottom_right = bottom_right;
+    fixed_point& old_bottom_right = data.rect_windows_boundaries[index];
+    point old_integer_bottom_right(old_bottom_right.x().right_shift_integer(),
+                                   old_bottom_right.y().right_shift_integer());
+    point new_integer_bottom_right(bottom_right.x().right_shift_integer(),
+                                   bottom_right.y().right_shift_integer());
+    old_bottom_right = bottom_right;
 
     if(old_integer_bottom_right != new_integer_bottom_right)
     {

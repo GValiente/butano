@@ -92,9 +92,9 @@ namespace
     void _update_flipped_identity(int index)
     {
         item_type& item = data.items[index];
-        const affine_mat_attributes& attributes = item.attributes;
+        const affine_mat_attributes& item_attributes = item.attributes;
 
-        if(attributes.flipped_identity())
+        if(item_attributes.flipped_identity())
         {
             if(! item.flipped_identity)
             {
@@ -523,11 +523,11 @@ bool sprite_double_size(int id)
         return false;
     }
 
-    const affine_mat_attributes& attributes = item.attributes;
-    int pa = attributes.pa_register_value();
-    int pb = attributes.pb_register_value();
-    int pc = attributes.pc_register_value();
-    int pd = attributes.pd_register_value();
+    const affine_mat_attributes& item_attributes = item.attributes;
+    int pa = item_attributes.pa_register_value();
+    int pb = item_attributes.pb_register_value();
+    int pc = item_attributes.pc_register_value();
+    int pd = item_attributes.pd_register_value();
 
     if(pb == 0 && pc == 0)
     {

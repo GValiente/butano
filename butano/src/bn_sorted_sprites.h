@@ -56,10 +56,10 @@ namespace bn::sorted_sprites
 
         void insert(sprites_manager_item& item)
         {
-            layers_type& layers = _layer_ptrs;
+            layers_type& layer_ptrs = _layer_ptrs;
             sort_key item_sort_key = item.sprite_sort_key;
-            layers_type::iterator layers_end = layers.end();
-            layers_type::iterator layers_it = lower_bound(layers.begin(), layers_end, item_sort_key,
+            layers_type::iterator layers_end = layer_ptrs.end();
+            layers_type::iterator layers_it = lower_bound(layer_ptrs.begin(), layers_end, item_sort_key,
                     [](const layer& layer, sort_key sort_key) {
                         return layer.layer_sort_key() < sort_key;
                     });
@@ -69,20 +69,20 @@ namespace bn::sorted_sprites
                 BN_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
 
                 layer& pool_layer = _layer_pool.create(item_sort_key);
-                layers_it = layers.insert(layers_end, pool_layer);
+                layers_it = layer_ptrs.insert(layers_end, pool_layer);
             }
             else if(item_sort_key != layers_it->layer_sort_key())
             {
                 BN_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
 
                 layer& pool_layer = _layer_pool.create(item_sort_key);
-                layers_it = layers.insert(layers_it, pool_layer);
+                layers_it = layer_ptrs.insert(layers_it, pool_layer);
             }
 
             layer& layer_ref = *layers_it;
             layer_ref.items().push_front(item);
 
-            int diff = &layer_ref - reinterpret_cast<layer*>(&layers);
+            int diff = &layer_ref - reinterpret_cast<layer*>(&layer_ptrs);
             item.sort_layer_ptr_diff = diff;
         }
 

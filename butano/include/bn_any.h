@@ -626,7 +626,9 @@ public:
     }
 
 private:
-    alignas(MaxAlignment) char _storage_buffer[MaxSize];
+    static constexpr unsigned _alignment = MaxAlignment > alignof(int) ? MaxAlignment : alignof(int);
+
+    alignas(_alignment) char _storage_buffer[MaxSize];
 };
 
 

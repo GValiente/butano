@@ -1573,7 +1573,9 @@ public:
     }
 
 private:
-    alignas(value_type) char _storage_buffer[sizeof(value_type) * MaxSize];
+    static constexpr unsigned _alignment = alignof(value_type) > alignof(int) ? alignof(value_type) : alignof(int);
+
+    alignas(_alignment) char _storage_buffer[sizeof(value_type) * MaxSize];
     bool _allocated_buffer[MaxSize] = {};
 };
 

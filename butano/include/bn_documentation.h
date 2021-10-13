@@ -1763,6 +1763,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_8_3_0 8.3.0 (next release)
+ *
+ * Integer alignment at minimum enforced in all containers.
+ *
+ *
  * @section changelog_8_2_0 8.2.0
  *
  * * <b>(Security issue)</b> Source code files full path is not stored in output ROMs anymore.

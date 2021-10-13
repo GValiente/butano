@@ -153,7 +153,7 @@
         template<int Size>
         struct file_name
         {
-            char characters[Size < 17 ? 17 : Size];
+            alignas(int) char characters[Size < 17 ? 17 : Size];
 
             constexpr explicit file_name(const char* path) :
                 characters()

@@ -1765,7 +1765,8 @@
  *
  * @section changelog_8_2_0 8.2.0 (next release)
  *
- * Some Clang-Tidy and Cppcheck warnings removed.
+ * * <b>(Security issue)</b> Source code files full path is not stored in output ROMs anymore.
+ * * Some Clang-Tidy and Cppcheck warnings removed.
  *
  *
  * @section changelog_8_1_0 8.1.0

@@ -99,7 +99,8 @@
                 { \
                     if(! (condition)) [[unlikely]] \
                     { \
-                        _bn::assert::show_args(#condition, _bn::assert::base_name(__FILE__), __func__, \
+                        constexpr _bn::assert::file_name<_bn::assert::file_name_size(__FILE__) + 1> _bn_assert_file_name(__FILE__); \
+                        _bn::assert::show_args(#condition, _bn_assert_file_name.characters, __func__, \
                                 __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                     } \
                 } \
@@ -118,7 +119,8 @@
                 } \
                 else \
                 { \
-                    _bn::assert::show_args("", _bn::assert::base_name(__FILE__), __func__, \
+                    constexpr _bn::assert::file_name<_bn::assert::file_name_size(__FILE__) + 1> _bn_error_file_name(__FILE__); \
+                    _bn::assert::show_args("", _bn_error_file_name.characters, __func__, \
                             __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                 } \
             } while(false)
@@ -131,27 +133,57 @@
     {
         static_assert(BN_CFG_ASSERT_BUFFER_SIZE >= 64);
 
+        constexpr int file_name_size(const char* path)
+        {
+            const char* name_path = path;
+
+            while(*path)
+            {
+                if(*path == '/' || *path == '\\')
+                {
+                    name_path = path + 1;
+                }
+
+                ++path;
+            }
+
+            return path - name_path;
+        }
+
+        template<int Size>
+        struct file_name
+        {
+            char characters[Size < 17 ? 17 : Size];
+
+            constexpr explicit file_name(const char* path) :
+                characters()
+            {
+                int index = 0;
+
+                while(*path)
+                {
+                    if(*path == '/' || *path == '\\')
+                    {
+                        index = 0;
+                    }
+                    else
+                    {
+                        characters[index] = *path;
+                        ++index;
+                    }
+
+                    ++path;
+                }
+
+                characters[index] = '\0';
+            }
+        };
+
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const char* message);
 
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const bn::istring_base& message);
-
-        template<int Size>
-        [[nodiscard]] constexpr const char* base_name_impl(const char (&char_array)[Size], int index)
-        {
-            return index >= Size ?
-                        char_array :
-                        char_array[Size - index] == '/' ?
-                            char_array + Size - index + 1 :
-                            base_name_impl(char_array, index + 1);
-        }
-
-        template<int Size>
-        [[nodiscard]] constexpr const char* base_name(const char (&char_array)[Size])
-        {
-            return base_name_impl(char_array, 2);
-        }
 
         [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
                                            int line)

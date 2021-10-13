@@ -1763,7 +1763,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_2_0 8.2.0 (next release)
+ * @section changelog_8_2_0 8.2.0
  *
  * * <b>(Security issue)</b> Source code files full path is not stored in output ROMs anymore.
  * * Some Clang-Tidy and Cppcheck warnings removed.

@@ -7,6 +7,7 @@
 #define BN_HW_BG_BLOCKS_H
 
 #include "bn_assert.h"
+#include "bn_alignment.h"
 #include "bn_compression_type.h"
 #include "bn_hw_memory.h"
 #include "bn_hw_decompress.h"
@@ -82,17 +83,28 @@ namespace bn::hw::bg_blocks
         return uint16_t((tiles_offset << 8) + tiles_offset);
     }
 
-    BN_CODE_IWRAM void _commit_offset_impl(const unsigned* source_data_ptr, unsigned words, unsigned word_offset,
-                                           unsigned* destination_vram_ptr);
+    BN_CODE_IWRAM void _commit_offset_half_words(
+            const uint16_t* source_data_ptr, unsigned half_words, uint16_t offset, uint16_t* destination_vram_ptr);
+
+    BN_CODE_IWRAM void _commit_offset_words(
+            const unsigned* source_data_ptr, unsigned words, unsigned word_offset, unsigned* destination_vram_ptr);
 
     inline void commit_offset(const uint16_t* source_data_ptr, int half_words, uint16_t offset,
                               uint16_t* destination_vram_ptr)
     {
-        auto unsigned_source_ptr = reinterpret_cast<const unsigned*>(source_data_ptr);
-        auto unsigned_destination_ptr = reinterpret_cast<unsigned*>(destination_vram_ptr);
-        unsigned words = half_words / 2;
-        unsigned word_offset = (unsigned(offset) << 16) + offset;
-        _commit_offset_impl(unsigned_source_ptr, words, word_offset, unsigned_destination_ptr);
+        if(half_words % 4 == 0 && bn::aligned<sizeof(unsigned)>(source_data_ptr) &&
+                bn::aligned<sizeof(unsigned)>(destination_vram_ptr))
+        {
+            auto unsigned_source_ptr = reinterpret_cast<const unsigned*>(source_data_ptr);
+            auto unsigned_destination_ptr = reinterpret_cast<unsigned*>(destination_vram_ptr);
+            unsigned words = unsigned(half_words) / 2;
+            unsigned word_offset = (unsigned(offset) << 16) + offset;
+            _commit_offset_words(unsigned_source_ptr, words, word_offset, unsigned_destination_ptr);
+        }
+        else
+        {
+            _commit_offset_half_words(source_data_ptr, unsigned(half_words), offset, destination_vram_ptr);
+        }
     }
 }
 

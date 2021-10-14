@@ -1765,7 +1765,8 @@
  *
  * @section changelog_8_3_0 8.3.0 (next release)
  *
- * Integer alignment at minimum enforced in all containers.
+ * * Maps commit optimized by more than 50% in some cases.
+ * * Integer alignment at minimum enforced in all containers.
  *
  *
  * @section changelog_8_2_0 8.2.0

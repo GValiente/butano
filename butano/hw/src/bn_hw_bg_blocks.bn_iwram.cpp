@@ -8,11 +8,13 @@
 namespace bn::hw::bg_blocks
 {
 
-void commit_offset(const uint16_t* source_data_ptr, int half_words, uint16_t offset, uint16_t* destination_vram_ptr)
+void _commit_offset_impl(const unsigned* source_data_ptr, unsigned words, unsigned word_offset,
+                         unsigned* destination_vram_ptr)
 {
-    for(int index = 0; index < half_words; ++index)
+    for(unsigned index = 0; index < words; index += 2)
     {
-        destination_vram_ptr[index] = source_data_ptr[index] + offset;
+        destination_vram_ptr[index] = source_data_ptr[index] + word_offset;
+        destination_vram_ptr[index + 1] = source_data_ptr[index + 1] + word_offset;
     }
 }
 

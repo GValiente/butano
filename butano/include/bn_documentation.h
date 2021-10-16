@@ -1763,7 +1763,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_3_0 8.3.0 (next release)
+ * @section changelog_8_3_0 8.3.0
  *
  * * Maps commit optimized by more than 50% in some cases.
  * * Integer alignment at minimum enforced in all containers.

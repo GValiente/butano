@@ -1799,7 +1799,6 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
-        item.commit = false;
         item.set_status(status_type::TO_REMOVE);
         data.to_remove_blocks_count += item.blocks_count;
 
@@ -2722,6 +2721,7 @@ void update()
                 item.width = 0;
                 item.height = 0;
                 item.set_status(status_type::FREE);
+                item.commit = false;
                 data.free_blocks_count += item.blocks_count;
 
                 auto next_iterator = iterator;

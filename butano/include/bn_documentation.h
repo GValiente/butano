@@ -1767,6 +1767,7 @@
  *
  * * Maps commit optimized by more than 50% in some cases.
  * * Integer alignment at minimum enforced in all containers.
+ * * BG blocks manager and sprite tiles manager commit fixed.
  *
  *
  * @section changelog_8_2_0 8.2.0

@@ -432,19 +432,8 @@ namespace
     {
         if(! item.commit)
         {
-            auto to_commit_items_it = upper_bound(data.to_commit_items.begin(), data.to_commit_items.end(), id);
-            data.to_commit_items.insert(to_commit_items_it, id);
+            data.to_commit_items.push_back(id);
             item.commit = true;
-        }
-    }
-
-    void _erase_to_commit_item(int id, item_type& item)
-    {
-        if(item.commit)
-        {
-            auto to_commit_items_it = lower_bound(data.to_commit_items.begin(), data.to_commit_items.end(), id);
-            data.to_commit_items.erase(to_commit_items_it);
-            item.commit = false;
         }
     }
 
@@ -942,7 +931,6 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         item.set_status(status_type::TO_REMOVE);
-        _erase_to_commit_item(id, item);
         _insert_to_remove_item(id);
         data.to_remove_tiles_count += int(item.tiles_count);
     }
@@ -1057,10 +1045,11 @@ void update()
             if(item.data)
             {
                 data.items_map.erase(item.data);
+                item.data = nullptr;
             }
 
-            item.data = nullptr;
             item.set_status(status_type::FREE);
+            item.commit = false;
             data.free_tiles_count += int(item.tiles_count);
 
             auto next_iterator = iterator;
@@ -1117,8 +1106,12 @@ void commit()
         for(int item_index : data.to_commit_items)
         {
             item_type& item = data.items.item(item_index);
-            hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
-            item.commit = false;
+
+            if(item.commit)
+            {
+                hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
+                item.commit = false;
+            }
         }
 
         data.to_commit_items.clear();

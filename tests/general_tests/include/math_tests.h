@@ -103,6 +103,16 @@ public:
         BN_ASSERT(bn::degrees_atan2(-1, -1) == -45 * 3);
         BN_ASSERT(bn::degrees_atan2(-1, 1) == -45);
         BN_ASSERT(bn::degrees_atan2(0, 0) == 0);
+
+        for(int y = -50; y < 50; ++y)
+        {
+            for(int x = -50; x < 50; ++x)
+            {
+                int atan2 = bn::atan2(y, x).data();
+                int diamond_angle = bn::diamond_angle(y, x).data();
+                BN_ASSERT(bn::abs(atan2 - diamond_angle) < 750);
+            }
+        }
     }
 };
 

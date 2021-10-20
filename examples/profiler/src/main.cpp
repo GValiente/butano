@@ -17,7 +17,8 @@ int main()
 
     bn::random random;
     int integer = 123456789;
-    int its = 10000;
+    int its_sqrt = 100;
+    int its = its_sqrt * its_sqrt;
 
     int div_result = 0;
     BN_PROFILER_START("div");
@@ -90,6 +91,32 @@ int main()
     for(int i = 0; i < its; ++i)
     {
         integer += bn::calculate_sin_lut_value(i % 65536);
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("atan2");
+
+    int its_sqrt_half = its_sqrt / 2;
+
+    for(int y = -its_sqrt_half; y < its_sqrt_half; ++y)
+    {
+        for(int x = -its_sqrt_half; x < its_sqrt_half; ++x)
+        {
+            integer += bn::atan2(y, x).data();
+        }
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("diamond_angle");
+
+    for(int y = -its_sqrt_half; y < its_sqrt_half; ++y)
+    {
+        for(int x = -its_sqrt_half; x < its_sqrt_half; ++x)
+        {
+            integer += bn::diamond_angle(y, x).data();
+        }
     }
 
     BN_PROFILER_STOP();

@@ -314,6 +314,73 @@ namespace bn
     }
 
     /**
+     * @brief Computes an approximation of the arc tangent of y/x
+     * using the signs of arguments to determine the correct quadrant.
+     *
+     * https://www.freesteel.co.uk/wpblog/2009/06/05/encoding-2d-angles-without-trigonometry/
+     *
+     * @param y Vertical value in the range [-32767, 32767].
+     * @param x Horizontal value in the range [-32767, 32767].
+     * @return Arc tangent of y/x in the range [-0.5, 0.5] (2π = 1).
+     *
+     * @ingroup math
+     */
+    [[nodiscard]] constexpr fixed_t<16> diamond_angle(int y, int x)
+    {
+        BN_ASSERT(y >= -32767 && y <= 32767, "Invalid y: ", y);
+        BN_ASSERT(x >= -32767 && x <= 32767, "Invalid x: ", x);
+
+        if(y == 0 && x == 0)
+        {
+            return 0;
+        }
+
+        int data;
+
+        if(y >= 0)
+        {
+            if(x >= 0)
+            {
+                data = (y * 16384) / (x + y);
+            }
+            else
+            {
+                data = 16384 - ((x * 16384) / (y - x));
+            }
+        }
+        else
+        {
+            if(x < 0)
+            {
+                data = -32768 - ((y * 16384) / (-x - y));
+            }
+            else
+            {
+                data = ((x * 16384) / (x - y)) - 16384;
+            }
+        }
+
+        return bn::fixed_t<16>::from_data(data);
+    }
+
+    /**
+     * @brief Computes an approximation of the arc tangent of y/x
+     * using the signs of arguments to determine the correct quadrant.
+     *
+     * https://www.freesteel.co.uk/wpblog/2009/06/05/encoding-2d-angles-without-trigonometry/
+     *
+     * @param y Vertical value in the range [-32767, 32767].
+     * @param x Horizontal value in the range [-32767, 32767].
+     * @return Arc tangent of y/x in degrees in the range [-180, 180].
+     *
+     * @ingroup math
+     */
+    [[nodiscard]] constexpr fixed degrees_diamond_angle(int y, int x)
+    {
+        return fixed::from_data((diamond_angle(y, x).data() * 360) / (1 << 4));
+    }
+
+    /**
      * @brief Calculates the reciprocal of a value using a LUT.
      * @param lut_value Value in the range [1, 1024].
      * @return Reciprocal of the given value (1 / value).

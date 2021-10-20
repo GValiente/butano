@@ -232,6 +232,16 @@
             </dt>
             <dd>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga4cf00f5fc5faadf2c42946bc7cae58ad" class="m-doc">diamond_angle</a>(</span><span class="m-doc-wrap">int y,
+              int x) -&gt; fixed_t&lt;16&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Computes an approximation of the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gae58559f9c545a9787c41b2e59db8eac7" class="m-doc">degrees_diamond_angle</a>(</span><span class="m-doc-wrap">int y,
+              int x) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Computes an approximation of the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#gac253666985e4064e5c663549b6e5812d" class="m-doc">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; fixed_t&lt;20&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the reciprocal of a value using a LUT.</dd>
@@ -561,6 +571,66 @@
                 </tr>
               </tfoot>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="ga4cf00f5fc5faadf2c42946bc7cae58ad"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed_t&lt;16&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4cf00f5fc5faadf2c42946bc7cae58ad" class="m-doc-self">diamond_angle</a>(</span><span class="m-doc-wrap">int y,
+              int x) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Computes an approximation of the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">y</td>
+                  <td>Vertical value in the range [-32767, 32767].</td>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td>Horizontal value in the range [-32767, 32767].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Arc tangent of y/x in the range [-0.5, 0.5] (2π = 1).</td>
+                </tr>
+              </tfoot>
+            </table>
+<p><a href="https://www.freesteel.co.uk/wpblog/2009/06/05/encoding-2d-angles-without-trigonometry/">https:/<wbr />/<wbr />www.freesteel.co.uk/<wbr />wpblog/<wbr />2009/<wbr />06/<wbr />05/<wbr />encoding-2d-angles-without-trigonometry/<wbr /></a></p>
+          </div></section>
+          <section class="m-doc-details" id="gae58559f9c545a9787c41b2e59db8eac7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae58559f9c545a9787c41b2e59db8eac7" class="m-doc-self">degrees_diamond_angle</a>(</span><span class="m-doc-wrap">int y,
+              int x) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Computes an approximation of the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">y</td>
+                  <td>Vertical value in the range [-32767, 32767].</td>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td>Horizontal value in the range [-32767, 32767].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Arc tangent of y/x in degrees in the range [-180, 180].</td>
+                </tr>
+              </tfoot>
+            </table>
+<p><a href="https://www.freesteel.co.uk/wpblog/2009/06/05/encoding-2d-angles-without-trigonometry/">https:/<wbr />/<wbr />www.freesteel.co.uk/<wbr />wpblog/<wbr />2009/<wbr />06/<wbr />05/<wbr />encoding-2d-angles-without-trigonometry/<wbr /></a></p>
           </div></section>
           <section class="m-doc-details" id="gac253666985e4064e5c663549b6e5812d"><div>
             <h3>

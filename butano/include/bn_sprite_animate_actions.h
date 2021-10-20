@@ -256,7 +256,7 @@ private:
  * @ingroup sprite
  */
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_once(
+[[nodiscard]] auto create_sprite_animate_action_once(
         const sprite_ptr& sprite, int wait_updates, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::once(
@@ -276,7 +276,7 @@ template<typename ...Args>
  * @ingroup sprite
  */
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_once(
+[[nodiscard]] auto create_sprite_animate_action_once(
         sprite_ptr&& sprite, int wait_updates, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::once(
@@ -296,7 +296,7 @@ template<typename ...Args>
  * @ingroup sprite
  */
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_forever(
+[[nodiscard]] auto create_sprite_animate_action_forever(
         const sprite_ptr& sprite, int wait_updates, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::forever(
@@ -316,7 +316,7 @@ template<typename ...Args>
  * @ingroup sprite
  */
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_animate_action_forever(
+[[nodiscard]] auto create_sprite_animate_action_forever(
         sprite_ptr&& sprite, int wait_updates, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_animate_action<sizeof...(Args)>::forever(
@@ -621,7 +621,7 @@ private:
  * @ingroup sprite
  */
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_once(
+[[nodiscard]] auto create_sprite_cached_animate_action_once(
         const sprite_ptr& sprite, int wait_updates, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::once(
@@ -641,7 +641,7 @@ template<typename ...Args>
  * @ingroup sprite
  */
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_once(
+[[nodiscard]] auto create_sprite_cached_animate_action_once(
         sprite_ptr&& sprite, int wait_updates, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::once(
@@ -661,7 +661,7 @@ template<typename ...Args>
  * @ingroup sprite
  */
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
+[[nodiscard]] auto create_sprite_cached_animate_action_forever(
         const sprite_ptr& sprite, int wait_updates, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::forever(
@@ -681,7 +681,7 @@ template<typename ...Args>
  * @ingroup sprite
  */
 template<typename ...Args>
-[[nodiscard]] inline auto create_sprite_cached_animate_action_forever(
+[[nodiscard]] auto create_sprite_cached_animate_action_forever(
         sprite_ptr&& sprite, int wait_updates, const sprite_tiles_item& tiles_item, Args ...graphics_indexes)
 {
     return sprite_cached_animate_action<sizeof...(Args)>::forever(

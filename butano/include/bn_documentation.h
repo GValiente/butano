@@ -1765,7 +1765,8 @@
  *
  * @section changelog_8_4_0 8.4.0 (next release)
  *
- * Asserts ROM usage reduced.
+ * * Asserts ROM usage reduced.
+ * * Unnecessary `inline` keyword usages removed.
  *
  *
  * @section changelog_8_3_0 8.3.0

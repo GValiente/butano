@@ -192,8 +192,8 @@
         }
 
         template<typename Arg>
-        [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
-                                           int line, const Arg& arg)
+        [[noreturn]] void show_args(const char* condition_msg, const char* file, const char* function, int line,
+                                    const Arg& arg)
         {
             char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);
@@ -203,8 +203,8 @@
         }
 
         template<typename Arg1, typename Arg2>
-        [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
-                                           int line, const Arg1& arg1, const Arg2& arg2)
+        [[noreturn]] void show_args(const char* condition_msg, const char* file, const char* function, int line,
+                                    const Arg1& arg1, const Arg2& arg2)
         {
             char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);
@@ -215,8 +215,8 @@
         }
 
         template<typename... Args>
-        [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
-                                           int line, const Args&... args)
+        [[noreturn]] void show_args(const char* condition_msg, const char* file, const char* function, int line,
+                                    const Args&... args)
         {
             char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);

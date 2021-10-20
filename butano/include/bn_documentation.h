@@ -1763,6 +1763,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_8_4_0 8.4.0 (next release)
+ *
+ * Asserts ROM usage reduced.
+ *
+ *
  * @section changelog_8_3_0 8.3.0
  *
  * * Maps commit optimized by more than 50% in some cases.

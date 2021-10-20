@@ -157,7 +157,7 @@ namespace bn
      */
     [[nodiscard]] constexpr fixed degrees_sin(fixed degrees_angle)
     {
-        constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), 65536);
+        constexpr rule_of_three_approximation rule_of_three(fixed(360).data(), 65536);
         int lut_angle = rule_of_three.calculate(degrees_angle.data());
         return fixed::from_data(calculate_sin_lut_value(lut_angle));
     }
@@ -197,7 +197,7 @@ namespace bn
         BN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360,
                   "Angle must be in the range [0, 360]: ", degrees_angle);
 
-        constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), sin_lut_size - 1);
+        constexpr rule_of_three_approximation rule_of_three(fixed(360).data(), sin_lut_size - 1);
         int lut_angle = rule_of_three.calculate(degrees_angle.data());
 
         if(is_constant_evaluated())
@@ -233,7 +233,7 @@ namespace bn
      */
     [[nodiscard]] constexpr fixed degrees_cos(fixed degrees_angle)
     {
-        constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), 65536);
+        constexpr rule_of_three_approximation rule_of_three(fixed(360).data(), 65536);
         int lut_angle = rule_of_three.calculate(degrees_angle.data()) + 16384;
         return fixed::from_data(calculate_sin_lut_value(lut_angle));
     }
@@ -275,7 +275,7 @@ namespace bn
         BN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360,
                   "Angle must be in the range [0, 360]: ", degrees_angle);
 
-        constexpr bn::rule_of_three_approximation rule_of_three(bn::fixed(360).data(), sin_lut_size - 1);
+        constexpr rule_of_three_approximation rule_of_three(fixed(360).data(), sin_lut_size - 1);
         int lut_angle = rule_of_three.calculate(degrees_angle.data());
         lut_angle = (lut_angle + ((sin_lut_size - 1) / 4)) & (sin_lut_size - 2);
 
@@ -360,7 +360,7 @@ namespace bn
             }
         }
 
-        return bn::fixed_t<16>::from_data(data);
+        return fixed_t<16>::from_data(data);
     }
 
     /**

@@ -105,9 +105,9 @@ public:
         BN_ASSERT(bn::degrees_atan2(-1, 1) == -45);
         BN_ASSERT(bn::degrees_atan2(0, 0) == 0);
 
-        for(int y = -64; y < 64; ++y)
+        for(int y = -64; y < 64; y += 2)
         {
-            for(int x = -64; x < 64; ++x)
+            for(int x = -64; x < 64; x += 2)
             {
                 int bn_atan2 = bn::atan2(y, x).data();
                 auto std_atan2 = int(std::atan2(float(y), float(x)) * float(32768 / 3.14159));

@@ -319,16 +319,16 @@ namespace bn
      *
      * https://www.freesteel.co.uk/wpblog/2009/06/05/encoding-2d-angles-without-trigonometry/
      *
-     * @param y Vertical value in the range [-32767, 32767].
-     * @param x Horizontal value in the range [-32767, 32767].
+     * @param y Vertical value in the range [-131072, 131071].
+     * @param x Horizontal value in the range [-131072, 131071].
      * @return Arc tangent of y/x in the range [-0.5, 0.5] (2π = 1).
      *
      * @ingroup math
      */
     [[nodiscard]] constexpr fixed_t<16> diamond_angle(int y, int x)
     {
-        BN_ASSERT(y >= -32767 && y <= 32767, "Invalid y: ", y);
-        BN_ASSERT(x >= -32767 && x <= 32767, "Invalid x: ", x);
+        BN_ASSERT(y >= -131072 && y <= 131071, "Invalid y: ", y);
+        BN_ASSERT(x >= -131072 && x <= 131071, "Invalid x: ", x);
 
         if(y == 0 && x == 0)
         {
@@ -369,8 +369,8 @@ namespace bn
      *
      * https://www.freesteel.co.uk/wpblog/2009/06/05/encoding-2d-angles-without-trigonometry/
      *
-     * @param y Vertical value in the range [-32767, 32767].
-     * @param x Horizontal value in the range [-32767, 32767].
+     * @param y Vertical value in the range [-131072, 131071].
+     * @param x Horizontal value in the range [-131072, 131071].
      * @return Arc tangent of y/x in degrees in the range [-180, 180].
      *
      * @ingroup math

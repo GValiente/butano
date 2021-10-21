@@ -317,7 +317,7 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(other._size <= max_size(), "Not enough space in set: ", max_size(), " - ", other._size);
+            BN_ASSERT(other._size <= max_size(), "Not enough space: ", max_size(), " - ", other._size);
 
             clear();
             _assign(other);
@@ -335,7 +335,7 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(other._size <= max_size(), "Not enough space in set: ", max_size(), " - ", other._size);
+            BN_ASSERT(other._size <= max_size(), "Not enough space: ", max_size(), " - ", other._size);
 
             clear();
             _assign(move(other));
@@ -1183,7 +1183,7 @@ public:
     unordered_set(const iunordered_set<Key, KeyHash, KeyEqual>& other) :
         unordered_set()
     {
-        BN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space: ", MaxSize, " - ", other.size());
 
         this->_assign(other);
     }
@@ -1195,7 +1195,7 @@ public:
     unordered_set(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept :
         unordered_set()
     {
-        BN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
     }
@@ -1241,7 +1241,7 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);
@@ -1259,7 +1259,7 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(other.size() <= MaxSize, "Not enough space in set: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(move(other));

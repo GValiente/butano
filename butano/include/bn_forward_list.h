@@ -216,7 +216,7 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(other.size() <= max_size(), "Not enough space in list: ", max_size(), " - ", other.size());
+            BN_ASSERT(other.size() <= max_size(), "Not enough space: ", max_size(), " - ", other.size());
 
             clear();
             _assign(other);
@@ -234,7 +234,7 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(other.size() <= max_size(), "Not enough space in list: ", max_size(), " - ", other.size());
+            BN_ASSERT(other.size() <= max_size(), "Not enough space: ", max_size(), " - ", other.size());
 
             clear();
             _assign(move(other));
@@ -888,7 +888,7 @@ public:
     forward_list(const iforward_list<Type>& other) :
         forward_list()
     {
-        BN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space: ", MaxSize, " - ", other.size());
 
         this->_assign(other);
     }
@@ -900,7 +900,7 @@ public:
     forward_list(iforward_list<Type>&& other) noexcept :
         forward_list()
     {
-        BN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+        BN_ASSERT(other.size() <= MaxSize, "Not enough space: ", MaxSize, " - ", other.size());
 
         this->_assign(move(other));
     }
@@ -967,7 +967,7 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(other);
@@ -985,7 +985,7 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(other.size() <= MaxSize, "Not enough space in list: ", MaxSize, " - ", other.size());
+            BN_ASSERT(other.size() <= MaxSize, "Not enough space: ", MaxSize, " - ", other.size());
 
             this->clear();
             this->_assign(move(other));

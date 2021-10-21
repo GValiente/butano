@@ -199,7 +199,7 @@ public:
      */
     constexpr istring& assign(const istring_base& other)
     {
-        BN_ASSERT(other.size() <= _max_size, "Not enough space in string: ", other.size(), " - ", _max_size);
+        BN_ASSERT(other.size() <= _max_size, "Not enough space: ", other.size(), " - ", _max_size);
 
         bn::copy(other.begin(), other.end(), begin());
         _size = other.size();
@@ -226,7 +226,7 @@ public:
      */
     constexpr istring& assign(const string_view& view)
     {
-        BN_ASSERT(view.size() <= _max_size, "Not enough space in string: ", view.size(), " - ", _max_size);
+        BN_ASSERT(view.size() <= _max_size, "Not enough space: ", view.size(), " - ", _max_size);
 
         bn::copy(view.begin(), view.end(), begin());
         _size = view.size();
@@ -358,7 +358,7 @@ public:
     constexpr istring& append(size_type count, value_type value)
     {
         BN_ASSERT(count >= 0, "Invalid count: ", count);
-        BN_ASSERT(_size + count <= _max_size, "Not enough space in string: ", _size + count, " - ", _max_size);
+        BN_ASSERT(_size + count <= _max_size, "Not enough space: ", _size + count, " - ", _max_size);
 
         iterator append_position = end();
         fill(append_position, append_position + count, value);
@@ -377,7 +377,7 @@ public:
     {
         size_type count = last - first;
         BN_ASSERT(count >= 0, "Invalid range");
-        BN_ASSERT(_size + count <= _max_size, "Not enough space in string: ", _size + count, " - ", _max_size);
+        BN_ASSERT(_size + count <= _max_size, "Not enough space: ", _size + count, " - ", _max_size);
 
         iterator append_position = end();
 

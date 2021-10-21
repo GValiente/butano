@@ -6,6 +6,7 @@
 #ifndef MATH_TESTS_H
 #define MATH_TESTS_H
 
+#include <cmath>
 #include "bn_math.h"
 #include "bn_fixed.h"
 #include "bn_rule_of_three_approximation.h"
@@ -108,9 +109,13 @@ public:
         {
             for(int x = -64; x < 64; ++x)
             {
-                int atan2 = bn::atan2(y, x).data();
+                int bn_atan2 = bn::atan2(y, x).data();
+                auto std_atan2 = int(std::atan2(float(y), float(x)) * float(32768 / 3.14159));
+                BN_ASSERT(bn::abs(bn_atan2 - std_atan2) < 3, bn::abs(bn_atan2 - std_atan2));
+
                 int diamond_angle = bn::diamond_angle(y, x).data();
-                BN_ASSERT(bn::abs(atan2 - diamond_angle) < 750);
+                BN_ASSERT(bn::abs(bn_atan2 - diamond_angle) < 745);
+                BN_ASSERT(bn::abs(std_atan2 - diamond_angle) < 744);
 
                 int diamond_angle_big = bn::diamond_angle(y * (1 << 11), x * (1 << 11)).data();
                 BN_ASSERT(diamond_angle == diamond_angle_big);

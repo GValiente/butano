@@ -330,17 +330,17 @@ namespace bn
         BN_ASSERT(y >= -131072 && y <= 131071, "Invalid y: ", y);
         BN_ASSERT(x >= -131072 && x <= 131071, "Invalid x: ", x);
 
-        if(y == 0 && x == 0)
-        {
-            return 0;
-        }
-
         int data;
 
         if(y >= 0)
         {
             if(x >= 0)
             {
+                if(y == 0 && x == 0)
+                {
+                    return 0;
+                }
+
                 data = (y * 16384) / (x + y);
             }
             else

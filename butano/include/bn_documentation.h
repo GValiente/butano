@@ -1763,7 +1763,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_4_0 8.4.0 (next release)
+ * @section changelog_8_4_0 8.4.0
  *
  * * bn::bitset_ref added.
  * * bn::diamond_angle and bn::degrees_diamond_angle added.

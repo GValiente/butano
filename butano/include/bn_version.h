@@ -34,7 +34,7 @@
  * @ingroup other
  */
 #ifndef BN_VERSION_MINOR
-    #define BN_VERSION_MINOR 3
+    #define BN_VERSION_MINOR 4
 #endif
 
 /**

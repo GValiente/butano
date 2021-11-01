@@ -51,7 +51,7 @@
           <div class="m-doc-template">template&lt;int Size&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>bitset <span class="m-thin">class</span>
         </h1>
-        <p>bitset implementation.</p>
+        <p>bitset implementation which manages its own elements array.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -70,7 +70,6 @@
               Reference
               <ul>
                 <li><a href="#base-classes">Base classes</a></li>
-                <li><a href="#pub-static-methods">Public static functions</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
                 <li><a href="#friends">Friends</a></li>
@@ -87,15 +86,6 @@
             <dd>Base class of bitset.</dd>
           </dl>
         </section>
-        <section id="pub-static-methods">
-          <h2><a href="#pub-static-methods">Public static functions</a></h2>
-          <dl class="m-doc">
-            <dt id="a749de67c0221bd2202cedc2f3e60f0ae">
-              <span class="m-doc-wrap-bumper">static auto <a href="#a749de67c0221bd2202cedc2f3e60f0ae" class="m-doc-self">unsafe_from_elements</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>&amp; elements_ref) -&gt; <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>UNSAFE: returns a bitset from the given elements array.</dd>
-          </dl>
-        </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
@@ -107,6 +97,10 @@
               <span class="m-doc-wrap-bumper"><a href="#a41ab1aad8aceca97513b25c6ade21e49" class="m-doc">bitset</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; other) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#af464efd841e2c9d9c8c50e545cd55a78" class="m-doc">bitset</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; other) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Copy constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -114,6 +108,10 @@
           <dl class="m-doc">
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a34813e6b5935843d392d792758b43ff4" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; other) -&gt; <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8ca9420f36e9182dac7b9a92ae9f2d84" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; other) -&gt; <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Copy assignment operator.</dd>
             <dt>
@@ -157,8 +155,8 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a90af929a4e0500fb774b3130a0ab66b0" class="m-doc">operator^=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; other) -&gt; <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Sets the bits to the result of binary XOR of this ibitset and the given one.</dd>
-            <dt id="af3ffa59191ea5206dc316dbcb0f672cd">
-              <span class="m-doc-wrap-bumper">auto <a href="#af3ffa59191ea5206dc316dbcb0f672cd" class="m-doc-self">operator~</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="a2451b0f4fa783cefed966f5747c7b3b5">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2451b0f4fa783cefed966f5747c7b3b5" class="m-doc-self">operator~</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns this bitset with all bits flipped (binary NOT).</dd>
           </dl>
@@ -166,19 +164,19 @@
         <section id="friends">
           <h2><a href="#friends">Friends</a></h2>
           <dl class="m-doc">
-            <dt id="a1c1f7f94254e9b313ff9f54f2947b276">
-              <span class="m-doc-wrap-bumper">auto <a href="#a1c1f7f94254e9b313ff9f54f2947b276" class="m-doc-self">operator&amp;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; a,
-              const <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; b) -&gt; friend <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="ae0f44244501299e166795af1e8266dac">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae0f44244501299e166795af1e8266dac" class="m-doc-self">operator&amp;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; a,
+              const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; b) -&gt; friend <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a bitset containing the result of binary AND of the given bitsets.</dd>
-            <dt id="a213a80858b5ddac3c22bc85484065f81">
-              <span class="m-doc-wrap-bumper">auto <a href="#a213a80858b5ddac3c22bc85484065f81" class="m-doc-self">operator|</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; a,
-              const <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; b) -&gt; friend <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="a28c17a405832105c1cca0439655c659f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a28c17a405832105c1cca0439655c659f" class="m-doc-self">operator|</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; a,
+              const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; b) -&gt; friend <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a bitset containing the result of binary OR of the given bitsets.</dd>
-            <dt id="a007da6ef892170d07554242333c9d2f0">
-              <span class="m-doc-wrap-bumper">auto <a href="#a007da6ef892170d07554242333c9d2f0" class="m-doc-self">operator^</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; a,
-              const <a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; b) -&gt; friend <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="aaa6d5075209bad9cccd0ddbf71b1ef46">
+              <span class="m-doc-wrap-bumper">auto <a href="#aaa6d5075209bad9cccd0ddbf71b1ef46" class="m-doc-self">operator^</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; a,
+              const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; b) -&gt; friend <a href="classbn_1_1bitset.html" class="m-doc">bitset</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a bitset containing the result of binary XOR of the given bitsets.</dd>
           </dl>
@@ -205,6 +203,26 @@
               </tbody>
             </table>
           </div></section>
+          <section class="m-doc-details" id="af464efd841e2c9d9c8c50e545cd55a78"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />bitset&lt;Size&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af464efd841e2c9d9c8c50e545cd55a78" class="m-doc-self">bitset</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ibitset to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="a34813e6b5935843d392d792758b43ff4"><div>
             <h3>
               <div class="m-doc-template">
@@ -221,6 +239,32 @@
                 <tr>
                   <td style="width: 1%">other</td>
                   <td>bitset to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8ca9420f36e9182dac7b9a92ae9f2d84"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Size&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1bitset.html" class="m-doc">bitset</a>&amp; bn::<wbr />bitset&lt;Size&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8ca9420f36e9182dac7b9a92ae9f2d84" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ibitset to copy.</td>
                 </tr>
               </tbody>
               <tfoot>

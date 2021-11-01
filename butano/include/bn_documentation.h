@@ -1765,6 +1765,7 @@
  *
  * @section changelog_8_4_0 8.4.0 (next release)
  *
+ * * bn::bitset_ref added.
  * * bn::diamond_angle and bn::degrees_diamond_angle added.
  * * Asserts ROM usage reduced.
  * * Unnecessary `inline` keyword usages removed.

@@ -17,8 +17,10 @@
 
 namespace bn
 {
+    class ibitset;
+
     /**
-     * @brief bitset implementation.
+     * @brief bitset implementation which manages its own elements array.
      *
      * @tparam Size Number of bits stored.
      *
@@ -26,6 +28,8 @@ namespace bn
      */
     template<int Size>
     class bitset;
+
+    class bitset_ref;
 }
 
 #endif

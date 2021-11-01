@@ -38,9 +38,8 @@
  */
 
 #include "bn_bit.h"
-#include "bn_assert.h"
+#include "bn_span.h"
 #include "bn_limits.h"
-#include "bn_algorithm.h"
 #include "bn_bitset_fwd.h"
 
 namespace bn
@@ -295,13 +294,7 @@ public:
      */
     constexpr ibitset& reset()
     {
-        int last_element_index = _num_elements - 1;
-
-        for(int index = last_element_index; index >= 0; --index)
-        {
-            _data[index] = all_bits_clear;
-        }
-
+        fill_n(_data, _num_elements, all_bits_clear);
         return *this;
     }
 
@@ -630,20 +623,11 @@ private:
 
 public:
     /**
-     * @brief UNSAFE: returns a bitset from the given elements array.
-     */
-    [[nodiscard]] constexpr static bitset unsafe_from_elements(const element_t& elements_ref)
-    {
-        return bitset(false, elements_ref);
-    }
-
-    /**
      * @brief Default constructor.
      */
     constexpr bitset() :
         ibitset(Size, num_elements, _storage_buffer)
     {
-        reset();
     }
 
     /**
@@ -654,6 +638,16 @@ public:
         ibitset(Size, num_elements, _storage_buffer)
     {
         copy_n(other._storage_buffer, num_elements, _storage_buffer);
+    }
+
+    /**
+     * @brief Copy constructor.
+     * @param other ibitset to copy.
+     */
+    constexpr bitset(const ibitset& other) :
+        ibitset(Size, num_elements, _storage_buffer)
+    {
+        ibitset::operator=(other);
     }
 
     /**
@@ -668,6 +662,17 @@ public:
             copy_n(other._storage_buffer, num_elements, _storage_buffer);
         }
 
+        return *this;
+    }
+
+    /**
+     * @brief Copy assignment operator.
+     * @param other ibitset to copy.
+     * @return Reference to this.
+     */
+    constexpr bitset& operator=(const ibitset& other)
+    {
+        ibitset::operator=(other);
         return *this;
     }
 
@@ -782,7 +787,7 @@ public:
     /**
      * @brief Returns this bitset with all bits flipped (binary NOT).
      */
-    [[nodiscard]] constexpr bitset operator~()
+    [[nodiscard]] constexpr bitset operator~() const
     {
         bitset result = *this;
         result.flip();
@@ -792,7 +797,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary AND of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator&(const bitset& a, const bitset& b)
+    [[nodiscard]] constexpr friend bitset operator&(const ibitset& a, const ibitset& b)
     {
         bitset result(a);
         result &= b;
@@ -802,7 +807,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary OR of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator|(const bitset& a, const bitset& b)
+    [[nodiscard]] constexpr friend bitset operator|(const ibitset& a, const ibitset& b)
     {
         bitset result(a);
         result |= b;
@@ -812,7 +817,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary XOR of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator^(const bitset& a, const bitset& b)
+    [[nodiscard]] constexpr friend bitset operator^(const ibitset& a, const ibitset& b)
     {
         bitset result(a);
         result ^= b;
@@ -820,12 +825,149 @@ public:
     }
 
 private:
-    element_t _storage_buffer[num_elements];
+    alignas(int) element_t _storage_buffer[num_elements] = {};
+};
 
-    constexpr bitset(bool, const element_t& elements_ref) :
-        ibitset(Size, num_elements, _storage_buffer)
+
+/**
+ * @brief bitset_ref implementation which manages an external elements array.
+ *
+ * @ingroup bitset
+ */
+class bitset_ref : public ibitset
+{
+
+public:
+    /**
+     * @brief Default constructor.
+     * @param elements_ref External elements array reference.
+     *
+     * The elements are not copied but referenced, so they should outlive the bitset_ref
+     * to avoid dangling references.
+     */
+    constexpr explicit bitset_ref(span<element_t> elements_ref) :
+        ibitset(elements_ref.size() * bits_per_element, elements_ref.size(), elements_ref.data())
     {
-        copy_n(&elements_ref, num_elements, _storage_buffer);
+        BN_ASSERT(elements_ref.size(), "No elements");
+    }
+
+    /**
+     * @brief Copy assignment operator.
+     * @param other ibitset to copy.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& operator=(const ibitset& other)
+    {
+        ibitset::operator=(other);
+        return *this;
+    }
+
+    /**
+     * @brief Sets all bits to `true`.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& set()
+    {
+        ibitset::set();
+        return *this;
+    }
+
+    /**
+     * @brief Sets the specified bit to `true`.
+     * @param index Index of the bit to set.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& set(int index)
+    {
+        ibitset::set(index);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the specified bit to the specified value.
+     * @param index Index of the bit to set.
+     * @param value Value to set.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& set(int index, bool value)
+    {
+        ibitset::set(index, value);
+        return *this;
+    }
+
+    /**
+     * @brief Sets all bits to `false`.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& reset()
+    {
+        ibitset::reset();
+        return *this;
+    }
+
+    /**
+     * @brief Sets the specified bit to `false`.
+     * @param index Index of the bit to set.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& reset(int index)
+    {
+        ibitset::reset(index);
+        return *this;
+    }
+
+    /**
+     * @brief Flips all values (changes `true` values to `false` and vice versa).
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& flip()
+    {
+        ibitset::flip();
+        return *this;
+    }
+
+    /**
+     * @brief Flips the specified bit value (changes `true` value to `false` and vice versa).
+     * @param index Index of the bit to flip.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& flip(int index)
+    {
+        ibitset::flip(index);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the bits to the result of binary AND of this ibitset and the given one.
+     * @param other Another ibitset.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& operator&=(const ibitset& other)
+    {
+        ibitset::operator&=(other);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the bits to the result of binary OR of this ibitset and the given one.
+     * @param other Another ibitset.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& operator|=(const ibitset& other)
+    {
+        ibitset::operator|=(other);
+        return *this;
+    }
+
+    /**
+     * @brief Sets the bits to the result of binary XOR of this ibitset and the given one.
+     * @param other Another ibitset.
+     * @return Reference to this.
+     */
+    constexpr bitset_ref& operator^=(const ibitset& other)
+    {
+        ibitset::operator^=(other);
+        return *this;
     }
 };
 

@@ -22,7 +22,7 @@ namespace bn
     /**
      * @brief bitset implementation which manages its own elements array.
      *
-     * @tparam Size Number of bits stored.
+     * @tparam Size Number of stored bits. It must be a multiple of 8.
      *
      * @ingroup bitset
      */

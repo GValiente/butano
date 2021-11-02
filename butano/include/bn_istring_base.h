@@ -43,11 +43,14 @@ public:
 
     /**
      * @brief Constructor.
-     * @param char_array Non empty const characters array.
+     * @param char_array_ref Non empty const characters array.
+     *
+     * The characters are not copied but referenced, so they should outlive the istring_base
+     * to avoid dangling references.
      */
     template<int MaxSize>
-    constexpr istring_base(char (&char_array)[MaxSize]) :
-        _data(char_array),
+    constexpr istring_base(char (&char_array_ref)[MaxSize]) :
+        _data(char_array_ref),
         _size(0),
         _max_size(MaxSize - 1)
     {

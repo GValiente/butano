@@ -77,7 +77,12 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a9cb166a3bfc7425af9a26fdea1c6ba1d" class="m-doc">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>&gt; elements_ref) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+              <div class="m-doc-template">template&lt;int ElementSize&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#a26d45ed40f55e83851f30071e87c855e" class="m-doc">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>(&amp;elements_array_ref)[ElementSize]) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a9cb166a3bfc7425af9a26fdea1c6ba1d" class="m-doc">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>&gt; elements_ref) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Default constructor.</dd>
           </dl>
@@ -134,9 +139,30 @@
         </section>
         <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a26d45ed40f55e83851f30071e87c855e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int ElementSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />bitset_ref::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a26d45ed40f55e83851f30071e87c855e" class="m-doc-self">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>(&amp;elements_array_ref)[ElementSize]) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Default constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">elements_array_ref</td>
+                  <td>Elements array reference.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The elements are not copied but referenced, so they should outlive the <a href="classbn_1_1bitset__ref.html" class="m-doc">bitset_<wbr />ref</a> to avoid dangling references.</p>
+          </div></section>
           <section class="m-doc-details" id="a9cb166a3bfc7425af9a26fdea1c6ba1d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />bitset_ref::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9cb166a3bfc7425af9a26fdea1c6ba1d" class="m-doc-self">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>&gt; elements_ref) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />bitset_ref::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9cb166a3bfc7425af9a26fdea1c6ba1d" class="m-doc-self">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>&gt; elements_ref) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Default constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -146,7 +172,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">elements_ref</td>
-                  <td>External elements array reference.</td>
+                  <td>Elements reference.</td>
                 </tr>
               </tbody>
             </table>

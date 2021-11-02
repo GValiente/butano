@@ -158,7 +158,7 @@ public:
      */
     [[nodiscard]] constexpr int size() const
     {
-        return _num_bits;
+        return _num_elements * _bits_per_element;
     }
 
     /**
@@ -189,23 +189,9 @@ public:
      */
     [[nodiscard]] constexpr bool test(int index) const
     {
-        BN_ASSERT(index >= 0 && index < _num_bits, "Invalid index: ", index, " - ", _num_bits);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index, " - ", size());
 
-        int element_index;
-        element_t mask;
-
-        if(_num_elements == 1)
-        {
-            element_index = 0;
-            mask = element_t(1) << index;
-        }
-        else
-        {
-            element_index = index >> _log2(bits_per_element);
-            mask = element_t(1) << (index & (bits_per_element - 1));
-        }
-
-        return (_data[element_index] & mask) != 0;
+        return (_element(index) & _bit(index)) != 0;
     }
 
     /**
@@ -214,14 +200,7 @@ public:
      */
     constexpr ibitset& set()
     {
-        int last_element_index = _num_elements - 1;
-
-        for(int index = last_element_index; index >= 0; --index)
-        {
-            _data[index] = all_bits_set;
-        }
-
-        _data[last_element_index] &= _top_mask;
+        fill_n(_data, _num_elements, _all_bits_set);
         return *this;
     }
 
@@ -232,23 +211,9 @@ public:
      */
     constexpr ibitset& set(int index)
     {
-        BN_ASSERT(index >= 0 && index < _num_bits, "Invalid index: ", index, " - ", _num_bits);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index, " - ", size());
 
-        int element_index;
-        element_t bit;
-
-        if(_num_elements == 1)
-        {
-            element_index = 0;
-            bit = element_t(1) << index;
-        }
-        else
-        {
-            element_index = index >>_log2(bits_per_element);
-            bit = element_t(1) << (index & (bits_per_element - 1));
-        }
-
-        _data[element_index] |= bit;
+        _element(index) |= _bit(index);
         return *this;
     }
 
@@ -260,29 +225,18 @@ public:
      */
     constexpr ibitset& set(int index, bool value)
     {
-        BN_ASSERT(index >= 0 && index < _num_bits, "Invalid index: ", index, " - ", _num_bits);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index, " - ", size());
 
-        int element_index;
-        element_t bit;
-
-        if(_num_elements == 1)
-        {
-            element_index = 0;
-            bit = element_t(1) << index;
-        }
-        else
-        {
-            element_index = index >>_log2(bits_per_element);
-            bit = element_t(1) << (index & (bits_per_element - 1));
-        }
+        element_t& element = _element(index);
+        element_t bit = _bit(index);
 
         if(value)
         {
-            _data[element_index] |= bit;
+            element |= bit;
         }
         else
         {
-            _data[element_index] &= ~bit;
+            element &= ~bit;
         }
 
         return *this;
@@ -294,7 +248,7 @@ public:
      */
     constexpr ibitset& reset()
     {
-        fill_n(_data, _num_elements, all_bits_clear);
+        fill_n(_data, _num_elements, _all_bits_clear);
         return *this;
     }
 
@@ -305,23 +259,9 @@ public:
      */
     constexpr ibitset& reset(int index)
     {
-        BN_ASSERT(index >= 0 && index < _num_bits, "Invalid index: ", index, " - ", _num_bits);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index, " - ", size());
 
-        int element_index;
-        element_t bit;
-
-        if(_num_elements == 1)
-        {
-            element_index = 0;
-            bit = element_t(1) << index;
-        }
-        else
-        {
-            element_index = index >> _log2(bits_per_element);
-            bit = element_t(1) << (index & (bits_per_element - 1));
-        }
-
-        _data[element_index] &= ~bit;
+        _element(index) &= ~_bit(index);
         return *this;
     }
 
@@ -338,7 +278,6 @@ public:
             _data[index] = ~_data[index];
         }
 
-        _data[_num_elements - 1] &= _top_mask;
         return *this;
     }
 
@@ -349,23 +288,9 @@ public:
      */
     constexpr ibitset& flip(int index)
     {
-        BN_ASSERT(index >= 0 && index < _num_bits, "Invalid index: ", index, " - ", _num_bits);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index, " - ", size());
 
-        int element_index;
-        element_t bit;
-
-        if(_num_elements == 1)
-        {
-            element_index = 0;
-            bit = element_t(1) << index;
-        }
-        else
-        {
-            element_index = index >> _log2(bits_per_element);
-            bit = element_t(1) << (index & (bits_per_element - 1));
-        }
-
-        _data[element_index] ^= bit;
+        _element(index) ^= _bit(index);
         return *this;
     }
 
@@ -382,7 +307,7 @@ public:
      */
     [[nodiscard]] constexpr reference operator[](int index)
     {
-        BN_ASSERT(index >= 0 && index < _num_bits, "Invalid index: ", index, " - ", _num_bits);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index, " - ", size());
 
         return reference(*this, index);
     }
@@ -400,7 +325,7 @@ public:
      */
     [[nodiscard]] constexpr reference at(int index)
     {
-        BN_ASSERT(index >= 0 && index < _num_bits, "Invalid index: ", index, " - ", _num_bits);
+        BN_ASSERT(index >= 0 && index < size(), "Invalid index: ", index, " - ", size());
 
         return reference(*this, index);
     }
@@ -414,15 +339,10 @@ public:
 
         for(int index = last_element_index; index >= 0; --index)
         {
-            if(_data[index] != all_bits_set)
+            if(_data[index] != _all_bits_set)
             {
                 return false;
             }
-        }
-
-        if(_data[last_element_index] != (all_bits_set & _top_mask))
-        {
-            return false;
         }
 
         return true;
@@ -563,50 +483,37 @@ public:
 protected:
     /// @cond DO_NOT_DOCUMENT
 
-    static constexpr int bits_per_element = 8;
+    static constexpr int _bits_per_element = 8;
 
-    [[nodiscard]] constexpr static bool _is_equal(const ibitset& a, const ibitset& b)
-    {
-        return equal(a._data, a._data + a._num_elements, b._data);
-    }
-
-    constexpr ibitset(int num_bits, int num_elements, element_t* data) :
-        _num_bits(num_bits),
+    constexpr ibitset(int num_elements, element_t* data) :
         _num_elements(num_elements),
-        _data(data),
-        _top_mask(_calculate_top_mask(num_bits, num_elements))
+        _data(data)
     {
     }
 
     /// @endcond
 
 private:
-    static constexpr element_t all_bits_set = numeric_limits<element_t>::max();
-    static constexpr element_t all_bits_clear = 0;
+    static constexpr element_t _all_bits_set = numeric_limits<element_t>::max();
+    static constexpr element_t _all_bits_clear = 0;
+    static constexpr int _bits_per_element_log2 = 3;
 
-    int _num_bits;
     int _num_elements;
     element_t* _data;
-    int _top_mask;
 
-    [[nodiscard]] static constexpr int _log2(int value)
+    [[nodiscard]] constexpr const element_t& _element(int index) const
     {
-        int result = 0;
-
-        while(value >= 2)
-        {
-            value /= 2;
-            ++result;
-        }
-
-        return result;
+        return _data[index >> _bits_per_element_log2];
     }
 
-    [[nodiscard]] static constexpr element_t _calculate_top_mask(int num_bits, int num_elements)
+    [[nodiscard]] constexpr element_t& _element(int index)
     {
-        int allocated_bits = num_elements * bits_per_element;
-        int top_mask_shift = ((bits_per_element - (allocated_bits - num_bits)) % bits_per_element);
-        return element_t(top_mask_shift == 0 ? all_bits_set : ~(all_bits_set << top_mask_shift));
+        return _data[index >> _bits_per_element_log2];
+    }
+
+    [[nodiscard]] constexpr static element_t _bit(int index)
+    {
+        return element_t(1) << (index & (_bits_per_element - 1));
     }
 };
 
@@ -615,18 +522,17 @@ template<int Size>
 class bitset : public ibitset
 {
     static_assert(Size > 0);
+    static_assert(Size % _bits_per_element == 0);
 
 private:
-    static constexpr int num_elements = (Size % bits_per_element == 0) ?
-                Size / bits_per_element :
-                Size / bits_per_element + 1;
+    static constexpr int _num_elements = Size / _bits_per_element;
 
 public:
     /**
      * @brief Default constructor.
      */
     constexpr bitset() :
-        ibitset(Size, num_elements, _storage_buffer)
+        ibitset(_num_elements, _storage_buffer)
     {
     }
 
@@ -635,9 +541,9 @@ public:
      * @param other bitset to copy.
      */
     constexpr bitset(const bitset& other) :
-        ibitset(Size, num_elements, _storage_buffer)
+        ibitset(_num_elements, _storage_buffer)
     {
-        copy_n(other._storage_buffer, num_elements, _storage_buffer);
+        copy_n(other._storage_buffer, _num_elements, _storage_buffer);
     }
 
     /**
@@ -645,7 +551,7 @@ public:
      * @param other ibitset to copy.
      */
     constexpr bitset(const ibitset& other) :
-        ibitset(Size, num_elements, _storage_buffer)
+        ibitset(_num_elements, _storage_buffer)
     {
         ibitset::operator=(other);
     }
@@ -659,7 +565,7 @@ public:
     {
         if(this != &other)
         {
-            copy_n(other._storage_buffer, num_elements, _storage_buffer);
+            copy_n(other._storage_buffer, _num_elements, _storage_buffer);
         }
 
         return *this;
@@ -825,7 +731,7 @@ public:
     }
 
 private:
-    alignas(int) element_t _storage_buffer[num_elements] = {};
+    alignas(int) element_t _storage_buffer[_num_elements] = {};
 };
 
 
@@ -840,13 +746,27 @@ class bitset_ref : public ibitset
 public:
     /**
      * @brief Default constructor.
-     * @param elements_ref External elements array reference.
+     * @param elements_array_ref Elements array reference.
      *
      * The elements are not copied but referenced, so they should outlive the bitset_ref
      * to avoid dangling references.
      */
-    constexpr explicit bitset_ref(span<element_t> elements_ref) :
-        ibitset(elements_ref.size() * bits_per_element, elements_ref.size(), elements_ref.data())
+    template<int ElementSize>
+    constexpr bitset_ref(element_t (&elements_array_ref)[ElementSize]) :
+        ibitset(ElementSize, elements_array_ref)
+    {
+        static_assert(ElementSize >= 1);
+    }
+
+    /**
+     * @brief Default constructor.
+     * @param elements_ref Elements reference.
+     *
+     * The elements are not copied but referenced, so they should outlive the bitset_ref
+     * to avoid dangling references.
+     */
+    constexpr bitset_ref(span<element_t> elements_ref) :
+        ibitset(elements_ref.size(), elements_ref.data())
     {
         BN_ASSERT(elements_ref.size(), "No elements");
     }

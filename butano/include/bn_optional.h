@@ -361,6 +361,22 @@ public:
     }
 
     /**
+     * @brief Returns a const pointer to the contained value.
+     */
+    [[nodiscard]] constexpr const Type* get() const
+    {
+        return _valid ? &_value : nullptr;
+    }
+
+    /**
+     * @brief Returns a pointer to the contained value.
+     */
+    [[nodiscard]] constexpr Type* get()
+    {
+        return _valid ? &_value : nullptr;
+    }
+
+    /**
      * @brief Returns a const reference to the contained value.
      */
     [[nodiscard]] constexpr const Type& value() const

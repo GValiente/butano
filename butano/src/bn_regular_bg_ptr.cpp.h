@@ -202,10 +202,11 @@ void regular_bg_ptr::set_map(const regular_bg_map_item& map_item)
 {
     const regular_bg_tiles_ptr& current_tiles = tiles();
     const bg_palette_ptr& current_palette = palette();
+    optional<regular_bg_map_ptr> map = map_item.find_map(current_tiles, current_palette);
 
-    if(optional<regular_bg_map_ptr> map = map_item.find_map(current_tiles, current_palette))
+    if(regular_bg_map_ptr* map_ptr = map.get())
     {
-        bgs_manager::set_regular_map(_handle, move(*map));
+        bgs_manager::set_regular_map(_handle, move(*map_ptr));
     }
     else
     {
@@ -218,10 +219,12 @@ void regular_bg_ptr::set_map(const regular_bg_map_item& map_item)
 
 void regular_bg_ptr::set_item(const regular_bg_item& item)
 {
-    if(optional<regular_bg_map_ptr> map = item.map_item().find_map(tiles(), palette()))
+    optional<regular_bg_map_ptr> map = item.map_item().find_map(tiles(), palette());
+
+    if(regular_bg_map_ptr* map_ptr = map.get())
     {
-        map->set_tiles_and_palette(item.tiles_item(), item.palette_item());
-        bgs_manager::set_regular_map(_handle, move(*map));
+        map_ptr->set_tiles_and_palette(item.tiles_item(), item.palette_item());
+        bgs_manager::set_regular_map(_handle, move(*map_ptr));
     }
     else
     {

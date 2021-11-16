@@ -654,7 +654,7 @@ optional<commit_data> retrieve_commit_data()
     {
         int offset = first_index_to_commit;
         int count = data.last_index_to_commit - first_index_to_commit + 1;
-        result = commit_data{ offset, count };
+        result.emplace(offset, count);
         data.first_index_to_commit = max_items;
         data.last_index_to_commit = 0;
     }

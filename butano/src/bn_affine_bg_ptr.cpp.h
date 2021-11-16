@@ -189,10 +189,11 @@ void affine_bg_ptr::set_map(const affine_bg_map_item& map_item)
 {
     const affine_bg_tiles_ptr& current_tiles = tiles();
     const bg_palette_ptr& current_palette = palette();
+    optional<affine_bg_map_ptr> map = map_item.find_map(current_tiles, current_palette);
 
-    if(optional<affine_bg_map_ptr> map = map_item.find_map(current_tiles, current_palette))
+    if(affine_bg_map_ptr* map_ptr = map.get())
     {
-        bgs_manager::set_affine_map(_handle, move(*map));
+        bgs_manager::set_affine_map(_handle, move(*map_ptr));
     }
     else
     {
@@ -205,11 +206,13 @@ void affine_bg_ptr::set_map(const affine_bg_map_item& map_item)
 
 void affine_bg_ptr::set_item(const affine_bg_item& item)
 {
-    if(optional<affine_bg_map_ptr> map = item.map_item().find_map(tiles(), palette()))
+    optional<affine_bg_map_ptr> map = item.map_item().find_map(tiles(), palette());
+
+    if(affine_bg_map_ptr* map_ptr = map.get())
     {
-        map->set_tiles(item.tiles_item());
-        map->set_palette(item.palette_item());
-        bgs_manager::set_affine_map(_handle, move(*map));
+        map_ptr->set_tiles(item.tiles_item());
+        map_ptr->set_palette(item.palette_item());
+        bgs_manager::set_affine_map(_handle, move(*map_ptr));
     }
     else
     {

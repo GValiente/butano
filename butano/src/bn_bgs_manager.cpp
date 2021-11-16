@@ -212,9 +212,9 @@ namespace
             int real_x = position.x().right_shift_integer();
             int real_y = position.y().right_shift_integer();
 
-            if(camera)
+            if(camera_ptr* camera_ptr = camera.get())
             {
-                const fixed_point& camera_position = camera->position();
+                const fixed_point& camera_position = camera_ptr->position();
                 real_x -= camera_position.x().right_shift_integer();
                 real_y -= camera_position.y().right_shift_integer();
             }
@@ -237,9 +237,9 @@ namespace
 
         void update_affine_camera()
         {
-            if(camera)
+            if(camera_ptr* camera_ptr = camera.get())
             {
-                affine_mat_attributes.set_position(position - camera->position());
+                affine_mat_attributes.set_position(position - camera_ptr->position());
             }
             else
             {
@@ -511,13 +511,13 @@ namespace
         {
             if(item->big_map)
             {
-                bool is_regular = item->regular_map.has_value();
+                regular_bg_map_ptr* item_regular_map = item->regular_map.get();
                 int old_map_x = item->old_big_map_x;
                 int old_map_y = item->old_big_map_y;
                 int new_map_x;
                 int new_map_y;
 
-                if(is_regular)
+                if(item_regular_map)
                 {
                     new_map_x = item->hw_position.x() >> 3;
                     new_map_y = item->hw_position.y() >> 3;
@@ -537,7 +537,7 @@ namespace
                 new_map_x = min(new_map_x, (item->half_dimensions.width() / 4) - 32);
                 new_map_y = min(new_map_y, (item->half_dimensions.height() / 4) - 22);
 
-                int map_handle = is_regular ? item->regular_map->handle() : item->affine_map->handle();
+                int map_handle = item_regular_map ? item_regular_map->handle() : item->affine_map->handle();
                 bool full_commit_big_map = item->full_commit_big_map || bg_blocks_manager::must_commit(map_handle);
                 bool commit_big_map = full_commit_big_map;
 
@@ -809,9 +809,9 @@ void set_affine_x(id_type id, fixed x)
 
     if(old_x.right_shift_integer() != x.right_shift_integer())
     {
-        if(item->camera)
+        if(camera_ptr* item_camera = item->camera.get())
         {
-            x -= item->camera->x();
+            x -= item_camera->x();
         }
 
         item->affine_mat_attributes.set_x(x);
@@ -846,9 +846,9 @@ void set_affine_y(id_type id, fixed y)
 
     if(old_y.right_shift_integer() != y.right_shift_integer())
     {
-        if(item->camera)
+        if(camera_ptr* item_camera = item->camera.get())
         {
-            y -= item->camera->y();
+            y -= item_camera->y();
         }
 
         item->affine_mat_attributes.set_y(y);
@@ -887,9 +887,9 @@ void set_affine_position(id_type id, const fixed_point& position)
 
     if(old_integer_position != new_integer_position)
     {
-        if(item->camera)
+        if(camera_ptr* item_camera = item->camera.get())
         {
-            item->affine_mat_attributes.set_position(position - item->camera->position());
+            item->affine_mat_attributes.set_position(position - item_camera->position());
         }
         else
         {
@@ -1514,7 +1514,7 @@ void update_regular_map_tiles_cbb(int map_id, int tiles_cbb)
 {
     for(item_type* item : data.items_vector)
     {
-        optional<regular_bg_map_ptr>& item_regular_map = item->regular_map;
+        regular_bg_map_ptr* item_regular_map = item->regular_map.get();
 
         if(item_regular_map && item_regular_map->id() == map_id)
         {
@@ -1528,7 +1528,7 @@ void update_affine_map_tiles_cbb(int map_id, int tiles_cbb)
 {
     for(item_type* item : data.items_vector)
     {
-        optional<affine_bg_map_ptr>& item_affine_map = item->affine_map;
+        affine_bg_map_ptr* item_affine_map = item->affine_map.get();
 
         if(item_affine_map && item_affine_map->id() == map_id)
         {
@@ -1542,7 +1542,7 @@ void update_regular_map_palette_bpp(int map_id, bpp_mode bpp)
 {
     for(item_type* item : data.items_vector)
     {
-        optional<regular_bg_map_ptr>& item_regular_map = item->regular_map;
+        regular_bg_map_ptr* item_regular_map = item->regular_map.get();
 
         if(item_regular_map && item_regular_map->id() == map_id)
         {
@@ -1672,8 +1672,8 @@ void commit_big_maps()
     {
         if(item->commit_big_map)
         {
-            bool is_regular = item->regular_map.has_value();
-            int map_handle = is_regular ? item->regular_map->handle() : item->affine_map->handle();
+            regular_bg_map_ptr* item_regular_map = item->regular_map.get();
+            int map_handle = item_regular_map ? item_regular_map->handle() : item->affine_map->handle();
             int old_map_x = item->old_big_map_x;
             int old_map_y = item->old_big_map_y;
             int new_map_x = item->new_big_map_x;
@@ -1686,7 +1686,7 @@ void commit_big_maps()
             {
                 item->full_commit_big_map = false;
 
-                if(is_regular)
+                if(item_regular_map)
                 {
                     bg_blocks_manager::set_regular_map_position(map_handle, new_map_x, new_map_y);
                 }
@@ -1697,7 +1697,7 @@ void commit_big_maps()
             }
             else
             {
-                if(is_regular)
+                if(item_regular_map)
                 {
                     while(new_map_x < old_map_x)
                     {

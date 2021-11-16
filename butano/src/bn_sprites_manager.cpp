@@ -79,9 +79,9 @@ namespace
 
     void _assign_affine_mat(item_type& item, sprite_affine_mat_ptr&& affine_mat)
     {
-        if(item.affine_mat)
+        if(const sprite_affine_mat_ptr* item_affine_mat = item.affine_mat.get())
         {
-            sprite_affine_mats_manager::dettach_sprite(item.affine_mat->id(), item.affine_mat_attach_node);
+            sprite_affine_mats_manager::dettach_sprite(item_affine_mat->id(), item.affine_mat_attach_node);
         }
 
         int affine_mat_id = affine_mat.id();
@@ -280,20 +280,22 @@ id_type create_optional(sprite_builder&& builder)
     }
 
     optional<sprite_tiles_ptr> builder_tiles = builder.release_tiles_optional();
+    sprite_tiles_ptr* tiles_ptr = builder_tiles.get();
 
-    if(! builder_tiles)
+    if(! tiles_ptr)
     {
         return nullptr;
     }
 
     optional<sprite_palette_ptr> builder_palette = builder.release_palette_optional();
+    sprite_palette_ptr* palette_ptr = builder_palette.get();
 
-    if(! builder_palette)
+    if(! palette_ptr)
     {
         return nullptr;
     }
 
-    item_type& new_item = data.items_pool.create(move(builder), move(*builder_tiles), move(*builder_palette));
+    item_type& new_item = data.items_pool.create(move(builder), move(*tiles_ptr), move(*palette_ptr));
     data.sorter.insert(new_item);
 
     if(new_item.visible)
@@ -320,9 +322,9 @@ void decrease_usages(id_type id)
     {
         data.sorter.erase(*item);
 
-        if(item->affine_mat)
+        if(const sprite_affine_mat_ptr* item_affine_mat = item->affine_mat.get())
         {
-            sprite_affine_mats_manager::dettach_sprite(item->affine_mat->id(), item->affine_mat_attach_node);
+            sprite_affine_mats_manager::dettach_sprite(item_affine_mat->id(), item->affine_mat_attach_node);
         }
 
         if(item->visible)
@@ -707,9 +709,9 @@ bool horizontal_flip(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
 
-    if(item->affine_mat)
+    if(const sprite_affine_mat_ptr* item_affine_mat = item->affine_mat.get())
     {
-        return item->affine_mat->horizontal_flip();
+        return item_affine_mat->horizontal_flip();
     }
 
     return hw::sprites::horizontal_flip(item->handle);
@@ -719,9 +721,9 @@ void set_horizontal_flip(id_type id, bool horizontal_flip)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->affine_mat)
+    if(sprite_affine_mat_ptr* item_affine_mat = item->affine_mat.get())
     {
-        item->affine_mat->set_horizontal_flip(horizontal_flip);
+        item_affine_mat->set_horizontal_flip(horizontal_flip);
     }
     else
     {
@@ -739,9 +741,9 @@ bool vertical_flip(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
 
-    if(item->affine_mat)
+    if(const sprite_affine_mat_ptr* item_affine_mat = item->affine_mat.get())
     {
-        return item->affine_mat->vertical_flip();
+        return item_affine_mat->vertical_flip();
     }
 
     return hw::sprites::vertical_flip(item->handle);
@@ -751,9 +753,9 @@ void set_vertical_flip(id_type id, bool vertical_flip)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->affine_mat)
+    if(sprite_affine_mat_ptr* item_affine_mat = item->affine_mat.get())
     {
-        item->affine_mat->set_vertical_flip(vertical_flip);
+        item_affine_mat->set_vertical_flip(vertical_flip);
     }
     else
     {
@@ -1030,10 +1032,9 @@ void set_regular_second_attributes(id_type id, const sprite_regular_second_attri
 sprite_affine_second_attributes affine_second_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    const optional<sprite_affine_mat_ptr>& item_affine_mat = item->affine_mat;
-    BN_ASSERT(item_affine_mat, "Item is not affine");
+    BN_ASSERT(item->affine_mat, "Item is not affine");
 
-    return sprite_affine_second_attributes(item->position.x(), *item_affine_mat);
+    return sprite_affine_second_attributes(item->position.x(), *item->affine_mat);
 }
 
 void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes)

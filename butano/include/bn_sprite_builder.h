@@ -163,10 +163,7 @@ public:
     /**
      * @brief Returns the rotation angle in degrees of the sprites to generate.
      */
-    [[nodiscard]] fixed rotation_angle() const
-    {
-        return _affine_mat ? _affine_mat->rotation_angle() : 0;
-    }
+    [[nodiscard]] fixed rotation_angle() const;
 
     /**
      * @brief Sets the rotation angle in degrees of the sprites to generate.
@@ -182,10 +179,7 @@ public:
     /**
      * @brief Returns the horizontal scale of the sprites to generate.
      */
-    [[nodiscard]] fixed horizontal_scale() const
-    {
-        return _affine_mat ? _affine_mat->horizontal_scale() : 1;
-    }
+    [[nodiscard]] fixed horizontal_scale() const;
 
     /**
      * @brief Sets the horizontal scale of the sprites to generate.
@@ -201,10 +195,7 @@ public:
     /**
      * @brief Returns the vertical scale of the sprites to generate.
      */
-    [[nodiscard]] fixed vertical_scale() const
-    {
-        return _affine_mat ? _affine_mat->vertical_scale() : 1;
-    }
+    [[nodiscard]] fixed vertical_scale() const;
 
     /**
      * @brief Sets the vertical scale of the sprites to generate.
@@ -243,10 +234,7 @@ public:
     /**
      * @brief Returns the horizontal shear of the sprites to generate.
      */
-    [[nodiscard]] fixed horizontal_shear() const
-    {
-        return _affine_mat ? _affine_mat->horizontal_shear() : 0;
-    }
+    [[nodiscard]] fixed horizontal_shear() const;
 
     /**
      * @brief Sets the horizontal shear of the sprites to generate.
@@ -262,10 +250,7 @@ public:
     /**
      * @brief Returns the vertical shear of the sprites to generate.
      */
-    [[nodiscard]] fixed vertical_shear() const
-    {
-        return _affine_mat ? _affine_mat->vertical_shear() : 0;
-    }
+    [[nodiscard]] fixed vertical_shear() const;
 
     /**
      * @brief Sets the vertical shear of the sprites to generate.
@@ -352,10 +337,7 @@ public:
     /**
      * @brief Indicates if the sprites to generate are flipped in the horizontal axis or not.
      */
-    [[nodiscard]] bool horizontal_flip() const
-    {
-        return _affine_mat ? _affine_mat->horizontal_flip() : _horizontal_flip;
-    }
+    [[nodiscard]] bool horizontal_flip() const;
 
     /**
      * @brief Sets if the sprites to generate must be flipped in the horizontal axis or not.
@@ -368,10 +350,7 @@ public:
     /**
      * @brief Indicates if the sprites to generate are flipped in the vertical axis or not.
      */
-    [[nodiscard]] bool vertical_flip() const
-    {
-        return _affine_mat ? _affine_mat->vertical_flip() : _vertical_flip;
-    }
+    [[nodiscard]] bool vertical_flip() const;
 
     /**
      * @brief Sets if the sprites to generate must be flipped in the vertical axis or not.

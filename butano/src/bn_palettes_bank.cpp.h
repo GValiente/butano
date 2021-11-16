@@ -653,9 +653,9 @@ void palettes_bank::update()
             }
         }
 
-        if(_transparent_color)
+        if(const color* transparent_color = _transparent_color.get())
         {
-            _final_colors[0] = *_transparent_color;
+            _final_colors[0] = *transparent_color;
             first_index = 0;
         }
 
@@ -683,7 +683,7 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data() const
         int colors_offset = first_index * hw::palettes::colors_per_palette();
         int colors_count = (last_index - first_index + _palettes[last_index].slots_count) *
                 hw::palettes::colors_per_palette();
-        result = commit_data{ _final_colors, colors_offset, colors_count };
+        result.emplace(_final_colors, colors_offset, colors_count);
     }
 
     return result;

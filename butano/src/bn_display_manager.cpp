@@ -77,9 +77,11 @@ namespace
         int window_x = window_boundaries.x().right_shift_integer();
         int window_y = window_boundaries.y().right_shift_integer();
 
-        if(const optional<camera_ptr>& camera = data.rect_windows_camera[boundaries_index / 2])
+        const optional<camera_ptr>& camera = data.rect_windows_camera[boundaries_index / 2];
+
+        if(const camera_ptr* camera_ptr = camera.get())
         {
-            const fixed_point& camera_position = camera->position();
+            const fixed_point& camera_position = camera_ptr->position();
             window_x -= camera_position.x().right_shift_integer();
             window_y -= camera_position.y().right_shift_integer();
         }

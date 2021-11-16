@@ -30,13 +30,15 @@ public:
 
     [[nodiscard]] static bool target_updated(intptr_t target_id, iany&)
     {
-        if(optional<palettes_bank::commit_data> commit_data =
-                palettes_manager::sprite_palettes_bank().retrieve_commit_data())
+        optional<palettes_bank::commit_data> commit_data =
+                        palettes_manager::sprite_palettes_bank().retrieve_commit_data();
+
+        if(palettes_bank::commit_data* commit_data_ptr = commit_data.get())
         {
             palette_target_id palette_target_id(target_id);
             int target_color = palette_target_id.params.final_color_index;
-            int first_color = commit_data->offset;
-            int last_color = first_color + commit_data->count - 1;
+            int first_color = commit_data_ptr->offset;
+            int last_color = first_color + commit_data_ptr->count - 1;
             return target_color >= first_color && target_color <= last_color;
         }
 

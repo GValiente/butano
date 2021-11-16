@@ -2111,9 +2111,9 @@ void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
         int old_tiles_cbb;
         int old_tiles_offset;
 
-        if(item.regular_tiles)
+        if(const regular_bg_tiles_ptr* item_regular_tiles = item.regular_tiles.get())
         {
-            old_tiles_cbb = item.regular_tiles->cbb();
+            old_tiles_cbb = item_regular_tiles->cbb();
             old_tiles_offset = item.regular_tiles_offset();
         }
         else
@@ -2148,9 +2148,9 @@ void set_affine_map_tiles(int id, affine_bg_tiles_ptr&& tiles)
         int old_tiles_cbb;
         int old_tiles_offset;
 
-        if(item.affine_tiles)
+        if(const affine_bg_tiles_ptr* item_affine_tiles = item.affine_tiles.get())
         {
-            old_tiles_cbb = item.affine_tiles->cbb();
+            old_tiles_cbb = item_affine_tiles->cbb();
             old_tiles_offset = item.affine_tiles_offset();
         }
         else
@@ -2277,7 +2277,8 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
 
     if(tiles != item.regular_tiles)
     {
-        int old_tiles_cbb = item.regular_tiles ? item.regular_tiles->cbb() : -1;
+        const regular_bg_tiles_ptr* item_regular_tiles = item.regular_tiles.get();
+        int old_tiles_cbb = item_regular_tiles ? item_regular_tiles->cbb() : -1;
         int new_tiles_cbb = tiles.cbb();
 
         if(new_tiles_cbb != old_tiles_cbb)
@@ -2290,7 +2291,8 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
 
     if(palette != item.palette)
     {
-        int old_palette_bpp = item.palette ? int(item.palette->bpp()) : -1;
+        const bg_palette_ptr* item_palette = item.palette.get();
+        int old_palette_bpp = item_palette ? int(item_palette->bpp()) : -1;
 
         if(int(new_palette_bpp) != old_palette_bpp)
         {

@@ -30,13 +30,16 @@ optional<affine_bg_map_ptr> affine_bg_map_ptr::find(
 
 optional<affine_bg_map_ptr> affine_bg_map_ptr::find(const affine_bg_item& item)
 {
+    optional<affine_bg_tiles_ptr> tiles = affine_bg_tiles_ptr::find(item.tiles_item());
     optional<affine_bg_map_ptr> result;
 
-    if(optional<affine_bg_tiles_ptr> tiles = affine_bg_tiles_ptr::find(item.tiles_item()))
+    if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        if(optional<bg_palette_ptr> palette = bg_palette_ptr::find(item.palette_item()))
+        optional<bg_palette_ptr> palette = bg_palette_ptr::find(item.palette_item());
+
+        if(bg_palette_ptr* palette_ptr = palette.get())
         {
-            result = find(item.map_item(), *tiles, *palette);
+            result = find(item.map_item(), *tiles_ptr, *palette_ptr);
         }
     }
 
@@ -95,13 +98,17 @@ optional<affine_bg_map_ptr> affine_bg_map_ptr::create_optional(
 
 optional<affine_bg_map_ptr> affine_bg_map_ptr::create_optional(const affine_bg_item& item)
 {
+    optional<affine_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional();
     optional<affine_bg_map_ptr> result;
 
-    if(optional<affine_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional())
+    if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        if(optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional())
+        optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional();
+
+        if(bg_palette_ptr* palette_ptr = palette.get())
         {
-            int handle = bg_blocks_manager::create_affine_map(item.map_item(), move(*tiles), move(*palette), true);
+            int handle = bg_blocks_manager::create_affine_map(
+                        item.map_item(), move(*tiles_ptr), move(*palette_ptr), true);
 
             if(handle >= 0)
             {
@@ -129,13 +136,17 @@ optional<affine_bg_map_ptr> affine_bg_map_ptr::create_new_optional(
 
 optional<affine_bg_map_ptr> affine_bg_map_ptr::create_new_optional(const affine_bg_item& item)
 {
+    optional<affine_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional();
     optional<affine_bg_map_ptr> result;
 
-    if(optional<affine_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional())
+    if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        if(optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional())
+        optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional();
+
+        if(bg_palette_ptr* palette_ptr = palette.get())
         {
-            int handle = bg_blocks_manager::create_new_affine_map(item.map_item(), move(*tiles), move(*palette), true);
+            int handle = bg_blocks_manager::create_new_affine_map(
+                        item.map_item(), move(*tiles_ptr), move(*palette_ptr), true);
 
             if(handle >= 0)
             {
@@ -240,9 +251,11 @@ void affine_bg_map_ptr::set_tiles(affine_bg_tiles_ptr&& tiles)
 
 void affine_bg_map_ptr::set_tiles(const affine_bg_tiles_item& tiles_item)
 {
-    if(optional<affine_bg_tiles_ptr> tiles = tiles_item.find_tiles())
+    optional<affine_bg_tiles_ptr> tiles = tiles_item.find_tiles();
+
+    if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        bg_blocks_manager::set_affine_map_tiles(_handle, move(*tiles));
+        bg_blocks_manager::set_affine_map_tiles(_handle, move(*tiles_ptr));
     }
     else
     {

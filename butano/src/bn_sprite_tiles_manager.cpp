@@ -570,10 +570,12 @@ namespace
                 {
                     data.to_remove_items.erase(to_remove_items_it);
 
-                    if(optional<int> new_free_item_id = _create_item(
-                                id, tiles_data, compression, tiles_count, true))
+                    optional<int> new_free_item_id = _create_item(
+                                id, tiles_data, compression, tiles_count, true);
+
+                    if(int* new_free_item_id_ptr = new_free_item_id.get())
                     {
-                        _insert_free_item(*new_free_item_id);
+                        _insert_free_item(*new_free_item_id_ptr);
                     }
 
                     return id;
@@ -590,11 +592,12 @@ namespace
             if(free_items_it != free_items_end)
             {
                 int id = *free_items_it;
+                optional<int> new_free_item_id = _create_item(
+                            id, tiles_data, compression, tiles_count, data.delay_commit);
 
-                if(optional<int> new_free_item_id = _create_item(
-                            id, tiles_data, compression, tiles_count, data.delay_commit))
+                if(int* new_free_item_id_ptr = new_free_item_id.get())
                 {
-                    _insert_free_item(*new_free_item_id, free_items_it);
+                    _insert_free_item(*new_free_item_id_ptr, free_items_it);
                     ++free_items_it;
                 }
 
@@ -629,11 +632,12 @@ namespace
             if(free_items_it != free_items_end)
             {
                 int id = *free_items_it;
+                optional<int> new_free_item_id = _create_item(
+                            id, nullptr, compression_type::NONE, tiles_count, false);
 
-                if(optional<int> new_free_item_id = _create_item(
-                            id, nullptr, compression_type::NONE, tiles_count, false))
+                if(int* new_free_item_id_ptr = new_free_item_id.get())
                 {
-                    _insert_free_item(*new_free_item_id, free_items_it);
+                    _insert_free_item(*new_free_item_id_ptr, free_items_it);
                     ++free_items_it;
                 }
 

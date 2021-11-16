@@ -49,23 +49,24 @@ optional<regular_bg_ptr> regular_bg_builder::release_build_optional()
 
 regular_bg_map_ptr regular_bg_builder::map() const
 {
-    if(_item)
+    if(const regular_bg_item* item = _item.get())
     {
-        return _item->create_map();
+        return item->create_map();
     }
 
-    BN_ASSERT(_map, "Map has already been released");
+    const regular_bg_map_ptr* map = _map.get();
+    BN_ASSERT(map, "Map has been already released");
 
-    return *_map;
+    return *map;
 }
 
 optional<regular_bg_map_ptr> regular_bg_builder::map_optional() const
 {
     optional<regular_bg_map_ptr> result;
 
-    if(_item)
+    if(const regular_bg_item* item = _item.get())
     {
-        result = _item->create_map_optional();
+        result = item->create_map_optional();
     }
     else
     {
@@ -77,14 +78,15 @@ optional<regular_bg_map_ptr> regular_bg_builder::map_optional() const
 
 regular_bg_map_ptr regular_bg_builder::release_map()
 {
-    if(_item)
+    if(const regular_bg_item* item = _item.get())
     {
-        return _item->create_map();
+        return item->create_map();
     }
 
-    BN_ASSERT(_map, "Map has already been released");
+    regular_bg_map_ptr* map = _map.get();
+    BN_ASSERT(map, "Map has been already released");
 
-    regular_bg_map_ptr result = move(*_map);
+    regular_bg_map_ptr result = move(*map);
     _map.reset();
     return result;
 }
@@ -93,15 +95,15 @@ optional<regular_bg_map_ptr> regular_bg_builder::release_map_optional()
 {
     optional<regular_bg_map_ptr> result;
 
-    if(_item)
+    if(const regular_bg_item* item = _item.get())
     {
-        result = _item->create_map_optional();
+        result = item->create_map_optional();
     }
     else
     {
-        if(_map)
+        if(regular_bg_map_ptr* map = _map.get())
         {
-            result = move(*_map);
+            result = move(*map);
             _map.reset();
         }
     }

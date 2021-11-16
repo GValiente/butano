@@ -30,13 +30,16 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::find(
 
 optional<regular_bg_map_ptr> regular_bg_map_ptr::find(const regular_bg_item& item)
 {
+    optional<regular_bg_tiles_ptr> tiles = regular_bg_tiles_ptr::find(item.tiles_item());
     optional<regular_bg_map_ptr> result;
 
-    if(optional<regular_bg_tiles_ptr> tiles = regular_bg_tiles_ptr::find(item.tiles_item()))
+    if(regular_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        if(optional<bg_palette_ptr> palette = bg_palette_ptr::find(item.palette_item()))
+        optional<bg_palette_ptr> palette = bg_palette_ptr::find(item.palette_item());
+
+        if(bg_palette_ptr* palette_ptr = palette.get())
         {
-            result = find(item.map_item(), *tiles, *palette);
+            result = find(item.map_item(), *tiles_ptr, *palette_ptr);
         }
     }
 
@@ -95,13 +98,17 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::create_optional(
 
 optional<regular_bg_map_ptr> regular_bg_map_ptr::create_optional(const regular_bg_item& item)
 {
+    optional<regular_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional();
     optional<regular_bg_map_ptr> result;
 
-    if(optional<regular_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional())
+    if(regular_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        if(optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional())
+        optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional();
+
+        if(bg_palette_ptr* palette_ptr = palette.get())
         {
-            int handle = bg_blocks_manager::create_regular_map(item.map_item(), move(*tiles), move(*palette), true);
+            int handle = bg_blocks_manager::create_regular_map(
+                        item.map_item(), move(*tiles_ptr), move(*palette_ptr), true);
 
             if(handle >= 0)
             {
@@ -129,13 +136,17 @@ optional<regular_bg_map_ptr> regular_bg_map_ptr::create_new_optional(
 
 optional<regular_bg_map_ptr> regular_bg_map_ptr::create_new_optional(const regular_bg_item& item)
 {
+    optional<regular_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional();
     optional<regular_bg_map_ptr> result;
 
-    if(optional<regular_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional())
+    if(regular_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        if(optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional())
+        optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional();
+
+        if(bg_palette_ptr* palette_ptr = palette.get())
         {
-            int handle = bg_blocks_manager::create_new_regular_map(item.map_item(), move(*tiles), move(*palette), true);
+            int handle = bg_blocks_manager::create_new_regular_map(
+                        item.map_item(), move(*tiles_ptr), move(*palette_ptr), true);
 
             if(handle >= 0)
             {
@@ -250,9 +261,11 @@ void regular_bg_map_ptr::set_tiles(regular_bg_tiles_ptr&& tiles)
 
 void regular_bg_map_ptr::set_tiles(const regular_bg_tiles_item& tiles_item)
 {
-    if(optional<regular_bg_tiles_ptr> tiles = tiles_item.find_tiles())
+    optional<regular_bg_tiles_ptr> tiles = tiles_item.find_tiles();
+
+    if(regular_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        bg_blocks_manager::set_regular_map_tiles(_handle, move(*tiles));
+        bg_blocks_manager::set_regular_map_tiles(_handle, move(*tiles_ptr));
     }
     else
     {
@@ -280,9 +293,11 @@ void regular_bg_map_ptr::set_palette(const bg_palette_item& palette_item)
 {
     if(palette_item.bpp() == bpp_mode::BPP_4 || bpp() == bpp_mode::BPP_4)
     {
-        if(optional<bg_palette_ptr> palette = palette_item.find_palette())
+        optional<bg_palette_ptr> palette = palette_item.find_palette();
+
+        if(bg_palette_ptr* palette_ptr = palette.get())
         {
-            bg_blocks_manager::set_regular_map_palette(_handle, move(*palette));
+            bg_blocks_manager::set_regular_map_palette(_handle, move(*palette_ptr));
         }
         else
         {

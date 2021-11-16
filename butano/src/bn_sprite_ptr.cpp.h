@@ -85,14 +85,17 @@ optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_
 
 optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_item& item)
 {
+    optional<sprite_tiles_ptr> tiles = item.tiles_item().create_tiles();
     optional<sprite_ptr> result;
 
-    if(optional<sprite_tiles_ptr> tiles = item.tiles_item().create_tiles())
+    if(sprite_tiles_ptr* tiles_ptr = tiles.get())
     {
-        if(optional<sprite_palette_ptr> palette = item.palette_item().create_palette())
+        optional<sprite_palette_ptr> palette = item.palette_item().create_palette();
+
+        if(sprite_palette_ptr* palette_ptr = palette.get())
         {
-            if(handle_type handle = sprites_manager::create_optional(position, item.shape_size(), move(*tiles),
-                                                                     move(*palette)))
+            if(handle_type handle = sprites_manager::create_optional(
+                        position, item.shape_size(), move(*tiles_ptr), move(*palette_ptr)))
             {
                 result = sprite_ptr(handle);
             }
@@ -105,14 +108,17 @@ optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, co
 optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_item& item,
                                                  int graphics_index)
 {
+    optional<sprite_tiles_ptr> tiles = item.tiles_item().create_tiles(graphics_index);
     optional<sprite_ptr> result;
 
-    if(optional<sprite_tiles_ptr> tiles = item.tiles_item().create_tiles(graphics_index))
+    if(sprite_tiles_ptr* tiles_ptr = tiles.get())
     {
-        if(optional<sprite_palette_ptr> palette = item.palette_item().create_palette())
+        optional<sprite_palette_ptr> palette = item.palette_item().create_palette();
+
+        if(sprite_palette_ptr* palette_ptr = palette.get())
         {
-            if(handle_type handle = sprites_manager::create_optional(position, item.shape_size(), move(*tiles),
-                                                                     move(*palette)))
+            if(handle_type handle = sprites_manager::create_optional(
+                        position, item.shape_size(), move(*tiles_ptr), move(*palette_ptr)))
             {
                 result = sprite_ptr(handle);
             }
@@ -237,9 +243,11 @@ void sprite_ptr::set_tiles(const sprite_shape_size& shape_size, sprite_tiles_ptr
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item)
 {
-    if(optional<sprite_tiles_ptr> tiles = tiles_item.find_tiles())
+    optional<sprite_tiles_ptr> tiles = tiles_item.find_tiles();
+
+    if(sprite_tiles_ptr* tiles_ptr = tiles.get())
     {
-        sprites_manager::set_tiles(_handle, move(*tiles));
+        sprites_manager::set_tiles(_handle, move(*tiles_ptr));
     }
     else
     {
@@ -250,9 +258,11 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item)
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_index)
 {
-    if(optional<sprite_tiles_ptr> tiles = tiles_item.find_tiles(graphics_index))
+    optional<sprite_tiles_ptr> tiles = tiles_item.find_tiles(graphics_index);
+
+    if(sprite_tiles_ptr* tiles_ptr = tiles.get())
     {
-        sprites_manager::set_tiles(_handle, move(*tiles));
+        sprites_manager::set_tiles(_handle, move(*tiles_ptr));
     }
     else
     {
@@ -263,9 +273,11 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_ind
 
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size)
 {
-    if(optional<sprite_tiles_ptr> tiles = tiles_item.find_tiles())
+    optional<sprite_tiles_ptr> tiles = tiles_item.find_tiles();
+
+    if(sprite_tiles_ptr* tiles_ptr = tiles.get())
     {
-        sprites_manager::set_tiles(_handle, shape_size, move(*tiles));
+        sprites_manager::set_tiles(_handle, shape_size, move(*tiles_ptr));
     }
     else
     {
@@ -277,9 +289,11 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_sha
 void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_shape_size& shape_size,
                            int graphics_index)
 {
-    if(optional<sprite_tiles_ptr> tiles = tiles_item.find_tiles(graphics_index))
+    optional<sprite_tiles_ptr> tiles = tiles_item.find_tiles(graphics_index);
+
+    if(sprite_tiles_ptr* tiles_ptr = tiles.get())
     {
-        sprites_manager::set_tiles(_handle, shape_size, move(*tiles));
+        sprites_manager::set_tiles(_handle, shape_size, move(*tiles_ptr));
     }
     else
     {
@@ -309,9 +323,11 @@ void sprite_ptr::set_palette(const sprite_palette_item& palette_item)
 
     if(palette_item.bpp() == bpp_mode::BPP_4 || old_bpp == bpp_mode::BPP_4)
     {
-        if(optional<sprite_palette_ptr> palette = palette_item.find_palette())
+        optional<sprite_palette_ptr> palette = palette_item.find_palette();
+
+        if(sprite_palette_ptr* palette_ptr = palette.get())
         {
-            sprites_manager::set_palette(_handle, old_bpp, move(*palette));
+            sprites_manager::set_palette(_handle, old_bpp, move(*palette_ptr));
         }
         else
         {
@@ -437,9 +453,11 @@ fixed sprite_ptr::rotation_angle() const
 
 void sprite_ptr::set_rotation_angle(fixed rotation_angle)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_rotation_angle(rotation_angle);
+        affine_mat_ptr->set_rotation_angle(rotation_angle);
     }
     else if(rotation_angle != 0)
     {
@@ -454,9 +472,11 @@ void sprite_ptr::set_rotation_angle(fixed rotation_angle)
 
 fixed sprite_ptr::horizontal_scale() const
 {
-    if(const optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        return affine_mat->horizontal_scale();
+        return affine_mat_ptr->horizontal_scale();
     }
 
     return 1;
@@ -464,9 +484,11 @@ fixed sprite_ptr::horizontal_scale() const
 
 void sprite_ptr::set_horizontal_scale(fixed horizontal_scale)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_horizontal_scale(horizontal_scale);
+        affine_mat_ptr->set_horizontal_scale(horizontal_scale);
     }
     else if(horizontal_scale != 1)
     {
@@ -491,9 +513,11 @@ fixed sprite_ptr::vertical_scale() const
 
 void sprite_ptr::set_vertical_scale(fixed vertical_scale)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_vertical_scale(vertical_scale);
+        affine_mat_ptr->set_vertical_scale(vertical_scale);
     }
     else if(vertical_scale != 1)
     {
@@ -508,9 +532,11 @@ void sprite_ptr::set_vertical_scale(fixed vertical_scale)
 
 void sprite_ptr::set_scale(fixed scale)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_scale(scale);
+        affine_mat_ptr->set_scale(scale);
     }
     else if(scale != 1)
     {
@@ -525,9 +551,11 @@ void sprite_ptr::set_scale(fixed scale)
 
 void sprite_ptr::set_scale(fixed horizontal_scale, fixed vertical_scale)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_scale(horizontal_scale, vertical_scale);
+        affine_mat_ptr->set_scale(horizontal_scale, vertical_scale);
     }
     else if(horizontal_scale != 1 || vertical_scale != 1)
     {
@@ -552,9 +580,11 @@ fixed sprite_ptr::horizontal_shear() const
 
 void sprite_ptr::set_horizontal_shear(fixed horizontal_shear)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_horizontal_shear(horizontal_shear);
+        affine_mat_ptr->set_horizontal_shear(horizontal_shear);
     }
     else if(horizontal_shear != 0)
     {
@@ -579,9 +609,11 @@ fixed sprite_ptr::vertical_shear() const
 
 void sprite_ptr::set_vertical_shear(fixed vertical_shear)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_vertical_shear(vertical_shear);
+        affine_mat_ptr->set_vertical_shear(vertical_shear);
     }
     else if(vertical_shear != 0)
     {
@@ -596,9 +628,11 @@ void sprite_ptr::set_vertical_shear(fixed vertical_shear)
 
 void sprite_ptr::set_shear(fixed shear)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_shear(shear);
+        affine_mat_ptr->set_shear(shear);
     }
     else if(shear != 0)
     {
@@ -613,9 +647,11 @@ void sprite_ptr::set_shear(fixed shear)
 
 void sprite_ptr::set_shear(fixed horizontal_shear, fixed vertical_shear)
 {
-    if(optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle))
+    optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);
+
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        affine_mat->set_shear(horizontal_shear, vertical_shear);
+        affine_mat_ptr->set_shear(horizontal_shear, vertical_shear);
     }
     else if(horizontal_shear != 0 || vertical_shear != 0)
     {

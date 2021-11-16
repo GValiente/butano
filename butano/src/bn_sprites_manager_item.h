@@ -201,9 +201,9 @@ public:
         int real_x = position.x().right_shift_integer();
         int real_y = position.y().right_shift_integer();
 
-        if(camera)
+        if(const camera_ptr* camera_ptr = camera.get())
         {
-            const fixed_point& camera_position = camera->position();
+            const fixed_point& camera_position = camera_ptr->position();
             real_x -= camera_position.x().right_shift_integer();
             real_y -= camera_position.y().right_shift_integer();
         }
@@ -230,23 +230,22 @@ private:
     void _builder_init(const sprite_builder& builder)
     {
         const sprite_palette_ptr& palette_ref = *palette;
+        int tiles_id = tiles->id();
 
-        if(affine_mat)
+        if(const sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
         {
-            const sprite_affine_mat_ptr& affine_mat_ref = *affine_mat;
-
-            if(remove_affine_mat_when_not_needed && affine_mat_ref.flipped_identity())
+            if(remove_affine_mat_when_not_needed && affine_mat_ptr->flipped_identity())
             {
-                hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp(),
-                                           affine_mat_ref.horizontal_flip(), affine_mat_ref.vertical_flip(),
+                hw::sprites::setup_regular(builder, tiles_id, palette_ref.id(), palette_ref.bpp(),
+                                           affine_mat_ptr->horizontal_flip(), affine_mat_ptr->vertical_flip(),
                                            display_manager::blending_fade_enabled(), handle);
                 affine_mat.reset();
             }
             else
             {
-                int affine_mat_id = affine_mat_ref.id();
+                int affine_mat_id = affine_mat_ptr->id();
                 double_size = new_double_size(affine_mat_id);
-                hw::sprites::setup_affine(builder, tiles->id(), palette_ref.id(), palette_ref.bpp(),
+                hw::sprites::setup_affine(builder, tiles_id, palette_ref.id(), palette_ref.bpp(),
                                           display_manager::blending_fade_enabled(), handle);
                 hw::sprites::set_affine_mat(affine_mat_id, handle);
                 hw::sprites::show_affine(double_size, handle);
@@ -255,7 +254,7 @@ private:
         }
         else
         {
-            hw::sprites::setup_regular(builder, tiles->id(), palette_ref.id(), palette_ref.bpp(),
+            hw::sprites::setup_regular(builder, tiles_id, palette_ref.id(), palette_ref.bpp(),
                                        display_manager::blending_fade_enabled(), handle);
         }
 

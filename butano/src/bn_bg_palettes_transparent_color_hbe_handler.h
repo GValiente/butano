@@ -29,10 +29,12 @@ public:
 
     [[nodiscard]] static bool target_updated(intptr_t, iany&)
     {
-        if(optional<palettes_bank::commit_data> commit_data =
-                palettes_manager::bg_palettes_bank().retrieve_commit_data())
+        optional<palettes_bank::commit_data> commit_data =
+                palettes_manager::bg_palettes_bank().retrieve_commit_data();
+
+        if(palettes_bank::commit_data* commit_data_ptr = commit_data.get())
         {
-            return commit_data->offset == 0;
+            return commit_data_ptr->offset == 0;
         }
 
         return false;

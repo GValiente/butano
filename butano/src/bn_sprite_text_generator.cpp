@@ -31,22 +31,23 @@ namespace
             return nullptr;
         }
 
-        optional<sprite_tiles_ptr> tiles_ptr = sprite_tiles_ptr::allocate_optional(tiles_count, bpp_mode::BPP_4);
+        optional<sprite_tiles_ptr> tiles = sprite_tiles_ptr::allocate_optional(tiles_count, bpp_mode::BPP_4);
+        sprite_tiles_ptr* tiles_ptr = tiles.get();
 
         if(! tiles_ptr)
         {
             return nullptr;
         }
 
-        sprite_tiles_ptr& tiles_ptr_ref = *tiles_ptr;
-        optional<span<tile>> tiles_vram = tiles_ptr_ref.vram();
+        optional<span<tile>> tiles_vram = tiles_ptr->vram();
 
-        sprite_builder builder(shape_size, move(tiles_ptr_ref), palette);
+        sprite_builder builder(shape_size, move(*tiles_ptr), palette);
         builder.set_position(current_position);
         builder.set_bg_priority(generator.bg_priority());
         builder.set_z_order(generator.z_order());
 
-        optional<sprite_ptr> sprite_ptr = sprite_ptr::create_optional(move(builder));
+        optional<sprite_ptr> sprite = sprite_ptr::create_optional(move(builder));
+        sprite_ptr* sprite_ptr = sprite.get();
 
         if(! sprite_ptr)
         {
@@ -315,7 +316,8 @@ namespace
 
             if(allow_failure)
             {
-                optional<sprite_ptr> sprite_ptr = sprite_ptr::create_optional(move(builder));
+                optional<sprite_ptr> sprite = sprite_ptr::create_optional(move(builder));
+                sprite_ptr* sprite_ptr = sprite.get();
 
                 if(! sprite_ptr)
                 {
@@ -413,7 +415,8 @@ namespace
 
                 if(allow_failure)
                 {
-                    optional<sprite_ptr> sprite_ptr = sprite_ptr::create_optional(move(builder));
+                    optional<sprite_ptr> sprite = sprite_ptr::create_optional(move(builder));
+                    sprite_ptr* sprite_ptr = sprite.get();
 
                     if(! sprite_ptr)
                     {

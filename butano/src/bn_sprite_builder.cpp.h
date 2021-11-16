@@ -40,11 +40,17 @@ sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles
               "Invalid tiles count: ", _tiles->tiles_count(), " - ", _shape_size.tiles_count(_palette->bpp()));
 }
 
+fixed sprite_builder::rotation_angle() const
+{
+    const sprite_affine_mat_ptr* affine_mat = _affine_mat.get();
+    return affine_mat ? affine_mat->rotation_angle() : 0;
+}
+
 sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_rotation_angle(rotation_angle);
+        affine_mat->set_rotation_angle(rotation_angle);
     }
     else if(rotation_angle != 0)
     {
@@ -58,11 +64,17 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
     return *this;
 }
 
+fixed sprite_builder::horizontal_scale() const
+{
+    const sprite_affine_mat_ptr* affine_mat = _affine_mat.get();
+    return affine_mat ? affine_mat->horizontal_scale() : 1;
+}
+
 sprite_builder& sprite_builder::set_horizontal_scale(fixed horizontal_scale)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_horizontal_scale(horizontal_scale);
+        affine_mat->set_horizontal_scale(horizontal_scale);
     }
     else if(horizontal_scale != 1)
     {
@@ -76,11 +88,17 @@ sprite_builder& sprite_builder::set_horizontal_scale(fixed horizontal_scale)
     return *this;
 }
 
+fixed sprite_builder::vertical_scale() const
+{
+    const sprite_affine_mat_ptr* affine_mat = _affine_mat.get();
+    return affine_mat ? affine_mat->vertical_scale() : 1;
+}
+
 sprite_builder& sprite_builder::set_vertical_scale(fixed vertical_scale)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_vertical_scale(vertical_scale);
+        affine_mat->set_vertical_scale(vertical_scale);
     }
     else if(vertical_scale != 1)
     {
@@ -96,9 +114,9 @@ sprite_builder& sprite_builder::set_vertical_scale(fixed vertical_scale)
 
 sprite_builder& sprite_builder::set_scale(fixed scale)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_scale(scale);
+        affine_mat->set_scale(scale);
     }
     else if(scale != 1)
     {
@@ -114,9 +132,9 @@ sprite_builder& sprite_builder::set_scale(fixed scale)
 
 sprite_builder& sprite_builder::set_scale(fixed horizontal_scale, fixed vertical_scale)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_scale(horizontal_scale, vertical_scale);
+        affine_mat->set_scale(horizontal_scale, vertical_scale);
     }
     else if(horizontal_scale != 1 || vertical_scale != 1)
     {
@@ -130,11 +148,17 @@ sprite_builder& sprite_builder::set_scale(fixed horizontal_scale, fixed vertical
     return *this;
 }
 
+fixed sprite_builder::horizontal_shear() const
+{
+    const sprite_affine_mat_ptr* affine_mat = _affine_mat.get();
+    return affine_mat ? affine_mat->horizontal_shear() : 0;
+}
+
 sprite_builder& sprite_builder::set_horizontal_shear(fixed horizontal_shear)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_horizontal_shear(horizontal_shear);
+        affine_mat->set_horizontal_shear(horizontal_shear);
     }
     else if(horizontal_shear != 0)
     {
@@ -148,11 +172,17 @@ sprite_builder& sprite_builder::set_horizontal_shear(fixed horizontal_shear)
     return *this;
 }
 
+fixed sprite_builder::vertical_shear() const
+{
+    const sprite_affine_mat_ptr* affine_mat = _affine_mat.get();
+    return affine_mat ? affine_mat->vertical_shear() : 0;
+}
+
 sprite_builder& sprite_builder::set_vertical_shear(fixed vertical_shear)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_vertical_shear(vertical_shear);
+        affine_mat->set_vertical_shear(vertical_shear);
     }
     else if(vertical_shear != 0)
     {
@@ -168,9 +198,9 @@ sprite_builder& sprite_builder::set_vertical_shear(fixed vertical_shear)
 
 sprite_builder& sprite_builder::set_shear(fixed shear)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_shear(shear);
+        affine_mat->set_shear(shear);
     }
     else if(shear != 0)
     {
@@ -186,9 +216,9 @@ sprite_builder& sprite_builder::set_shear(fixed shear)
 
 sprite_builder& sprite_builder::set_shear(fixed horizontal_shear, fixed vertical_shear)
 {
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_shear(horizontal_shear, vertical_shear);
+        affine_mat->set_shear(horizontal_shear, vertical_shear);
     }
     else if(horizontal_shear != 0 || vertical_shear != 0)
     {
@@ -218,25 +248,37 @@ sprite_builder& sprite_builder::set_z_order(int z_order)
     return *this;
 }
 
+bool sprite_builder::horizontal_flip() const
+{
+    const sprite_affine_mat_ptr* affine_mat = _affine_mat.get();
+    return affine_mat ? affine_mat->horizontal_flip() : _horizontal_flip;
+}
+
 sprite_builder& sprite_builder::set_horizontal_flip(bool horizontal_flip)
 {
     _horizontal_flip = horizontal_flip;
 
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_horizontal_flip(horizontal_flip);
+        affine_mat->set_horizontal_flip(horizontal_flip);
     }
 
     return *this;
+}
+
+bool sprite_builder::vertical_flip() const
+{
+    const sprite_affine_mat_ptr* affine_mat = _affine_mat.get();
+    return affine_mat ? affine_mat->vertical_flip() : _vertical_flip;
 }
 
 sprite_builder& sprite_builder::set_vertical_flip(bool vertical_flip)
 {
     _vertical_flip = vertical_flip;
 
-    if(_affine_mat)
+    if(sprite_affine_mat_ptr* affine_mat = _affine_mat.get())
     {
-        _affine_mat->set_vertical_flip(vertical_flip);
+        affine_mat->set_vertical_flip(vertical_flip);
     }
 
     return *this;
@@ -280,35 +322,37 @@ optional<sprite_ptr> sprite_builder::release_build_optional()
 
 sprite_tiles_ptr sprite_builder::tiles() const
 {
-    if(_item)
+    if(const sprite_item* item = _item.get())
     {
-        return _item->tiles_item().create_tiles(_graphics_index);
+        return item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BN_ASSERT(_tiles, "Tiles have already been released");
+    const sprite_tiles_ptr* tiles = _tiles.get();
+    BN_ASSERT(tiles, "Tiles have been already released");
 
-    return *_tiles;
+    return *tiles;
 }
 
 sprite_palette_ptr sprite_builder::palette() const
 {
-    if(_item)
+    if(const sprite_item* item = _item.get())
     {
-        return _item->palette_item().create_palette();
+        return item->palette_item().create_palette();
     }
 
-    BN_ASSERT(_palette, "Palette has already been released");
+    const sprite_palette_ptr* palette = _palette.get();
+    BN_ASSERT(palette, "Palette has been already released");
 
-    return *_palette;
+    return *palette;
 }
 
 optional<sprite_tiles_ptr> sprite_builder::tiles_optional() const
 {
     optional<sprite_tiles_ptr> result;
 
-    if(_item)
+    if(const sprite_item* item = _item.get())
     {
-        result = _item->tiles_item().create_tiles_optional(_graphics_index);
+        result = item->tiles_item().create_tiles_optional(_graphics_index);
     }
     else
     {
@@ -322,9 +366,9 @@ optional<sprite_palette_ptr> sprite_builder::palette_optional() const
 {
     optional<sprite_palette_ptr> result;
 
-    if(_item)
+    if(const sprite_item* item = _item.get())
     {
-        result = _item->palette_item().create_palette_optional();
+        result = item->palette_item().create_palette_optional();
     }
     else
     {
@@ -336,28 +380,30 @@ optional<sprite_palette_ptr> sprite_builder::palette_optional() const
 
 sprite_tiles_ptr sprite_builder::release_tiles()
 {
-    if(_item)
+    if(const sprite_item* item = _item.get())
     {
-        return _item->tiles_item().create_tiles(_graphics_index);
+        return item->tiles_item().create_tiles(_graphics_index);
     }
 
-    BN_ASSERT(_tiles, "Tiles have already been released");
+    sprite_tiles_ptr* tiles = _tiles.get();
+    BN_ASSERT(tiles, "Tiles have been already released");
 
-    sprite_tiles_ptr result = move(*_tiles);
+    sprite_tiles_ptr result = move(*tiles);
     _tiles.reset();
     return result;
 }
 
 sprite_palette_ptr sprite_builder::release_palette()
 {
-    if(_item)
+    if(const sprite_item* item = _item.get())
     {
-        return _item->palette_item().create_palette();
+        return item->palette_item().create_palette();
     }
 
-    BN_ASSERT(_palette, "Palette has already been released");
+    sprite_palette_ptr* palette = _palette.get();
+    BN_ASSERT(palette, "Palette has been already released");
 
-    sprite_palette_ptr result = move(*_palette);
+    sprite_palette_ptr result = move(*palette);
     _palette.reset();
     return result;
 }
@@ -366,15 +412,15 @@ optional<sprite_tiles_ptr> sprite_builder::release_tiles_optional()
 {
     optional<sprite_tiles_ptr> result;
 
-    if(_item)
+    if(const sprite_item* item = _item.get())
     {
-        result = _item->tiles_item().create_tiles_optional(_graphics_index);
+        result = item->tiles_item().create_tiles_optional(_graphics_index);
     }
     else
     {
-        if(_tiles)
+        if(sprite_tiles_ptr* tiles = _tiles.get())
         {
-            result = move(*_tiles);
+            result = move(*tiles);
             _tiles.reset();
         }
     }
@@ -386,15 +432,15 @@ optional<sprite_palette_ptr> sprite_builder::release_palette_optional()
 {
     optional<sprite_palette_ptr> result;
 
-    if(_item)
+    if(const sprite_item* item = _item.get())
     {
-        result = _item->palette_item().create_palette_optional();
+        result = item->palette_item().create_palette_optional();
     }
     else
     {
-        if(_palette)
+        if(sprite_palette_ptr* palette = _palette.get())
         {
-            result = move(*_palette);
+            result = move(*palette);
             _palette.reset();
         }
     }
@@ -404,45 +450,29 @@ optional<sprite_palette_ptr> sprite_builder::release_palette_optional()
 
 sprite_builder& sprite_builder::set_affine_mat(const sprite_affine_mat_ptr& affine_mat)
 {
-    _affine_mat = affine_mat;
     _remove_affine_mat_when_not_needed = false;
+    _affine_mat = affine_mat;
     return *this;
 }
 
 sprite_builder& sprite_builder::set_affine_mat(sprite_affine_mat_ptr&& affine_mat)
 {
-    _affine_mat = move(affine_mat);
     _remove_affine_mat_when_not_needed = false;
+    _affine_mat = move(affine_mat);
     return *this;
 }
 
 sprite_builder& sprite_builder::set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
 {
-    if(affine_mat)
-    {
-        _affine_mat = affine_mat;
-        _remove_affine_mat_when_not_needed = false;
-    }
-    else
-    {
-        _affine_mat.reset();
-    }
-
+    _remove_affine_mat_when_not_needed = affine_mat.has_value();
+    _affine_mat = affine_mat;
     return *this;
 }
 
 sprite_builder& sprite_builder::set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
 {
-    if(affine_mat)
-    {
-        _affine_mat = move(affine_mat);
-        _remove_affine_mat_when_not_needed = false;
-    }
-    else
-    {
-        _affine_mat.reset();
-    }
-
+    _remove_affine_mat_when_not_needed = affine_mat.has_value();
+    _affine_mat = move(affine_mat);
     return *this;
 }
 

@@ -49,23 +49,24 @@ optional<affine_bg_ptr> affine_bg_builder::release_build_optional()
 
 affine_bg_map_ptr affine_bg_builder::map() const
 {
-    if(_item)
+    if(const affine_bg_item* item = _item.get())
     {
-        return _item->create_map();
+        return item->create_map();
     }
 
-    BN_ASSERT(_map, "Map has already been released");
+    const affine_bg_map_ptr* map = _map.get();
+    BN_ASSERT(map, "Map has been already released");
 
-    return *_map;
+    return *map;
 }
 
 optional<affine_bg_map_ptr> affine_bg_builder::map_optional() const
 {
     optional<affine_bg_map_ptr> result;
 
-    if(_item)
+    if(const affine_bg_item* item = _item.get())
     {
-        result = _item->create_map_optional();
+        result = item->create_map_optional();
     }
     else
     {
@@ -77,14 +78,15 @@ optional<affine_bg_map_ptr> affine_bg_builder::map_optional() const
 
 affine_bg_map_ptr affine_bg_builder::release_map()
 {
-    if(_item)
+    if(const affine_bg_item* item = _item.get())
     {
-        return _item->create_map();
+        return item->create_map();
     }
 
-    BN_ASSERT(_map, "Map has already been released");
+    affine_bg_map_ptr* map = _map.get();
+    BN_ASSERT(map, "Map has been already released");
 
-    affine_bg_map_ptr result = move(*_map);
+    affine_bg_map_ptr result = move(*map);
     _map.reset();
     return result;
 }
@@ -93,15 +95,15 @@ optional<affine_bg_map_ptr> affine_bg_builder::release_map_optional()
 {
     optional<affine_bg_map_ptr> result;
 
-    if(_item)
+    if(const affine_bg_item* item = _item.get())
     {
-        result = _item->create_map_optional();
+        result = item->create_map_optional();
     }
     else
     {
-        if(_map)
+        if(affine_bg_map_ptr* map = _map.get())
         {
-            result = move(*_map);
+            result = move(*map);
             _map.reset();
         }
     }

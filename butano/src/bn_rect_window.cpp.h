@@ -151,9 +151,9 @@ void rect_window::set_camera(camera_ptr&& camera)
 
 void rect_window::set_camera(const optional<camera_ptr>& camera)
 {
-    if(camera)
+    if(const camera_ptr* camera_ref = camera.get())
     {
-        display_manager::set_rect_window_camera(id(), camera_ptr(*camera));
+        display_manager::set_rect_window_camera(id(), camera_ptr(*camera_ref));
     }
     else
     {
@@ -163,9 +163,9 @@ void rect_window::set_camera(const optional<camera_ptr>& camera)
 
 void rect_window::set_camera(optional<camera_ptr>&& camera)
 {
-    if(camera)
+    if(camera_ptr* camera_ref = camera.get())
     {
-        display_manager::set_rect_window_camera(id(), move(*camera));
+        display_manager::set_rect_window_camera(id(), move(*camera_ref));
     }
     else
     {

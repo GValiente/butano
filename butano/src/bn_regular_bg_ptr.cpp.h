@@ -355,9 +355,9 @@ void regular_bg_ptr::set_camera(camera_ptr&& camera)
 
 void regular_bg_ptr::set_camera(const optional<camera_ptr>& camera)
 {
-    if(camera)
+    if(const camera_ptr* camera_ref = camera.get())
     {
-        bgs_manager::set_camera(_handle, camera_ptr(*camera));
+        bgs_manager::set_camera(_handle, camera_ptr(*camera_ref));
     }
     else
     {
@@ -367,9 +367,9 @@ void regular_bg_ptr::set_camera(const optional<camera_ptr>& camera)
 
 void regular_bg_ptr::set_camera(optional<camera_ptr>&& camera)
 {
-    if(camera)
+    if(camera_ptr* camera_ref = camera.get())
     {
-        bgs_manager::set_camera(_handle, move(*camera));
+        bgs_manager::set_camera(_handle, move(*camera_ref));
     }
     else
     {

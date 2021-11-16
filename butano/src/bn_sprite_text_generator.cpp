@@ -293,23 +293,23 @@ namespace
 
             const sprite_item& item = _generator.font().item();
             const sprite_tiles_item& tiles_item = item.tiles_item();
-            optional<sprite_tiles_ptr> source_tiles_ptr;
+            optional<sprite_tiles_ptr> source_tiles;
 
             if(allow_failure)
             {
-                source_tiles_ptr = sprite_tiles_ptr::create_optional(tiles_item, graphics_index);
+                source_tiles = sprite_tiles_ptr::create_optional(tiles_item, graphics_index);
 
-                if(! source_tiles_ptr)
+                if(! source_tiles)
                 {
                     return false;
                 }
             }
             else
             {
-                source_tiles_ptr = sprite_tiles_ptr::create(tiles_item, graphics_index);
+                source_tiles = sprite_tiles_ptr::create(tiles_item, graphics_index);
             }
 
-            sprite_builder builder(item.shape_size(), move(*source_tiles_ptr), _palette);
+            sprite_builder builder(item.shape_size(), move(*source_tiles), _palette);
             builder.set_position(_current_position);
             builder.set_bg_priority(_generator.bg_priority());
             builder.set_z_order(_generator.z_order());
@@ -392,23 +392,23 @@ namespace
 
                 const sprite_item& item = _generator.font().item();
                 const sprite_tiles_item& tiles_item = item.tiles_item();
-                optional<sprite_tiles_ptr> source_tiles_ptr;
+                optional<sprite_tiles_ptr> source_tiles;
 
                 if(allow_failure)
                 {
-                    source_tiles_ptr = sprite_tiles_ptr::create_optional(tiles_item, graphics_index);
+                    source_tiles = sprite_tiles_ptr::create_optional(tiles_item, graphics_index);
 
-                    if(! source_tiles_ptr)
+                    if(! source_tiles)
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    source_tiles_ptr = sprite_tiles_ptr::create(tiles_item, graphics_index);
+                    source_tiles = sprite_tiles_ptr::create(tiles_item, graphics_index);
                 }
 
-                sprite_builder builder(item.shape_size(), move(*source_tiles_ptr), _palette);
+                sprite_builder builder(item.shape_size(), move(*source_tiles), _palette);
                 builder.set_position(_current_position);
                 builder.set_bg_priority(_generator.bg_priority());
                 builder.set_z_order(_generator.z_order());
@@ -1030,12 +1030,14 @@ namespace
                    bool one_sprite_per_character, ivector<sprite_ptr>& output_sprites)
     {
         optional<sprite_palette_ptr> palette;
+        sprite_palette_ptr* palette_ptr;
 
         if(allow_failure)
         {
             palette = generator.palette_item().create_palette_optional();
+            palette_ptr = palette.get();
 
-            if(! palette)
+            if(! palette_ptr)
             {
                 return false;
             }
@@ -1043,6 +1045,7 @@ namespace
         else
         {
             palette = generator.palette_item().create_palette();
+            palette_ptr = palette.get();
         }
 
         fixed_point aligned_position = position;
@@ -1076,13 +1079,13 @@ namespace
             if(fixed_width)
             {
                 fixed_one_sprite_per_character_painter<allow_failure> painter(
-                            generator, move(*palette), aligned_position, max_character_width, output_sprites);
+                            generator, move(*palette_ptr), aligned_position, max_character_width, output_sprites);
                 success = _paint(text, utf8_characters_map, painter);
             }
             else
             {
                 variable_one_sprite_per_character_painter<allow_failure> painter(
-                            generator, move(*palette), aligned_position, max_character_width, output_sprites);
+                            generator, move(*palette_ptr), aligned_position, max_character_width, output_sprites);
                 success = _paint(text, utf8_characters_map, painter);
             }
         }
@@ -1095,20 +1098,20 @@ namespace
                     if(max_character_width == 8)
                     {
                         fixed_height_8_painter<8, allow_failure> painter(
-                                    generator, move(*palette), aligned_position, output_sprites);
+                                    generator, move(*palette_ptr), aligned_position, output_sprites);
                         success = _paint(text, utf8_characters_map, painter);
                     }
                     else
                     {
                         fixed_height_8_painter<16, allow_failure> painter(
-                                    generator, move(*palette), aligned_position, output_sprites);
+                                    generator, move(*palette_ptr), aligned_position, output_sprites);
                         success = _paint(text, utf8_characters_map, painter);
                     }
                 }
                 else
                 {
                     variable_8x8_painter<allow_failure> painter(
-                                generator, move(*palette), aligned_position, output_sprites);
+                                generator, move(*palette_ptr), aligned_position, output_sprites);
                     success = _paint(text, utf8_characters_map, painter);
                 }
             }
@@ -1119,13 +1122,13 @@ namespace
                     if(max_character_width == 8)
                     {
                         fixed_height_16_painter<8, allow_failure> painter(
-                                    generator, move(*palette), aligned_position, output_sprites);
+                                    generator, move(*palette_ptr), aligned_position, output_sprites);
                         success = _paint(text, utf8_characters_map, painter);
                     }
                     else
                     {
                         fixed_height_16_painter<16, allow_failure> painter(
-                                    generator, move(*palette), aligned_position, output_sprites);
+                                    generator, move(*palette_ptr), aligned_position, output_sprites);
                         success = _paint(text, utf8_characters_map, painter);
                     }
                 }
@@ -1134,13 +1137,13 @@ namespace
                     if(max_character_width == 8)
                     {
                         variable_8x16_painter<allow_failure> painter(
-                                    generator, move(*palette), aligned_position, output_sprites);
+                                    generator, move(*palette_ptr), aligned_position, output_sprites);
                         success = _paint(text, utf8_characters_map, painter);
                     }
                     else
                     {
                         variable_16x16_painter<allow_failure> painter(
-                                    generator, move(*palette), aligned_position, output_sprites);
+                                    generator, move(*palette_ptr), aligned_position, output_sprites);
                         success = _paint(text, utf8_characters_map, painter);
                     }
                 }

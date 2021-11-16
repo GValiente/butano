@@ -320,16 +320,19 @@ void regular_bg_map_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tile
                                                const bg_palette_item& palette_item)
 {
     optional<regular_bg_tiles_ptr> tiles = tiles_item.find_tiles();
+    regular_bg_tiles_ptr* tiles_ptr = tiles.get();
 
-    if(! tiles)
+    if(! tiles_ptr)
     {
         bg_blocks_manager::remove_regular_map_tiles(_handle);
         tiles = tiles_item.create_new_tiles();
+        tiles_ptr = tiles.get();
     }
 
     optional<bg_palette_ptr> palette = palette_item.find_palette();
+    bg_palette_ptr* palette_ptr = palette.get();
 
-    if(! palette)
+    if(! palette_ptr)
     {
         if(palette_item.bpp() == bpp_mode::BPP_4 || bpp() == bpp_mode::BPP_4)
         {
@@ -337,9 +340,10 @@ void regular_bg_map_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tile
         }
 
         palette = palette_item.create_new_palette();
+        palette_ptr = palette.get();
     }
 
-    bg_blocks_manager::set_regular_map_tiles_and_palette(_handle, move(*tiles), move(*palette));
+    bg_blocks_manager::set_regular_map_tiles_and_palette(_handle, move(*tiles_ptr), move(*palette_ptr));
 }
 
 optional<span<regular_bg_map_cell>> regular_bg_map_ptr::vram()

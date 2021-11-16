@@ -601,13 +601,14 @@ id_type create_optional(regular_bg_builder&& builder)
     }
 
     optional<regular_bg_map_ptr> map = builder.release_map_optional();
+    regular_bg_map_ptr* map_ptr = map.get();
 
-    if(! map)
+    if(! map_ptr)
     {
         return nullptr;
     }
 
-    item_type& item = data.items_pool.create(move(builder), move(*map));
+    item_type& item = data.items_pool.create(move(builder), move(*map_ptr));
     BN_ASSERT(_check_unique_regular_big_map(item), "Two or more regular BGs have the same big map");
 
     _insert_item(item);
@@ -622,13 +623,14 @@ id_type create_optional(affine_bg_builder&& builder)
     }
 
     optional<affine_bg_map_ptr> map = builder.release_map_optional();
+    affine_bg_map_ptr* map_ptr = map.get();
 
-    if(! map)
+    if(! map_ptr)
     {
         return nullptr;
     }
 
-    item_type& item = data.items_pool.create(move(builder), move(*map));
+    item_type& item = data.items_pool.create(move(builder), move(*map_ptr));
     BN_ASSERT(_check_unique_affine_big_map(item), "Two or more affine BGs have the same big map");
 
     _insert_item(item);

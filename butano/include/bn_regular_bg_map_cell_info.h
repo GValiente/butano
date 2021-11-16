@@ -127,8 +127,8 @@ public:
 
     /**
      * @brief Equal operator.
-     * @param a First unique_ptr to compare.
-     * @param b Second unique_ptr to compare.
+     * @param a First regular_bg_map_cell_info to compare.
+     * @param b Second regular_bg_map_cell_info to compare.
      * @return `true` if the first managed cell is equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator==(regular_bg_map_cell_info a, regular_bg_map_cell_info b)
@@ -138,8 +138,8 @@ public:
 
     /**
      * @brief Not equal operator.
-     * @param a First unique_ptr to compare.
-     * @param b Second unique_ptr to compare.
+     * @param a First regular_bg_map_cell_info to compare.
+     * @param b Second regular_bg_map_cell_info to compare.
      * @return `true` if the first managed cell is not equal to the second one, otherwise `false`.
      */
     [[nodiscard]] friend bool operator!=(regular_bg_map_cell_info a, regular_bg_map_cell_info b)

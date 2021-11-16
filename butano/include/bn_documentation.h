@@ -1768,6 +1768,7 @@
  * * bn::optional::get added.
  * * bn::bitset and bn::bitset_ref optimized (managed bits count now must be a multiple of 8).
  * * ROM usage reduced.
+ * * bn::regular_bg_map_cell_info documentation fixed.
  *
  *
  * @section changelog_8_4_0 8.4.0

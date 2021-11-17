@@ -1767,7 +1767,8 @@
  *
  * * bn::optional::get added.
  * * bn::bitset and bn::bitset_ref optimized (managed bits count now must be a multiple of 8).
- * * ROM usage reduced.
+ * * ROM usage reduced due to unnecessary internal asserts removed.
+ * * Blending hardware weights fixed.
  * * bn::regular_bg_map_cell_info documentation fixed.
  *
  *

@@ -71,6 +71,13 @@ namespace
 
     BN_DATA_EWRAM static_data data;
 
+    [[nodiscard]] pair<int, int> _blending_hw_weights(fixed top_weight, fixed bottom_weight)
+    {
+        int hw_top_weight = top_weight.data() >> 8;
+        int hw_bottom_weight = (1 - bottom_weight).data() >> 8;
+        return make_pair(hw_top_weight, 16 - hw_bottom_weight);
+    }
+
     void _update_rect_windows_hw_boundaries(int boundaries_index)
     {
         fixed_point window_boundaries = data.rect_windows_boundaries[boundaries_index];
@@ -361,9 +368,9 @@ void fill_blending_transparency_hblank_effect_attributes(
     for(int index = 0; index < display::height(); ++index)
     {
         const blending_transparency_attributes& attributes = blending_transparency_attributes_ptr[index];
-        int top_weight = attributes.transparency_top_weight().data() >> 8;
-        int bottom_weight = attributes.transparency_bottom_weight().data() >> 8;
-        hw::display::set_blending_transparency(top_weight, bottom_weight, dest_ptr[index]);
+        pair<int, int> hw_weights = _blending_hw_weights(
+                    attributes.transparency_top_weight(), attributes.transparency_bottom_weight());
+        hw::display::set_blending_transparency(hw_weights.first, hw_weights.second, dest_ptr[index]);
     }
 }
 
@@ -841,9 +848,10 @@ void update()
 
         if(data.commit_blending_transparency)
         {
-            int top_weight = blending_transparency_top_weight().data() >> 8;
-            int bottom_weight = blending_transparency_bottom_weight().data() >> 8;
-            hw::display::set_blending_transparency(top_weight, bottom_weight, data.blending_transparency_cnt);
+            pair<int, int> hw_weights = _blending_hw_weights(
+                        blending_transparency_top_weight(), blending_transparency_bottom_weight());
+            hw::display::set_blending_transparency(
+                        hw_weights.first, hw_weights.second, data.blending_transparency_cnt);
         }
     }
 }

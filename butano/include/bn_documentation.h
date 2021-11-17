@@ -1763,7 +1763,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_5_0 8.5.0 (next release)
+ * @section changelog_8_5_0 8.5.0
  *
  * * bn::optional::get added.
  * * bn::bitset and bn::bitset_ref optimized (managed bits count now must be a multiple of 8).

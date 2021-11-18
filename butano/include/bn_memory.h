@@ -459,38 +459,74 @@ namespace bn::memory
      * @brief Allocates uninitialized storage in EWRAM.
      * @param bytes Bytes to allocate.
      * @return On success, returns the pointer to the beginning of newly allocated memory.
-     * To avoid a memory leak, the returned pointer must be deallocated with bn::ewram_free.
-     * On failure, returns a null pointer.
+     * On failure, returns `nullptr`.
+     *
+     * To avoid a memory leak, the returned pointer must be deallocated with bn::memory::ewram_free.
      */
     [[nodiscard]] void* ewram_alloc(int bytes);
 
     /**
-     * @brief Deallocates the space previously allocated by bn::ewram_alloc.
-     * @param ptr Pointer to the memory to deallocate.
+     * @brief Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.
+     * @param bytes Bytes to allocate.
+     * @return On success, returns the pointer to the beginning of newly allocated memory.
+     * On failure, returns `nullptr`.
      *
-     * If ptr is a null pointer, the function does nothing.
+     * To avoid a memory leak, the returned pointer must be deallocated with bn::memory::ewram_free.
+     */
+    [[nodiscard]] void* ewram_calloc(int bytes);
+
+    /**
+     * @brief Reallocates the given storage in the EWRAM.
+     * @param ptr Pointer to the storage to reallocate.
      *
-     * If ptr was not previously allocated by bn::ewram_alloc, the behavior is undefined.
+     * If ptr was not previously allocated by bn::memory::ewram_alloc, bn::memory::ewram_calloc or
+     * bn::memory::ewram_realloc, the behavior is undefined.
+     *
+     * @param new_bytes New bytes count of the reallocated storage.
+     * @return On success, returns the pointer to the beginning of newly allocated storage.
+     * On failure, returns `nullptr`.
+     *
+     * On success, the original pointer ptr is invalidated and any access to it is undefined behavior
+     * (even if reallocation was in-place).
+     *
+     * To avoid a memory leak, the returned pointer must be deallocated with bn::memory::ewram_free.
+     */
+    [[nodiscard]] void* ewram_realloc(void* ptr, int new_bytes);
+
+    /**
+     * @brief Deallocates the storage previously allocated by bn::memory::ewram_alloc,
+     * bn::memory::ewram_calloc or bn::memory::ewram_realloc.
+     * @param ptr Pointer to the storage to deallocate.
+     * It is invalidated and any access to it is undefined behavior.
+     *
+     * If ptr is `nullptr`, the function does nothing.
+     *
+     * If ptr was not previously allocated by bn::memory::ewram_alloc, bn::memory::ewram_calloc or
+     * bn::memory::ewram_realloc, the behavior is undefined.
      */
     void ewram_free(void* ptr);
 
     /**
-     * @brief Returns the bytes of all allocated items in EWRAM with ewram_alloc.
+     * @brief Returns the bytes of all allocated items in EWRAM with bn::memory::ewram_alloc,
+     * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
      */
     [[nodiscard]] int used_alloc_ewram();
 
     /**
-     * @brief Returns the bytes that still can be allocated in EWRAM with ewram_alloc.
+     * @brief Returns the bytes that still can be allocated in EWRAM with bn::memory::ewram_alloc,
+     * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
      */
     [[nodiscard]] int available_alloc_ewram();
 
     /**
-     * @brief Returns the items allocated in EWRAM with ewram_alloc.
+     * @brief Returns the items allocated in EWRAM with bn::memory::ewram_alloc,
+     * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
      */
     [[nodiscard]] int used_items_ewram();
 
     /**
-     * @brief Returns the items that still can be allocated in EWRAM with ewram_alloc.
+     * @brief Returns the items that still can be allocated in EWRAM with bn::memory::ewram_alloc,
+     * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
      */
     [[nodiscard]] int available_items_ewram();
 

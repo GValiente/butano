@@ -64,6 +64,18 @@ namespace
         return size < items_it->size;
     };
 
+    [[nodiscard]] int _aligned_bytes(int bytes)
+    {
+        int alignment_bytes = sizeof(int);
+
+        if(int extra_bytes = bytes % alignment_bytes)
+        {
+            bytes += alignment_bytes - extra_bytes;
+        }
+
+        return bytes;
+    }
+
     void _insert_free_item(items_iterator items_it, ivector<items_iterator>::iterator free_items_last)
     {
         auto free_items_it = upper_bound(data.free_items.begin(), free_items_last, items_it->size,
@@ -109,14 +121,7 @@ void* ewram_alloc(int bytes)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
 
-    int alignment_bytes = sizeof(int);
-
-    if(int extra_bytes = bytes % alignment_bytes)
-    {
-        bytes += alignment_bytes - extra_bytes;
-    }
-
-    bytes += sizeof(items_iterator);
+    bytes = _aligned_bytes(bytes) + sizeof(items_iterator);
 
     if(bytes > data.free_bytes_count)
     {
@@ -159,6 +164,50 @@ void* ewram_alloc(int bytes)
     *items_it_ptr = items_it;
     data.free_bytes_count -= bytes;
     return items_it_ptr + 1;
+}
+
+void* ewram_calloc(int bytes)
+{
+    void* result = ewram_alloc(bytes);
+
+    if(result)
+    {
+        auto int_result = reinterpret_cast<int*>(result);
+        memory::clear(_aligned_bytes(bytes) / sizeof(int), *int_result);
+    }
+
+    return result;
+}
+
+void* ewram_realloc(void* ptr, int new_bytes)
+{
+    if(! ptr)
+    {
+        return ewram_alloc(new_bytes);
+    }
+
+    items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
+    items_iterator items_it = *items_it_ptr;
+    item_type& item = *items_it;
+    int old_bytes = item.size - sizeof(items_iterator);
+
+    if(new_bytes <= old_bytes)
+    {
+        return ptr;
+    }
+
+    void* new_ptr = ewram_alloc(new_bytes);
+
+    if(! new_ptr)
+    {
+        return nullptr;
+    }
+
+    auto old_ptr_data = reinterpret_cast<const int*>(ptr);
+    auto new_ptr_data = reinterpret_cast<int*>(new_ptr);
+    memory::copy(*old_ptr_data, old_bytes / 4, *new_ptr_data);
+    ewram_free(ptr);
+    return new_ptr;
 }
 
 void ewram_free(void* ptr)

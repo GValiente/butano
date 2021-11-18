@@ -2326,11 +2326,20 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">malloc</a>(</span><span class="m-doc-wrap">int bytes) -&gt; void*</span>
             </dt>
-            <dd>Allocates size bytes of uninitialized storage in the EWRAM.</dd>
+            <dd>Allocates uninitialized storage in EWRAM.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="group__std.html#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">calloc</a>(</span><span class="m-doc-wrap">int bytes) -&gt; void*</span>
+            </dt>
+            <dd>Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="group__std.html#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
+              int new_bytes) -&gt; void*</span>
+            </dt>
+            <dd>Reallocates the given storage in the EWRAM.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="group__std.html#ga6f8bf32a45558fc595672345f903ddce" class="m-doc">free</a>(</span><span class="m-doc-wrap">void* ptr)</span>
             </dt>
-            <dd>Deallocates the space previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>.</dd>
+            <dd>Deallocates the storage previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>, <a href="group__std.html#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">bn::<wbr />calloc</a> or <a href="group__std.html#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">bn::<wbr />realloc</a>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="group__std.html#ga83ace66ec8ad6ad00ab775e4797fefa0" class="m-doc">memcpy</a>(</span><span class="m-doc-wrap">void* destination,
               const void* source,

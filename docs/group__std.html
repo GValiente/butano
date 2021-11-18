@@ -100,11 +100,20 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">malloc</a>(</span><span class="m-doc-wrap">int bytes) -&gt; void*</span>
             </dt>
-            <dd>Allocates size bytes of uninitialized storage in the EWRAM.</dd>
+            <dd>Allocates uninitialized storage in EWRAM.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">calloc</a>(</span><span class="m-doc-wrap">int bytes) -&gt; void*</span>
+            </dt>
+            <dd>Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
+              int new_bytes) -&gt; void*</span>
+            </dt>
+            <dd>Reallocates the given storage in the EWRAM.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ga6f8bf32a45558fc595672345f903ddce" class="m-doc">free</a>(</span><span class="m-doc-wrap">void* ptr)</span>
             </dt>
-            <dd>Deallocates the space previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>.</dd>
+            <dd>Deallocates the storage previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>, <a href="group__std.html#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">bn::<wbr />calloc</a> or <a href="group__std.html#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">bn::<wbr />realloc</a>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ga83ace66ec8ad6ad00ab775e4797fefa0" class="m-doc">memcpy</a>(</span><span class="m-doc-wrap">void* destination,
               const void* source,
@@ -131,7 +140,7 @@
               <span class="m-doc-wrap-bumper">void* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc-self">malloc</a>(</span><span class="m-doc-wrap">int bytes)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__cstdlib_8h.html">&lt;bn_cstdlib.h&gt;</a></div>
             </h3>
-            <p>Allocates size bytes of uninitialized storage in the EWRAM.</p>
+            <p>Allocates uninitialized storage in EWRAM.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -139,23 +148,50 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">bytes</td>
-                  <td>Number of bytes to allocate.</td>
+                  <td>Bytes count to allocate.</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>The pointer to the beginning of the allocated memory if it could be allocated; <code>nullptr</code> otherwise.</td>
+                  <td>On success, returns the pointer to the beginning of newly allocated memory. On failure, returns <code>nullptr</code>.</td>
                 </tr>
               </tfoot>
             </table>
+<p>To avoid a memory leak, the returned pointer must be deallocated with <a href="group__std.html#ga6f8bf32a45558fc595672345f903ddce" class="m-doc">bn::<wbr />free</a>.</p>
           </div></section>
-          <section class="m-doc-details" id="ga6f8bf32a45558fc595672345f903ddce"><div>
+          <section class="m-doc-details" id="ga3fcd20ede638a84a5e3b7e1ad2d7e1a7"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6f8bf32a45558fc595672345f903ddce" class="m-doc-self">free</a>(</span><span class="m-doc-wrap">void* ptr)</span></span>
+              <span class="m-doc-wrap-bumper">void* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc-self">calloc</a>(</span><span class="m-doc-wrap">int bytes)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__cstdlib_8h.html">&lt;bn_cstdlib.h&gt;</a></div>
             </h3>
-            <p>Deallocates the space previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>.</p>
+            <p>Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bytes</td>
+                  <td>Bytes count to allocate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>On success, returns the pointer to the beginning of newly allocated memory. On failure, returns <code>nullptr</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>To avoid a memory leak, the returned pointer must be deallocated with <a href="group__std.html#ga6f8bf32a45558fc595672345f903ddce" class="m-doc">bn::<wbr />free</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga8ae419acf0fb9e2a512c68e7808773a9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc-self">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
+              int new_bytes)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__cstdlib_8h.html">&lt;bn_cstdlib.h&gt;</a></div>
+            </h3>
+            <p>Reallocates the given storage in the EWRAM.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -163,11 +199,40 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">ptr</td>
-                  <td>Pointer to the memory to deallocate.</td>
+                  <td>Pointer to the storage to reallocate.</td>
+                </tr>
+                <tr>
+                  <td>new_bytes</td>
+                  <td>New bytes count of the reallocated storage.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>On success, returns the pointer to the beginning of newly allocated storage. On failure, returns <code>nullptr</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If ptr was not previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>, <a href="group__std.html#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">bn::<wbr />calloc</a> or <a href="group__std.html#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">bn::<wbr />realloc</a>, the behavior is undefined.</p><p>On success, the original pointer ptr is invalidated and any access to it is undefined behavior (even if reallocation was in-place).</p><p>To avoid a memory leak, the returned pointer must be deallocated with <a href="group__std.html#ga6f8bf32a45558fc595672345f903ddce" class="m-doc">bn::<wbr />free</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga6f8bf32a45558fc595672345f903ddce"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6f8bf32a45558fc595672345f903ddce" class="m-doc-self">free</a>(</span><span class="m-doc-wrap">void* ptr)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__cstdlib_8h.html">&lt;bn_cstdlib.h&gt;</a></div>
+            </h3>
+            <p>Deallocates the storage previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>, <a href="group__std.html#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">bn::<wbr />calloc</a> or <a href="group__std.html#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">bn::<wbr />realloc</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Pointer to the storage to deallocate. It is invalidated and any access to it is undefined behavior.</td>
                 </tr>
               </tbody>
             </table>
-<p>If ptr is a null pointer, the function does nothing.</p><p>If ptr was not previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>, the behavior is undefined.</p>
+<p>If ptr is <code>nullptr</code>, the function does nothing.</p><p>If ptr was not previously allocated by <a href="group__std.html#ga3cd1eec75bdcdd00ae01789110740796" class="m-doc">bn::<wbr />malloc</a>, <a href="group__std.html#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">bn::<wbr />calloc</a> or <a href="group__std.html#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">bn::<wbr />realloc</a>, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="ga83ace66ec8ad6ad00ab775e4797fefa0"><div>
             <h3>

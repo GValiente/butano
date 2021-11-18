@@ -14,6 +14,10 @@ namespace bn::memory_manager
 
     [[nodiscard]] void* ewram_alloc(int bytes);
 
+    [[nodiscard]] void* ewram_calloc(int bytes);
+
+    [[nodiscard]] void* ewram_realloc(void* ptr, int new_bytes);
+
     void ewram_free(void* ptr);
 
     [[nodiscard]] int used_alloc_ewram();

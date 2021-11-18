@@ -90,6 +90,16 @@ void* ewram_alloc(int bytes)
     return memory_manager::ewram_alloc(bytes);
 }
 
+void* ewram_calloc(int bytes)
+{
+    return memory_manager::ewram_calloc(bytes);
+}
+
+void* ewram_realloc(void* ptr, int new_bytes)
+{
+    return memory_manager::ewram_realloc(ptr, new_bytes);
+}
+
 void ewram_free(void* ptr)
 {
     memory_manager::ewram_free(ptr);

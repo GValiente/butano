@@ -18,21 +18,56 @@
 namespace bn
 {
     /**
-     * @brief Allocates size bytes of uninitialized storage in the EWRAM.
-     * @param bytes Number of bytes to allocate.
-     * @return The pointer to the beginning of the allocated memory if it could be allocated; `nullptr` otherwise.
+     * @brief Allocates uninitialized storage in EWRAM.
+     * @param bytes Bytes count to allocate.
+     * @return On success, returns the pointer to the beginning of newly allocated memory.
+     * On failure, returns `nullptr`.
+     *
+     * To avoid a memory leak, the returned pointer must be deallocated with bn::free.
      *
      * @ingroup std
      */
     [[nodiscard]] void* malloc(int bytes);
 
     /**
-     * @brief Deallocates the space previously allocated by bn::malloc.
-     * @param ptr Pointer to the memory to deallocate.
+     * @brief Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.
+     * @param bytes Bytes count to allocate.
+     * @return On success, returns the pointer to the beginning of newly allocated memory.
+     * On failure, returns `nullptr`.
      *
-     * If ptr is a null pointer, the function does nothing.
+     * To avoid a memory leak, the returned pointer must be deallocated with bn::free.
      *
-     * If ptr was not previously allocated by bn::malloc, the behavior is undefined.
+     * @ingroup std
+     */
+    [[nodiscard]] void* calloc(int bytes);
+
+    /**
+     * @brief Reallocates the given storage in the EWRAM.
+     * @param ptr Pointer to the storage to reallocate.
+     *
+     * If ptr was not previously allocated by bn::malloc, bn::calloc or bn::realloc, the behavior is undefined.
+     *
+     * @param new_bytes New bytes count of the reallocated storage.
+     * @return On success, returns the pointer to the beginning of newly allocated storage.
+     * On failure, returns `nullptr`.
+     *
+     * On success, the original pointer ptr is invalidated and any access to it is undefined behavior
+     * (even if reallocation was in-place).
+     *
+     * To avoid a memory leak, the returned pointer must be deallocated with bn::free.
+     *
+     * @ingroup std
+     */
+    [[nodiscard]] void* realloc(void* ptr, int new_bytes);
+
+    /**
+     * @brief Deallocates the storage previously allocated by bn::malloc, bn::calloc or bn::realloc.
+     * @param ptr Pointer to the storage to deallocate.
+     * It is invalidated and any access to it is undefined behavior.
+     *
+     * If ptr is `nullptr`, the function does nothing.
+     *
+     * If ptr was not previously allocated by bn::malloc, bn::calloc or bn::realloc, the behavior is undefined.
      *
      * @ingroup std
      */

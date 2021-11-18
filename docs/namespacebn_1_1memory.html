@@ -70,25 +70,34 @@
             </dt>
             <dd>Allocates uninitialized storage in EWRAM.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">ewram_calloc</a>(</span><span class="m-doc-wrap">int bytes) -&gt; void*</span>
+            </dt>
+            <dd>Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">ewram_realloc</a>(</span><span class="m-doc-wrap">void* ptr,
+              int new_bytes) -&gt; void*</span>
+            </dt>
+            <dd>Reallocates the given storage in the EWRAM.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a2af655e2dbf61b4d1b894fc7120ebaf0" class="m-doc">ewram_free</a>(</span><span class="m-doc-wrap">void* ptr)</span>
             </dt>
-            <dd>Deallocates the space previously allocated by bn::ewram_alloc.</dd>
+            <dd>Deallocates the storage previously allocated by <a href="namespacebn_1_1memory.html#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">bn::<wbr />memory::<wbr />ewram_alloc</a>, <a href="namespacebn_1_1memory.html#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">bn::<wbr />memory::<wbr />ewram_calloc</a> or <a href="namespacebn_1_1memory.html#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">bn::<wbr />memory::<wbr />ewram_realloc</a>.</dd>
             <dt id="a39be6f4fc5b0043846b3839d197686f3">
               <span class="m-doc-wrap-bumper">auto <a href="#a39be6f4fc5b0043846b3839d197686f3" class="m-doc-self">used_alloc_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
-            <dd>Returns the bytes of all allocated items in EWRAM with ewram_alloc.</dd>
+            <dd>Returns the bytes of all allocated items in EWRAM with <a href="namespacebn_1_1memory.html#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">bn::<wbr />memory::<wbr />ewram_alloc</a>, <a href="namespacebn_1_1memory.html#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">bn::<wbr />memory::<wbr />ewram_calloc</a> and <a href="namespacebn_1_1memory.html#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">bn::<wbr />memory::<wbr />ewram_realloc</a>.</dd>
             <dt id="a51471d0a930a0ff5461aca26c7dd3211">
               <span class="m-doc-wrap-bumper">auto <a href="#a51471d0a930a0ff5461aca26c7dd3211" class="m-doc-self">available_alloc_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
-            <dd>Returns the bytes that still can be allocated in EWRAM with ewram_alloc.</dd>
+            <dd>Returns the bytes that still can be allocated in EWRAM with <a href="namespacebn_1_1memory.html#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">bn::<wbr />memory::<wbr />ewram_alloc</a>, <a href="namespacebn_1_1memory.html#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">bn::<wbr />memory::<wbr />ewram_calloc</a> and <a href="namespacebn_1_1memory.html#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">bn::<wbr />memory::<wbr />ewram_realloc</a>.</dd>
             <dt id="a0d8b7f2c440409eb066a053253eec435">
               <span class="m-doc-wrap-bumper">auto <a href="#a0d8b7f2c440409eb066a053253eec435" class="m-doc-self">used_items_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
-            <dd>Returns the items allocated in EWRAM with ewram_alloc.</dd>
+            <dd>Returns the items allocated in EWRAM with <a href="namespacebn_1_1memory.html#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">bn::<wbr />memory::<wbr />ewram_alloc</a>, <a href="namespacebn_1_1memory.html#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">bn::<wbr />memory::<wbr />ewram_calloc</a> and <a href="namespacebn_1_1memory.html#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">bn::<wbr />memory::<wbr />ewram_realloc</a>.</dd>
             <dt id="a09aeb85857e1dc7f8324da39b6e53955">
               <span class="m-doc-wrap-bumper">auto <a href="#a09aeb85857e1dc7f8324da39b6e53955" class="m-doc-self">available_items_ewram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
-            <dd>Returns the items that still can be allocated in EWRAM with ewram_alloc.</dd>
+            <dd>Returns the items that still can be allocated in EWRAM with <a href="namespacebn_1_1memory.html#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">bn::<wbr />memory::<wbr />ewram_alloc</a>, <a href="namespacebn_1_1memory.html#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">bn::<wbr />memory::<wbr />ewram_calloc</a> and <a href="namespacebn_1_1memory.html#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">bn::<wbr />memory::<wbr />ewram_realloc</a>.</dd>
             <dt id="a0d18408ebe87f9a35fe7ccd7dbd4f23a">
               <span class="m-doc-wrap-bumper">auto <a href="#a0d18408ebe87f9a35fe7ccd7dbd4f23a" class="m-doc-self">used_stack_iwram</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
@@ -161,16 +170,42 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>On success, returns the pointer to the beginning of newly allocated memory. To avoid a memory leak, the returned pointer must be deallocated with bn::ewram_free. On failure, returns a null pointer.</td>
+                  <td>On success, returns the pointer to the beginning of newly allocated memory. On failure, returns <code>nullptr</code>.</td>
                 </tr>
               </tfoot>
             </table>
+<p>To avoid a memory leak, the returned pointer must be deallocated with <a href="namespacebn_1_1memory.html#a2af655e2dbf61b4d1b894fc7120ebaf0" class="m-doc">bn::<wbr />memory::<wbr />ewram_free</a>.</p>
           </div></section>
-          <section class="m-doc-details" id="a2af655e2dbf61b4d1b894fc7120ebaf0"><div>
+          <section class="m-doc-details" id="a772d8d05aae2d3acc8e0b7ecf55e5242"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2af655e2dbf61b4d1b894fc7120ebaf0" class="m-doc-self">ewram_free</a>(</span><span class="m-doc-wrap">void* ptr)</span></span>
+              <span class="m-doc-wrap-bumper">void* bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc-self">ewram_calloc</a>(</span><span class="m-doc-wrap">int bytes)</span></span>
             </h3>
-            <p>Deallocates the space previously allocated by bn::ewram_alloc.</p>
+            <p>Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bytes</td>
+                  <td>Bytes to allocate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>On success, returns the pointer to the beginning of newly allocated memory. On failure, returns <code>nullptr</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>To avoid a memory leak, the returned pointer must be deallocated with <a href="namespacebn_1_1memory.html#a2af655e2dbf61b4d1b894fc7120ebaf0" class="m-doc">bn::<wbr />memory::<wbr />ewram_free</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab88bbdb6d04bef907e2d58b998c824dc"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void* bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc-self">ewram_realloc</a>(</span><span class="m-doc-wrap">void* ptr,
+              int new_bytes)</span></span>
+            </h3>
+            <p>Reallocates the given storage in the EWRAM.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -178,11 +213,39 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">ptr</td>
-                  <td>Pointer to the memory to deallocate.</td>
+                  <td>Pointer to the storage to reallocate.</td>
+                </tr>
+                <tr>
+                  <td>new_bytes</td>
+                  <td>New bytes count of the reallocated storage.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>On success, returns the pointer to the beginning of newly allocated storage. On failure, returns <code>nullptr</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If ptr was not previously allocated by <a href="namespacebn_1_1memory.html#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">bn::<wbr />memory::<wbr />ewram_alloc</a>, <a href="namespacebn_1_1memory.html#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">bn::<wbr />memory::<wbr />ewram_calloc</a> or <a href="namespacebn_1_1memory.html#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">bn::<wbr />memory::<wbr />ewram_realloc</a>, the behavior is undefined.</p><p>On success, the original pointer ptr is invalidated and any access to it is undefined behavior (even if reallocation was in-place).</p><p>To avoid a memory leak, the returned pointer must be deallocated with <a href="namespacebn_1_1memory.html#a2af655e2dbf61b4d1b894fc7120ebaf0" class="m-doc">bn::<wbr />memory::<wbr />ewram_free</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2af655e2dbf61b4d1b894fc7120ebaf0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2af655e2dbf61b4d1b894fc7120ebaf0" class="m-doc-self">ewram_free</a>(</span><span class="m-doc-wrap">void* ptr)</span></span>
+            </h3>
+            <p>Deallocates the storage previously allocated by <a href="namespacebn_1_1memory.html#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">bn::<wbr />memory::<wbr />ewram_alloc</a>, <a href="namespacebn_1_1memory.html#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">bn::<wbr />memory::<wbr />ewram_calloc</a> or <a href="namespacebn_1_1memory.html#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">bn::<wbr />memory::<wbr />ewram_realloc</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Pointer to the storage to deallocate. It is invalidated and any access to it is undefined behavior.</td>
                 </tr>
               </tbody>
             </table>
-<p>If ptr is a null pointer, the function does nothing.</p><p>If ptr was not previously allocated by bn::ewram_alloc, the behavior is undefined.</p>
+<p>If ptr is <code>nullptr</code>, the function does nothing.</p><p>If ptr was not previously allocated by <a href="namespacebn_1_1memory.html#a0e15ce0e3a49a5bf788a03df92c03b39" class="m-doc">bn::<wbr />memory::<wbr />ewram_alloc</a>, <a href="namespacebn_1_1memory.html#a772d8d05aae2d3acc8e0b7ecf55e5242" class="m-doc">bn::<wbr />memory::<wbr />ewram_calloc</a> or <a href="namespacebn_1_1memory.html#ab88bbdb6d04bef907e2d58b998c824dc" class="m-doc">bn::<wbr />memory::<wbr />ewram_realloc</a>, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="a6b84181b5e8e1eca783b61f1b0c782ea"><div>
             <h3>

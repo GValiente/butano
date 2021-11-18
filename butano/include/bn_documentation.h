@@ -1763,6 +1763,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_8_6_0 8.6.0 (next release)
+ *
+ * bn::calloc, bn::realloc, bn::memory::ewram_calloc and bn::memory::ewram_realloc added.
+ *
+ *
  * @section changelog_8_5_0 8.5.0
  *
  * * bn::optional::get added.

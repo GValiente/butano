@@ -12,6 +12,16 @@ void* malloc(std::size_t bytes)
     return bn::malloc(int(bytes));
 }
 
+void* calloc(std::size_t bytes)
+{
+    return bn::calloc(int(bytes));
+}
+
+void* realloc(void* ptr, std::size_t new_bytes)
+{
+    return bn::realloc(ptr, int(new_bytes));
+}
+
 void free(void* ptr)
 {
     bn::free(ptr);

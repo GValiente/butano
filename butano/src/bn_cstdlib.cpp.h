@@ -15,6 +15,16 @@ void* malloc(int bytes)
     return memory_manager::ewram_alloc(bytes);
 }
 
+void* calloc(int bytes)
+{
+    return memory_manager::ewram_calloc(bytes);
+}
+
+void* realloc(void* ptr, int new_bytes)
+{
+    return memory_manager::ewram_realloc(ptr, new_bytes);
+}
+
 void free(void* ptr)
 {
     memory_manager::ewram_free(ptr);

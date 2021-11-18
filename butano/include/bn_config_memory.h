@@ -19,7 +19,8 @@
  * @def BN_CFG_MEMORY_MAX_EWRAM_ALLOC_ITEMS
  *
  * Specifies the maximum number of memory blocks that can be allocated in EWRAM with
- * bn::malloc, bn::memory::ewram_alloc and the new operator.
+ * bn::malloc, bn::calloc, bn::realloc, bn::memory::ewram_alloc, bn::memory::ewram_calloc,
+ * bn::memory::ewram_realloc and the `new` operator.
  *
  * @ingroup memory
  */

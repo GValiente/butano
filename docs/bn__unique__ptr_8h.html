@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn_memory.h file | Butano Docs</title>
+  <title>bn_unique_ptr.h file | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,7 +47,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          bn_memory.h <span class="m-thin">file</span>
+          bn_unique_ptr.h <span class="m-thin">file</span>
         </h1>
         <div class="m-block m-default">
           <h3>Contents</h3>
@@ -56,18 +56,32 @@
               Reference
               <ul>
                 <li><a href="#namespaces">Namespaces</a></li>
+                <li><a href="#nested-classes">Classes</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p><a href="classbn_1_1unique__ptr.html" class="m-doc">bn::<wbr />unique_ptr</a> and memory functions header file.</p>
+<p><a href="classbn_1_1unique__ptr.html" class="m-doc">bn::<wbr />unique_ptr</a> implementation header file.</p>
         <section id="namespaces">
           <h2><a href="#namespaces">Namespaces</a></h2>
           <dl class="m-doc">
             <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
             <dd>Main Butano namespace.</dd>
-            <dt>namespace <a href="namespacebn_1_1memory.html" class="m-doc">bn::memory</a></dt>
-            <dd>Memory related functions.</dd>
+          </dl>
+        </section>
+        <section id="nested-classes">
+          <h2><a href="#nested-classes">Classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, typename Deleter&gt;</div>
+              class <a href="classbn_1_1unique__ptr.html" class="m-doc">bn::unique_ptr</a>
+            </dt>
+            <dd>Smart pointer that owns and manages another object through a pointer and disposes of that object when the <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> goes out of scope.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, typename Deleter&gt;</div>
+              struct <a href="structbn_1_1hash_3_01unique__ptr_3_01_type_00_01_deleter_01_4_01_4.html" class="m-doc">bn::hash&lt;unique_ptr&lt;Type, Deleter&gt;&gt;</a>
+            </dt>
+            <dd>Hash support for <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>.</dd>
           </dl>
         </section>
       </div>

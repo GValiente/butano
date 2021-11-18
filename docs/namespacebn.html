@@ -2200,10 +2200,10 @@
             </dt>
             <dd>Unique type ID without RTTI.</dd>
             <dt>
-              <div class="m-doc-template">template&lt;typename Type, typename Deleter = <a href="structbn_1_1default__delete.html" class="m-doc">default_<wbr />delete</a>&lt;Type&gt;&gt;</div>
+              <div class="m-doc-template">template&lt;typename Type, typename Deleter&gt;</div>
               class <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_ptr</a>
             </dt>
-            <dd>std::shared_ptr like smart pointer that owns and manages another object through a pointer and disposes of that object when the <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> goes out of scope.</dd>
+            <dd>Smart pointer that owns and manages another object through a pointer and disposes of that object when the <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> goes out of scope.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;</div>
               class <a href="classbn_1_1unordered__map.html" class="m-doc">unordered_map</a>
@@ -2467,11 +2467,6 @@
             <dd>Calculates the reciprocal of a value using a LUT.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type, class... Args&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="group__unique__ptr.html#gabb3bd50b9e50580a3ccf56fd4a8d91cd" class="m-doc">make_unique</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;Type&gt;</span>
-            </dt>
-            <dd>Constructs an object and wraps it in a <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename Type, class... Args&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__optional.html#ga609c7192a6c7898fe5131440a817ff66" class="m-doc">make_optional</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;Type&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructs an object and wraps it in a optional.</dd>
@@ -2644,6 +2639,11 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ad53e30290510c19fbc9c40abffc95408" class="m-doc">type_id</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1type__id__t.html" class="m-doc">type_<wbr />id_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the <a href="classbn_1_1type__id__t.html" class="m-doc">type_<wbr />id_<wbr />t</a> of the specified type.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, class... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="group__unique__ptr.html#gabb3bd50b9e50580a3ccf56fd4a8d91cd" class="m-doc">make_unique</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;Type&gt;</span>
+            </dt>
+            <dd>Constructs an object and wraps it in a <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type1, typename Type2&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__utility.html#gaf21f14ffe1032f10bde040e0afe71f86" class="m-doc">make_pair</a>(</span><span class="m-doc-wrap">Type1&amp;&amp; x,

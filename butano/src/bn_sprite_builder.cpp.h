@@ -327,10 +327,7 @@ sprite_tiles_ptr sprite_builder::tiles() const
         return item->tiles_item().create_tiles(_graphics_index);
     }
 
-    const sprite_tiles_ptr* tiles = _tiles.get();
-    BN_ASSERT(tiles, "Tiles have been already released");
-
-    return *tiles;
+    return *_tiles;
 }
 
 sprite_palette_ptr sprite_builder::palette() const
@@ -340,10 +337,7 @@ sprite_palette_ptr sprite_builder::palette() const
         return item->palette_item().create_palette();
     }
 
-    const sprite_palette_ptr* palette = _palette.get();
-    BN_ASSERT(palette, "Palette has been already released");
-
-    return *palette;
+    return *_palette;
 }
 
 optional<sprite_tiles_ptr> sprite_builder::tiles_optional() const
@@ -385,10 +379,7 @@ sprite_tiles_ptr sprite_builder::release_tiles()
         return item->tiles_item().create_tiles(_graphics_index);
     }
 
-    sprite_tiles_ptr* tiles = _tiles.get();
-    BN_ASSERT(tiles, "Tiles have been already released");
-
-    sprite_tiles_ptr result = move(*tiles);
+    sprite_tiles_ptr result = move(*_tiles);
     _tiles.reset();
     return result;
 }
@@ -400,10 +391,7 @@ sprite_palette_ptr sprite_builder::release_palette()
         return item->palette_item().create_palette();
     }
 
-    sprite_palette_ptr* palette = _palette.get();
-    BN_ASSERT(palette, "Palette has been already released");
-
-    sprite_palette_ptr result = move(*palette);
+    sprite_palette_ptr result = move(*_palette);
     _palette.reset();
     return result;
 }

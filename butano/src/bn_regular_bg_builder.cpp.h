@@ -54,10 +54,7 @@ regular_bg_map_ptr regular_bg_builder::map() const
         return item->create_map();
     }
 
-    const regular_bg_map_ptr* map = _map.get();
-    BN_ASSERT(map, "Map has been already released");
-
-    return *map;
+    return *_map;
 }
 
 optional<regular_bg_map_ptr> regular_bg_builder::map_optional() const
@@ -83,10 +80,7 @@ regular_bg_map_ptr regular_bg_builder::release_map()
         return item->create_map();
     }
 
-    regular_bg_map_ptr* map = _map.get();
-    BN_ASSERT(map, "Map has been already released");
-
-    regular_bg_map_ptr result = move(*map);
+    regular_bg_map_ptr result = move(*_map);
     _map.reset();
     return result;
 }

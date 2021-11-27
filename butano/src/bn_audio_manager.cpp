@@ -238,7 +238,7 @@ bool music_paused()
 void pause_music()
 {
     BN_ASSERT(data.music_playing, "There's no music playing");
-    BN_ASSERT(! data.music_paused, "Music was already paused");
+    BN_ASSERT(! data.music_paused, "Music is already paused");
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_pause());
@@ -247,7 +247,7 @@ void pause_music()
 
 void resume_music()
 {
-    BN_ASSERT(data.music_paused, "Music was not paused");
+    BN_ASSERT(data.music_paused, "Music is not paused");
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_resume());

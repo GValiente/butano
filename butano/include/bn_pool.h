@@ -65,7 +65,8 @@ public:
      */
     [[nodiscard]] bool contains(const Type& value) const
     {
-        return base_type::_contains(value);
+        auto ptr = reinterpret_cast<const char*>(&value);
+        return base_type::_contains_ptr(ptr);
     }
 
     /**

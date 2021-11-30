@@ -1778,6 +1778,7 @@
  *
  * * bn::calloc, bn::realloc, bn::memory::ewram_calloc and bn::memory::ewram_realloc added.
  * * bn::unique_ptr moved to its own header files.
+ * * bn::pool and bn::generic_pool ROM usage reduced.
  * * Asserts disabled build warnings fixed.
  * * @ref faq page improved.
  *

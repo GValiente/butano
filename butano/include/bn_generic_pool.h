@@ -44,33 +44,85 @@
 namespace bn
 {
 
-template<int MaxElementSize>
-class igeneric_pool
+/**
+ * @brief Base class of igeneric_pool.
+ *
+ * @ingroup pool
+ */
+class igeneric_pool_base
 {
 
 public:
-    using size_type = int; //!< Size type alias.
+    igeneric_pool_base(const igeneric_pool_base&) = delete;
 
-    igeneric_pool(const igeneric_pool&) = delete;
-
-    igeneric_pool& operator=(const igeneric_pool&) = delete;
+    igeneric_pool_base& operator=(const igeneric_pool_base&) = delete;
 
     /**
      * @brief Destructor.
      *
      * It doesn't destroy its elements, they must be destroyed manually.
      */
-    ~igeneric_pool() noexcept
+    ~igeneric_pool_base() noexcept;
+
+protected:
+    /// @cond DO_NOT_DOCUMENT
+
+    using size_type = int;
+
+    char* _buffer;
+    char* _next_ptr;
+    size_type _max_size;
+    size_type _allocated_items_count = 0;
+    size_type _initialised_items_count = 0;
+
+    igeneric_pool_base(char* buffer, size_type max_size);
+
+    [[nodiscard]] size_type size() const
     {
-        BN_ASSERT(empty(), "Pool is not empty");
+        return _allocated_items_count;
     }
+
+    [[nodiscard]] size_type max_size() const
+    {
+        return _max_size;
+    }
+
+    [[nodiscard]] size_type available() const
+    {
+        return _max_size - _allocated_items_count;
+    }
+
+    [[nodiscard]] bool empty() const
+    {
+        return _allocated_items_count == 0;
+    }
+
+    [[nodiscard]] bool full() const
+    {
+        return _allocated_items_count == _max_size;
+    }
+
+    [[nodiscard]] char* _allocate();
+
+    void _free(char* ptr);
+
+    /// @endcond
+};
+
+
+template<int MaxElementSize>
+class igeneric_pool : public igeneric_pool_base
+{
+
+public:
+    using size_type = igeneric_pool_base::size_type; //!< Size type alias.
 
     /**
      * @brief Returns the current elements count.
      */
     [[nodiscard]] size_type size() const
     {
-        return _allocated_items_count;
+        return igeneric_pool_base::size();
     }
 
     /**
@@ -78,7 +130,7 @@ public:
      */
     [[nodiscard]] size_type max_size() const
     {
-        return _max_size;
+        return igeneric_pool_base::max_size();
     }
 
     /**
@@ -86,7 +138,7 @@ public:
      */
     [[nodiscard]] size_type available() const
     {
-        return _max_size - _allocated_items_count;
+        return igeneric_pool_base::available();
     }
 
     /**
@@ -94,7 +146,7 @@ public:
      */
     [[nodiscard]] bool empty() const
     {
-        return _allocated_items_count == 0;
+        return igeneric_pool_base::empty();
     }
 
     /**
@@ -102,7 +154,7 @@ public:
      */
     [[nodiscard]] bool full() const
     {
-        return _allocated_items_count == _max_size;
+        return igeneric_pool_base::full();
     }
 
     /**
@@ -116,7 +168,6 @@ public:
     [[nodiscard]] Type& create(Args&&... args)
     {
         static_assert(sizeof(Type) <= MaxElementSize);
-        BN_ASSERT(! full(), "Pool is full");
 
         auto result = reinterpret_cast<Type*>(_allocate());
         ::new(result) Type(forward<Args>(args)...);
@@ -130,82 +181,44 @@ public:
     void destroy(Type& value)
     {
         static_assert(sizeof(Type) <= MaxElementSize);
-        BN_ASSERT(_contains(value), "Pool does not contain this value");
+
+        auto ptr = reinterpret_cast<char*>(&value);
+        BN_ASSERT(_contains_ptr(ptr), "Pool does not contain this value");
 
         value.~Type();
-        _free(reinterpret_cast<char*>(&value));
+        _free(ptr);
     }
 
 protected:
     /// @cond DO_NOT_DOCUMENT
 
     igeneric_pool(char* buffer, size_type max_size) :
-        _buffer(buffer),
-        _next_ptr(buffer),
-        _max_size(max_size),
-        _allocated_items_count(0),
-        _initialised_items_count(0)
+        igeneric_pool_base(buffer, max_size)
     {
     }
 
-    template<typename Type>
-    [[nodiscard]] bool _contains(const Type& value) const
+    [[nodiscard]] bool _contains_ptr(const char* ptr) const
     {
-        auto ptr = reinterpret_cast<const char*>(&value);
         ptrdiff_t index = ptr - _buffer;
         return index >= 0 && index <= (MaxElementSize * _max_size) - MaxElementSize;
     }
 
     [[nodiscard]] char* _allocate()
     {
-        if(_initialised_items_count < _max_size)
+        size_type initialised_count = _initialised_items_count;
+
+        if(initialised_count < _max_size)
         {
             char* ptr = _buffer + (_initialised_items_count * MaxElementSize);
             char* next_ptr = ptr + MaxElementSize;
             *reinterpret_cast<char**>(ptr) = next_ptr;
-            ++_initialised_items_count;
+            _initialised_items_count = initialised_count + 1;
         }
 
-        char* result = _next_ptr;
-        ++_allocated_items_count;
-
-        if(_allocated_items_count != _max_size)
-        {
-            _next_ptr = *reinterpret_cast<char**>(_next_ptr);
-        }
-        else
-        {
-            _next_ptr = nullptr;
-        }
-
-        return result;
-    }
-
-    void _free(char* ptr)
-    {
-        auto typed_ptr = reinterpret_cast<uintptr_t*>(ptr);
-
-        if(_next_ptr)
-        {
-            *typed_ptr = reinterpret_cast<uintptr_t>(_next_ptr);
-        }
-        else
-        {
-            *typed_ptr = 0;
-        }
-
-        _next_ptr = ptr;
-        --_allocated_items_count;
+        return igeneric_pool_base::_allocate();
     }
 
     /// @endcond
-
-private:
-    char* _buffer;
-    char* _next_ptr;
-    size_type _max_size;
-    size_type _allocated_items_count;
-    size_type _initialised_items_count;
 };
 
 
@@ -246,7 +259,8 @@ public:
     template<typename Type>
     [[nodiscard]] bool contains(const Type& value) const
     {
-        return base_type::_contains(value);
+        auto ptr = reinterpret_cast<const char*>(&value);
+        return base_type::_contains_ptr(ptr);
     }
 
     /**

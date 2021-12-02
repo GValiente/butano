@@ -13,7 +13,8 @@
  * @ingroup other
  */
 
-#include "bn_common.h"
+#include "bn_fixed.h"
+#include "bn_assert.h"
 
 namespace bn
 {
@@ -32,7 +33,8 @@ class random
 
 public:
     /**
-     * @brief Returns a new random unsigned integer, modifying its internal seed in the process.
+     * @brief Returns a random unsigned integer greater or equal than 0,
+     * modifying its internal seed in the process.
      */
     [[nodiscard]] constexpr unsigned get()
     {
@@ -45,6 +47,86 @@ public:
         _y = _z;
         _z = t ^ _x ^ _y;
         return _z;
+    }
+
+    /**
+     * @brief Returns a random signed integer greater or equal than 0,
+     * modifying its internal seed in the process.
+     */
+    [[nodiscard]] constexpr int get_int()
+    {
+        unsigned result = get() % unsigned(numeric_limits<int>::max());
+        return int(result);
+    }
+
+    /**
+     * @brief Returns a random bn::fixed greater or equal than 0,
+     * modifying its internal seed in the process.
+     */
+    [[nodiscard]] constexpr fixed get_fixed()
+    {
+        return fixed::from_data(get_int());
+    }
+
+    /**
+     * @brief Returns a random signed integer in the range [0..limit),
+     * modifying its internal seed in the process.
+     * @param limit Returned value is lower than this value.
+     * @return Random signed integer in the range [0..limit).
+     */
+    [[nodiscard]] constexpr int get_int(int limit)
+    {
+        BN_ASSERT(limit > 0, "Invalid limit: ", limit);
+
+        unsigned result = get() % unsigned(limit);
+        return int(result);
+    }
+
+    /**
+     * @brief Returns a random bn::fixed in the range [0..limit),
+     * modifying its internal seed in the process.
+     * @param limit Returned value is lower than this value.
+     * @return Random bn::fixed in the range [0..limit).
+     */
+    [[nodiscard]] constexpr fixed get_fixed(fixed limit)
+    {
+        int limit_data = limit.data();
+        BN_ASSERT(limit_data > 0, "Invalid limit: ", limit);
+
+        unsigned result = get() % unsigned(limit_data);
+        return fixed::from_data(int(result));
+    }
+
+    /**
+     * @brief Returns a random signed integer in the range [minimum..limit),
+     * modifying its internal seed in the process.
+     * @param minimum Returned value is greater or equal than this value.
+     * @param limit Returned value is lower than this value.
+     * @return Random signed integer in the range [minimum..limit).
+     */
+    [[nodiscard]] constexpr int get_int(int minimum, int limit)
+    {
+        int range = limit - minimum;
+        BN_ASSERT(range > 0, "Invalid range: ", minimum, " - ", limit);
+
+        unsigned result = get() % unsigned(range);
+        return minimum + int(result);
+    }
+
+    /**
+     * @brief Returns a random bn::fixed in the range [minimum..limit),
+     * modifying its internal seed in the process.
+     * @param minimum Returned value is greater or equal than this value.
+     * @param limit Returned value is lower than this value.
+     * @return Random bn::fixed in the range [minimum..limit).
+     */
+    [[nodiscard]] constexpr fixed get_fixed(fixed minimum, fixed limit)
+    {
+        int range_data = limit.data() - minimum.data();
+        BN_ASSERT(range_data > 0, "Invalid range: ", minimum, " - ", limit);
+
+        unsigned result = get() % unsigned(range_data);
+        return minimum + fixed::from_data(int(result));
     }
 
 private:

@@ -1776,6 +1776,7 @@
  *
  * @section changelog_8_6_0 8.6.0 (next release)
  *
+ * * bn::random::get_int and bn::random::get_fixed added.
  * * bn::calloc, bn::realloc, bn::memory::ewram_calloc and bn::memory::ewram_realloc added.
  * * bn::unique_ptr moved to its own header files.
  * * bn::pool and bn::generic_pool ROM usage reduced.

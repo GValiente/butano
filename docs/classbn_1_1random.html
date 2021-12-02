@@ -69,8 +69,139 @@
             <dt id="a182b24e8d8cdef9abbc503137e4761b3">
               <span class="m-doc-wrap-bumper">auto <a href="#a182b24e8d8cdef9abbc503137e4761b3" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">) -&gt; unsigned <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Returns a new random unsigned integer, modifying its internal seed in the process.</dd>
+            <dd>Returns a random unsigned integer greater or equal than 0, modifying its internal seed in the process.</dd>
+            <dt id="a5e9c1dadffd6b24904a758155a5995c2">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5e9c1dadffd6b24904a758155a5995c2" class="m-doc-self">get_int</a>(</span><span class="m-doc-wrap">) -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random signed integer greater or equal than 0, modifying its internal seed in the process.</dd>
+            <dt id="a6b11ac067ee482a20a84e201dfbb1264">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6b11ac067ee482a20a84e201dfbb1264" class="m-doc-self">get_fixed</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">bn::<wbr />fixed</a> greater or equal than 0, modifying its internal seed in the process.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae945502c1a5e9159292aa55dffb0eb60" class="m-doc">get_int</a>(</span><span class="m-doc-wrap">int limit) -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random signed integer in the range [0..limit), modifying its internal seed in the process.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acac86f11c74f2cd093f6d2c8fb0adf3b" class="m-doc">get_fixed</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> limit) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">bn::<wbr />fixed</a> in the range [0..limit), modifying its internal seed in the process.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af146d87e538a4b4f7dbdaecf2a3023d5" class="m-doc">get_int</a>(</span><span class="m-doc-wrap">int minimum,
+              int limit) -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random signed integer in the range [minimum..limit), modifying its internal seed in the process.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a31a5e1ff5ecd4a82193190378e1c3a27" class="m-doc">get_fixed</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> minimum,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> limit) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">bn::<wbr />fixed</a> in the range [minimum..limit), modifying its internal seed in the process.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ae945502c1a5e9159292aa55dffb0eb60"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />random::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae945502c1a5e9159292aa55dffb0eb60" class="m-doc-self">get_int</a>(</span><span class="m-doc-wrap">int limit) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a random signed integer in the range [0..limit), modifying its internal seed in the process.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">limit</td>
+                  <td>Returned value is lower than this value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Random signed integer in the range [0..limit).</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acac86f11c74f2cd093f6d2c8fb0adf3b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> bn::<wbr />random::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acac86f11c74f2cd093f6d2c8fb0adf3b" class="m-doc-self">get_fixed</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> limit) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a random <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">bn::<wbr />fixed</a> in the range [0..limit), modifying its internal seed in the process.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">limit</td>
+                  <td>Returned value is lower than this value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Random <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">bn::<wbr />fixed</a> in the range [0..limit).</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af146d87e538a4b4f7dbdaecf2a3023d5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />random::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af146d87e538a4b4f7dbdaecf2a3023d5" class="m-doc-self">get_int</a>(</span><span class="m-doc-wrap">int minimum,
+              int limit) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a random signed integer in the range [minimum..limit), modifying its internal seed in the process.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">minimum</td>
+                  <td>Returned value is greater or equal than this value.</td>
+                </tr>
+                <tr>
+                  <td>limit</td>
+                  <td>Returned value is lower than this value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Random signed integer in the range [minimum..limit).</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a31a5e1ff5ecd4a82193190378e1c3a27"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> bn::<wbr />random::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a31a5e1ff5ecd4a82193190378e1c3a27" class="m-doc-self">get_fixed</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> minimum,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> limit) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a random <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">bn::<wbr />fixed</a> in the range [minimum..limit), modifying its internal seed in the process.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">minimum</td>
+                  <td>Returned value is greater or equal than this value.</td>
+                </tr>
+                <tr>
+                  <td>limit</td>
+                  <td>Returned value is lower than this value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Random <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">bn::<wbr />fixed</a> in the range [minimum..limit).</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

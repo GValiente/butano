@@ -163,7 +163,7 @@ class BMP:
                         minimum_j = None
                         minimum_u_set_length = 16
                         merged = True
-                    elif u_set_length < minimum_u_set_length:
+                    elif not merged and u_set_length < minimum_u_set_length:
                         minimum_u_set = u_set
                         minimum_i = i
                         minimum_j = j

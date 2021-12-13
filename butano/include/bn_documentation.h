@@ -1774,6 +1774,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_8_7_0 8.7.0 (next release)
+ *
+ * <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a> LGPL license files removed.
+ *
+ *
  * @section changelog_8_6_0 8.6.0
  *
  * * bn::random::get_int and bn::random::get_fixed added.

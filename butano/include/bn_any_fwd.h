@@ -17,17 +17,12 @@
 
 namespace bn
 {
-    /**
-     * @brief Base class of any.
-     *
-     * Can be used as a reference type for all any containers.
-     *
-     * @ingroup any
-     */
     class iany;
 
     /**
-     * @brief Any implementation that uses a fixed size buffer.
+     * @brief `std::any` like container with a fixed size buffer.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam MaxSize Maximum size in bytes of the managed objects.
      * @tparam MaxAlignment Maximum alignment in bytes of the managed objects.

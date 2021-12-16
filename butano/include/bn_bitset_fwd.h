@@ -20,7 +20,9 @@ namespace bn
     class ibitset;
 
     /**
-     * @brief bitset implementation which manages its own elements array.
+     * @brief `std::bitset` like container.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Size Number of stored bits. It must be a multiple of 8.
      *

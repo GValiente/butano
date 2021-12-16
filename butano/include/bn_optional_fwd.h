@@ -18,7 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Manages an optional contained value (a value that may or may not be present).
+     * @brief `std::optional` like container.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Type Element type.
      *

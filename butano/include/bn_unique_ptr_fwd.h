@@ -38,8 +38,9 @@ struct default_delete
 };
 
 /**
- * @brief Smart pointer that owns and manages another object through a pointer
- * and disposes of that object when the unique_ptr goes out of scope.
+ * @brief `std::unique_ptr` like container.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
  * @tparam Type Type of the managed object.
  * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.

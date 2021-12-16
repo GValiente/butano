@@ -18,7 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Container that encapsulates fixed size arrays.
+     * @brief `std::array` like container.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Type Element type.
      * @tparam Size Number of stored elements.

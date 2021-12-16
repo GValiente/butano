@@ -18,9 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Base class of list.
+     * @brief Base class of bn::list.
      *
-     * Can be used as a reference type for all list containers containing a specific type.
+     * Can be used as a reference type for all bn::list containers containing a specific type.
      *
      * @tparam Type Element type.
      *
@@ -30,7 +30,9 @@ namespace bn
     class ilist;
 
     /**
-     * @brief List implementation that uses a fixed size buffer.
+     * @brief `std::list` like container with a fixed size buffer.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Type Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

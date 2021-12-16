@@ -18,9 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Base class of deque.
+     * @brief Base class of bn::deque.
      *
-     * Can be used as a reference type for all deque containers containing a specific type.
+     * Can be used as a reference type for all bn::deque containers containing a specific type.
      *
      * @tparam Type Element type.
      *
@@ -30,7 +30,9 @@ namespace bn
     class ideque;
 
     /**
-     * @brief Deque implementation that uses a fixed size buffer.
+     * @brief A `std::deque` like container with a fixed size buffer.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Type Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

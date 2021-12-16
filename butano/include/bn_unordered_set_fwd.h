@@ -18,9 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Base class of unordered_set.
+     * @brief Base class of bn::unordered_set.
      *
-     * Can be used as a reference type for all unordered_set containers containing a specific type.
+     * Can be used as a reference type for all bn::unordered_set containers containing a specific type.
      *
      * @tparam Key Element type.
      * @tparam KeyHash Functor used to calculate the hash of a given key.
@@ -32,7 +32,9 @@ namespace bn
     class iunordered_set;
 
     /**
-     * @brief Unordered set implementation that uses a fixed size buffer.
+     * @brief `std::unordered_set` like container with a fixed size buffer.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Key Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

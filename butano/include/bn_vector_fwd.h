@@ -18,9 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Base class of vector.
+     * @brief Base class of bn::vector.
      *
-     * Can be used as a reference type for all vector containers containing a specific type.
+     * Can be used as a reference type for all bn::vector containers containing a specific type.
      *
      * @tparam Type Element type.
      *
@@ -30,7 +30,9 @@ namespace bn
     class ivector;
 
     /**
-     * @brief Vector implementation that uses a fixed size buffer.
+     * @brief `std::vector` like container with a fixed size buffer.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Type Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

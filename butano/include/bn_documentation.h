@@ -359,7 +359,7 @@
 /**
  * @defgroup vector Vector
  *
- * A std::vector like container with the capacity defined at compile time.
+ * `std::vector` like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -369,7 +369,7 @@
 /**
  * @defgroup deque Deque
  *
- * A std::deque like container with the capacity defined at compile time.
+ * `std::deque` like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -379,7 +379,7 @@
 /**
  * @defgroup list List
  *
- * A std::list like container with the capacity defined at compile time.
+ * `std::list` like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -389,7 +389,7 @@
 /**
  * @defgroup intrusive_list Intrusive list
  *
- * A std::list like container that doesn't contain values, it just references them.
+ * `std::list` like container that doesn't contain values, it just references them.
  *
  * To be part of an intrusive list, values must inherit @a bn::intrusive_list_node_type @a class.
  *
@@ -401,7 +401,7 @@
 /**
  * @defgroup forward_list Forward list
  *
- * A std::forward_list like container with the capacity defined at compile time.
+ * `std::forward_list` like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -411,7 +411,7 @@
 /**
  * @defgroup intrusive_forward_list Intrusive forward list
  *
- * A std::forward_list like container that doesn't contain values, it just references them.
+ * `std::forward_list` like container that doesn't contain values, it just references them.
  *
  * To be part of an intrusive forward list, values must inherit @a bn::intrusive_forward_list_node_type @a class.
  *
@@ -423,7 +423,7 @@
 /**
  * @defgroup unordered_map Unordered map
  *
- * A std::unordered_map like container with the capacity defined at compile time.
+ * `std::unordered_map` like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -433,7 +433,7 @@
 /**
  * @defgroup unordered_set Unordered set
  *
- * A std::unordered_set like container with the capacity defined at compile time.
+ * `std::unordered_set` like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -451,7 +451,7 @@
 /**
  * @defgroup array Array
  *
- * A std::array like container.
+ * `std::array` like container.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -461,7 +461,7 @@
 /**
  * @defgroup bitset Bitset
  *
- * A std::bitset like container.
+ * `std::bitset` like container.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -471,7 +471,7 @@
 /**
  * @defgroup span Span
  *
- * A std::span like container.
+ * `std::span` like container.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -481,7 +481,7 @@
 /**
  * @defgroup optional Optional
  *
- * A std::optional like container.
+ * `std::optional` like container.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -491,7 +491,7 @@
 /**
  * @defgroup any Any
  *
- * A std::any like container with the capacity defined at compile time.
+ * `std::any` like container with the capacity defined at compile time.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -501,7 +501,7 @@
 /**
  * @defgroup unique_ptr Unique pointer
  *
- * A std::unique_ptr like container.
+ * `std::unique_ptr` like container.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -1778,6 +1778,7 @@
  * @section changelog_8_7_0 8.7.0 (next release)
  *
  * * <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a> LGPL license files removed.
+ * * Standard containers documentation improved.
  * * @ref faq page improved.
  *
  *

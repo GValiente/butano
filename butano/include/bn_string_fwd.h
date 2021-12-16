@@ -17,26 +17,14 @@
 
 namespace bn
 {
-    /**
-     * @brief Base class of istring.
-     *
-     * It avoids circular references when including istring's header.
-     *
-     * @ingroup string
-     */
     class istring_base;
 
-    /**
-     * @brief Base class of string.
-     *
-     * Can be used as a reference type for all string containers.
-     *
-     * @ingroup string
-     */
     class istring;
 
     /**
-     * @brief String implementation that uses a fixed size buffer.
+     * @brief `std::string` like container with a fixed size buffer.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam MaxSize Maximum number of characters that can be stored.
      *

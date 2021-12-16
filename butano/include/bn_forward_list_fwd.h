@@ -18,9 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Base class of forward_list.
+     * @brief Base class of bn::forward_list.
      *
-     * Can be used as a reference type for all forward_list containers containing a specific type.
+     * Can be used as a reference type for all bn::forward_list containers containing a specific type.
      *
      * @tparam Type Element type.
      *
@@ -30,7 +30,9 @@ namespace bn
     class iforward_list;
 
     /**
-     * @brief Forward list implementation that uses a fixed size buffer.
+     * @brief `std::forward_list` like container with a fixed size buffer.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Type Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

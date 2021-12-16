@@ -18,9 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Base class of unordered_map.
+     * @brief Base class of bn::unordered_map.
      *
-     * Can be used as a reference type for all unordered_map containers containing a specific type.
+     * Can be used as a reference type for all bn::unordered_map containers containing a specific type.
      *
      * @tparam Key Key type.
      * @tparam Value Value type.
@@ -33,7 +33,9 @@ namespace bn
     class iunordered_map;
 
     /**
-     * @brief Unordered map implementation that uses a fixed size buffer.
+     * @brief `std::unordered_map` like container with a fixed size buffer.
+     *
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Key Key type.
      * @tparam Value Value type.

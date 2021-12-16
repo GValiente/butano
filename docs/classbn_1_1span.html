@@ -51,7 +51,7 @@
           <div class="m-doc-template">template&lt;typename Type&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>span <span class="m-thin">class</span>
         </h1>
-        <p>Refers to a contiguous sequence of elements with the first element of the sequence at position zero.</p>
+        <p><code>std::span</code> like container.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -77,7 +77,7 @@
             </li>
           </ul>
         </div>
-<p>The elements are not copied but referenced, so they should outlive the span to avoid dangling references.</p>
+<p>It doesn&#x27;t throw exceptions. Instead, asserts are used to ensure valid usage.</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">

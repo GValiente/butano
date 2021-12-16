@@ -20,9 +20,9 @@ namespace bn
 {
 
 /**
- * @brief Base class of string.
+ * @brief Base class of bn::string.
  *
- * Can be used as a reference type for all string containers.
+ * Can be used as a reference type for all bn::string containers.
  *
  * @ingroup string
  */

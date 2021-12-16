@@ -24,9 +24,9 @@ namespace bn
 {
 
 /**
- * @brief Base class of any.
+ * @brief Base class of bn::any.
  *
- * Can be used as a reference type for all any containers.
+ * Can be used as a reference type for all bn::any containers.
  *
  * @ingroup any
  */

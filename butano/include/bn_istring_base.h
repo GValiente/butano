@@ -21,9 +21,9 @@ namespace bn
 {
 
 /**
- * @brief Base class of istring.
+ * @brief Base class of bn::istring.
  *
- * It avoids circular references when including istring header.
+ * It avoids circular references when including bn::istring header.
  *
  * @ingroup string
  */

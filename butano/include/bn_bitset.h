@@ -46,9 +46,9 @@ namespace bn
 {
 
 /**
- * @brief Base class of bitset.
+ * @brief Base class of bn::bitset.
  *
- * Can be used as a reference type for all bitset containers.
+ * Can be used as a reference type for all bn::bitset containers.
  *
  * @ingroup bitset
  */

@@ -51,7 +51,7 @@
           <div class="m-doc-template">template&lt;typename Type&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>intrusive_forward_list <span class="m-thin">class</span>
         </h1>
-        <p>Intrusive forward list implementation.</p>
+        <p><code>std::forward_list</code> like container that doesn&#x27;t contain values, it just references them.</p>
         <table class="m-table m-fullwidth m-flat">
           <thead>
             <tr><th colspan="2">Template parameters</th></tr>
@@ -59,7 +59,7 @@
           <tbody>
             <tr>
               <td style="width: 1%">Type</td>
-              <td>Element type (it must inherit <a href="classbn_1_1intrusive__forward__list__node__type.html" class="m-doc">intrusive_<wbr />forward_<wbr />list_<wbr />node_<wbr />type</a> class).</td>
+              <td>Element type (it must inherit <a href="classbn_1_1intrusive__forward__list__node__type.html" class="m-doc">bn::<wbr />intrusive_forward_list_node_type</a> class).</td>
             </tr>
           </tbody>
         </table>
@@ -77,6 +77,7 @@
             </li>
           </ul>
         </div>
+<p>It doesn&#x27;t throw exceptions. Instead, asserts are used to ensure valid usage.</p>
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">

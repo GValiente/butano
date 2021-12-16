@@ -18,9 +18,9 @@
 namespace bn
 {
     /**
-     * @brief Refers to a contiguous sequence of elements with the first element of the sequence at position zero.
+     * @brief `std::span` like container.
      *
-     * The elements are not copied but referenced, so they should outlive the span to avoid dangling references.
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
      * @tparam Type Element type.
      *

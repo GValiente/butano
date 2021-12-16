@@ -18,16 +18,18 @@
 namespace bn
 {
     /**
-     * @brief To be part of a intrusive_list, values must inherit this class.
+     * @brief To be part of a bn::intrusive_list, values must inherit this class.
      *
      * @ingroup intrusive_list
      */
     class intrusive_list_node_type;
 
     /**
-     * @brief Intrusive list implementation.
+     * @brief `std::list` like container that doesn't contain values, it just references them.
      *
-     * @tparam Type Element type (it must inherit intrusive_list_node_type class).
+     * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+     *
+     * @tparam Type Element type (it must inherit bn::intrusive_list_node_type class).
      *
      * @ingroup intrusive_list
      */

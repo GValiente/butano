@@ -1468,6 +1468,7 @@
  * @code{.cpp}
  * error: variable 'bn::regular_bg_ptr bg' has initializer but incomplete type
  * error: invalid use of incomplete type 'class bn::regular_bg_ptr'
+ * error: aggregate 'bn::fixed' has incomplete type and cannot be defined
  * @endcode
  *
  * It is almost always because of lack of included headers.
@@ -1776,7 +1777,8 @@
  *
  * @section changelog_8_7_0 8.7.0 (next release)
  *
- * <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a> LGPL license files removed.
+ * * <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a> LGPL license files removed.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_8_6_0 8.6.0

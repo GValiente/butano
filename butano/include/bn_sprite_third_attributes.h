@@ -34,7 +34,7 @@ public:
      * @param palette Smart pointer to a sprite color palette.
      * @param bg_priority Drawing priority relative to backgrounds in the range [0..3].
      *
-     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      */
     sprite_third_attributes(sprite_tiles_ptr tiles, sprite_palette_ptr palette, int bg_priority);
@@ -94,7 +94,7 @@ public:
     /**
      * @brief Returns the priority relative to backgrounds.
      *
-     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      */
     [[nodiscard]] int bg_priority() const
@@ -105,7 +105,7 @@ public:
     /**
      * @brief Sets the priority relative to backgrounds.
      *
-     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      *
      * @param bg_priority Priority relative to backgrounds in the range [0..3].

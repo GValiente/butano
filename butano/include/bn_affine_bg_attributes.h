@@ -33,7 +33,7 @@ public:
      * @param priority Priority of an affine background relative to sprites and other backgrounds,
      * in the range [0..3].
      *
-     * Backgrounds with higher priorities are drawn first
+     * Backgrounds with higher priority are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
      * @param wrapping_enabled Indicates if an affine background wraps around at the edges or not.
      * @param mosaic_enabled Indicates if the mosaic effect is applied to an affine background or not.
@@ -46,7 +46,7 @@ public:
      * @param priority Priority of an affine background relative to sprites and other backgrounds,
      * in the range [0..3].
      *
-     * Backgrounds with higher priorities are drawn first
+     * Backgrounds with higher priority are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
      * @param wrapping_enabled Indicates if an affine background wraps around at the edges or not.
      * @param mosaic_enabled Indicates if the mosaic effect is applied to an affine background or not.
@@ -82,7 +82,7 @@ public:
     /**
      * @brief Returns the priority of an affine background relative to sprites and other backgrounds.
      *
-     * Backgrounds with higher priorities are drawn first
+     * Backgrounds with higher priority are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
      */
     [[nodiscard]] int priority() const
@@ -93,7 +93,7 @@ public:
     /**
      * @brief Sets the priority of an affine background relative to sprites and other backgrounds.
      *
-     * Backgrounds with higher priorities are drawn first
+     * Backgrounds with higher priority are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
      *
      * @param priority Priority in the range [0..3].

@@ -564,7 +564,7 @@ public:
     /**
      * @brief Returns the priority relative to backgrounds.
      *
-     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      */
     [[nodiscard]] int bg_priority() const;
@@ -572,7 +572,7 @@ public:
     /**
      * @brief Sets the priority relative to backgrounds.
      *
-     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      *
      * @param bg_priority Priority relative to backgrounds in the range [0..3].
@@ -602,12 +602,12 @@ public:
     void set_z_order(int z_order);
 
     /**
-     * @brief Modify this sprite to be drawn above all of the other sprites with the same priorities.
+     * @brief Modify this sprite to be drawn above all of the other sprites with the same priority.
      */
     void put_above();
 
     /**
-     * @brief Modify this sprite to be drawn below all of the other sprites with the same priorities.
+     * @brief Modify this sprite to be drawn below all of the other sprites with the same priority.
      */
     void put_below();
 

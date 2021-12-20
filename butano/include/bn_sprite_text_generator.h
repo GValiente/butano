@@ -131,7 +131,7 @@ public:
     /**
      * @brief Returns the priority of the output sprites priority relative to backgrounds.
      *
-     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      */
     [[nodiscard]] int bg_priority() const
@@ -142,7 +142,7 @@ public:
     /**
      * @brief Sets the priority of the output sprites relative to backgrounds.
      *
-     * Sprites with higher priorities are drawn first (and therefore can be covered by later sprites and backgrounds).
+     * Sprites with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).
      * Sprites cover backgrounds of the same priority.
      *
      * @param bg_priority Priority relative to backgrounds in the range [0..3].

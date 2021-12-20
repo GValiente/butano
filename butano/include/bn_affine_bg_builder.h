@@ -419,7 +419,7 @@ public:
     /**
      * @brief Returns the priority of the affine backgrounds to generate relative to sprites and other backgrounds.
      *
-     * Backgrounds with higher priorities are drawn first
+     * Backgrounds with higher priority are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
      */
     [[nodiscard]] int priority() const
@@ -430,7 +430,7 @@ public:
     /**
      * @brief Sets the priority of the affine backgrounds to generate relative to sprites and other backgrounds.
      *
-     * Backgrounds with higher priorities are drawn first
+     * Backgrounds with higher priority are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
      *
      * @param priority Priority in the range [0..3].

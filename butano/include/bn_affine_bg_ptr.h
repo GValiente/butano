@@ -464,7 +464,7 @@ public:
     /**
      * @brief Returns the priority of the affine background relative to sprites and other backgrounds.
      *
-     * Backgrounds with higher priorities are drawn first
+     * Backgrounds with higher priority are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
      */
     [[nodiscard]] int priority() const;
@@ -472,7 +472,7 @@ public:
     /**
      * @brief Sets the priority of the affine background relative to sprites and other backgrounds.
      *
-     * Backgrounds with higher priorities are drawn first
+     * Backgrounds with higher priority are drawn first
      * (and therefore can be covered by later sprites and backgrounds).
      *
      * @param priority Priority in the range [0..3].
@@ -496,12 +496,12 @@ public:
     void set_z_order(int z_order);
 
     /**
-     * @brief Modify this affine background to be drawn above all of the other backgrounds with the same priorities.
+     * @brief Modify this affine background to be drawn above all of the other backgrounds with the same priority.
      */
     void put_above();
 
     /**
-     * @brief Modify this affine background to be drawn below all of the other backgrounds with the same priorities.
+     * @brief Modify this affine background to be drawn below all of the other backgrounds with the same priority.
      */
     void put_below();
 

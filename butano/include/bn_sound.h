@@ -54,7 +54,7 @@ namespace bn::sound
      * @brief Plays the sound effect specified by the given sound_item with default settings and the given priority.
      *
      * If there's playing too much sound effects at the same time,
-     * sound effects with higher priorities are discarded later.
+     * sound effects with higher priority are discarded later.
      *
      * Default settings are volume = 1, speed = 1 and panning = 0.
      *
@@ -67,7 +67,7 @@ namespace bn::sound
      * @brief Plays the sound effect specified by the given sound_item with the given priority.
      *
      * If there's playing too much sound effects at the same time,
-     * sound effects with higher priorities are discarded later.
+     * sound effects with higher priority are discarded later.
      *
      * @param priority Priority relative to backgrounds in the range [-32767..32767].
      * @param item Specifies the sound effect to play.
@@ -79,7 +79,7 @@ namespace bn::sound
      * @brief Plays the sound effect specified by the given sound_item with the given priority.
      *
      * If there's playing too much sound effects at the same time,
-     * sound effects with higher priorities are discarded later.
+     * sound effects with higher priority are discarded later.
      *
      * @param priority Priority relative to backgrounds in the range [-32767..32767].
      * @param item Specifies the sound effect to play.

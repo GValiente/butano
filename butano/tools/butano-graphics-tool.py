@@ -6,6 +6,7 @@ zlib License, see LICENSE file.
 import os
 import json
 import argparse
+import string
 import subprocess
 import sys
 from multiprocessing import Pool
@@ -402,7 +403,6 @@ class SpritePaletteItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-        self.__colors_count = bmp.colors_count
 
         try:
             colors_count = int(info['colors_count'])
@@ -417,7 +417,7 @@ class SpritePaletteItem:
 
             self.__colors_count = colors_count
         except KeyError:
-            pass
+            self.__colors_count = bmp.colors_count
 
         try:
             self.__compression = info['compression']
@@ -515,7 +515,6 @@ class RegularBgItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-        self.__colors_count = bmp.colors_count
 
         width = bmp.width
         height = bmp.height
@@ -542,18 +541,47 @@ class RegularBgItem:
         except KeyError:
             self.__flipped_tiles_reduction = True
 
-        if self.__colors_count > 16:
+        try:
+            palette_item = str(info['palette_item'])
+
+            if len(palette_item) == 0:
+                raise ValueError('Empty palette item')
+
+            if palette_item[0] not in string.ascii_lowercase:
+                raise ValueError('Invalid palette item: ' + palette_item +
+                                 ' (invalid character: \'' + palette_item[0] + '\')')
+
+            valid_characters = '_%s%s' % (string.ascii_lowercase, string.digits)
+
+            for palette_item_character in palette_item:
+                if palette_item_character not in valid_characters:
+                    raise ValueError('Invalid palette item: ' + palette_item +
+                                     ' (invalid character: \'' + palette_item_character + '\')')
+
+            self.__palette_item = palette_item
+            self.__colors_count = 0
+        except KeyError:
+            self.__palette_item = None
+            self.__colors_count = bmp.colors_count
+
+        if self.__palette_item is not None or self.__colors_count > 16:
             try:
                 bpp_mode = str(info['bpp_mode'])
             except KeyError:
+                if self.__palette_item is not None:
+                    raise ValueError('bpp_mode field not found in graphics json file: ' + file_name_no_ext + '.json')
+
                 bpp_mode = 'bpp_8'
 
             if bpp_mode == 'bpp_8':
                 self.__bpp_8 = True
             elif bpp_mode == 'bpp_4_auto':
+                if self.__palette_item is not None:
+                    raise ValueError('BPP mode not supported with an external palette item: ' + bpp_mode)
+
                 self.__file_path = self.__build_folder_path + '/' + file_name_no_ext + '.bn_quantized.bmp'
                 self.__colors_count = bmp.quantize(self.__file_path)
-            elif bpp_mode != 'bpp_4_manual':
+            elif bpp_mode != 'bpp_4' and bpp_mode != 'bpp_4_manual':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
         try:
@@ -566,15 +594,18 @@ class RegularBgItem:
             except KeyError:
                 self.__tiles_compression = 'none'
 
-        try:
-            self.__palette_compression = info['palette_compression']
-            validate_compression(self.__palette_compression)
-        except KeyError:
+        if self.__palette_item is not None:
+            self.__palette_compression = 'none'
+        else:
             try:
-                self.__palette_compression = info['compression']
+                self.__palette_compression = info['palette_compression']
                 validate_compression(self.__palette_compression)
             except KeyError:
-                self.__palette_compression = 'none'
+                try:
+                    self.__palette_compression = info['compression']
+                    validate_compression(self.__palette_compression)
+                except KeyError:
+                    self.__palette_compression = 'none'
 
         try:
             self.__map_compression = info['map_compression']
@@ -648,7 +679,9 @@ class RegularBgItem:
             grit_data = grit_data.replace('[', '[bn::max(', 1)
             grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
             grit_data = grit_data.replace('unsigned short', 'bn::regular_bg_map_cell', 1)
-            grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
+
+            if self.__palette_item is None:
+                grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 
             for grit_line in grit_data.splitlines():
                 if ' tiles ' in grit_line:
@@ -686,16 +719,26 @@ class RegularBgItem:
             header_file.write('#include "bn_regular_bg_item.h"' + '\n')
             header_file.write(grit_data)
             header_file.write('\n')
+
+            if self.__palette_item is not None:
+                header_file.write('#include "bn_bg_palette_items_' + self.__palette_item + '.h"' + '\n')
+                header_file.write('\n')
+
             header_file.write('namespace bn::regular_bg_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline regular_bg_item ' + name + '(' + '\n            ' +
                               'regular_bg_tiles_item(span<const tile>(' + name + '_bn_gfxTiles, ' +
                               str(tiles_count) + '), ' + bpp_mode_label + ', ' + compression_label(tiles_compression) +
-                              '), ' + '\n            ' +
-                              'bg_palette_item(span<const color>(' + name + '_bn_gfxPal, ' +
-                              str(self.__colors_count) + '), ' + bpp_mode_label + ', ' +
-                              compression_label(palette_compression) + '),' + '\n            ' +
-                              'regular_bg_map_item(' + name + '_bn_gfxMap[0], ' +
+                              '), ' + '\n            ')
+
+            if self.__palette_item is None:
+                header_file.write('bg_palette_item(span<const color>(' + name + '_bn_gfxPal, ' +
+                                  str(self.__colors_count) + '), ' + bpp_mode_label + ', ' +
+                                  compression_label(palette_compression) + '),' + '\n            ')
+            else:
+                header_file.write('bn::bg_palette_items::' + self.__palette_item + ',' + '\n            ')
+
+            header_file.write('regular_bg_map_item(' + name + '_bn_gfxMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
                               compression_label(map_compression) + '));' + '\n')
             header_file.write('}' + '\n')
@@ -706,7 +749,12 @@ class RegularBgItem:
         return total_size, header_file_path
 
     def __execute_command(self, tiles_compression, palette_compression, map_compression):
-        command = ['grit', self.__file_path, '-pe' + str(self.__colors_count)]
+        command = ['grit', self.__file_path]
+
+        if self.__colors_count > 0:
+            command.append('-pe' + str(self.__colors_count))
+        else:
+            command.append('-p!')
 
         if self.__bpp_8:
             command.append('-gB8')
@@ -767,7 +815,6 @@ class AffineBgItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-        self.__colors_count = bmp.colors_count
 
         width = bmp.width
         height = bmp.height
@@ -787,6 +834,29 @@ class AffineBgItem:
             self.__repeated_tiles_reduction = True
 
         try:
+            palette_item = str(info['palette_item'])
+
+            if len(palette_item) == 0:
+                raise ValueError('Empty palette item')
+
+            if palette_item[0] not in string.ascii_lowercase:
+                raise ValueError('Invalid palette item: ' + palette_item +
+                                 ' (invalid character: \'' + palette_item[0] + '\')')
+
+            valid_characters = '_%s%s' % (string.ascii_lowercase, string.digits)
+
+            for palette_item_character in palette_item:
+                if palette_item_character not in valid_characters:
+                    raise ValueError('Invalid palette item: ' + palette_item +
+                                     ' (invalid character: \'' + palette_item_character + '\')')
+
+            self.__palette_item = palette_item
+            self.__colors_count = 0
+        except KeyError:
+            self.__palette_item = None
+            self.__colors_count = bmp.colors_count
+
+        try:
             self.__tiles_compression = info['tiles_compression']
             validate_compression(self.__tiles_compression)
         except KeyError:
@@ -796,15 +866,18 @@ class AffineBgItem:
             except KeyError:
                 self.__tiles_compression = 'none'
 
-        try:
-            self.__palette_compression = info['palette_compression']
-            validate_compression(self.__palette_compression)
-        except KeyError:
+        if self.__palette_item is not None:
+            self.__palette_compression = 'none'
+        else:
             try:
-                self.__palette_compression = info['compression']
+                self.__palette_compression = info['palette_compression']
                 validate_compression(self.__palette_compression)
             except KeyError:
-                self.__palette_compression = 'none'
+                try:
+                    self.__palette_compression = info['compression']
+                    validate_compression(self.__palette_compression)
+                except KeyError:
+                    self.__palette_compression = 'none'
 
         try:
             self.__map_compression = info['map_compression']
@@ -878,7 +951,9 @@ class AffineBgItem:
             grit_data = grit_data.replace('[', '[bn::max(', 1)
             grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
             grit_data = grit_data.replace('unsigned char', 'bn::affine_bg_map_cell', 1)
-            grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
+
+            if self.__palette_item is None:
+                grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 
             for grit_line in grit_data.splitlines():
                 if ' tiles ' in grit_line:
@@ -910,16 +985,26 @@ class AffineBgItem:
             header_file.write('#include "bn_affine_bg_item.h"' + '\n')
             header_file.write(grit_data)
             header_file.write('\n')
+
+            if self.__palette_item is not None:
+                header_file.write('#include "bn_bg_palette_items_' + self.__palette_item + '.h"' + '\n')
+                header_file.write('\n')
+
             header_file.write('namespace bn::affine_bg_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline affine_bg_item ' + name + '(' + '\n            ' +
                               'affine_bg_tiles_item(span<const tile>(' + name + '_bn_gfxTiles, ' +
                               str(tiles_count * 2) + '), ' + compression_label(tiles_compression) +
-                              '), ' + '\n            ' +
-                              'bg_palette_item(span<const color>(' + name + '_bn_gfxPal, ' +
-                              str(self.__colors_count) + '), bpp_mode::BPP_8, ' +
-                              compression_label(palette_compression) + '),' + '\n            ' +
-                              'affine_bg_map_item(' + name + '_bn_gfxMap[0], ' +
+                              '), ' + '\n            ')
+
+            if self.__palette_item is None:
+                header_file.write('bg_palette_item(span<const color>(' + name + '_bn_gfxPal, ' +
+                                  str(self.__colors_count) + '), bpp_mode::BPP_8, ' +
+                                  compression_label(palette_compression) + '),' + '\n            ')
+            else:
+                header_file.write('bn::bg_palette_items::' + self.__palette_item + ',' + '\n            ')
+
+            header_file.write('affine_bg_map_item(' + name + '_bn_gfxMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
                               compression_label(map_compression) + '));' + '\n')
             header_file.write('}' + '\n')
@@ -930,7 +1015,12 @@ class AffineBgItem:
         return total_size, header_file_path
 
     def __execute_command(self, tiles_compression, palette_compression, map_compression):
-        command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8', '-pe' + str(self.__colors_count)]
+        command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8']
+
+        if self.__colors_count > 0:
+            command.append('-pe' + str(self.__colors_count))
+        else:
+            command.append('-p!')
 
         if self.__repeated_tiles_reduction:
             command.append('-mRt')
@@ -968,7 +1058,6 @@ class BgPaletteItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-        self.__colors_count = bmp.colors_count
 
         try:
             bpp_mode = str(info['bpp_mode'])
@@ -995,7 +1084,7 @@ class BgPaletteItem:
 
             self.__colors_count = colors_count
         except KeyError:
-            pass
+            self.__colors_count = bmp.colors_count
 
         try:
             self.__compression = info['compression']

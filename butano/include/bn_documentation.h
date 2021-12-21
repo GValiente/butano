@@ -1119,18 +1119,22 @@
  *
  * The fields for regular backgrounds are the following:
  * * `"type"`: must be `"regular_bg"` for regular backgrounds.
+ * * `"palette_item"`: optional field which specifies the name of the bn::bg_palette_item to use for this background.
+ * * `"bpp_mode"`: optional field which specifies the bits per pixel of the regular background.
+ * This field is required if an external bn::bg_palette_item is referenced with `"palette_item"`:
+ *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
+ *   * `"bpp_4_auto"`: up to 16 colors per @ref tile "tile".
+ * Butano tries to quantize the image to fit the color palette into the required one.
+ * It is not supported if an external bn::bg_palette_item is referenced with `"palette_item"`.
+ *   * `"bpp_4_manual"`: up to 16 colors per @ref tile "tile".
+ * Butano expects that the image color palette is already valid for this mode.
+ *   * `"bpp_4"`: `"bpp_4_manual"` alias.
+ *
+ * The default is `"bpp_4_manual"` for 16 color images and `"bpp_8"` for 256 color images.
  * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
  * (`true` by default).
  * * `"flipped_tiles_reduction"`: optional field which specifies if flipped tiles must be reduced or not
  * (`true` by default).
- * * `"bpp_mode"`: optional field which specifies the bits per pixel of the regular background:
- *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
- *   * `"bpp_4_auto"`: up to 16 colors per @ref tile "tile".
- * Butano tries to quantize the image to fit the color palette into the required one.
- *   * `"bpp_4_manual"`: up to 16 colors per @ref tile "tile".
- * Butano expects that the image color palette is already valid for this mode.
- *
- * The default is `"bpp_4_manual"` for 16 color images and `"bpp_8"` for 256 color images.
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1184,6 +1188,7 @@
  *
  * The fields for affine backgrounds are the following:
  * * `"type"`: must be `"affine_bg"` for affine backgrounds.
+ * * `"palette_item"`: optional field which specifies the name of the bn::bg_palette_item to use for this background.
  * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
  * (`true` by default).
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
@@ -1779,6 +1784,7 @@
  *
  * @section changelog_8_7_0 8.7.0 (next release)
  *
+ * * An external bn::bg_palette_item can be specified when importing regular and affine backgrounds.
  * * Colors count can be specified when importing sprite and background palettes.
  * * <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a> LGPL license files removed.
  * * Standard containers documentation improved.

@@ -405,6 +405,21 @@ class SpritePaletteItem:
         self.__colors_count = bmp.colors_count
 
         try:
+            colors_count = int(info['colors_count'])
+
+            if colors_count < 1 or colors_count > 256:
+                raise ValueError('Invalid colors count: ' + str(colors_count))
+
+            extra_colors = colors_count % 16
+
+            if extra_colors > 0:
+                colors_count += 16 - extra_colors
+
+            self.__colors_count = colors_count
+        except KeyError:
+            pass
+
+        try:
             self.__compression = info['compression']
             validate_compression(self.__compression)
         except KeyError:
@@ -966,6 +981,21 @@ class BgPaletteItem:
             self.__bpp_8 = False
         else:
             raise ValueError('Invalid BPP mode: ' + bpp_mode)
+
+        try:
+            colors_count = int(info['colors_count'])
+
+            if colors_count < 1 or colors_count > 256:
+                raise ValueError('Invalid colors count: ' + str(colors_count))
+
+            extra_colors = colors_count % 16
+
+            if extra_colors > 0:
+                colors_count += 16 - extra_colors
+
+            self.__colors_count = colors_count
+        except KeyError:
+            pass
 
         try:
             self.__compression = info['compression']

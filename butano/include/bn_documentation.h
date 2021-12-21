@@ -1080,6 +1080,7 @@
  *
  * The fields for sprite palettes are the following:
  * * `"type"`: must be `"sprite_palette"` for sprites.
+ * * `"colors_count"`: optional field which specifies the palette size [1..256].
  * * `"compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1237,6 +1238,7 @@
  * * `"bpp_mode"`: specifies the bits per pixel of the background palette:
  *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
  *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
+ * * `"colors_count"`: optional field which specifies the palette size [1..256].
  * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1777,6 +1779,7 @@
  *
  * @section changelog_8_7_0 8.7.0 (next release)
  *
+ * * Colors count can be specified when importing sprite and background palettes.
  * * <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a> LGPL license files removed.
  * * Standard containers documentation improved.
  * * @ref faq page improved.

@@ -486,7 +486,15 @@ public:
             return false;
         }
 
-        return equal(_data, _data + other_size, other.data());
+        const_pointer this_data = data();
+        const_pointer other_data = other.data();
+
+        if(this_data == other_data)
+        {
+            return true;
+        }
+
+        return equal(this_data, this_data + other_size, other_data);
     }
 
     /**

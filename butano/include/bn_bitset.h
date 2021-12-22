@@ -461,12 +461,22 @@ public:
      */
     [[nodiscard]] constexpr friend bool operator==(const ibitset& a, const ibitset& b)
     {
-        if(a.size() != b.size())
+        int a_size = a.elements_size();
+
+        if(a_size != b.size())
         {
             return false;
         }
 
-        return equal(a._data, a._data + a._num_elements, b._data);
+        const element_t* a_data = a.data();
+        const element_t* b_data = b.data();
+
+        if(a_data == b_data)
+        {
+            return true;
+        }
+
+        return equal(a_data, a_data + a_size, b_data);
     }
 
     /**

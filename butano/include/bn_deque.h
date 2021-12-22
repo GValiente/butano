@@ -1249,6 +1249,11 @@ public:
             return false;
         }
 
+        if(a._data == b._data)
+        {
+            return true;
+        }
+
         return equal(a.begin(), a.end(), b.begin());
     }
 

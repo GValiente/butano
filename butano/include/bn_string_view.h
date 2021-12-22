@@ -320,7 +320,15 @@ public:
             return false;
         }
 
-        return equal(_begin, _begin + other_size, other._begin);
+        const_pointer this_data = data();
+        const_pointer other_data = other.data();
+
+        if(this_data == other_data)
+        {
+            return true;
+        }
+
+        return equal(this_data, this_data + other_size, other_data);
     }
 
     /**
@@ -412,12 +420,22 @@ public:
      */
     [[nodiscard]] constexpr friend bool operator==(const string_view& a, const string_view& b)
     {
-        if(a.size() != b.size())
+        size_type a_size = a.size();
+
+        if(a_size != b.size())
         {
             return false;
         }
 
-        return equal(a.begin(), a.end(), b.begin());
+        const_pointer a_data = a.data();
+        const_pointer b_data = b.data();
+
+        if(a_data == b_data)
+        {
+            return true;
+        }
+
+        return equal(a_data, a_data + a_size, b_data);
     }
 
     /**

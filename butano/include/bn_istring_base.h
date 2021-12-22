@@ -196,12 +196,22 @@ public:
      */
     [[nodiscard]] constexpr friend bool operator==(const istring_base& a, const istring_base& b)
     {
-        if(a._size != b._size)
+        size_type a_size = a.size();
+
+        if(a_size != b.size())
         {
             return false;
         }
 
-        return equal(a.begin(), a.end(), b.begin());
+        const_pointer a_data = a.data();
+        const_pointer b_data = b.data();
+
+        if(a_data == b_data)
+        {
+            return true;
+        }
+
+        return equal(a_data, a_data + a_size, b_data);
     }
 
     /**

@@ -1786,6 +1786,7 @@
  *
  * * An external bn::bg_palette_item can be specified when importing regular and affine backgrounds.
  * * Colors count can be specified when importing sprite and background palettes.
+ * * Standard containers equality comparison optimized.
  * * <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a> LGPL license files removed.
  * * Standard containers documentation improved.
  * * @ref faq page improved.

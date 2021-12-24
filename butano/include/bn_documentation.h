@@ -1796,7 +1796,7 @@
  *
  * * bn::random::get_int and bn::random::get_fixed added.
  * * bn::calloc, bn::realloc, bn::memory::ewram_calloc and bn::memory::ewram_realloc added.
- * * bn::unique_ptr moved to its own header files.
+ * * bn::unique_ptr moved to its own header file.
  * * bn::pool and bn::generic_pool ROM usage reduced.
  * * Automatic 4BPP regular backgrounds generation fixed.
  * * Asserts disabled build warnings fixed.

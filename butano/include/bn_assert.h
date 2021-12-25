@@ -153,7 +153,9 @@
         template<int Size>
         struct file_name
         {
-            alignas(int) char characters[Size < 17 ? 17 : Size];
+            static_assert(Size > 0 && Size < BN_CFG_ASSERT_BUFFER_SIZE);
+
+            alignas(int) char characters[Size < 20 ? 20 : Size];
 
             constexpr explicit file_name(const char* path) :
                 characters()
@@ -166,7 +168,7 @@
                     {
                         index = 0;
                     }
-                    else
+                    else if(index < Size)
                     {
                         characters[index] = *path;
                         ++index;

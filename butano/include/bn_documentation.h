@@ -1782,7 +1782,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_7_0 8.7.0 (next release)
+ * @section changelog_8_7_0 8.7.0
  *
  * * An external bn::bg_palette_item can be specified when importing regular and affine backgrounds.
  * * Colors count can be specified when importing sprite and background palettes.

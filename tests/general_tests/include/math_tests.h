@@ -19,31 +19,6 @@ public:
     math_tests() :
         tests("math")
     {
-        BN_ASSERT(bn::newton_raphson_sqrt(2) == 1);
-        BN_ASSERT(bn::newton_raphson_sqrt(3) == 1);
-        BN_ASSERT(bn::newton_raphson_sqrt(4) == 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(5) == 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(6) == 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(7) == 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(8) == 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(9) == 3);
-
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(2)) < 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(2.5)) < 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(3)) < 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(3.5)) < 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(4)) == 2);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(4.5)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(5)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(5.5)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(6)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(6.5)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(7)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(7.5)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(8)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(8.5)) < 3);
-        BN_ASSERT(bn::newton_raphson_sqrt(bn::fixed(9)) == 3);
-
         BN_ASSERT(bn::rule_of_three_approximation(360, 65536).calculate(0) == 0);
         BN_ASSERT(bn::rule_of_three_approximation(360, 65536).calculate(90) == 16384);
         BN_ASSERT(bn::rule_of_three_approximation(360, 65536).calculate(180) == 32768);

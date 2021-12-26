@@ -1786,7 +1786,7 @@
  *
  * * Modified assets detection optimized.
  * * Audio and graphics tools unified in order to reduce build time.
- * * bn::newton_raphson_sqrt (used by `constexpr` bn::sqrt) fixed.
+ * * bn::newton_raphson_sqrt removed, since it doesn't work for bn::fixed input values.
  *
  *
  * @section changelog_8_7_0 8.7.0

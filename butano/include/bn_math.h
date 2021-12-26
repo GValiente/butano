@@ -23,48 +23,6 @@
 
 namespace _bn
 {
-    template<typename Type>
-    [[nodiscard]] constexpr Type newton_raphson_sqrt_impl(Type value)
-    {
-        Type x0 = value / 2;
-
-        if(x0 == 0)
-        {
-            return value;
-        }
-
-        Type x1 = (x0 + (value / x0)) / 2;
-
-        while(x1 < x0)
-        {
-            x0 = x1;
-            x1 = (x0 + (value / x0)) / 2;
-        }
-
-        return x0;
-    }
-
-    template<>
-    [[nodiscard]] constexpr bn::fixed newton_raphson_sqrt_impl(bn::fixed value)
-    {
-        bn::fixed x0 = value / 2;
-
-        if(x0 == 0)
-        {
-            return value;
-        }
-
-        bn::fixed x1 = (x0 + (value.safe_division(x0))) / 2;
-
-        while(x1 < x0)
-        {
-            x0 = x1;
-            x1 = (x0 + (value.safe_division(x0))) / 2;
-        }
-
-        return x0;
-    }
-
     [[nodiscard]] int sqrt_impl(int value);
 }
 
@@ -107,7 +65,22 @@ namespace bn
 
         if(is_constant_evaluated())
         {
-            return _bn::newton_raphson_sqrt_impl(value);
+            int x0 = value / 2;
+
+            if(x0 == 0)
+            {
+                return value;
+            }
+
+            int x1 = (x0 + (value / x0)) / 2;
+
+            while(x1 < x0)
+            {
+                x0 = x1;
+                x1 = (x0 + (value / x0)) / 2;
+            }
+
+            return x0;
         }
         else
         {
@@ -133,21 +106,6 @@ namespace bn
         {
             return fixed_t<(Precision + 1) / 2>::from_data(sqrt(value.data()));
         }
-    }
-
-    /**
-     * @brief Returns the square root of the given value using the Newton–Raphson method.
-     *
-     * See https://en.wikipedia.org/wiki/Newton%27s_method#Square_root
-     *
-     * @ingroup math
-     */
-    template<typename Type>
-    [[nodiscard]] constexpr Type newton_raphson_sqrt(Type value)
-    {
-        BN_ASSERT(value >= 0, "Invalid value: ", value);
-
-        return _bn::newton_raphson_sqrt_impl(value);
     }
 
     /**

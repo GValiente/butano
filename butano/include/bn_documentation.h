@@ -1782,7 +1782,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_8_0 8.8.0 (next release)
+ * @section changelog_8_8_0 8.8.0
  *
  * * Modified assets detection optimized.
  * * Audio and graphics tools unified in order to reduce build time.

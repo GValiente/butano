@@ -24,30 +24,45 @@
 namespace _bn
 {
     template<typename Type>
-    [[nodiscard]] constexpr Type newton_raphson_sqrt_impl(Type value, Type current_result, Type previous_result)
+    [[nodiscard]] constexpr Type newton_raphson_sqrt_impl(Type value)
     {
-        while(current_result != previous_result)
+        Type x0 = value / 2;
+
+        if(x0 == 0)
         {
-            Type new_result = (current_result + (value / current_result)) / 2;
-            previous_result = current_result;
-            current_result = new_result;
+            return value;
         }
 
-        return current_result;
+        Type x1 = (x0 + (value / x0)) / 2;
+
+        while(x1 < x0)
+        {
+            x0 = x1;
+            x1 = (x0 + (value / x0)) / 2;
+        }
+
+        return x0;
     }
 
     template<>
-    [[nodiscard]] constexpr bn::fixed newton_raphson_sqrt_impl(bn::fixed value, bn::fixed current_result,
-                                                               bn::fixed previous_result)
+    [[nodiscard]] constexpr bn::fixed newton_raphson_sqrt_impl(bn::fixed value)
     {
-        while(current_result != previous_result)
+        bn::fixed x0 = value / 2;
+
+        if(x0 == 0)
         {
-            bn::fixed new_result = (current_result + (value.safe_division(current_result))) / 2;
-            previous_result = current_result;
-            current_result = new_result;
+            return value;
         }
 
-        return current_result;
+        bn::fixed x1 = (x0 + (value.safe_division(x0))) / 2;
+
+        while(x1 < x0)
+        {
+            x0 = x1;
+            x1 = (x0 + (value.safe_division(x0))) / 2;
+        }
+
+        return x0;
     }
 
     [[nodiscard]] int sqrt_impl(int value);
@@ -92,7 +107,7 @@ namespace bn
 
         if(is_constant_evaluated())
         {
-            return _bn::newton_raphson_sqrt_impl(value, value, 0);
+            return _bn::newton_raphson_sqrt_impl(value);
         }
         else
         {
@@ -132,7 +147,7 @@ namespace bn
     {
         BN_ASSERT(value >= 0, "Invalid value: ", value);
 
-        return _bn::newton_raphson_sqrt_impl(value, value, Type(0));
+        return _bn::newton_raphson_sqrt_impl(value);
     }
 
     /**

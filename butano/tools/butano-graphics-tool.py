@@ -1177,16 +1177,12 @@ class BgPaletteItem:
 
 class GraphicsFileInfo:
 
-    def __init__(self, json_file_path, file_path, file_name, file_name_no_ext, new_file_info,
-                 file_info_path, new_json_file_info, json_file_info_path):
+    def __init__(self, json_file_path, file_path, file_name, file_name_no_ext, file_info_path):
         self.__json_file_path = json_file_path
         self.__file_path = file_path
         self.__file_name = file_name
         self.__file_name_no_ext = file_name_no_ext
-        self.__new_file_info = new_file_info
         self.__file_info_path = file_info_path
-        self.__new_json_file_info = new_json_file_info
-        self.__json_file_info_path = json_file_info_path
 
     def print_file_name(self):
         print(self.__file_name)
@@ -1221,8 +1217,10 @@ class GraphicsFileInfo:
                                  '" found in graphics json file: ' + self.__json_file_path)
 
             total_size, header_file_path = item.process()
-            self.__new_file_info.write(self.__file_info_path)
-            self.__new_json_file_info.write(self.__json_file_info_path)
+
+            with open(self.__file_info_path, 'w') as file_info:
+                file_info.write('')
+
             return [self.__file_name, header_file_path, total_size]
         except Exception as exc:
             return [self.__file_name, exc]
@@ -1243,7 +1241,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
     file_names_set = set()
 
     for graphics_folder_path in graphics_folder_path_list:
-        graphics_file_names = sorted(os.listdir(graphics_folder_path))
+        graphics_file_names = os.listdir(graphics_folder_path)
 
         for graphics_file_name in graphics_file_names:
             graphics_file_path = graphics_folder_path + '/' + graphics_file_name
@@ -1264,18 +1262,24 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
                     if not os.path.isfile(json_file_path):
                         raise ValueError('Graphics json file not found: ' + json_file_path)
 
-                    file_info_path_prefix = build_folder_path + '/_bn_' + graphics_file_name_no_ext + '_'
-                    file_info_path = file_info_path_prefix + '_file_info.txt'
-                    json_file_info_path = file_info_path_prefix + '_json_file_info.txt'
-                    old_file_info = FileInfo.read(file_info_path)
-                    new_file_info = FileInfo.build_from_file(graphics_file_path)
-                    old_json_file_info = FileInfo.read(json_file_info_path)
-                    new_json_file_info = FileInfo.build_from_file(json_file_path)
+                    file_info_path = build_folder_path + '/_bn_' + graphics_file_name_no_ext + '_file_info.txt'
 
-                    if old_file_info != new_file_info or old_json_file_info != new_json_file_info:
+                    if not os.path.exists(file_info_path):
+                        build = True
+                    else:
+                        file_info_mtime = os.path.getmtime(file_info_path)
+                        graphics_file_mtime = os.path.getmtime(graphics_file_path)
+
+                        if file_info_mtime < graphics_file_mtime:
+                            build = True
+                        else:
+                            json_file_mtime = os.path.getmtime(json_file_path)
+                            build = file_info_mtime < json_file_mtime
+
+                    if build:
                         graphics_file_infos.append(GraphicsFileInfo(
                             json_file_path, graphics_file_path, graphics_file_name, graphics_file_name_no_ext,
-                            new_file_info, file_info_path, new_json_file_info, json_file_info_path))
+                            file_info_path))
 
     return graphics_file_infos
 

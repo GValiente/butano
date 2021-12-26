@@ -5,12 +5,10 @@ zlib License, see LICENSE file.
 
 import os
 import json
-import argparse
 import string
 import subprocess
 import sys
 from multiprocessing import Pool
-import traceback
 
 from bmp import BMP
 from file_info import FileInfo
@@ -1284,7 +1282,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
     return graphics_file_infos
 
 
-def process(graphics_folder_paths, build_folder_path):
+def process_graphics(graphics_folder_paths, build_folder_path):
     graphics_file_infos = list_graphics_file_infos(graphics_folder_paths, build_folder_path)
 
     if len(graphics_file_infos) > 0:
@@ -1318,17 +1316,3 @@ def process(graphics_folder_paths, build_folder_path):
             exit(-1)
 
         print('    ' + 'Processed graphics size: ' + str(total_size) + ' bytes')
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Butano graphics tool.')
-    parser.add_argument('--graphics', required=True, help='graphics folder paths')
-    parser.add_argument('--build', required=True, help='build folder path')
-
-    try:
-        args = parser.parse_args()
-        process(args.graphics, args.build)
-    except Exception as ex:
-        sys.stderr.write('Error: ' + str(ex) + '\n')
-        traceback.print_exc()
-        exit(-1)

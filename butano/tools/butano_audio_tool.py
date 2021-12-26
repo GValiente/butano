@@ -4,10 +4,8 @@ zlib License, see LICENSE file.
 """
 
 import os
-import argparse
 import subprocess
 import sys
-import traceback
 
 from file_info import FileInfo
 
@@ -163,7 +161,7 @@ def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_fol
                            'sound_item', build_folder_path + '/bn_sound_items_info.h')
 
 
-def process(audio_folder_paths, build_folder_path):
+def process_audio(audio_folder_paths, build_folder_path):
     audio_file_names, audio_file_names_no_ext, audio_file_paths = list_audio_files(audio_folder_paths)
     file_info_path = build_folder_path + '/_bn_audio_files_info.txt'
     old_file_info = FileInfo.read(file_info_path)
@@ -184,17 +182,3 @@ def process(audio_folder_paths, build_folder_path):
     print('    Processed audio size: ' + str(total_size) + ' bytes')
     os.remove(soundbank_header_path)
     new_file_info.write(file_info_path)
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Butano audio tool.')
-    parser.add_argument('--audio', required=True, help='audio folder paths')
-    parser.add_argument('--build', required=True, help='build folder path')
-
-    try:
-        args = parser.parse_args()
-        process(args.audio, args.build)
-    except Exception as ex:
-        sys.stderr.write('Error: ' + str(ex) + '\n')
-        traceback.print_exc()
-        exit(-1)

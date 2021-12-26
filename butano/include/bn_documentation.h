@@ -1784,7 +1784,8 @@
  *
  * @section changelog_8_8_0 8.8.0 (next release)
  *
- * Modified assets detection optimized.
+ * * Modified assets detection optimized.
+ * * Audio and graphics tools unified in order to reduce build time.
  *
  *
  * @section changelog_8_7_0 8.7.0

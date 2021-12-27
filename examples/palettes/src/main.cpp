@@ -216,6 +216,59 @@ namespace
         }
     }
 
+    void palette_hue_shift_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "LEFT: decrease hue shift intensity",
+            "RIGHT: increase hue shift intensity",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Palette hue shift", info_text_lines, text_generator);
+
+        bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
+        bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
+        cavegirl_palette.set_hue_shift_intensity(0.5);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed hue_shift_intensity = cavegirl_palette.hue_shift_intensity();
+
+            if(bn::keypad::left_held())
+            {
+                cavegirl_palette.set_hue_shift_intensity(bn::max(hue_shift_intensity - 0.01, bn::fixed(0)));
+            }
+            else if(bn::keypad::right_held())
+            {
+                cavegirl_palette.set_hue_shift_intensity(bn::min(hue_shift_intensity + 0.01, bn::fixed(1)));
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void palette_hue_shift_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Palette hue shift actions", info_text_lines, text_generator);
+
+        bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
+        bn::bg_palette_ptr village_palette = village_bg.palette();
+        bn::bg_palette_hue_shift_loop_action hue_shift_action(village_palette, 120, 1);
+
+        while(! bn::keypad::start_pressed())
+        {
+            hue_shift_action.update();
+            info.update();
+            bn::core::update();
+        }
+    }
+
     void palette_rotate_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
@@ -522,6 +575,12 @@ int main()
         bn::core::update();
 
         palette_fade_actions_scene(text_generator);
+        bn::core::update();
+
+        palette_hue_shift_scene(text_generator);
+        bn::core::update();
+
+        palette_hue_shift_actions_scene(text_generator);
         bn::core::update();
 
         palette_rotate_scene(text_generator);

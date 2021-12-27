@@ -96,6 +96,17 @@ namespace bn::sprite_palettes
     void set_grayscale_intensity(fixed intensity);
 
     /**
+     * @brief Returns the intensity of the hue shift effect applied to all sprite color palettes.
+     */
+    [[nodiscard]] fixed hue_shift_intensity();
+
+    /**
+     * @brief Sets the intensity of the hue shift effect applied to all sprite color palettes.
+     * @param intensity New intensity in the range [0..1].
+     */
+    void set_hue_shift_intensity(fixed intensity);
+
+    /**
      * @brief Returns the color of the fade effect applied to all sprite color palettes.
      */
     [[nodiscard]] color fade_color();

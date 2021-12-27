@@ -249,6 +249,16 @@ void sprite_palette_ptr::set_grayscale_intensity(fixed intensity)
     palettes_manager::sprite_palettes_bank().set_grayscale_intensity(_id, intensity);
 }
 
+fixed sprite_palette_ptr::hue_shift_intensity() const
+{
+    return palettes_manager::sprite_palettes_bank().hue_shift_intensity(_id);
+}
+
+void sprite_palette_ptr::set_hue_shift_intensity(fixed intensity)
+{
+    palettes_manager::sprite_palettes_bank().set_hue_shift_intensity(_id, intensity);
+}
+
 color sprite_palette_ptr::fade_color() const
 {
     return palettes_manager::sprite_palettes_bank().fade_color(_id);

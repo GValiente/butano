@@ -91,6 +91,16 @@ void set_grayscale_intensity(fixed intensity)
     palettes_manager::bg_palettes_bank().set_grayscale_intensity(intensity);
 }
 
+fixed hue_shift_intensity()
+{
+    return palettes_manager::bg_palettes_bank().hue_shift_intensity();
+}
+
+void set_hue_shift_intensity(fixed intensity)
+{
+    palettes_manager::bg_palettes_bank().set_hue_shift_intensity(intensity);
+}
+
 color fade_color()
 {
     return palettes_manager::bg_palettes_bank().fade_color();

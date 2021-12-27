@@ -83,6 +83,13 @@ public:
 
     void set_grayscale_intensity(int id, fixed intensity);
 
+    [[nodiscard]] fixed hue_shift_intensity(int id) const
+    {
+        return _palettes[id].hue_shift_intensity;
+    }
+
+    void set_hue_shift_intensity(int id, fixed intensity);
+
     [[nodiscard]] color fade_color(int id) const
     {
         return _palettes[id].fade_color;
@@ -150,6 +157,13 @@ public:
 
     void set_grayscale_intensity(fixed intensity);
 
+    [[nodiscard]] fixed hue_shift_intensity() const
+    {
+        return _hue_shift_intensity;
+    }
+
+    void set_hue_shift_intensity(fixed intensity);
+
     [[nodiscard]] color fade_color() const
     {
         return _fade_color;
@@ -188,6 +202,7 @@ private:
     public:
         unsigned usages = 0;
         fixed grayscale_intensity;
+        fixed hue_shift_intensity;
         fixed fade_intensity;
         color fade_color;
         uint16_t hash = 0;
@@ -219,6 +234,7 @@ private:
     fixed _contrast;
     fixed _intensity;
     fixed _grayscale_intensity;
+    fixed _hue_shift_intensity;
     fixed _fade_intensity;
     unordered_map<uint16_t, int16_t, hw::palettes::count() * 2, identity_hasher> _bpp_4_indexes_map;
     int _first_index_to_commit = numeric_limits<int>::max();

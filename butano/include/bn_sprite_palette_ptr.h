@@ -175,6 +175,17 @@ public:
     void set_grayscale_intensity(fixed intensity);
 
     /**
+     * @brief Returns the intensity of the hue shift effect applied to the colors of this palette.
+     */
+    [[nodiscard]] fixed hue_shift_intensity() const;
+
+    /**
+     * @brief Sets the intensity of the hue shift effect applied to the colors of this palette.
+     * @param intensity New intensity in the range [0..1].
+     */
+    void set_hue_shift_intensity(fixed intensity);
+
+    /**
      * @brief Returns the color of the fade effect applied to the colors of this palette.
      */
     [[nodiscard]] color fade_color() const;

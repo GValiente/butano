@@ -249,6 +249,16 @@ void bg_palette_ptr::set_grayscale_intensity(fixed intensity)
     palettes_manager::bg_palettes_bank().set_grayscale_intensity(_id, intensity);
 }
 
+fixed bg_palette_ptr::hue_shift_intensity() const
+{
+    return palettes_manager::bg_palettes_bank().hue_shift_intensity(_id);
+}
+
+void bg_palette_ptr::set_hue_shift_intensity(fixed intensity)
+{
+    palettes_manager::bg_palettes_bank().set_hue_shift_intensity(_id, intensity);
+}
+
 color bg_palette_ptr::fade_color() const
 {
     return palettes_manager::bg_palettes_bank().fade_color(_id);

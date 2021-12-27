@@ -84,6 +84,8 @@ namespace bn::hw::palettes
         }
     }
 
+    void hue_shift(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr);
+
     inline void fade(const color* source_colors_ptr, color fade_color, int intensity, int count,
                      color* destination_colors_ptr)
     {

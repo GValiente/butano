@@ -633,6 +633,147 @@ public:
 };
 
 
+// hue_shift
+
+/**
+ * @brief Manages the intensity of the hue shift effect applied to all sprite color palettes.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palettes_hue_shift_manager
+{
+
+public:
+    /**
+     * @brief Returns the intensity of the hue shift effect applied to all sprite color palettes.
+     */
+    [[nodiscard]] static fixed get()
+    {
+        return sprite_palettes::hue_shift_intensity();
+    }
+
+    /**
+     * @brief Sets the intensity of the hue shift effect applied to all sprite color palettes.
+     * @param intensity New intensity in the range [0..1].
+     */
+    static void set(fixed intensity)
+    {
+        sprite_palettes::set_hue_shift_intensity(intensity);
+    }
+};
+
+
+/**
+ * @brief Modifies the intensity of the hue shift effect applied to all sprite color palettes
+ * until it has a given state.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palettes_hue_shift_to_action : public to_template_action<fixed, sprite_palettes_hue_shift_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates Number of times that the action must be updated
+     * until the intensity is equal to final_intensity.
+     * @param final_intensity Intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palettes_hue_shift_to_action(int duration_updates, fixed final_intensity) :
+        to_template_action(duration_updates, final_intensity)
+    {
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    /**
+     * @brief Returns the intensity when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed final_intensity() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the intensity of the hue shift effect applied to all sprite color palettes
+ * from a minimum to a maximum. When the intensity is equal to the given final state,
+ * it goes back to its initial state and vice versa.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palettes_hue_shift_loop_action : public loop_template_action<fixed, sprite_palettes_hue_shift_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the intensity delta.
+     * @param final_intensity When the intensity is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palettes_hue_shift_loop_action(int duration_updates, fixed final_intensity) :
+        loop_template_action(duration_updates, final_intensity)
+    {
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    /**
+     * @brief When the intensity is equal to the returned parameter, it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] fixed final_intensity() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the intensity of the hue shift effect applied to all sprite color palettes
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palettes_hue_shift_toggle_action : public toggle_template_action<fixed, sprite_palettes_hue_shift_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param new_intensity New intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palettes_hue_shift_toggle_action(int duration_updates, fixed new_intensity) :
+        toggle_template_action(duration_updates, new_intensity)
+    {
+        BN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
+    }
+
+    /**
+     * @brief Returns the intensity when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed new_intensity() const
+    {
+        return new_property();
+    }
+};
+
+
 // fade
 
 /**

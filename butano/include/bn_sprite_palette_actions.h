@@ -320,6 +320,227 @@ public:
 };
 
 
+// hue_shift
+
+/**
+ * @brief Manages the intensity of the hue shift effect applied to a sprite_palette_ptr.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_hue_shift_manager
+{
+
+public:
+    /**
+     * @brief Returns the intensity of the hue shift effect applied to the given sprite_palette_ptr.
+     */
+    [[nodiscard]] static fixed get(const sprite_palette_ptr& palette)
+    {
+        return palette.hue_shift_intensity();
+    }
+
+    /**
+     * @brief Sets the intensity of the hue shift effect applied to the given sprite_palette_ptr.
+     * @param intensity New intensity in the range [0..1].
+     * @param palette sprite_palette_ptr to modify.
+     */
+    static void set(fixed intensity, sprite_palette_ptr& palette)
+    {
+        palette.set_hue_shift_intensity(intensity);
+    }
+};
+
+
+/**
+ * @brief Modifies the intensity of the hue shift effect applied to a sprite_palette_ptr
+ * until it has a given state.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_hue_shift_to_action :
+        public to_value_template_action<sprite_palette_ptr, fixed, sprite_palette_hue_shift_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the intensity is equal to final_intensity.
+     * @param final_intensity Intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palette_hue_shift_to_action(const sprite_palette_ptr& palette, int duration_updates,
+                                       fixed final_intensity) :
+        to_value_template_action(palette, duration_updates, final_intensity)
+    {
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the intensity is equal to final_intensity.
+     * @param final_intensity Intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palette_hue_shift_to_action(sprite_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
+        to_value_template_action(move(palette), duration_updates, final_intensity)
+    {
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    /**
+     * @brief Returns the sprite_palette_ptr to modify.
+     */
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the intensity when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed final_intensity() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the intensity of the hue shift effect applied to a sprite_palette_ptr
+ * from a minimum to a maximum. When the intensity is equal to the given final state,
+ * it goes back to its initial state and vice versa.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_hue_shift_loop_action :
+        public loop_value_template_action<sprite_palette_ptr, fixed, sprite_palette_hue_shift_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the intensity delta.
+     * @param final_intensity When the intensity is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palette_hue_shift_loop_action(const sprite_palette_ptr& palette, int duration_updates,
+                                         fixed final_intensity) :
+        loop_value_template_action(palette, duration_updates, final_intensity)
+    {
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the intensity delta.
+     * @param final_intensity When the intensity is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palette_hue_shift_loop_action(sprite_palette_ptr&& palette, int duration_updates, fixed final_intensity) :
+        loop_value_template_action(move(palette), duration_updates, final_intensity)
+    {
+        BN_ASSERT(final_intensity >= 0 && final_intensity <= 1, "Invalid final intensity: ", final_intensity);
+    }
+
+    /**
+     * @brief Returns the sprite_palette_ptr to modify.
+     */
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the intensity is equal to the returned parameter,
+     * it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] fixed final_intensity() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the intensity of the hue shift effect applied to a sprite_palette_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_hue_shift_toggle_action :
+        public toggle_value_template_action<sprite_palette_ptr, fixed, sprite_palette_hue_shift_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param new_intensity New intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palette_hue_shift_toggle_action(const sprite_palette_ptr& palette, int duration_updates,
+                                           fixed new_intensity) :
+        toggle_value_template_action(palette, duration_updates, new_intensity)
+    {
+        BN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param new_intensity New intensity when the action is updated duration_updates times.
+     *
+     * This intensity must be in the range [0..1].
+     */
+    sprite_palette_hue_shift_toggle_action(sprite_palette_ptr&& palette, int duration_updates, fixed new_intensity) :
+        toggle_value_template_action(move(palette), duration_updates, new_intensity)
+    {
+        BN_ASSERT(new_intensity >= 0 && new_intensity <= 1, "Invalid new intensity: ", new_intensity);
+    }
+
+    /**
+     * @brief Returns the sprite_palette_ptr to modify.
+     */
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the intensity when the action is updated the given number of times.
+     */
+    [[nodiscard]] fixed new_intensity() const
+    {
+        return new_property();
+    }
+};
+
+
 // fade
 
 /**

@@ -119,6 +119,17 @@
             </dt>
             <dd>Applies a grayscale effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a27eb659607927241744dbbe11badc54b" class="m-doc">hue_shift</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> hue_shift_intensity,
+              <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span>
+            </dt>
+            <dd>Applies a hue shift effect to all referenced colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a336ed018dc8dc3e1eb9b74eacdcce157" class="m-doc">hue_shift</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> hue_shift_intensity,
+              <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span>
+            </dt>
+            <dd>Applies a hue shift effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a73af3a7c0426ed0ee4be14a81d34e014" class="m-doc">fade</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> fade_color,
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> fade_intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span>
@@ -373,6 +384,55 @@
                 <tr>
                   <td>grayscale_intensity</td>
                   <td>Grayscale effect intensity in the range [0..1].</td>
+                </tr>
+                <tr>
+                  <td>destination_colors_ref</td>
+                  <td>Destination colors reference.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a27eb659607927241744dbbe11badc54b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a27eb659607927241744dbbe11badc54b" class="m-doc-self">hue_shift</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> hue_shift_intensity,
+              <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span></span>
+            </h3>
+            <p>Applies a hue shift effect to all referenced colors.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">hue_shift_intensity</td>
+                  <td>Hue shift effect intensity in the range [0..1].</td>
+                </tr>
+                <tr>
+                  <td>colors_ref</td>
+                  <td>Colors reference.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a336ed018dc8dc3e1eb9b74eacdcce157"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a336ed018dc8dc3e1eb9b74eacdcce157" class="m-doc-self">hue_shift</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> hue_shift_intensity,
+              <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span></span>
+            </h3>
+            <p>Applies a hue shift effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">source_colors_ref</td>
+                  <td>Source colors reference.</td>
+                </tr>
+                <tr>
+                  <td>hue_shift_intensity</td>
+                  <td>Hue shift effect intensity in the range [0..1].</td>
                 </tr>
                 <tr>
                   <td>destination_colors_ref</td>

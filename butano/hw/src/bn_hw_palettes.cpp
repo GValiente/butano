@@ -14,23 +14,6 @@ namespace
 {
     constexpr int luts_size = 33 * 32;
 
-    constexpr array<uint8_t, luts_size> brightness_lut = []{
-        array<uint8_t, luts_size> lut;
-        int lut_index = 0;
-
-        for(int brightness = 0; brightness < 33; ++brightness)
-        {
-            for(int color = 0; color < 32; ++color)
-            {
-                int result = color + brightness;
-                lut[lut_index] = uint8_t(bn::clamp(result, 0, 31));
-                ++lut_index;
-            }
-        }
-
-        return lut;
-    }();
-
     constexpr array<uint8_t, luts_size> contrast_lut = []{
         array<uint8_t, luts_size> lut;
         int lut_index = 0;
@@ -135,8 +118,16 @@ namespace
 
 void brightness(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
 {
-    const uint8_t* lut = brightness_lut.data() + (value * 32);
-    lut_effect(source_colors_ptr, lut, count, destination_colors_ptr);
+    auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+
+    for(int index = 0; index < count; ++index)
+    {
+        color color = source_colors_ptr[index];
+        int red = bn::min(color.red() + value, 31);
+        int green = bn::min(color.green() + value, 31);
+        int blue = bn::min(color.blue() + value, 31);
+        tonc_dst_ptr[index] = RGB15(red, green, blue);
+    }
 }
 
 void contrast(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
@@ -170,7 +161,6 @@ void hue_shift(const color* source_colors_ptr, int value, int count, color* dest
                     clamp(out_g.right_shift_integer(), 0, 31),
                     clamp(out_b.right_shift_integer(), 0, 31));
     }
-
 }
 
 void rotate(const color* source_colors_ptr, int rotate_count, int colors_count, color* destination_colors_ptr)

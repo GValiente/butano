@@ -1787,7 +1787,7 @@
  * * Hue shift palette effect added.
  * See the `palettes` example to learn how to use it.
  * * Brightness effect ROM usage reduced.
- * * bn::sprite_tiles_item size reduced.
+ * * bn::sprite_item and bn::sprite_tiles_item size reduced.
  *
  *
  * @section changelog_8_8_0 8.8.0

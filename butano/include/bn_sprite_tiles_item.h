@@ -85,8 +85,8 @@ public:
         _tiles_ref(tiles_ref),
         _graphics_count(1),
         _tiles_count_per_graphic(tiles_ref.size()),
-        _bpp(bpp),
-        _compression(compression)
+        _compression(uint8_t(compression)),
+        _bpp(uint8_t(bpp))
     {
         BN_ASSERT(valid_tiles_count(tiles_ref.size(), bpp),
                   "Invalid tiles count per graphic: ", tiles_ref.size(), " - ", int(bpp));
@@ -123,8 +123,8 @@ public:
         _tiles_ref(tiles_ref),
         _graphics_count(graphics_count),
         _tiles_count_per_graphic(0),
-        _bpp(bpp),
-        _compression(compression)
+        _compression(uint8_t(compression)),
+        _bpp(uint8_t(bpp))
     {
         BN_ASSERT(graphics_count > 0 && graphics_count < 65536, "Invalid graphics count: ", graphics_count);
         BN_ASSERT(graphics_count <= tiles_ref.size(),
@@ -154,7 +154,7 @@ public:
      */
     [[nodiscard]] constexpr bpp_mode bpp() const
     {
-        return _bpp;
+        return bpp_mode(_bpp);
     }
 
     /**
@@ -178,7 +178,7 @@ public:
      */
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref() const
     {
-        BN_ASSERT(_compression == compression_type::NONE || _graphics_count == 1,
+        BN_ASSERT(compression() == compression_type::NONE || _graphics_count == 1,
                   "Compressed tiles with multiple graphics not supported");
 
         return span<const tile>(_tiles_ref.data(), _tiles_count_per_graphic);
@@ -189,7 +189,7 @@ public:
      */
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref(int graphics_index) const
     {
-        BN_ASSERT(_compression == compression_type::NONE || _graphics_count == 1,
+        BN_ASSERT(compression() == compression_type::NONE || _graphics_count == 1,
                   "Compressed tiles with multiple graphics not supported");
         BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
         BN_ASSERT(graphics_index < _graphics_count,
@@ -204,7 +204,7 @@ public:
      */
     [[nodiscard]] constexpr compression_type compression() const
     {
-        return _compression;
+        return compression_type(_compression);
     }
 
     /**
@@ -379,8 +379,8 @@ private:
     uint16_t _graphics_count;
 
     uint8_t _tiles_count_per_graphic;
-    bpp_mode _bpp;
-    compression_type _compression;
+    uint8_t _compression: 3;
+    uint8_t _bpp: 1;
 };
 
 }

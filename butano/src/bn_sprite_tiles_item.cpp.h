@@ -22,7 +22,7 @@ sprite_tiles_item sprite_tiles_item::decompress(span<tile> decompressed_tiles_re
     tile* dest_tiles_ptr = decompressed_tiles_ref.data();
     sprite_tiles_item result = *this;
 
-    switch(_compression)
+    switch(compression())
     {
 
     case compression_type::NONE:
@@ -31,17 +31,17 @@ sprite_tiles_item sprite_tiles_item::decompress(span<tile> decompressed_tiles_re
     case compression_type::LZ77:
         hw::decompress::lz77_wram(_tiles_ref.data(), dest_tiles_ptr);
         result._tiles_ref = span<const tile>(dest_tiles_ptr, source_tiles_count);
-        result._compression = compression_type::NONE;
+        result._compression = uint8_t(compression_type::NONE);
         break;
 
     case compression_type::RUN_LENGTH:
         hw::decompress::rl_wram(_tiles_ref.data(), dest_tiles_ptr);
         result._tiles_ref = span<const tile>(dest_tiles_ptr, source_tiles_count);
-        result._compression = compression_type::NONE;
+        result._compression = uint8_t(compression_type::NONE);
         break;
 
     default:
-        BN_ERROR("Unknown compression type: ", int(_compression));
+        BN_ERROR("Unknown compression type: ", _compression);
         break;
     }
 

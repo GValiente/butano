@@ -69,9 +69,9 @@ public:
      */
     constexpr sprite_item(const sprite_shape_size& shape_size, const sprite_tiles_item& tiles_item,
                           const sprite_palette_item& palette_item) :
-        _shape_size(shape_size),
         _tiles_item(tiles_item),
-        _palette_item(palette_item)
+        _palette_item(palette_item),
+        _shape_size(shape_size)
     {
         BN_ASSERT(tiles_item.bpp() == palette_item.bpp(), "Tiles and color palette BPP are different");
         BN_ASSERT(tiles_item.tiles_ref().size() ==
@@ -197,9 +197,9 @@ public:
     [[nodiscard]] constexpr friend bool operator==(const sprite_item& a, const sprite_item& b) = default;
 
 private:
-    sprite_shape_size _shape_size;
     sprite_tiles_item _tiles_item;
     sprite_palette_item _palette_item;
+    sprite_shape_size _shape_size;
 };
 
 }

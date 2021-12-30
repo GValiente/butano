@@ -88,8 +88,8 @@ public:
         _bpp(bpp),
         _compression(compression)
     {
-        BN_ASSERT(valid_tiles_count(_tiles_count_per_graphic, bpp),
-                  "Invalid tiles count per graphic: ", _tiles_count_per_graphic, " - ", int(bpp));
+        BN_ASSERT(valid_tiles_count(tiles_ref.size(), bpp),
+                  "Invalid tiles count per graphic: ", tiles_ref.size(), " - ", int(bpp));
     }
 
     /**
@@ -126,15 +126,16 @@ public:
         _bpp(bpp),
         _compression(compression)
     {
-        BN_ASSERT(graphics_count > 0, "Invalid graphics count: ", graphics_count);
+        BN_ASSERT(graphics_count > 0 && graphics_count < 65536, "Invalid graphics count: ", graphics_count);
         BN_ASSERT(graphics_count <= tiles_ref.size(),
                   "Invalid tiles or graphics count: ", tiles_ref.size(), " - ", graphics_count);
         BN_ASSERT(tiles_ref.size() % graphics_count == 0,
                   "Invalid tiles or graphics count: ", tiles_ref.size(), " - ", graphics_count);
 
-        _tiles_count_per_graphic = tiles_ref.size() / graphics_count;
-        BN_ASSERT(valid_tiles_count(_tiles_count_per_graphic, bpp),
-                  "Invalid tiles count per graphic: ", _tiles_count_per_graphic, " - ", int(bpp));
+        int tcpg = tiles_ref.size() / graphics_count;
+        BN_ASSERT(valid_tiles_count(tcpg, bpp), "Invalid tiles count per graphic: ", tcpg, " - ", int(bpp));
+
+        _tiles_count_per_graphic = tcpg;
     }
 
     /**
@@ -374,8 +375,10 @@ public:
 
 private:
     span<const tile> _tiles_ref;
-    int _graphics_count;
-    int _tiles_count_per_graphic;
+
+    uint16_t _graphics_count;
+
+    uint8_t _tiles_count_per_graphic;
     bpp_mode _bpp;
     compression_type _compression;
 };

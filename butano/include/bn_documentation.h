@@ -1788,6 +1788,7 @@
  * See the `palettes` example to learn how to use it.
  * * Brightness effect ROM usage reduced.
  * * bn::sprite_item and bn::sprite_tiles_item size reduced.
+ * * New games made with Butano added to `README.md`.
  *
  *
  * @section changelog_8_8_0 8.8.0

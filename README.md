@@ -53,7 +53,24 @@ Butano would have not been possible without these libraries:
 * Unique type ID generation without RTTI provided by [CTTI](https://github.com/Manu343726/ctti).
 
 
-## Butano Fighter
+## Contact and support
+
+If you spotted a bug, need a feature or have an awesome idea,
+the best you can do is to head over to the [issues page](https://github.com/GValiente/butano/issues) 
+and to the [gbadev Discord server](https://discord.gg/2WS7bpJ).
+
+
+## Licenses
+
+Butano is licensed under the zlib license, see the [LICENSE](LICENSE) file for details.
+
+Third party libraries are licensed under other licenses, please check the [licenses](licenses) folder for details.
+
+Assets used in games, examples and other projects are licensed under other licenses, 
+please check the `credits` folders for details.
+
+
+## Made with Butano: Butano Fighter
 
 Stay alive while you shoot at everything that moves! What else do you need?
 
@@ -64,7 +81,7 @@ Get the latest Butano Fighter ROM from [itch.io](https://gvaliente.itch.io/butan
 ![](docs_tools/images/bf_title.gif) ![](docs_tools/images/bf_intro.gif) ![](docs_tools/images/bf_bomb.gif)
 
 
-## Varooom 3D
+## Made with Butano: Varooom 3D
 
 Action-packed with revolutionary 60FPS 3D technology and 3D glasses (not included) that will have you believing 
 you're in the middle of a circuit race at speeds of 200 KMH!
@@ -88,6 +105,11 @@ face difficult foes and save your family!
 
 ![](docs_tools/images/symbol_merged_title.png) ![](docs_tools/images/symbol_merged_gameplay.png)
 
+* [LRO - Luggage Retrieval Officer](https://foopod.itch.io/lro): you will work your way to being a highly ranked member off staff,
+retrieving important missing luggage for the likes of the Natural History Museum, NASA and even the FBI!
+
+![](docs_tools/images/lro_title.png) ![](docs_tools/images/lro_gameplay.png)
+
 * [Bridge Quest](https://fixxiefixx.itch.io/bridge-quest): find the way to the desert, but beware, 
 because enemies and an evil tree boss will try to stop you!
 
@@ -106,20 +128,3 @@ gather owls and upgrades while managing your health and money and defeat the fin
 * [GBA-NICCC](https://github.com/GValiente/gba-niccc): Game Boy Advance port of the Atari ST demo STNICCC 2000.
 
 ![](docs_tools/images/gba-niccc_1.png) ![](docs_tools/images/gba-niccc_2.png)
-
-
-## Contact and support
-
-If you spotted a bug, need a feature or have an awesome idea,
-the best you can do is to head over to the [issues page](https://github.com/GValiente/butano/issues) 
-and to the [gbadev Discord server](https://discord.gg/2WS7bpJ).
-
-
-## Licenses
-
-Butano is licensed under the zlib license, see the [LICENSE](LICENSE) file for details.
-
-Third party libraries are licensed under other licenses, please check the [licenses](licenses) folder for details.
-
-Assets used in games, examples and other projects are licensed under other licenses, 
-please check the `credits` folders for details.

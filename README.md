@@ -105,8 +105,9 @@ face difficult foes and save your family!
 
 ![](docs_tools/images/symbol_merged_title.png) ![](docs_tools/images/symbol_merged_gameplay.png)
 
-* [LRO - Luggage Retrieval Officer](https://foopod.itch.io/lro): you will work your way to being a highly ranked member off staff,
-retrieving important missing luggage for the likes of the Natural History Museum, NASA and even the FBI!
+* [LRO - Luggage Retrieval Officer](https://foopod.itch.io/lro): you will work your way to being a highly ranked
+member off staff, retrieving important missing luggage for the likes of the Natural History Museum, 
+NASA and even the FBI!
 
 ![](docs_tools/images/lro_title.png) ![](docs_tools/images/lro_gameplay.png)
 
@@ -124,6 +125,11 @@ small demo/prototype of a visual novel about joining an ordinary math club.
 gather owls and upgrades while managing your health and money and defeat the final boss to win!
 
 ![](docs_tools/images/knight_owls_title.png) ![](docs_tools/images/knight_owls_gameplay.png)
+
+* [Frost Princess](https://squishyfrogs.itch.io/frost-princess): place tiles down on the board to create a path
+to your opponent's base, then place tiles on their base to damage them.
+
+![](docs_tools/images/frost_princess_title.png) ![](docs_tools/images/frost_princess_gameplay.png)
 
 * [GBA-NICCC](https://github.com/GValiente/gba-niccc): Game Boy Advance port of the Atari ST demo STNICCC 2000.
 

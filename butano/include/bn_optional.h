@@ -153,7 +153,9 @@ public:
     /**
      * @brief Destructor.
      */
-    constexpr ~optional() noexcept = default;
+    constexpr ~optional() noexcept
+    {
+    }
 
     /**
      * @brief Destructor.

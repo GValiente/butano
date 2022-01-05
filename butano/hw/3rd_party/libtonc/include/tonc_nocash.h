@@ -41,9 +41,6 @@ extern EWRAM_DATA char nocash_buffer[80];
 */
 int nocash_puts(const char *str);
 
-//! Print the current \a nocash_buffer to the no$gba debugger.
-EWRAM_CODE void nocash_message(void);
-
 /*!	\}	*/
 
 #endif // TONC_NOCASH

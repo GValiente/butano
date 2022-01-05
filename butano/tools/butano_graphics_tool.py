@@ -5,6 +5,7 @@ zlib License, see LICENSE file.
 
 import os
 import json
+import re
 import string
 import subprocess
 import sys
@@ -178,8 +179,6 @@ class SpriteItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile')
-            grit_data = grit_data.replace('[', '[bn::max(', 1)
-            grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
             grit_data = grit_data.replace('unsigned short', 'bn::color')
 
             for grit_line in grit_data.splitlines():
@@ -206,6 +205,9 @@ class SpriteItem:
         else:
             bpp_mode_label = 'bpp_mode::BPP_8'
             tiles_count *= 2
+
+        grit_data = re.sub(r'Tiles\[([0-9]+)]', 'Tiles[' + str(tiles_count) + ']', grit_data)
+        grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__colors_count) + ']', grit_data)
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_SPRITE_ITEMS_' + name.upper() + '_H'
@@ -318,8 +320,6 @@ class SpriteTilesItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile')
-            grit_data = grit_data.replace('[', '[bn::max(', 1)
-            grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
 
             for grit_line in grit_data.splitlines():
                 if ' tiles ' in grit_line:
@@ -345,6 +345,8 @@ class SpriteTilesItem:
         else:
             bpp_mode_label = 'bpp_mode::BPP_8'
             tiles_count *= 2
+
+        grit_data = re.sub(r'Tiles\[([0-9]+)]', 'Tiles[' + str(tiles_count) + ']', grit_data)
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_SPRITE_TILES_ITEMS_' + name.upper() + '_H'
@@ -467,6 +469,8 @@ class SpritePaletteItem:
             bpp_mode_label = 'bpp_mode::BPP_4'
         else:
             bpp_mode_label = 'bpp_mode::BPP_8'
+
+        grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__colors_count) + ']', grit_data)
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_SPRITE_PALETTE_ITEMS_' + name.upper() + '_H'
@@ -674,8 +678,6 @@ class RegularBgItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile', 1)
-            grit_data = grit_data.replace('[', '[bn::max(', 1)
-            grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
             grit_data = grit_data.replace('unsigned short', 'bn::regular_bg_map_cell', 1)
 
             if self.__palette_item is None:
@@ -708,6 +710,9 @@ class RegularBgItem:
             tiles_count *= 2
         else:
             bpp_mode_label = 'bpp_mode::BPP_4'
+
+        grit_data = re.sub(r'Tiles\[([0-9]+)]', 'Tiles[' + str(tiles_count) + ']', grit_data)
+        grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__colors_count) + ']', grit_data)
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_REGULAR_BG_ITEMS_' + name.upper() + '_H'
@@ -946,8 +951,6 @@ class AffineBgItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile', 1)
-            grit_data = grit_data.replace('[', '[bn::max(', 1)
-            grit_data = grit_data.replace(']', ' / 8, 1)]', 1)
             grit_data = grit_data.replace('unsigned char', 'bn::affine_bg_map_cell', 1)
 
             if self.__palette_item is None:
@@ -975,6 +978,10 @@ class AffineBgItem:
 
         remove_file(grit_file_path)
 
+        tiles_count *= 2
+        grit_data = re.sub(r'Tiles\[([0-9]+)]', 'Tiles[' + str(tiles_count) + ']', grit_data)
+        grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__colors_count) + ']', grit_data)
+
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_AFFINE_BG_ITEMS_' + name.upper() + '_H'
             header_file.write('#ifndef ' + include_guard + '\n')
@@ -992,7 +999,7 @@ class AffineBgItem:
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline affine_bg_item ' + name + '(' + '\n            ' +
                               'affine_bg_tiles_item(span<const tile>(' + name + '_bn_gfxTiles, ' +
-                              str(tiles_count * 2) + '), ' + compression_label(tiles_compression) +
+                              str(tiles_count) + '), ' + compression_label(tiles_compression) +
                               '), ' + '\n            ')
 
             if self.__palette_item is None:
@@ -1134,6 +1141,8 @@ class BgPaletteItem:
             bpp_mode_label = 'bpp_mode::BPP_8'
         else:
             bpp_mode_label = 'bpp_mode::BPP_4'
+
+        grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__colors_count) + ']', grit_data)
 
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_BG_PALETTE_ITEMS_' + name.upper() + '_H'

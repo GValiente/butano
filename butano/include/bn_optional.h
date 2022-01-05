@@ -46,8 +46,7 @@ public:
      * @brief Default constructor.
      */
     constexpr optional() :
-        _empty(0),
-        _valid(false)
+        _empty(0)
     {
     }
 

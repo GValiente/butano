@@ -105,7 +105,7 @@ public:
                    alignof(Type), " - ", _max_alignment);
 
         reset();
-        ::new(_value_ptr<Type>()) Type(move(value));
+        ::new(_value_ptr<Type>()) Type(bn::forward<Type>(value));
         _create_manager<Type>();
         return *this;
     }
@@ -192,7 +192,7 @@ public:
     template<typename Type>
     [[nodiscard]] Type value_or(Type&& default_value) const
     {
-        return has_value() ? value<Type>() : move(default_value);
+        return has_value() ? value<Type>() : bn::forward<Type>(default_value);
     }
 
     /**
@@ -502,7 +502,7 @@ public:
         static_assert(int(sizeof(Type)) <= MaxSize);
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
-        ::new(_value_ptr<Type>()) Type(move(value));
+        ::new(_value_ptr<Type>()) Type(bn::forward<Type>(value));
         _create_manager<Type>();
     }
 
@@ -599,7 +599,7 @@ public:
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
         reset();
-        ::new(_value_ptr<Type>()) Type(move(value));
+        ::new(_value_ptr<Type>()) Type(bn::forward<Type>(value));
         _create_manager<Type>();
         return *this;
     }

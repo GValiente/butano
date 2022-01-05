@@ -16,7 +16,7 @@ namespace bn::hw::sprite_affine_mats
 
     namespace
     {
-        handle* vram()
+        [[nodiscard]] inline handle* vram()
         {
             return reinterpret_cast<handle*>(MEM_OAM);
         }

@@ -1790,6 +1790,7 @@
  * * bn::sprite_item and bn::sprite_tiles_item size reduced.
  * * bn::hbe_visible_toggle_action removed, since it was not possible to use it.
  * * Clang build fixes.
+ * * Clang-Tidy warnings fixed.
  * * New games made with Butano added to `README.md`.
  *
  *

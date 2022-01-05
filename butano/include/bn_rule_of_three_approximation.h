@@ -111,7 +111,7 @@ private:
 
         while(true)
         {
-            unsigned result = 1u << shift_bits;
+            unsigned result = unsigned(1) << shift_bits;
 
             if(result >= unsigned(divisor))
             {

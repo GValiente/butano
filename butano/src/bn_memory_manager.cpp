@@ -121,7 +121,7 @@ void* ewram_alloc(int bytes)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
 
-    bytes = _aligned_bytes(bytes) + sizeof(items_iterator);
+    bytes = _aligned_bytes(bytes) + int(sizeof(items_iterator));
 
     if(bytes > data.free_bytes_count)
     {
@@ -173,7 +173,7 @@ void* ewram_calloc(int bytes)
     if(result)
     {
         auto int_result = reinterpret_cast<int*>(result);
-        memory::clear(_aligned_bytes(bytes) / sizeof(int), *int_result);
+        memory::clear(_aligned_bytes(bytes) / int(sizeof(int)), *int_result);
     }
 
     return result;
@@ -189,7 +189,7 @@ void* ewram_realloc(void* ptr, int new_bytes)
     items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
     items_iterator items_it = *items_it_ptr;
     item_type& item = *items_it;
-    int old_bytes = item.size - sizeof(items_iterator);
+    int old_bytes = item.size - int(sizeof(items_iterator));
 
     if(new_bytes <= old_bytes)
     {

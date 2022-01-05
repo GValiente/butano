@@ -60,7 +60,7 @@
  * @ingroup audio
  */
 #ifndef BN_CFG_AUDIO_MAX_COMMANDS
-    #define BN_CFG_AUDIO_MAX_COMMANDS (BN_CFG_AUDIO_MAX_SOUND_CHANNELS * 2) + 1
+    #define BN_CFG_AUDIO_MAX_COMMANDS (((BN_CFG_AUDIO_MAX_SOUND_CHANNELS) * 2) + 1)
 #endif
 
 #endif

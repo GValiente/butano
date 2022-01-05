@@ -18,7 +18,7 @@ namespace bn::hw::math
 
     [[nodiscard]] inline int atan2(int y, int x)
     {
-        return int(uint16_t(ArcTan2(x, y)));
+        return int(uint16_t(ArcTan2(int16_t(x), int16_t(y))));
     }
 }
 

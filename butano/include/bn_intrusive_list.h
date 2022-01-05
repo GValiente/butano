@@ -225,8 +225,7 @@ public:
     /**
      * @brief Default constructor.
      */
-    intrusive_list() :
-        _size(0)
+    intrusive_list()
     {
         _first_node.next = &_last_node;
         _last_node.prev = &_first_node;
@@ -788,7 +787,7 @@ public:
 private:
     node_type _first_node;
     node_type _last_node;
-    size_type _size;
+    size_type _size = 0;
 
     [[nodiscard]] static iterator _mutable_iterator(const_iterator const_iterator)
     {

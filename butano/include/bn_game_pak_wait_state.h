@@ -63,7 +63,7 @@
  *
  * @ingroup game_pak
  */
-#define BN_GAME_PAK_WAIT_STATE_FIRST_AUTO   -1
+#define BN_GAME_PAK_WAIT_STATE_FIRST_AUTO   (-1)
 
 /**
  * @def BN_GAME_PAK_WAIT_STATE_SECOND_2
@@ -93,6 +93,6 @@
  *
  * @ingroup game_pak
  */
-#define BN_GAME_PAK_WAIT_STATE_SECOND_AUTO  -1
+#define BN_GAME_PAK_WAIT_STATE_SECOND_AUTO  (-1)
 
 #endif

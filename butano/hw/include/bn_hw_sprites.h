@@ -24,7 +24,7 @@ namespace bn::hw::sprites
 
     namespace
     {
-        handle_type* vram()
+        [[nodiscard]] inline handle_type* vram()
         {
             return reinterpret_cast<handle_type*>(MEM_OAM);
         }
@@ -317,7 +317,7 @@ namespace bn::hw::sprites
 
     inline void commit(const handle_type& sprites_ref, int offset, int count)
     {
-        hw::memory::copy_words((&sprites_ref) + offset, count * (sizeof(handle_type) / 4), vram() + offset);
+        hw::memory::copy_words((&sprites_ref) + offset, count * int(sizeof(handle_type) / 4), vram() + offset);
     }
 
     [[nodiscard]] inline uint16_t* first_attributes_register(int id)

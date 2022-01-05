@@ -403,17 +403,6 @@ public:
 
     /**
      * @brief Multiplies both width and height of the rectangle by the given factor.
-     * @param value Unsigned integer multiplication factor.
-     * @return Reference to this.
-     */
-    constexpr fixed_rect& operator*=(unsigned value)
-    {
-        _dimensions *= value;
-        return *this;
-    }
-
-    /**
-     * @brief Multiplies both width and height of the rectangle by the given factor.
      * @param value Valid fixed point multiplication factor (>= 0).
      * @return Reference to this.
      */
@@ -429,17 +418,6 @@ public:
      * @return Reference to this.
      */
     constexpr fixed_rect& operator/=(int value)
-    {
-        _dimensions /= value;
-        return *this;
-    }
-
-    /**
-     * @brief Divides both width and height of the rectangle by the given divisor.
-     * @param value Valid unsigned integer divisor (> 0).
-     * @return Reference to this.
-     */
-    constexpr fixed_rect& operator/=(unsigned value)
     {
         _dimensions /= value;
         return *this;
@@ -467,14 +445,6 @@ public:
     /**
      * @brief Returns a multiplied by b.
      */
-    [[nodiscard]] constexpr friend fixed_rect operator*(const fixed_rect& a, unsigned b)
-    {
-        return fixed_rect(a._position, a._dimensions * b);
-    }
-
-    /**
-     * @brief Returns a multiplied by b.
-     */
     [[nodiscard]] constexpr friend fixed_rect operator*(const fixed_rect& a, fixed b)
     {
         return fixed_rect(a._position, a._dimensions * b);
@@ -484,14 +454,6 @@ public:
      * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend fixed_rect operator/(const fixed_rect& a, int b)
-    {
-        return fixed_rect(a._position, a._dimensions / b);
-    }
-
-    /**
-     * @brief Returns a divided by b.
-     */
-    [[nodiscard]] constexpr friend fixed_rect operator/(const fixed_rect& a, unsigned b)
     {
         return fixed_rect(a._position, a._dimensions / b);
     }

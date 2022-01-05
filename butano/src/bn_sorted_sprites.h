@@ -83,7 +83,7 @@ namespace bn::sorted_sprites
             layer_ref.items().push_front(item);
 
             int diff = &layer_ref - reinterpret_cast<layer*>(&layer_ptrs);
-            item.sort_layer_ptr_diff = diff;
+            item.sort_layer_ptr_diff = int16_t(diff);
         }
 
         void erase(sprites_manager_item& item)

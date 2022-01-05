@@ -30,7 +30,7 @@ namespace
 
     public:
         explicit entry(int channel) :
-            _channel(channel)
+            _channel(int8_t(channel))
         {
         }
 

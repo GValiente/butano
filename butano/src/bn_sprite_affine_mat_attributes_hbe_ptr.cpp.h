@@ -32,8 +32,7 @@ optional<sprite_affine_mat_attributes_hbe_ptr> sprite_affine_mat_attributes_hbe_
         {
             if(auto pc = sprite_affine_mat_pc_register_hbe_ptr::create_optional(affine_mat, attributes_ref))
             {
-                if(auto pd = sprite_affine_mat_pd_register_hbe_ptr::create_optional(
-                            move(affine_mat), attributes_ref))
+                if(auto pd = sprite_affine_mat_pd_register_hbe_ptr::create_optional(affine_mat, attributes_ref))
                 {
                     result = sprite_affine_mat_attributes_hbe_ptr(move(*pa), move(*pb), move(*pc), move(*pd));
                 }

@@ -33,7 +33,6 @@ public:
     using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
     using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
-public:
     /**
      * @brief Copy assignment operator.
      * @param other istring_base to copy.

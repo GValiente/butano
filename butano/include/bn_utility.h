@@ -90,7 +90,7 @@ namespace bn
         /**
          * @brief Default move constructor.
          */
-        constexpr pair(pair&& other) = default;
+        constexpr pair(pair&& other) noexcept = default;
 
         /**
          * @brief Initializes first with move(other.first) and second with move(other.second).
@@ -121,7 +121,7 @@ namespace bn
         /**
          * @brief Default move assignment operator.
          */
-        constexpr pair& operator=(pair&& other) = default;
+        constexpr pair& operator=(pair&& other) noexcept = default;
 
         /**
          * @brief Assigns move(other.first) to first and move(other.second) to second.

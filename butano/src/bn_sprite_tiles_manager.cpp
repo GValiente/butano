@@ -233,7 +233,7 @@ namespace
         iterator erase(int index)
         {
             int next_index = _items[index].next_index;
-            _free_indices.push_back(index);
+            _free_indices.push_back(int16_t(index));
             _remove_node(index);
             return iterator(next_index, *this);
         }

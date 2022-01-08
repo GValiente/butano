@@ -1782,7 +1782,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_9_0 8.9.0 (next release)
+ * @section changelog_8_9_0 8.9.0
  *
  * * Hue shift palette effect added.
  * See the `palettes` example to learn how to use it.

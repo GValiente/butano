@@ -1788,6 +1788,7 @@
  * See the `palettes` example to learn how to use it.
  * * Brightness effect ROM usage reduced.
  * * bn::sprite_item and bn::sprite_tiles_item size reduced.
+ * * Automatic sprite double size detection fixed.
  * * bn::hbe_visible_toggle_action removed, since it was not possible to use it.
  * * Clang build fixes.
  * * Clang-Tidy warnings fixed.

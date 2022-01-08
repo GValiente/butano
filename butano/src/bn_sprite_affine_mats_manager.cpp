@@ -531,12 +531,12 @@ bool sprite_double_size(int id)
 
     if(pb == 0 && pc == 0)
     {
-        return (pa > -257 && pa < 256) || (pd > -257 && pd < 256);
+        return bn::abs(pa) < 256 || bn::abs(pd) < 256;
     }
 
     if(pa == 0 && pd == 0)
     {
-        return (pb > -257 && pb < 256) || (pc > -257 && pc < 256);
+        return bn::abs(pb) < 256 || bn::abs(pc) < 256;
     }
 
     int divisor = (pa * pd) - (pb * pc);

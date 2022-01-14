@@ -1782,6 +1782,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_8_10_0 8.10.0 (next release)
+ *
+ * Slot index added to palettes manager status log.
+ *
+ *
  * @section changelog_8_9_0 8.9.0
  *
  * * Hue shift palette effect added.

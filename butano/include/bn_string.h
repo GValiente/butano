@@ -702,6 +702,16 @@ public:
 
     /**
      * @brief Copy constructor.
+     * @param view string_view to copy.
+     */
+    constexpr string(const string_view& view) :
+        string()
+    {
+        append(view);
+    }
+
+    /**
+     * @brief Copy constructor.
      * @param char_array_ptr Pointer to null-terminated characters array.
      */
     constexpr string(const_pointer char_array_ptr) :
@@ -762,6 +772,17 @@ public:
     constexpr string& operator=(const istring_base& other)
     {
         assign(other);
+        return *this;
+    }
+
+    /**
+     * @brief Copy assignment operator.
+     * @param view string_view to copy.
+     * @return Reference to this.
+     */
+    constexpr string& operator=(const string_view& view)
+    {
+        assign(view);
         return *this;
     }
 

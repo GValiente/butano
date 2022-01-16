@@ -16,8 +16,8 @@ Butano is a modern C++ high level engine for the [Game Boy Advance](https://en.w
 * Based on modern C++ concepts like shared ownership and RAII.
 * Detailed [documentation](https://gvaliente.github.io/butano).
 * Multiple [examples](https://gvaliente.github.io/butano/examples.html) of most aspects of the engine.
-* The source code and assets of two full games ([Butano Fighter](#butano-fighter) 
-and [Varooom 3D](#varooom-3d)) are provided with this project.
+* The source code and assets of two full games ([Butano Fighter](#made-with-butano-butano-fighter) 
+and [Varooom 3D](#made-with-butano-varooom-3d)) are provided with this project.
 
 
 ## Supported platforms

@@ -198,11 +198,7 @@ public:
      */
     constexpr istring& assign(const istring_base& other)
     {
-        BN_ASSERT(other.size() <= _max_size, "Not enough space: ", other.size(), " - ", _max_size);
-
-        bn::copy(other.begin(), other.end(), begin());
-        _size = other.size();
-        _data[_size] = 0;
+        _assign(other.data(), other.size());
         return *this;
     }
 
@@ -213,8 +209,10 @@ public:
      */
     constexpr istring& assign(value_type value)
     {
-        clear();
-        append(value);
+        pointer data = _data;
+        data[0] = value;
+        data[1] = 0;
+        _size = 1;
         return *this;
     }
 
@@ -225,11 +223,7 @@ public:
      */
     constexpr istring& assign(const string_view& view)
     {
-        BN_ASSERT(view.size() <= _max_size, "Not enough space: ", view.size(), " - ", _max_size);
-
-        bn::copy(view.begin(), view.end(), begin());
-        _size = view.size();
-        _data[_size] = 0;
+        _assign(view.data(), view.size());
         return *this;
     }
 
@@ -244,6 +238,17 @@ public:
     }
 
     /**
+     * @brief Replaces the contents of the istring.
+     * @param char_array_ptr Pointer to null-terminated characters array replacement.
+     * @param char_array_size Characters count of the characters array.
+     * @return Reference to this.
+     */
+    constexpr istring& assign(const_pointer char_array_ptr, size_type char_array_size)
+    {
+        return assign(string_view(char_array_ptr, char_array_size));
+    }
+
+    /**
      * @brief Replaces the contents of the istring with count copies of character value.
      * @param count New size.
      * @param value Character replacement.
@@ -251,8 +256,13 @@ public:
      */
     constexpr istring& assign(size_type count, value_type value)
     {
-        clear();
-        append(count, value);
+        BN_ASSERT(count >= 0, "Invalid count: ", count);
+        BN_ASSERT(count <= _max_size, "Not enough space: ", count, " - ", _max_size);
+
+        pointer data = _data;
+        bn::fill(data, data + count, value);
+        data[count] = 0;
+        _size = count;
         return *this;
     }
 
@@ -275,10 +285,11 @@ public:
     {
         BN_ASSERT(! full(), "String is full");
 
-        pointer data = _data + _size;
+        size_type size = _size;
+        pointer data = _data + size;
         data[0] = value;
         data[1] = 0;
-        ++_size;
+        _size = size + 1;
     }
 
     /**
@@ -286,10 +297,12 @@ public:
      */
     constexpr void pop_back()
     {
-        BN_ASSERT(! empty(), "String is empty");
+        size_type size = _size;
+        BN_ASSERT(size, "String is empty");
 
-        --_size;
-        _data[_size] = 0;
+        --size;
+        _data[size] = 0;
+        _size = size;
     }
 
     /**
@@ -299,7 +312,7 @@ public:
      */
     constexpr istring& append(const istring_base& other)
     {
-        append(other.begin(), other.end());
+        _append(other.data(), other.size());
         return *this;
     }
 
@@ -321,7 +334,7 @@ public:
      */
     constexpr istring& append(const string_view& view)
     {
-        append(view.begin(), view.end());
+        _append(view.data(), view.size());
         return *this;
     }
 
@@ -360,7 +373,7 @@ public:
         BN_ASSERT(_size + count <= _max_size, "Not enough space: ", _size + count, " - ", _max_size);
 
         iterator append_position = end();
-        fill(append_position, append_position + count, value);
+        bn::fill(append_position, append_position + count, value);
         _size += count;
         _data[_size] = 0;
         return *this;
@@ -374,24 +387,7 @@ public:
      */
     constexpr istring& append(const_iterator first, const_iterator last)
     {
-        size_type count = last - first;
-        BN_ASSERT(count >= 0, "Invalid range");
-        BN_ASSERT(_size + count <= _max_size, "Not enough space: ", _size + count, " - ", _max_size);
-
-        iterator append_position = end();
-
-        if(append_position <= first)
-        {
-            bn::copy(first, last, append_position);
-        }
-        else
-        {
-            copy_backward(first, last, append_position + count);
-        }
-
-        _size += count;
-        _data[_size] = 0;
-        return *this;
+        return assign(string_view(first, last - first));
     }
 
     /**
@@ -662,6 +658,37 @@ protected:
     }
 
     /// @endcond
+
+private:
+    constexpr void _assign(const_pointer other_data, size_type other_size)
+    {
+        BN_ASSERT(other_size <= _max_size, "Not enough space: ", other_size, " - ", _max_size);
+
+        pointer data = _data;
+        bn::copy(other_data, other_data + other_size, data);
+        data[other_size] = 0;
+        _size = other_size;
+    }
+
+    constexpr void _append(const_pointer other_data, size_type other_size)
+    {
+        size_type new_size = _size + other_size;
+        BN_ASSERT(new_size <= _max_size, "Not enough space: ", new_size, " - ", _max_size);
+
+        iterator append_position = end();
+
+        if(append_position <= other_data)
+        {
+            bn::copy(other_data, other_data + other_size, append_position);
+        }
+        else
+        {
+            bn::copy_backward(other_data, other_data + other_size, append_position + other_size);
+        }
+
+        _data[new_size] = 0;
+        _size = new_size;
+    }
 };
 
 
@@ -687,7 +714,7 @@ public:
     constexpr string(const string& other) :
         string()
     {
-        append(other);
+        assign(other);
     }
 
     /**
@@ -697,7 +724,7 @@ public:
     constexpr string(const istring_base& other) :
         string()
     {
-        append(other);
+        assign(other);
     }
 
     /**
@@ -707,7 +734,7 @@ public:
     constexpr string(const string_view& view) :
         string()
     {
-        append(view);
+        assign(view);
     }
 
     /**
@@ -717,7 +744,7 @@ public:
     constexpr string(const_pointer char_array_ptr) :
         string()
     {
-        append(char_array_ptr);
+        assign(char_array_ptr);
     }
 
     /**
@@ -728,18 +755,18 @@ public:
     constexpr string(const_pointer char_array_ptr, size_type char_array_size) :
         string()
     {
-        append(char_array_ptr, char_array_size);
+        assign(char_array_ptr, char_array_size);
     }
 
     /**
      * @brief Constructs a string with count copies of character value.
-     * @param count Number of characters to append.
-     * @param value Character to append.
+     * @param count Number of characters to assign.
+     * @param value Character to assign.
      */
     constexpr string(size_type count, value_type value) :
         string()
     {
-        append(count, value);
+        assign(count, value);
     }
 
     /**
@@ -750,7 +777,7 @@ public:
     constexpr string(const_iterator first, const_iterator last) :
         string()
     {
-        append(first, last);
+        assign(first, last);
     }
 
     /**

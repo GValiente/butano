@@ -1785,6 +1785,7 @@
  * @section changelog_8_10_0 8.10.0 (next release)
  *
  * * bn::string and bn::string_view compatibility improved.
+ * * bn::string construction, assignment and append optimized.
  * * Slot index added to palettes manager status log.
  *
  *

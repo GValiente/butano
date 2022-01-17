@@ -192,6 +192,97 @@ public:
     }
 
     /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param value Single character.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool starts_with(value_type value) const
+    {
+        return ! empty() && _data[0] == value;
+    }
+
+    /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param other Another string_view.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool starts_with(const string_view& other) const
+    {
+        size_type other_size = other.size();
+
+        if(size() < other_size)
+        {
+            return false;
+        }
+
+        const_pointer this_data = data();
+        const_pointer other_data = other.data();
+
+        if(this_data == other_data)
+        {
+            return true;
+        }
+
+        return equal(this_data, this_data + other_size, other_data);
+    }
+
+    /**
+     * @brief Checks if the referenced string begins with the given prefix.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool starts_with(const_pointer char_array_ptr) const
+    {
+        if(! char_array_ptr)
+        {
+            return true;
+        }
+
+        const_pointer this_char_array_ptr = _data;
+
+        for(size_type index = 0, limit = size(); index < limit; ++index)
+        {
+            if(*this_char_array_ptr != *char_array_ptr)
+            {
+                return false;
+            }
+
+            ++this_char_array_ptr;
+            ++char_array_ptr;
+        }
+
+        return *char_array_ptr == 0;
+    }
+
+    /**
+     * @brief Checks if the referenced string ends with the given prefix.
+     * @param value Single character.
+     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool ends_with(value_type value) const
+    {
+        return ! empty() && _data[_size - 1] == value;
+    }
+
+    /**
+     * @brief Checks if the referenced string ends with the given prefix.
+     * @param other Another string_view.
+     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool ends_with(const string_view& other) const
+    {
+        size_type this_size = size();
+        size_type other_size = other.size();
+
+        if(this_size < other_size)
+        {
+            return false;
+        }
+
+        return equal(_data + this_size - other_size, _data + this_size, other.data());
+    }
+
+    /**
      * @brief Replaces the contents of the istring.
      * @param other istring_base replacement.
      * @return Reference to this.
@@ -458,94 +549,45 @@ public:
     }
 
     /**
-     * @brief Checks if the referenced string begins with the given prefix.
-     * @param value Single character.
-     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     * @brief Resizes the istring.
+     * @param count New size.
      */
-    [[nodiscard]] constexpr bool starts_with(value_type value) const
+    constexpr void resize(size_type count)
     {
-        return ! empty() && _data[0] == value;
+        resize(count, 0);
     }
 
     /**
-     * @brief Checks if the referenced string begins with the given prefix.
-     * @param other Another string_view.
-     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     * @brief Resizes the istring.
+     * @param count New size.
+     * @param value Character to fill new elements with.
      */
-    [[nodiscard]] constexpr bool starts_with(const string_view& other) const
+    constexpr void resize(size_type count, value_type value)
     {
-        size_type other_size = other.size();
+        BN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
 
-        if(size() < other_size)
+        pointer data = _data;
+        size_type size = _size;
+        _size = count;
+
+        if(size < count)
         {
-            return false;
+            bn::fill(data + size, data + size + count, value);
         }
 
-        const_pointer this_data = data();
-        const_pointer other_data = other.data();
-
-        if(this_data == other_data)
-        {
-            return true;
-        }
-
-        return equal(this_data, this_data + other_size, other_data);
+        data[count] = 0;
     }
 
     /**
-     * @brief Checks if the referenced string begins with the given prefix.
-     * @param char_array_ptr Pointer to null-terminated characters array.
-     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     * @brief Resizes the istring to a size less or equal than the previous one.
+     * @param count New size.
      */
-    [[nodiscard]] constexpr bool starts_with(const_pointer char_array_ptr) const
+    constexpr void shrink(size_type count)
     {
-        if(! char_array_ptr)
-        {
-            return true;
-        }
+        BN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _size);
 
-        const_pointer this_char_array_ptr = _data;
-
-        for(size_type index = 0, limit = size(); index < limit; ++index)
-        {
-            if(*this_char_array_ptr != *char_array_ptr)
-            {
-                return false;
-            }
-
-            ++this_char_array_ptr;
-            ++char_array_ptr;
-        }
-
-        return *char_array_ptr == 0;
-    }
-
-    /**
-     * @brief Checks if the referenced string ends with the given prefix.
-     * @param value Single character.
-     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
-     */
-    [[nodiscard]] constexpr bool ends_with(value_type value) const
-    {
-        return ! empty() && _data[_size - 1] == value;
-    }
-
-    /**
-     * @brief Checks if the referenced string ends with the given prefix.
-     * @param other Another string_view.
-     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
-     */
-    [[nodiscard]] constexpr bool ends_with(const string_view& other) const
-    {
-        size_type this_size = size();
-        size_type other_size = other.size();
-
-        if(this_size < other_size)
-        {
-            return false;
-        }
-
-        return equal(_data + this_size - other_size, _data + this_size, other.data());
+        _data[count] = 0;
+        _size = count;
     }
 
     /**

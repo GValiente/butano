@@ -171,6 +171,26 @@
             </dt>
             <dd>Returns a reference to the last character.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa2fb23e7f4e4fc2e792e27d567dbf780" class="m-doc">starts_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string begins with the given prefix.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a80a29293de4cf46fa5161e6fed3ce761" class="m-doc">starts_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string begins with the given prefix.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abb4946b6382edbf7e1e2827cdf4e798f" class="m-doc">starts_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a7d9c854234ddd52d8ba1351d653dafd1" class="m-doc">const_<wbr />pointer</a> char_array_ptr) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string begins with the given prefix.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a114cd1e10c839e6bf2460e4d8f9a417b" class="m-doc">ends_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string ends with the given prefix.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae332dd9509a833ef4b0f7a79ecfdbb82" class="m-doc">ends_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string ends with the given prefix.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#afd3cd420695ba7c7a214bf4622f82fa0" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Replaces the contents of the istring.</dd>
@@ -250,25 +270,18 @@
             </dt>
             <dd>Erases a range of characters.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa2fb23e7f4e4fc2e792e27d567dbf780" class="m-doc">starts_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">void <a href="#add8d57586c89c989757fe24b8806f862" class="m-doc">resize</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Checks if the referenced string begins with the given prefix.</dd>
+            <dd>Resizes the istring.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a80a29293de4cf46fa5161e6fed3ce761" class="m-doc">starts_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">void <a href="#a4abe88fce71547588d46aacba2a65ff1" class="m-doc">resize</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Checks if the referenced string begins with the given prefix.</dd>
+            <dd>Resizes the istring.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#abb4946b6382edbf7e1e2827cdf4e798f" class="m-doc">starts_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a7d9c854234ddd52d8ba1351d653dafd1" class="m-doc">const_<wbr />pointer</a> char_array_ptr) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">void <a href="#af20b22cd0b0f04576065a9d78f9c1008" class="m-doc">shrink</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Checks if the referenced string begins with the given prefix.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a114cd1e10c839e6bf2460e4d8f9a417b" class="m-doc">ends_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Checks if the referenced string ends with the given prefix.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ae332dd9509a833ef4b0f7a79ecfdbb82" class="m-doc">ends_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
-            </dt>
-            <dd>Checks if the referenced string ends with the given prefix.</dd>
+            <dd>Resizes the istring to a size less or equal than the previous one.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#aa529da546b1f27737908e1e6f3cb7de7" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; other) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -379,6 +392,121 @@
                 <tr>
                   <th>Returns</th>
                   <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa2fb23e7f4e4fc2e792e27d567dbf780"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa2fb23e7f4e4fc2e792e27d567dbf780" class="m-doc-self">starts_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string begins with the given prefix.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Single character.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string begins with the given prefix, <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a80a29293de4cf46fa5161e6fed3ce761"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a80a29293de4cf46fa5161e6fed3ce761" class="m-doc-self">starts_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string begins with the given prefix.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string begins with the given prefix, <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abb4946b6382edbf7e1e2827cdf4e798f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abb4946b6382edbf7e1e2827cdf4e798f" class="m-doc-self">starts_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a7d9c854234ddd52d8ba1351d653dafd1" class="m-doc">const_<wbr />pointer</a> char_array_ptr) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string begins with the given prefix.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">char_array_ptr</td>
+                  <td>Pointer to null-terminated characters array.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string begins with the given prefix, <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a114cd1e10c839e6bf2460e4d8f9a417b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a114cd1e10c839e6bf2460e4d8f9a417b" class="m-doc-self">ends_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string ends with the given prefix.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Single character.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string ends with the given prefix, <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae332dd9509a833ef4b0f7a79ecfdbb82"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae332dd9509a833ef4b0f7a79ecfdbb82" class="m-doc-self">ends_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string ends with the given prefix.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string ends with the given prefix, <code>false</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>
@@ -804,119 +932,60 @@
             </table>
 <p>The range includes all the characters between first and last, including the character pointed by first, but not the one pointed by last.</p>
           </div></section>
-          <section class="m-doc-details" id="aa2fb23e7f4e4fc2e792e27d567dbf780"><div>
+          <section class="m-doc-details" id="add8d57586c89c989757fe24b8806f862"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa2fb23e7f4e4fc2e792e27d567dbf780" class="m-doc-self">starts_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#add8d57586c89c989757fe24b8806f862" class="m-doc-self">resize</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Checks if the referenced string begins with the given prefix.</p>
+            <p>Resizes the istring.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">value</td>
-                  <td>Single character.</td>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>true</code> if the referenced string begins with the given prefix, <code>false</code> otherwise.</td>
-                </tr>
-              </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a80a29293de4cf46fa5161e6fed3ce761"><div>
+          <section class="m-doc-details" id="a4abe88fce71547588d46aacba2a65ff1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a80a29293de4cf46fa5161e6fed3ce761" class="m-doc-self">starts_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4abe88fce71547588d46aacba2a65ff1" class="m-doc-self">resize</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count,
+              <a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Checks if the referenced string begins with the given prefix.</p>
+            <p>Resizes the istring.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">other</td>
-                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Character to fill new elements with.</td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>true</code> if the referenced string begins with the given prefix, <code>false</code> otherwise.</td>
-                </tr>
-              </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="abb4946b6382edbf7e1e2827cdf4e798f"><div>
+          <section class="m-doc-details" id="af20b22cd0b0f04576065a9d78f9c1008"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abb4946b6382edbf7e1e2827cdf4e798f" class="m-doc-self">starts_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a7d9c854234ddd52d8ba1351d653dafd1" class="m-doc">const_<wbr />pointer</a> char_array_ptr) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af20b22cd0b0f04576065a9d78f9c1008" class="m-doc-self">shrink</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Checks if the referenced string begins with the given prefix.</p>
+            <p>Resizes the istring to a size less or equal than the previous one.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">char_array_ptr</td>
-                  <td>Pointer to null-terminated characters array.</td>
+                  <td style="width: 1%">count</td>
+                  <td>New size.</td>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>true</code> if the referenced string begins with the given prefix, <code>false</code> otherwise.</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="a114cd1e10c839e6bf2460e4d8f9a417b"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a114cd1e10c839e6bf2460e4d8f9a417b" class="m-doc-self">ends_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) const <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>Checks if the referenced string ends with the given prefix.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">value</td>
-                  <td>Single character.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>true</code> if the referenced string ends with the given prefix, <code>false</code> otherwise.</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ae332dd9509a833ef4b0f7a79ecfdbb82"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae332dd9509a833ef4b0f7a79ecfdbb82" class="m-doc-self">ends_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
-            </h3>
-            <p>Checks if the referenced string ends with the given prefix.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">other</td>
-                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><code>true</code> if the referenced string ends with the given prefix, <code>false</code> otherwise.</td>
-                </tr>
-              </tfoot>
             </table>
           </div></section>
           <section class="m-doc-details" id="aa529da546b1f27737908e1e6f3cb7de7"><div>

@@ -1,136 +1,162 @@
-# Butano
 
-Butano is a modern C++ high level engine for the [Game Boy Advance](https://en.wikipedia.org/wiki/Game_Boy_Advance).
+# Butano ![Badge Windows]​![Badge MacOS]​![Badge Unix] [![Badge Discord]][Discord]
 
-![](docs_tools/images/examples_mode_7.gif) ![](docs_tools/images/bf_title.gif) ![](docs_tools/images/vr3d_race.gif)
 
+
+*A modern high level* ***C++ Engine*** *for the* ***[Game Boy Advance]*** *.*
+
+![Preview 1]
+![Preview 2]
+![Preview 3]
+
+---
+
+**⸢ [Getting Started] ⸥ ⸢ [Games Made With Butano] ⸥ ⸢ [Documentation] ⸥**
+
+---
 
 ## Features
 
-* Create and display sprites, backgrounds, text, raster effects and more with only one line of C++ code.
-* Custom standard library without heap allocations nor exceptions, based on [ETL](https://www.etlcpp.com/).
-* Import and use your own assets [with ease](https://gvaliente.github.io/butano/import.html).
-* Multiple development tools like [asserts](https://gvaliente.github.io/butano/group__assert.html), 
-[emulator logging](https://gvaliente.github.io/butano/group__log.html) and 
-[code profiling](https://gvaliente.github.io/butano/group__profiler.html).
-* Based on modern C++ concepts like shared ownership and RAII.
-* Detailed [documentation](https://gvaliente.github.io/butano).
-* Multiple [examples](https://gvaliente.github.io/butano/examples.html) of most aspects of the engine.
-* The source code and assets of two full games ([Butano Fighter](#made-with-butano-butano-fighter) 
-and [Varooom 3D](#made-with-butano-varooom-3d)) are provided with this project.
+- Detailed **[Documentation]**.
+
+- **[Import]** your own assets.
+
+- **[ETL]** based **Standard Library** .
+
+    *without `Heap allocations` nor `Exceptions` .*
+
+- **[Examples]** for most aspects of the engine.
+
+- Included **Development Tools** like :
+
+    - **[Emulator Logging]**
+    - **[Code Profiling]**
+    - **[Assert]**
 
 
-## Supported platforms
+- Full **Source Code** & **Assets** available for :
 
-Butano is built on top of the [devkitARM](https://devkitpro.org/) toolchain, so it supports Windows, 
-macOS and Unix-like platforms.
-
-
-## What's new
-
-Curious about what was added or improved recently? 
-Check out the [changelog](https://gvaliente.github.io/butano/changelog.html) in the documentation.
+    - **[Butano Fighter]**
+    - **[Varooom 3D]**
 
 
-## Getting started
+- **Create** & **Display** with just one line of code :
 
-The best way to get started is to read the 
-[download, install and start using Butano guide](https://gvaliente.github.io/butano/getting_started.html).
+    - `Raster Effects`
+    - `Backgrounds`
+    - `Sprites`
+    - `Text`
+    - `..`
 
 
-## Third party libraries
+- Based on modern **C++ Concepts** <br>
+like `Shared Ownership` & `RAII` .
 
-Butano would have not been possible without these libraries:
+---
 
-* GBA hardware access and more provided by [Tonclib](https://www.coranac.com/projects/#tonc).
-* Music and sound effects provided by [Maxmod](https://maxmod.devkitpro.org).
-* Fast number to string conversion provided by [posprintf](http://danposluns.com/danposluns/gbadev/posprintf/index.html).
-* Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern) and
-[Universal GBA Library](https://github.com/AntonioND/libugba).
-* Fast decompression routines provided by [Cult-of-GBA BIOS](https://github.com/Cult-of-GBA/BIOS).
-* Multiplayer support provided by [gba-link-connection](https://github.com/rodri042/gba-link-connection).
-* Pool containers provided by [ETL](https://www.etlcpp.com/).
-* Unique type ID generation without RTTI provided by [CTTI](https://github.com/Manu343726/ctti).
+## Supported Platforms
 
+**Butano** is built on top of the **[DevKitARM]** toolchain, as <br>
+such it supports `Windows` , `MacOS` & `Unix` - like platforms.
+
+---
+
+## What's New
+
+Check our **[Changelog]** if you're Curious <br>
+about recent `Additions` / `Improvements` .
+
+---
 
 ## Contact and support
 
-If you spotted a bug, need a feature or have an awesome idea,
-the best you can do is to head over to the [issues page](https://github.com/GValiente/butano/issues) 
-and to the [gbadev Discord server](https://discord.gg/2WS7bpJ).
+If you *spotted a bug*, *need a feature* or *have an awesome idea*, <br>
+please check out to the **[Issues]** page and / or our **[Discord]**.
 
+---
+
+## Third Party Libraries
+
+***Butano*** *would have not been possible without these libraries.*
+
+**[Tonclib]** <br>
+*GBA hardware access and more.*
+
+**[Maxmod]** <br>
+*Music and sound effects.*
+
+**[PosPrintF]** <br>
+*Fast number to string conversion.*
+
+**[GBA Modern]** & **[Universal GBA Library]**<br>
+*Fast math routines.*
+
+**[Cult of GBA BIOS]** <br>
+*Fast decompression routines.*
+
+**[GBA Link Connection]** <br>
+*Multiplayer support.*
+
+**[ETL]** <br>
+*Pool containers.*
+
+**[CTTI]** <br>
+*Unique type ID generation without RTTI.*
+
+---
 
 ## Licenses
 
-Butano is licensed under the zlib license, see the [LICENSE](LICENSE) file for details.
+**Butano** is licensed under the **[ZLib][License]** license.
 
-Third party libraries are licensed under other licenses, please check the [licenses](licenses) folder for details.
+**Third Party Libraries** are licensed under other **[Licenses]**.
 
-Assets used in games, examples and other projects are licensed under other licenses, 
-please check the `credits` folders for details.
-
-
-## Made with Butano: Butano Fighter
-
-Stay alive while you shoot at everything that moves! What else do you need?
-
-The full source code and the creative commons assets of this game are in [its project folder](games/butano-fighter).
-
-Get the latest Butano Fighter ROM from [itch.io](https://gvaliente.itch.io/butano-fighter).
-
-![](docs_tools/images/bf_title.gif) ![](docs_tools/images/bf_intro.gif) ![](docs_tools/images/bf_bomb.gif)
+**Assets** used in games, **Examples** and other <br>
+projects are licensed under other licenses, <br>
+please check the **[Credits]** for details.
 
 
-## Made with Butano: Varooom 3D
+<!----------------------------------------------------------------------------->
 
-Action-packed with revolutionary 60FPS 3D technology and 3D glasses (not included) that will have you believing 
-you're in the middle of a circuit race at speeds of 200 KMH!
+[Game Boy Advance]: https://en.wikipedia.org/wiki/Game_Boy_Advance
 
-The full source code and the creative commons assets of this game are in [its project folder](games/varooom-3d).
+[Badge Discord]: https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white
+[Badge Windows]: https://img.shields.io/badge/Windows-0078D6?style=for-the-badge
+[Badge MacOS]: https://img.shields.io/badge/MacOS-999999?style=for-the-badge
+[Badge Unix]: https://img.shields.io/badge/Unix-000000?style=for-the-badge
 
-Get the latest Varooom 3D ROMs from [itch.io](https://gvaliente.itch.io/varooom-3d).
+[Discord]: https://discord.gg/2WS7bpJ
 
-![](docs_tools/images/vr3d_title.gif) ![](docs_tools/images/vr3d_race.gif) ![](docs_tools/images/vr3d_viewer.gif)
+[Preview 1]: docs_tools/images/examples_mode_7.gif
+[Preview 2]: docs_tools/images/bf_title.gif
+[Preview 3]: docs_tools/images/vr3d_race.gif
 
+[Issues]: https://github.com/GValiente/butano/issues
+[Changelog]: https://gvaliente.github.io/butano/changelog.html
+[Getting Started]: https://gvaliente.github.io/butano/getting_started.html
+[Games Made With Butano]: games/Games.md
 
-## Also made with Butano
+[License]: LICENSE
+[Licenses]: licenses
+[Credits]: credits
 
-* [Feline](https://foopod.itch.io/feline): explore the world as a cat, meet new people, learn new languages, 
-face difficult foes and save your family!
+[DevKitARM]: https://devkitpro.org/
 
-![](docs_tools/images/feline_title.png) ![](docs_tools/images/feline_gameplay.png)
+[Import]: https://gvaliente.github.io/butano/import.html
+[Assert]: https://gvaliente.github.io/butano/group__assert.html
+[Emulator Logging]: https://gvaliente.github.io/butano/group__log.html
+[Code Profiling]: https://gvaliente.github.io/butano/group__profiler.html
+[Documentation]: https://gvaliente.github.io/butano
+[Examples]: https://gvaliente.github.io/butano/examples.html
+[Butano Fighter]: #made-with-butano-butano-fighter
+[Varooom 3D]: #made-with-butano-varooom-3d
 
-* [Symbol★Merged](https://copyrat90.itch.io/sym-merged): a puzzle platformer game where you can merge items 
-(symbols) in hands, and use the superpower of the merged symbol.
-
-![](docs_tools/images/symbol_merged_title.png) ![](docs_tools/images/symbol_merged_gameplay.png)
-
-* [LRO - Luggage Retrieval Officer](https://foopod.itch.io/lro): you will work your way to being a highly ranked
-member off staff, retrieving important missing luggage for the likes of the Natural History Museum, 
-NASA and even the FBI!
-
-![](docs_tools/images/lro_title.png) ![](docs_tools/images/lro_gameplay.png)
-
-* [Bridge Quest](https://fixxiefixx.itch.io/bridge-quest): find the way to the desert, but beware, 
-because enemies and an evil tree boss will try to stop you!
-
-![](docs_tools/images/bridge_quest_title.png) ![](docs_tools/images/bridge_quest_gameplay.png)
-
-* [Advance! Adventures Of The Math & Logic Club](https://kva64.itch.io/advance-demo-adventures-of-the-math-logic-club): 
-small demo/prototype of a visual novel about joining an ordinary math club.
-
-![](docs_tools/images/advance_amlc_title.png) ![](docs_tools/images/advance_amlc_gameplay.png)
-
-* [Knight Owls](https://blaise-rascal.itch.io/knight-owls): build up a powerful spellbook and take on many enemies, 
-gather owls and upgrades while managing your health and money and defeat the final boss to win!
-
-![](docs_tools/images/knight_owls_title.png) ![](docs_tools/images/knight_owls_gameplay.png)
-
-* [Frost Princess](https://squishyfrogs.itch.io/frost-princess): place tiles down on the board to create a path
-to your opponent's base, then place tiles on their base to damage them.
-
-![](docs_tools/images/frost_princess_title.png) ![](docs_tools/images/frost_princess_gameplay.png)
-
-* [GBA-NICCC](https://github.com/GValiente/gba-niccc): Game Boy Advance port of the Atari ST demo STNICCC 2000.
-
-![](docs_tools/images/gba-niccc_1.png) ![](docs_tools/images/gba-niccc_2.png)
+[Tonclib]: https://www.coranac.com/projects/#tonc
+[Maxmod]: https://maxmod.devkitpro.org
+[PosPrintF]: http://danposluns.com/danposluns/gbadev/posprintf/index.html
+[GBA Modern]: https://github.com/JoaoBaptMG/gba-modern
+[Universal GBA Library]: https://github.com/AntonioND/libugba
+[Cult of GBA BIOS]: https://github.com/Cult-of-GBA/BIOS
+[GBA Link Connection]: https://github.com/rodri042/gba-link-connection
+[ETL]: https://www.etlcpp.com/
+[CTTI]: https://github.com/Manu343726/ctti

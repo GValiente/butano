@@ -7,6 +7,8 @@
 
 ---
 
+<br>
+
 ## Butano Fighter [![Badge ItchIO]][Butano Fighter ItchIO]
 
 ***Stay alive while you shoot at everything that moves!*** <br>
@@ -24,6 +26,8 @@ of this game can be found in **[`games/butano-fighter`][Butano Fighter Folder]
 <br>
 
 ---
+
+<br>
 
 ## Varooom 3D [![Badge ItchIO]][Varooom3D ItchIO]
 
@@ -44,13 +48,15 @@ of this game can be found in **[`games/varooom-3d`][Varooom3D Folder]** .
 
 ---
 
-## Others
+<br>
+
+# Others
 
 *Games also made with the* ***Butano*** *Engine*.
 
-<br>
+<br><br>
 
-#### Feline [![Badge ItchIO]][Feline ItchIO]
+## Feline [![Badge ItchIO]][Feline ItchIO]
 
 <br>
 
@@ -62,7 +68,7 @@ of this game can be found in **[`games/varooom-3d`][Varooom3D Folder]** .
 
 <br>
 
-#### Symbol★Merged [![Badge ItchIO]][Symbol★Merged ItchIO]
+## Symbol★Merged [![Badge ItchIO]][Symbol★Merged ItchIO]
 
 <br>
 
@@ -77,7 +83,7 @@ of this game can be found in **[`games/varooom-3d`][Varooom3D Folder]** .
 
 <br>
 
-#### Luggage Retrieval Officer [![Badge ItchIO]][Luggage ItchIO]
+## Luggage Retrieval Officer [![Badge ItchIO]][Luggage ItchIO]
 
 <br>
 
@@ -90,7 +96,7 @@ of this game can be found in **[`games/varooom-3d`][Varooom3D Folder]** .
 
 <br><br>
 
-#### Bridge Quest [![Badge ItchIO]][Bridge Quest ItchIO]
+## Bridge Quest [![Badge ItchIO]][Bridge Quest ItchIO]
 
 <br>
 
@@ -102,7 +108,7 @@ of this game can be found in **[`games/varooom-3d`][Varooom3D Folder]** .
 
 <br><br>
 
-#### Advance! [![Badge ItchIO]][Advance ItchIO]
+## Advance! [![Badge ItchIO]][Advance ItchIO]
 *Adventures Of The Math & Logic Club*
 
 <br>
@@ -115,7 +121,7 @@ of this game can be found in **[`games/varooom-3d`][Varooom3D Folder]** .
 
 <br><br>
 
-#### Knight Owls [![Badge ItchIO]][Knight Owls ItchIO]
+## Knight Owls [![Badge ItchIO]][Knight Owls ItchIO]
 
 <br>
 
@@ -123,12 +129,12 @@ of this game can be found in **[`games/varooom-3d`][Varooom3D Folder]** .
 ***gather owls and upgrades while managing your health*** <br>
 ***and money and defeat the final boss to win!***
 
-![Knight Owls Title]
-![Knight Owls Gameplay]
+![Knight Owls Title]
+![Knight Owls Gameplay]
 
 <br><br>
 
-#### Frost Princess [![Badge ItchIO]][Frost Princess ItchIO]
+## Frost Princess [![Badge ItchIO]][Frost Princess ItchIO]
 
 <br>
 
@@ -136,19 +142,19 @@ of this game can be found in **[`games/varooom-3d`][Varooom3D Folder]** .
 ***a path to your opponent's base, then*** <br>
 ***place tiles on their base to damage them.***
 
-![Frost Princess Title]
-![Frost Princess Gameplay]
+![Frost Princess Title]
+![Frost Princess Gameplay]
 
 <br><br>
 
-#### GBA NICCC [![Badge Github]][GBA NICCC ItchIO]
+## GBA NICCC [![Badge Github]][GBA NICCC ItchIO]
 
 <br>
 
 ***Game Boy Advance port of the Atari ST demo STNICCC 2000.***
 
-![GBA NICCC Title]
-![GBA NICCC Gameplay]
+![GBA NICCC Title]
+![GBA NICCC Gameplay]
 
 
 <!----------------------------------------------------------------------------->

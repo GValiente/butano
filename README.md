@@ -5,6 +5,10 @@
 
 *A modern high level* ***C++ Engine*** *for the* ***[Game Boy Advance]*** *.*
 
+<br>
+
+---
+
 ![Preview 1]
 ![Preview 2]
 ![Preview 3]
@@ -14,6 +18,8 @@
 **⸢ [Getting Started] ⸥ ⸢ [Games Made With Butano] ⸥ ⸢ [Documentation] ⸥**
 
 ---
+
+<br>
 
 ## Features
 
@@ -52,28 +58,44 @@
 - Based on modern **C++ Concepts** <br>
 like `Shared Ownership` & `RAII` .
 
+<br>
+
 ---
+
+<br>
 
 ## Supported Platforms
 
 **Butano** is built on top of the **[DevKitARM]** toolchain, as <br>
 such it supports `Windows` , `MacOS` & `Unix` - like platforms.
 
+<br>
+
 ---
+
+<br>
 
 ## What's New
 
 Check our **[Changelog]** if you're Curious <br>
 about recent `Additions` / `Improvements` .
 
+<br>
+
 ---
+
+<br>
 
 ## Contact and support
 
 If you *spotted a bug*, *need a feature* or *have an awesome idea*, <br>
 please check out to the **[Issues]** page and / or our **[Discord]**.
 
+<br>
+
 ---
+
+<br>
 
 ## Third Party Libraries
 
@@ -103,7 +125,11 @@ please check out to the **[Issues]** page and / or our **[Discord]**.
 **[CTTI]** <br>
 *Unique type ID generation without RTTI.*
 
+<br>
+
 ---
+
+<br>
 
 ## Licenses
 
@@ -121,15 +147,15 @@ please check the **[Credits]** for details.
 [Game Boy Advance]: https://en.wikipedia.org/wiki/Game_Boy_Advance
 
 [Badge Discord]: https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white
-[Badge Windows]: https://img.shields.io/badge/Windows-0078D6?style=for-the-badge
-[Badge MacOS]: https://img.shields.io/badge/MacOS-999999?style=for-the-badge
-[Badge Unix]: https://img.shields.io/badge/Unix-000000?style=for-the-badge
+[Badge Windows]: https://img.shields.io/badge/Windows-0078D6?style=for-the-badge 'Support for Windows'
+[Badge MacOS]: https://img.shields.io/badge/MacOS-999999?style=for-the-badge 'Support for MacOS'
+[Badge Unix]: https://img.shields.io/badge/Unix-000000?style=for-the-badge 'Support for UNIX-like Systems'
 
-[Discord]: https://discord.gg/2WS7bpJ
+[Discord]: https://discord.gg/2WS7bpJ 'GBADev Discord'
 
 [Preview 1]: docs_tools/images/examples_mode_7.gif
-[Preview 2]: docs_tools/images/bf_title.gif
-[Preview 3]: docs_tools/images/vr3d_race.gif
+[Preview 2]: docs_tools/images/bf_title.gif 'Butano Fighter Title Card'
+[Preview 3]: docs_tools/images/vr3d_race.gif 'Vrooom3D Race'
 
 [Issues]: https://github.com/GValiente/butano/issues
 [Changelog]: https://gvaliente.github.io/butano/changelog.html
@@ -148,8 +174,9 @@ please check the **[Credits]** for details.
 [Code Profiling]: https://gvaliente.github.io/butano/group__profiler.html
 [Documentation]: https://gvaliente.github.io/butano
 [Examples]: https://gvaliente.github.io/butano/examples.html
-[Butano Fighter]: #made-with-butano-butano-fighter
-[Varooom 3D]: #made-with-butano-varooom-3d
+
+[Butano Fighter]: games/Games.md#Butano-Fighter
+[Varooom 3D]: games/Games.md#Varooom-3D
 
 [Tonclib]: https://www.coranac.com/projects/#tonc
 [Maxmod]: https://maxmod.devkitpro.org

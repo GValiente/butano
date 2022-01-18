@@ -235,6 +235,11 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, compression_typ
                 dest_colors_span = span<const color>(dest_colors_array, colors_count);
                 break;
 
+            case compression_type::HUFFMAN:
+                hw::decompress::huff(colors.data(), dest_colors_array);
+                dest_colors_span = span<const color>(dest_colors_array, colors_count);
+                break;
+
             default:
                 BN_ERROR("Unknown compression type: ", int(compression));
                 break;

@@ -40,6 +40,12 @@ sprite_tiles_item sprite_tiles_item::decompress(span<tile> decompressed_tiles_re
         result._compression = uint8_t(compression_type::NONE);
         break;
 
+    case compression_type::HUFFMAN:
+        hw::decompress::huff(_tiles_ref.data(), dest_tiles_ptr);
+        result._tiles_ref = span<const tile>(dest_tiles_ptr, source_tiles_count);
+        result._compression = uint8_t(compression_type::NONE);
+        break;
+
     default:
         BN_ERROR("Unknown compression type: ", _compression);
         break;

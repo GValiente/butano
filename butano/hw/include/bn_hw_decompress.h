@@ -30,6 +30,11 @@ namespace bn::hw::decompress
     {
         swi_RLUnCompReadNormalWrite16bit(src, dst);
     }
+
+    inline void huff(const void* src, void* dst)
+    {
+        swi_HuffUnCompReadNormal(src, dst);
+    }
 }
 
 #endif

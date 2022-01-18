@@ -27,7 +27,8 @@ enum class compression_type : uint8_t
 {
     NONE, //!< Uncompressed data.
     LZ77, //!< LZ77 compressed data.
-    RUN_LENGTH //!< Run-length compressed data.
+    RUN_LENGTH, //!< Run-length compressed data.
+    HUFFMAN //!< Huffman compressed data.
 };
 
 }

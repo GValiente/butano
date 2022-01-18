@@ -45,6 +45,12 @@ affine_bg_map_item affine_bg_map_item::decompress(affine_bg_map_cell& decompress
         result._compression = compression_type::NONE;
         break;
 
+    case compression_type::HUFFMAN:
+        hw::decompress::huff(_cells_ptr, &decompressed_cells_ref);
+        result._cells_ptr = &decompressed_cells_ref;
+        result._compression = compression_type::NONE;
+        break;
+
     default:
         BN_ERROR("Unknown compression type: ", int(_compression));
         break;

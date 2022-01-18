@@ -200,6 +200,10 @@ void decompress(compression_type compression, const void* source_ptr, int bytes,
         }
         break;
 
+    case compression_type::HUFFMAN:
+        hw::decompress::huff(source_ptr, destination_ptr);
+        break;
+
     default:
         BN_ERROR("Unknown compression type: ", int(compression));
         break;

@@ -42,6 +42,12 @@ bg_palette_item bg_palette_item::decompress(span<color> decompressed_colors_ref)
         result._compression = compression_type::NONE;
         break;
 
+    case compression_type::HUFFMAN:
+        hw::decompress::huff(_colors_ref.data(), dest_colors_ptr);
+        result._colors_ref = span<const color>(dest_colors_ptr, source_colors_count);
+        result._compression = compression_type::NONE;
+        break;
+
     default:
         BN_ERROR("Unknown compression type: ", int(_compression));
         break;

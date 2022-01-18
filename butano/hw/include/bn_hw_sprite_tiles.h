@@ -59,6 +59,10 @@ namespace bn::hw::sprite_tiles
             hw::decompress::rl_vram(source_tiles_ptr, destination_tiles_ptr);
             break;
 
+        case compression_type::HUFFMAN:
+            hw::decompress::huff(source_tiles_ptr, destination_tiles_ptr);
+            break;
+
         default:
             BN_ERROR("Unknown compression type: ", int(compression));
             break;

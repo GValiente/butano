@@ -14,6 +14,8 @@ void swi_LZ77UnCompWrite8bit(const void* src, void* dst) __attribute__((section(
 
 void swi_LZ77UnCompWrite16bit(const void* src, void* dst) __attribute__((section(".iwram"), long_call));
 
+void swi_HuffUnCompReadNormal(const void* src, void* dst) __attribute__((section(".iwram"), long_call));
+
 #ifdef __cplusplus
 }
 #endif

@@ -67,6 +67,10 @@ namespace bn::hw::bg_blocks
             hw::decompress::rl_vram(source_ptr, destination_ptr);
             break;
 
+        case compression_type::HUFFMAN:
+            hw::decompress::huff(source_ptr, destination_ptr);
+            break;
+
         default:
             BN_ERROR("Unknown compression type: ", int(compression));
             break;

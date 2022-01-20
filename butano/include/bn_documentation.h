@@ -1789,6 +1789,7 @@
  * * bn::string and bn::string_view compatibility improved.
  * * bn::string construction, assignment and append optimized.
  * * Slot index added to palettes manager status log.
+ * * `-O0` builds support restored.
  *
  *
  * @section changelog_8_9_0 8.9.0

@@ -1144,7 +1144,7 @@ namespace
 
 void init()
 {
-    hw::hblank_effects::init(internal_data.entries_b);
+    hw::hblank_effects::commit_entries(internal_data.entries_b);
 
     for(int index = max_items - 1; index >= 0; --index)
     {

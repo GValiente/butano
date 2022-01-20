@@ -33,6 +33,7 @@
 #include "../hw/include/bn_hw_timer.h"
 #include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_game_pak.h"
+#include "../hw/include/bn_hw_hblank_effects.h"
 
 #if BN_CFG_ASSERT_ENABLED
     #include "bn_string_view.h"
@@ -298,6 +299,13 @@ void init()
 
 void init(const string_view& keypad_commands)
 {
+    // Init irq system:
+    hw::irq::init();
+    hw::irq::replace_or_push_back_disabled(hw::irq::id::HBLANK, hw::hblank_effects::_intr);
+
+    // Init audio system:
+    audio_manager::init(hp_vblank_function, link_manager::commit);
+
     // Init storage systems:
     data.slow_game_pak = hw::game_pak::init();
     hw::memory::init();
@@ -306,14 +314,8 @@ void init(const string_view& keypad_commands)
     // Init display:
     display_manager::init();
 
-    // Init irq system:
-    hw::irq::init();
-
     // Init H-Blank effects system:
     hblank_effects_manager::init();
-
-    // Init audio system:
-    audio_manager::init(hp_vblank_function, link_manager::commit);
 
     // Init link system:
     link_manager::init();

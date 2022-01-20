@@ -52,12 +52,6 @@ namespace bn::hw::hblank_effects
         data = &entries_ref;
     }
 
-    inline void init(entries& entries_ref)
-    {
-        commit_entries(entries_ref);
-        irq::replace_or_push_back_disabled(irq::id::HBLANK, _intr);
-    }
-
     inline void enable()
     {
         irq::enable(irq::id::HBLANK);

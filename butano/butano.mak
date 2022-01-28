@@ -49,15 +49,16 @@ CWARNINGS   :=	-Wall -Wextra -Wpedantic -Wshadow -Wundef -Wunused-parameter -Wmi
 				-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wswitch-default \
 				-Wstack-usage=16384
 
-CFLAGS      :=	$(CWARNINGS) -g -O2 -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math -ffunction-sections -fdata-sections $(ARCH)
+CFLAGS      :=	$(CWARNINGS) -gdwarf-4 -O2 -mcpu=arm7tdmi -mtune=arm7tdmi -ffast-math -ffunction-sections \
+				-fdata-sections $(ARCH)
 CFLAGS      +=	$(INCLUDE)
 CFLAGS      +=	$(USERFLAGS)
 
 CPPWARNINGS	:=	-Wuseless-cast -Wnon-virtual-dtor -Woverloaded-virtual
 CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++20 -fno-rtti -fno-exceptions
 
-ASFLAGS     :=	-g $(ARCH)
-LDFLAGS     =	-g $(ARCH) -Wl,-Map,$(notdir $*.map)
+ASFLAGS     :=	-gdwarf-4 $(ARCH)
+LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project:

@@ -19,7 +19,7 @@ namespace bn
 {
     /**
      * @brief Allocates uninitialized storage in EWRAM.
-     * @param bytes Bytes count to allocate.
+     * @param bytes Bytes to allocate.
      * @return On success, returns the pointer to the beginning of newly allocated memory.
      * On failure, returns `nullptr`.
      *
@@ -30,8 +30,8 @@ namespace bn
     [[nodiscard]] void* malloc(int bytes);
 
     /**
-     * @brief Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.
-     * @param bytes Bytes count to allocate.
+     * @brief Allocates storage in EWRAM and initializes all bytes in it to zero.
+     * @param bytes Bytes to allocate.
      * @return On success, returns the pointer to the beginning of newly allocated memory.
      * On failure, returns `nullptr`.
      *
@@ -47,7 +47,7 @@ namespace bn
      *
      * If ptr was not previously allocated by bn::malloc, bn::calloc or bn::realloc, the behavior is undefined.
      *
-     * @param new_bytes New bytes count of the reallocated storage.
+     * @param new_bytes New size in bytes of the reallocated storage.
      * @return On success, returns the pointer to the beginning of newly allocated storage.
      * On failure, returns `nullptr`.
      *

@@ -746,7 +746,7 @@ private:
 
 
 /**
- * @brief bitset_ref implementation which manages an external elements array.
+ * @brief ibitset implementation which manages an external elements array.
  *
  * @ingroup bitset
  */

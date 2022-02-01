@@ -54,7 +54,7 @@ namespace bn
     class igeneric_pool;
 
     /**
-     * @brief Generic pool implementation that uses a fixed size buffer.
+     * @brief igeneric_pool implementation that uses a fixed size buffer.
      *
      * @tparam MaxElementSize Element size.
      * @tparam MaxSize Maximum number of elements that can be stored.

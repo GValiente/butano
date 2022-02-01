@@ -65,7 +65,7 @@ namespace bn::memory
     [[nodiscard]] void* ewram_alloc(int bytes);
 
     /**
-     * @brief Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.
+     * @brief Allocates storage in EWRAM and initializes all bytes in it to zero.
      * @param bytes Bytes to allocate.
      * @return On success, returns the pointer to the beginning of newly allocated memory.
      * On failure, returns `nullptr`.
@@ -81,7 +81,7 @@ namespace bn::memory
      * If ptr was not previously allocated by bn::memory::ewram_alloc, bn::memory::ewram_calloc or
      * bn::memory::ewram_realloc, the behavior is undefined.
      *
-     * @param new_bytes New bytes count of the reallocated storage.
+     * @param new_bytes New size in bytes of the reallocated storage.
      * @return On success, returns the pointer to the beginning of newly allocated storage.
      * On failure, returns `nullptr`.
      *
@@ -106,25 +106,25 @@ namespace bn::memory
     void ewram_free(void* ptr);
 
     /**
-     * @brief Returns the bytes of all allocated items in EWRAM with bn::memory::ewram_alloc,
+     * @brief Returns the size in bytes of all allocated items in EWRAM with bn::memory::ewram_alloc,
      * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
      */
     [[nodiscard]] int used_alloc_ewram();
 
     /**
-     * @brief Returns the bytes that still can be allocated in EWRAM with bn::memory::ewram_alloc,
+     * @brief Returns the number of bytes that still can be allocated in EWRAM with bn::memory::ewram_alloc,
      * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
      */
     [[nodiscard]] int available_alloc_ewram();
 
     /**
-     * @brief Returns the items allocated in EWRAM with bn::memory::ewram_alloc,
+     * @brief Returns the number of items allocated in EWRAM with bn::memory::ewram_alloc,
      * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
      */
     [[nodiscard]] int used_items_ewram();
 
     /**
-     * @brief Returns the items that still can be allocated in EWRAM with bn::memory::ewram_alloc,
+     * @brief Returns the number of items that still can be allocated in EWRAM with bn::memory::ewram_alloc,
      * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
      */
     [[nodiscard]] int available_items_ewram();

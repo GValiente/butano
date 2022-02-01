@@ -429,6 +429,11 @@
             </dt>
             <dd><code>std::array</code> like container.</dd>
             <dt>
+              <div class="m-doc-template">template&lt;int MaxItems&gt;</div>
+              class <a href="classbn_1_1best__fit__allocator.html" class="m-doc">best_fit_allocator</a>
+            </dt>
+            <dd><a href="classbn_1_1ibest__fit__allocator.html" class="m-doc">ibest_<wbr />fit_<wbr />allocator</a> implementation that uses a fixed number of maximum items.</dd>
+            <dt>
               class <a href="classbn_1_1bg__palette__color__hbe__ptr.html" class="m-doc">bg_palette_color_hbe_ptr</a>
             </dt>
             <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the color of a background color palette in each screen horizontal line.</dd>
@@ -680,7 +685,7 @@
             <dt>
               class <a href="classbn_1_1bitset__ref.html" class="m-doc">bitset_ref</a>
             </dt>
-            <dd><a href="classbn_1_1bitset__ref.html" class="m-doc">bitset_<wbr />ref</a> implementation which manages an external elements array.</dd>
+            <dd>ibitset implementation which manages an external elements array.</dd>
             <dt>
               class <a href="classbn_1_1blending__fade__alpha.html" class="m-doc">blending_fade_alpha</a>
             </dt>
@@ -896,7 +901,7 @@
               <div class="m-doc-template">template&lt;int MaxElementSize, int MaxSize&gt;</div>
               class <a href="classbn_1_1generic__pool.html" class="m-doc">generic_pool</a>
             </dt>
-            <dd>Generic pool implementation that uses a fixed size buffer.</dd>
+            <dd><a href="classbn_1_1igeneric__pool.html" class="m-doc">igeneric_<wbr />pool</a> implementation that uses a fixed size buffer.</dd>
             <dt>
               class <a href="classbn_1_1green__swap__hbe__ptr.html" class="m-doc">green_swap_hbe_ptr</a>
             </dt>
@@ -1143,6 +1148,10 @@
             </dt>
             <dd>Base class of <a href="classbn_1_1any.html" class="m-doc">bn::<wbr />any</a>.</dd>
             <dt>
+              class <a href="classbn_1_1ibest__fit__allocator.html" class="m-doc">ibest_fit_allocator</a>
+            </dt>
+            <dd>Base class of <a href="classbn_1_1best__fit__allocator.html" class="m-doc">best_<wbr />fit_<wbr />allocator</a>.</dd>
+            <dt>
               class <a href="classbn_1_1ibitset.html" class="m-doc">ibitset</a>
             </dt>
             <dd>Base class of <a href="classbn_1_1bitset.html" class="m-doc">bn::<wbr />bitset</a>.</dd>
@@ -1204,7 +1213,7 @@
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
               class <a href="classbn_1_1ipool.html" class="m-doc">ipool</a>
             </dt>
-            <dd>Base class of pool.</dd>
+            <dd>Base class of <a href="classbn_1_1pool.html" class="m-doc">bn::<wbr />pool</a>.</dd>
             <dt>
               class <a href="classbn_1_1istring.html" class="m-doc">istring</a>
             </dt>
@@ -1310,7 +1319,7 @@
               <div class="m-doc-template">template&lt;typename Type, int MaxSize&gt;</div>
               class <a href="classbn_1_1pool.html" class="m-doc">pool</a>
             </dt>
-            <dd>Pool implementation that uses a fixed size buffer.</dd>
+            <dd><a href="classbn_1_1ipool.html" class="m-doc">bn::<wbr />ipool</a> implementation that uses a fixed size buffer.</dd>
             <dt>
               class <a href="classbn_1_1random.html" class="m-doc">random</a>
             </dt>
@@ -2391,7 +2400,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="group__std.html#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">calloc</a>(</span><span class="m-doc-wrap">int bytes) -&gt; void*</span>
             </dt>
-            <dd>Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.</dd>
+            <dd>Allocates storage in EWRAM and initializes all bytes in it to zero.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="group__std.html#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
               int new_bytes) -&gt; void*</span>

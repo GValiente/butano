@@ -42,7 +42,7 @@
 namespace bn
 {
     /**
-     * @brief Base class of pool.
+     * @brief Base class of bn::pool.
      *
      * Can be used as a reference type for all pool containers containing a specific type.
      *
@@ -54,7 +54,7 @@ namespace bn
     class ipool;
 
     /**
-     * @brief Pool implementation that uses a fixed size buffer.
+     * @brief bn::ipool implementation that uses a fixed size buffer.
      *
      * @tparam Type Element type.
      * @tparam MaxSize Maximum number of elements that can be stored.

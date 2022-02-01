@@ -104,7 +104,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc">calloc</a>(</span><span class="m-doc-wrap">int bytes) -&gt; void*</span>
             </dt>
-            <dd>Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.</dd>
+            <dd>Allocates storage in EWRAM and initializes all bytes in it to zero.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga8ae419acf0fb9e2a512c68e7808773a9" class="m-doc">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
               int new_bytes) -&gt; void*</span>
@@ -148,7 +148,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">bytes</td>
-                  <td>Bytes count to allocate.</td>
+                  <td>Bytes to allocate.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -165,7 +165,7 @@
               <span class="m-doc-wrap-bumper">void* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3fcd20ede638a84a5e3b7e1ad2d7e1a7" class="m-doc-self">calloc</a>(</span><span class="m-doc-wrap">int bytes)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__cstdlib_8h.html">&lt;bn_cstdlib.h&gt;</a></div>
             </h3>
-            <p>Allocates storage in EWRAM and initializes all bytes in the allocated storage to zero.</p>
+            <p>Allocates storage in EWRAM and initializes all bytes in it to zero.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -173,7 +173,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">bytes</td>
-                  <td>Bytes count to allocate.</td>
+                  <td>Bytes to allocate.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -203,7 +203,7 @@
                 </tr>
                 <tr>
                   <td>new_bytes</td>
-                  <td>New bytes count of the reallocated storage.</td>
+                  <td>New size in bytes of the reallocated storage.</td>
                 </tr>
               </tbody>
               <tfoot>

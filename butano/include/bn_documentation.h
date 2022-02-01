@@ -521,6 +521,18 @@
  */
 
 /**
+ * @defgroup allocator Allocator
+ *
+ * A generic allocator where allocation and release are not O(1) operations.
+ *
+ * An allocator doesn't destroy its elements in its destructor, they must be destroyed manually.
+ *
+ * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+ *
+ * @ingroup container
+ */
+
+/**
  * @defgroup utility Utilities
  *
  * Standard library utilities.
@@ -1785,6 +1797,7 @@
  * @section changelog_8_10_0 8.10.0 (next release)
  *
  * * Huffman decompression support added.
+ * * bn::best_fit_allocator added.
  * * bn::istring::resize and bn::istring::shrink added.
  * * bn::string and bn::string_view compatibility improved.
  * * bn::string construction, assignment and append optimized.

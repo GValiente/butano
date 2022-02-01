@@ -100,6 +100,8 @@ void* ibest_fit_allocator::realloc(void* ptr, int new_bytes)
         return alloc(new_bytes);
     }
 
+    BN_ASSERT(new_bytes >= 0, "Invalid new bytes: ", new_bytes);
+
     items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
     items_iterator items_it = *items_it_ptr;
     item_type& item = *items_it;
@@ -134,7 +136,6 @@ void ibest_fit_allocator::free(void* ptr)
     items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
     items_iterator items_it = *items_it_ptr;
     item_type& item = *items_it;
-
     item.used = false;
     _free_bytes_count += item.size;
 
@@ -182,7 +183,7 @@ void ibest_fit_allocator::_init(void* start, int bytes)
 {
     BN_ASSERT(start, "Start is null");
     BN_ASSERT(aligned<sizeof(int)>(start), "Start is not aligned");
-    BN_ASSERT(bytes > 0, "Invalid bytes: ", bytes);
+    BN_ASSERT(bytes > 0 && bytes % sizeof(int) == 0, "Invalid bytes: ", bytes);
 
     _total_bytes_count = bytes;
     _free_bytes_count = bytes;

@@ -40,6 +40,13 @@ r2 <- param1
 r3 <- param2
 
 */
+	.thumb
+	.thumb_func
+	.align
+____thumb_aeabi_uidiv:
+	ldr     r3, =__aeabi_uidiv
+	bx      r3
+
 	.thumb 
 	.thumb_func
 	.align
@@ -168,7 +175,7 @@ posprintf:
 	mov		r1, #0x27
 	lsl		r1, r1, #8
 	add		r1, #0x10				@ r1 <- 0x2710 == 10000
-	swi		6						@ split number by dividing by 10000
+	bl		____thumb_aeabi_uidiv	@ split number by dividing by 10000
 	mov		r3, #0
 	sub		r3, #4
 	add		r8, r3					@ subtract 4 from digits to display

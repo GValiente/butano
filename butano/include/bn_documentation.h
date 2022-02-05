@@ -1820,7 +1820,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_8_10_0 8.10.0 (next release)
+ * @section changelog_8_10_0 8.10.0
  *
  * * Huffman decompression support added.
  * * bn::best_fit_allocator added.

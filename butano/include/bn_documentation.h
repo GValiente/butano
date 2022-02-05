@@ -1576,6 +1576,32 @@
  * Use it when you want to work with numbers with decimal points.
  *
  *
+ * @subsection faq_sprintf How do I print a number in a string?
+ *
+ * *Don't* use `sprintf`, `std::ostring_stream` nor anything that comes with the standard library, because:
+ *
+ * * Butano functions for printing numbers in strings can be more than 5 times faster than the standard functions.
+ * * Standard functions can take more than 4KB of IWRAM.
+ * * Standard functions sometimes can't be used because they give link errors.
+ *
+ * If you want to print a number in a string with Butano, bn::to_string provides the easiest way to do it:
+ *
+ * @code{.cpp}
+ * bn::string<16> string = bn::to_string<16>(number);
+ * @endcode
+ *
+ * If you want to compose a string with multiple numbers, you can use bn::ostringstream too:
+ *
+ * @code{.cpp}
+ * bn::string<64> string;
+ * bn::ostringstream string_stream(string);
+ * string_stream << "Text: ";
+ * string_stream << 123;
+ * string_stream << " - ";
+ * string_stream << number;
+ * @endcode
+ *
+ *
  * @subsection faq_global_objects Does Butano allow to declare bn::sprite_ptr or bn::regular_bg_ptr objects globally?
  *
  * In general, you should not do anything with Butano before calling bn::core::init,
@@ -1803,9 +1829,10 @@
  * * bn::string construction, assignment and append optimized.
  * * Integer to string conversion optimized.
  * * Slot index added to palettes manager status log.
- * * bn::calloc, bn::memory::ewram_calloc and bn::ibest_fit_allocator::calloc interface fixed.
+ * * bn::calloc and bn::memory::ewram_calloc interface fixed.
  * * `.elf` files No$gba support restored.
  * * `-O0` builds support restored.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_8_9_0 8.9.0

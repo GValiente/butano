@@ -13,11 +13,11 @@ namespace bn
 
 namespace
 {
-    [[nodiscard]] int _aligned_bytes(int bytes)
+    [[nodiscard]] ibest_fit_allocator::size_type _aligned_bytes(ibest_fit_allocator::size_type bytes)
     {
-        int alignment_bytes = sizeof(int);
+        ibest_fit_allocator::size_type alignment_bytes = sizeof(int);
 
-        if(int extra_bytes = bytes % alignment_bytes)
+        if(ibest_fit_allocator::size_type extra_bytes = bytes % alignment_bytes)
         {
             bytes += alignment_bytes - extra_bytes;
         }
@@ -31,11 +31,11 @@ ibest_fit_allocator::~ibest_fit_allocator() noexcept
     BN_ASSERT(empty(), "Pool is not empty");
 }
 
-void* ibest_fit_allocator::alloc(int bytes)
+void* ibest_fit_allocator::alloc(size_type bytes)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
 
-    bytes = _aligned_bytes(bytes) + int(sizeof(items_iterator));
+    bytes = _aligned_bytes(bytes) + size_type(sizeof(items_iterator));
 
     if(bytes > _free_bytes_count)
     {
@@ -53,7 +53,7 @@ void* ibest_fit_allocator::alloc(int bytes)
     items_iterator items_it = *free_items_it;
     item_type& item = *items_it;
 
-    if(int new_item_size = item.size - bytes)
+    if(size_type new_item_size = item.size - bytes)
     {
         if(_items.full())
         {
@@ -80,20 +80,25 @@ void* ibest_fit_allocator::alloc(int bytes)
     return items_it_ptr + 1;
 }
 
-void* ibest_fit_allocator::calloc(int bytes)
+void* ibest_fit_allocator::calloc(size_type num, size_type bytes)
 {
+    BN_ASSERT(num >= 0, "Invalid num: ", num);
+    BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
+
+    bytes *= num;
+
     void* result = alloc(bytes);
 
     if(result)
     {
         auto int_result = reinterpret_cast<int*>(result);
-        memory::clear(_aligned_bytes(bytes) / int(sizeof(int)), *int_result);
+        memory::clear(_aligned_bytes(bytes) / size_type(sizeof(int)), *int_result);
     }
 
     return result;
 }
 
-void* ibest_fit_allocator::realloc(void* ptr, int new_bytes)
+void* ibest_fit_allocator::realloc(void* ptr, size_type new_bytes)
 {
     if(! ptr)
     {
@@ -105,7 +110,7 @@ void* ibest_fit_allocator::realloc(void* ptr, int new_bytes)
     items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
     items_iterator items_it = *items_it_ptr;
     item_type& item = *items_it;
-    int old_bytes = item.size - int(sizeof(items_iterator));
+    size_type old_bytes = item.size - size_type(sizeof(items_iterator));
 
     if(new_bytes <= old_bytes)
     {
@@ -179,11 +184,11 @@ ibest_fit_allocator::ibest_fit_allocator(ilist<item_type>& items, ivector<items_
 {
 }
 
-void ibest_fit_allocator::_init(void* start, int bytes)
+void ibest_fit_allocator::_init(void* start, size_type bytes)
 {
     BN_ASSERT(start, "Start is null");
     BN_ASSERT(aligned<sizeof(int)>(start), "Start is not aligned");
-    BN_ASSERT(bytes > 0 && bytes % sizeof(int) == 0, "Invalid bytes: ", bytes);
+    BN_ASSERT(bytes > 0 && bytes % size_type(sizeof(int)) == 0, "Invalid bytes: ", bytes);
 
     _total_bytes_count = bytes;
     _free_bytes_count = bytes;

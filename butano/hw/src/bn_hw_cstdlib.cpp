@@ -12,9 +12,9 @@ void* malloc(std::size_t bytes)
     return bn::malloc(int(bytes));
 }
 
-void* calloc(std::size_t bytes)
+void* calloc(std::size_t num, std::size_t bytes)
 {
-    return bn::calloc(int(bytes));
+    return bn::calloc(int(num), int(bytes));
 }
 
 void* realloc(void* ptr, std::size_t new_bytes)

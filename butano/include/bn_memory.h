@@ -65,14 +65,16 @@ namespace bn::memory
     [[nodiscard]] void* ewram_alloc(int bytes);
 
     /**
-     * @brief Allocates storage in EWRAM and initializes all bytes in it to zero.
-     * @param bytes Bytes to allocate.
+     * @brief Allocates storage in EWRAM for an array of num objects of bytes size
+     * and initializes all bytes in it to zero.
+     * @param num Number of objects.
+     * @param bytes Size in bytes of each object.
      * @return On success, returns the pointer to the beginning of newly allocated memory.
      * On failure, returns `nullptr`.
      *
      * To avoid a memory leak, the returned pointer must be deallocated with bn::memory::ewram_free.
      */
-    [[nodiscard]] void* ewram_calloc(int bytes);
+    [[nodiscard]] void* ewram_calloc(int num, int bytes);
 
     /**
      * @brief Reallocates the given storage in the EWRAM.

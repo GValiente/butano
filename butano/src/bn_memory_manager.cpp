@@ -43,9 +43,9 @@ void* ewram_alloc(int bytes)
     return data.allocator->alloc(bytes);
 }
 
-void* ewram_calloc(int bytes)
+void* ewram_calloc(int num, int bytes)
 {
-    return data.allocator->calloc(bytes);
+    return data.allocator->calloc(num, bytes);
 }
 
 void* ewram_realloc(void* ptr, int new_bytes)

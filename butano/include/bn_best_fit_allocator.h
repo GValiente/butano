@@ -103,17 +103,19 @@ public:
     [[nodiscard]] void* alloc(size_type bytes);
 
     /**
-     * @brief Allocates storage and initializes all bytes in it to zero.
-     * @param bytes Bytes to allocate.
+     * @brief Allocates storage for an array of num objects of bytes size
+     * and initializes all bytes in it to zero.
+     * @param num Number of objects.
+     * @param bytes Size in bytes of each object.
      * @return On success, returns the pointer to the beginning of newly allocated memory.
      * On failure, returns `nullptr`.
      *
      * To avoid a memory leak, the returned pointer must be deallocated with free.
      */
-    [[nodiscard]] void* calloc(size_type bytes);
+    [[nodiscard]] void* calloc(size_type num, size_type bytes);
 
     /**
-     * @brief Reallocates the given storage in the EWRAM.
+     * @brief Reallocates the given storage.
      * @param ptr Pointer to the storage to reallocate.
      *
      * If ptr was not previously allocated by alloc, calloc or realloc, the behavior is undefined.
@@ -173,7 +175,7 @@ protected:
 
     public:
         char* data = nullptr;
-        int size: 24 = 0;
+        size_type size: 24 = 0;
         bool used = false;
     };
 
@@ -189,20 +191,20 @@ private:
     static_assert(sizeof(items_iterator) == sizeof(int));
     static_assert(alignof(items_iterator) == alignof(int));
 
-    constexpr static auto _lower_bound_comparator = [](const items_iterator& items_it, int size)
+    constexpr static auto _lower_bound_comparator = [](const items_iterator& items_it, size_type size)
     {
         return items_it->size < size;
     };
 
-    constexpr static auto _upper_bound_comparator = [](int size, const items_iterator& items_it)
+    constexpr static auto _upper_bound_comparator = [](size_type size, const items_iterator& items_it)
     {
         return size < items_it->size;
     };
 
     ilist<item_type>& _items;
     ivector<items_iterator>& _free_items;
-    int _total_bytes_count;
-    int _free_bytes_count;
+    size_type _total_bytes_count;
+    size_type _free_bytes_count;
 
     void _insert_free_item(items_iterator items_it, ivector<items_iterator>::iterator free_items_last);
 

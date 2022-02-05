@@ -126,14 +126,15 @@
             </dt>
             <dd>Allocates uninitialized storage.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ab787bbce9cc57f52fc543e3e3f8efce0" class="m-doc">calloc</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> bytes) -&gt; void*</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6bc2ad32272b76920d43e11e80b29c34" class="m-doc">calloc</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> num,
+              <a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> bytes) -&gt; void*</span>
             </dt>
-            <dd>Allocates storage and initializes all bytes in it to zero.</dd>
+            <dd>Allocates storage for an array of num objects of bytes size and initializes all bytes in it to zero.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a5463bc121eed8b6bfebd09afa493e92d" class="m-doc">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
               <a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> new_bytes) -&gt; void*</span>
             </dt>
-            <dd>Reallocates the given storage in the EWRAM.</dd>
+            <dd>Reallocates the given storage.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a70e1a689ebf080384b088f94a4f54f1f" class="m-doc">free</a>(</span><span class="m-doc-wrap">void* ptr)</span>
             </dt>
@@ -183,19 +184,24 @@
             </table>
 <p>To avoid a memory leak, the returned pointer must be deallocated with free.</p>
           </div></section>
-          <section class="m-doc-details" id="ab787bbce9cc57f52fc543e3e3f8efce0"><div>
+          <section class="m-doc-details" id="a6bc2ad32272b76920d43e11e80b29c34"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void* bn::<wbr />ibest_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab787bbce9cc57f52fc543e3e3f8efce0" class="m-doc-self">calloc</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> bytes)</span></span>
+              <span class="m-doc-wrap-bumper">void* bn::<wbr />ibest_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6bc2ad32272b76920d43e11e80b29c34" class="m-doc-self">calloc</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> num,
+              <a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> bytes)</span></span>
             </h3>
-            <p>Allocates storage and initializes all bytes in it to zero.</p>
+            <p>Allocates storage for an array of num objects of bytes size and initializes all bytes in it to zero.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">bytes</td>
-                  <td>Bytes to allocate.</td>
+                  <td style="width: 1%">num</td>
+                  <td>Number of objects.</td>
+                </tr>
+                <tr>
+                  <td>bytes</td>
+                  <td>Size in bytes of each object.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -212,7 +218,7 @@
               <span class="m-doc-wrap-bumper">void* bn::<wbr />ibest_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5463bc121eed8b6bfebd09afa493e92d" class="m-doc-self">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
               <a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> new_bytes)</span></span>
             </h3>
-            <p>Reallocates the given storage in the EWRAM.</p>
+            <p>Reallocates the given storage.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>

@@ -1803,6 +1803,7 @@
  * * bn::string construction, assignment and append optimized.
  * * Integer to string conversion optimized.
  * * Slot index added to palettes manager status log.
+ * * bn::calloc, bn::memory::ewram_calloc and bn::ibest_fit_allocator::calloc interface fixed.
  * * `.elf` files No$gba support restored.
  * * `-O0` builds support restored.
  *

@@ -15,9 +15,9 @@ void* malloc(int bytes)
     return memory_manager::ewram_alloc(bytes);
 }
 
-void* calloc(int bytes)
+void* calloc(int num, int bytes)
 {
-    return memory_manager::ewram_calloc(bytes);
+    return memory_manager::ewram_calloc(num, bytes);
 }
 
 void* realloc(void* ptr, int new_bytes)

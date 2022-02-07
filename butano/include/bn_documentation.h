@@ -729,7 +729,7 @@
  * * Change in the `Makefile` the path in which Butano library folder is located.
  *   For example, if Butano is located in `/path/to/butano/`,
  *   `LIBBUTANO` variable should be set to `/path/to/butano/butano`.
- * * If you want, change also the ROM title, the ROM code and more in the `Makefile`.
+ * * If you want, you can also change ROM title, ROM code and more in the `Makefile`.
  * * `cd` to the new folder.
  * * Type `make -j#cpu_cores#` again.
  *

@@ -158,7 +158,7 @@ all:
 	
 #---------------------------------------------------------------------------------
 $(BUILD):
-	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --audio="$(AUDIO)" --graphics="$(GRAPHICS)" --fonts="$(FONTS)" --build=$(BUILD)
+	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --audio="$(AUDIO)" --graphics="$(GRAPHICS) $(BUILD)/fonts" --fonts="$(FONTS)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------

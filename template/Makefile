@@ -8,6 +8,7 @@
 # DATA is a list of directories containing binary data.
 # GRAPHICS is a list of directories containing files to be processed by grit.
 # AUDIO is a list of directories containing files to be processed by mmutil.
+# FONTS is a list of directories containing font files.
 # ROMTITLE is a uppercase ASCII, max 12 characters text string containing the output ROM title.
 # ROMCODE is a uppercase ASCII, max 4 characters text string containing the output ROM code.
 # USERFLAGS is a list of additional compiler flags:
@@ -28,8 +29,9 @@ PYTHON      :=  python
 SOURCES     :=  src
 INCLUDES    :=  include
 DATA        :=
-GRAPHICS    :=  graphics
+GRAPHICS    :=  graphics $(BUILD)/fonts
 AUDIO       :=  audio
+FONTS       :=  fonts
 ROMTITLE    :=  ROM TITLE
 ROMCODE     :=  SBTP
 USERFLAGS   :=  

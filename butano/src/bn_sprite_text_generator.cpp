@@ -973,7 +973,7 @@ namespace
         {
             utf8_character utf8_char(text_data[text_index]);
             auto it = utf8_characters_map.find(utf8_char.data());
-            BN_ASSERT(it != utf8_characters_map.end(), "UTF-8 character not found: ", text_data);
+            BN_ASSERT(it != utf8_characters_map.end(), "UTF-8 character not found: ", utf8_char.data());
 
             result = it->second;
             text_index += utf8_char.size();

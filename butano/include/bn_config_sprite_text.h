@@ -23,7 +23,7 @@
  * @ingroup text
  */
 #ifndef BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS
-    #define BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS 64
+    #define BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS 4096
 #endif
 
 #endif

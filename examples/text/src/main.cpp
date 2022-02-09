@@ -23,11 +23,16 @@
 #include "common_fixed_8x16_sprite_font.h"
 #include "common_variable_8x8_sprite_font.h"
 #include "common_variable_8x16_sprite_font.h"
+#include "common_cn_variable_16x16_sprite_font.h"
+#include "common_jp_variable_16x16_sprite_font.h"
 
 namespace
 {
     constexpr bn::fixed text_y_inc = 14;
     constexpr bn::fixed text_y_limit = (bn::display::height() / 2) - text_y_inc;
+
+    bn::sprite_text_generator *common_cn_font_text_generator;
+    bn::sprite_text_generator *common_jp_font_text_generator;
 
     void text_scene()
     {
@@ -237,6 +242,29 @@ namespace
             bn::core::update();
         }
     }
+
+    void common_font_text_scene()
+    {
+        bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
+        text_generator.set_center_alignment();
+
+        bn::vector<bn::sprite_ptr, 32> text_sprites;
+        text_generator.generate(0, -text_y_limit, "BMFont text (common)", text_sprites);
+        text_generator.generate(0, text_y_limit, "START: go to next scene", text_sprites);
+
+        bn::vector<bn::sprite_ptr, 32> common_cn_font_text_sprites;
+        common_cn_font_text_generator->generate(0, -32, "这是系统预设字体。", common_cn_font_text_sprites);
+        common_cn_font_text_generator->generate(0, -16, "（3500个常用汉字）", common_cn_font_text_sprites);
+
+        bn::vector<bn::sprite_ptr, 32> common_jp_font_text_sprites;
+        common_jp_font_text_generator->generate(0, 0, "システム設定のフォントです｡", common_jp_font_text_sprites);
+        common_jp_font_text_generator->generate(0, 16, "｢常用漢字1945字｣", common_jp_font_text_sprites);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::core::update();
+        }
+    }
 }
 
 int main()
@@ -270,5 +298,17 @@ int main()
 
         user_font_text_scene();
         bn::core::update();
+
+        common_cn_font_text_generator = new bn::sprite_text_generator(common_cn_variable_16x16_sprite_font);
+        common_cn_font_text_generator->set_center_alignment();
+
+        common_jp_font_text_generator = new bn::sprite_text_generator(common_jp_variable_16x16_sprite_font);
+        common_jp_font_text_generator->set_center_alignment();
+
+        common_font_text_scene();
+        bn::core::update();
+
+        delete common_cn_font_text_generator;
+        delete common_jp_font_text_generator;
     }
 }

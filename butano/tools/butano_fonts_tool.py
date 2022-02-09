@@ -98,6 +98,8 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                         dst_upper = 0
                     font_code = int(line_conf['id'])
                     font_w = int(line_conf['xadvance'])
+                    if font_w > font_width:
+                        font_w = font_width
                     if font_code > 126:
                         font_chars.append(chr(font_code))
                         font_widths.append(font_w)

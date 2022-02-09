@@ -1820,6 +1820,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_8_11_0 8.11.0 (next release)
+ *
+ * bn::blending_transparency_attributes::set_transparency_and_intensity_alphas added.
+ *
+ *
  * @section changelog_8_10_0 8.10.0
  *
  * * Huffman decompression support added.

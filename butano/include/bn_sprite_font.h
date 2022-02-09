@@ -118,7 +118,8 @@ public:
         BN_ASSERT(utf8_characters_ref.size() <= BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS,
                    "Invalid UTF-8 characters count: ", utf8_characters_ref.size());
         BN_ASSERT(_validate_utf8_characters(), "UTF-8 characters validation failed");
-        //BN_ASSERT(! _duplicated_utf8_characters(), "There's duplicated UTF-8 characters");
+        BN_ASSERT(BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS > BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS_FOR_DUPLICATION_CHECK ||
+                   ! _duplicated_utf8_characters(), "There's duplicated UTF-8 characters");
         BN_ASSERT(character_widths_ref.empty() ||
                    character_widths_ref.size() == 1 + minimum_graphics + utf8_characters_ref.size(),
                    "Invalid character widths count: ", character_widths_ref.size(), " - ",

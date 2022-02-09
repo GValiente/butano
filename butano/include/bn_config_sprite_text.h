@@ -26,4 +26,15 @@
     #define BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS 4096
 #endif
 
+/**
+ * @def BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS_FOR_DUPLICATION_CHECK
+ *
+ * Specifies the maximum number of UTF-8 characters for duplication check to save compile time.
+ *
+ * @ingroup text
+ */
+#ifndef BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS_FOR_DUPLICATION_CHECK
+    #define BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS_FOR_DUPLICATION_CHECK 100
+#endif
+
 #endif

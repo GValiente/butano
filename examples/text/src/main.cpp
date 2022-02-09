@@ -13,7 +13,7 @@
 #include "bn_sprite_text_generator.h"
 
 #include "fixed_32x64_sprite_font.h"
-#include "user_variable_16x16_font_sprite_font.h"
+#include "user_variable_32x32_sprite_font.h"
 
 #include "bn_sprite_items_variable_8x16_font_red.h"
 #include "bn_sprite_items_variable_8x16_font_blue.h"
@@ -230,12 +230,14 @@ namespace
         text_generator.generate(0, -text_y_limit, "BMFont text (user)", text_sprites);
         text_generator.generate(0, text_y_limit, "START: go to next scene", text_sprites);
 
-        bn::sprite_text_generator user_font_text_generator(user_variable_16x16_font_sprite_font);
+        bn::sprite_text_generator user_font_text_generator(user_variable_32x32_sprite_font);
         user_font_text_generator.set_center_alignment();
 
         bn::vector<bn::sprite_ptr, 32> user_font_text_sprites;
-        user_font_text_generator.generate(0, 0, "这是用户自定义字体。", user_font_text_sprites);
-        user_font_text_generator.generate(0, 32, "ユーザー設定のフォントです。", user_font_text_sprites);
+        user_font_text_generator.generate(0, -48, "这是用户自定义", user_font_text_sprites);
+        user_font_text_generator.generate(0, -16, "字体。", user_font_text_sprites);
+        user_font_text_generator.generate(0, 16, "ユーザー設定の", user_font_text_sprites);
+        user_font_text_generator.generate(0, 48, "フォントです。", user_font_text_sprites);
 
         while(! bn::keypad::start_pressed())
         {

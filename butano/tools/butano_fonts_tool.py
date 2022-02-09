@@ -90,10 +90,10 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                     src_lower = int(line_conf['y']) + int(line_conf['height']) - padding_down
                     if src_lower < src_upper:
                         src_lower = src_upper
-                    dst_left = int(line_conf['xoffset']) + padding_left
+                    dst_left = round(float(line_conf['xoffset'])) + padding_left
                     if dst_left < 0:
                         dst_left = 0
-                    dst_upper = int(line_conf['yoffset']) + padding_up
+                    dst_upper = round(float(line_conf['yoffset'])) + padding_up
                     if dst_upper < 0:
                         dst_upper = 0
                     font_code = int(line_conf['id'])

@@ -1326,6 +1326,60 @@
  *
  * bn::sound_items::sfx.play();
  * @endcode
+ *
+ *
+ * @section import_fonts Fonts
+ *
+ * By default fonts files go into the `fonts` folder of your project.
+ *
+ * Common fonts for English, Chinese (including 3500 common Hanzi characters) and Japanese (including 1945 common Kanji characters) are provided in `common` folder.
+ *
+ * If you want to:
+ * * support other languages
+ * * display rare characters
+ * * change font style and size
+ * You can import your own fonts too.
+ *
+ *
+ * @subsection import_bmfont Bitmap Font
+ *
+ * A bitmap font file (.fnt) in text format is supported. You can make it using <a href="http://www.angelcode.com/products/bmfont/">Bitmap Font Generator</a> or <a href="https://snowb.org/">Bitmap Font Generator Online</a>.
+ * It is also a common font format used in generic game engines like <a href="https://docs.cocos.com/creator/manual/en/asset/font.html">Cocos</a>, <a href="https://assetstore.unity.com/packages/tools/gui/bitmap-font-importer-62128">Unity</a> and visual novel engines like <a href="https://www.renpy.org/doc/html/text.html?highlight=text#image-based-fonts">Ren'Py</a>.
+ *
+ * First of all, <a href="https://pillow.readthedocs.io/en/stable/installation.html">install Pillow</a>.
+ *
+ * @code{.sh}
+ * # For MSYS2/MinGW-w64 users
+ * pacman -S mingw-w64-x86_64-python-pillow
+ * # For WSL2/Ubuntu/Debian users
+ * sudo apt-get install python3-pil
+ * # For Mac users
+ * brew install pillow
+ * # For FreeBSD users
+ * pkg install py38-pillow
+ * # For CentOS users
+ * yum install python3-pillow
+ * # For Fedora Linux users
+ * dnf install python3-pillow
+ * # For Arch Linux users
+ * pacman -S python37-pillow
+ * @endcode
+ *
+ * Place `*.fnt` and `*.png` files in the `fonts` folder. Notice that `*.png` files should have background color instead of transparent background.
+ *
+ * If the conversion process has finished successfully,
+ * a bunch of bn::sprite_font objects should have been generated in the `build` folder for all fonts files.
+ *
+ * For example, from two files named `items.fnt` and `items.png`,
+ * a header file named `items_sprite_font.h` is generated in the `build` folder.
+ *
+ * You can use these fonts to display text with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * #include "items_sprite_font.h"
+ *
+ * bn::sprite_text_generator text_generator(items_sprite_font);
+ * @endcode
  */
 
 
@@ -1655,9 +1709,14 @@
  * @subsection faq_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
  *
  * bn::sprite_text_generator already supports UTF-8 characters rendering,
- * but the bn::sprite_font instances used in the examples don't provide japanese nor chinese characters,
- * so you will have to make a new one with them.
+ * and the bn::sprite_font instances used in the examples provide japanese and chinese characters,
+ * but it is not included and linked by default to save space,
+ * so you will have to add them to Makefile to enable them according to your needs.
  *
+ * * For japanese, refer to <a href="https://github.com/laqieer/gba-dev-best-practice/commit/5f455976bead5f9bb436e4524f882b91d207e4e3">this</a>.
+ * * For chinese, refer to <a href="https://github.com/laqieer/gba-dev-best-practice/commit/5f455976bead5f9bb436e4524f882b91d207e4e3">this</a>.
+ *
+ * If you want to print other UTF-8 characters, you can import your own font. Read @ref import "this" to learn how to do it.
  *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *

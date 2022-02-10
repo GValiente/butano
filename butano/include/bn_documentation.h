@@ -1332,7 +1332,7 @@
  *
  * By default fonts files go into the `fonts` folder of your project.
  *
- * Common fonts for English, Chinese (including 3500 common Hanzi characters) and Japanese (including 1945 common Kanji characters) are provided in `common` folder.
+ * Common fonts for English, Japanese, Korean, Simplified Chinese, Traditional Chinese (Taiwan) and Traditional Chinese (Hong Kong) are provided in `common` folder.
  *
  * If you want to:
  * * support other languages
@@ -1710,12 +1710,11 @@
  * @subsection faq_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
  *
  * bn::sprite_text_generator already supports UTF-8 characters rendering,
- * and the bn::sprite_font instances used in the examples provide japanese and chinese characters,
+ * and the bn::sprite_font instances used in the examples provide CJK characters including japanese and chinese,
  * but it is not included and linked by default to save space,
  * so you will have to add them to Makefile to enable them according to your needs.
  *
- * * For japanese, refer to <a href="https://github.com/laqieer/gba-dev-best-practice/commit/5f455976bead5f9bb436e4524f882b91d207e4e3">this</a>.
- * * For chinese, refer to <a href="https://github.com/laqieer/gba-dev-best-practice/commit/5f455976bead5f9bb436e4524f882b91d207e4e3">this</a>.
+ * Refer to <a href="https://github.com/laqieer/gba-dev-best-practice/tree/main/source/common-text">this</a> to learn how to do it.
  *
  * If you want to print other UTF-8 characters, you can import your own font. Read @ref import "this" to learn how to do it.
  *

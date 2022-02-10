@@ -103,7 +103,7 @@ public:
             ++its;
         }
 
-        BN_ERROR("UTF-8 character not found");
+        BN_ERROR("UTF-8 character not found: ", key);
         return 0;
     }
 

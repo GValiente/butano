@@ -260,8 +260,8 @@ namespace
         common_sc_font_text_generator->generate(0, -16, "（3500个常用汉字）", common_sc_font_text_sprites);
 
         bn::vector<bn::sprite_ptr, 32> common_jp_font_text_sprites;
-        common_jp_font_text_generator->generate(0, 0, "システム設定のフォントです｡", common_jp_font_text_sprites);
-        common_jp_font_text_generator->generate(0, 16, "｢常用漢字1945字｣", common_jp_font_text_sprites);
+        common_jp_font_text_generator->generate(0, 0, "システム設定のフォントです。", common_jp_font_text_sprites);
+        common_jp_font_text_generator->generate(0, 16, "「常用漢字1945字」", common_jp_font_text_sprites);
 
         while(! bn::keypad::start_pressed())
         {

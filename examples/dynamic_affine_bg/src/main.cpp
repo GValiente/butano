@@ -5,6 +5,7 @@
 
 #include "bn_core.h"
 #include "bn_keypad.h"
+#include "bn_memory.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_affine_bg_map_ptr.h"
 #include "bn_sprite_text_generator.h"

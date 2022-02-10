@@ -7,6 +7,7 @@
 
 #include "bn_sprites.h"
 #include "bn_sprite_ptr.h"
+#include "bn_string_view.h"
 #include "bn_sprite_builder.h"
 #include "../hw/include/bn_hw_sprite_tiles.h"
 
@@ -15,9 +16,6 @@ namespace bn
 
 namespace
 {
-    static_assert(BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS > 0);
-    static_assert(power_of_two(BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS));
-
     template<sprite_size size>
     [[nodiscard]] tile* _build_sprite_optional(
         const sprite_text_generator& generator, const sprite_palette_ptr& palette,
@@ -260,10 +258,10 @@ namespace
                 const fixed_point& position, int character_width, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
-            _palette(move(palette)),
             _current_position(position.x() + (character_width / 2), position.y()),
             _character_width(character_width),
-            _space_between_characters(generator.font().space_between_characters())
+            _space_between_characters(generator.font().space_between_characters()),
+            _palette(move(palette))
         {
         }
 
@@ -338,10 +336,10 @@ namespace
     private:
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
-        sprite_palette_ptr _palette;
         fixed_point _current_position;
         int _character_width;
         int _space_between_characters;
+        sprite_palette_ptr _palette;
     };
 
 
@@ -358,9 +356,9 @@ namespace
             _generator(generator),
             _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
-            _palette(move(palette)),
             _current_position(position.x() + (max_character_width / 2), position.y()),
-            _space_between_characters(generator.font().space_between_characters())
+            _space_between_characters(generator.font().space_between_characters()),
+            _palette(move(palette))
         {
         }
 
@@ -444,9 +442,9 @@ namespace
         const sprite_text_generator& _generator;
         const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
-        sprite_palette_ptr _palette;
         fixed_point _current_position;
         int _space_between_characters;
+        sprite_palette_ptr _palette;
     };
 
 
@@ -461,9 +459,9 @@ namespace
                                const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
-            _palette(move(palette)),
             _current_position(position.x() + (_max_columns_per_sprite / 2), position.y()),
-            _space_between_characters(generator.font().space_between_characters())
+            _space_between_characters(generator.font().space_between_characters()),
+            _palette(move(palette))
         {
         }
 
@@ -528,11 +526,11 @@ namespace
 
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
-        sprite_palette_ptr _palette;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _sprite_character_index = _max_characters_per_sprite;
         int _space_between_characters;
+        sprite_palette_ptr _palette;
 
         void _clear(int characters) const
         {
@@ -563,9 +561,9 @@ namespace
             _generator(generator),
             _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
-            _palette(move(palette)),
             _current_position(position.x() + (_max_columns_per_sprite / 2), position.y()),
-            _space_between_characters(generator.font().space_between_characters())
+            _space_between_characters(generator.font().space_between_characters()),
+            _palette(move(palette))
         {
         }
 
@@ -635,11 +633,11 @@ namespace
         const sprite_text_generator& _generator;
         const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
-        sprite_palette_ptr _palette;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _space_between_characters;
         int _sprite_column = _max_columns_per_sprite;
+        sprite_palette_ptr _palette;
     };
 
 
@@ -654,9 +652,9 @@ namespace
                                 const fixed_point& position, ivector<sprite_ptr>& output_sprites) :
             _generator(generator),
             _output_sprites(output_sprites),
-            _palette(move(palette)),
             _current_position(position.x() + (_max_columns_per_sprite / 2), position.y()),
-            _space_between_characters(generator.font().space_between_characters())
+            _space_between_characters(generator.font().space_between_characters()),
+            _palette(move(palette))
         {
         }
 
@@ -726,11 +724,11 @@ namespace
 
         const sprite_text_generator& _generator;
         ivector<sprite_ptr>& _output_sprites;
-        sprite_palette_ptr _palette;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _space_between_characters;
         int _sprite_character_index = _max_characters_per_sprite;
+        sprite_palette_ptr _palette;
 
         void _clear(int characters) const
         {
@@ -765,9 +763,9 @@ namespace
             _generator(generator),
             _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
-            _palette(move(palette)),
             _current_position(position.x() + (_max_columns_per_sprite / 2), position.y()),
-            _space_between_characters(generator.font().space_between_characters())
+            _space_between_characters(generator.font().space_between_characters()),
+            _palette(move(palette))
         {
         }
 
@@ -841,11 +839,11 @@ namespace
         const sprite_text_generator& _generator;
         const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
-        sprite_palette_ptr _palette;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _space_between_characters;
         int _sprite_column = _max_columns_per_sprite;
+        sprite_palette_ptr _palette;
     };
 
 
@@ -861,9 +859,9 @@ namespace
             _generator(generator),
             _character_widths(generator.font().character_widths_ref().data()),
             _output_sprites(output_sprites),
-            _palette(move(palette)),
             _current_position(position.x() + (_max_columns_per_sprite / 2), position.y()),
-            _space_between_characters(generator.font().space_between_characters())
+            _space_between_characters(generator.font().space_between_characters()),
+            _palette(move(palette))
         {
         }
 
@@ -951,15 +949,15 @@ namespace
         const sprite_text_generator& _generator;
         const int8_t* _character_widths;
         ivector<sprite_ptr>& _output_sprites;
-        sprite_palette_ptr _palette;
         fixed_point _current_position;
         tile* _tiles_vram = nullptr;
         int _space_between_characters;
         int _sprite_column = _max_columns_per_sprite;
+        sprite_palette_ptr _palette;
     };
 
 
-    [[nodiscard]] int _graphics_index(char character, const iunordered_map<int, int>& utf8_characters_map,
+    [[nodiscard]] int _graphics_index(char character, const utf8_characters_map_ref& utf8_characters_map,
                                       const char* text_data, int& text_index)
     {
         int result;
@@ -972,10 +970,7 @@ namespace
         else
         {
             utf8_character utf8_char(text_data[text_index]);
-            auto it = utf8_characters_map.find(utf8_char.data());
-            BN_ASSERT(it != utf8_characters_map.end(), "UTF-8 character not found: ", text_data);
-
-            result = it->second;
+            result = utf8_characters_map.index(utf8_char) + sprite_font::minimum_graphics;
             text_index += utf8_char.size();
         }
 
@@ -984,7 +979,7 @@ namespace
 
 
     template<class Painter>
-    [[nodiscard]] bool _paint(const string_view& text, const iunordered_map<int, int>& utf8_characters_map,
+    [[nodiscard]] bool _paint(const string_view& text, const utf8_characters_map_ref& utf8_characters_map,
                               Painter& painter)
     {
         const char* text_data = text.data();
@@ -1026,7 +1021,7 @@ namespace
 
     template<bool allow_failure>
     bool _generate(const sprite_text_generator& generator, const fixed_point& position, const string_view& text,
-                   const iunordered_map<int, int>& utf8_characters_map, int max_character_width, int character_height,
+                   const utf8_characters_map_ref& utf8_characters_map, int max_character_width, int character_height,
                    bool one_sprite_per_character, ivector<sprite_ptr>& output_sprites)
     {
         optional<sprite_palette_ptr> palette;
@@ -1199,19 +1194,20 @@ void sprite_text_generator::set_z_order(int z_order)
 int sprite_text_generator::width(const string_view& text) const
 {
     const span<const int8_t>& character_widths = _font.character_widths_ref();
+    const utf8_characters_map_ref& utf8_characters_map = _font.utf8_characters_ref();
 
     if(int space_between_characters = _font.space_between_characters())
     {
         if(character_widths.empty())
         {
             fixed_width_space_between_characters_painter painter(_max_character_width, space_between_characters);
-            [[maybe_unused]] bool success = _paint(text, _utf8_characters_map, painter);
+            [[maybe_unused]] bool success = _paint(text, utf8_characters_map, painter);
             return painter.width();
         }
         else
         {
             variable_width_space_between_characters_painter painter(character_widths.data(), space_between_characters);
-            [[maybe_unused]] bool success = _paint(text, _utf8_characters_map, painter);
+            [[maybe_unused]] bool success = _paint(text, utf8_characters_map, painter);
             return painter.width();
         }
     }
@@ -1220,13 +1216,13 @@ int sprite_text_generator::width(const string_view& text) const
         if(character_widths.empty())
         {
             fixed_width_no_space_between_characters_painter painter(_max_character_width);
-            [[maybe_unused]] bool success = _paint(text, _utf8_characters_map, painter);
+            [[maybe_unused]] bool success = _paint(text, utf8_characters_map, painter);
             return painter.width();
         }
         else
         {
             variable_width_no_space_between_characters_painter painter(character_widths.data());
-            [[maybe_unused]] bool success = _paint(text, _utf8_characters_map, painter);
+            [[maybe_unused]] bool success = _paint(text, utf8_characters_map, painter);
             return painter.width();
         }
     }
@@ -1236,23 +1232,23 @@ void sprite_text_generator::generate(fixed x, fixed y, const string_view& text,
                                      ivector<sprite_ptr>& output_sprites) const
 {
     bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
-    _generate<false>(*this, fixed_point(x, y), text, _utf8_characters_map, _max_character_width, _character_height,
-                     one_sprite_per_character, output_sprites);
+    _generate<false>(*this, fixed_point(x, y), text, _font.utf8_characters_ref(), _max_character_width,
+                     _character_height, one_sprite_per_character, output_sprites);
 }
 
 void sprite_text_generator::generate(const fixed_point& position, const string_view& text,
                                      ivector<sprite_ptr>& output_sprites) const
 {
     bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
-    _generate<false>(*this, position, text, _utf8_characters_map, _max_character_width, _character_height,
-                     one_sprite_per_character, output_sprites);
+    _generate<false>(*this, position, text, _font.utf8_characters_ref(), _max_character_width,
+                     _character_height, one_sprite_per_character, output_sprites);
 }
 
 bool sprite_text_generator::generate_optional(fixed x, fixed y, const string_view& text,
                                               ivector<sprite_ptr>& output_sprites) const
 {
     bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
-    return _generate<true>(*this, fixed_point(x, y), text, _utf8_characters_map, _max_character_width,
+    return _generate<true>(*this, fixed_point(x, y), text, _font.utf8_characters_ref(), _max_character_width,
                            _character_height, one_sprite_per_character, output_sprites);
 }
 
@@ -1260,21 +1256,12 @@ bool sprite_text_generator::generate_optional(const fixed_point& position, const
                                               ivector<sprite_ptr>& output_sprites) const
 {
     bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
-    return _generate<true>(*this, position, text, _utf8_characters_map, _max_character_width, _character_height,
-                           one_sprite_per_character, output_sprites);
+    return _generate<true>(*this, position, text, _font.utf8_characters_ref(), _max_character_width,
+                           _character_height, one_sprite_per_character, output_sprites);
 }
 
 void sprite_text_generator::_init()
 {
-    int utf8_character_index = sprite_font::minimum_graphics;
-
-    for(const string_view& utf8_character_text : _font.utf8_characters_ref())
-    {
-        utf8_character utf8_char(utf8_character_text.data());
-        _utf8_characters_map.insert(utf8_char.data(), utf8_character_index);
-        ++utf8_character_index;
-    }
-
     const sprite_shape_size& shape_size = _font.item().shape_size();
     int width = shape_size.width();
     int height = shape_size.height();

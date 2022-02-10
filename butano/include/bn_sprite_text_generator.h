@@ -17,14 +17,13 @@
 #include "bn_fixed.h"
 #include "bn_vector.h"
 #include "bn_sprite_font.h"
-#include "bn_unordered_map.h"
-#include "bn_config_sprite_text.h"
 
 namespace bn
 {
 
 class sprite_ptr;
 class fixed_point;
+class string_view;
 
 /**
  * @brief Generates sprites containing text from a given sprite_font.
@@ -273,7 +272,6 @@ public:
 private:
     sprite_font _font;
     sprite_palette_item _palette_item;
-    unordered_map<int, int, BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS> _utf8_characters_map;
     int8_t _bg_priority = 3;
     int8_t _z_order = 0;
     alignment_type _alignment = alignment_type::LEFT;

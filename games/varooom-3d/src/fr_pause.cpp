@@ -10,6 +10,7 @@
 #include "bn_keypad.h"
 #include "bn_rumble.h"
 #include "bn_green_swap.h"
+#include "bn_string_view.h"
 #include "bn_sprite_builder.h"
 
 #include "fr_announcer.h"

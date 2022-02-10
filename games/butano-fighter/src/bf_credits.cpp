@@ -8,6 +8,7 @@
 #include "bn_keypad.h"
 #include "bn_display.h"
 #include "bn_music_items.h"
+#include "bn_string_view.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_affine_mat_attributes.h"
 #include "bn_sprite_double_size_mode.h"

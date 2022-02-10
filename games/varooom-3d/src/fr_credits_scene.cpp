@@ -8,6 +8,7 @@
 #include "bn_keypad.h"
 #include "bn_colors.h"
 #include "bn_display.h"
+#include "bn_string_view.h"
 
 #include "fr_scene_type.h"
 #include "fr_common_stuff.h"
@@ -149,7 +150,7 @@ namespace
         "",
         "Fast number to string conversion",
         "posprintf",
-        "danposluns.com/gbadev"
+        "danposluns.com/gbadev",
         "",
         "",
         "",

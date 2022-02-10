@@ -7,11 +7,12 @@
 #define BF_SMALL_SPRITE_FONT_H
 
 #include "bn_sprite_font.h"
+#include "bn_utf8_characters_map.h"
 #include "bn_sprite_items_small_font.h"
 
 namespace bf
 {
-    constexpr bn::string_view small_sprite_font_utf8_characters[] = {
+    constexpr bn::utf8_character small_sprite_font_utf8_characters[] = {
         "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
     };
 
@@ -129,8 +130,14 @@ namespace bf
         7,  // ¿
     };
 
+    constexpr bn::span<const bn::utf8_character> small_sprite_font_utf8_characters_span(
+            small_sprite_font_utf8_characters);
+
+    constexpr auto small_sprite_font_utf8_characters_map =
+            bn::utf8_characters_map<small_sprite_font_utf8_characters_span>();
+
     constexpr bn::sprite_font small_sprite_font(
-            bn::sprite_items::small_font, small_sprite_font_utf8_characters,
+            bn::sprite_items::small_font, small_sprite_font_utf8_characters_map.reference(),
             small_sprite_font_character_widths);
 }
 

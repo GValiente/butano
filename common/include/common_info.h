@@ -9,10 +9,10 @@
 #include "bn_vector.h"
 #include "bn_span_fwd.h"
 #include "bn_sprite_ptr.h"
+#include "bn_string_view.h"
 
 namespace bn
 {
-    class string_view;
     class sprite_text_generator;
 }
 

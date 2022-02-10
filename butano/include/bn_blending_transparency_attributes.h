@@ -122,6 +122,24 @@ public:
     }
 
     /**
+     * @brief Sets the weights of the transparency and the the intensity blendings.
+     * @param transparency_alpha Transparency weight in the range [0..1],
+     * with 0 being fully transparent and 1 being fully visible.
+     * @param intensity_alpha Intensity weight in the range [0..1],
+     * with 0 being disabled and 1 being fully applied.
+     */
+    constexpr void set_transparency_and_intensity_alphas(fixed transparency_alpha, fixed intensity_alpha)
+    {
+        BN_ASSERT(transparency_alpha >= 0 && transparency_alpha <= 1,
+                  "Invalid transparency alpha: ", transparency_alpha);
+        BN_ASSERT(intensity_alpha >= 0 && intensity_alpha <= 1,
+                  "Invalid intensity alpha: ", intensity_alpha);
+
+        _transparency_top_weight = transparency_alpha;
+        _transparency_bottom_weight = max(1 - transparency_alpha, intensity_alpha);
+    }
+
+    /**
      * @brief Default equal operator.
      */
     [[nodiscard]] constexpr friend bool operator==(const blending_transparency_attributes& a,

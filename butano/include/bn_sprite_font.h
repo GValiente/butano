@@ -27,7 +27,7 @@ namespace bn
  *
  * Also, UTF-8 characters are supported.
  *
- * UTF-8 characters and character widths are not copied but referenced,
+ * UTF-8 characters map and character widths are not copied but referenced,
  * so they should outlive the sprite_font to avoid dangling references.
  *
  * @ingroup sprite
@@ -37,7 +37,7 @@ class sprite_font
 {
 
 public:
-    static constexpr int minimum_graphics = 94; //!< Minimum number of sprite tile sets that must contain a sprite_tiles_item of a sprite_font.
+    static constexpr int minimum_graphics = 94; //!< Minimum number of sprite tile sets that must contain the sprite_tiles_item of a sprite_font.
 
     /**
      * @brief Constructor.
@@ -51,12 +51,12 @@ public:
     /**
      * @brief Constructor.
      * @param item sprite_item used to generate text sprites.
-     * @param utf8_characters_ref Reference to a map of the supported UTF-8 characters
+     * @param utf8_characters_ref Reference to the map of the supported UTF-8 characters
      * and their position in the tile sets.
      *
      * UTF-8 characters should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font
+     * UTF-8 characters map is not copied but referenced, so it should outlive the sprite_font
      * to avoid dangling references.
      */
     constexpr sprite_font(const sprite_item& item, const utf8_characters_map_ref& utf8_characters_ref) :
@@ -67,12 +67,12 @@ public:
     /**
      * @brief Constructor.
      * @param item sprite_item used to generate text sprites.
-     * @param utf8_characters_ref Reference to a map of the supported UTF-8 characters
+     * @param utf8_characters_ref Reference to the map of the supported UTF-8 characters
      * and their position in the tile sets.
      *
      * UTF-8 characters should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font
+     * UTF-8 characters map is not copied but referenced, so it should outlive the sprite_font
      * to avoid dangling references.
      *
      * @param character_widths_ref Reference to the width in pixels of each supported character.
@@ -89,12 +89,12 @@ public:
     /**
      * @brief Constructor.
      * @param item sprite_item used to generate text sprites.
-     * @param utf8_characters_ref Reference to a map of the supported UTF-8 characters
+     * @param utf8_characters_ref Reference to the map of the supported UTF-8 characters
      * and their position in the tile sets.
      *
      * UTF-8 characters should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font
+     * UTF-8 characters map is not copied but referenced, so it should outlive the sprite_font
      * to avoid dangling references.
      *
      * @param character_widths_ref Reference to the width in pixels of each supported character.
@@ -133,12 +133,12 @@ public:
     }
 
     /**
-     * @brief Returns the reference to a map of the supported UTF-8 characters
+     * @brief Returns the reference to the map of the supported UTF-8 characters
      * and their position in the tile sets.
      *
      * UTF-8 characters should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font
+     * UTF-8 characters map is not copied but referenced, so it should outlive the sprite_font
      * to avoid dangling references.
      */
     [[nodiscard]] constexpr const utf8_characters_map_ref& utf8_characters_ref() const

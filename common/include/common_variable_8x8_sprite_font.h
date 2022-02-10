@@ -7,12 +7,13 @@
 #define COMMON_VARIABLE_8x8_SPRITE_FONT_H
 
 #include "bn_sprite_font.h"
+#include "bn_utf8_characters_map.h"
 #include "bn_sprite_items_common_variable_8x8_font.h"
 
 namespace common
 {
 
-constexpr bn::string_view variable_8x8_sprite_font_utf8_characters[] = {
+constexpr bn::utf8_character variable_8x8_sprite_font_utf8_characters[] = {
     "Á", "É", "Í", "Ó", "Ú", "Ü", "Ñ", "á", "é", "í", "ó", "ú", "ü", "ñ", "¡", "¿"
 };
 
@@ -130,8 +131,14 @@ constexpr int8_t variable_8x8_sprite_font_character_widths[] = {
     7,  // ¿
 };
 
+constexpr bn::span<const bn::utf8_character> variable_8x8_sprite_font_utf8_characters_span(
+        variable_8x8_sprite_font_utf8_characters);
+
+constexpr auto variable_8x8_sprite_font_utf8_characters_map =
+        bn::utf8_characters_map<variable_8x8_sprite_font_utf8_characters_span>();
+
 constexpr bn::sprite_font variable_8x8_sprite_font(
-        bn::sprite_items::common_variable_8x8_font, variable_8x8_sprite_font_utf8_characters,
+        bn::sprite_items::common_variable_8x8_font, variable_8x8_sprite_font_utf8_characters_map.reference(),
         variable_8x8_sprite_font_character_widths);
 
 }

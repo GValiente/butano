@@ -54,7 +54,7 @@ public:
      * @brief Constructor.
      * @param text_ptr Non null pointer to the string to decode.
      */
-    constexpr explicit utf8_character(const char* text_ptr)
+    constexpr utf8_character(const char* text_ptr)
     {
         BN_ASSERT(text_ptr, "Text is null");
 
@@ -65,7 +65,7 @@ public:
      * @brief Constructor.
      * @param text_ref Reference to the string to decode.
      */
-    constexpr explicit utf8_character(const char& text_ref)
+    constexpr utf8_character(const char& text_ref)
     {
         const char* src = &text_ref;
         auto ch8 = unsigned(*src);

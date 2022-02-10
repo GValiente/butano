@@ -9,6 +9,7 @@
 #include "bn_music_items.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_regular_bg_items_butano_huge.h"
+#include "bn_string_view.h"
 #include "bf_scene_type.h"
 #include "bf_butano_background.h"
 

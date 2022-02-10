@@ -14,10 +14,8 @@
  * @ingroup text
  */
 
-#include "bn_string_view.h"
 #include "bn_sprite_item.h"
-#include "bn_utf8_character.h"
-#include "bn_config_sprite_text.h"
+#include "bn_utf8_characters_map_ref.h"
 
 namespace bn
 {
@@ -29,7 +27,7 @@ namespace bn
  *
  * Also, UTF-8 characters are supported.
  *
- * UTF-8 characters and character widths are not copied but referenced,
+ * UTF-8 characters map and character widths are not copied but referenced,
  * so they should outlive the sprite_font to avoid dangling references.
  *
  * @ingroup sprite
@@ -39,28 +37,29 @@ class sprite_font
 {
 
 public:
-    static constexpr int minimum_graphics = 94; //!< Minimum number of sprite tile sets that must contain a sprite_tiles_item of a sprite_font.
+    static constexpr int minimum_graphics = 94; //!< Minimum number of sprite tile sets that must contain the sprite_tiles_item of a sprite_font.
 
     /**
      * @brief Constructor.
      * @param item sprite_item used to generate text sprites.
      */
     constexpr explicit sprite_font(const sprite_item& item) :
-        sprite_font(item, span<const string_view>(), span<const int8_t>(), 0)
+        sprite_font(item, utf8_characters_map_ref(), span<const int8_t>(), 0)
     {
     }
 
     /**
      * @brief Constructor.
      * @param item sprite_item used to generate text sprites.
-     * @param utf8_characters_ref Reference to a list of supported UTF-8 characters.
+     * @param utf8_characters_ref Reference to the map of the supported UTF-8 characters
+     * and their position in the tile sets.
      *
-     * They should appear in the tile sets referenced by item just after ASCII characters.
+     * UTF-8 characters should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font
+     * UTF-8 characters map is not copied but referenced, so it should outlive the sprite_font
      * to avoid dangling references.
      */
-    constexpr sprite_font(const sprite_item& item, const span<const string_view>& utf8_characters_ref) :
+    constexpr sprite_font(const sprite_item& item, const utf8_characters_map_ref& utf8_characters_ref) :
         sprite_font(item, utf8_characters_ref, span<const int8_t>(), 0)
     {
     }
@@ -68,11 +67,12 @@ public:
     /**
      * @brief Constructor.
      * @param item sprite_item used to generate text sprites.
-     * @param utf8_characters_ref Reference to a list of supported UTF-8 characters.
+     * @param utf8_characters_ref Reference to the map of the supported UTF-8 characters
+     * and their position in the tile sets.
      *
-     * They should appear in the tile sets referenced by item just after ASCII characters.
+     * UTF-8 characters should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font
+     * UTF-8 characters map is not copied but referenced, so it should outlive the sprite_font
      * to avoid dangling references.
      *
      * @param character_widths_ref Reference to the width in pixels of each supported character.
@@ -80,7 +80,7 @@ public:
      * Character widths are not copied but referenced, so they should outlive the sprite_font
      * to avoid dangling references.
      */
-    constexpr sprite_font(const sprite_item& item, const span<const string_view>& utf8_characters_ref,
+    constexpr sprite_font(const sprite_item& item, const utf8_characters_map_ref& utf8_characters_ref,
                           const span<const int8_t>& character_widths_ref) :
         sprite_font(item, utf8_characters_ref, character_widths_ref, 0)
     {
@@ -89,11 +89,12 @@ public:
     /**
      * @brief Constructor.
      * @param item sprite_item used to generate text sprites.
-     * @param utf8_characters_ref Reference to a list of supported UTF-8 characters.
+     * @param utf8_characters_ref Reference to the map of the supported UTF-8 characters
+     * and their position in the tile sets.
      *
-     * They should appear in the tile sets referenced by item just after ASCII characters.
+     * UTF-8 characters should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font
+     * UTF-8 characters map is not copied but referenced, so it should outlive the sprite_font
      * to avoid dangling references.
      *
      * @param character_widths_ref Reference to the width in pixels of each supported character.
@@ -103,7 +104,7 @@ public:
      *
      * @param space_between_characters Space between two consecutive characters in pixels (it can be negative).
      */
-    constexpr sprite_font(const sprite_item& item, const span<const string_view>& utf8_characters_ref,
+    constexpr sprite_font(const sprite_item& item, const utf8_characters_map_ref& utf8_characters_ref,
                           const span<const int8_t>& character_widths_ref, int space_between_characters) :
         _item(item),
         _utf8_characters_ref(utf8_characters_ref),
@@ -115,11 +116,6 @@ public:
                    "Invalid graphics count or UTF-8 characters count: ", item.tiles_item().graphics_count(), " - ",
                    utf8_characters_ref.size(), " - ", minimum_graphics + utf8_characters_ref.size());
         BN_ASSERT(item.palette_item().bpp() == bpp_mode::BPP_4, "8BPP fonts not supported");
-        BN_ASSERT(utf8_characters_ref.size() <= BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS,
-                   "Invalid UTF-8 characters count: ", utf8_characters_ref.size());
-        BN_ASSERT(_validate_utf8_characters(), "UTF-8 characters validation failed");
-        BN_ASSERT(BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS > BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS_FOR_DUPLICATION_CHECK ||
-                   ! _duplicated_utf8_characters(), "There's duplicated UTF-8 characters");
         BN_ASSERT(character_widths_ref.empty() ||
                    character_widths_ref.size() == 1 + minimum_graphics + utf8_characters_ref.size(),
                    "Invalid character widths count: ", character_widths_ref.size(), " - ",
@@ -137,14 +133,15 @@ public:
     }
 
     /**
-     * @brief Returns the reference to the list of supported UTF-8 characters.
+     * @brief Returns the reference to the map of the supported UTF-8 characters
+     * and their position in the tile sets.
      *
-     * They should appear in the tile sets referenced by item just after ASCII characters.
+     * UTF-8 characters should appear in the tile sets referenced by item just after ASCII characters.
      *
-     * UTF-8 characters are not copied but referenced, so they should outlive the sprite_font
+     * UTF-8 characters map is not copied but referenced, so it should outlive the sprite_font
      * to avoid dangling references.
      */
-    [[nodiscard]] constexpr const span<const string_view>& utf8_characters_ref() const
+    [[nodiscard]] constexpr const utf8_characters_map_ref& utf8_characters_ref() const
     {
         return _utf8_characters_ref;
     }
@@ -170,51 +167,9 @@ public:
 
 private:
     sprite_item _item;
-    span<const string_view> _utf8_characters_ref;
+    utf8_characters_map_ref _utf8_characters_ref;
     span<const int8_t> _character_widths_ref;
     int _space_between_characters;
-
-    [[nodiscard]] constexpr bool _validate_utf8_characters() const
-    {
-        for(const string_view& utf8_character_text : _utf8_characters_ref)
-        {
-            utf8_character utf8_char(utf8_character_text.data());
-
-            if(utf8_char.data() <= '~')
-            {
-                return false;
-            }
-
-            if(utf8_char.size() != utf8_character_text.size())
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    [[nodiscard]] constexpr bool _duplicated_utf8_characters() const
-    {
-        const string_view* utf8_characters_data = _utf8_characters_ref.data();
-
-        for(int i = 0, size = _utf8_characters_ref.size(); i < size; ++i)
-        {
-            const string_view& a = utf8_characters_data[i];
-
-            for(int j = i + 1; j < size; ++j)
-            {
-                const string_view& b = utf8_characters_data[j];
-
-                if(a == b)
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
     [[nodiscard]] constexpr bool _validate_character_widths() const
     {

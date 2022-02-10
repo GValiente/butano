@@ -7,6 +7,7 @@
 
 #include "bn_keypad.h"
 #include "bn_optional.h"
+#include "bn_string_view.h"
 
 #include "fr_common_stuff.h"
 

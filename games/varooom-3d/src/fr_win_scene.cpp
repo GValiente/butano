@@ -7,6 +7,7 @@
 
 #include "bn_keypad.h"
 #include "bn_colors.h"
+#include "bn_string_view.h"
 
 #include "fr_scene_type.h"
 #include "fr_common_stuff.h"
@@ -45,9 +46,6 @@ namespace
     constexpr bn::fixed model_source_theta = 65536 - 32768;
     constexpr bn::fixed model_target_theta = 0;
     constexpr bn::fixed model_inc_theta = (model_target_theta - model_source_theta) / model_anim_frames;
-
-    constexpr bn::fixed position_text_y = 39;
-    constexpr bn::fixed exit_text_y = position_text_y + 16;
 
     constexpr bn::color model_colors[] = {
         bn::color(31, 22, 0)

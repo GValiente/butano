@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Display &raquo; Text module | Butano Docs</title>
+  <title>bn::utf8_characters_map class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,61 +47,64 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__display.html">Display</a> &raquo;</span>
-          Text <span class="m-thin">module</span></h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__utf8__characters__map_8h.html">&lt;bn_utf8_characters_map.h&gt;</a></div>
+          <div class="m-doc-template">template&lt;const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1utf8__character.html" class="m-doc">utf8_<wbr />character</a>&gt;&amp; Utf8Characters&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>utf8_characters_map <span class="m-thin">class</span>
+        </h1>
+        <p>Maps a list of UTF-8 characters to their position in the list.</p>
+        <table class="m-table m-fullwidth m-flat">
+          <thead>
+            <tr><th colspan="2">Template parameters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 1%">Utf8Characters</td>
+              <td>UTF-8 characters list to map.</td>
+            </tr>
+          </tbody>
+        </table>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p>Butano&#x27;s text system, based on sprites.</p><p>Currently, it supports 8x8 and 8x16 fixed width AND variable width fonts of 16 colors (4 bits per pixel).</p><p>Text can be printed in one sprite per character or multiple characters per sprite.</p><p>Also, UTF-8 characters are supported.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="bn__sprite__font_8h.html" class="m-doc">bn_sprite_font.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__sprite__text__generator_8h.html" class="m-doc">bn_sprite_text_generator.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__character_8h.html" class="m-doc">bn_utf8_character.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__characters__map_8h.html" class="m-doc">bn_utf8_characters_map.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__characters__map__ref_8h.html" class="m-doc">bn_utf8_characters_map_ref.h</a></dt>
-            <dd></dd>
+            <dt id="ad50f799d5f0578bf6928e70797fef568">
+              <span class="m-doc-wrap-bumper"><a href="#ad50f799d5f0578bf6928e70797fef568" class="m-doc-self">utf8_characters_map</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default constructor.</dd>
           </dl>
         </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              class <a href="classbn_1_1sprite__font.html" class="m-doc">bn::sprite_font</a>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2a657766d6bf1d43041bde01a8fa5b7e" class="m-doc">reference</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1utf8__characters__map__ref.html" class="m-doc">utf8_<wbr />characters_<wbr />map_<wbr />ref</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Contains the required information to generate text sprites.</dd>
-            <dt>
-              class <a href="classbn_1_1sprite__text__generator.html" class="m-doc">bn::sprite_text_generator</a>
-            </dt>
-            <dd>Generates sprites containing text from a given <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a>.</dd>
-            <dt>
-              class <a href="classbn_1_1utf8__character.html" class="m-doc">bn::utf8_character</a>
-            </dt>
-            <dd>Decodes a single UTF-8 character from a string.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1utf8__character.html" class="m-doc">utf8_<wbr />character</a>&gt;&amp; Utf8Characters&gt;</div>
-              class <a href="classbn_1_1utf8__characters__map.html" class="m-doc">bn::utf8_characters_map</a>
-            </dt>
-            <dd>Maps a list of UTF-8 characters to their position in the list.</dd>
-            <dt>
-              class <a href="classbn_1_1utf8__characters__map__ref.html" class="m-doc">bn::utf8_characters_map_ref</a>
-            </dt>
-            <dd>Maps a list of UTF-8 characters to their position in the list.</dd>
+            <dd>Returns a reference to this map without information about the UTF-8 characters input list.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a2a657766d6bf1d43041bde01a8fa5b7e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1utf8__character.html" class="m-doc">utf8_<wbr />character</a>&gt;&amp; Utf8Characters&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1utf8__characters__map__ref.html" class="m-doc">utf8_<wbr />characters_<wbr />map_<wbr />ref</a> bn::<wbr />utf8_characters_map&lt;Utf8Characters&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2a657766d6bf1d43041bde01a8fa5b7e" class="m-doc-self">reference</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a reference to this map without information about the UTF-8 characters input list.</p>
+<p>This map is not copied but referenced, so it should outlive the <a href="classbn_1_1utf8__characters__map__ref.html" class="m-doc">utf8_<wbr />characters_<wbr />map_<wbr />ref</a> to avoid dangling references.</p>
+          </div></section>
         </section>
       </div>
     </div>

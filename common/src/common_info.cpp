@@ -7,6 +7,7 @@
 
 #include "bn_keypad.h"
 #include "bn_display.h"
+#include "bn_string_view.h"
 #include "bn_sprite_text_generator.h"
 
 namespace common

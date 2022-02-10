@@ -26,6 +26,7 @@
 #include "common_variable_8x16_sprite_font.h"
 #include "common_sc_variable_16x16_sprite_font.h"
 #include "common_tc_variable_16x16_sprite_font.h"
+#include "common_hc_variable_16x16_sprite_font.h"
 #include "common_jp_variable_16x16_sprite_font.h"
 #include "common_kr_variable_16x16_sprite_font.h"
 
@@ -265,19 +266,25 @@ namespace
 
         bn::vector<bn::sprite_ptr, 32> common_tc_font_text_sprites;
         common_tc_font_text_generator.generate(0, -32, "繁体中文（台灣）4808個常用國字", common_tc_font_text_sprites);
-        common_tc_font_text_generator.generate(0, -16, "+6341個次常用國字", common_tc_font_text_sprites);
+        common_tc_font_text_generator.generate(0, -16, "+ 6341個次常用國字", common_tc_font_text_sprites);
+
+        bn::sprite_text_generator common_hc_font_text_generator(common_hc_variable_16x16_sprite_font);
+        common_hc_font_text_generator.set_center_alignment();
+
+        bn::vector<bn::sprite_ptr, 32> common_hc_font_text_sprites;
+        common_hc_font_text_generator.generate(0, 0, "繁体中文（香港）小學學習4807字", common_hc_font_text_sprites);
 
         bn::sprite_text_generator common_jp_font_text_generator(common_jp_variable_16x16_sprite_font);
         common_jp_font_text_generator.set_center_alignment();
 
         bn::vector<bn::sprite_ptr, 32> common_jp_font_text_sprites;
-        common_jp_font_text_generator.generate(0, 32, "日本語「常用漢字1945字」", common_jp_font_text_sprites);
+        common_jp_font_text_generator.generate(0, 16, "日本語「常用漢字1945字」", common_jp_font_text_sprites);
 
         bn::sprite_text_generator common_kr_font_text_generator(common_kr_variable_16x16_sprite_font);
         common_kr_font_text_generator.set_center_alignment();
 
         bn::vector<bn::sprite_ptr, 32> common_kr_font_text_sprites;
-        common_kr_font_text_generator.generate(0, 48, "한국어 2350한자", common_kr_font_text_sprites);
+        common_kr_font_text_generator.generate(0, 32, "한국어 2350한자", common_kr_font_text_sprites);
 
         while(! bn::keypad::start_pressed())
         {

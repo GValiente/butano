@@ -87,15 +87,23 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                     src_right = int(line_conf['x']) + int(line_conf['width']) - padding_right
                     if src_right < src_left:
                         src_right = src_left
+                    src_right = min(src_right, src_left + font_width)
                     src_lower = int(line_conf['y']) + int(line_conf['height']) - padding_down
                     if src_lower < src_upper:
                         src_lower = src_upper
+                    src_upper = max(src_upper, src_lower - font_height)
                     dst_left = round(float(line_conf['xoffset'])) + padding_left
                     if dst_left < 0:
                         dst_left = 0
+                    dst_right = dst_left + src_right - src_left
+                    if dst_right > font_width:
+                        dst_left -= min(dst_left, dst_right - font_width)
                     dst_upper = round(float(line_conf['yoffset'])) + padding_up
                     if dst_upper < 0:
                         dst_upper = 0
+                    dst_lower = dst_upper + src_lower - src_upper
+                    if dst_lower > font_height:
+                        dst_upper -= min(dst_upper, dst_lower - font_height)
                     font_code = int(line_conf['id'])
                     font_w = int(line_conf['xadvance'])
                     if font_w > font_width:

@@ -1338,6 +1338,7 @@
  * * support other languages
  * * display rare characters
  * * change font style and size
+ * * exclude unused characters to save space
  * You can import your own fonts too.
  *
  *

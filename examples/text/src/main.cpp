@@ -28,7 +28,7 @@
 
 namespace
 {
-    constexpr bn::fixed text_y_inc = 14;
+    constexpr bn::fixed text_y_inc = 12;
     constexpr bn::fixed text_y_limit = (bn::display::height() / 2) - text_y_inc;
 
     bn::sprite_text_generator *common_cn_font_text_generator;

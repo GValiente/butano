@@ -1,0 +1,5 @@
+- Source Han Sans
+    By Adobe, Google
+    Licensed under the SIL Open Font License v.1.1
+    https://commons.wikimedia.org/wiki/File:Source_Han_Sans_Version_2_Specimen.svg
+

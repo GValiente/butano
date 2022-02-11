@@ -924,6 +924,12 @@
  *
  * Showcase of a 4096x4096 world map with a perspective effect.
  *
+ * <tr colspan="3"><td> @ref font
+ *
+ * @image html examples_font.png
+ *
+ * Showcase of Butano BMFont support.
+ *
  * </table>
  */
 

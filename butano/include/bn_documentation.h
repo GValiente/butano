@@ -1334,6 +1334,8 @@
  *
  * Common fonts for English, Japanese, Korean, Simplified Chinese, Traditional Chinese (Taiwan) and Traditional Chinese (Hong Kong) are provided in `common` folder.
  *
+ * They are based on open source font <a href="https://source.typekit.com/source-han-serif/">Source Han Serif</a> under <a href="https://github.com/adobe-fonts/source-han-serif/blob/master/LICENSE.txt">OFL-1.1 License</a>.
+ *
  * If you want to:
  * * support other languages
  * * display rare characters

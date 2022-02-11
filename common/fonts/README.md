@@ -9,10 +9,12 @@ Include a font in your project's Makefile to use it.
 - include BMFonts
 
 You need to install [Pillow](https://pillow.readthedocs.io/en/stable/installation.html) for BMFont support.
+
 [Example](../../examples/text/Makefile)
 
 - include graphics and headers
 
 They are already converted for direct use in your project, so you needn't install anything.
+
 [Example](https://github.com/laqieer/gba-dev-best-practice/blob/main/source/common-text/Makefile)
 

@@ -8,6 +8,7 @@
 # DATA is a list of directories containing binary data.
 # GRAPHICS is a list of directories containing files to be processed by grit.
 # AUDIO is a list of directories containing files to be processed by mmutil.
+# FONTS is a list of directories containing font files.
 # ROMTITLE is a uppercase ASCII, max 12 characters text string containing the output ROM title.
 # ROMCODE is a uppercase ASCII, max 4 characters text string containing the output ROM code.
 # USERFLAGS is a list of additional compiler flags:
@@ -25,18 +26,25 @@ TARGET      :=  $(notdir $(CURDIR))
 BUILD       :=  build
 LIBBUTANO   :=  ../../butano
 PYTHON      :=  python
-SOURCES     :=  src ../../common/src
-INCLUDES    :=  include ../../common/include
+SOURCES     :=  src
+INCLUDES    :=  include
 DATA        :=
-GRAPHICS    :=  graphics ../../common/graphics
-AUDIO       :=  audio ../../common/audio
-ROMTITLE    :=  BUTANO TEXT
+GRAPHICS    :=  graphics
+AUDIO       :=  audio
+FONTS       :=  fonts
+ROMTITLE    :=  BUTANO FONT
 ROMCODE     :=  SBTP
 USERFLAGS   :=  
 USERLIBDIRS :=  
 USERLIBS    :=  
 USERBUILD   :=  
 EXTTOOL     :=  
+
+ifneq ($(strip $(FONTS)),)
+INCLUDES    +=  $(BUILD)
+GRAPHICS    +=  $(BUILD)/fonts
+EXTTOOL     +=  $(PYTHON) $(LIBBUTANO)/tools/butano_fonts_tool.py --build=$(BUILD) --fonts="$(FONTS)"
+endif
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

@@ -33,6 +33,9 @@ def list_fonts_files(fonts_folder_paths):
 
 
 def process_fonts_files(fonts_file_paths, build_folder_path):
+    fonts_graphics_path = build_folder_path + '/fonts/'
+    if not os.path.exists(fonts_graphics_path):
+        os.makedirs(fonts_graphics_path)
     total_number = 0
     for fonts_file_path in fonts_file_paths:
         fonts_file_path_no_ext = os.path.splitext(fonts_file_path)[0]
@@ -149,7 +152,7 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
             header_file.write('        ' + font_name + '_character_widths);\n')
             header_file.write('\n')
             header_file.write('#endif')
-            fonts_image_path_no_ext = build_folder_path + '/fonts/' + fonts_file_name_no_ext
+            fonts_image_path_no_ext = fonts_graphics_path + fonts_file_name_no_ext
             fonts_image_trimmed = Image.new('RGB', (font_width, font_height * (len(font_widths) - 1)), transparent_color)
             fonts_image_trimmed.paste(fonts_image)
             #fonts_image_trimmed.save(fonts_image_path_no_ext + '.png')

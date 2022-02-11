@@ -43,7 +43,7 @@ EXTTOOL     :=
 ifneq ($(strip $(FONTS)),)
 INCLUDES    +=  $(BUILD)
 GRAPHICS    +=  $(BUILD)/fonts
-EXTTOOL     +=  ([ -d $(BUILD)/fonts ] || mkdir -p $(BUILD)/fonts) && $(PYTHON) $(LIBBUTANO)/tools/butano_fonts_tool.py --build=$(BUILD) --fonts="$(FONTS)"
+EXTTOOL     +=  $(PYTHON) $(LIBBUTANO)/tools/butano_fonts_tool.py --build=$(BUILD) --fonts="$(FONTS)"
 endif
 
 #---------------------------------------------------------------------------------------------------------------------

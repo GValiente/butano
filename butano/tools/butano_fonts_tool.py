@@ -69,6 +69,8 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                         font_height = 16
                     else:
                         font_height = 8
+                    font_base = int(line_conf['base'])
+                    font_y_offset = min(font_base - font_height, 0)
                     # Assume a font's width is not more than its height
                     font_width = font_height
                     font_pages = [None] * int(line_conf['pages'])
@@ -104,6 +106,8 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                     dst_lower = dst_upper + src_lower - src_upper
                     if dst_lower > font_height:
                         dst_upper -= min(dst_upper, dst_lower - font_height)
+                    if dst_lower > 0:
+                        dst_lower -= min(dst_lower, font_y_offset)
                     font_code = int(line_conf['id'])
                     font_w = int(line_conf['xadvance'])
                     if font_w > font_width:

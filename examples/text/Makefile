@@ -27,7 +27,7 @@ BUILD       :=  build
 LIBBUTANO   :=  ../../butano
 PYTHON      :=  python
 SOURCES     :=  src ../../common/src
-INCLUDES    :=  include $(BUILD) ../../common/include
+INCLUDES    :=  include ../../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
@@ -40,11 +40,10 @@ USERLIBS    :=
 USERBUILD   :=  
 EXTTOOL     :=  
 
-#---------------------------------------------------------------------------------------------------------------------
-# Install Pillow to handle fonts:
-#---------------------------------------------------------------------------------------------------------------------
 ifneq ($(strip $(FONTS)),)
-EXTTOOL += 
+INCLUDES    +=  $(BUILD)
+GRAPHICS    +=  $(BUILD)/fonts
+EXTTOOL     +=  ([ -d $(BUILD)/fonts ] || mkdir -p $(BUILD)/fonts) && $(PYTHON) $(LIBBUTANO)/tools/butano_fonts_tool.py --build=$(BUILD) --fonts="$(FONTS)"
 endif
 
 #---------------------------------------------------------------------------------------------------------------------

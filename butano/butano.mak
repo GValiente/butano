@@ -111,8 +111,7 @@ SFILES          :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.s))) 
 BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*))) \
 						_bn_audio_soundbank.bin
 						
-GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp))) \
-						$(foreach dir,	$(FONTS),	$(patsubst %.fnt,%.bmp,$(notdir $(wildcard $(dir)/*.fnt))))
+GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp)))
 
 #---------------------------------------------------------------------------------------------------------------------
 # Use CXX for linking C++ projects, CC for standard C:
@@ -152,13 +151,12 @@ export LIBPATHS         :=  $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 #---------------------------------------------------------------------------------
 all:
 	@[ -d $(BUILD) ] || mkdir -p $(BUILD)
-	@[ -d $(BUILD)/fonts ] || mkdir -p $(BUILD)/fonts
 	@$(EXTTOOL)
 	@$(MAKE) --no-print-directory $(BUILD)
 	
 #---------------------------------------------------------------------------------
 $(BUILD):
-	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --audio="$(AUDIO)" --graphics="$(GRAPHICS) $(BUILD)/fonts" --fonts="$(FONTS)" --build=$(BUILD)
+	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --audio="$(AUDIO)" --graphics="$(GRAPHICS)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------

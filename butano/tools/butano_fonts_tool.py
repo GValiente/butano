@@ -7,7 +7,7 @@ zlib License, see LICENSE file.
 
 import os
 import sys
-import codecs
+import argparse
 
 from file_info import FileInfo
 from PIL import Image
@@ -187,3 +187,17 @@ def process_fonts(fonts_folder_paths, build_folder_path):
     total_number = process_fonts_files(fonts_file_paths, build_folder_path)
     print('    Processed character number: ' + str(total_number))
     new_file_info.write(file_info_path)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Butano fonts tool.')
+    parser.add_argument('--build', required=True, help='build folder path')
+    parser.add_argument('--fonts', required=True, help='fonts folder paths')
+
+    try:
+        args = parser.parse_args()
+        process_fonts(args.fonts, args.build)
+    except Exception as ex:
+        sys.stderr.write('Error: ' + str(ex) + '\n')
+        traceback.print_exc()
+        exit(-1)

@@ -1332,21 +1332,11 @@
  *
  * By default fonts files go into the `fonts` folder of your project.
  *
- * Common fonts for English, Japanese, Korean, Simplified Chinese, Traditional Chinese (Taiwan) and Traditional Chinese (Hong Kong) are provided in `common` folder.
- *
- * They are based on open source font <a href="https://source.typekit.com/source-han-serif/">Source Han Serif</a> under <a href="https://github.com/adobe-fonts/source-han-serif/blob/master/LICENSE.txt">OFL-1.1 License</a>.
- *
- * If you want to:
- * * support other languages
- * * display rare characters
- * * change font style and size
- * * exclude unused characters to save space
- * You can import your own fonts too.
- *
  *
  * @subsection import_bmfont Bitmap Font
  *
- * A bitmap font file (.fnt) in text format is supported. You can make it using <a href="http://www.angelcode.com/products/bmfont/">Bitmap Font Generator</a> or <a href="https://snowb.org/">Bitmap Font Generator Online</a>.
+ * A bitmap font file (.fnt) in text format is supported. You can make it using <a href="http://www.angelcode.com/products/bmfont/">Bitmap Font Generator</a>, <a href="https://snowb.org/">Bitmap Font Generator Online</a> or <a href="https://hahahoho.studio/">BMfont-web</a>.
+ *
  * It is also a common font format used in generic game engines like <a href="https://docs.cocos.com/creator/manual/en/asset/font.html">Cocos</a>, <a href="https://assetstore.unity.com/packages/tools/gui/bitmap-font-importer-62128">Unity</a> and visual novel engines like <a href="https://www.renpy.org/doc/html/text.html?highlight=text#image-based-fonts">Ren'Py</a>.
  *
  * First of all, <a href="https://pillow.readthedocs.io/en/stable/installation.html">install Pillow</a>.
@@ -1712,13 +1702,10 @@
  * @subsection faq_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
  *
  * bn::sprite_text_generator already supports UTF-8 characters rendering,
- * and the bn::sprite_font instances used in the examples provide CJK characters including japanese and chinese,
- * but it is not included and linked by default to save space,
- * so you will have to add them to Makefile to enable them according to your needs.
+ * but the bn::sprite_font instances used in the examples don't provide japanese nor chinese characters,
+ * so you will have to make a new one with them.
  *
- * Refer to <a href="https://github.com/laqieer/gba-dev-best-practice/tree/main/source/common-text">this</a> to learn how to do it.
- *
- * If you want to print other UTF-8 characters, you can import your own font. Read @ref import "this" to learn how to do it.
+ * You can get ready-to-use free fonts <a href="https://github.com/laqieer/gba-free-fonts">here</a>.
  *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *

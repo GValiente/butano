@@ -1678,6 +1678,14 @@
  * @image html import_usenti.png
  *
  *
+ * @subsection faq_backdrop_color How can I set the backdrop color?
+ *
+ * The transparent or the backdrop color (displayed color when nothing else is)
+ * is the first one in the backgrounds palette.
+ *
+ * You can override its default value with bn::bg_palettes::set_transparent_color.
+ *
+ *
  * @subsection faq_share_palettes How to share the same color palette between sprites or backgrounds?
  *
  * If two sprites or backgrounds have the same colors, by default they share the same color palette.
@@ -1828,6 +1836,7 @@
  *   instead of a span of UTF-8 characters.
  * * <b>(Breaking change)</b> `BN_CFG_SPRITE_TEXT_MAX_UTF8_CHARACTERS` removed.
  * * bn::blending_transparency_attributes::set_transparency_and_intensity_alphas added.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_8_10_0 8.10.0

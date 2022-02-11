@@ -1828,7 +1828,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_9_0_0 9.0.0 (next release)
+ * @section changelog_9_0_0 9.0.0
  *
  * * bn::utf8_characters_map and bn::utf8_characters_map_ref added:
  *   they allow to build an UTF-8 characters map in ROM, without size limit.

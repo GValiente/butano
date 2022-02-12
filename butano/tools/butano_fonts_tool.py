@@ -88,6 +88,7 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
         with open(fonts_file_path, 'r') as fonts_file, open(fonts_header_path, 'w', encoding='utf-8') as header_file:
             font_chars = []
             font_widths = [0] * 95
+            unique_chars = unique_characters.copy()
 
             for fonts_line in fonts_file:
                 line_type, *pair_tokens = fonts_line.split()
@@ -131,9 +132,9 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                     if len(unique_characters) == 0:
                         break
                     font_code = int(line_conf['id'])
-                    if not trim_fonts or chr(font_code) in unique_characters:
+                    if not trim_fonts or chr(font_code) in unique_chars:
                         if trim_fonts:
-                            unique_characters.remove(chr(font_code))
+                            unique_chars.remove(chr(font_code))
                         src_left = int(line_conf['x']) + padding_left
                         src_upper = int(line_conf['y']) + padding_up
                         src_right = int(line_conf['x']) + int(line_conf['width']) - padding_right
@@ -159,6 +160,7 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                         if dst_lower > 0:
                             dst_lower -= min(dst_lower, font_y_offset)
                         font_w = max(int(line_conf['xadvance']), int(line_conf['width']) - padding_left -padding_right)
+                        font_w = min(font_w, font_width)
                         if font_code > 126:
                             font_chars.append(chr(font_code))
                             font_widths.append(font_w)

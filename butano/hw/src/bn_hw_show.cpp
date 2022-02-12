@@ -10,6 +10,7 @@
     #include "bn_string.h"
     #include "bn_display.h"
     #include "bn_string_view.h"
+    #include "bn_system_font.h"
     #include "../include/bn_hw_tonc.h"
     #include "../include/bn_hw_display.h"
 #endif
@@ -28,14 +29,14 @@ namespace bn::hw::show
 namespace
 {
     #if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
-        void init_tte()
+        void init_tte(const system_font& system_font)
         {
             bn::hw::display::set_show_mode();
             m3_fill(0);
 
             // Init TTE in mode 3:
             auto margin = 12;
-            tte_init_bmp(3, nullptr, nullptr);
+            tte_init_bmp(3, &system_font.tte_font(), nullptr);
             tte_set_margins(margin, margin, bn::display::width() - margin, bn::display::height() - margin);
             tte_write("\n");
         }
@@ -43,11 +44,11 @@ namespace
 }
 
 #if BN_CFG_ASSERT_ENABLED
-    void error(const string_view& condition, const string_view& file_name, const string_view& function, int line,
-               const string_view& message)
+    void error(const system_font& system_font, const string_view& condition, const string_view& file_name,
+               const string_view& function, int line, const string_view& message)
     {
         string<BN_CFG_ASSERT_BUFFER_SIZE> buffer;
-        init_tte();
+        init_tte(system_font);
 
         // Show file name:
         tte_set_ink(colors::red.data());
@@ -105,10 +106,10 @@ namespace
 #endif
 
 #if BN_CFG_PROFILER_ENABLED
-    void profiler_results()
+    void profiler_results(const system_font& system_font)
     {
         const auto& ticks_per_entry = _bn::profiler::ticks_per_entry();
-        init_tte();
+        init_tte(system_font);
         tte_set_ink(colors::green.data());
 
         if(ticks_per_entry.empty())

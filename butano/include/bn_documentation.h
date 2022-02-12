@@ -201,7 +201,7 @@
  *
  * Butano's text system, based on sprites.
  *
- * Currently, it supports 8x8 and 8x16 fixed width AND variable width fonts of 16 colors (4 bits per pixel).
+ * Currently, it supports 4 bits per pixel (16 colors) fixed width AND variable width characters.
  *
  * Text can be printed in one sprite per character or multiple characters per sprite.
  *
@@ -1830,7 +1830,8 @@
  *
  * @section changelog_9_1_0 9.1.0 (next release)
  *
- * bn::utf8_characters_map_ref::index assert shows UTF8-character data.
+ * * bn::system_font, bn::core::system_font and bn::core::set_system_font added.
+ * * bn::utf8_characters_map_ref::index assert shows UTF8-character data.
  *
  *
  * @section changelog_9_0_0 9.0.0

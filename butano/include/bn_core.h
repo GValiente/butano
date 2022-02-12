@@ -19,6 +19,7 @@
 namespace bn
 {
     class string_view;
+    class system_font;
 }
 
 namespace bn::keypad
@@ -108,6 +109,18 @@ namespace bn::core
      * @brief Indicates if a slow game pak like the SuperCard SD has been detected or not.
      */
     [[nodiscard]] bool slow_game_pak();
+
+    /**
+     * @brief Returns the font used to show assert and profiling messages.
+     */
+    [[nodiscard]] const system_font& system_font();
+
+    /**
+     * @brief Sets the font used to show assert and profiling messages.
+     *
+     * @param font New system font.
+     */
+    void set_system_font(const bn::system_font& font);
 }
 
 #endif

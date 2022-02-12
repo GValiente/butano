@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Display &raquo; Text module | Butano Docs</title>
+  <title>bn_system_font.h file | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,60 +47,35 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__display.html">Display</a> &raquo;</span>
-          Text <span class="m-thin">module</span></h1>
+          bn_system_font.h <span class="m-thin">file</span>
+        </h1>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
+                <li><a href="#namespaces">Namespaces</a></li>
                 <li><a href="#nested-classes">Classes</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p>Butano&#x27;s text system, based on sprites.</p><p>Currently, it supports 4 bits per pixel (16 colors) fixed width AND variable width characters.</p><p>Text can be printed in one sprite per character or multiple characters per sprite.</p><p>Also, UTF-8 characters are supported.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
+<p><a href="classbn_1_1system__font.html" class="m-doc">bn::<wbr />system_font</a> header file.</p>
+        <section id="namespaces">
+          <h2><a href="#namespaces">Namespaces</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="bn__sprite__font_8h.html" class="m-doc">bn_sprite_font.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__sprite__text__generator_8h.html" class="m-doc">bn_sprite_text_generator.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__character_8h.html" class="m-doc">bn_utf8_character.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__characters__map_8h.html" class="m-doc">bn_utf8_characters_map.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__characters__map__ref_8h.html" class="m-doc">bn_utf8_characters_map_ref.h</a></dt>
-            <dd></dd>
+            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
+            <dd>Main Butano namespace.</dd>
           </dl>
         </section>
         <section id="nested-classes">
           <h2><a href="#nested-classes">Classes</a></h2>
           <dl class="m-doc">
             <dt>
-              class <a href="classbn_1_1sprite__font.html" class="m-doc">bn::sprite_font</a>
+              class <a href="classbn_1_1system__font.html" class="m-doc">bn::system_font</a>
             </dt>
-            <dd>Contains the required information to generate text sprites.</dd>
-            <dt>
-              class <a href="classbn_1_1sprite__text__generator.html" class="m-doc">bn::sprite_text_generator</a>
-            </dt>
-            <dd>Generates sprites containing text from a given <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a>.</dd>
-            <dt>
-              class <a href="classbn_1_1utf8__character.html" class="m-doc">bn::utf8_character</a>
-            </dt>
-            <dd>Decodes a single UTF-8 character from a string.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1utf8__character.html" class="m-doc">utf8_<wbr />character</a>&gt;&amp; Utf8Characters&gt;</div>
-              class <a href="classbn_1_1utf8__characters__map.html" class="m-doc">bn::utf8_characters_map</a>
-            </dt>
-            <dd>Maps a list of UTF-8 characters to their position in the list.</dd>
-            <dt>
-              class <a href="classbn_1_1utf8__characters__map__ref.html" class="m-doc">bn::utf8_characters_map_ref</a>
-            </dt>
-            <dd>Maps a list of UTF-8 characters to their position in the list.</dd>
+            <dd>Contains information of the font used to show assert and profiling messages.</dd>
           </dl>
         </section>
       </div>

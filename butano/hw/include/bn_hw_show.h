@@ -15,18 +15,19 @@
     namespace bn
     {
         class string_view;
+        class system_font;
     }
 #endif
 
 namespace bn::hw::show
 {
     #if BN_CFG_ASSERT_ENABLED
-        void error(const string_view& condition, const string_view& file_name, const string_view& function, int line,
-                   const string_view& message);
+        void error(const system_font& system_font, const string_view& condition, const string_view& file_name,
+                   const string_view& function, int line, const string_view& message);
     #endif
 
     #if BN_CFG_PROFILER_ENABLED
-        [[noreturn]] void profiler_results();
+        [[noreturn]] void profiler_results(const system_font& system_font);
     #endif
 }
 

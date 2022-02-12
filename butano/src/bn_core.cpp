@@ -13,6 +13,7 @@
 #include "bn_timers.h"
 #include "bn_profiler.h"
 #include "bn_string_view.h"
+#include "bn_system_font.h"
 #include "bn_bgs_manager.h"
 #include "bn_hdma_manager.h"
 #include "bn_link_manager.h"
@@ -118,6 +119,7 @@ namespace
     public:
         timer cpu_usage_timer;
         ticks last_ticks;
+        bn::system_font system_font;
         int skip_frames = 0;
         int last_update_frames = 1;
         bool slow_game_pak = false;
@@ -485,6 +487,16 @@ bool slow_game_pak()
     return data.slow_game_pak;
 }
 
+const bn::system_font& system_font()
+{
+    return data.system_font;
+}
+
+void set_system_font(const bn::system_font& font)
+{
+    data.system_font = font;
+}
+
 }
 
 #if BN_CFG_ASSERT_ENABLED
@@ -493,7 +505,7 @@ bool slow_game_pak()
         void show(const char* condition, const char* file_name, const char* function, int line, const char* message)
         {
             bn::core::stop(true);
-            bn::hw::show::error(condition, file_name, function, line, message);
+            bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message);
 
             while(true)
             {
@@ -505,7 +517,7 @@ bool slow_game_pak()
                   const bn::istring_base& message)
         {
             bn::core::stop(true);
-            bn::hw::show::error(condition, file_name, function, line, message);
+            bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message);
 
             while(true)
             {
@@ -521,7 +533,7 @@ bool slow_game_pak()
         void show()
         {
             core::stop(false);
-            hw::show::profiler_results();
+            hw::show::profiler_results(core::system_font());
         }
     }
 #endif

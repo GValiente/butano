@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Display &raquo; Text module | Butano Docs</title>
+  <title>bn::system_font class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,61 +47,63 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__display.html">Display</a> &raquo;</span>
-          Text <span class="m-thin">module</span></h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>system_font <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__system__font_8h.html">&lt;bn_system_font.h&gt;</a></div>
+        </h1>
+        <p>Contains information of the font used to show assert and profiling messages.</p>
         <div class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p>Butano&#x27;s text system, based on sprites.</p><p>Currently, it supports 4 bits per pixel (16 colors) fixed width AND variable width characters.</p><p>Text can be printed in one sprite per character or multiple characters per sprite.</p><p>Also, UTF-8 characters are supported.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="bn__sprite__font_8h.html" class="m-doc">bn_sprite_font.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__sprite__text__generator_8h.html" class="m-doc">bn_sprite_text_generator.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__character_8h.html" class="m-doc">bn_utf8_character.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__characters__map_8h.html" class="m-doc">bn_utf8_characters_map.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__characters__map__ref_8h.html" class="m-doc">bn_utf8_characters_map_ref.h</a></dt>
-            <dd></dd>
+            <dt id="ad4222428622017527cbca2e0f9fad6a2">
+              <span class="m-doc-wrap-bumper"><a href="#ad4222428622017527cbca2e0f9fad6a2" class="m-doc-self">system_font</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a5963ed0d97a93af35bc4971636f74b28" class="m-doc">system_font</a>(</span><span class="m-doc-wrap">const TFont&amp; tte_font)</span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1sprite__font.html" class="m-doc">bn::sprite_font</a>
+            <dt id="a7cb30ba56a1912159c76f3d2d96d5dc1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7cb30ba56a1912159c76f3d2d96d5dc1" class="m-doc-self">tte_font</a>(</span><span class="m-doc-wrap">) const -&gt; const TFont&amp;</span>
             </dt>
-            <dd>Contains the required information to generate text sprites.</dd>
-            <dt>
-              class <a href="classbn_1_1sprite__text__generator.html" class="m-doc">bn::sprite_text_generator</a>
-            </dt>
-            <dd>Generates sprites containing text from a given <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a>.</dd>
-            <dt>
-              class <a href="classbn_1_1utf8__character.html" class="m-doc">bn::utf8_character</a>
-            </dt>
-            <dd>Decodes a single UTF-8 character from a string.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1utf8__character.html" class="m-doc">utf8_<wbr />character</a>&gt;&amp; Utf8Characters&gt;</div>
-              class <a href="classbn_1_1utf8__characters__map.html" class="m-doc">bn::utf8_characters_map</a>
-            </dt>
-            <dd>Maps a list of UTF-8 characters to their position in the list.</dd>
-            <dt>
-              class <a href="classbn_1_1utf8__characters__map__ref.html" class="m-doc">bn::utf8_characters_map_ref</a>
-            </dt>
-            <dd>Maps a list of UTF-8 characters to their position in the list.</dd>
+            <dd>Returns an instance of <a href="https://www.coranac.com/man/tonclib/structTFont.htm">TFont</a> struct.</dd>
           </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a5963ed0d97a93af35bc4971636f74b28"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />system_font::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5963ed0d97a93af35bc4971636f74b28" class="m-doc-self">system_font</a>(</span><span class="m-doc-wrap">const TFont&amp; tte_font)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tte_font</td>
+                  <td>Instance of <a href="https://www.coranac.com/man/tonclib/structTFont.htm">TFont</a> struct.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

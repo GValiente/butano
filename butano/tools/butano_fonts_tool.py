@@ -7,6 +7,7 @@ zlib License, see LICENSE file.
 
 import os
 import sys
+import shlex
 import codecs
 import argparse
 
@@ -91,7 +92,7 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
             unique_chars = unique_characters.copy()
 
             for fonts_line in fonts_file:
-                line_type, *pair_tokens = fonts_line.split()
+                line_type, *pair_tokens = shlex.split(fonts_line)
                 line_conf = dict(pair_token.split("=", 1) for pair_token in pair_tokens)
 
                 if line_type == "info":

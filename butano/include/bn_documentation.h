@@ -1828,6 +1828,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_9_1_0 9.1.0 (next release)
+ *
+ * bn::utf8_characters_map_ref::index assert shows UTF8-character data.
+ *
+ *
  * @section changelog_9_0_0 9.0.0
  *
  * * bn::utf8_characters_map and bn::utf8_characters_map_ref added:

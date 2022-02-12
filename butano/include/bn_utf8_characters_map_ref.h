@@ -87,23 +87,23 @@ public:
     [[nodiscard]] constexpr int index(const utf8_character& character) const
     {
         hash<int> hasher;
-        int key = character.data();
-        int index = _item_index(hasher(key));
+        int data = character.data();
+        int index = _item_index(hasher(data));
         int its = 0;
         int items_count = _items_count_minus_one + 1;
 
         while(its < items_count && _items[index].valid)
         {
-            if(key == _items[index].data)
+            if(data == _items[index].data)
             {
-                return _items[index].index;
+                return int(_items[index].index);
             }
 
             index = _item_index(unsigned(index + 1));
             ++its;
         }
 
-        BN_ERROR("UTF-8 character not found");
+        BN_ERROR("UTF-8 character not found: ", data);
         return 0;
     }
 

@@ -158,9 +158,7 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                             dst_upper -= min(dst_upper, dst_lower - font_height)
                         if dst_lower > 0:
                             dst_lower -= min(dst_lower, font_y_offset)
-                        font_w = int(line_conf['xadvance'])
-                        if font_w > font_width:
-                            font_w = font_width
+                        font_w = max(int(line_conf['xadvance']), int(line_conf['width']) - padding_left -padding_right)
                         if font_code > 126:
                             font_chars.append(chr(font_code))
                             font_widths.append(font_w)

@@ -128,8 +128,12 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                     transparent_color = font_pages[0].getpixel((0, 0))
                     fonts_image = Image.new('RGB', (font_width, font_height * (font_number + 94)), transparent_color)
                 elif line_type == "char":
+                    if len(unique_characters) == 0:
+                        break
                     font_code = int(line_conf['id'])
                     if not trim_fonts or chr(font_code) in unique_characters:
+                        if trim_fonts:
+                            unique_characters.remove(chr(font_code))
                         src_left = int(line_conf['x']) + padding_left
                         src_upper = int(line_conf['y']) + padding_up
                         src_right = int(line_conf['x']) + int(line_conf['width']) - padding_right

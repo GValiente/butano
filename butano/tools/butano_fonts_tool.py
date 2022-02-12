@@ -7,10 +7,51 @@ zlib License, see LICENSE file.
 
 import os
 import sys
+import codecs
 import argparse
 
 from file_info import FileInfo
 from PIL import Image
+
+trim_fonts = False
+unique_characters = {' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'}
+
+
+def list_texts_files(texts_paths):
+    global trim_fonts
+    texts_file_names = []
+    texts_file_paths = []
+
+    if texts_paths is not None:
+        texts_path_list = texts_paths.split(' ')
+
+        for texts_path in texts_path_list:
+            if os.path.isfile(texts_path):
+                texts_file_name = os.path.basename(texts_path)
+                if FileInfo.validate(texts_file_name):
+                    texts_file_names.append(texts_file_name)
+                    texts_file_paths.append(texts_path)
+            elif os.path.isdir(texts_path):
+                folder_texts_file_names = sorted(os.listdir(texts_path))
+                for texts_file_name in folder_texts_file_names:
+                    texts_file_path = texts_path + '/' + texts_file_name
+
+                    if os.path.isfile(texts_file_path) and FileInfo.validate(texts_file_name):
+                        texts_file_names.append(texts_file_name)
+                        texts_file_paths.append(texts_file_path)
+
+    trim_fonts = len(texts_file_names) > 0
+
+    return texts_file_names, texts_file_paths
+
+
+def process_texts_files(texts_file_paths):
+    global unique_characters
+    for texts_file_path in texts_file_paths:
+        with open(texts_file_path, 'r', encoding='UTF-8') as texts_file:
+            for line in texts_file:
+                for char in line:
+                    unique_characters.add(char)
 
 
 def list_fonts_files(fonts_folder_paths):
@@ -33,6 +74,7 @@ def list_fonts_files(fonts_folder_paths):
 
 
 def process_fonts_files(fonts_file_paths, build_folder_path):
+    global trim_fonts, unique_characters
     fonts_graphics_path = build_folder_path + '/fonts/'
     if not os.path.exists(fonts_graphics_path):
         os.makedirs(fonts_graphics_path)
@@ -82,48 +124,48 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
                     font_pages[int(line_conf['id'])] = Image.open(page_file_path)
                 elif line_type == "chars":
                     font_number = int(line_conf['count'])
-                    total_number += font_number
                     #fonts_image = Image.new('RGBA', (font_width, font_height * font_number))
                     transparent_color = font_pages[0].getpixel((0, 0))
                     fonts_image = Image.new('RGB', (font_width, font_height * (font_number + 94)), transparent_color)
                 elif line_type == "char":
-                    src_left = int(line_conf['x']) + padding_left
-                    src_upper = int(line_conf['y']) + padding_up
-                    src_right = int(line_conf['x']) + int(line_conf['width']) - padding_right
-                    if src_right < src_left:
-                        src_right = src_left
-                    src_right = min(src_right, src_left + font_width)
-                    src_lower = int(line_conf['y']) + int(line_conf['height']) - padding_down
-                    if src_lower < src_upper:
-                        src_lower = src_upper
-                    src_upper = max(src_upper, src_lower - font_height)
-                    dst_left = round(float(line_conf['xoffset'])) + padding_left
-                    if dst_left < 0:
-                        dst_left = 0
-                    dst_right = dst_left + src_right - src_left
-                    if dst_right > font_width:
-                        dst_left -= min(dst_left, dst_right - font_width)
-                    dst_upper = round(float(line_conf['yoffset'])) + padding_up
-                    if dst_upper < 0:
-                        dst_upper = 0
-                    dst_lower = dst_upper + src_lower - src_upper
-                    if dst_lower > font_height:
-                        dst_upper -= min(dst_upper, dst_lower - font_height)
-                    if dst_lower > 0:
-                        dst_lower -= min(dst_lower, font_y_offset)
                     font_code = int(line_conf['id'])
-                    font_w = int(line_conf['xadvance'])
-                    if font_w > font_width:
-                        font_w = font_width
-                    if font_code > 126:
-                        font_chars.append(chr(font_code))
-                        font_widths.append(font_w)
-                        dst_upper += font_height * (len(font_widths) - 2)
-                    elif font_code > 31:
-                        font_widths[font_code - 32] = font_w
-                        dst_upper += font_height * (font_code - 33)
-                    if font_code > 32:
-                        fonts_image.paste(font_pages[int(line_conf['page'])].crop((src_left, src_upper, src_right, src_lower)), (dst_left, dst_upper))
+                    if not trim_fonts or chr(font_code) in unique_characters:
+                        src_left = int(line_conf['x']) + padding_left
+                        src_upper = int(line_conf['y']) + padding_up
+                        src_right = int(line_conf['x']) + int(line_conf['width']) - padding_right
+                        if src_right < src_left:
+                            src_right = src_left
+                        src_right = min(src_right, src_left + font_width)
+                        src_lower = int(line_conf['y']) + int(line_conf['height']) - padding_down
+                        if src_lower < src_upper:
+                            src_lower = src_upper
+                        src_upper = max(src_upper, src_lower - font_height)
+                        dst_left = round(float(line_conf['xoffset'])) + padding_left
+                        if dst_left < 0:
+                            dst_left = 0
+                        dst_right = dst_left + src_right - src_left
+                        if dst_right > font_width:
+                            dst_left -= min(dst_left, dst_right - font_width)
+                        dst_upper = round(float(line_conf['yoffset'])) + padding_up
+                        if dst_upper < 0:
+                            dst_upper = 0
+                        dst_lower = dst_upper + src_lower - src_upper
+                        if dst_lower > font_height:
+                            dst_upper -= min(dst_upper, dst_lower - font_height)
+                        if dst_lower > 0:
+                            dst_lower -= min(dst_lower, font_y_offset)
+                        font_w = int(line_conf['xadvance'])
+                        if font_w > font_width:
+                            font_w = font_width
+                        if font_code > 126:
+                            font_chars.append(chr(font_code))
+                            font_widths.append(font_w)
+                            dst_upper += font_height * (len(font_widths) - 2)
+                        elif font_code > 31:
+                            font_widths[font_code - 32] = font_w
+                            dst_upper += font_height * (font_code - 33)
+                        if font_code > 32:
+                            fonts_image.paste(font_pages[int(line_conf['page'])].crop((src_left, src_upper, src_right, src_lower)), (dst_left, dst_upper))
 
             header_file.write('#ifndef ' + font_name.upper() + '_H\n')
             header_file.write('#define ' + font_name.upper() + '_H\n')
@@ -153,7 +195,9 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
             header_file.write('\n')
             header_file.write('#endif')
             fonts_image_path_no_ext = fonts_graphics_path + fonts_file_name_no_ext
-            fonts_image_trimmed = Image.new('RGB', (font_width, font_height * (len(font_widths) - 1)), transparent_color)
+            font_number = len(font_widths) - 1
+            total_number += font_number
+            fonts_image_trimmed = Image.new('RGB', (font_width, font_height * total_number), transparent_color)
             fonts_image_trimmed.paste(fonts_image)
             #fonts_image_trimmed.save(fonts_image_path_no_ext + '.png')
             fonts_image_trimmed = fonts_image_trimmed.convert("P", palette=Image.ADAPTIVE, colors=16)
@@ -173,13 +217,18 @@ def process_fonts_files(fonts_file_paths, build_folder_path):
     return total_number
 
 
-def process_fonts(fonts_folder_paths, build_folder_path):
-    fonts_file_names, fonts_file_paths = list_fonts_files(fonts_folder_paths)
-    file_info_path = build_folder_path + '/_bn_fonts_files_info.txt'
-    old_file_info = FileInfo.read(file_info_path)
-    new_file_info = FileInfo.build_from_files(fonts_file_paths)
+def process_fonts(fonts_folder_paths, build_folder_path, texts_paths):
+    texts_file_names, texts_file_paths = list_texts_files(texts_paths)
+    text_file_info_path = build_folder_path + '/_bn_texts_files_info.txt'
+    old_text_file_info = FileInfo.read(text_file_info_path)
+    new_text_file_info = FileInfo.build_from_files(texts_file_paths)
 
-    if old_file_info == new_file_info:
+    fonts_file_names, fonts_file_paths = list_fonts_files(fonts_folder_paths)
+    font_file_info_path = build_folder_path + '/_bn_fonts_files_info.txt'
+    old_font_file_info = FileInfo.read(font_file_info_path)
+    new_font_file_info = FileInfo.build_from_files(fonts_file_paths)
+
+    if old_font_file_info == new_font_file_info and old_text_file_info == new_text_file_info:
         return
 
     for fonts_file_name in fonts_file_names:
@@ -187,19 +236,22 @@ def process_fonts(fonts_folder_paths, build_folder_path):
 
     sys.stdout.flush()
 
+    process_texts_files(texts_file_paths)
     total_number = process_fonts_files(fonts_file_paths, build_folder_path)
     print('    Processed character number: ' + str(total_number))
-    new_file_info.write(file_info_path)
+    new_font_file_info.write(font_file_info_path)
+    new_text_file_info.write(text_file_info_path)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Butano fonts tool.')
     parser.add_argument('--build', required=True, help='build folder path')
     parser.add_argument('--fonts', required=True, help='fonts folder paths')
+    parser.add_argument('--texts', required=False, help='texts folder or files paths')
 
     try:
         args = parser.parse_args()
-        process_fonts(args.fonts, args.build)
+        process_fonts(args.fonts, args.build, args.texts)
     except Exception as ex:
         sys.stderr.write('Error: ' + str(ex) + '\n')
         traceback.print_exc()

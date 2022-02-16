@@ -1831,6 +1831,7 @@
  * @section changelog_9_1_0 9.1.0 (next release)
  *
  * * bn::system_font, bn::core::system_font and bn::core::set_system_font added.
+ * * @ref BN_VERSION_STRING added.
  * * bn::rect_window::restore_boundaries added.
  * * bn::window::set_show_all and bn::window::set_show_nothing fixed.
  * * bn::utf8_characters_map_ref::index assert shows UTF8-character data.

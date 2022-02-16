@@ -49,6 +49,17 @@
 #endif
 
 /**
+ * @def BN_VERSION_STRING
+ *
+ * Specifies the current version of Butano in string format.
+ *
+ * @ingroup other
+ */
+#ifndef BN_VERSION_STRING
+    #define BN_VERSION_STRING "9.0.0"
+#endif
+
+/**
  * @brief Current version of Butano.
  *
  * @ingroup other

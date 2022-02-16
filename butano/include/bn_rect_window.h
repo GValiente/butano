@@ -150,6 +150,11 @@ public:
     void set_boundaries(const fixed_rect& boundaries);
 
     /**
+     * @brief Restores the boundaries of this window to its initial values.
+     */
+    void restore_boundaries();
+
+    /**
      * @brief Returns the camera_ptr attached to this rect window (if any).
      */
     [[nodiscard]] const optional<camera_ptr>& camera() const;

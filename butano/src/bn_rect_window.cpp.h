@@ -123,15 +123,24 @@ void rect_window::set_boundaries(const fixed_point& top_left, const fixed_point&
     BN_ASSERT(top_left.y() <= bottom_right.y(), "Invalid top or bottom: ", top_left.y(), " - ", bottom_right.y());
     BN_ASSERT(top_left.x() <= bottom_right.x(), "Invalid left or right: ", top_left.x(), " - ", bottom_right.x());
 
-    display_manager::set_rect_window_top_left(id(), top_left);
-    display_manager::set_rect_window_bottom_right(id(), bottom_right);
+    int window_id = id();
+    display_manager::set_rect_window_top_left(window_id, top_left);
+    display_manager::set_rect_window_bottom_right(window_id, bottom_right);
 }
 
 void rect_window::set_boundaries(const fixed_rect& boundaries)
 {
+    int window_id = id();
     fixed_point half_dimensions(boundaries.width() / 2, boundaries.height() / 2);
-    display_manager::set_rect_window_top_left(id(), boundaries.position() - half_dimensions);
-    display_manager::set_rect_window_bottom_right(id(), boundaries.position() + half_dimensions);
+    display_manager::set_rect_window_top_left(window_id, boundaries.position() - half_dimensions);
+    display_manager::set_rect_window_bottom_right(window_id, boundaries.position() + half_dimensions);
+}
+
+void rect_window::restore_boundaries()
+{
+    int window_id = id();
+    display_manager::set_rect_window_top_left(window_id, fixed_point());
+    display_manager::set_rect_window_bottom_right(window_id, fixed_point());
 }
 
 const optional<camera_ptr>& rect_window::camera() const

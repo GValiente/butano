@@ -11,6 +11,7 @@
 #include "bn_string.h"
 #include "bn_keypad.h"
 #include "bn_timers.h"
+#include "bn_version.h"
 #include "bn_profiler.h"
 #include "bn_string_view.h"
 #include "bn_system_font.h"
@@ -35,10 +36,6 @@
 #include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_game_pak.h"
 #include "../hw/include/bn_hw_hblank_effects.h"
-
-#if BN_CFG_ASSERT_ENABLED
-    #include "bn_string_view.h"
-#endif
 
 #if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
     #include "../hw/include/bn_hw_show.h"
@@ -120,6 +117,7 @@ namespace
         timer cpu_usage_timer;
         ticks last_ticks;
         bn::system_font system_font;
+        string_view assert_tag = BN_VERSION_STRING;
         int skip_frames = 0;
         int last_update_frames = 1;
         bool slow_game_pak = false;
@@ -497,6 +495,16 @@ void set_system_font(const bn::system_font& font)
     data.system_font = font;
 }
 
+const string_view& assert_tag()
+{
+    return data.assert_tag;
+}
+
+void set_assert_tag(const string_view& assert_tag)
+{
+    data.assert_tag = assert_tag;
+}
+
 }
 
 #if BN_CFG_ASSERT_ENABLED
@@ -505,7 +513,8 @@ void set_system_font(const bn::system_font& font)
         void show(const char* condition, const char* file_name, const char* function, int line, const char* message)
         {
             bn::core::stop(true);
-            bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message);
+            bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message,
+                                bn::core::assert_tag());
 
             while(true)
             {
@@ -517,7 +526,8 @@ void set_system_font(const bn::system_font& font)
                   const bn::istring_base& message)
         {
             bn::core::stop(true);
-            bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message);
+            bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message,
+                                bn::core::assert_tag());
 
             while(true)
             {

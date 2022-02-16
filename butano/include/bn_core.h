@@ -117,10 +117,18 @@ namespace bn::core
 
     /**
      * @brief Sets the font used to show assert and profiling messages.
-     *
-     * @param font New system font.
      */
     void set_system_font(const bn::system_font& font);
+
+    /**
+     * @brief Returns the tag displayed in assert messages.
+     */
+    [[nodiscard]] const string_view& assert_tag();
+
+    /**
+     * @brief Sets the tag displayed in assert messages.
+     */
+    void set_assert_tag(const string_view& assert_tag);
 }
 
 #endif

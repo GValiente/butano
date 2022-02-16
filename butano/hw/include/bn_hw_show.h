@@ -23,7 +23,7 @@ namespace bn::hw::show
 {
     #if BN_CFG_ASSERT_ENABLED
         void error(const system_font& system_font, const string_view& condition, const string_view& file_name,
-                   const string_view& function, int line, const string_view& message);
+                   const string_view& function, int line, const string_view& message, const string_view& tag);
     #endif
 
     #if BN_CFG_PROFILER_ENABLED

@@ -29,15 +29,16 @@ namespace bn::hw::show
 namespace
 {
     #if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
+        constexpr int tte_margin = 12;
+
         void init_tte(const system_font& system_font)
         {
-            bn::hw::display::set_show_mode();
+            hw::display::set_show_mode();
             m3_fill(0);
 
             // Init TTE in mode 3:
-            auto margin = 12;
             tte_init_bmp(3, &system_font.tte_font(), nullptr);
-            tte_set_margins(margin, margin, bn::display::width() - margin, bn::display::height() - margin);
+            tte_set_margins(tte_margin, tte_margin, display::width() - tte_margin, display::height() - tte_margin);
             tte_write("\n");
         }
     #endif
@@ -45,7 +46,7 @@ namespace
 
 #if BN_CFG_ASSERT_ENABLED
     void error(const system_font& system_font, const string_view& condition, const string_view& file_name,
-               const string_view& function, int line, const string_view& message)
+               const string_view& function, int line, const string_view& message, const string_view& tag)
     {
         string<BN_CFG_ASSERT_BUFFER_SIZE> buffer;
         init_tte(system_font);
@@ -102,6 +103,18 @@ namespace
         buffer.append(message.begin(), message.end());
         tte_set_ink(colors::white.data());
         tte_write(buffer.c_str());
+
+        // Show tag:
+        if(! tag.empty())
+        {
+            buffer.clear();
+            buffer.append(tag.data(), tag.size());
+
+            POINT16 tag_size = tte_get_text_size(buffer.c_str());
+            tte_set_pos(display::width() - tte_margin - tag_size.x, display::height() - tte_margin - tag_size.y);
+            tte_set_ink(colors::orange.data());
+            tte_write(buffer.c_str());
+        }
     }
 #endif
 

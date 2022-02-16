@@ -1413,6 +1413,25 @@ void set_show_in_window(id_type id, int window, bool show)
     }
 }
 
+void set_show_all_in_window(int window, bool show)
+{
+    bool update = false;
+
+    for(item_type* item : data.items_vector)
+    {
+        if(item->visible_in_windows[window] != show)
+        {
+            item->visible_in_windows[window] = show;
+            update = true;
+        }
+    }
+
+    if(update)
+    {
+        display_manager::update_windows_visible_bgs();
+    }
+}
+
 void update_windows_flags(unsigned* windows_flags)
 {
     for(int window = 0; window < hw::display::windows_count(); ++window)

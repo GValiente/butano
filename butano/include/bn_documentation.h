@@ -1832,6 +1832,7 @@
  *
  * * bn::system_font, bn::core::system_font and bn::core::set_system_font added.
  * * bn::rect_window::restore_boundaries added.
+ * * bn::window::set_show_all and bn::window::set_show_nothing fixed.
  * * bn::utf8_characters_map_ref::index assert shows UTF8-character data.
  * * <a href="https://github.com/laqieer/gba-free-fonts">gba-free-fonts</a> added to `README.md`.
  *

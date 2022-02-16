@@ -64,7 +64,9 @@ bool window::show_all() const
 
 void window::set_show_all()
 {
-    display_manager::set_show_all_in_window(_id);
+    int id = _id;
+    bgs_manager::set_show_all_in_window(id, true);
+    display_manager::set_show_all_in_window(id);
 }
 
 bool window::show_nothing() const
@@ -74,7 +76,9 @@ bool window::show_nothing() const
 
 void window::set_show_nothing()
 {
-    display_manager::set_show_nothing_in_window(_id);
+    int id = _id;
+    bgs_manager::set_show_all_in_window(id, false);
+    display_manager::set_show_nothing_in_window(id);
 }
 
 }

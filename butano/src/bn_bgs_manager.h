@@ -173,6 +173,8 @@ namespace bgs_manager
 
     void set_show_in_window(id_type id, int window, bool show);
 
+    void set_show_all_in_window(int window, bool show);
+
     void update_windows_flags(unsigned* windows_flags);
 
     [[nodiscard]] const optional<camera_ptr>& camera(id_type id);

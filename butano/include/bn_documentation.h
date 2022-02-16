@@ -1828,7 +1828,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_9_1_0 9.1.0 (next release)
+ * @section changelog_9_1_0 9.1.0
  *
  * * bn::system_font, bn::core::system_font and bn::core::set_system_font added.
  * * bn::core::assert_tag and bn::core::set_assert_tag added.

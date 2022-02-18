@@ -1830,7 +1830,8 @@
  *
  * @section changelog_9_2_0 9.2.0 (next release)
  *
- * bn::sin_and_cos, bn::degrees_sin_and_cos, bn::lut_sin_and_cos and bn::degrees_lut_sin_and_cos added.
+ * * bn::sin_and_cos, bn::degrees_sin_and_cos, bn::lut_sin_and_cos and bn::degrees_lut_sin_and_cos added.
+ * * bn::affine_mat_attributes rotation angle processing optimized.
  *
  *
  * @section changelog_9_1_1 9.1.1

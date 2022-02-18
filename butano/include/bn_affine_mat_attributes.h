@@ -67,7 +67,6 @@ public:
         _hflip(int8_t(1 - (2 * horizontal_flip))),
         _vflip(int8_t(1 - (2 * vertical_flip)))
     {
-        BN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
         BN_ASSERT(horizontal_scale > 0, "Invalid horizontal scale: ", horizontal_scale);
         BN_ASSERT(vertical_scale > 0, "Invalid vertical scale: ", vertical_scale);
 
@@ -94,8 +93,6 @@ public:
      */
     constexpr void set_rotation_angle(fixed rotation_angle)
     {
-        BN_ASSERT(rotation_angle >= 0 && rotation_angle <= 360, "Invalid rotation angle: ", rotation_angle);
-
         _rotation_angle = rotation_angle;
         _update_rotation_angle();
         _update_pa();
@@ -426,8 +423,9 @@ private:
         }
         else
         {
-            _sin = int16_t(degrees_lut_sin(rotation_angle).data());
-            _cos = int16_t(degrees_lut_cos(rotation_angle).data());
+            pair<fixed, fixed> sin_and_cos = degrees_lut_sin_and_cos(rotation_angle);
+            _sin = int16_t(sin_and_cos.first.data());
+            _cos = int16_t(sin_and_cos.second.data());
         }
     }
 

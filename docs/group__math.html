@@ -217,6 +217,22 @@
             </dt>
             <dd>Calculates the cosine value of an angle in degrees using a LUT.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaf6d272fd322b4aace3379499731ebb54" class="m-doc">sin_and_cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the sine and the cosine values of an angle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga81fa03aeaa711ef85fc3c7bbdcc26661" class="m-doc">degrees_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the sine and the cosine values of an angle in degrees.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#gac62cc0af55285a33018b6c3a026e9dfe" class="m-doc">lut_sin_and_cos</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the sine and the cosine values value of an angle using a LUT.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga8f5627e48c96a57f79c7e5c4817db062" class="m-doc">degrees_lut_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Calculates the sine and the cosine values of an angle in degrees using a LUT.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga0c2a616ce1ea66acfb550ef739db8018" class="m-doc">atan2</a>(</span><span class="m-doc-wrap">int y,
               int x) -&gt; fixed_t&lt;16&gt;</span>
             </dt>
@@ -494,6 +510,102 @@
                 <tr>
                   <th>Returns</th>
                   <td>Cosine value in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf6d272fd322b4aace3379499731ebb54"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf6d272fd322b4aace3379499731ebb54" class="m-doc-self">sin_and_cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the sine and the cosine values of an angle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">angle</td>
+                  <td>Angle (2π = 1).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Sine and cosine values in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga81fa03aeaa711ef85fc3c7bbdcc26661"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga81fa03aeaa711ef85fc3c7bbdcc26661" class="m-doc-self">degrees_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the sine and the cosine values of an angle in degrees.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">degrees_angle</td>
+                  <td>Angle in degrees.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Sine and cosine values in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gac62cc0af55285a33018b6c3a026e9dfe"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac62cc0af55285a33018b6c3a026e9dfe" class="m-doc-self">lut_sin_and_cos</a>(</span><span class="m-doc-wrap">int lut_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the sine and the cosine values value of an angle using a LUT.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">lut_angle</td>
+                  <td>Angle in the range [0, 2048].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Sine and cosine values in the range [-1, 1].</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga8f5627e48c96a57f79c7e5c4817db062"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8f5627e48c96a57f79c7e5c4817db062" class="m-doc-self">degrees_lut_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
+            </h3>
+            <p>Calculates the sine and the cosine values of an angle in degrees using a LUT.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">degrees_angle</td>
+                  <td>Angle in degrees in the range [0, 360].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Sine and cosine values in the range [-1, 1].</td>
                 </tr>
               </tfoot>
             </table>

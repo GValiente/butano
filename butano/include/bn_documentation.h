@@ -1828,6 +1828,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_9_2_0 9.2.0 (next release)
+ *
+ * bn::sin_and_cos, bn::degrees_sin_and_cos, bn::lut_sin_and_cos and bn::degrees_lut_sin_and_cos added.
+ *
+ *
  * @section changelog_9_1_1 9.1.1
  *
  * bn::calculate_sin_lut_value sine and cosine symmetry with 135 and 315 degrees fixed.

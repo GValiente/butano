@@ -86,10 +86,10 @@ namespace bn
     result *= x; // 24.32
 
     // Add 0.5 to round up before the final shift
-    result += (1U << 31); // 24.32
+    result += 1U << 31; // 24.32
     result >>= 32; // 24.0
 
-    return int(result >> 4);
+    return int(result / (1 << 4));
 }
 
 /**

@@ -1828,6 +1828,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_9_1_1 9.1.1 (next release)
+ *
+ * bn::calculate_sin_lut_value sine and cosine symmetry with 135 and 315 degrees fixed.
+ *
+ *
  * @section changelog_9_1_0 9.1.0
  *
  * * bn::system_font, bn::core::system_font and bn::core::set_system_font added.

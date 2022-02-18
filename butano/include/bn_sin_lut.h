@@ -49,7 +49,7 @@ namespace bn
  */
 [[nodiscard]] constexpr int calculate_sin_lut_value(int lut_angle)
 {
-    // https://github.com/AntonioND/ugba/blob/master/libugba/source/fp_math.c
+    // https://github.com/AntonioND/libugba/blob/master/source/fp_math.c
 
     constexpr int FP_PI = 0x8000;
     constexpr int FP_PI_2 = FP_PI / 2;
@@ -89,7 +89,7 @@ namespace bn
     result += 1U << 31; // 24.32
     result >>= 32; // 24.0
 
-    return int(result / (1 << 4));
+    return int(result) / (1 << 4);
 }
 
 /**

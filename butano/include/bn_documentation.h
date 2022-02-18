@@ -1828,7 +1828,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_9_1_1 9.1.1 (next release)
+ * @section changelog_9_1_1 9.1.1
  *
  * bn::calculate_sin_lut_value sine and cosine symmetry with 135 and 315 degrees fixed.
  *

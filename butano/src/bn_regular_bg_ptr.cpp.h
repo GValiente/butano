@@ -392,6 +392,13 @@ void regular_bg_ptr::set_attributes(const regular_bg_attributes& attributes)
     bgs_manager::set_regular_attributes(_handle, attributes);
 }
 
+optional<int> regular_bg_ptr::hw_id() const
+{
+    bgs_manager::rebuild_handles();
+
+    return bgs_manager::hw_id(_handle);
+}
+
 void regular_bg_ptr::_destroy()
 {
     bgs_manager::decrease_usages(_handle);

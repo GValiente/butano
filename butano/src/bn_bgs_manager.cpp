@@ -430,81 +430,6 @@ namespace
         }
     }
 
-    void _rebuild_handles()
-    {
-        if(data.rebuild_handles)
-        {
-            int affine_bgs_count = 0;
-            data.rebuild_handles = false;
-            data.commit = true;
-
-            for(item_type* item : data.items_vector)
-            {
-                if(item->affine_map && item->visible)
-                {
-                    ++affine_bgs_count;
-                }
-            }
-
-            BN_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
-
-            int regular_id;
-            int affine_id;
-            display_manager::set_mode(affine_bgs_count);
-            display_manager::disable_all_bgs();
-            display_manager::update_windows_visible_bgs();
-
-            switch(affine_bgs_count)
-            {
-
-            case 0:
-                regular_id = hw::bgs::count() - 1;
-                affine_id = -1;
-                break;
-
-            case 1:
-                regular_id = hw::bgs::count() - 3;
-                affine_id = hw::bgs::count() - 2;
-                break;
-
-            default:
-                regular_id = -1;
-                affine_id = hw::bgs::count() - 1;
-                break;
-            }
-
-            for(item_type* item : data.items_vector)
-            {
-                if(item->visible)
-                {
-                    int id;
-
-                    if(item->affine_map)
-                    {
-                        id = affine_id;
-                        --affine_id;
-                    }
-                    else
-                    {
-                        BN_ASSERT(regular_id >= 0, "Too much regular BGs on screen");
-
-                        id = regular_id;
-                        --regular_id;
-                    }
-
-                    item->handles_index = int8_t(id);
-                    data.handles[id] = item->handle;
-                    display_manager::set_bg_enabled(id, true);
-                    display_manager::set_blending_bg_enabled(id, item->blending_enabled);
-                }
-                else
-                {
-                    item->handles_index = -1;
-                }
-            }
-        }
-    }
-
     void _update_big_maps()
     {
         for(item_type* item : data.items_vector)
@@ -652,14 +577,7 @@ void decrease_usages(id_type id)
     {
         if(! data.rebuild_handles && item->visible)
         {
-            if(item->regular_map && item == data.items_vector.back())
-            {
-                display_manager::set_bg_enabled(item->handles_index, false);
-            }
-            else
-            {
-                data.rebuild_handles = true;
-            }
+            data.rebuild_handles = true;
         }
 
         erase(data.items_vector, item);
@@ -1672,9 +1590,84 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
     }
 }
 
+void rebuild_handles()
+{
+    if(data.rebuild_handles)
+    {
+        int affine_bgs_count = 0;
+        data.rebuild_handles = false;
+        data.commit = true;
+
+        for(item_type* item : data.items_vector)
+        {
+            if(item->affine_map && item->visible)
+            {
+                ++affine_bgs_count;
+            }
+        }
+
+        BN_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
+
+        int regular_id;
+        int affine_id;
+        display_manager::set_mode(affine_bgs_count);
+        display_manager::disable_all_bgs();
+        display_manager::update_windows_visible_bgs();
+
+        switch(affine_bgs_count)
+        {
+
+        case 0:
+            regular_id = hw::bgs::count() - 1;
+            affine_id = -1;
+            break;
+
+        case 1:
+            regular_id = hw::bgs::count() - 3;
+            affine_id = hw::bgs::count() - 2;
+            break;
+
+        default:
+            regular_id = -1;
+            affine_id = hw::bgs::count() - 1;
+            break;
+        }
+
+        for(item_type* item : data.items_vector)
+        {
+            if(item->visible)
+            {
+                int id;
+
+                if(item->affine_map)
+                {
+                    id = affine_id;
+                    --affine_id;
+                }
+                else
+                {
+                    BN_ASSERT(regular_id >= 0, "Too much regular BGs on screen");
+
+                    id = regular_id;
+                    --regular_id;
+                }
+
+                item->handles_index = int8_t(id);
+                data.handles[id] = item->handle;
+                display_manager::set_bg_enabled(id, true);
+                display_manager::set_blending_bg_enabled(id, item->blending_enabled);
+            }
+            else
+            {
+                item->handles_index = -1;
+            }
+        }
+    }
+}
+
 void update()
 {
-    _rebuild_handles();
+    rebuild_handles();
     _update_big_maps();
 }
 

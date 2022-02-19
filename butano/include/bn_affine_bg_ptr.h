@@ -600,6 +600,20 @@ public:
     void set_attributes(const affine_bg_attributes& attributes);
 
     /**
+     * @brief Returns the hardware ID assigned to this background or bn::nullopt if no hardware ID has been assigned.
+     *
+     * Normally you should not need to call this function, but it can be useful for messing with HDMA for example.
+     *
+     * A background doesn't have an assigned hardware ID if it is not visible.
+     *
+     * Assigned hardware ID can change after calling this method
+     * if some properties of this background or others are updated.
+     *
+     * Call this method at your own risk.
+     */
+    [[nodiscard]] optional<int> hw_id() const;
+
+    /**
      * @brief Returns the internal handle.
      */
     [[nodiscard]] const void* handle() const

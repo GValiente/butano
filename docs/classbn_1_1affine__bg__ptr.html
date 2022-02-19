@@ -434,6 +434,10 @@
               <span class="m-doc-wrap-bumper">void <a href="#af20ba696aa3ff02125563455d24a322e" class="m-doc-self">set_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />attributes</a>&amp; attributes)</span>
             </dt>
             <dd>Sets the attributes to commit to the GBA for this affine background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2cd53d4a7fd0d3bbe886356551538fdf" class="m-doc">hw_id</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;int&gt;</span>
+            </dt>
+            <dd>Returns the hardware ID assigned to this background or <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> if no hardware ID has been assigned.</dd>
             <dt id="aec2632b113a67911ed20f577fe64ed2b">
               <span class="m-doc-wrap-bumper">auto <a href="#aec2632b113a67911ed20f577fe64ed2b" class="m-doc-self">handle</a>(</span><span class="m-doc-wrap">) const -&gt; const void*</span>
             </dt>
@@ -1199,6 +1203,13 @@
                 </tr>
               </tbody>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="a2cd53d4a7fd0d3bbe886356551538fdf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;int&gt; bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2cd53d4a7fd0d3bbe886356551538fdf" class="m-doc-self">hw_id</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the hardware ID assigned to this background or <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> if no hardware ID has been assigned.</p>
+<p>Normally you should not need to call this function, but it can be useful for messing with HDMA for example.</p><p>A background doesn&#x27;t have an assigned hardware ID if it is not visible.</p><p>Assigned hardware ID can change after calling this method if some properties of this background or others are updated.</p><p>Call this method at your own risk.</p>
           </div></section>
           <section class="m-doc-details" id="a711126f7613bc75e9f22ce93ca3c0f79"><div>
             <h3>

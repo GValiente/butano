@@ -525,6 +525,13 @@ void affine_bg_ptr::set_attributes(const affine_bg_attributes& attributes)
     bgs_manager::set_affine_attributes(_handle, attributes);
 }
 
+optional<int> affine_bg_ptr::hw_id() const
+{
+    bgs_manager::rebuild_handles();
+
+    return bgs_manager::hw_id(_handle);
+}
+
 void affine_bg_ptr::_destroy()
 {
     bgs_manager::decrease_usages(_handle);

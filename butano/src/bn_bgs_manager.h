@@ -205,6 +205,8 @@ namespace bgs_manager
     void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes* attributes_ptr,
                                               uint16_t* dest_ptr);
 
+    void rebuild_handles();
+
     void update();
 
     void commit();

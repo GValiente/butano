@@ -86,6 +86,14 @@ public:
     }
 
     /**
+     * @brief Returns a pointer to the referenced map cells.
+     */
+    [[nodiscard]] constexpr const affine_bg_map_cell* cells_ptr() const
+    {
+        return _cells_ptr;
+    }
+
+    /**
      * @brief Returns the referenced map cells.
      */
     [[nodiscard]] constexpr const affine_bg_map_cell& cells_ref() const

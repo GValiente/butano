@@ -1834,6 +1834,7 @@
  * * bn::sin_and_cos, bn::degrees_sin_and_cos, bn::lut_sin_and_cos and bn::degrees_lut_sin_and_cos added.
  * * bn::regular_bg_map_item::cells_ptr and bn::affine_bg_map_item::cells_ptr added.
  * * bn::affine_mat_attributes rotation angle processing optimized.
+ * * bn::unordered_map and bn::unordered_set lack of pointer stability documented.
  *
  *
  * @section changelog_9_1_1 9.1.1

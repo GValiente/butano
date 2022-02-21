@@ -328,6 +328,9 @@ public:
 
     /**
      * @brief Move assignment operator.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param other iunordered_set to move.
      * @return Reference to this.
      */
@@ -663,6 +666,9 @@ public:
 
     /**
      * @brief Erases an element.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param position Iterator to the element to erase.
      * @return Iterator following the erased element.
      */
@@ -746,6 +752,9 @@ public:
 
     /**
      * @brief Erases an element.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param key Key to erase.
      * @return `true` if the elements was erased, otherwise `false`.
      */
@@ -756,6 +765,9 @@ public:
 
     /**
      * @brief Erases an element.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param key_hash Hash of the key to erase.
      * @param key Key to erase.
      * @return `true` if the elements was erased, otherwise `false`.
@@ -775,6 +787,9 @@ public:
 
     /**
      * @brief Erases all elements that satisfy the specified predicate.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param set iunordered_set from which to erase.
      * @param pred Unary predicate which returns ​true if the element should be erased.
      * @return Number of erased elements.
@@ -814,6 +829,8 @@ public:
 
     /**
      * @brief Moves all elements of the given iunordered_set into this one, leaving the first one empty.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
      */
     void merge(iunordered_set&& other)
     {
@@ -899,6 +916,9 @@ public:
 
     /**
      * @brief Exchanges the contents of this iunordered_set with those of the other one.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param other iunordered_set to exchange the contents with.
      */
     void swap(iunordered_set& other)
@@ -951,6 +971,9 @@ public:
 
     /**
      * @brief Exchanges the contents of a iunordered_set with those of another one.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param a First iunordered_set to exchange the contents with.
      * @param b Second iunordered_set to exchange the contents with.
      */
@@ -1168,6 +1191,9 @@ public:
 
     /**
      * @brief Move constructor.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param other unordered_set to move.
      */
     unordered_set(unordered_set&& other) noexcept :
@@ -1190,6 +1216,9 @@ public:
 
     /**
      * @brief Move constructor.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param other iunordered_set to move.
      */
     unordered_set(iunordered_set<Key, KeyHash, KeyEqual>&& other) noexcept :
@@ -1218,6 +1247,9 @@ public:
 
     /**
      * @brief Move assignment operator.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param other unordered_set to move.
      * @return Reference to this.
      */
@@ -1252,6 +1284,9 @@ public:
 
     /**
      * @brief Move assignment operator.
+     *
+     * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+     *
      * @param other iunordered_set to move.
      * @return Reference to this.
      */

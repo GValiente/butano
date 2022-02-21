@@ -22,6 +22,8 @@ namespace bn
      *
      * Can be used as a reference type for all bn::unordered_map containers containing a specific type.
      *
+     * Unlike `std::unordered_map`, it doesn't offer pointer stability when moving or erasing elements.
+     *
      * @tparam Key Key type.
      * @tparam Value Value type.
      * @tparam KeyHash Functor used to calculate the hash of a given key.
@@ -36,6 +38,8 @@ namespace bn
      * @brief `std::unordered_map` like container with a fixed size buffer.
      *
      * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
+     *
+     * Unlike `std::unordered_map`, it doesn't offer pointer stability when moving or erasing elements.
      *
      * @tparam Key Key type.
      * @tparam Value Value type.

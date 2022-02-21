@@ -89,7 +89,7 @@
             </li>
           </ul>
         </nav>
-<p>Can be used as a reference type for all <a href="classbn_1_1unordered__map.html" class="m-doc">bn::<wbr />unordered_map</a> containers containing a specific type.</p>
+<p>Can be used as a reference type for all <a href="classbn_1_1unordered__map.html" class="m-doc">bn::<wbr />unordered_map</a> containers containing a specific type.</p><p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability when moving or erasing elements.</p>
         <section id="derived-classes">
           <h2><a href="#derived-classes">Derived classes</a></h2>
           <dl class="m-doc">
@@ -408,8 +408,8 @@
               const <a href="classbn_1_1iunordered__map.html#a4f7f6064ef1e026089464857a3165e85" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; bool</span>
             </dt>
             <dd>Erases an element.</dd>
-            <dt id="ad744964f2afe8400b241c08bd25cb7a5">
-              <span class="m-doc-wrap-bumper">void <a href="#ad744964f2afe8400b241c08bd25cb7a5" class="m-doc-self">merge</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad744964f2afe8400b241c08bd25cb7a5" class="m-doc">merge</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Moves all elements of the given <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> into this one, leaving the first one empty.</dd>
             <dt id="ae3f1a11955171f209ce905f2f922264e">
@@ -538,6 +538,7 @@
                 </tr>
               </tfoot>
             </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
           <section class="m-doc-details" id="af3eeb7a4c4320b199836240f95a565fd"><div>
             <h3>
@@ -1471,6 +1472,7 @@
                 </tr>
               </tfoot>
             </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
           <section class="m-doc-details" id="a98bdbcee00ec0cb58adc806db1fe9954"><div>
             <h3>
@@ -1497,6 +1499,7 @@
                 </tr>
               </tfoot>
             </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
           <section class="m-doc-details" id="abee9aa619773c6ac62cf731ccf382f95"><div>
             <h3>
@@ -1528,6 +1531,17 @@
                 </tr>
               </tfoot>
             </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad744964f2afe8400b241c08bd25cb7a5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, typename KeyHash, typename KeyEqual&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />iunordered_map&lt;Key, Value, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad744964f2afe8400b241c08bd25cb7a5" class="m-doc-self">merge</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Moves all elements of the given <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> into this one, leaving the first one empty.</p>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
           <section class="m-doc-details" id="a12465d0a538da33632e85767498f2929"><div>
             <h3>
@@ -1631,6 +1645,7 @@
                 </tr>
               </tbody>
             </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
           <section class="m-doc-details" id="a99ca624a6df3998c0ce9e25911b7c07c"><div>
             <h3>
@@ -1694,6 +1709,7 @@
                 </tr>
               </tfoot>
             </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
           <section class="m-doc-details" id="a17788611859d606bf1481103272f16cc"><div>
             <h3>
@@ -1719,6 +1735,7 @@
                 </tr>
               </tbody>
             </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
           <section class="m-doc-details" id="adc55ec8c719165791a03b3be2cebf18e"><div>
             <h3>

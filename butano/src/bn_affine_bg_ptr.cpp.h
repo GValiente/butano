@@ -30,6 +30,20 @@ affine_bg_ptr affine_bg_ptr::create(const fixed_point& position, const affine_bg
     return affine_bg_ptr(bgs_manager::create(move(builder)));
 }
 
+affine_bg_ptr affine_bg_ptr::create(fixed x, fixed y, affine_bg_map_ptr map)
+{
+    affine_bg_builder builder(move(map));
+    builder.set_position(fixed_point(x, y));
+    return affine_bg_ptr(bgs_manager::create(move(builder)));
+}
+
+affine_bg_ptr affine_bg_ptr::create(const fixed_point& position, affine_bg_map_ptr map)
+{
+    affine_bg_builder builder(move(map));
+    builder.set_position(position);
+    return affine_bg_ptr(bgs_manager::create(move(builder)));
+}
+
 affine_bg_ptr affine_bg_ptr::create(const affine_bg_builder& builder)
 {
     return affine_bg_ptr(bgs_manager::create(affine_bg_builder(builder)));
@@ -58,6 +72,34 @@ optional<affine_bg_ptr> affine_bg_ptr::create_optional(const fixed_point& positi
 {
     optional<affine_bg_ptr> result;
     affine_bg_builder builder(item);
+    builder.set_position(position);
+
+    if(handle_type handle = bgs_manager::create_optional(move(builder)))
+    {
+        result = affine_bg_ptr(handle);
+    }
+
+    return result;
+}
+
+optional<affine_bg_ptr> affine_bg_ptr::create_optional(fixed x, fixed y, affine_bg_map_ptr map)
+{
+    optional<affine_bg_ptr> result;
+    affine_bg_builder builder(move(map));
+    builder.set_position(fixed_point(x, y));
+
+    if(handle_type handle = bgs_manager::create_optional(move(builder)))
+    {
+        result = affine_bg_ptr(handle);
+    }
+
+    return result;
+}
+
+optional<affine_bg_ptr> affine_bg_ptr::create_optional(const fixed_point& position, affine_bg_map_ptr map)
+{
+    optional<affine_bg_ptr> result;
+    affine_bg_builder builder(move(map));
     builder.set_position(position);
 
     if(handle_type handle = bgs_manager::create_optional(move(builder)))

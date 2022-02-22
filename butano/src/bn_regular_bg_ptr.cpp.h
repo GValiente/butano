@@ -30,6 +30,20 @@ regular_bg_ptr regular_bg_ptr::create(const fixed_point& position, const regular
     return regular_bg_ptr(bgs_manager::create(move(builder)));
 }
 
+regular_bg_ptr regular_bg_ptr::create(fixed x, fixed y, regular_bg_map_ptr map)
+{
+    regular_bg_builder builder(move(map));
+    builder.set_position(fixed_point(x, y));
+    return regular_bg_ptr(bgs_manager::create(move(builder)));
+}
+
+regular_bg_ptr regular_bg_ptr::create(const fixed_point& position, regular_bg_map_ptr map)
+{
+    regular_bg_builder builder(move(map));
+    builder.set_position(position);
+    return regular_bg_ptr(bgs_manager::create(move(builder)));
+}
+
 regular_bg_ptr regular_bg_ptr::create(const regular_bg_builder& builder)
 {
     return regular_bg_ptr(bgs_manager::create(regular_bg_builder(builder)));
@@ -58,6 +72,34 @@ optional<regular_bg_ptr> regular_bg_ptr::create_optional(const fixed_point& posi
 {
     optional<regular_bg_ptr> result;
     regular_bg_builder builder(item);
+    builder.set_position(position);
+
+    if(handle_type handle = bgs_manager::create_optional(move(builder)))
+    {
+        result = regular_bg_ptr(handle);
+    }
+
+    return result;
+}
+
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(fixed x, fixed y, regular_bg_map_ptr map)
+{
+    optional<regular_bg_ptr> result;
+    regular_bg_builder builder(move(map));
+    builder.set_position(fixed_point(x, y));
+
+    if(handle_type handle = bgs_manager::create_optional(move(builder)))
+    {
+        result = regular_bg_ptr(handle);
+    }
+
+    return result;
+}
+
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(const fixed_point& position, regular_bg_map_ptr map)
+{
+    optional<regular_bg_ptr> result;
+    regular_bg_builder builder(move(map));
     builder.set_position(position);
 
     if(handle_type handle = bgs_manager::create_optional(move(builder)))

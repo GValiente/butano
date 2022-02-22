@@ -66,6 +66,23 @@ public:
     [[nodiscard]] static regular_bg_ptr create(const fixed_point& position, const regular_bg_item& item);
 
     /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_map_ptr.
+     * @param x Horizontal position of the regular background.
+     * @param y Vertical position of the regular background.
+     * @param map regular_bg_map_ptr used by the regular background.
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] static regular_bg_ptr create(fixed x, fixed y, regular_bg_map_ptr map);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_map_ptr.
+     * @param position Position of the regular background.
+     * @param map regular_bg_map_ptr used by the regular background.
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] static regular_bg_ptr create(const fixed_point& position, regular_bg_map_ptr map);
+
+    /**
      * @brief Creates a regular_bg_ptr from a regular_bg_builder reference.
      * @param builder regular_bg_builder reference.
      * @return The requested regular_bg_ptr.
@@ -96,6 +113,24 @@ public:
      */
     [[nodiscard]] static optional<regular_bg_ptr> create_optional(const fixed_point& position,
                                                                   const regular_bg_item& item);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_map_ptr.
+     * @param x Horizontal position of the regular background.
+     * @param y Vertical position of the regular background.
+     * @param map regular_bg_map_ptr used by the regular background.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(fixed x, fixed y, regular_bg_map_ptr map);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_map_ptr.
+     * @param position Position of the regular background.
+     * @param map regular_bg_map_ptr used by the regular background.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(const fixed_point& position,
+                                                                  regular_bg_map_ptr map);
 
     /**
      * @brief Creates a regular_bg_ptr from a regular_bg_builder reference.

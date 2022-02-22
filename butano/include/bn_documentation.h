@@ -1832,6 +1832,7 @@
  *
  * * bn::regular_bg_ptr::hw_id and bn::affine_bg_ptr::hw_id added.
  * * bn::sin_and_cos, bn::degrees_sin_and_cos, bn::lut_sin_and_cos and bn::degrees_lut_sin_and_cos added.
+ * * More bn::regular_bg_ptr and bn::affine_bg_ptr static contructors added.
  * * bn::regular_bg_map_item::cells_ptr and bn::affine_bg_map_item::cells_ptr added.
  * * bn::affine_mat_attributes rotation angle processing optimized.
  * * bn::unordered_map and bn::unordered_set lack of pointer stability documented.

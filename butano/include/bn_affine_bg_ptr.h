@@ -68,6 +68,23 @@ public:
     [[nodiscard]] static affine_bg_ptr create(const fixed_point& position, const affine_bg_item& item);
 
     /**
+     * @brief Creates an affine_bg_ptr from the given affine_bg_map_ptr.
+     * @param x Horizontal position of the affine background.
+     * @param y Vertical position of the affine background.
+     * @param map affine_bg_map_ptr used by the affine background.
+     * @return The requested affine_bg_ptr.
+     */
+    [[nodiscard]] static affine_bg_ptr create(fixed x, fixed y, affine_bg_map_ptr map);
+
+    /**
+     * @brief Creates an affine_bg_ptr from the given affine_bg_map_ptr.
+     * @param position Position of the affine background.
+     * @param map affine_bg_map_ptr used by the affine background.
+     * @return The requested affine_bg_ptr.
+     */
+    [[nodiscard]] static affine_bg_ptr create(const fixed_point& position, affine_bg_map_ptr map);
+
+    /**
      * @brief Creates an affine_bg_ptr from an affine_bg_builder reference.
      * @param builder affine_bg_builder reference.
      * @return The requested affine_bg_ptr.
@@ -98,6 +115,24 @@ public:
      */
     [[nodiscard]] static optional<affine_bg_ptr> create_optional(
             const fixed_point& position, const affine_bg_item& item);
+
+    /**
+     * @brief Creates an affine_bg_ptr from the given affine_bg_map_ptr.
+     * @param x Horizontal position of the affine background.
+     * @param y Vertical position of the affine background.
+     * @param map affine_bg_map_ptr used by the affine background.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<affine_bg_ptr> create_optional(fixed x, fixed y, affine_bg_map_ptr map);
+
+    /**
+     * @brief Creates an affine_bg_ptr from the given affine_bg_map_ptr.
+     * @param position Position of the affine background.
+     * @param map affine_bg_map_ptr used by the affine background.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<affine_bg_ptr> create_optional(
+            const fixed_point& position, affine_bg_map_ptr map);
 
     /**
      * @brief Creates an affine_bg_ptr from an affine_bg_builder reference.

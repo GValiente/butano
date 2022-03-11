@@ -1828,7 +1828,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_9_2_0 9.2.0 (next release)
+ * @section changelog_9_2_0 9.2.0
  *
  * * bn::regular_bg_ptr::hw_id and bn::affine_bg_ptr::hw_id added.
  * * bn::sin_and_cos, bn::degrees_sin_and_cos, bn::lut_sin_and_cos and bn::degrees_lut_sin_and_cos added.

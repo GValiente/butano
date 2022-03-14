@@ -13,7 +13,7 @@
  * @ingroup math
  */
 
-#include "bn_bit.h"
+#include "bn_common.h"
 
 namespace bn
 {
@@ -26,7 +26,7 @@ namespace bn
 template<typename Type>
 [[nodiscard]] constexpr bool power_of_two(Type value)
 {
-    return value > 0 && has_single_bit(unsigned(value));
+    return value > 0 && (value & (value - 1)) == 0;
 }
 
 }

@@ -1828,6 +1828,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_9_3_0 9.3.0 (next release)
+ *
+ * bn::power_of_two optimized.
+ *
+ *
  * @section changelog_9_2_0 9.2.0
  *
  * * bn::regular_bg_ptr::hw_id and bn::affine_bg_ptr::hw_id added.

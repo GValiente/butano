@@ -18,6 +18,8 @@
 
 namespace bn
 {
+    using std::has_single_bit;
+
     using std::popcount;
 }
 

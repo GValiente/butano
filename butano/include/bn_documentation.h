@@ -1830,7 +1830,8 @@
  *
  * @section changelog_9_3_0 9.3.0 (next release)
  *
- * bn::power_of_two optimized.
+ * * bn::sram::clear and bn::sram::set_bytes added.
+ * * bn::power_of_two optimized.
  *
  *
  * @section changelog_9_2_0 9.2.0

@@ -179,7 +179,7 @@ namespace bn::memory
     }
 
     /**
-     * @brief Clears (set to zero) the memory of the given amount of elements
+     * @brief Clears (fills with zero) the memory of the given amount of elements
      * from the object referenced by destination_ref.
      * @param elements Number of elements to clear (not bytes).
      * @param destination_ref Reference to the memory location to clear.
@@ -212,7 +212,7 @@ namespace bn::memory
      * If the given size is greater than the size of the object pointed to by destination_ptr or it is not trivial,
      * the behavior is undefined.
      *
-     * @param value Value to copy.
+     * @param value Value to fill with.
      * @param bytes Number of bytes to fill.
      * @param destination_ptr Pointer to the object to fill.
      */
@@ -224,7 +224,7 @@ namespace bn::memory
      * If the given size is greater than the size of the object pointed to by destination_ptr or it is not trivial,
      * the behavior is undefined.
      *
-     * @param value Value to copy.
+     * @param value Value to fill with.
      * @param half_words Number of half words to fill.
      * @param destination_ptr Pointer to the object to fill.
      */
@@ -236,7 +236,7 @@ namespace bn::memory
      * If the given size is greater than the size of the object pointed to by destination_ptr or it is not trivial,
      * the behavior is undefined.
      *
-     * @param value Value to copy.
+     * @param value Value to fill with.
      * @param words Number of words to fill.
      * @param destination_ptr Pointer to the object to fill.
      */

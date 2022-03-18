@@ -14,6 +14,8 @@ namespace bn::hw::sram
 
     void _copy(const uint8_t* source, int size, uint8_t* destination);
 
+    void _fill(uint8_t value, int size, uint8_t* destination);
+
     inline void write(const void* source, int size, int offset)
     {
         auto source_ptr = reinterpret_cast<const uint8_t*>(source);
@@ -26,6 +28,12 @@ namespace bn::hw::sram
         auto source_ptr = reinterpret_cast<const uint8_t*>(MEM_SRAM) + offset;
         auto destination_ptr = reinterpret_cast<uint8_t*>(destination);
         _copy(source_ptr, size, destination_ptr);
+    }
+
+    inline void set_bytes(uint8_t value, int size, int offset)
+    {
+        auto destination_ptr = reinterpret_cast<uint8_t*>(MEM_SRAM) + offset;
+        _fill(value, size, destination_ptr);
     }
 }
 

@@ -1831,6 +1831,7 @@
  * @section changelog_9_3_0 9.3.0 (next release)
  *
  * * bn::sram::clear and bn::sram::set_bytes added.
+ * * SRAM code moved back from ROM to EWRAM again, since it doesn't seem to crash No$gba anymore.
  * * bn::power_of_two optimized.
  *
  *

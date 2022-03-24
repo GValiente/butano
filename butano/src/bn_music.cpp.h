@@ -6,7 +6,7 @@
 #include "bn_music.h"
 
 #include "bn_fixed.h"
-#include "bn_assert.h"
+#include "bn_optional.h"
 #include "bn_music_item.h"
 #include "bn_audio_manager.h"
 
@@ -15,7 +15,12 @@ namespace bn::music
 
 bool playing()
 {
-    return audio_manager::music_playing();
+    return audio_manager::playing_music_item().has_value();
+}
+
+optional<music_item> playing_item()
+{
+    return audio_manager::playing_music_item();
 }
 
 void play(music_item item)

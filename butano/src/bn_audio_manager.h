@@ -7,6 +7,7 @@
 #define BN_AUDIO_MANAGER_H
 
 #include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
 
 namespace bn
 {
@@ -24,7 +25,7 @@ namespace bn::audio_manager
 
     void disable();
 
-    [[nodiscard]] bool music_playing();
+    [[nodiscard]] optional<music_item> playing_music_item();
 
     void play_music(music_item item, fixed volume, bool loop);
 

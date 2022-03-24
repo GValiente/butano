@@ -14,6 +14,7 @@
  */
 
 #include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
 
 namespace bn
 {
@@ -31,6 +32,11 @@ namespace bn::music
      * @brief Indicates if currently there's any music playing or not.
      */
     [[nodiscard]] bool playing();
+
+    /**
+     * @brief Returns the active music_item if there's any music playing; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<music_item> playing_item();
 
     /**
      * @brief Plays the music specified by the given music_item with default settings.

@@ -1828,7 +1828,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_9_3_0 9.3.0 (next release)
+ * @section changelog_9_3_0 9.3.0
  *
  * * bn::sram::clear and bn::sram::set_bytes added.
  * * bn::music::playing_item added.

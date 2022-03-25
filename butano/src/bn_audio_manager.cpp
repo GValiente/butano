@@ -161,9 +161,10 @@ namespace
 
     public:
         vector<command, BN_CFG_AUDIO_MAX_COMMANDS> commands;
-        optional<music_item> playing_music_item;
         fixed music_volume;
+        int music_item_id = 0;
         int music_position = 0;
+        bool music_playing = false;
         bool music_paused = false;
     };
 
@@ -206,9 +207,21 @@ void disable()
     hw::audio::disable();
 }
 
+bool music_playing()
+{
+    return data.music_playing;
+}
+
 optional<music_item> playing_music_item()
 {
-    return data.playing_music_item;
+    optional<music_item> result;
+
+    if(data.music_playing)
+    {
+        result = music_item(data.music_item_id);
+    }
+
+    return result;
 }
 
 void play_music(music_item item, fixed volume, bool loop)
@@ -216,18 +229,19 @@ void play_music(music_item item, fixed volume, bool loop)
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_play(item, loop, _hw_music_volume(volume)));
-    data.playing_music_item = item;
+    data.music_item_id = item.id();
     data.music_volume = volume;
+    data.music_playing = true;
     data.music_paused = false;
 }
 
 void stop_music()
 {
-    BN_ASSERT(data.playing_music_item, "There's no music playing");
+    BN_ASSERT(data.music_playing, "There's no music playing");
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_stop());
-    data.playing_music_item.reset();
+    data.music_playing = false;
     data.music_paused = false;
 }
 
@@ -238,7 +252,7 @@ bool music_paused()
 
 void pause_music()
 {
-    BN_ASSERT(data.playing_music_item, "There's no music playing");
+    BN_ASSERT(data.music_playing, "There's no music playing");
     BN_ASSERT(! data.music_paused, "Music is already paused");
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
@@ -257,14 +271,14 @@ void resume_music()
 
 int music_position()
 {
-    BN_ASSERT(data.playing_music_item, "There's no music playing");
+    BN_ASSERT(data.music_playing, "There's no music playing");
 
     return data.music_position;
 }
 
 void set_music_position(int position)
 {
-    BN_ASSERT(data.playing_music_item, "There's no music playing");
+    BN_ASSERT(data.music_playing, "There's no music playing");
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_set_position(position));
@@ -273,14 +287,14 @@ void set_music_position(int position)
 
 fixed music_volume()
 {
-    BN_ASSERT(data.playing_music_item, "There's no music playing");
+    BN_ASSERT(data.music_playing, "There's no music playing");
 
     return data.music_volume;
 }
 
 void set_music_volume(fixed volume)
 {
-    BN_ASSERT(data.playing_music_item, "There's no music playing");
+    BN_ASSERT(data.music_playing, "There's no music playing");
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::music_set_volume(_hw_music_volume(volume)));
@@ -335,7 +349,7 @@ void update()
 
     data.commands.clear();
 
-    if(data.playing_music_item && hw::audio::music_playing())
+    if(data.music_playing && hw::audio::music_playing())
     {
         data.music_position = hw::audio::music_position();
     }
@@ -350,7 +364,7 @@ void stop()
 {
     data.commands.clear();
 
-    if(data.playing_music_item)
+    if(data.music_playing)
     {
         stop_music();
     }

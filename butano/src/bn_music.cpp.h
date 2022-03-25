@@ -15,7 +15,7 @@ namespace bn::music
 
 bool playing()
 {
-    return audio_manager::playing_music_item().has_value();
+    return audio_manager::music_playing();
 }
 
 optional<music_item> playing_item()

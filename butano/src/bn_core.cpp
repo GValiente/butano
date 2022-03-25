@@ -282,10 +282,6 @@ namespace
         gpio_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_DETAILED_START("eng_keypad");
-        keypad_manager::update();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
         BN_PROFILER_ENGINE_GENERAL_STOP();
 
         return result;
@@ -382,6 +378,10 @@ void update()
 
         data.last_ticks = total_ticks;
     }
+
+    BN_PROFILER_ENGINE_DETAILED_START("eng_keypad");
+    keypad_manager::update();
+    BN_PROFILER_ENGINE_DETAILED_STOP();
 }
 
 void sleep(keypad::key_type wake_up_key)

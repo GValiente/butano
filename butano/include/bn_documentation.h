@@ -1834,6 +1834,7 @@
  * * bn::music::playing_item added.
  * * SRAM code moved back from ROM to EWRAM again, since it doesn't seem to crash No$gba anymore.
  * * bn::power_of_two optimized.
+ * * Keypad with frame skipping fixed.
  *
  *
  * @section changelog_9_2_0 9.2.0

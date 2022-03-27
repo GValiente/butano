@@ -1828,6 +1828,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_9_4_0 9.4.0 (next release)
+ *
+ * <a href="https://cinemint.itch.io/tremblay-island">Tremblay Island</a> added to `README.md`.
+ *
+ *
  * @section changelog_9_3_0 9.3.0
  *
  * * bn::sram::clear and bn::sram::set_bytes added.

@@ -696,6 +696,10 @@
  *
  * @image html python_ubuntu.png
  *
+ * If you have an Ubuntu/Debian based system with `python3` instead of `python`, you can:
+ * * Specify `python3` as the Python interpreter path in the `Makefile` of the project you are trying to build.
+ * * Install `python-is-python3`: `sudo apt-get install python-is-python3`.
+ *
  *
  * @section getting_started_butano Butano
  *
@@ -1830,7 +1834,8 @@
  *
  * @section changelog_9_4_0 9.4.0 (next release)
  *
- * <a href="https://cinemint.itch.io/tremblay-island">Tremblay Island</a> added to `README.md`.
+ * * @ref getting_started Python setup improved.
+ * * <a href="https://cinemint.itch.io/tremblay-island">Tremblay Island</a> added to `README.md`.
  *
  *
  * @section changelog_9_3_0 9.3.0

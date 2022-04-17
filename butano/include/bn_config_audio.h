@@ -18,7 +18,7 @@
 /**
  * @def BN_CFG_AUDIO_MIXING_RATE
  *
- * Specifies software audio mixing rate in KHz.
+ * Specifies audio mixing rate in KHz.
  *
  * Values not specified in BN_AUDIO_MIXING_RATE_* macros are not allowed.
  *

@@ -23,10 +23,12 @@ class DmgAudioFileInfo:
         print(self.__file_name)
 
     def process(self, mod2gbt_file_path, build_folder_path):
+        output_tag = self.__file_name_no_ext + '_bn_dmg'
+        output_file_name = output_tag + '.c'
+
         try:
-            output_tag = self.__file_name_no_ext + '_bn_dmg'
             self.__execute_command(mod2gbt_file_path, output_tag)
-            self.__move_output_file(build_folder_path, output_tag)
+            self.__move_output_file(build_folder_path, output_file_name)
             header_file_path = self.__write_header(build_folder_path, output_tag)
 
             with open(self.__file_info_path, 'w') as file_info:
@@ -34,6 +36,9 @@ class DmgAudioFileInfo:
 
             return [self.__file_name, header_file_path, None]
         except Exception as exc:
+            if os.path.exists(output_file_name):
+                os.remove(output_file_name)
+
             return [self.__file_name, exc]
 
     def __execute_command(self, mod2gbt_file_path, output_tag):
@@ -46,8 +51,7 @@ class DmgAudioFileInfo:
             raise ValueError('mod2gbt call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
     @staticmethod
-    def __move_output_file(build_folder_path, output_tag):
-        output_file_name = output_tag + '.c'
+    def __move_output_file(build_folder_path, output_file_name):
         output_file_path = build_folder_path + '/' + output_file_name
 
         if os.path.exists(output_file_path):

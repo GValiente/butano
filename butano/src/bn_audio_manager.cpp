@@ -13,8 +13,10 @@
 #include "bn_audio.cpp.h"
 #include "bn_music.cpp.h"
 #include "bn_sound.cpp.h"
+#include "bn_dmg_music.cpp.h"
 #include "bn_music_item.cpp.h"
 #include "bn_sound_item.cpp.h"
+#include "bn_dmg_music_item.cpp.h"
 
 namespace bn::audio_manager
 {
@@ -56,6 +58,26 @@ namespace
         [[nodiscard]] static command music_set_volume(int volume)
         {
             return command(MUSIC_SET_VOLUME, 0, 0, volume);
+        }
+
+        [[nodiscard]] static command dmg_music_play(dmg_music_item item, bool loop, int speed)
+        {
+            return command(DMG_MUSIC_PLAY, int(item.data_ptr()), 0, speed, loop);
+        }
+
+        [[nodiscard]] static command dmg_music_stop()
+        {
+            return command(DMG_MUSIC_STOP);
+        }
+
+        [[nodiscard]] static command dmg_music_pause()
+        {
+            return command(DMG_MUSIC_PAUSE);
+        }
+
+        [[nodiscard]] static command dmg_music_resume()
+        {
+            return command(DMG_MUSIC_RESUME);
         }
 
         [[nodiscard]] static command sound_play(int priority, sound_item item)
@@ -102,6 +124,22 @@ namespace
                 hw::audio::set_music_volume(_volume);
                 return;
 
+            case DMG_MUSIC_PLAY:
+                hw::audio::play_dmg_music(reinterpret_cast<const void*>(_id), _volume, _loop);
+                return;
+
+            case DMG_MUSIC_STOP:
+                hw::audio::stop_dmg_music();
+                return;
+
+            case DMG_MUSIC_PAUSE:
+                hw::audio::pause_dmg_music();
+                return;
+
+            case DMG_MUSIC_RESUME:
+                hw::audio::resume_dmg_music();
+                return;
+
             case SOUND_PLAY:
                 hw::audio::play_sound(_priority, _id);
                 return;
@@ -137,6 +175,10 @@ namespace
             MUSIC_RESUME,
             MUSIC_SET_POSITION,
             MUSIC_SET_VOLUME,
+            DMG_MUSIC_PLAY,
+            DMG_MUSIC_STOP,
+            DMG_MUSIC_PAUSE,
+            DMG_MUSIC_RESUME,
             SOUND_PLAY,
             SOUND_PLAY_EX,
             SOUND_STOP_ALL
@@ -164,8 +206,10 @@ namespace
         fixed music_volume;
         int music_item_id = 0;
         int music_position = 0;
+        const uint8_t* dmg_music_data = nullptr;
         bool music_playing = false;
         bool music_paused = false;
+        bool dmg_music_paused = false;
     };
 
     BN_DATA_EWRAM static_data data;
@@ -299,6 +343,66 @@ void set_music_volume(fixed volume)
 
     data.commands.push_back(command::music_set_volume(_hw_music_volume(volume)));
     data.music_volume = volume;
+}
+
+bool dmg_music_playing()
+{
+    return data.dmg_music_data;
+}
+
+optional<dmg_music_item> playing_dmg_music_item()
+{
+    optional<dmg_music_item> result;
+
+    if(const uint8_t* dmg_music_data = data.dmg_music_data)
+    {
+        result = dmg_music_item(*dmg_music_data);
+    }
+
+    return result;
+}
+
+void play_dmg_music(dmg_music_item item, int speed, bool loop)
+{
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
+
+    data.commands.push_back(command::dmg_music_play(item, loop, speed));
+    data.dmg_music_data = item.data_ptr();
+    data.dmg_music_paused = false;
+}
+
+void stop_dmg_music()
+{
+    BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
+
+    data.commands.push_back(command::dmg_music_stop());
+    data.dmg_music_data = nullptr;
+    data.dmg_music_paused = false;
+}
+
+bool dmg_music_paused()
+{
+    return data.dmg_music_paused;
+}
+
+void pause_dmg_music()
+{
+    BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    BN_ASSERT(! data.dmg_music_paused, "DMG music is already paused");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
+
+    data.commands.push_back(command::dmg_music_pause());
+    data.dmg_music_paused = true;
+}
+
+void resume_dmg_music()
+{
+    BN_ASSERT(data.dmg_music_paused, "DMG music is not paused");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
+
+    data.commands.push_back(command::dmg_music_resume());
+    data.dmg_music_paused = false;
 }
 
 void play_sound(int priority, sound_item item)

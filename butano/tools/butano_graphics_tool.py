@@ -1255,10 +1255,11 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
 
             if os.path.isfile(graphics_file_path) and FileInfo.validate(graphics_file_name):
                 graphics_file_name_split = os.path.splitext(graphics_file_name)
-                graphics_file_name_no_ext = graphics_file_name_split[0]
                 graphics_file_name_ext = graphics_file_name_split[1]
 
                 if graphics_file_name_ext == '.bmp':
+                    graphics_file_name_no_ext = graphics_file_name_split[0]
+
                     if graphics_file_name_no_ext in file_names_set:
                         raise ValueError('There\'s two or more graphics files with the same name: ' +
                                          graphics_file_name_no_ext)
@@ -1269,7 +1270,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
                     if not os.path.isfile(json_file_path):
                         raise ValueError('Graphics json file not found: ' + json_file_path)
 
-                    file_info_path = build_folder_path + '/_bn_' + graphics_file_name_no_ext + '_file_info.txt'
+                    file_info_path = build_folder_path + '/_bn_' + graphics_file_name_no_ext + '_graphics_file_info.txt'
 
                     if not os.path.exists(file_info_path):
                         build = True

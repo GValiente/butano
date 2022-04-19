@@ -167,13 +167,23 @@
 /**
  * @defgroup audio Audio
  *
- * Music for your ears, provided by <a href="https://maxmod.devkitpro.org/">Maxmod</a>.
+ * Music for your ears, using both Direct Sound and DMG channels.
  */
 
 /**
  * @defgroup music Music
  *
- * Module files (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions) music.
+ * Module files (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions) played with Direct Sound channels
+ * thanks to <a href="https://maxmod.devkitpro.org/">Maxmod</a>.
+ *
+ * @ingroup audio
+ */
+
+/**
+ * @defgroup dmg_music DMG music
+ *
+ * Module files (files with extension) played with DMG channels
+ * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
  *
  * @ingroup audio
  */
@@ -181,7 +191,8 @@
 /**
  * @defgroup sound Sound effects
  *
- * Waveform audio files (files with `*.wav` extension) sound effects.
+ * Waveform audio files (files with `*.wav` extension) sound effects played with Direct Sound channels
+ * thanks to <a href="https://maxmod.devkitpro.org/">Maxmod</a>.
  *
  * @ingroup audio
  */
@@ -1834,6 +1845,8 @@
  *
  * @section changelog_9_4_0 9.4.0 (next release)
  *
+ * * bn::dmg_music and bn::dmg_music_item added (yes, music playback using DMG channels is now supported
+ * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
  * * @ref getting_started Python setup improved.
  * * <a href="https://cinemint.itch.io/tremblay-island">Tremblay Island</a> added to `README.md`.
  *

@@ -9,6 +9,11 @@
 #include "bn_common.h"
 #include "maxmod.h"
 
+extern "C"
+{
+    #include "../3rd_party/gbt-player/include/gbt_player.h"
+}
+
 namespace bn::hw::audio
 {
     using func_type = void(*)();
@@ -63,6 +68,27 @@ namespace bn::hw::audio
     inline void set_music_volume(int volume)
     {
         mmSetModuleVolume(mm_word(volume));
+    }
+
+    inline void play_dmg_music(const void* song, int speed, bool loop)
+    {
+        gbt_play(song, speed);
+        gbt_loop(loop);
+    }
+
+    inline void stop_dmg_music()
+    {
+        gbt_stop();
+    }
+
+    inline void pause_dmg_music()
+    {
+        gbt_pause(0);
+    }
+
+    inline void resume_dmg_music()
+    {
+        gbt_pause(1);
     }
 
     void play_sound(int priority, int id);

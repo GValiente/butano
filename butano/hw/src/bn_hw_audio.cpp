@@ -5,7 +5,6 @@
 
 #include "../include/bn_hw_audio.h"
 
-#include "maxmod.h"
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
 #include "../include/bn_hw_irq.h"
@@ -124,6 +123,7 @@ namespace
     void _commit()
     {
         mmFrame();
+        gbt_update();
         data.lp_vblank_function();
     }
 
@@ -160,6 +160,8 @@ void init(func_type hp_vblank_function, func_type lp_vblank_function)
     mmInit(&maxmod_info);
 
     mmSetVBlankHandler(reinterpret_cast<void*>(_vblank_handler));
+
+    gbt_stop();
 }
 
 void enable()

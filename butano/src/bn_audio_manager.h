@@ -13,6 +13,7 @@ namespace bn
 {
     class music_item;
     class sound_item;
+    class dmg_music_item;
 }
 
 namespace bn::audio_manager
@@ -24,6 +25,8 @@ namespace bn::audio_manager
     void enable();
 
     void disable();
+
+    // music
 
     [[nodiscard]] bool music_playing();
 
@@ -46,6 +49,24 @@ namespace bn::audio_manager
     [[nodiscard]] fixed music_volume();
 
     void set_music_volume(fixed volume);
+
+    // dmg_music
+
+    [[nodiscard]] bool dmg_music_playing();
+
+    [[nodiscard]] optional<dmg_music_item> playing_dmg_music_item();
+
+    void play_dmg_music(dmg_music_item item, int speed, bool loop);
+
+    void stop_dmg_music();
+
+    [[nodiscard]] bool dmg_music_paused();
+
+    void pause_dmg_music();
+
+    void resume_dmg_music();
+
+    // sound
 
     void play_sound(int priority, sound_item item);
 

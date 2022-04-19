@@ -80,7 +80,8 @@ BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
                                 $(LIBBUTANOABS)/hw/3rd_party/libtonc/src/tte \
                                 $(LIBBUTANOABS)/hw/3rd_party/posprintf/src \
                                 $(LIBBUTANOABS)/hw/3rd_party/gba-modern/src \
-                                $(LIBBUTANOABS)/hw/3rd_party/cult-of-gba-bios/src
+                                $(LIBBUTANOABS)/hw/3rd_party/cult-of-gba-bios/src \
+                                $(LIBBUTANOABS)/hw/3rd_party/gbt-player/src
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't remove intermediary files (avoid rebuilding graphics files more than once):
@@ -95,6 +96,7 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 export VPATH	:=  $(foreach dir,	$(SOURCES),	$(CURDIR)/$(dir)) \
                         $(foreach dir,	$(BNSOURCES),	$(dir)) \
                         $(foreach dir,	$(DATA),	$(CURDIR)/$(dir)) \
+                        $(foreach dir,	$(DMGAUDIO),	$(CURDIR)/$(dir)) \
                         $(foreach dir,	$(GRAPHICS),	$(CURDIR)/$(dir))
 
 export DEPSDIR	:=  $(CURDIR)/$(BUILD)
@@ -110,6 +112,8 @@ SFILES          :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.s))) 
 						
 BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*))) \
 						_bn_audio_soundbank.bin
+						
+DMGAUDIOFILES	:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.mod)))
 						
 GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp)))
 
@@ -129,11 +133,13 @@ endif
 
 export OFILES_BIN       :=  $(addsuffix .o,$(BINFILES))
 
+export OFILES_DMGAUDIO	:=  $(DMGAUDIOFILES:.mod=_bn_dmg.o)
+
 export OFILES_GRAPHICS	:=  $(GRAPHICSFILES:.bmp=_bn_gfx.o)
 
 export OFILES_SOURCES   :=  $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
  
-export OFILES           :=  $(OFILES_BIN) $(OFILES_GRAPHICS) $(OFILES_SOURCES)
+export OFILES           :=  $(OFILES_BIN) $(OFILES_DMGAUDIO) $(OFILES_GRAPHICS) $(OFILES_SOURCES)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't generate header files from audio soundbank (avoid rebuilding all sources when audio files are updated):
@@ -156,7 +162,8 @@ all:
 	
 #---------------------------------------------------------------------------------
 $(BUILD):
-	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --audio="$(AUDIO)" --graphics="$(GRAPHICS)" --build=$(BUILD)
+	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --audio="$(AUDIO)" --dmg_audio="$(DMGAUDIO)" \
+			--graphics="$(GRAPHICS)" --mod2gbt="$(MOD2GBT)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------

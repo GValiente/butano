@@ -3,11 +3,13 @@
 # BUILD is the directory where object files & intermediate files will be placed.
 # LIBBUTANO is the main directory of butano library (https://github.com/GValiente/butano).
 # PYTHON is the path to the python interpreter.
+# MOD2GBT is the path to mod2gbt, the GBT Player conversion tool (https://github.com/AntonioND/gbt-player).
 # SOURCES is a list of directories containing source code.
 # INCLUDES is a list of directories containing extra header files.
 # DATA is a list of directories containing binary data.
 # GRAPHICS is a list of directories containing files to be processed by grit.
 # AUDIO is a list of directories containing files to be processed by mmutil.
+# DMGAUDIO is a list of directories containing files to be processed by mod2gbt.
 # ROMTITLE is a uppercase ASCII, max 12 characters text string containing the output ROM title.
 # ROMCODE is a uppercase ASCII, max 4 characters text string containing the output ROM code.
 # USERFLAGS is a list of additional compiler flags:
@@ -25,11 +27,13 @@ TARGET      :=  $(notdir $(CURDIR))
 BUILD       :=  build
 LIBBUTANO   :=  ../../butano
 PYTHON      :=  python
+MOD2GBT     :=
 SOURCES     :=  src ../../common/src
 INCLUDES    :=  include ../../common/include
 DATA        :=
 GRAPHICS    :=  graphics ../../common/graphics
 AUDIO       :=  audio ../../common/audio
+DMGAUDIO    :=  dmg_audio ../../common/dmg_audio
 ROMTITLE    :=  BUTANO GRNSW
 ROMCODE     :=  SBTP
 USERFLAGS   :=  

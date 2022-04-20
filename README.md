@@ -43,7 +43,8 @@ The best way to get started is to read the
 Butano would have not been possible without these libraries:
 
 * GBA hardware access and more provided by [Tonclib](https://www.coranac.com/projects/#tonc).
-* Music and sound effects provided by [Maxmod](https://maxmod.devkitpro.org).
+* Music and sound effects provided by [Maxmod](https://maxmod.devkitpro.org) 
+and [GBT Player](https://github.com/AntonioND/gbt-player).
 * Fast number to string conversion provided by [posprintf](http://danposluns.com/danposluns/gbadev/posprintf/index.html).
 * Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern) and
 [Universal GBA Library](https://github.com/AntonioND/libugba).

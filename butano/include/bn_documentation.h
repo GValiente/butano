@@ -1300,18 +1300,22 @@
  *
  * @section import_audio Audio
  *
- * By default audio files go into the `audio` folder of your project.
+ * By default audio files played with Direct Sound channels go into the `audio` folder of your project,
+ * and music files played with DMG channels go into the `dmg_audio` folder.
  *
- * Audio stuff is managed by the awesome <a href="https://maxmod.devkitpro.org/">Maxmod</a>,
- * so if you have an issue with music or sound effects, well, you know.
+ * Direct Sound stuff is managed by the awesome <a href="https://maxmod.devkitpro.org/">Maxmod</a>,
+ * so if you have an issue with Direct Sound music or with sound effects, well, you know.
+ *
+ * DMG channels are handled by the also impressive <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>,
+ * so if you have issues with DMG music, you know where to go.
  *
  * A really nice application for editing audio files
  * before importing them into your game is <a href="https://openmpt.org/">OpenMPT</a>.
  *
  *
- * @subsection import_music Music
+ * @subsection import_direct_sound_music Direct Sound music
  *
- * The required format for music are module files (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions).
+ * The required format for Direct Sound music is module files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions.
  *
  * By default Butano supports up to 16 music channels,
  * but this limit can be increased by overloading the definition of @ref BN_CFG_AUDIO_MAX_MUSIC_CHANNELS.
@@ -1327,6 +1331,30 @@
  * #include "bn_music_items.h"
  *
  * bn::music_items::song.play();
+ * @endcode
+ *
+ *
+ * @subsection import_dmg_music DMG music
+ *
+ * The required format for DMG music is module files with `*.mod` extension.
+ *
+ * Since devkitARM does not provide `mod2gbt`
+ * (<a href="https://github.com/AntonioND/gbt-player">GBT Player</a> conversion tool),
+ * you must build it (or get it from somewhere else) and specify its file path in the `MOD2GBT` variable
+ * of your project's `Makefile`.
+ *
+ * If the conversion process has finished successfully,
+ * a bn::dmg_music_item should have been generated in the `build` folder.
+ *
+ * For example, from a file named `module.mod`,
+ * a header file named `bn_dmg_music_items_module.h` is generated in the `build` folder.
+ *
+ * You can use this header to play the module file with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * #include "bn_dmg_music_items_module.h"
+ *
+ * bn::dmg_music_items::module.play();
  * @endcode
  *
  *
@@ -1854,7 +1882,7 @@
  *
  * * bn::dmg_music and bn::dmg_music_item added (yes, music playback using DMG channels is now supported
  * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
- * See the `dmg_audio` example to learn how to import and play it.
+ * See the @ref import_dmg_music import guide and the `dmg_audio` example to learn how to import and play it.
  * * @ref getting_started Python setup improved.
  * * <a href="https://cinemint.itch.io/tremblay-island">Tremblay Island</a> added to `README.md`.
  *

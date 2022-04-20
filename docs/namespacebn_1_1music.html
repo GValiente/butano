@@ -50,7 +50,7 @@
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>music <span class="m-thin">namespace</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__music_8h.html">&lt;bn_music.h&gt;</a></div>
         </h1>
-        <p>Music related functions.</p>
+        <p>Direct Sound music related functions.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -68,58 +68,58 @@
             <dt id="af617c15dc631fa2966ae02a781192ab7">
               <span class="m-doc-wrap-bumper">auto <a href="#af617c15dc631fa2966ae02a781192ab7" class="m-doc-self">playing</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
             </dt>
-            <dd>Indicates if currently there&#x27;s any music playing or not.</dd>
+            <dd>Indicates if currently there&#x27;s any Direct Sound music playing or not.</dd>
             <dt id="a5fcdccd7145a31e13c1539af2469b81a">
               <span class="m-doc-wrap-bumper">auto <a href="#a5fcdccd7145a31e13c1539af2469b81a" class="m-doc-self">playing_item</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>&gt;</span>
             </dt>
-            <dd>Returns the active <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> if there&#x27;s any music playing; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</dd>
+            <dd>Returns the active <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> if there&#x27;s any Direct Sound music playing; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ad253c8f629f1ac20d2b5d4a815346a9d" class="m-doc">play</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> item)</span>
             </dt>
-            <dd>Plays the music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> with default settings.</dd>
+            <dd>Plays the Direct Sound music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> with default settings.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#afc6ceecdce1a8ebc3da027e3df23367e" class="m-doc">play</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> item,
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> volume)</span>
             </dt>
-            <dd>Plays the music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</dd>
+            <dd>Plays the Direct Sound music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a155393dae95c52b31c5ace1e06b65ff5" class="m-doc">play</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> item,
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> volume,
               bool loop)</span>
             </dt>
-            <dd>Plays the music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</dd>
+            <dd>Plays the Direct Sound music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</dd>
             <dt id="a89013df63f8d3529f36dfa0f2c284fbf">
               <span class="m-doc-wrap-bumper">void <a href="#a89013df63f8d3529f36dfa0f2c284fbf" class="m-doc-self">stop</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd>Stops playback of the active music.</dd>
+            <dd>Stops playback of the active Direct Sound music.</dd>
             <dt id="a20f6a6f2129ec8a510219cb3b74b5894">
               <span class="m-doc-wrap-bumper">auto <a href="#a20f6a6f2129ec8a510219cb3b74b5894" class="m-doc-self">paused</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
             </dt>
-            <dd>Indicates if the active music has been paused or not.</dd>
+            <dd>Indicates if the active Direct Sound music has been paused or not.</dd>
             <dt id="aa2fb3d473828f0a77825743b66308e66">
               <span class="m-doc-wrap-bumper">void <a href="#aa2fb3d473828f0a77825743b66308e66" class="m-doc-self">pause</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd>Pauses playback of the active music.</dd>
+            <dd>Pauses playback of the active Direct Sound music.</dd>
             <dt id="ab064f8ee61dcb856b2b5126e92ac7302">
               <span class="m-doc-wrap-bumper">void <a href="#ab064f8ee61dcb856b2b5126e92ac7302" class="m-doc-self">resume</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
-            <dd>Resumes playback of the paused music.</dd>
+            <dd>Resumes playback of the paused Direct Sound music.</dd>
             <dt id="a6f2ae9a4ad01a3289a6ca52ad263d410">
               <span class="m-doc-wrap-bumper">auto <a href="#a6f2ae9a4ad01a3289a6ca52ad263d410" class="m-doc-self">position</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
-            <dd>Returns the sequence position of the active music.</dd>
+            <dd>Returns the sequence position of the active Direct Sound music.</dd>
             <dt id="a4b3fb92b6349cdf0e041309165c6e371">
               <span class="m-doc-wrap-bumper">void <a href="#a4b3fb92b6349cdf0e041309165c6e371" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">int position)</span>
             </dt>
-            <dd>Sets the sequence position of the active music.</dd>
+            <dd>Sets the sequence position of the active Direct Sound music.</dd>
             <dt id="a682c60a807328a57e18e9e7d82d3b65c">
               <span class="m-doc-wrap-bumper">auto <a href="#a682c60a807328a57e18e9e7d82d3b65c" class="m-doc-self">volume</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
-            <dd>Returns the volume of the active music.</dd>
+            <dd>Returns the volume of the active Direct Sound music.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a5e488026ed889e7d94e4e5f4d720e2b1" class="m-doc">set_volume</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> volume)</span>
             </dt>
-            <dd>Sets the volume of the active music.</dd>
+            <dd>Sets the volume of the active Direct Sound music.</dd>
           </dl>
         </section>
         <section>
@@ -128,7 +128,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />music::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad253c8f629f1ac20d2b5d4a815346a9d" class="m-doc-self">play</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> item)</span></span>
             </h3>
-            <p>Plays the music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> with default settings.</p>
+            <p>Plays the Direct Sound music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> with default settings.</p>
 <p>Default settings are volume = 1 and loop enabled.</p>
           </div></section>
           <section class="m-doc-details" id="afc6ceecdce1a8ebc3da027e3df23367e"><div>
@@ -136,7 +136,7 @@
               <span class="m-doc-wrap-bumper">void bn::<wbr />music::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afc6ceecdce1a8ebc3da027e3df23367e" class="m-doc-self">play</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a> item,
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> volume)</span></span>
             </h3>
-            <p>Plays the music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</p>
+            <p>Plays the Direct Sound music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -159,7 +159,7 @@
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> volume,
               bool loop)</span></span>
             </h3>
-            <p>Plays the music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</p>
+            <p>Plays the Direct Sound music specified by the given <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -184,7 +184,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />music::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5e488026ed889e7d94e4e5f4d720e2b1" class="m-doc-self">set_volume</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> volume)</span></span>
             </h3>
-            <p>Sets the volume of the active music.</p>
+            <p>Sets the volume of the active Direct Sound music.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>

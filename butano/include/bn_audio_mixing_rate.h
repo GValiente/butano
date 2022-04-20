@@ -8,7 +8,7 @@
 
 /**
  * @file
- * Available audio mixing rates header file.
+ * Available Direct Sound mixing rates header file.
  *
  * @ingroup audio
  */

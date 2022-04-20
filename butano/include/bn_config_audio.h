@@ -18,7 +18,7 @@
 /**
  * @def BN_CFG_AUDIO_MIXING_RATE
  *
- * Specifies audio mixing rate in KHz.
+ * Specifies Direct Sound mixing rate in KHz.
  *
  * Values not specified in BN_AUDIO_MIXING_RATE_* macros are not allowed.
  *
@@ -31,7 +31,7 @@
 /**
  * @def BN_CFG_AUDIO_MAX_MUSIC_CHANNELS
  *
- * Specifies the maximum number of active music channels.
+ * Specifies the maximum number of active Direct Sound music channels.
  *
  * @ingroup music
  */

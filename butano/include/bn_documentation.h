@@ -787,7 +787,7 @@
  *
  * @image html examples_audio.png
  *
- * Shows how to play music and sound effects with Butano.
+ * Shows how to play Direct Sound music and sound effects with Butano.
  *
  * <td> **Audio player**
  *
@@ -1776,9 +1776,10 @@
  * @section faq_audio Audio
  *
  *
- * @subsection faq_music_crash Why the game crashes when some songs are played?
+ * @subsection faq_music_crash Why the game crashes when some Direct Sound songs are played?
  *
- * Butano uses the excellent <a href="https://maxmod.devkitpro.org/">Maxmod</a> library for audio support.
+ * Butano uses the excellent <a href="https://maxmod.devkitpro.org/">Maxmod</a> library
+ * for Direct Sound audio support.
  *
  * It provides impressive performance and support for lots of module music formats,
  * but unfortunately it crashes with some songs.
@@ -1791,9 +1792,9 @@
  * but since it seems the library was abandoned long time ago, don't hold your hopes up too much.
  *
  *
- * @subsection faq_music_missing_notes Why there are missing notes when playing some songs?
+ * @subsection faq_music_missing_notes Why there are missing notes when playing some Direct Sound songs?
  *
- * If a song doesn't have more channels than the maximum number of active music channels
+ * If a song doesn't have more channels than the maximum number of active Direct Sound music channels
  * specified by @ref BN_CFG_AUDIO_MAX_MUSIC_CHANNELS, as before,
  * sometimes it helps to change its file format (for example, from `*.xm` to `*.it`).
  * You can use <a href="https://openmpt.org/">OpenMPT</a> to do that.

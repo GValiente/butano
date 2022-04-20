@@ -21,7 +21,7 @@ namespace bn
 {
 
 /**
- * @brief Contains the required information to play music.
+ * @brief Contains the required information to play Direct Sound music.
  *
  * The assets conversion tools generate an object of this type in the build folder for each module file.
  *
@@ -52,20 +52,20 @@ public:
     }
 
     /**
-     * @brief Plays the music specified by this item with default settings.
+     * @brief Plays the Direct Sound music specified by this item with default settings.
      *
      * Default settings are volume = 1 and loop enabled.
      */
     void play() const;
 
     /**
-     * @brief Plays the music specified by this item.
+     * @brief Plays the Direct Sound music specified by this item.
      * @param volume Volume level, in the range [0..1].
      */
     void play(fixed volume) const;
 
     /**
-     * @brief Plays the music specified by this item.
+     * @brief Plays the Direct Sound music specified by this item.
      * @param volume Volume level, in the range [0..1].
      * @param loop Indicates if it must be played until it is stopped manually or until end.
      */

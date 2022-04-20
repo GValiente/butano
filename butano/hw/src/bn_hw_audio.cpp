@@ -38,6 +38,7 @@ namespace
         func_type lp_vblank_function = nullptr;
         uint16_t stat_value = 0;
         uint16_t direct_sound_control_value = 0;
+        uint16_t dmg_control_value = 0;
         bool update_on_vblank = false;
         bool delay_commit = false;
     };
@@ -166,18 +167,24 @@ void init(func_type hp_vblank_function, func_type lp_vblank_function)
 
 void enable()
 {
-    REG_SNDSTAT = data.stat_value;
+    REG_SNDDMGCNT = data.dmg_control_value;
     REG_SNDDSCNT = data.direct_sound_control_value;
+    REG_SNDSTAT = data.stat_value;
+
     irq::enable(irq::id::VBLANK);
 }
 
 void disable()
 {
     irq::disable(irq::id::VBLANK);
+
     data.stat_value = REG_SNDSTAT;
     data.direct_sound_control_value = REG_SNDDSCNT;
-    REG_SNDDSCNT = 0;
+    data.dmg_control_value = REG_SNDDMGCNT;
+
     REG_SNDSTAT = 0;
+    REG_SNDDSCNT = 0;
+    REG_SNDDMGCNT = 0;
 }
 
 void play_sound(int priority, int id)

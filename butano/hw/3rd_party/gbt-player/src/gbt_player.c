@@ -1,8 +1,8 @@
-// GBT Player v3.0.9
+// GBT Player v3.1.0
 //
 // SPDX-License-Identifier: MIT
 //
-// Copyright (c) 2009-2022, Antonio Niño Díaz <antonio_nd@outlook.com>
+// Copyright (c) 2009-2022 Antonio Niño Díaz <antonio_nd@outlook.com>
 
 #include <stdint.h>
 
@@ -16,8 +16,8 @@
 
 typedef int (*effect_handler)(uint32_t args);
 
-struct gbt_data_t
-{
+typedef struct {
+
     // Pointer to the pattern pointer array
     uint8_t * const *pattern_array_ptr;
 
@@ -50,129 +50,16 @@ struct gbt_data_t
     uint8_t arpeggio_tick[3];
 
     // Cut note
-    uint8_t cut_note_tick[4]; // If tick == gbt_data.cut_note_tick, stop note.
+    uint8_t cut_note_tick[4]; // If tick == gbt.cut_note_tick, stop note.
 
     // Last step of last pattern this is set to 1
     uint8_t have_to_stop_next_step;
 
     uint8_t update_pattern_pointers; // set to 1 by jump effects
-};
 
-__attribute__((section(".ewram"))) static struct gbt_data_t gbt_data;
+} gbt_player_info_t;
 
-static void gbt_get_pattern_ptr(int pattern_number)
-{
-    gbt_data.current_step_data_ptr = gbt_data.pattern_array_ptr[pattern_number];
-}
-
-void gbt_play(const void *song, int speed)
-{
-    gbt_data.pattern_array_ptr = song;
-    gbt_data.speed = speed;
-
-    gbt_get_pattern_ptr(0);
-
-    gbt_data.current_step = 0;
-    gbt_data.current_pattern = 0;
-    gbt_data.ticks_elapsed = 0;
-    gbt_data.loop_enabled = 0;
-    gbt_data.have_to_stop_next_step = 0;
-    gbt_data.update_pattern_pointers = 0;
-
-    gbt_data.channel3_loaded_instrument = 0xFF;
-
-    gbt_data.channels_enabled = GBT_ENABLE_CH_ALL;
-
-    gbt_data.pan[0] = 0x11; // L and R
-    gbt_data.pan[1] = 0x22;
-    gbt_data.pan[2] = 0x44;
-    gbt_data.pan[3] = 0x88;
-
-    gbt_data.vol[0] = 0xF000; // 100%
-    gbt_data.vol[1] = 0xF000;
-    gbt_data.vol[2] = 0x2000;
-    gbt_data.vol[3] = 0xF000;
-
-    gbt_data.instr[0] = 0;
-    gbt_data.instr[1] = 0;
-    gbt_data.instr[2] = 0;
-    gbt_data.instr[3] = 0;
-
-    gbt_data.freq[0] = 0;
-    gbt_data.freq[1] = 0;
-    gbt_data.freq[2] = 0;
-
-    gbt_data.arpeggio_enabled[0] = 0;
-    gbt_data.arpeggio_enabled[1] = 0;
-    gbt_data.arpeggio_enabled[2] = 0;
-
-    gbt_data.cut_note_tick[0] = 0xFF;
-    gbt_data.cut_note_tick[1] = 0xFF;
-    gbt_data.cut_note_tick[2] = 0xFF;
-    gbt_data.cut_note_tick[3] = 0xFF;
-
-    // REG_SOUNDCNT_X = SOUNDCNT_X_MASTER_ENABLE;
-
-    REG_SOUNDCNT_L = 0;
-
-    REG_SOUND1CNT_L = 0;
-    REG_SOUND1CNT_H = 0;
-    REG_SOUND1CNT_X = 0;
-
-    REG_SOUND2CNT_L = 0;
-    REG_SOUND2CNT_H = 0;
-
-    REG_SOUND3CNT_L = 0;
-    REG_SOUND3CNT_H = 0;
-    REG_SOUND3CNT_X = 0;
-
-    REG_SOUND4CNT_L = 0;
-    REG_SOUND4CNT_H = 0;
-
-    REG_SOUNDCNT_L = SOUNDCNT_L_PSG_VOL_RIGHT_SET(7)
-                   | SOUNDCNT_L_PSG_VOL_LEFT_SET(7);
-
-    gbt_data.playing = 1;
-}
-
-void gbt_pause(int play)
-{
-    gbt_data.playing = play;
-
-    uint16_t mask =
-        SOUNDCNT_L_PSG_1_ENABLE_RIGHT | SOUNDCNT_L_PSG_1_ENABLE_LEFT |
-        SOUNDCNT_L_PSG_2_ENABLE_RIGHT | SOUNDCNT_L_PSG_2_ENABLE_LEFT |
-        SOUNDCNT_L_PSG_3_ENABLE_RIGHT | SOUNDCNT_L_PSG_3_ENABLE_LEFT |
-        SOUNDCNT_L_PSG_4_ENABLE_RIGHT | SOUNDCNT_L_PSG_4_ENABLE_LEFT;
-
-    if (play)
-    {
-        // Unmute sound if playback is resumed
-        uint16_t new_pan = gbt_data.pan[0] | gbt_data.pan[1] | gbt_data.pan[2] | gbt_data.pan[3];
-        REG_SOUNDCNT_L = (REG_SOUNDCNT_L & ~mask) | (new_pan << 8);
-    }
-    else
-    {
-        REG_SOUNDCNT_L &= ~mask;
-    }
-}
-
-void gbt_loop(int loop)
-{
-    gbt_data.loop_enabled = loop;
-}
-
-void gbt_stop(void)
-{
-    gbt_data.playing = 0;
-    REG_SOUNDCNT_L = 0; // Disable all PSG channels
-    // REG_SOUNDCNT_X = SOUNDCNT_X_MASTER_DISABLE; // Don't do this!
-}
-
-void gbt_enable_channels(int flags)
-{
-    gbt_data.channels_enabled = flags;
-}
+EWRAM_BSS static gbt_player_info_t gbt;
 
 static const uint8_t gbt_wave[8][16] = { // 8 sounds
     { 0xA5, 0xD7, 0xC9, 0xE1, 0xBC, 0x9A, 0x76, 0x31,
@@ -201,59 +88,176 @@ static const uint8_t gbt_noise[16] = { // 16 sounds
     0x67, 0x63, 0x53
 };
 
-static const uint16_t gbt_frequencies[] = {
-      44,  156,  262,  363,  457,  547,  631,  710,  786,  854,  923,  986,
-    1046, 1102, 1155, 1205, 1253, 1297, 1339, 1379, 1417, 1452, 1486, 1517,
-    1546, 1575, 1602, 1627, 1650, 1673, 1694, 1714, 1732, 1750, 1767, 1783,
-    1798, 1812, 1825, 1837, 1849, 1860, 1871, 1881, 1890, 1899, 1907, 1915,
-    1923, 1930, 1936, 1943, 1949, 1954, 1959, 1964, 1969, 1974, 1978, 1982,
-    1985, 1988, 1992, 1995, 1998, 2001, 2004, 2006, 2009, 2011, 2013, 2015
-};
+static void gbt_get_pattern_ptr(int pattern_number)
+{
+    gbt.current_step_data_ptr = gbt.pattern_array_ptr[pattern_number];
+}
+
+void gbt_play(const void *song, int speed)
+{
+    gbt.pattern_array_ptr = song;
+    gbt.speed = speed;
+
+    gbt_get_pattern_ptr(0);
+
+    gbt.current_step = -1;
+    gbt.current_pattern = 0;
+    gbt.ticks_elapsed = 0;
+    gbt.loop_enabled = 0;
+    gbt.have_to_stop_next_step = 0;
+    gbt.update_pattern_pointers = 0;
+
+    // Force refresh as soon as possible
+    gbt.ticks_elapsed = gbt.speed - 1;
+
+    gbt.channel3_loaded_instrument = 0xFF;
+
+    gbt.channels_enabled = GBT_ENABLE_CH_ALL;
+
+    gbt.pan[0] = 0x11; // L and R
+    gbt.pan[1] = 0x22;
+    gbt.pan[2] = 0x44;
+    gbt.pan[3] = 0x88;
+
+    gbt.vol[0] = 0xF000; // 100%
+    gbt.vol[1] = 0xF000;
+    gbt.vol[2] = 0x2000;
+    gbt.vol[3] = 0xF000;
+
+    gbt.instr[0] = 0;
+    gbt.instr[1] = 0;
+    gbt.instr[2] = 0;
+    gbt.instr[3] = 0;
+
+    gbt.freq[0] = 0;
+    gbt.freq[1] = 0;
+    gbt.freq[2] = 0;
+
+    gbt.arpeggio_enabled[0] = 0;
+    gbt.arpeggio_enabled[1] = 0;
+    gbt.arpeggio_enabled[2] = 0;
+
+    gbt.cut_note_tick[0] = 0xFF;
+    gbt.cut_note_tick[1] = 0xFF;
+    gbt.cut_note_tick[2] = 0xFF;
+    gbt.cut_note_tick[3] = 0xFF;
+
+    REG_SOUNDCNT_X = SOUNDCNT_X_MASTER_ENABLE;
+
+    REG_SOUNDCNT_L = 0;
+
+    REG_SOUND1CNT_L = 0;
+    REG_SOUND1CNT_H = 0;
+    REG_SOUND1CNT_X = 0;
+
+    REG_SOUND2CNT_L = 0;
+    REG_SOUND2CNT_H = 0;
+
+    REG_SOUND3CNT_L = 0;
+    REG_SOUND3CNT_H = 0;
+    REG_SOUND3CNT_X = 0;
+
+    REG_SOUND4CNT_L = 0;
+    REG_SOUND4CNT_H = 0;
+
+    REG_SOUNDCNT_L = SOUNDCNT_L_PSG_VOL_RIGHT_SET(7)
+                   | SOUNDCNT_L_PSG_VOL_LEFT_SET(7);
+
+    gbt.playing = 1;
+}
+
+void gbt_pause(int play)
+{
+    gbt.playing = play;
+
+    uint16_t mask =
+        SOUNDCNT_L_PSG_1_ENABLE_RIGHT | SOUNDCNT_L_PSG_1_ENABLE_LEFT |
+        SOUNDCNT_L_PSG_2_ENABLE_RIGHT | SOUNDCNT_L_PSG_2_ENABLE_LEFT |
+        SOUNDCNT_L_PSG_3_ENABLE_RIGHT | SOUNDCNT_L_PSG_3_ENABLE_LEFT |
+        SOUNDCNT_L_PSG_4_ENABLE_RIGHT | SOUNDCNT_L_PSG_4_ENABLE_LEFT;
+
+    if (play)
+    {
+        // Unmute sound if playback is resumed
+        uint16_t new_pan = gbt.pan[0] | gbt.pan[1] | gbt.pan[2] | gbt.pan[3];
+        REG_SOUNDCNT_L = (REG_SOUNDCNT_L & ~mask) | (new_pan << 8);
+    }
+    else
+    {
+        REG_SOUNDCNT_L &= ~mask;
+    }
+}
+
+void gbt_loop(int loop)
+{
+    gbt.loop_enabled = loop;
+}
+
+void gbt_stop(void)
+{
+    gbt.playing = 0;
+    REG_SOUNDCNT_L = 0; // Disable all PSG channels
+    // REG_SOUNDCNT_X = SOUNDCNT_X_MASTER_DISABLE; // Don't do this!
+}
+
+void gbt_enable_channels(int flags)
+{
+    gbt.channels_enabled = flags;
+}
 
 static uint16_t _gbt_get_freq_from_index(int index)
 {
+    const uint16_t gbt_frequencies[] = {
+        44,  156,  262,  363,  457,  547,  631,  710,  786,  854,  923,  986,
+        1046, 1102, 1155, 1205, 1253, 1297, 1339, 1379, 1417, 1452, 1486, 1517,
+        1546, 1575, 1602, 1627, 1650, 1673, 1694, 1714, 1732, 1750, 1767, 1783,
+        1798, 1812, 1825, 1837, 1849, 1860, 1871, 1881, 1890, 1899, 1907, 1915,
+        1923, 1930, 1936, 1943, 1949, 1954, 1959, 1964, 1969, 1974, 1978, 1982,
+        1985, 1988, 1992, 1995, 1998, 2001, 2004, 2006, 2009, 2011, 2013, 2015
+    };
+
     return gbt_frequencies[index];
 }
 
 static int gbt_ch1234_nop(uint32_t args)
 {
-    (void)(args);
+    (void)args;
     return 0;
 }
 
 static int gbt_ch1234_speed(uint32_t args)
 {
-    gbt_data.speed = args;
-    gbt_data.ticks_elapsed = 0;
+    gbt.speed = args;
+    gbt.ticks_elapsed = 0;
     return 0;
 }
 
 static int gbt_ch1234_jump_pattern(uint32_t args)
 {
-    gbt_data.current_pattern = args;
+    gbt.current_pattern = args;
 
-    gbt_data.current_step = 0;
-    gbt_data.have_to_stop_next_step = 0; // Clear stop flag
+    gbt.current_step = 0;
+    gbt.have_to_stop_next_step = 0; // Clear stop flag
 
-    gbt_data.update_pattern_pointers = 1;
+    gbt.update_pattern_pointers = 1;
 
     return 0;
 }
 
 static int gbt_ch1234_jump_position(uint32_t args)
 {
-    gbt_data.current_step = args;
+    gbt.current_step = args;
 
-    gbt_data.current_pattern++;
+    gbt.current_pattern++;
 
     // Check to see if jump puts us past end of song
-    gbt_get_pattern_ptr(gbt_data.current_pattern);
-    if (gbt_data.current_step_data_ptr == NULL)
+    gbt_get_pattern_ptr(gbt.current_pattern);
+    if (gbt.current_step_data_ptr == NULL)
     {
-        gbt_data.current_pattern = 0;
+        gbt.current_pattern = 0;
     }
 
-    gbt_data.update_pattern_pointers = 1;
+    gbt.update_pattern_pointers = 1;
 
     return 0;
 }
@@ -264,24 +268,24 @@ static int gbt_ch1234_jump_position(uint32_t args)
 
 static int gbt_ch1_pan(uint32_t args)
 {
-    gbt_data.pan[0] = args & 0x11;
-    return 0; // do not update registers, only NR51 at end.
+    gbt.pan[0] = args & 0x11;
+    return 0; // Panning is always updated
 }
 
 static int gbt_ch1_cut_note(uint32_t args)
 {
-    gbt_data.cut_note_tick[0] = args;
+    gbt.cut_note_tick[0] = args;
     return 0;
 }
 
 static int gbt_ch1_arpeggio(uint32_t args)
 {
-    uint32_t base_index = gbt_data.arpeggio_freq_index[0][0];
-    gbt_data.arpeggio_freq_index[0][1] = base_index + ((args >> 4) & 0xF);
-    gbt_data.arpeggio_freq_index[0][2] = base_index + (args & 0xF);
+    uint32_t base_index = gbt.arpeggio_freq_index[0][0];
+    gbt.arpeggio_freq_index[0][1] = base_index + ((args >> 4) & 0xF);
+    gbt.arpeggio_freq_index[0][2] = base_index + (args & 0xF);
 
-    gbt_data.arpeggio_enabled[0] = 1;
-    gbt_data.arpeggio_tick[0] = 1;
+    gbt.arpeggio_enabled[0] = 1;
+    gbt.arpeggio_tick[0] = 1;
 
     return 1;
 }
@@ -314,13 +318,13 @@ static int gbt_channel_1_set_effect(uint32_t effect, uint8_t data)
 static void channel1_refresh_registers(void)
 {
     REG_SOUND1CNT_L = 0;
-    REG_SOUND1CNT_H = gbt_data.vol[0] | gbt_data.instr[0];
-    REG_SOUND1CNT_X = SOUND1CNT_X_RESTART | gbt_data.freq[0];
+    REG_SOUND1CNT_H = gbt.vol[0] | gbt.instr[0];
+    REG_SOUND1CNT_X = SOUND1CNT_X_RESTART | gbt.freq[0];
 }
 
 static const uint8_t *gbt_channel_1_handle(const uint8_t *data)
 {
-    if ((gbt_data.channels_enabled & GBT_ENABLE_CH1) == 0)
+    if ((gbt.channels_enabled & GBT_ENABLE_CH1) == 0)
     {
         // Channel is disabled. Increment pointer as needed
 
@@ -348,33 +352,33 @@ static const uint8_t *gbt_channel_1_handle(const uint8_t *data)
     if (b & BIT(7)) // Has frequency
     {
         uint32_t index = b & 0x7F;
-        gbt_data.arpeggio_freq_index[0][0] = index;
-        gbt_data.freq[0] = _gbt_get_freq_from_index(index);
+        gbt.arpeggio_freq_index[0][0] = index;
+        gbt.freq[0] = _gbt_get_freq_from_index(index);
 
         b = *data++;
 
         if (b & BIT(7)) // Freq + Instr + Effect
         {
-            gbt_data.instr[0] = (b & 0x30) << 2; // Instrument
+            gbt.instr[0] = (b & 0x30) << 2; // Instrument
             gbt_channel_1_set_effect(b & 0xF, *data++);
             channel1_refresh_registers();
         }
         else // Freq + Instr + Volume
         {
-            gbt_data.instr[0] = (b & 0x30) << 2; // Instrument
-            gbt_data.vol[0] = (b & 0xF) << 12;
+            gbt.instr[0] = (b & 0x30) << 2; // Instrument
+            gbt.vol[0] = (b & 0xF) << 12;
             channel1_refresh_registers();
         }
     }
     else if (b & BIT(6)) // Set instrument and effect
     {
-        gbt_data.instr[0] = (b & 0x30) << 2; // Instrument
+        gbt.instr[0] = (b & 0x30) << 2; // Instrument
         gbt_channel_1_set_effect(b & 0xF, *data++);
         channel1_refresh_registers();
     }
     else if (b & BIT(5)) // Set volume
     {
-        gbt_data.vol[0] = (b & 0xF) << 12;
+        gbt.vol[0] = (b & 0xF) << 12;
         channel1_refresh_registers();
     }
     else
@@ -391,9 +395,9 @@ static int channel1_update_effects(void)
     // Cut note
     // --------
 
-    if (gbt_data.cut_note_tick[0] == gbt_data.ticks_elapsed)
+    if (gbt.cut_note_tick[0] == gbt.ticks_elapsed)
     {
-        gbt_data.cut_note_tick[0] = 0xFF; // Disable cut note
+        gbt.cut_note_tick[0] = 0xFF; // Disable cut note
 
         REG_SOUND1CNT_H = 0; // Set volume to 0
         REG_SOUND1CNT_X = SOUND1CNT_X_RESTART;
@@ -402,16 +406,16 @@ static int channel1_update_effects(void)
     // Arpeggio
     // --------
 
-    if (gbt_data.arpeggio_enabled[0])
+    if (gbt.arpeggio_enabled[0])
     {
-        uint8_t tick = gbt_data.arpeggio_tick[0];
+        uint8_t tick = gbt.arpeggio_tick[0];
         if (tick == 2)
-            gbt_data.arpeggio_tick[0] = 0;
+            gbt.arpeggio_tick[0] = 0;
         else
-            gbt_data.arpeggio_tick[0] = tick + 1;
+            gbt.arpeggio_tick[0] = tick + 1;
 
-        uint32_t index = gbt_data.arpeggio_freq_index[0][tick];
-        gbt_data.freq[0] = _gbt_get_freq_from_index(index);
+        uint32_t index = gbt.arpeggio_freq_index[0][tick];
+        gbt.freq[0] = _gbt_get_freq_from_index(index);
 
         return 1;
     }
@@ -425,24 +429,24 @@ static int channel1_update_effects(void)
 
 static int gbt_ch2_pan(uint32_t args)
 {
-    gbt_data.pan[1] = args & 0x22;
-    return 0; // do not update registers, only NR51 at end.
+    gbt.pan[1] = args & 0x22;
+    return 0; // Panning is always updated
 }
 
 static int gbt_ch2_cut_note(uint32_t args)
 {
-    gbt_data.cut_note_tick[1] = args;
+    gbt.cut_note_tick[1] = args;
     return 0;
 }
 
 static int gbt_ch2_arpeggio(uint32_t args)
 {
-    uint32_t base_index = gbt_data.arpeggio_freq_index[1][0];
-    gbt_data.arpeggio_freq_index[1][1] = base_index + ((args >> 4) & 0xF);
-    gbt_data.arpeggio_freq_index[1][2] = base_index + (args & 0xF);
+    uint32_t base_index = gbt.arpeggio_freq_index[1][0];
+    gbt.arpeggio_freq_index[1][1] = base_index + ((args >> 4) & 0xF);
+    gbt.arpeggio_freq_index[1][2] = base_index + (args & 0xF);
 
-    gbt_data.arpeggio_enabled[1] = 1;
-    gbt_data.arpeggio_tick[1] = 1;
+    gbt.arpeggio_enabled[1] = 1;
+    gbt.arpeggio_tick[1] = 1;
 
     return 1;
 }
@@ -474,13 +478,13 @@ static int gbt_channel_2_set_effect(uint32_t effect, uint8_t data)
 
 static void channel2_refresh_registers(void)
 {
-    REG_SOUND2CNT_L = gbt_data.vol[1] | gbt_data.instr[1];
-    REG_SOUND2CNT_H = SOUND2CNT_H_RESTART | gbt_data.freq[1];
+    REG_SOUND2CNT_L = gbt.vol[1] | gbt.instr[1];
+    REG_SOUND2CNT_H = SOUND2CNT_H_RESTART | gbt.freq[1];
 }
 
 static const uint8_t *gbt_channel_2_handle(const uint8_t *data)
 {
-    if ((gbt_data.channels_enabled & GBT_ENABLE_CH2) == 0)
+    if ((gbt.channels_enabled & GBT_ENABLE_CH2) == 0)
     {
         // Channel is disabled. Increment pointer as needed
 
@@ -508,34 +512,34 @@ static const uint8_t *gbt_channel_2_handle(const uint8_t *data)
     if (b & BIT(7)) // Has frequency
     {
         uint32_t index = b & 0x7F;
-        gbt_data.arpeggio_freq_index[1][0] = index;
-        gbt_data.freq[1] = _gbt_get_freq_from_index(index);
+        gbt.arpeggio_freq_index[1][0] = index;
+        gbt.freq[1] = _gbt_get_freq_from_index(index);
 
         b = *data++;
 
         if (b & BIT(7)) // Freq + Instr + Effect
         {
-            gbt_data.instr[1] = (b & 0x30) << 2; // Instrument
+            gbt.instr[1] = (b & 0x30) << 2; // Instrument
             gbt_channel_2_set_effect(b & 0xF, *data++);
             channel2_refresh_registers();
         }
         else // Freq + Instr + Volume
         {
-            gbt_data.instr[1] = (b & 0x30) << 2; // Instrument
-            gbt_data.vol[1] = (b & 0xF) << 12;
+            gbt.instr[1] = (b & 0x30) << 2; // Instrument
+            gbt.vol[1] = (b & 0xF) << 12;
             channel2_refresh_registers();
         }
     }
     else if (b & BIT(6)) // Set instrument and effect
     {
 
-        gbt_data.instr[1] = (b & 0x30) << 2; // Instrument
+        gbt.instr[1] = (b & 0x30) << 2; // Instrument
         gbt_channel_2_set_effect(b & 0xF, *data++);
         channel2_refresh_registers();
     }
     else if (b & BIT(5)) // Set volume
     {
-        gbt_data.vol[1] = (b & 0xF) << 12;
+        gbt.vol[1] = (b & 0xF) << 12;
         channel2_refresh_registers();
     }
     else
@@ -552,9 +556,9 @@ static int channel2_update_effects(void)
     // Cut note
     // --------
 
-    if (gbt_data.cut_note_tick[1] == gbt_data.ticks_elapsed)
+    if (gbt.cut_note_tick[1] == gbt.ticks_elapsed)
     {
-        gbt_data.cut_note_tick[1] = 0xFF; // Disable cut note
+        gbt.cut_note_tick[1] = 0xFF; // Disable cut note
 
         REG_SOUND2CNT_L = 0; // Set volume to 0
         REG_SOUND2CNT_H = SOUND2CNT_H_RESTART;
@@ -563,16 +567,16 @@ static int channel2_update_effects(void)
     // Arpeggio
     // --------
 
-    if (gbt_data.arpeggio_enabled[1])
+    if (gbt.arpeggio_enabled[1])
     {
-        uint8_t tick = gbt_data.arpeggio_tick[1];
+        uint8_t tick = gbt.arpeggio_tick[1];
         if (tick == 2)
-            gbt_data.arpeggio_tick[1] = 0;
+            gbt.arpeggio_tick[1] = 0;
         else
-            gbt_data.arpeggio_tick[1] = tick + 1;
+            gbt.arpeggio_tick[1] = tick + 1;
 
-        uint32_t index = gbt_data.arpeggio_freq_index[1][tick];
-        gbt_data.freq[1] = _gbt_get_freq_from_index(index);
+        uint32_t index = gbt.arpeggio_freq_index[1][tick];
+        gbt.freq[1] = _gbt_get_freq_from_index(index);
 
         return 1;
     }
@@ -586,24 +590,24 @@ static int channel2_update_effects(void)
 
 static int gbt_ch3_pan(uint32_t args)
 {
-    gbt_data.pan[2] = args & 0x44;
-    return 0; // do not update registers, only NR51 at end.
+    gbt.pan[2] = args & 0x44;
+    return 0; // Panning is always updated
 }
 
 static int gbt_ch3_cut_note(uint32_t args)
 {
-    gbt_data.cut_note_tick[2] = args;
+    gbt.cut_note_tick[2] = args;
     return 0;
 }
 
 static int gbt_ch3_arpeggio(uint32_t args)
 {
-    uint32_t base_index = gbt_data.arpeggio_freq_index[2][0];
-    gbt_data.arpeggio_freq_index[2][1] = base_index + ((args >> 4) & 0xF);
-    gbt_data.arpeggio_freq_index[2][2] = base_index + (args & 0xF);
+    uint32_t base_index = gbt.arpeggio_freq_index[2][0];
+    gbt.arpeggio_freq_index[2][1] = base_index + ((args >> 4) & 0xF);
+    gbt.arpeggio_freq_index[2][2] = base_index + (args & 0xF);
 
-    gbt_data.arpeggio_enabled[2] = 1;
-    gbt_data.arpeggio_tick[2] = 1;
+    gbt.arpeggio_enabled[2] = 1;
+    gbt.arpeggio_tick[2] = 1;
 
     return 1;
 }
@@ -638,8 +642,8 @@ static void channel3_refresh_registers(void)
     // Disable channel and set bank 0 as writable
     REG_SOUND3CNT_L = SOUND3CNT_L_DISABLE | SOUND3CNT_L_BANK_SET(1);
 
-    uint32_t instr = gbt_data.instr[2];
-    if (gbt_data.channel3_loaded_instrument != instr)
+    uint32_t instr = gbt.instr[2];
+    if (gbt.channel3_loaded_instrument != instr)
     {
         for (int i = 0; i < 16; i += 2)
         {
@@ -647,20 +651,20 @@ static void channel3_refresh_registers(void)
                                  ((uint16_t)gbt_wave[instr][i + 1] << 8);
         }
 
-        gbt_data.channel3_loaded_instrument = instr;
+        gbt.channel3_loaded_instrument = instr;
     }
 
     REG_SOUND3CNT_L = SOUND3CNT_L_SIZE_32 | SOUND3CNT_L_BANK_SET(0) |
                       SOUND3CNT_L_ENABLE;
 
     // TODO: Support 75%
-    REG_SOUND3CNT_H = gbt_data.vol[2];
-    REG_SOUND3CNT_X = SOUND3CNT_X_RESTART | gbt_data.freq[2];
+    REG_SOUND3CNT_H = gbt.vol[2];
+    REG_SOUND3CNT_X = SOUND3CNT_X_RESTART | gbt.freq[2];
 }
 
 static const uint8_t *gbt_channel_3_handle(const uint8_t *data)
 {
-    if ((gbt_data.channels_enabled & GBT_ENABLE_CH3) == 0)
+    if ((gbt.channels_enabled & GBT_ENABLE_CH3) == 0)
     {
         // Channel is disabled. Increment pointer as needed
 
@@ -688,22 +692,22 @@ static const uint8_t *gbt_channel_3_handle(const uint8_t *data)
     if (b & BIT(7)) // Has frequency
     {
         uint32_t index = b & 0x7F;
-        gbt_data.arpeggio_freq_index[2][0] = index;
-        gbt_data.freq[2] = _gbt_get_freq_from_index(index);
+        gbt.arpeggio_freq_index[2][0] = index;
+        gbt.freq[2] = _gbt_get_freq_from_index(index);
 
         b = *data++;
 
         if (b & BIT(7)) // Freq + Instr + Effect
         {
-            gbt_data.instr[2] = b & 0x0F; // Instrument
+            gbt.instr[2] = b & 0x0F; // Instrument
             // Effects 8-15 not available from this mode
             gbt_channel_3_set_effect((b >> 4) & 0x7, *data++);
             channel3_refresh_registers();
         }
         else // Freq + Instr + Volume
         {
-            gbt_data.instr[2] = b & 0x0F; // Instrument
-            gbt_data.vol[2] = (b & 0x30) << 9;
+            gbt.instr[2] = b & 0x0F; // Instrument
+            gbt.vol[2] = (b & 0x70) << 9;
             channel3_refresh_registers();
         }
     }
@@ -714,7 +718,7 @@ static const uint8_t *gbt_channel_3_handle(const uint8_t *data)
     }
     else if (b & BIT(5)) // Set volume
     {
-        gbt_data.vol[2] = (b & 0x3) << 13;
+        gbt.vol[2] = (b & 0x7) << 13;
         channel3_refresh_registers();
     }
     else
@@ -731,9 +735,9 @@ static int channel3_update_effects(void)
     // Cut note
     // --------
 
-    if (gbt_data.cut_note_tick[2] == gbt_data.ticks_elapsed)
+    if (gbt.cut_note_tick[2] == gbt.ticks_elapsed)
     {
-        gbt_data.cut_note_tick[2] = 0xFF; // Disable cut note
+        gbt.cut_note_tick[2] = 0xFF; // Disable cut note
 
         REG_SOUND3CNT_X = SOUND3CNT_X_RESTART;
         REG_SOUND3CNT_H = SOUND3CNT_H_VOLUME_0;
@@ -743,16 +747,16 @@ static int channel3_update_effects(void)
     // Arpeggio
     // --------
 
-    if (gbt_data.arpeggio_enabled[2])
+    if (gbt.arpeggio_enabled[2])
     {
-        uint8_t tick = gbt_data.arpeggio_tick[2];
+        uint8_t tick = gbt.arpeggio_tick[2];
         if (tick == 2)
-            gbt_data.arpeggio_tick[2] = 0;
+            gbt.arpeggio_tick[2] = 0;
         else
-            gbt_data.arpeggio_tick[2] = tick + 1;
+            gbt.arpeggio_tick[2] = tick + 1;
 
-        uint32_t index = gbt_data.arpeggio_freq_index[2][tick];
-        gbt_data.freq[2] = _gbt_get_freq_from_index(index);
+        uint32_t index = gbt.arpeggio_freq_index[2][tick];
+        gbt.freq[2] = _gbt_get_freq_from_index(index);
 
         return 1;
     }
@@ -766,13 +770,13 @@ static int channel3_update_effects(void)
 
 static int gbt_ch4_pan(uint32_t args)
 {
-    gbt_data.pan[3] = args & 0x88;
-    return 0; // do not update registers, only NR51 at end.
+    gbt.pan[3] = args & 0x88;
+    return 0; // Panning is always updated
 }
 
 static int gbt_ch4_cut_note(uint32_t args)
 {
-    gbt_data.cut_note_tick[3] = args;
+    gbt.cut_note_tick[3] = args;
     return 0;
 }
 
@@ -803,13 +807,13 @@ static int gbt_channel_4_set_effect(uint32_t effect, uint8_t data)
 
 static void channel4_refresh_registers(void)
 {
-    REG_SOUND4CNT_L = gbt_data.vol[3];
-    REG_SOUND4CNT_H = SOUND2CNT_H_RESTART | gbt_data.instr[3];
+    REG_SOUND4CNT_L = gbt.vol[3];
+    REG_SOUND4CNT_H = SOUND2CNT_H_RESTART | gbt.instr[3];
 }
 
 static const uint8_t *gbt_channel_4_handle(const uint8_t *data)
 {
-    if ((gbt_data.channels_enabled & GBT_ENABLE_CH4) == 0)
+    if ((gbt.channels_enabled & GBT_ENABLE_CH4) == 0)
     {
         // Channel is disabled. Increment pointer as needed
 
@@ -837,7 +841,7 @@ static const uint8_t *gbt_channel_4_handle(const uint8_t *data)
     if (b & BIT(7)) // Has instrument
     {
         uint32_t index = b & 0x1F;
-        gbt_data.instr[3] = gbt_noise[index];
+        gbt.instr[3] = gbt_noise[index];
 
         b = *data++;
 
@@ -848,7 +852,7 @@ static const uint8_t *gbt_channel_4_handle(const uint8_t *data)
         }
         else // Instr + Volume
         {
-            gbt_data.vol[3] = (b & 0xF) << 12;
+            gbt.vol[3] = (b & 0xF) << 12;
             channel4_refresh_registers();
         }
     }
@@ -859,7 +863,7 @@ static const uint8_t *gbt_channel_4_handle(const uint8_t *data)
     }
     else if (b & BIT(5)) // Set volume
     {
-        gbt_data.vol[3] = (b & 0xF) << 12;
+        gbt.vol[3] = (b & 0xF) << 12;
         channel4_refresh_registers();
     }
     else
@@ -876,9 +880,9 @@ static int channel4_update_effects(void)
     // Cut note
     // --------
 
-    if (gbt_data.cut_note_tick[3] == gbt_data.ticks_elapsed)
+    if (gbt.cut_note_tick[3] == gbt.ticks_elapsed)
     {
-        gbt_data.cut_note_tick[3] = 0xFF; // Disable cut note
+        gbt.cut_note_tick[3] = 0xFF; // Disable cut note
 
         REG_SOUND4CNT_L = 0; // Set volume to 0
         REG_SOUND4CNT_H = SOUND4CNT_H_RESTART;
@@ -909,32 +913,32 @@ static void gbt_update_effects_internal(void)
 void gbt_update(void)
 {
     // If not playing, return
-    if (gbt_data.playing == 0)
+    if (gbt.playing == 0)
         return;
 
     // Handle tick counter
 
-    gbt_data.ticks_elapsed++;
-    if (gbt_data.ticks_elapsed != gbt_data.speed)
+    gbt.ticks_elapsed++;
+    if (gbt.ticks_elapsed != gbt.speed)
     {
         // Update effects and exit
         gbt_update_effects_internal();
         return;
     }
 
-    gbt_data.ticks_elapsed = 0; // reset tick counter
+    gbt.ticks_elapsed = 0; // reset tick counter
 
     // Clear tick-based effects
     // ------------------------
 
-    gbt_data.arpeggio_enabled[0] = 0; // Disable arpeggio
-    gbt_data.arpeggio_enabled[1] = 0;
-    gbt_data.arpeggio_enabled[2] = 0;
+    gbt.arpeggio_enabled[0] = 0; // Disable arpeggio
+    gbt.arpeggio_enabled[1] = 0;
+    gbt.arpeggio_enabled[2] = 0;
 
-    gbt_data.cut_note_tick[0] = 0xFF; // Disable cut note
-    gbt_data.cut_note_tick[1] = 0xFF;
-    gbt_data.cut_note_tick[2] = 0xFF;
-    gbt_data.cut_note_tick[3] = 0xFF;
+    gbt.cut_note_tick[0] = 0xFF; // Disable cut note
+    gbt.cut_note_tick[1] = 0xFF;
+    gbt.cut_note_tick[2] = 0xFF;
+    gbt.cut_note_tick[3] = 0xFF;
 
     // Update effects
     // --------------
@@ -944,57 +948,57 @@ void gbt_update(void)
     // Check if last step
     // ------------------
 
-    if (gbt_data.have_to_stop_next_step)
+    if (gbt.have_to_stop_next_step)
     {
         gbt_stop();
-        gbt_data.have_to_stop_next_step = 0;
+        gbt.have_to_stop_next_step = 0;
         return;
     }
 
     // Increment step/pattern
     // ----------------------
 
-    gbt_data.current_step++;
-    if (gbt_data.current_step == 64)
+    gbt.current_step++;
+    if (gbt.current_step == 64)
     {
         // Increment pattern
 
-        gbt_data.current_step = 0;
+        gbt.current_step = 0;
 
-        gbt_data.current_pattern++;
+        gbt.current_pattern++;
 
-        gbt_get_pattern_ptr(gbt_data.current_pattern);
+        gbt_get_pattern_ptr(gbt.current_pattern);
 
-        if (gbt_data.current_step_data_ptr == NULL)
+        if (gbt.current_step_data_ptr == NULL)
         {
             // The song has ended
 
-            if (gbt_data.loop_enabled)
+            if (gbt.loop_enabled)
             {
                 // If loop is enabled, jump to pattern 0
-                gbt_data.current_pattern = 0;
-                gbt_get_pattern_ptr(gbt_data.current_pattern);
+                gbt.current_pattern = 0;
+                gbt_get_pattern_ptr(gbt.current_pattern);
             }
             else
             {
                 // If loop is disabled, stop song
                 // Stop it next step, if not this step won't be played
 
-                gbt_data.have_to_stop_next_step = 1;
+                gbt.have_to_stop_next_step = 1;
             }
         }
     }
 
     // Update channels
 
-    const uint8_t *ptr = gbt_data.current_step_data_ptr;
+    const uint8_t *ptr = gbt.current_step_data_ptr;
 
     ptr = gbt_channel_1_handle(ptr);
     ptr = gbt_channel_2_handle(ptr);
     ptr = gbt_channel_3_handle(ptr);
     ptr = gbt_channel_4_handle(ptr);
 
-    gbt_data.current_step_data_ptr = ptr;
+    gbt.current_step_data_ptr = ptr;
 
     // Handle panning
 
@@ -1004,24 +1008,24 @@ void gbt_update(void)
         SOUNDCNT_L_PSG_3_ENABLE_RIGHT | SOUNDCNT_L_PSG_3_ENABLE_LEFT |
         SOUNDCNT_L_PSG_4_ENABLE_RIGHT | SOUNDCNT_L_PSG_4_ENABLE_LEFT;
 
-    uint16_t new_pan = gbt_data.pan[0] | gbt_data.pan[1] | gbt_data.pan[2] | gbt_data.pan[3];
+    uint16_t new_pan = gbt.pan[0] | gbt.pan[1] | gbt.pan[2] | gbt.pan[3];
 
     REG_SOUNDCNT_L = (REG_SOUNDCNT_L & ~mask) | (new_pan << 8);
 
     // Check if any effect has changed the pattern or step
-    if (gbt_data.update_pattern_pointers)
+    if (gbt.update_pattern_pointers)
     {
-        gbt_data.update_pattern_pointers = 0; // clear flag
+        gbt.update_pattern_pointers = 0; // clear flag
 
-        gbt_data.have_to_stop_next_step = 0; // clear stop flag
+        gbt.have_to_stop_next_step = 0; // clear stop flag
 
-        gbt_get_pattern_ptr(gbt_data.current_pattern); // set ptr to start of pattern
+        gbt_get_pattern_ptr(gbt.current_pattern); // set ptr to start of pattern
 
         // Search the step
 
-        const uint8_t *src_search = gbt_data.current_step_data_ptr;
+        const uint8_t *src_search = gbt.current_step_data_ptr;
 
-        for (int i = 0; i < 4 * gbt_data.current_step; i++)
+        for (int i = 0; i < 4 * gbt.current_step; i++)
         {
             uint8_t b = *src_search++;
 
@@ -1038,6 +1042,6 @@ void gbt_update(void)
             }
         }
 
-        gbt_data.current_step_data_ptr = src_search;
+        gbt.current_step_data_ptr = src_search;
     }
 }

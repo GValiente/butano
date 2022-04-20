@@ -1,8 +1,8 @@
-// GBT Player v3.0.9
+// GBT Player v3.1.0
 //
 // SPDX-License-Identifier: MIT
 //
-// Copyright (c) 2009-2020, Antonio Niño Díaz <antonio_nd@outlook.com>
+// Copyright (c) 2009-2022 Antonio Niño Díaz <antonio_nd@outlook.com>
 
 #ifndef GBT_PLAYER_H__
 #define GBT_PLAYER_H__

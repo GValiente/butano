@@ -146,7 +146,8 @@ def process_dmg_audio(mod2gbt_file_path, audio_folder_paths, build_folder_path):
         sys.stdout.flush()
 
         if len(mod2gbt_file_path) == 0:
-            raise ValueError('mod2gbt file path not specified')
+            raise ValueError('mod2gbt file path not specified. You must specify it in the MOD2GBT variable '
+                             'of your project\'s Makefile.')
 
         if not os.path.exists(mod2gbt_file_path):
             raise ValueError('mod2gbt file does not exist: ' + mod2gbt_file_path)

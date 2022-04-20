@@ -789,13 +789,19 @@
  *
  * Shows how to play Direct Sound music and sound effects with Butano.
  *
- * <td> **Audio player**
+ * <td> **DMG audio**
+ *
+ * @image html examples_dmg_audio.png
+ *
+ * Simple DMG music playback example.
+ *
+ * <tr><td> **Audio player**
  *
  * @image html examples_audio_player.png
  *
  * Basic audio player example.
  *
- * <tr><td> @ref blending
+ * <td> @ref blending
  *
  * @image html examples_blending.png
  *
@@ -807,13 +813,13 @@
  *
  * Shows how a camera affects the displayed elements.
  *
- * <td> @ref core
+ * <tr><td> @ref core
  *
  * @image html examples_core.png
  *
  * Shows how to sleep and reset the GBA among other things.
  *
- * <tr><td> **Dynamic affine background**
+ * <td> **Dynamic affine background**
  *
  * @image html examples_dynamic_affine_bg.png
  *
@@ -825,13 +831,13 @@
  *
  * Basic dynamic regular background example.
  *
- * <td> **External tool**
+ * <tr><td> **External tool**
  *
  * @image html examples_external_tool.png
  *
  * Shows how to call an external tool from the project's `Makefile`.
  *
- * <tr><td> @ref green_swap
+ * <td> @ref green_swap
  *
  * @image html examples_green_swap.png
  *
@@ -843,13 +849,13 @@
  *
  * Simple keypad status demo.
  *
- * <td> @ref link
+ * <tr><td> @ref link
  *
  * @image html examples_link.png
  *
  * Multiplayer communication through a link cable.
  *
- * <tr><td> @ref log
+ * <td> @ref log
  *
  * @image html examples_log.png
  *
@@ -861,13 +867,13 @@
  *
  * Basic SNES mode 7 like background example.
  *
- * <td> @ref mosaic
+ * <tr><td> @ref mosaic
  *
  * @image html examples_mosaic.png
  *
  * Sprites and backgrounds mosaic effects.
  *
- * <tr><td> @ref palette
+ * <td> @ref palette
  *
  * @image html examples_palettes.png
  *
@@ -879,13 +885,13 @@
  *
  * Showcases flat polygons rendering with sprites.
  *
- * <td> @ref profiler
+ * <tr><td> @ref profiler
  *
  * @image html examples_profiler.png
  *
  * Basic code blocks profiling.
  *
- * <tr><td> @ref regular_bg
+ * <td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
@@ -897,13 +903,13 @@
  *
  * Vibration showcase (if your cart supports it).
  *
- * <td> @ref affine_mat "Sprite affine matrices"
+ * <tr><td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
  * Demonstrates usage of one affine matrix for multiple sprites.
  *
- * <tr><td> @ref sprite
+ * <td> @ref sprite
  *
  * @image html examples_sprites.png
  *
@@ -915,13 +921,13 @@
  *
  * SRAM reads and writes with Butano.
  *
- * <td> @ref text
+ * <tr><td> @ref text
  *
  * @image html examples_text.png
  *
  * Showcase of Butano sprite text rendering.
  *
- * <tr><td> **Textured polygons**
+ * <td> **Textured polygons**
  *
  * @image html examples_texture_polygons.png
  *
@@ -933,7 +939,7 @@
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <td> **World map**
+ * <tr><td> **World map**
  *
  * @image html examples_world_map.png
  *
@@ -1848,6 +1854,7 @@
  *
  * * bn::dmg_music and bn::dmg_music_item added (yes, music playback using DMG channels is now supported
  * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
+ * See the `dmg_audio` example to learn how to import and play it.
  * * @ref getting_started Python setup improved.
  * * <a href="https://cinemint.itch.io/tremblay-island">Tremblay Island</a> added to `README.md`.
  *

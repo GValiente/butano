@@ -1,14 +1,14 @@
-GBT PLAYER v3.0.9
+GBT PLAYER v3.1.0
 =================
 
 Music player library and converter kit for Game Boy and Game Boy Color that can
-be used with `RGBDS <https://github.com/bentley/rgbds>`__ (and, with
+be used with `RGBDS <https://github.com/gbdev/rgbds>`__ (and, with
 limitations, with GBDK). It is also available for Game Boy Advance as a C
 library.
 
 Licensed under the MIT license.
 
-Copyright (C) 2009-2022 Antonio Niño Díaz.
+Copyright (C) 2009-2022 Antonio Niño Díaz
 
 All rights reserved.
 
@@ -84,10 +84,12 @@ the examples would be too simple for a makefile to be useful.
 
 ``effects_test.gb`` tests arpeggio and "cut note" effects.
 
+``volume_test.gb`` tests the range of volumes supported by each channel.
+
 The mod file isn't 100% accurate. Sounds are a bit different from the real ones,
 so you should make roms and test them in emulators or real GB often.
 
-If you don't like the speed convertion done by ``mod2gbt`` (from 50 Hz to 60 Hz)
+If you don't like the speed conversion done by ``mod2gbt`` (from 50 Hz to 60 Hz)
 you can use the ``-speed`` argument for ``mod2gbt``. The speed will be higher
 and it will probably have to be adjusted manually.
 
@@ -127,6 +129,10 @@ path to your ``lcc`` binary and double clic the bat.
 
 Changelog
 ---------
+
+- Version 3.1.0 (2022/4/19)
+
+  - Bugfix release for GBA.
 
 - Version 3.0.9 (2022/4/18)
 

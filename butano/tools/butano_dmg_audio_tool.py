@@ -42,7 +42,7 @@ class DmgAudioFileInfo:
             return [self.__file_name, exc]
 
     def __execute_command(self, mod2gbt_file_path, output_tag):
-        command = [mod2gbt_file_path, self.__file_path, output_tag, '-gba']
+        command = [mod2gbt_file_path, self.__file_path, output_tag]
         command = ' '.join(command)
 
         try:
@@ -70,12 +70,11 @@ class DmgAudioFileInfo:
             header_file.write('\n')
             header_file.write('#include "bn_dmg_music_item.h"' + '\n')
             header_file.write('\n')
-            header_file.write('extern const uint8_t ' + output_tag + '_data[];' + '\n')
+            header_file.write('extern const uint8_t ' + output_tag + '[];' + '\n')
             header_file.write('\n')
             header_file.write('namespace bn::dmg_music_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr inline dmg_music_item ' + name + '(*' + output_tag +
-                              '_data);\n')
+            header_file.write('    constexpr inline dmg_music_item ' + name + '(*' + output_tag + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')

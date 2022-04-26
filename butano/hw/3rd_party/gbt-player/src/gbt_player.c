@@ -1,4 +1,4 @@
-// GBT Player v3.1.0
+// GBT Player v4.0.1
 //
 // SPDX-License-Identifier: MIT
 //
@@ -17,6 +17,9 @@
 typedef int (*effect_handler)(uint32_t args);
 
 typedef struct {
+
+    // Array of commands to run before the start of the song (or NULL)
+    const uint8_t *startup_cmds_ptr;
 
     // Pointer to the pattern pointer array
     uint8_t * const *pattern_array_ptr;
@@ -52,10 +55,9 @@ typedef struct {
     // Cut note
     uint8_t cut_note_tick[4]; // If tick == gbt.cut_note_tick, stop note.
 
-    // Last step of last pattern this is set to 1
-    uint8_t have_to_stop_next_step;
-
-    uint8_t update_pattern_pointers; // set to 1 by jump effects
+    uint8_t jump_requested; // set to 1 by jump effects
+    uint8_t jump_target_step;
+    uint8_t jump_target_pattern;
 
 } gbt_player_info_t;
 
@@ -93,19 +95,59 @@ static void gbt_get_pattern_ptr(int pattern_number)
     gbt.current_step_data_ptr = gbt.pattern_array_ptr[pattern_number];
 }
 
+static void gbt_run_startup_commands(const uint8_t *ptr)
+{
+    if (ptr == NULL)
+        return;
+
+    while (1)
+    {
+        uint8_t cmd = *ptr++;
+
+        if (cmd == 0) // End setup
+        {
+            break;
+        }
+        else if (cmd == 1) // Initial speed
+        {
+            gbt.speed = *ptr++;
+        }
+        else if (cmd == 2) // Initial panning
+        {
+            gbt.pan[0] = *ptr++;
+            gbt.pan[1] = *ptr++;
+            gbt.pan[2] = *ptr++;
+            gbt.pan[3] = *ptr++;
+        }
+    }
+}
+
 void gbt_play(const void *song, int speed)
 {
-    gbt.pattern_array_ptr = song;
+    // If the user hasn't specified a speed, set the default value
+
+    if (speed <= 0)
+        speed = 6;
+
+    // Load pointers to startup commands and to list of patterns
+
+    uint8_t * const *ptr = song;
+
+    gbt.startup_cmds_ptr = ptr[0];
+    gbt.pattern_array_ptr = ptr;
+    gbt.pattern_array_ptr++;
+
+    // Initialize player state
+
     gbt.speed = speed;
 
     gbt_get_pattern_ptr(0);
 
-    gbt.current_step = -1;
+    gbt.current_step = 0;
     gbt.current_pattern = 0;
     gbt.ticks_elapsed = 0;
     gbt.loop_enabled = 0;
-    gbt.have_to_stop_next_step = 0;
-    gbt.update_pattern_pointers = 0;
+    gbt.jump_requested = 0;
 
     // Force refresh as soon as possible
     gbt.ticks_elapsed = gbt.speed - 1;
@@ -142,6 +184,12 @@ void gbt_play(const void *song, int speed)
     gbt.cut_note_tick[2] = 0xFF;
     gbt.cut_note_tick[3] = 0xFF;
 
+    // Run startup commands after internal player status has been initialized
+
+    gbt_run_startup_commands(gbt.startup_cmds_ptr);
+
+    // Initialize hardware registers
+
     REG_SOUNDCNT_X = SOUNDCNT_X_MASTER_ENABLE;
 
     REG_SOUNDCNT_L = 0;
@@ -162,6 +210,8 @@ void gbt_play(const void *song, int speed)
 
     REG_SOUNDCNT_L = SOUNDCNT_L_PSG_VOL_RIGHT_SET(7)
                    | SOUNDCNT_L_PSG_VOL_LEFT_SET(7);
+
+    // Everything is ready
 
     gbt.playing = 1;
 }
@@ -234,33 +284,31 @@ static int gbt_ch1234_speed(uint32_t args)
 
 static int gbt_ch1234_jump_pattern(uint32_t args)
 {
-    gbt.current_pattern = args;
-
-    gbt.current_step = 0;
-    gbt.have_to_stop_next_step = 0; // Clear stop flag
-
-    gbt.update_pattern_pointers = 1;
+    gbt.jump_requested = 1;
+    gbt.jump_target_step = 0;
+    gbt.jump_target_pattern = args;
 
     return 0;
 }
 
 static int gbt_ch1234_jump_position(uint32_t args)
 {
-    gbt.current_step = args;
-
-    gbt.current_pattern++;
-
-    // Check to see if jump puts us past end of song
-    gbt_get_pattern_ptr(gbt.current_pattern);
-    if (gbt.current_step_data_ptr == NULL)
-    {
-        gbt.current_pattern = 0;
-    }
-
-    gbt.update_pattern_pointers = 1;
+    gbt.jump_requested = 1;
+    gbt.jump_target_step = args;
+    gbt.jump_target_pattern = gbt.current_pattern + 1;
 
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
+#define HAS_VOLUME      BIT(4)
+#define HAS_INSTRUMENT  BIT(5)
+#define HAS_EFFECT      BIT(6)
+#define HAS_NOTE        BIT(7)
+#define HAS_KIT         BIT(7)
 
 // -----------------------------------------------------------------------------
 // --------------------------------- Channel 1 ---------------------------------
@@ -324,69 +372,60 @@ static void channel1_refresh_registers(void)
 
 static const uint8_t *gbt_channel_1_handle(const uint8_t *data)
 {
+    // Calculate pointer to next channel
+    // Note: The volume bit doesn't affect the final size.
+    const uint8_t sizes[8] = { 1, 2, 3, 3, 2, 3, 4, 4 };
+    uint8_t bits = (*data) >> 5;
+    const uint8_t *next = data + sizes[bits];
+
+    // If the channel is disabled, exit
     if ((gbt.channels_enabled & GBT_ENABLE_CH1) == 0)
     {
-        // Channel is disabled. Increment pointer as needed
-
-        uint8_t b = *data++;
-
-        if (b & BIT(7))
-        {
-            b = *data++;
-
-            if (b & BIT(7))
-                data++;
-        }
-        else if (b & BIT(6))
-        {
-            data++;
-        }
-
-        return data;
+        return next;
     }
 
-    // Channel 1 is enabled
+    uint8_t header = *data++;
 
-    uint8_t b = *data++;
+    int has_volume = header & HAS_VOLUME;
+    int has_instrument = header & HAS_INSTRUMENT;
+    int has_effect = header & HAS_EFFECT;
+    int has_note = header & HAS_NOTE;
 
-    if (b & BIT(7)) // Has frequency
+    int has_to_update_registers = 0;
+
+    if (has_volume)
     {
-        uint32_t index = b & 0x7F;
+        gbt.vol[0] = (header & 0xF) << 12;
+        has_to_update_registers = 1;
+    }
+
+    if (has_note)
+    {
+        uint32_t index = *data++ & 0x7F;
         gbt.arpeggio_freq_index[0][0] = index;
         gbt.freq[0] = _gbt_get_freq_from_index(index);
-
-        b = *data++;
-
-        if (b & BIT(7)) // Freq + Instr + Effect
-        {
-            gbt.instr[0] = (b & 0x30) << 2; // Instrument
-            gbt_channel_1_set_effect(b & 0xF, *data++);
-            channel1_refresh_registers();
-        }
-        else // Freq + Instr + Volume
-        {
-            gbt.instr[0] = (b & 0x30) << 2; // Instrument
-            gbt.vol[0] = (b & 0xF) << 12;
-            channel1_refresh_registers();
-        }
+        has_to_update_registers = 1;
     }
-    else if (b & BIT(6)) // Set instrument and effect
+
+    if (has_instrument)
     {
-        gbt.instr[0] = (b & 0x30) << 2; // Instrument
-        gbt_channel_1_set_effect(b & 0xF, *data++);
+        gbt.instr[0] = (*data & 0x30) << 2;
+        has_to_update_registers = 1;
+    }
+
+    if (has_effect)
+    {
+        uint8_t effect = (*data++) & 0x0F;
+        uint8_t args = *data;
+        has_to_update_registers |= gbt_channel_1_set_effect(effect, args);
+    }
+
+    if (has_to_update_registers)
+    {
         channel1_refresh_registers();
     }
-    else if (b & BIT(5)) // Set volume
-    {
-        gbt.vol[0] = (b & 0xF) << 12;
-        channel1_refresh_registers();
-    }
-    else
-    {
-        // NOP
-    }
 
-    return data;
+    return next;
 }
 
 // Returns 1 if it needed to update sound registers
@@ -484,70 +523,60 @@ static void channel2_refresh_registers(void)
 
 static const uint8_t *gbt_channel_2_handle(const uint8_t *data)
 {
+    // Calculate pointer to next channel
+    // Note: The volume bit doesn't affect the final size.
+    const uint8_t sizes[8] = { 1, 2, 3, 3, 2, 3, 4, 4 };
+    uint8_t bits = (*data) >> 5;
+    const uint8_t *next = data + sizes[bits];
+
+    // If the channel is disabled, exit
     if ((gbt.channels_enabled & GBT_ENABLE_CH2) == 0)
     {
-        // Channel is disabled. Increment pointer as needed
-
-        uint8_t b = *data++;
-
-        if (b & BIT(7))
-        {
-            b = *data++;
-
-            if (b & BIT(7))
-                data++;
-        }
-        else if (b & BIT(6))
-        {
-            data++;
-        }
-
-        return data;
+        return next;
     }
 
-    // Channel 2 is enabled
+    uint8_t header = *data++;
 
-    uint8_t b = *data++;
+    int has_volume = header & HAS_VOLUME;
+    int has_instrument = header & HAS_INSTRUMENT;
+    int has_effect = header & HAS_EFFECT;
+    int has_note = header & HAS_NOTE;
 
-    if (b & BIT(7)) // Has frequency
+    int has_to_update_registers = 0;
+
+    if (has_volume)
     {
-        uint32_t index = b & 0x7F;
+        gbt.vol[1] = (header & 0xF) << 12;
+        has_to_update_registers = 1;
+    }
+
+    if (has_note)
+    {
+        uint32_t index = *data++ & 0x7F;
         gbt.arpeggio_freq_index[1][0] = index;
         gbt.freq[1] = _gbt_get_freq_from_index(index);
-
-        b = *data++;
-
-        if (b & BIT(7)) // Freq + Instr + Effect
-        {
-            gbt.instr[1] = (b & 0x30) << 2; // Instrument
-            gbt_channel_2_set_effect(b & 0xF, *data++);
-            channel2_refresh_registers();
-        }
-        else // Freq + Instr + Volume
-        {
-            gbt.instr[1] = (b & 0x30) << 2; // Instrument
-            gbt.vol[1] = (b & 0xF) << 12;
-            channel2_refresh_registers();
-        }
+        has_to_update_registers = 1;
     }
-    else if (b & BIT(6)) // Set instrument and effect
-    {
 
-        gbt.instr[1] = (b & 0x30) << 2; // Instrument
-        gbt_channel_2_set_effect(b & 0xF, *data++);
+    if (has_instrument)
+    {
+        gbt.instr[1] = (*data & 0x30) << 2;
+        has_to_update_registers = 1;
+    }
+
+    if (has_effect)
+    {
+        uint8_t effect = (*data++) & 0x0F;
+        uint8_t args = *data;
+        has_to_update_registers |= gbt_channel_2_set_effect(effect, args);
+    }
+
+    if (has_to_update_registers)
+    {
         channel2_refresh_registers();
     }
-    else if (b & BIT(5)) // Set volume
-    {
-        gbt.vol[1] = (b & 0xF) << 12;
-        channel2_refresh_registers();
-    }
-    else
-    {
-        // NOP
-    }
 
-    return data;
+    return next;
 }
 
 // Returns 1 if it needed to update sound registers
@@ -657,76 +686,66 @@ static void channel3_refresh_registers(void)
     REG_SOUND3CNT_L = SOUND3CNT_L_SIZE_32 | SOUND3CNT_L_BANK_SET(0) |
                       SOUND3CNT_L_ENABLE;
 
-    // TODO: Support 75%
     REG_SOUND3CNT_H = gbt.vol[2];
     REG_SOUND3CNT_X = SOUND3CNT_X_RESTART | gbt.freq[2];
 }
 
 static const uint8_t *gbt_channel_3_handle(const uint8_t *data)
 {
+    // Calculate pointer to next channel
+    // Note: The volume bit doesn't affect the final size.
+    const uint8_t sizes[8] = { 1, 2, 3, 3, 2, 3, 4, 4 };
+    uint8_t bits = (*data) >> 5;
+    const uint8_t *next = data + sizes[bits];
+
+    // If the channel is disabled, exit
     if ((gbt.channels_enabled & GBT_ENABLE_CH3) == 0)
     {
-        // Channel is disabled. Increment pointer as needed
-
-        uint8_t b = *data++;
-
-        if (b & BIT(7))
-        {
-            b = *data++;
-
-            if (b & BIT(7))
-                data++;
-        }
-        else if (b & BIT(6))
-        {
-            data++;
-        }
-
-        return data;
+        return next;
     }
 
-    // Channel 3 is enabled
+    uint8_t header = *data++;
 
-    uint8_t b = *data++;
+    int has_volume = header & HAS_VOLUME;
+    int has_instrument = header & HAS_INSTRUMENT;
+    int has_effect = header & HAS_EFFECT;
+    int has_note = header & HAS_NOTE;
 
-    if (b & BIT(7)) // Has frequency
+    int has_to_update_registers = 0;
+
+    if (has_volume)
     {
-        uint32_t index = b & 0x7F;
+        gbt.vol[2] = (header & 0x7) << 13;
+        has_to_update_registers = 1;
+    }
+
+    if (has_note)
+    {
+        uint32_t index = *data++ & 0x7F;
         gbt.arpeggio_freq_index[2][0] = index;
         gbt.freq[2] = _gbt_get_freq_from_index(index);
-
-        b = *data++;
-
-        if (b & BIT(7)) // Freq + Instr + Effect
-        {
-            gbt.instr[2] = b & 0x0F; // Instrument
-            // Effects 8-15 not available from this mode
-            gbt_channel_3_set_effect((b >> 4) & 0x7, *data++);
-            channel3_refresh_registers();
-        }
-        else // Freq + Instr + Volume
-        {
-            gbt.instr[2] = b & 0x0F; // Instrument
-            gbt.vol[2] = (b & 0x70) << 9;
-            channel3_refresh_registers();
-        }
+        has_to_update_registers = 1;
     }
-    else if (b & BIT(6)) // Set effect
+
+    if (has_instrument)
     {
-        if (gbt_channel_3_set_effect(b & 0xF, *data++))
-            channel3_refresh_registers();
+        gbt.instr[2] = (*data & 0x70) >> 4;
+        has_to_update_registers = 1;
     }
-    else if (b & BIT(5)) // Set volume
+
+    if (has_effect)
     {
-        gbt.vol[2] = (b & 0x7) << 13;
+        uint8_t effect = (*data++) & 0x0F;
+        uint8_t args = *data;
+        has_to_update_registers |= gbt_channel_3_set_effect(effect, args);
+    }
+
+    if (has_to_update_registers)
+    {
         channel3_refresh_registers();
     }
-    else
-    {
-        // NOP
-    }
 
-    return data;
+    return next;
 }
 
 // Returns 1 if it needed to update sound registers
@@ -808,70 +827,57 @@ static int gbt_channel_4_set_effect(uint32_t effect, uint8_t data)
 static void channel4_refresh_registers(void)
 {
     REG_SOUND4CNT_L = gbt.vol[3];
-    REG_SOUND4CNT_H = SOUND2CNT_H_RESTART | gbt.instr[3];
+    REG_SOUND4CNT_H = SOUND4CNT_H_RESTART | gbt.instr[3];
 }
 
 static const uint8_t *gbt_channel_4_handle(const uint8_t *data)
 {
+    // Calculate pointer to next channel
+    // Note: The volume bit doesn't affect the final size.
+    const uint8_t sizes[4] = { 1, 3, 2, 4 };
+    uint8_t bits = (*data) >> 6;
+    const uint8_t *next = data + sizes[bits];
+
+    // If the channel is disabled, exit
     if ((gbt.channels_enabled & GBT_ENABLE_CH4) == 0)
     {
-        // Channel is disabled. Increment pointer as needed
-
-        uint8_t b = *data++;
-
-        if (b & BIT(7))
-        {
-            b = *data++;
-
-            if (b & BIT(7))
-                data++;
-        }
-        else if (b & BIT(6))
-        {
-            data++;
-        }
-
-        return data;
+        return next;
     }
 
-    // Channel 4 is enabled
+    uint8_t header = *data++;
 
-    uint8_t b = *data++;
+    int has_volume = header & HAS_VOLUME;
+    int has_effect = header & HAS_EFFECT;
+    int has_kit = header & HAS_KIT;
 
-    if (b & BIT(7)) // Has instrument
+    int has_to_update_registers = 0;
+
+    if (has_volume)
     {
-        uint32_t index = b & 0x1F;
+        gbt.vol[3] = (header & 0xF) << 12;
+        has_to_update_registers = 1;
+    }
+
+    if (has_kit)
+    {
+        uint32_t index = *data++ & 0x0F;
         gbt.instr[3] = gbt_noise[index];
-
-        b = *data++;
-
-        if (b & BIT(7)) // Instr + Effect
-        {
-            gbt_channel_4_set_effect(b & 0xF, *data++);
-            channel4_refresh_registers();
-        }
-        else // Instr + Volume
-        {
-            gbt.vol[3] = (b & 0xF) << 12;
-            channel4_refresh_registers();
-        }
+        has_to_update_registers = 1;
     }
-    else if (b & BIT(6)) // Set effect
+
+    if (has_effect)
     {
-        if (gbt_channel_4_set_effect(b & 0xF, *data++))
-            channel4_refresh_registers();
+        uint8_t effect = (*data++) & 0x0F;
+        uint8_t args = *data++;
+        has_to_update_registers |= gbt_channel_4_set_effect(effect, args);
     }
-    else if (b & BIT(5)) // Set volume
+
+    if (has_to_update_registers)
     {
-        gbt.vol[3] = (b & 0xF) << 12;
         channel4_refresh_registers();
     }
-    else
-    {
-        // NOP
-    }
 
-    return data;
+    return next;
 }
 
 // Returns 1 if it needed to update sound registers
@@ -945,51 +951,28 @@ void gbt_update(void)
 
     gbt_update_effects_internal();
 
-    // Check if last step
-    // ------------------
+    // Check if the song has ended
+    // ---------------------------
 
-    if (gbt.have_to_stop_next_step)
+    if (gbt.current_step_data_ptr == NULL)
     {
-        gbt_stop();
-        gbt.have_to_stop_next_step = 0;
-        return;
-    }
-
-    // Increment step/pattern
-    // ----------------------
-
-    gbt.current_step++;
-    if (gbt.current_step == 64)
-    {
-        // Increment pattern
-
-        gbt.current_step = 0;
-
-        gbt.current_pattern++;
-
-        gbt_get_pattern_ptr(gbt.current_pattern);
-
-        if (gbt.current_step_data_ptr == NULL)
+        if (gbt.loop_enabled)
         {
-            // The song has ended
-
-            if (gbt.loop_enabled)
-            {
-                // If loop is enabled, jump to pattern 0
-                gbt.current_pattern = 0;
-                gbt_get_pattern_ptr(gbt.current_pattern);
-            }
-            else
-            {
-                // If loop is disabled, stop song
-                // Stop it next step, if not this step won't be played
-
-                gbt.have_to_stop_next_step = 1;
-            }
+            // If loop is enabled, jump to pattern 0
+            gbt.current_pattern = 0;
+            gbt_get_pattern_ptr(gbt.current_pattern);
+            gbt_run_startup_commands(gbt.startup_cmds_ptr);
+        }
+        else
+        {
+            // If loop is disabled, stop song
+            gbt_stop();
+            return;
         }
     }
 
     // Update channels
+    // ---------------
 
     const uint8_t *ptr = gbt.current_step_data_ptr;
 
@@ -1001,6 +984,7 @@ void gbt_update(void)
     gbt.current_step_data_ptr = ptr;
 
     // Handle panning
+    // --------------
 
     uint16_t mask =
         SOUNDCNT_L_PSG_1_ENABLE_RIGHT | SOUNDCNT_L_PSG_1_ENABLE_LEFT |
@@ -1012,33 +996,50 @@ void gbt_update(void)
 
     REG_SOUNDCNT_L = (REG_SOUNDCNT_L & ~mask) | (new_pan << 8);
 
-    // Check if any effect has changed the pattern or step
-    if (gbt.update_pattern_pointers)
-    {
-        gbt.update_pattern_pointers = 0; // clear flag
+    // Increment step
+    // --------------
 
-        gbt.have_to_stop_next_step = 0; // clear stop flag
+    if (gbt.jump_requested == 0)
+    {
+        gbt.current_step++;
+
+        if (gbt.current_step == 64)
+        {
+            // Increment pattern
+            gbt.current_step = 0;
+            gbt.current_pattern++;
+            gbt_get_pattern_ptr(gbt.current_pattern);
+        }
+    }
+    else
+    {
+        gbt.jump_requested = 0;
+
+        gbt.current_step = gbt.jump_target_step;
+        gbt.current_pattern = gbt.jump_target_pattern;
 
         gbt_get_pattern_ptr(gbt.current_pattern); // set ptr to start of pattern
 
-        // Search the step
+        // Seek the requested step
 
         const uint8_t *src_search = gbt.current_step_data_ptr;
 
-        for (int i = 0; i < 4 * gbt.current_step; i++)
+        for (int i = 0; i < gbt.current_step; i++)
         {
-            uint8_t b = *src_search++;
-
-            if (b & BIT(7))
+            for (int j = 0; j < 3; j++) // Channels 1-3
             {
-                b = *src_search++;
-
-                if (b & BIT(7))
-                    src_search++;
+                // Note: The volume bit doesn't affect the final size.
+                const uint8_t sizes[8] = { 1, 2, 3, 3, 2, 3, 4, 4 };
+                uint8_t bits = (*src_search) >> 5;
+                src_search += sizes[bits];
             }
-            else if (b & BIT(6))
+
+            // Channel 4
             {
-                src_search++;
+                // Note: The volume bit doesn't affect the final size.
+                const uint8_t sizes[4] = { 1, 3, 2, 4 };
+                uint8_t bits = (*src_search) >> 6;
+                src_search += sizes[bits];
             }
         }
 

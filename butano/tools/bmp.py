@@ -60,22 +60,30 @@ class BMP:
             if bits_per_pixel == 4:
                 colors_count = 16
             else:
-                colors_count = 256
-                self.__colors = struct.unpack(str(colors_count) + 'I', file.read(colors_count * 4))
+                colors_count = int((self.__pixels_offset - self.__colors_offset) / 4)
 
-                file.seek(self.__pixels_offset)
-                pixels_count = self.width * self.height  # no padding, multiple of 8.
-                self.__pixels = [ord(pixel) for pixel in
-                                 struct.unpack(str(pixels_count) + 'c', file.read(pixels_count))]
+                if colors_count < 1 or colors_count > 256:
+                    raise ValueError('Invalid input colors count: ' + str(colors_count))
 
-                colors_count = max(self.__pixels) + 1
-                extra_colors = colors_count % 16
+                if colors_count <= 16:
+                    colors_count = 16
+                else:
+                    file.seek(self.__colors_offset)
+                    self.__colors = struct.unpack(str(colors_count) + 'I', file.read(colors_count * 4))
 
-                if extra_colors > 0:
-                    colors_count += 16 - extra_colors
+                    file.seek(self.__pixels_offset)
+                    pixels_count = self.width * self.height  # no padding, multiple of 8.
+                    self.__pixels = [ord(pixel) for pixel in
+                                     struct.unpack(str(pixels_count) + 'c', file.read(pixels_count))]
 
-                if colors_count > 256:
-                    raise ValueError('Invalid calculated colors count: ' + str(colors_count))
+                    colors_count = max(self.__pixels) + 1
+                    extra_colors = colors_count % 16
+
+                    if extra_colors > 0:
+                        colors_count += 16 - extra_colors
+
+                    if colors_count > 256:
+                        raise ValueError('Invalid calculated colors count: ' + str(colors_count))
 
             self.colors_count = colors_count
 

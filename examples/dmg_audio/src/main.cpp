@@ -13,7 +13,7 @@
 #include "common_info.h"
 #include "common_variable_8x16_sprite_font.h"
 
-#include "bn_dmg_music_items_sugar_craze.h"
+#include "bn_dmg_music_items_s3m_template.h"
 
 int main()
 {
@@ -29,7 +29,7 @@ int main()
     common::info info("DMG music", info_text_lines, text_generator);
     info.set_show_always(true);
 
-    bn::dmg_music_items::sugar_craze.play();
+    bn::dmg_music_items::s3m_template.play();
 
     while(true)
     {

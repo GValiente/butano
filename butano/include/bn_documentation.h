@@ -182,7 +182,7 @@
 /**
  * @defgroup dmg_music DMG music
  *
- * Module files (files with extension) played with DMG channels
+ * Module files (files with `*.mod` and `*.s3m` extensions) played with DMG channels
  * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
  *
  * @ingroup audio
@@ -1336,12 +1336,14 @@
  *
  * @subsection import_dmg_music DMG music
  *
- * The required format for DMG music is module files with `*.mod` extension.
+ * The required format for DMG music is module files with `*.mod` and `*.s3m` extensions.
  *
  * Since devkitARM does not provide `mod2gbt`
- * (<a href="https://github.com/AntonioND/gbt-player">GBT Player</a> conversion tool),
- * you must build it (or get it from somewhere else) and specify its file path in the `MOD2GBT` variable
- * of your project's `Makefile`.
+ * (<a href="https://github.com/AntonioND/gbt-player">GBT Player</a> `*.mod` files conversion tool),
+ * if you want to import a `*.mod` file you must build `mod2gbt` (or get it from somewhere else)
+ * and specify its file path in the `MOD2GBT` variable of your project's `Makefile`.
+ *
+ * You don't need to do that for `*.s3m` files, since `s3m2gbt` is included with Butano.
  *
  * If the conversion process has finished successfully,
  * a bn::dmg_music_item should have been generated in the `build` folder.

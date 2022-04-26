@@ -1,0 +1,57 @@
+                       INITIAL STATUS
+                       --------------
+
+You can set the global song speed in the song settings, as well as the initial
+panning for each channel. It isn't needed to set them by using them as effects.
+
+Don't change the BPM of the song, it's set so that it matches the refresh
+frequency of the GB/GBC/GBA.
+
+The converter ignores global volumes, as well as sample volumes. The only
+volumes used are the ones in the patterns.
+
+                         FREQUENCIES
+                         -----------
+
+You can use notes from C3 to B8.
+
+                         INSTRUMENTS
+                         -----------
+
++---------------------------------------------------------------------+
+| CHANNEL | RANGE |                      NOTES                        |
++---------+-------+---------------------------------------------------+
+|    1    |  1-4  |                                                   |
+|    2    |  1-4  |                                                   |
+|    3    |  8-15 | Volume is usually a bit lower than other channels.|
+|    4    | 16-31 | Doesn't change with frequency (always C5).        |
++---------+-------+---------------------------------------------------+
+
+Volume of channel 3 is always lower than other channels because the waveform of
+channels 1, 2 and 4 use the full range of allowed values (0% or 100%) but
+channel 3 can be set to any value in between. The area of any waveform of
+channel 3 will always be smaller than the other channels (unless the wave of
+channel 3 is a square wave).
+
+                           EFFECTS
+                           -------
+
+Ann - Sets speed to nn (in hexadecimal). Valid values 01h and higher.
+      The higher the value, the slower the song.
+
+Bnn - Jump to pattern in order nn (in hexadecimal).
+
+Cnn - Ends this pattern and jumps to position nn (in decimal) in next pattern.
+      If used the last step of a pattern it will jump two patterns, not one!
+
+Jxy - Arpeggio. Only channels 1, 2 and 3.
+
+Cnn - Sets the volume to nn (in hexadecimal). Valid values from 00h to 40h.
+      Channel 3 can only be set to 0%, 25%, 50% and 100%. Others can be set
+      in a range of 0-Fh. On GBA, channel 3 can also be set to 75%.
+
+S8n - Sets the panning to n (in hexadecimal).
+      Left --- Both --- Right
+      0123   456789AB    CDEF
+
+SCn - Cut Note after n ticks. If n > speed or n = 0, it won't work.

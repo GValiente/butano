@@ -13,11 +13,12 @@ from file_info import FileInfo
 
 class DmgAudioFileInfo:
 
-    def __init__(self, file_path, file_name, file_name_no_ext, file_info_path):
+    def __init__(self, file_path, file_name, file_name_no_ext, file_info_path, is_mod):
         self.__file_path = file_path
         self.__file_name = file_name
         self.__file_name_no_ext = file_name_no_ext
         self.__file_info_path = file_info_path
+        self.__is_mod = is_mod
 
     def print_file_name(self):
         print(self.__file_name)
@@ -25,10 +26,15 @@ class DmgAudioFileInfo:
     def process(self, mod2gbt_file_path, build_folder_path):
         output_tag = self.__file_name_no_ext + '_bn_dmg'
         output_file_name = output_tag + '.c'
+        output_file_path = build_folder_path + '/' + output_file_name
 
         try:
-            self.__execute_command(mod2gbt_file_path, output_tag)
-            self.__move_output_file(build_folder_path, output_file_name)
+            if self.__is_mod:
+                self.__execute_mod2gbt_command(mod2gbt_file_path, output_tag)
+                self.__move_output_file(output_file_name, output_file_path)
+            else:
+                self.__execute_s3m2gbt_command(output_tag, output_file_path)
+
             header_file_path = self.__write_header(build_folder_path, output_tag)
 
             with open(self.__file_info_path, 'w') as file_info:
@@ -41,7 +47,7 @@ class DmgAudioFileInfo:
 
             return [self.__file_name, exc]
 
-    def __execute_command(self, mod2gbt_file_path, output_tag):
+    def __execute_mod2gbt_command(self, mod2gbt_file_path, output_tag):
         command = [mod2gbt_file_path, self.__file_path, output_tag]
         command = ' '.join(command)
 
@@ -50,10 +56,21 @@ class DmgAudioFileInfo:
         except subprocess.CalledProcessError as e:
             raise ValueError('mod2gbt call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
-    @staticmethod
-    def __move_output_file(build_folder_path, output_file_name):
-        output_file_path = build_folder_path + '/' + output_file_name
+    def __execute_s3m2gbt_command(self, output_tag, output_file_path):
+        import io
+        from s3m2gbt import s3m2gbt
 
+        sys.stdout = io.StringIO()
+
+        try:
+            s3m2gbt.convert_file(self.__file_path, output_tag, output_file_path)
+            sys.stdout = sys.__stdout__
+        except Exception:
+            sys.stdout = sys.__stdout__
+            raise
+
+    @staticmethod
+    def __move_output_file(output_file_name, output_file_path):
         if os.path.exists(output_file_path):
             os.remove(output_file_path)
 
@@ -97,6 +114,7 @@ def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
     audio_folder_path_list = audio_folder_paths.split(' ')
     audio_file_infos = []
     file_names_set = set()
+    mods_found = False
 
     for audio_folder_path in audio_folder_path_list:
         audio_file_names = os.listdir(audio_folder_path)
@@ -107,8 +125,9 @@ def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
             if os.path.isfile(audio_file_path) and FileInfo.validate(audio_file_name):
                 audio_file_name_split = os.path.splitext(audio_file_name)
                 audio_file_name_ext = audio_file_name_split[1]
+                mod_extension = audio_file_name_ext == '.mod'
 
-                if audio_file_name_ext == '.mod':
+                if mod_extension or audio_file_name_ext == '.s3m':
                     audio_file_name_no_ext = audio_file_name_split[0]
 
                     if audio_file_name_no_ext in file_names_set:
@@ -127,16 +146,19 @@ def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
 
                     if build:
                         audio_file_infos.append(DmgAudioFileInfo(
-                            audio_file_path, audio_file_name, audio_file_name_no_ext, file_info_path))
+                            audio_file_path, audio_file_name, audio_file_name_no_ext, file_info_path, mod_extension))
+                        
+                        if mod_extension:
+                            mods_found = True
 
-    return audio_file_infos
+    return audio_file_infos, mods_found
 
 
 def process_dmg_audio(mod2gbt_file_path, audio_folder_paths, build_folder_path):
     if len(audio_folder_paths) == 0:
         return
 
-    audio_file_infos = list_dmg_audio_file_infos(audio_folder_paths, build_folder_path)
+    audio_file_infos, mods_found = list_dmg_audio_file_infos(audio_folder_paths, build_folder_path)
 
     if len(audio_file_infos) > 0:
         for audio_file_info in audio_file_infos:
@@ -144,12 +166,13 @@ def process_dmg_audio(mod2gbt_file_path, audio_folder_paths, build_folder_path):
 
         sys.stdout.flush()
 
-        if len(mod2gbt_file_path) == 0:
-            raise ValueError('mod2gbt file path not specified. You must specify it in the MOD2GBT variable '
-                             'of your project\'s Makefile.')
+        if mods_found:
+            if len(mod2gbt_file_path) == 0:
+                raise ValueError('mod2gbt file path not specified. You must specify it in the MOD2GBT variable '
+                                 'of your project\'s Makefile.')
 
-        if not os.path.exists(mod2gbt_file_path):
-            raise ValueError('mod2gbt file does not exist: ' + mod2gbt_file_path)
+            if not os.path.exists(mod2gbt_file_path):
+                raise ValueError('mod2gbt file does not exist: ' + mod2gbt_file_path)
 
         pool = Pool()
         processor = DmgAudioFileInfoProcessor(mod2gbt_file_path, build_folder_path)

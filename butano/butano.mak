@@ -113,7 +113,9 @@ SFILES          :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.s))) 
 BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*))) \
 						_bn_audio_soundbank.bin
 						
-DMGAUDIOFILES	:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.mod)))
+DMGMODFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.mod)))
+						
+DMGS3MFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.s3m)))
 						
 GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp)))
 
@@ -133,13 +135,15 @@ endif
 
 export OFILES_BIN       :=  $(addsuffix .o,$(BINFILES))
 
-export OFILES_DMGAUDIO	:=  $(DMGAUDIOFILES:.mod=_bn_dmg.o)
+export OFILES_DMGMOD	:=  $(DMGMODFILES:.mod=_bn_dmg.o)
+
+export OFILES_DMGS3M	:=  $(DMGS3MFILES:.s3m=_bn_dmg.o)
 
 export OFILES_GRAPHICS	:=  $(GRAPHICSFILES:.bmp=_bn_gfx.o)
 
 export OFILES_SOURCES   :=  $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
  
-export OFILES           :=  $(OFILES_BIN) $(OFILES_DMGAUDIO) $(OFILES_GRAPHICS) $(OFILES_SOURCES)
+export OFILES           :=  $(OFILES_BIN) $(OFILES_DMGMOD) $(OFILES_DMGS3M) $(OFILES_GRAPHICS) $(OFILES_SOURCES)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't generate header files from audio soundbank (avoid rebuilding all sources when audio files are updated):

@@ -1886,6 +1886,7 @@
  * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
  * See the @ref import_dmg_music import guide and the `dmg_audio` example to learn how to import and play it.
  * * BMP files colors count calculation fixed.
+ * * C++ keywords are not valid asset names anymore.
  * * @ref getting_started Python setup improved.
  * * <a href="https://cinemint.itch.io/tremblay-island">Tremblay Island</a> added to `README.md`.
  *

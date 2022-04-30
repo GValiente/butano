@@ -1880,7 +1880,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_9_4_0 9.4.0 (next release)
+ * @section changelog_9_4_0 9.4.0
  *
  * * bn::dmg_music and bn::dmg_music_item added (yes, music playback using DMG channels is now supported
  * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.

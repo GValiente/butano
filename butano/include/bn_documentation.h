@@ -1880,7 +1880,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_9_4_1 9.4.1 (next release)
+ * @section changelog_9_4_1 9.4.1
  *
  * BMP files colors count calculation fixed (again).
  *

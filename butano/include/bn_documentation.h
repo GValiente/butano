@@ -1880,6 +1880,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_9_4_1 9.4.1 (next release)
+ *
+ * BMP files colors count calculation fixed (again).
+ *
+ *
  * @section changelog_9_4_0 9.4.0
  *
  * * bn::dmg_music and bn::dmg_music_item added (yes, music playback using DMG channels is now supported

@@ -62,14 +62,14 @@ class BMP:
             else:
                 colors_count = int((self.__pixels_offset - self.__colors_offset) / 4)
 
-                if colors_count < 1 or colors_count > 256:
+                if colors_count < 1:
                     raise ValueError('Invalid input colors count: ' + str(colors_count))
 
                 if colors_count <= 16:
                     colors_count = 16
                 else:
-                    file.seek(self.__colors_offset)
-                    self.__colors = struct.unpack(str(colors_count) + 'I', file.read(colors_count * 4))
+                    palette_colors_count = max(colors_count, 256)
+                    self.__colors = struct.unpack(str(palette_colors_count) + 'I', file.read(palette_colors_count * 4))
 
                     file.seek(self.__pixels_offset)
                     pixels_count = self.width * self.height  # no padding, multiple of 8.
@@ -77,6 +77,11 @@ class BMP:
                                      struct.unpack(str(pixels_count) + 'c', file.read(pixels_count))]
 
                     colors_count = max(self.__pixels) + 1
+
+                    if colors_count > palette_colors_count:
+                        raise ValueError('Not enough palette colors: ' + str(colors_count) + ' - ' +
+                                         str(palette_colors_count))
+
                     extra_colors = colors_count % 16
 
                     if extra_colors > 0:
@@ -91,6 +96,12 @@ class BMP:
         if self.colors_count == 16:
             shutil.copyfile(self.__file_path, output_file_path)
             return 16
+
+        palette_colors_count = int((self.__pixels_offset - self.__colors_offset) / 4)
+
+        if palette_colors_count < 256:
+            raise ValueError('Quantization is not supported is the input image has less than 256 colors: ' +
+                             str(palette_colors_count))
 
         width = self.width
         height = self.height

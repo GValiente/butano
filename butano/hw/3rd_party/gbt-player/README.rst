@@ -1,4 +1,4 @@
-GBT Player v4.0.1
+GBT Player v4.1.1
 =================
 
 Music player library and converter kit for Game Boy Advance. It only uses the
@@ -58,6 +58,8 @@ http://openmpt.org/
 
 - ``effects_test.gb`` tests arpeggio and "cut note" effects.
 
+- ``volume_slide_test.gb`` tests the volume slide effects.
+
 - ``volume_test.gb`` tests the range of volumes supported by each channel.
 
 The MOD and S3M files aren't 100% accurate. Sounds are a bit different from the
@@ -67,8 +69,6 @@ often.
 To Do
 -----
 
-- Store channel 3 samples in RAM to be able to change them in execution time by
-  the user?
 - End song callback? Special effect for callback? To synchronize game events or
   things like that.
 

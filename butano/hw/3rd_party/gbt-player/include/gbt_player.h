@@ -1,4 +1,4 @@
-// GBT Player v4.0.1
+// GBT Player v4.1.1
 //
 // SPDX-License-Identifier: MIT
 //
@@ -19,6 +19,11 @@ void gbt_loop(int loop);
 
 // Stops the song.
 void gbt_stop(void);
+
+#define GBT_VOLUME_MAX      8
+
+// Sets volume for left and right speakers. Valid values are 0 to 8.
+void gbt_volume(unsigned int left, unsigned int right);
 
 // Defines to specify which channels to enable
 #define GBT_ENABLE_CH1      (1 << 0)

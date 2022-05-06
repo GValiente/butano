@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# s3m2gbt v4.0.1 (Part of GBT Player)
+# s3m2gbt v4.1.1 (Part of GBT Player)
 #
 # SPDX-License-Identifier: MIT
 #
@@ -41,17 +41,21 @@ def s3m_note_to_gb(note, pattern, step, channel):
     # This function shouldn't be called for channel 4
     assert channel != 4
 
-    # TODO: s3mNoteOff = 0xFE || s3mNoteNone = 0xFF ?
+    # Note cut with ^^
+    if note == 0xFE:
+        return 0xFE
+
+    # Note off and ^^ note cut should be handled before calling this function
     assert note <= 0x7F
 
     note -= 32
     if note < 0:
-        print("ERROR: Note too low!")
-        print(f"  {pattern}-{step}:Ch {channel}")
+        print(f"ERROR: {pattern}-{step}-CH{channel}: ", end='')
+        print("Note too low!")
         sys.exit(1)
     elif note > 32 + 16 * 6:
-        print("ERROR: Note too hig!")
-        print(f"  {pattern}-{step}:Ch {channel}")
+        print(f"ERROR: {pattern}-{step}-CH{channel}: ", end='')
+        print("Note too high!")
         sys.exit(1)
 
     note = (note & 0xF) + ((note & 0xF0) >> 4) * 12
@@ -84,9 +88,9 @@ def effect_mod_to_gb(pattern_number, step_number, channel,
 
     if effectnum == 'A': # Set Speed
         if effectparams == 0:
-            print("WARN: Speed must not be zero.")
-            print(f"  {pattern_number}-{step_number}:Ch {channel}")
-            return (None, None)
+            print(f"ERROR: {pattern}-{step}-CH{channel}: ", end='')
+            print("Speed must not be zero.")
+            sys.exit(1)
 
         return (10, effectparams)
 
@@ -98,6 +102,52 @@ def effect_mod_to_gb(pattern_number, step_number, channel,
         # Effect value is BCD, convert to integer
         val = (((effectparams & 0xF0) >> 4) * 10) + (effectparams & 0x0F)
         return (9, val)
+
+    elif effectnum == 'D': # Volume Slide
+        if channel == 3:
+            print(f"ERROR: {pattern_number}-{step_number}: ", end='')
+            print("Volume slide not supported in channel 3")
+            sys.exit(1)
+        else:
+            if effectparams == 0:
+                # Ignore volume slide commands that just continue the effect
+                return (None, None)
+
+            upper = (effectparams >> 4) & 0xF
+            lower = effectparams & 0xF
+
+            if upper == 0xF or lower == 0xF:
+                print(f"WARN: {pattern_number}-{step_number}-CH{channel}: ", end='')
+                print("Fine volume slide not supported")
+                return (None, None)
+
+            elif lower == 0: # Volume goes up
+                params = 1 << 3 # Increase
+                delay = 7 - upper + 1
+                if delay <= 0:
+                    print(f"WARN: {pattern_number}-{step_number}-CH{channel}: ", end='')
+                    print("Volume slide too steep")
+                    return (None, None)
+                params |= delay
+                return (4, params)
+            elif upper == 0: # Volume goes down
+                params = 0 << 3 # Decrease
+                delay = 7 - lower + 1
+                if delay <= 0:
+                    print(f"WARN: {pattern_number}-{step_number}-CH{channel}: ", end='')
+                    print("Volume slide too steep")
+                    return (None, None)
+                params = delay
+                return (4, params)
+            else:
+                print(f"WARN: {pattern_number}-{step_number}-CH{channel}: ", end='')
+                print("Unknown volume slide arguments")
+                return (None, None)
+
+            return (4, effectparams)
+
+    elif effectnum == 'H': # Vibrato
+        return (3, effectparams)
 
     elif effectnum == 'J': # Arpeggio
         return (1, effectparams)
@@ -114,8 +164,8 @@ def effect_mod_to_gb(pattern_number, step_number, channel,
         if subeffectnum == 0xC: # Notecut
             return (2, subeffectparams)
 
-    print(f"WARN: Unsupported effect: {effectnum}{effectparams:02X}")
-    print(f"  {pattern_number}-{step_number}:Ch {channel}")
+    print(f"WARN: {pattern_number}-{step_number}-CH{channel}: ", end='')
+    print(f"Unsupported effect: {effectnum}{effectparams:02X}")
 
     return (None, None)
 
@@ -134,13 +184,8 @@ def convert_channel1(pattern_number, step_number,
     if note_index != -1:
         note_index = s3m_note_to_gb(note_index, pattern_number, step_number, 1)
         command[0] |= HAS_NOTE
-        command[command_ptr] = note_index & 0x7F
+        command[command_ptr] = note_index
         command_ptr = command_ptr + 1
-
-        # If a note is set with no volume, set volume to the max
-        # TODO: This should take the volume from the sample volume
-        if volume == -1:
-            volume = 64
 
     # Check if there is a sample defined
     if samplenum > 0:
@@ -179,13 +224,8 @@ def convert_channel2(pattern_number, step_number,
     if note_index != -1:
         note_index = s3m_note_to_gb(note_index, pattern_number, step_number, 2)
         command[0] |= HAS_NOTE
-        command[command_ptr] = note_index & 0x7F
+        command[command_ptr] = note_index
         command_ptr = command_ptr + 1
-
-        # If a note is set with no volume, set volume to the max
-        # TODO: This should take the volume from the sample volume
-        if volume == -1:
-            volume = 64
 
     # Check if there is a sample defined
     if samplenum > 0:
@@ -224,13 +264,8 @@ def convert_channel3(pattern_number, step_number,
     if note_index != -1:
         note_index = s3m_note_to_gb(note_index, pattern_number, step_number, 3)
         command[0] |= HAS_NOTE
-        command[command_ptr] = note_index & 0x7F
+        command[command_ptr] = note_index
         command_ptr = command_ptr + 1
-
-        # If a note is set with no volume, set volume to the max
-        # TODO: This should take the volume from the sample volume
-        if volume == -1:
-            volume = 64
 
     # Check if there is a sample defined
     if samplenum > 0:
@@ -265,17 +300,24 @@ def convert_channel4(pattern_number, step_number,
     command = [ 0, 0, 0, 0 ] # NOP
     command_ptr = 1
 
+    # Note cut using ^^ as note
+    if note_index == 0xFE:
+        if samplenum > 0:
+            # This limitation is only for channel 4. It should never happen in a
+            # regular song.
+            print(f"WARN: {pattern}-{step}-CH4: ", end='')
+            print("Note cut + Sample in same step: Sample will be ignored.")
+        samplenum = 0xFE
+
     # Check if there is a sample defined
     if samplenum > 0:
-        kit = samplenum & 0xF;
+        if samplenum == 0xFE:
+            kit = 0xFE;
+        else:
+            kit = samplenum & 0xF;
         command[0] |= HAS_KIT
-        command[command_ptr] = kit & 0xF
+        command[command_ptr] = kit
         command_ptr += 1
-
-        # If a note is set with no volume, set volume to the max
-        # TODO: This should take the volume from the sample volume
-        if volume == -1:
-            volume = 64
 
     if effectnum is not None:
         [converted_num, converted_params] = effect_mod_to_gb(
@@ -312,19 +354,77 @@ def print_step(fileout, cmd1, cmd2, cmd3, cmd4):
 
     fileout.write("\n")
 
-def initial_state_array(speed, panning_array):
+def initial_state_array(speed, panning_array, instruments):
     array = []
 
+    # Initial speed
+    # -------------
+
     array.extend([1, speed])
+
+    # Initial panning
+    # ---------------
 
     array.extend([2])
     array.extend(panning_array)
 
-    array.extend([0]) # End
+    # Channel 3 instruments
+    # ---------------------
+
+    if instruments is not None:
+        print("Exporting instruments...")
+        count = 0
+        for i in instruments:
+            # In the tracker, instruments start at index 1, but they start at
+            # index 0 in the file data.
+            count += 1
+
+            if count < 8 or count > 15:
+                continue
+
+            try:
+                body = i.body
+
+                name = body.sample_name.decode("utf-8")
+                print(f"Sample name: {name}")
+                if body.type != S3m.Instrument.InstTypes.sample:
+                    print("Unsupported instrument type!")
+                    continue
+
+                # TODO: body.tuning_hz ?
+
+                size = len(body.body.sample)
+                if size != 32 and size != 64:
+                    print("Invalid sample length!")
+                    continue
+                else:
+                    flags = count - 8
+                    if size == 64:
+                        flags |= 1 << 7
+
+                    array.extend([3, flags])
+
+                    # Convert from 8 bit to 4 bit
+                    for i in range(0, size, 2):
+                        sample_hi = body.body.sample[i + 0] >> 4
+                        sample_lo = body.body.sample[i + 1] >> 4
+                        value = (sample_hi << 4) | sample_lo
+                        array.extend([value])
+
+            except kaitaistruct.ValidationNotEqualError as e:
+                if e.src_path == u"/types/instrument/seq/6":
+                    print("Invalid magic in instrument")
+                else:
+                    print(vars(e))
+
+    # End commands
+    # ------------
+
+    array.extend([0])
 
     return array
 
-def convert_file(module_path, song_name, output_path):
+def convert_file(module_path, song_name, output_path, export_instruments):
 
     data = S3m.from_file(module_path)
 
@@ -337,15 +437,6 @@ def convert_file(module_path, song_name, output_path):
     print(f"Song Name: '{name}'")
     print(f"Num. Orders: {data.num_orders}")
     print(f"Num. Patterns: {data.num_patterns}")
-
-    #for i in data.instruments:
-    #    try:
-    #        print(vars(i.body))
-    #    except kaitaistruct.ValidationNotEqualError as e:
-    #        if e.src_path == u"/types/instrument/seq/6":
-    #            print("Invalid magic in instrument")
-    #        else:
-    #            print(vars(e))
 
     fileout.write("// File created by s3m2gbt\n\n"
                   "#include <stddef.h>\n#include <stdint.h>\n\n")
@@ -449,11 +540,30 @@ def convert_file(module_path, song_name, output_path):
         s3m_pan_to_gb(default_pan[3], 4)
     ]
 
-    state_array = initial_state_array(data.initial_speed, gb_default_pan)
-    fileout.write("    ")
-    for s in state_array:
-        fileout.write(f"0x{s:02X},")
-    fileout.write("\n")
+    instr = None
+    if export_instruments:
+        instr = data.instruments
+
+    state_array = initial_state_array(data.initial_speed, gb_default_pan, instr)
+
+    while True:
+        left = len(state_array)
+
+        write = []
+        if left == 0:
+            break
+        elif left <= 8:
+            write = state_array
+            state_array = []
+        else:
+            write = state_array[0:8]
+            state_array = state_array[8:]
+
+        fileout.write("    ")
+        for s in write:
+            fileout.write(f"0x{s:02X},")
+        fileout.write("\n")
+
     fileout.write("};\n")
     fileout.write("\n")
 
@@ -488,17 +598,22 @@ def convert_file(module_path, song_name, output_path):
 
 if __name__ == "__main__":
 
-    print("s3m2gbt v4.0.1 (part of GBT Player)")
+    print("s3m2gbt v4.1.1 (part of GBT Player)")
     print("Copyright (c) 2022 Antonio Niño Díaz <antonio_nd@outlook.com>")
     print("Copyright (c) 2015-2022 Kaitai Project")
     print("All rights reserved")
     print("")
 
     parser = argparse.ArgumentParser(description='Convert S3M files into GBT format.')
-    parser.add_argument("--input", default=None, required=True, help="input file")
-    parser.add_argument("--name", default=None, required=True, help="output song name")
-    parser.add_argument("--output", default=None, required=False, help="output file")
+    parser.add_argument("--input", default=None, required=True,
+                        help="input file")
+    parser.add_argument("--name", default=None, required=True,
+                        help="output song name")
+    parser.add_argument("--output", default=None, required=False,
+                        help="output file")
+    parser.add_argument("--instruments", default=False, required=False,
+                        action='store_true', help="export channel 3 instruments")
 
     args = parser.parse_args()
 
-    convert_file(args.input, args.name, args.output)
+    convert_file(args.input, args.name, args.output, args.instruments)

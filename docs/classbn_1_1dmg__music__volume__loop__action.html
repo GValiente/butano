@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn::music_volume_loop_action class | Butano Docs</title>
+  <title>bn::dmg_music_volume_loop_action class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,10 +47,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>music_volume_loop_action <span class="m-thin">class</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__music__actions_8h.html">&lt;bn_music_actions.h&gt;</a></div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>dmg_music_volume_loop_action <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__dmg__music__actions_8h.html">&lt;bn_dmg_music_actions.h&gt;</a></div>
         </h1>
-        <p>Modifies the volume of the active Direct Sound music from a minimum to a maximum. When the volume is equal to the given final state, it goes back to its initial state and vice versa.</p>
+        <p>Modifies the volume of the active DMG music from a minimum to a maximum. When the volume is equal to the given final state, it goes back to its initial state and vice versa.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -69,7 +69,7 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;typename Property, class PropertyManager&gt;</div>
-              class <a href="classbn_1_1loop__template__action.html" class="m-doc">loop_template_action&lt;fixed, music_volume_manager&gt;</a>
+              class <a href="classbn_1_1loop__template__action.html" class="m-doc">loop_template_action&lt;fixed_point, dmg_music_volume_manager&gt;</a>
             </dt>
             <dd>Modifies the property by delta from a minimum to a maximum. When the property is equal to the given final state, it goes back to its initial state and vice versa.</dd>
           </dl>
@@ -78,8 +78,14 @@
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a8853d1387c26e73586af02a3ff3be1ad" class="m-doc">music_volume_loop_action</a>(</span><span class="m-doc-wrap">int duration_updates,
+              <span class="m-doc-wrap-bumper"><a href="#a88fd91c7745c0ca956c8552122791f8e" class="m-doc">dmg_music_volume_loop_action</a>(</span><span class="m-doc-wrap">int duration_updates,
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> final_volume)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a86fb18dd7706dbe6c4577f5f90834e91" class="m-doc">dmg_music_volume_loop_action</a>(</span><span class="m-doc-wrap">int duration_updates,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> final_left_volume,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> final_right_volume)</span>
             </dt>
             <dd>Constructor.</dd>
           </dl>
@@ -87,17 +93,21 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="a43b0c9ebab0cb453421176be87a5b2f7">
-              <span class="m-doc-wrap-bumper">auto <a href="#a43b0c9ebab0cb453421176be87a5b2f7" class="m-doc-self">final_volume</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            <dt id="af3a10d515bc50591ec6529977cbab0af">
+              <span class="m-doc-wrap-bumper">auto <a href="#af3a10d515bc50591ec6529977cbab0af" class="m-doc-self">final_left_volume</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
-            <dd>When the volume is equal to the returned parameter, it goes back to its initial state and vice versa.</dd>
+            <dd>When the volume for the left speaker is equal to the returned parameter, it goes back to its initial state and vice versa.</dd>
+            <dt id="a4a3f754a67bf0e95fe1adda92a12aa08">
+              <span class="m-doc-wrap-bumper">auto <a href="#a4a3f754a67bf0e95fe1adda92a12aa08" class="m-doc-self">final_right_volume</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>When the volume for the right speaker is equal to the returned parameter, it goes back to its initial state and vice versa.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a8853d1387c26e73586af02a3ff3be1ad"><div>
+          <section class="m-doc-details" id="a88fd91c7745c0ca956c8552122791f8e"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />music_volume_loop_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8853d1387c26e73586af02a3ff3be1ad" class="m-doc-self">music_volume_loop_action</a>(</span><span class="m-doc-wrap">int duration_updates,
+              <span class="m-doc-wrap-bumper"> bn::<wbr />dmg_music_volume_loop_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a88fd91c7745c0ca956c8552122791f8e" class="m-doc-self">dmg_music_volume_loop_action</a>(</span><span class="m-doc-wrap">int duration_updates,
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> final_volume)</span></span>
             </h3>
             <p>Constructor.</p>
@@ -112,11 +122,40 @@
                 </tr>
                 <tr>
                   <td>final_volume</td>
-                  <td>When the volume is equal to this parameter, it goes back to its initial state and vice versa.</td>
+                  <td>When the volume for both speakers is equal to this parameter, it goes back to its initial state and vice versa.</td>
                 </tr>
               </tbody>
             </table>
 <p>This volume must be in the range [0..1].</p>
+          </div></section>
+          <section class="m-doc-details" id="a86fb18dd7706dbe6c4577f5f90834e91"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />dmg_music_volume_loop_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a86fb18dd7706dbe6c4577f5f90834e91" class="m-doc-self">dmg_music_volume_loop_action</a>(</span><span class="m-doc-wrap">int duration_updates,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> final_left_volume,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> final_right_volume)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">duration_updates</td>
+                  <td>How much times the action has to be updated before changing the direction of the volume delta.</td>
+                </tr>
+                <tr>
+                  <td>final_left_volume</td>
+                  <td>When the volume for the left speaker is equal to this parameter, it goes back to its initial state and vice versa.</td>
+                </tr>
+                <tr>
+                  <td>final_right_volume</td>
+                  <td>When the volume for the right speaker is equal to this parameter, it goes back to its initial state and vice versa.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>This volume must be in the range [0..1]. 
+This volume must be in the range [0..1].</p>
           </div></section>
         </section>
       </div>

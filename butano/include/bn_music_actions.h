@@ -24,7 +24,7 @@ namespace bn
 // volume
 
 /**
- * @brief Manages the volume of the active music.
+ * @brief Manages the volume of the active Direct Sound music.
  *
  * @ingroup music
  * @ingroup action
@@ -34,7 +34,7 @@ class music_volume_manager
 
 public:
     /**
-     * @brief Returns the volume of the active music.
+     * @brief Returns the volume of the active Direct Sound music.
      */
     [[nodiscard]] static fixed get()
     {
@@ -42,7 +42,7 @@ public:
     }
 
     /**
-     * @brief Sets the volume of the active music.
+     * @brief Sets the volume of the active Direct Sound music.
      * @param volume New volume in the range [0..1].
      */
     static void set(fixed volume)
@@ -53,7 +53,7 @@ public:
 
 
 /**
- * @brief Modifies the volume of the active music until it has a given state.
+ * @brief Modifies the volume of the active Direct Sound music until it has a given state.
  *
  * @ingroup music
  * @ingroup action
@@ -87,7 +87,7 @@ public:
 
 
 /**
- * @brief Modifies the volume of the active music from a minimum to a maximum.
+ * @brief Modifies the volume of the active Direct Sound music from a minimum to a maximum.
  * When the volume is equal to the given final state, it goes back to its initial state and vice versa.
  *
  * @ingroup music
@@ -123,7 +123,7 @@ public:
 
 
 /**
- * @brief Changes the volume of the active music when the action is updated a given number of times.
+ * @brief Changes the volume of the active Direct Sound music when the action is updated a given number of times.
  *
  * @ingroup music
  * @ingroup action

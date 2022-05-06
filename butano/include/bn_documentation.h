@@ -1882,7 +1882,9 @@
  *
  * @section changelog_9_5_0 9.5.0 (next release)
  *
- * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.1.1.
+ * * bn::dmg_music::left_volume, bn::dmg_music::right_volume, bn::dmg_music::set_left_volume,
+ * bn::dmg_music::set_right_volume and bn::dmg_music::set_volume added.
+ * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.1.1.
  *
  *
  * @section changelog_9_4_1 9.4.1

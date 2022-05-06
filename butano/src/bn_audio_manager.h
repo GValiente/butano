@@ -66,6 +66,16 @@ namespace bn::audio_manager
 
     void resume_dmg_music();
 
+    [[nodiscard]] fixed dmg_music_left_volume();
+
+    [[nodiscard]] fixed dmg_music_right_volume();
+
+    void set_dmg_music_left_volume(fixed left_volume);
+
+    void set_dmg_music_right_volume(fixed right_volume);
+
+    void set_dmg_music_volume(fixed left_volume, fixed right_volume);
+
     // sound
 
     void play_sound(int priority, sound_item item);

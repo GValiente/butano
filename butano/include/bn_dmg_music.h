@@ -13,6 +13,7 @@
  * @ingroup dmg_music
  */
 
+#include "bn_fixed_fwd.h"
 #include "bn_optional_fwd.h"
 
 namespace bn
@@ -78,6 +79,41 @@ namespace bn::dmg_music
      * @brief Resumes playback of the paused DMG music.
      */
     void resume();
+
+    /**
+     * @brief Returns the volume of the active DMG music for the left speaker.
+     */
+    [[nodiscard]] fixed left_volume();
+
+    /**
+     * @brief Returns the volume of the active DMG music for the right speaker.
+     */
+    [[nodiscard]] fixed right_volume();
+
+    /**
+     * @brief Sets the volume of the active DMG music for the left speaker.
+     * @param left_volume Left speaker volume level, in the range [0..1].
+     */
+    void set_left_volume(fixed left_volume);
+
+    /**
+     * @brief Sets the volume of the active DMG music for the right speaker.
+     * @param right_volume Right speaker volume level, in the range [0..1].
+     */
+    void set_right_volume(fixed right_volume);
+
+    /**
+     * @brief Sets the volume of the active DMG music for both speakers.
+     * @param volume Volume level, in the range [0..1].
+     */
+    void set_volume(fixed volume);
+
+    /**
+     * @brief Sets the volume of the active DMG music for both speakers.
+     * @param left_volume Left speaker volume level, in the range [0..1].
+     * @param right_volume Right speaker volume level, in the range [0..1].
+     */
+    void set_volume(fixed left_volume, fixed right_volume);
 }
 
 #endif

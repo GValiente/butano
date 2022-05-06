@@ -23,6 +23,8 @@ int main()
     bn::bg_palettes::set_transparent_color(bn::color(16, 16, 16));
 
     constexpr bn::string_view info_text_lines[] = {
+        "LEFT: decrease volume",
+        "RIGHT: increase volume",
         "A: pause/resume music",
     };
 
@@ -33,6 +35,17 @@ int main()
 
     while(true)
     {
+        bn::fixed volume = bn::dmg_music::left_volume();
+
+        if(bn::keypad::left_held())
+        {
+            bn::dmg_music::set_volume(bn::max(volume - 0.01, bn::fixed(0)));
+        }
+        else if(bn::keypad::right_held())
+        {
+            bn::dmg_music::set_volume(bn::min(volume + 0.01, bn::fixed(1)));
+        }
+
         if(bn::keypad::a_pressed())
         {
             if(bn::dmg_music::paused())

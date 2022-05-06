@@ -91,6 +91,11 @@ namespace bn::hw::audio
         gbt_pause(1);
     }
 
+    inline void set_dmg_music_volume(int left_volume, int right_volume)
+    {
+        gbt_volume(unsigned(left_volume), unsigned(right_volume));
+    }
+
     void play_sound(int priority, int id);
 
     void play_sound(int priority, int id, int volume, int speed, int panning);

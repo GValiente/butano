@@ -80,6 +80,11 @@ namespace
             return command(DMG_MUSIC_RESUME);
         }
 
+        [[nodiscard]] static command dmg_music_set_volume(int left_volume, int right_volume)
+        {
+            return command(DMG_MUSIC_SET_VOLUME, 0, 0, left_volume, false, right_volume);
+        }
+
         [[nodiscard]] static command sound_play(int priority, sound_item item)
         {
             return command(SOUND_PLAY, item.id(), int16_t(priority));
@@ -140,6 +145,10 @@ namespace
                 hw::audio::resume_dmg_music();
                 return;
 
+            case DMG_MUSIC_SET_VOLUME:
+                hw::audio::set_dmg_music_volume(_volume, _speed);
+                return;
+
             case SOUND_PLAY:
                 hw::audio::play_sound(_priority, _id);
                 return;
@@ -179,6 +188,7 @@ namespace
             DMG_MUSIC_STOP,
             DMG_MUSIC_PAUSE,
             DMG_MUSIC_RESUME,
+            DMG_MUSIC_SET_VOLUME,
             SOUND_PLAY,
             SOUND_PLAY_EX,
             SOUND_STOP_ALL
@@ -204,6 +214,8 @@ namespace
     public:
         vector<command, BN_CFG_AUDIO_MAX_COMMANDS> commands;
         fixed music_volume;
+        fixed dmg_music_left_volume;
+        fixed dmg_music_right_volume;
         int music_item_id = 0;
         int music_position = 0;
         const uint8_t* dmg_music_data = nullptr;
@@ -223,6 +235,11 @@ namespace
     int _hw_sound_volume(fixed volume)
     {
         return min(fixed_t<8>(volume).data(), 255);
+    }
+
+    int _hw_dmg_music_volume(fixed volume)
+    {
+        return fixed_t<3>(volume).data();
     }
 
     int _hw_sound_speed(fixed speed)
@@ -367,6 +384,8 @@ void play_dmg_music(dmg_music_item item, int speed, bool loop)
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::dmg_music_play(item, loop, speed));
+    data.dmg_music_left_volume = 1;
+    data.dmg_music_right_volume = 1;
     data.dmg_music_data = item.data_ptr();
     data.dmg_music_paused = false;
 }
@@ -403,6 +422,41 @@ void resume_dmg_music()
 
     data.commands.push_back(command::dmg_music_resume());
     data.dmg_music_paused = false;
+}
+
+fixed dmg_music_left_volume()
+{
+    BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+
+    return data.dmg_music_left_volume;
+}
+
+fixed dmg_music_right_volume()
+{
+    BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+
+    return data.dmg_music_right_volume;
+}
+
+void set_dmg_music_left_volume(fixed left_volume)
+{
+    set_dmg_music_volume(left_volume, data.dmg_music_right_volume);
+}
+
+void set_dmg_music_right_volume(fixed right_volume)
+{
+    set_dmg_music_volume(data.dmg_music_left_volume, right_volume);
+}
+
+void set_dmg_music_volume(fixed left_volume, fixed right_volume)
+{
+    BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
+
+    data.commands.push_back(command::dmg_music_set_volume(
+                                _hw_dmg_music_volume(left_volume), _hw_dmg_music_volume(right_volume)));
+    data.dmg_music_left_volume = left_volume;
+    data.dmg_music_right_volume = right_volume;
 }
 
 void play_sound(int priority, sound_item item)

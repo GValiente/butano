@@ -6,9 +6,7 @@
 #
 # Copyright (c) 2022 Antonio Niño Díaz <antonio_nd@outlook.com>
 
-import argparse
 from s3m2gbt import kaitaistruct
-import sys
 
 from s3m2gbt.s3m import S3m
 
@@ -52,11 +50,11 @@ def s3m_note_to_gb(note, pattern, step, channel):
     if note < 0:
         print(f"ERROR: {pattern}-{step}-CH{channel}: ", end='')
         print("Note too low!")
-        sys.exit(1)
+        raise Exception("Invalid note")
     elif note > 32 + 16 * 6:
         print(f"ERROR: {pattern}-{step}-CH{channel}: ", end='')
         print("Note too high!")
-        sys.exit(1)
+        raise Exception("Invalid note")
 
     note = (note & 0xF) + ((note & 0xF0) >> 4) * 12
     return note
@@ -88,9 +86,9 @@ def effect_mod_to_gb(pattern_number, step_number, channel,
 
     if effectnum == 'A': # Set Speed
         if effectparams == 0:
-            print(f"ERROR: {pattern}-{step}-CH{channel}: ", end='')
+            print(f"ERROR: {pattern_number}-{step_number}-CH{channel}: ", end='')
             print("Speed must not be zero.")
-            sys.exit(1)
+            raise Exception("Invalid song speed")
 
         return (10, effectparams)
 
@@ -107,7 +105,7 @@ def effect_mod_to_gb(pattern_number, step_number, channel,
         if channel == 3:
             print(f"ERROR: {pattern_number}-{step_number}: ", end='')
             print("Volume slide not supported in channel 3")
-            sys.exit(1)
+            raise Exception("Volume slide in channel 3 not supported")
         else:
             if effectparams == 0:
                 # Ignore volume slide commands that just continue the effect
@@ -305,7 +303,7 @@ def convert_channel4(pattern_number, step_number,
         if samplenum > 0:
             # This limitation is only for channel 4. It should never happen in a
             # regular song.
-            print(f"WARN: {pattern}-{step}-CH4: ", end='')
+            # print(f"WARN: {pattern}-{step}-CH4: ", end='')
             print("Note cut + Sample in same step: Sample will be ignored.")
         samplenum = 0xFE
 
@@ -598,6 +596,9 @@ def convert_file(module_path, song_name, output_path, export_instruments):
 
 if __name__ == "__main__":
 
+    import argparse
+    import sys
+
     print("s3m2gbt v4.1.1 (part of GBT Player)")
     print("Copyright (c) 2022 Antonio Niño Díaz <antonio_nd@outlook.com>")
     print("Copyright (c) 2015-2022 Kaitai Project")
@@ -616,4 +617,10 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    convert_file(args.input, args.name, args.output, args.instruments)
+    try:
+        convert_file(args.input, args.name, args.output, args.instruments)
+    except Exception as e:
+        print("Failed to convert file: " + str(e))
+        sys.exit(1)
+
+    sys.exit(0)

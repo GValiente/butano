@@ -1,4 +1,4 @@
-// GBT Player v4.1.1
+// GBT Player v4.2.0
 //
 // SPDX-License-Identifier: MIT
 //

@@ -1885,8 +1885,7 @@
  * * bn::dmg_music::left_volume, bn::dmg_music::right_volume, bn::dmg_music::set_left_volume,
  * bn::dmg_music::set_right_volume and bn::dmg_music::set_volume added.
  * * bn::dmg_music_volume_to_action, bn::dmg_music_volume_loop_action and bn::dmg_music_volume_toggle_action added.
- * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.1.1.
- * * `s3m2gbt` errors no longer abort the Python interpreter.
+ * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.2.0.
  *
  *
  * @section changelog_9_4_1 9.4.1

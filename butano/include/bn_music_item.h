@@ -25,7 +25,7 @@ namespace bn
  *
  * The assets conversion tools generate an object of this type in the build folder for each module file.
  *
- * Supported module files have *.mod, *.xm, *.s3m or *.it extensions.
+ * Module files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions are supported.
  *
  * @ingroup music
  * @ingroup tool

@@ -8,6 +8,7 @@
 #include "bn_fixed.h"
 #include "bn_optional.h"
 #include "bn_dmg_music_item.h"
+#include "bn_dmg_music_position.h"
 #include "bn_audio_manager.h"
 
 namespace bn::dmg_music
@@ -60,6 +61,21 @@ void pause()
 void resume()
 {
     audio_manager::resume_dmg_music();
+}
+
+const dmg_music_position& position()
+{
+    return audio_manager::dmg_music_position();
+}
+
+void set_position(int pattern, int row)
+{
+    audio_manager::set_dmg_music_position(dmg_music_position(pattern, row));
+}
+
+void set_position(const dmg_music_position& position)
+{
+    audio_manager::set_dmg_music_position(position);
 }
 
 fixed left_volume()

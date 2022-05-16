@@ -19,6 +19,7 @@
 namespace bn
 {
     class dmg_music_item;
+    class dmg_music_position;
 }
 
 /**
@@ -79,6 +80,23 @@ namespace bn::dmg_music
      * @brief Resumes playback of the paused DMG music.
      */
     void resume();
+
+    /**
+     * @brief Returns the sequence position of the active DMG music.
+     */
+    [[nodiscard]] const dmg_music_position& position();
+
+    /**
+     * @brief Sets the sequence position of the active DMG music.
+     * @param pattern Pattern order.
+     * @param row Row inside the pattern.
+     */
+    void set_position(int pattern, int row);
+
+    /**
+     * @brief Sets the sequence position of the active DMG music.
+     */
+    void set_position(const dmg_music_position& position);
 
     /**
      * @brief Returns the volume of the active DMG music for the left speaker.

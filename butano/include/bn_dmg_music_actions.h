@@ -8,9 +8,9 @@
 
 /**
  * @file
- * bn::music actions header file.
+ * bn::dmg_music actions header file.
  *
- * @ingroup music
+ * @ingroup dmg_music
  * @ingroup action
  */
 

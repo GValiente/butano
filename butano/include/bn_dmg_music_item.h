@@ -24,7 +24,7 @@ namespace bn
  *
  * The assets conversion tools generate an object of this type in the build folder for each module file.
  *
- * Supported module files have *.mod extension.
+ * Module files with `*.mod` and `*.s3m` extensions are supported.
  *
  * @ingroup dmg_music
  * @ingroup tool
@@ -94,7 +94,7 @@ private:
 /**
  * @brief Hash support for dmg_music_item.
  *
- * @ingroup music
+ * @ingroup dmg_music
  * @ingroup functional
  */
 template<>

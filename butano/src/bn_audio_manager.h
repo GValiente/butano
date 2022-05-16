@@ -14,6 +14,7 @@ namespace bn
     class music_item;
     class sound_item;
     class dmg_music_item;
+    class dmg_music_position;
 }
 
 namespace bn::audio_manager
@@ -65,6 +66,10 @@ namespace bn::audio_manager
     void pause_dmg_music();
 
     void resume_dmg_music();
+
+    [[nodiscard]] const dmg_music_position& dmg_music_position();
+
+    void set_dmg_music_position(const bn::dmg_music_position& position);
 
     [[nodiscard]] fixed dmg_music_left_volume();
 

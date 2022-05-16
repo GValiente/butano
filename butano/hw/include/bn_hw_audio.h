@@ -91,6 +91,16 @@ namespace bn::hw::audio
         gbt_pause(1);
     }
 
+    inline void dmg_music_position(int& pattern, int& row)
+    {
+        gbt_get_position(&pattern, &row, nullptr);
+    }
+
+    inline void set_dmg_music_position(int pattern, int row)
+    {
+        gbt_set_position(pattern, row);
+    }
+
     inline void set_dmg_music_volume(int left_volume, int right_volume)
     {
         gbt_volume(unsigned(left_volume), unsigned(right_volume));

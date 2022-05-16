@@ -8,6 +8,7 @@
 #include "bn_vector.h"
 #include "bn_optional.h"
 #include "bn_config_audio.h"
+#include "bn_dmg_music_position.h"
 #include "../hw/include/bn_hw_audio.h"
 
 #include "bn_audio.cpp.h"
@@ -80,6 +81,11 @@ namespace
             return command(DMG_MUSIC_RESUME);
         }
 
+        [[nodiscard]] static command dmg_music_set_position(const bn::dmg_music_position& position)
+        {
+            return command(DMG_MUSIC_SET_POSITION, position.pattern(), 0, position.row());
+        }
+
         [[nodiscard]] static command dmg_music_set_volume(int left_volume, int right_volume)
         {
             return command(DMG_MUSIC_SET_VOLUME, 0, 0, left_volume, false, right_volume);
@@ -145,6 +151,10 @@ namespace
                 hw::audio::resume_dmg_music();
                 return;
 
+            case DMG_MUSIC_SET_POSITION:
+                hw::audio::set_dmg_music_position(_id, _volume);
+                return;
+
             case DMG_MUSIC_SET_VOLUME:
                 hw::audio::set_dmg_music_volume(_volume, _speed);
                 return;
@@ -188,6 +198,7 @@ namespace
             DMG_MUSIC_STOP,
             DMG_MUSIC_PAUSE,
             DMG_MUSIC_RESUME,
+            DMG_MUSIC_SET_POSITION,
             DMG_MUSIC_SET_VOLUME,
             SOUND_PLAY,
             SOUND_PLAY_EX,
@@ -214,6 +225,7 @@ namespace
     public:
         vector<command, BN_CFG_AUDIO_MAX_COMMANDS> commands;
         fixed music_volume;
+        bn::dmg_music_position dmg_music_position;
         fixed dmg_music_left_volume;
         fixed dmg_music_right_volume;
         int music_item_id = 0;
@@ -291,6 +303,7 @@ void play_music(music_item item, fixed volume, bool loop)
 
     data.commands.push_back(command::music_play(item, loop, _hw_music_volume(volume)));
     data.music_item_id = item.id();
+    data.music_position = 0;
     data.music_volume = volume;
     data.music_playing = true;
     data.music_paused = false;
@@ -384,6 +397,7 @@ void play_dmg_music(dmg_music_item item, int speed, bool loop)
     BN_ASSERT(! data.commands.full(), "No more audio commands available");
 
     data.commands.push_back(command::dmg_music_play(item, loop, speed));
+    data.dmg_music_position = bn::dmg_music_position();
     data.dmg_music_left_volume = 1;
     data.dmg_music_right_volume = 1;
     data.dmg_music_data = item.data_ptr();
@@ -422,6 +436,22 @@ void resume_dmg_music()
 
     data.commands.push_back(command::dmg_music_resume());
     data.dmg_music_paused = false;
+}
+
+const bn::dmg_music_position& dmg_music_position()
+{
+    BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+
+    return data.dmg_music_position;
+}
+
+void set_dmg_music_position(const bn::dmg_music_position& position)
+{
+    BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    BN_ASSERT(! data.commands.full(), "No more audio commands available");
+
+    data.commands.push_back(command::dmg_music_set_position(position));
+    data.dmg_music_position = position;
 }
 
 fixed dmg_music_left_volume()
@@ -510,6 +540,18 @@ void update()
     if(data.music_playing && hw::audio::music_playing())
     {
         data.music_position = hw::audio::music_position();
+    }
+
+    if(data.dmg_music_data)
+    {
+        int pattern;
+        int row;
+        hw::audio::dmg_music_position(pattern, row);
+
+        if(pattern >= 0)
+        {
+            data.dmg_music_position = bn::dmg_music_position(pattern, row);
+        }
     }
 }
 

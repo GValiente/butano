@@ -1884,6 +1884,7 @@
  *
  * * bn::dmg_music::left_volume, bn::dmg_music::right_volume, bn::dmg_music::set_left_volume,
  * bn::dmg_music::set_right_volume and bn::dmg_music::set_volume added.
+ * * bn::dmg_music::position and bn::dmg_music::set_position added.
  * * bn::dmg_music_volume_to_action, bn::dmg_music_volume_loop_action and bn::dmg_music_volume_toggle_action added.
  * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.3.0.
  *

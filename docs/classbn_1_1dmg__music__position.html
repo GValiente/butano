@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Audio &raquo; Music module | Butano Docs</title>
+  <title>bn::dmg_music_position class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,90 +47,91 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__audio.html">Audio</a> &raquo;</span>
-          Music <span class="m-thin">module</span></h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>dmg_music_position <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__dmg__music__position_8h.html">&lt;bn_dmg_music_position.h&gt;</a></div>
+        </h1>
+        <p>Contains the required information to specify the position of an active DMG music.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
-                <li><a href="#define-members">Defines</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>Module files (files with <code>*.mod</code>, <code>*.xm</code>, <code>*.s3m</code> and <code>*.it</code> extensions) played with Direct Sound channels thanks to <a href="https://maxmod.devkitpro.org/">Maxmod</a>.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="bn__music_8h.html" class="m-doc">bn_music.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__music__actions_8h.html" class="m-doc">bn_music_actions.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__music__item_8h.html" class="m-doc">bn_music_item.h</a></dt>
-            <dd></dd>
+            <dt id="a06bb487b1495d287f564193055418c83">
+              <span class="m-doc-wrap-bumper"><a href="#a06bb487b1495d287f564193055418c83" class="m-doc-self">dmg_music_position</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a9174c8d8a44971e57e83495676584835" class="m-doc">dmg_music_position</a>(</span><span class="m-doc-wrap">int pattern,
+              int row) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main Butano namespace.</dd>
-            <dt>namespace <a href="namespacebn_1_1music.html" class="m-doc">bn::music</a></dt>
-            <dd>Direct Sound music related functions.</dd>
+            <dt id="a3dc7e775f49018ba1e779b945d8308b4">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3dc7e775f49018ba1e779b945d8308b4" class="m-doc-self">pattern</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the pattern order.</dd>
+            <dt id="ab05b6561d564b11bad35ce21ab401d4a">
+              <span class="m-doc-wrap-bumper">void <a href="#ab05b6561d564b11bad35ce21ab401d4a" class="m-doc-self">set_pattern</a>(</span><span class="m-doc-wrap">int pattern) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the pattern order.</dd>
+            <dt id="ab0000d82a770f0f0b1f4be0b1408d667">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab0000d82a770f0f0b1f4be0b1408d667" class="m-doc-self">row</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the row inside the pattern.</dd>
+            <dt id="af0e9e325a22adec6ee8ad9e2903b6bd6">
+              <span class="m-doc-wrap-bumper">void <a href="#af0e9e325a22adec6ee8ad9e2903b6bd6" class="m-doc-self">set_row</a>(</span><span class="m-doc-wrap">int row) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the row inside the pattern.</dd>
           </dl>
         </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
           <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1music__volume__manager.html" class="m-doc">bn::music_volume_manager</a>
+            <dt id="a21812d989f5beea51e9d949013887b61">
+              <span class="m-doc-wrap-bumper">auto <a href="#a21812d989f5beea51e9d949013887b61" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dmg__music__position.html" class="m-doc">dmg_<wbr />music_<wbr />position</a>&amp; a,
+              const <a href="classbn_1_1dmg__music__position.html" class="m-doc">dmg_<wbr />music_<wbr />position</a>&amp; b) -&gt; friend bool <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Manages the volume of the active Direct Sound music.</dd>
-            <dt>
-              class <a href="classbn_1_1music__volume__to__action.html" class="m-doc">bn::music_volume_to_action</a>
-            </dt>
-            <dd>Modifies the volume of the active Direct Sound music until it has a given state.</dd>
-            <dt>
-              class <a href="classbn_1_1music__volume__loop__action.html" class="m-doc">bn::music_volume_loop_action</a>
-            </dt>
-            <dd>Modifies the volume of the active Direct Sound music from a minimum to a maximum. When the volume is equal to the given final state, it goes back to its initial state and vice versa.</dd>
-            <dt>
-              class <a href="classbn_1_1music__volume__toggle__action.html" class="m-doc">bn::music_volume_toggle_action</a>
-            </dt>
-            <dd>Changes the volume of the active Direct Sound music when the action is updated a given number of times.</dd>
-            <dt>
-              class <a href="classbn_1_1music__item.html" class="m-doc">bn::music_item</a>
-            </dt>
-            <dd>Contains the required information to play Direct Sound music.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;&gt;</div>
-              struct <a href="structbn_1_1hash_3_01music__item_01_4.html" class="m-doc">bn::hash&lt;music_item&gt;</a>
-            </dt>
-            <dd>Hash support for <a href="classbn_1_1music__item.html" class="m-doc">music_<wbr />item</a>.</dd>
-          </dl>
-        </section>
-        <section id="define-members">
-          <h2><a href="#define-members">Defines</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga9ec36de1eb7cd32376a5765bf3d6a63d" class="m-doc">BN_CFG_AUDIO_MAX_MUSIC_CHANNELS</a></span>
-            </dt>
-            <dd></dd>
+            <dd>Default equal operator.</dd>
           </dl>
         </section>
         <section>
-          <h2>Define documentation</h2>
-          <section class="m-doc-details" id="ga9ec36de1eb7cd32376a5765bf3d6a63d"><div>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a9174c8d8a44971e57e83495676584835"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga9ec36de1eb7cd32376a5765bf3d6a63d" class="m-doc-self">BN_CFG_AUDIO_MAX_MUSIC_CHANNELS</a></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__config__audio_8h.html">&lt;bn_config_audio.h&gt;</a></div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />dmg_music_position::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9174c8d8a44971e57e83495676584835" class="m-doc-self">dmg_music_position</a>(</span><span class="m-doc-wrap">int pattern,
+              int row) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-<p>Specifies the maximum number of active Direct Sound music channels.</p>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pattern</td>
+                  <td>Pattern order.</td>
+                </tr>
+                <tr>
+                  <td>row</td>
+                  <td>Row inside the pattern.</td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
         </section>
       </div>

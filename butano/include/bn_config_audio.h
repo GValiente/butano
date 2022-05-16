@@ -53,9 +53,9 @@
 /**
  * @def BN_CFG_AUDIO_MAX_COMMANDS
  *
- * Specifies the size of the audio commands queue.
+ * Specifies the size of the audio commands list.
  *
- * This queue is processed and cleared when bn::core::update() is called.
+ * This list is processed and cleared when bn::core::update() is called.
  *
  * @ingroup audio
  */

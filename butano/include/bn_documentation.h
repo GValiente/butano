@@ -1887,6 +1887,7 @@
  * * bn::dmg_music::position and bn::dmg_music::set_position added.
  * * bn::dmg_music_volume_to_action, bn::dmg_music_volume_loop_action and bn::dmg_music_volume_toggle_action added.
  * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.3.0.
+ * * Audio commands list management optimized (ROM, EWRAM and CPU usage reduced).
  *
  *
  * @section changelog_9_4_1 9.4.1

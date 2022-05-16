@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# s3m2gbt v4.2.0 (Part of GBT Player)
+# s3m2gbt v4.3.0 (Part of GBT Player)
 #
 # SPDX-License-Identifier: MIT
 #
@@ -10,15 +10,15 @@ from s3m2gbt import kaitaistruct
 
 from s3m2gbt.s3m import S3m
 
-class StepConversionError(Exception):
-    def __init__(self, message, pattern = -1, step = -1, channel = -1):
+class RowConversionError(Exception):
+    def __init__(self, message, pattern = -1, row = -1, channel = -1):
         self.pattern = pattern
-        self.step = step
+        self.row = row
         self.channel = channel + 1
         self.message = message
 
     def __str__(self):
-        return f"Pattern {self.pattern} | Row {self.step} | Channel {self.channel} | {self.message}"
+        return f"Pattern {self.pattern} | Row {self.row} | Channel {self.channel} | {self.message}"
 
 class S3MFormatError(Exception):
     pass
@@ -57,9 +57,9 @@ def s3m_note_to_gb(note):
 
     note -= 32
     if note < 0:
-        raise StepConversionError("Note too low")
+        raise RowConversionError("Note too low")
     elif note > 32 + 16 * 6:
-        raise StepConversionError("Note too high")
+        raise RowConversionError("Note too high")
 
     note = (note & 0xF) + ((note & 0xF0) >> 4) * 12
     return note
@@ -92,6 +92,7 @@ EFFECT_VOLUME_SLIDE     = 4
 EFFECT_PATTERN_JUMP     = 8
 EFFECT_BREAK_SET_STEP   = 9
 EFFECT_SPEED            = 10
+EFFECT_EVENT            = 15
 
 # Returns (converted_num, converted_params) if there was a valid effect. If
 # there is none, it returns (None, None). Note that it is needed to pass the
@@ -101,7 +102,7 @@ def effect_s3m_to_gb(channel, effectnum, effectparams):
 
     if effectnum == 'A': # Set Speed
         if effectparams == 0:
-            raise StepConversionError("Speed must not be zero")
+            raise RowConversionError("Speed must not be zero")
 
         return (EFFECT_SPEED, effectparams)
 
@@ -109,14 +110,14 @@ def effect_s3m_to_gb(channel, effectnum, effectparams):
         # TODO: Fail if this jumps out of bounds
         return (EFFECT_PATTERN_JUMP, effectparams)
 
-    elif effectnum == 'C': # Break + Set step
+    elif effectnum == 'C': # Break + Set row
         # Effect value is BCD, convert to integer
         val = (((effectparams & 0xF0) >> 4) * 10) + (effectparams & 0x0F)
         return (EFFECT_BREAK_SET_STEP, val)
 
     elif effectnum == 'D': # Volume Slide
         if channel == 3:
-            raise StepConversionError("Volume slide not supported in channel 3")
+            raise RowConversionError("Volume slide not supported in channel 3")
 
         if effectparams == 0:
             # Ignore volume slide commands that just continue the effect,
@@ -127,24 +128,24 @@ def effect_s3m_to_gb(channel, effectnum, effectparams):
         lower = effectparams & 0xF
 
         if upper == 0xF or lower == 0xF:
-            raise StepConversionError("Fine volume slide not supported")
+            raise RowConversionError("Fine volume slide not supported")
 
         elif lower == 0: # Volume goes up
             params = 1 << 3 # Increase
             delay = 7 - upper + 1
             if delay <= 0:
-                raise StepConversionError("Volume slide too steep")
+                raise RowConversionError("Volume slide too steep")
             params |= delay
             return (EFFECT_VOLUME_SLIDE, params)
         elif upper == 0: # Volume goes down
             params = 0 << 3 # Decrease
             delay = 7 - lower + 1
             if delay <= 0:
-                raise StepConversionError("Volume slide too steep")
+                raise RowConversionError("Volume slide too steep")
             params = delay
             return (EFFECT_VOLUME_SLIDE, params)
         else:
-            raise StepConversionError("Invalid volume slide arguments")
+            raise RowConversionError("Invalid volume slide arguments")
 
         return (EFFECT_VOLUME_SLIDE, effectparams)
 
@@ -163,10 +164,16 @@ def effect_s3m_to_gb(channel, effectnum, effectparams):
             val = s3m_pan_to_gb(subeffectparams, channel)
             return (EFFECT_PAN, val)
 
-        if subeffectnum == 0xC: # Notecut
+        elif subeffectnum == 0xC: # Notecut
             return (EFFECT_NOTE_CUT, subeffectparams)
 
-    raise(f"Unsupported effect: {effectnum}{effectparams:02X}")
+        elif subeffectnum == 0xF: # Funkrepeat? Set active macro?
+            # This effect is either unused, or it's the "set active macro"
+            # command, which doesn't have any effect if you don't use the macro
+            # afterwards. It can safely be overloaded for event callbacks.
+            return (EFFECT_EVENT, subeffectparams)
+
+    raise RowConversionError(f"Unsupported effect: {effectnum}{effectparams:02X}")
 
 HAS_VOLUME      = 1 << 4
 HAS_INSTRUMENT  = 1 << 5
@@ -297,7 +304,7 @@ def convert_channel4(note_index, samplenum, volume, effectnum, effectparams):
         if samplenum > 0:
             # This limitation is only for channel 4. It should never happen in a
             # regular song.
-            raise("Note cut + Sample in same step: Not supported in channel 4")
+            raise("Note cut + Sample in same row: Not supported in channel 4")
         samplenum = 0xFE
 
     # Check if there is a sample defined
@@ -330,6 +337,11 @@ def convert_channel4(note_index, samplenum, volume, effectnum, effectparams):
 
     return command[:command_size]
 
+STARTUP_CMD_DONE                = 0
+STARTUP_CMD_SPEED               = 1
+STARTUP_CMD_PANING              = 2
+STARTUP_CMD_CHANNEL3_INSTRUMENT = 3
+
 SAMPLE_64_ENTRIES = 1 << 7
 
 def initial_state_array(speed, panning_array, instruments):
@@ -338,12 +350,12 @@ def initial_state_array(speed, panning_array, instruments):
     # Initial speed
     # -------------
 
-    array.extend([1, speed])
+    array.extend([STARTUP_CMD_SPEED, speed])
 
     # Initial panning
     # ---------------
 
-    array.extend([2])
+    array.extend([STARTUP_CMD_PANING])
     array.extend(panning_array)
 
     # Channel 3 instruments
@@ -376,7 +388,7 @@ def initial_state_array(speed, panning_array, instruments):
                     if size == 64:
                         flags |= SAMPLE_64_ENTRIES
 
-                    array.extend([3, flags])
+                    array.extend([STARTUP_CMD_CHANNEL3_INSTRUMENT, flags])
 
                     # Convert from 8 bit to 4 bit
                     for i in range(0, size, 2):
@@ -397,7 +409,7 @@ def initial_state_array(speed, panning_array, instruments):
     # End commands
     # ------------
 
-    array.extend([0])
+    array.extend([STARTUP_CMD_DONE])
 
     return array
 
@@ -436,7 +448,7 @@ def convert_file(module_path, song_name, output_path, export_instruments):
         fileout.write(f"static const uint8_t {song_name}_{pattern}[] = ")
         fileout.write("{\n")
 
-        step = 0
+        row = 0
         try:
             cmd1 = [0]
             cmd2 = [0]
@@ -452,7 +464,7 @@ def convert_file(module_path, song_name, output_path, export_instruments):
                 if c.channel_num == 0 and (not c.has_volume) and \
                     (not c.has_fx) and (not c.has_note_and_instrument):
 
-                    # Write step
+                    # Write row
                     fileout.write("    ")
 
                     for b in cmd1:
@@ -466,7 +478,7 @@ def convert_file(module_path, song_name, output_path, export_instruments):
 
                     fileout.write("\n")
 
-                    step = step + 1
+                    row = row + 1
 
                     # Clear commands
                     cmd1 = [0]
@@ -514,8 +526,8 @@ def convert_file(module_path, song_name, output_path, export_instruments):
                                                 effectnum, effectparams)
                     else:
                         raise S3MFormatError(f"Too many channels: {channel}")
-                except StepConversionError as e:
-                    e.step = step
+                except RowConversionError as e:
+                    e.row = row
                     e.pattern = pattern
                     e.channel = channel
                     raise e
@@ -606,7 +618,7 @@ if __name__ == "__main__":
     import argparse
     import sys
 
-    print("s3m2gbt v4.2.0 (part of GBT Player)")
+    print("s3m2gbt v4.3.0 (part of GBT Player)")
     print("Copyright (c) 2022 Antonio Niño Díaz <antonio_nd@outlook.com>")
     print("Copyright (c) 2015-2022 Kaitai Project")
     print("All rights reserved")
@@ -626,7 +638,7 @@ if __name__ == "__main__":
 
     try:
         convert_file(args.input, args.name, args.output, args.instruments)
-    except StepConversionError as e:
+    except RowConversionError as e:
         print("ERROR: " + str(e))
         sys.exit(1)
     except S3MFormatError as e:

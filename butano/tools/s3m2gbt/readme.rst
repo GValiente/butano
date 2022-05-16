@@ -1,4 +1,4 @@
-s3m2gbt v4.2.0
+s3m2gbt v4.3.0
 ==============
 
 This tool can convert a special template of S3M into a GBT converted song.
@@ -17,8 +17,8 @@ panning for each channel. It isn't needed to set them by using them as effects.
 Don't change the BPM of the song, it's set so that it matches the refresh
 frequency of the GB/GBC/GBA.
 
-The converter ignores global volumes, as well as sample volumes. The only
-volumes used are the ones in the patterns.
+The converter ignores global volumes. Sample default volumes are used when a
+note an an instrument are provided, but no volume (as expected from a S3M file).
 
 Frequencies
 -----------
@@ -72,12 +72,12 @@ channel 3 is a square wave).
 Effects
 -------
 
-- ``Ann``: Sets speed to nn (in hexadecimal). Valid values ``01`` and higher.
-  The higher the value, the slower the song.
+- ``Ann``: Sets speed to ``nn`` (in hexadecimal). Valid values are ``01`` and
+  higher. The higher the value, the slower the song.
 
-- ``Bnn``: Jump to pattern in order nn (in hexadecimal).
+- ``Bnn``: Jump to pattern in order ``nn`` (in hexadecimal).
 
-- ``Cnn``: Ends this pattern and jumps to position nn (in decimal) in next
+- ``Cnn``: Ends this pattern and jumps to position ``nn`` (in decimal) in next
   pattern.
 
 - ``Dxy``: Volume slide. Only channels 1, 2, and 4. Notes:

@@ -38,7 +38,7 @@
 	Licensed under the Attribution Non-commercial Share Alike license
 	https://modarchive.org/index.php?request=view_by_moduleid&query=43649
 
-- s3m_template.mod
+- s3m_template.s3m
 	By AntonioND and KizulEmeraldfire
 	Licensed under the MIT license
 	https://github.com/AntonioND/gbt-player

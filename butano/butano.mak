@@ -167,7 +167,7 @@ all:
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --audio="$(AUDIO)" --dmg_audio="$(DMGAUDIO)" \
-			--graphics="$(GRAPHICS)" --mod2gbt="$(MOD2GBT)" --build=$(BUILD)
+			--graphics="$(GRAPHICS)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------

@@ -5,7 +5,6 @@ zlib License, see LICENSE file.
 
 import os
 import sys
-import subprocess
 from multiprocessing import Pool
 
 from file_info import FileInfo
@@ -23,14 +22,14 @@ class DmgAudioFileInfo:
     def print_file_name(self):
         print(self.__file_name)
 
-    def process(self, mod2gbt_file_path, build_folder_path):
+    def process(self, build_folder_path):
         output_tag = self.__file_name_no_ext + '_bn_dmg'
         output_file_name = output_tag + '.c'
         output_file_path = build_folder_path + '/' + output_file_name
 
         try:
             if self.__is_mod:
-                self.__execute_mod2gbt_command(mod2gbt_file_path, output_tag)
+                self.__execute_mod2gbt_command(output_tag)
                 self.__move_output_file(output_file_name, output_file_path)
             else:
                 self.__execute_s3m2gbt_command(output_tag, output_file_path)
@@ -47,14 +46,18 @@ class DmgAudioFileInfo:
 
             return [self.__file_name, exc]
 
-    def __execute_mod2gbt_command(self, mod2gbt_file_path, output_tag):
-        command = [mod2gbt_file_path, self.__file_path, output_tag]
-        command = ' '.join(command)
+    def __execute_mod2gbt_command(self, output_tag):
+        import io
+        from mod2gbt import mod2gbt
+
+        sys.stdout = io.StringIO()
 
         try:
-            subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as e:
-            raise ValueError('mod2gbt call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            mod2gbt.convert_file(self.__file_path, output_tag, True)
+            sys.stdout = sys.__stdout__
+        except Exception:
+            sys.stdout = sys.__stdout__
+            raise
 
     def __execute_s3m2gbt_command(self, output_tag, output_file_path):
         import io
@@ -102,19 +105,17 @@ class DmgAudioFileInfo:
 
 class DmgAudioFileInfoProcessor:
 
-    def __init__(self, mod2gbt_file_path, build_folder_path):
-        self.__mod2gbt_file_path = mod2gbt_file_path
+    def __init__(self, build_folder_path):
         self.__build_folder_path = build_folder_path
 
     def __call__(self, audio_file_info):
-        return audio_file_info.process(self.__mod2gbt_file_path, self.__build_folder_path)
+        return audio_file_info.process(self.__build_folder_path)
 
 
 def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
     audio_folder_path_list = audio_folder_paths.split(' ')
     audio_file_infos = []
     file_names_set = set()
-    mods_found = False
 
     for audio_folder_path in audio_folder_path_list:
         audio_file_names = os.listdir(audio_folder_path)
@@ -147,18 +148,15 @@ def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
                     if build:
                         audio_file_infos.append(DmgAudioFileInfo(
                             audio_file_path, audio_file_name, audio_file_name_no_ext, file_info_path, mod_extension))
-                        
-                        if mod_extension:
-                            mods_found = True
 
-    return audio_file_infos, mods_found
+    return audio_file_infos
 
 
-def process_dmg_audio(mod2gbt_file_path, audio_folder_paths, build_folder_path):
+def process_dmg_audio(audio_folder_paths, build_folder_path):
     if len(audio_folder_paths) == 0:
         return
 
-    audio_file_infos, mods_found = list_dmg_audio_file_infos(audio_folder_paths, build_folder_path)
+    audio_file_infos = list_dmg_audio_file_infos(audio_folder_paths, build_folder_path)
 
     if len(audio_file_infos) > 0:
         for audio_file_info in audio_file_infos:
@@ -166,16 +164,8 @@ def process_dmg_audio(mod2gbt_file_path, audio_folder_paths, build_folder_path):
 
         sys.stdout.flush()
 
-        if mods_found:
-            if len(mod2gbt_file_path) == 0:
-                raise ValueError('mod2gbt file path not specified. You must specify it in the MOD2GBT variable '
-                                 'of your project\'s Makefile.')
-
-            if not os.path.exists(mod2gbt_file_path):
-                raise ValueError('mod2gbt file does not exist: ' + mod2gbt_file_path)
-
         pool = Pool()
-        processor = DmgAudioFileInfoProcessor(mod2gbt_file_path, build_folder_path)
+        processor = DmgAudioFileInfoProcessor(build_folder_path)
         process_results = pool.map(processor, audio_file_infos)
         pool.close()
 

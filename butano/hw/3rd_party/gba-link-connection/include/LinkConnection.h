@@ -198,8 +198,8 @@ public:
     }
     
 private:
-    bool isEnabled = false;
-    bool isBlocked = false;
+    volatile bool isEnabled = false;
+    volatile bool isBlocked = false;
     
     bool isReady() { return isBitHigh(LINK_BIT_READY); }
     bool hasError() { return isBitHigh(LINK_BIT_ERROR); }

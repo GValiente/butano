@@ -1882,6 +1882,7 @@
  * * An external `mod2gbt` executable is no longer necessary for importing DMG music with `*.mod` extension.
  * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.3.0.
  * * Audio commands list management optimized (ROM, EWRAM and CPU usage reduced).
+ * * Missed link messages frequency reduced.
  *
  *
  * @section changelog_9_4_1 9.4.1

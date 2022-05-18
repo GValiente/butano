@@ -50,32 +50,40 @@ void send(int data_to_send)
 optional<link_state> receive()
 {
     int current_player_id = 0;
-    vector<link_player, 3> other_players;
+    int player_datas[4]  = { LINK_NO_DATA, LINK_NO_DATA, LINK_NO_DATA, LINK_NO_DATA };
     _check_activated();
 
     hw::link::block();
 
     if(hw::link::state* link_state = hw::link::current_state())
     {
+        int players_count = bn::max(int(link_state->playerCount), 4);
         current_player_id = int(link_state->currentPlayerId);
 
-        for(int player_id = 0, players_count = link_state->playerCount; player_id < players_count; ++player_id)
+        for(int player_id = 0; player_id < players_count; ++player_id)
         {
             if(player_id != current_player_id)
             {
-                int player_data = link_state->readMessage(u8(player_id));
-
-                if(player_data != LINK_NO_DATA && player_data != LINK_DISCONNECTED)
-                {
-                    BN_ASSERT(! other_players.full(), "Too much players");
-
-                    other_players.emplace_back(player_id, player_data - 1);
-                }
+                player_datas[player_id] = link_state->readMessage(uint8_t(player_id));
             }
         }
     }
 
     hw::link::unblock();
+
+    vector<link_player, 3> other_players;
+
+    for(int player_id = 0; player_id < 4; ++player_id)
+    {
+        int player_data = player_datas[player_id];
+
+        if(player_data != LINK_NO_DATA && player_data != LINK_DISCONNECTED)
+        {
+            BN_ASSERT(! other_players.full(), "Too much players");
+
+            other_players.emplace_back(player_id, player_data - 1);
+        }
+    }
 
     optional<link_state> result;
 

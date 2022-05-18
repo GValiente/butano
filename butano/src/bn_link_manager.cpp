@@ -44,7 +44,11 @@ void send(int data_to_send)
 {
     _check_activated();
 
+    hw::link::block();
+
     hw::link::send(data_to_send + 1);
+
+    hw::link::unblock();
 }
 
 optional<link_state> receive()

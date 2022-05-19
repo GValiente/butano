@@ -39,14 +39,7 @@ namespace bn::hw::link
         irq::disable(irq::id::SERIAL);
     }
 
-    inline void init(connection& connection_ref)
-    {
-        linkConnection = &connection_ref;
-        connection_ref.init();
-        irq::replace_or_push_back_disabled(irq::id::SERIAL, _serial_intr);
-        irq::replace_or_push_back_disabled(irq::id::TIMER1, _timer_intr);
-        linkConnection->deactivate();
-    }
+    void init(connection& connection_ref);
 
     inline void block()
     {
@@ -70,10 +63,7 @@ namespace bn::hw::link
         return &link_state;
     }
 
-    inline void send(int data_to_send)
-    {
-        linkConnection->send(u16(data_to_send));
-    }
+    void send(int data_to_send);
 
     inline void commit()
     {

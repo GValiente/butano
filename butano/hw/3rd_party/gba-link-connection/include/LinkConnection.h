@@ -98,9 +98,13 @@ struct LinkState {
 
 class LinkConnection {
 public:
+    using func_type = void(*)();
+
     LinkState linkState;
     
-    void init() {
+    void init(func_type _sendDataCallback, func_type _resetStateCallback) {
+        sendDataCallback = _sendDataCallback;
+        resetStateCallback = _resetStateCallback;
         stop();
     }
     
@@ -198,6 +202,8 @@ public:
     }
     
 private:
+    func_type sendDataCallback;
+    func_type resetStateCallback;
     volatile bool isEnabled = false;
     volatile bool isBlocked = false;
     
@@ -208,6 +214,7 @@ private:
     bool didTimeout() { return linkState._IRQTimeout >= LINK_DEFAULT_TIMEOUT; }
     
     void sendPendingData() {
+        sendDataCallback();
         transfer(LINK_QUEUE_POP(linkState._outgoingMessages));
     }
     
@@ -244,6 +251,7 @@ private:
         LINK_QUEUE_CLEAR(linkState._outgoingMessages);
         linkState._IRQFlag = false;
         linkState._IRQTimeout = 0;
+        resetStateCallback();
     }
     
     void stop() {

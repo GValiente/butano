@@ -1884,6 +1884,7 @@
  * * Audio commands list management optimized (ROM, EWRAM and CPU usage reduced).
  * * Missed link messages frequency reduced.
  * * Link data sending race condition fixed.
+ * * Link race condition on V-Blank fixed.
  *
  *
  * @section changelog_9_4_1 9.4.1

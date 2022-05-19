@@ -125,7 +125,6 @@ namespace
     {
         mmFrame();
         gbt_update();
-        data.lp_vblank_function();
     }
 
     void _vblank_handler()
@@ -136,6 +135,8 @@ namespace
         {
             _commit();
         }
+
+        data.lp_vblank_function();
     }
 }
 
@@ -161,8 +162,6 @@ void init(func_type hp_vblank_function, func_type lp_vblank_function)
     mmInit(&maxmod_info);
 
     mmSetVBlankHandler(reinterpret_cast<void*>(_vblank_handler));
-
-    gbt_stop();
 }
 
 void enable()

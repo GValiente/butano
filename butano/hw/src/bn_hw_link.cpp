@@ -149,7 +149,9 @@ void send(int data_to_send)
 {
     _check_active();
 
+    BN_BARRIER;
     data.blockSendMessages = true;
+    BN_BARRIER;
 
     if(data.sendMessages.full())
     {
@@ -158,15 +160,22 @@ void send(int data_to_send)
 
     data.sendMessages.push_back(data_to_send);
 
+    BN_BARRIER;
     data.blockSendMessages = false;
+    BN_BARRIER;
 
     if(data.clearSendMessages)
     {
+        BN_BARRIER;
         data.blockSendMessages = true;
+        BN_BARRIER;
 
         data.sendMessages.clear();
 
+        BN_BARRIER;
         data.blockSendMessages = false;
+        BN_BARRIER;
+
         data.clearSendMessages = false;
     }
 }
@@ -175,7 +184,9 @@ bool receive(LinkResponse& response)
 {
     _check_active();
 
+    BN_BARRIER;
     data.blockReceivedMessages = true;
+    BN_BARRIER;
 
     bool success = ! data.firstReceivedMessages.empty();
 
@@ -185,15 +196,22 @@ bool receive(LinkResponse& response)
         data.firstReceivedMessages.pop_front();
     }
 
+    BN_BARRIER;
     data.blockReceivedMessages = false;
+    BN_BARRIER;
 
     if(data.clearReceivedMessages)
     {
+        BN_BARRIER;
         data.blockReceivedMessages = true;
+        BN_BARRIER;
 
         data.firstReceivedMessages.clear();
 
+        BN_BARRIER;
         data.blockReceivedMessages = false;
+        BN_BARRIER;
+
         data.clearReceivedMessages = false;
 
         success = false;

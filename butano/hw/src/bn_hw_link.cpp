@@ -5,7 +5,7 @@
 
 #include "../include/bn_hw_link.h"
 
-LinkConnection* linkConnection = nullptr;
+#include "../include/bn_hw_irq.h"
 
 namespace bn::hw::link
 {
@@ -16,33 +16,42 @@ namespace
     {
 
     public:
+        LinkConnection connection;
         bn::deque<uint16_t, LINK_DEFAULT_BUFFER_SIZE> sendMessages;
-        bn::deque<LinkConnection::Response, LINK_DEFAULT_BUFFER_SIZE> firstReceivedMessages;
-        bn::deque<LinkConnection::Response, LINK_DEFAULT_BUFFER_SIZE> secondReceivedMessages;
+        bn::deque<LinkResponse, LINK_DEFAULT_BUFFER_SIZE> firstReceivedMessages;
+        bn::deque<LinkResponse, LINK_DEFAULT_BUFFER_SIZE> secondReceivedMessages;
         volatile bool blockSendMessages = false;
         volatile bool blockReceivedMessages = false;
         volatile bool clearSendMessages = false;
         volatile bool clearReceivedMessages = false;
+        bool active = false;
     };
 
     BN_DATA_EWRAM static_data data;
+
+    void _check_active()
+    {
+        if(! data.active)
+        {
+            enable();
+            data.active = true;
+        }
+    }
 
     void _sendDataCallback()
     {
         if(! data.blockSendMessages)
         {
-            LinkConnection* lc = linkConnection;
-
             for(uint16_t message : data.sendMessages)
             {
-                lc->send(message);
+                data.connection.send(message);
             }
 
             data.sendMessages.clear();
         }
     }
 
-    void _receiveResponseCallback(const LinkConnection::Response& response)
+    void _receiveResponseCallback(const LinkResponse& response)
     {
         if(data.blockReceivedMessages)
         {
@@ -55,7 +64,7 @@ namespace
         }
         else
         {
-            for(const LinkConnection::Response& secondReceivedMessage : data.secondReceivedMessages)
+            for(const LinkResponse& secondReceivedMessage : data.secondReceivedMessages)
             {
                 if(data.firstReceivedMessages.full())
                 {
@@ -100,17 +109,46 @@ namespace
     }
 }
 
-void init(LinkConnection& connection_ref)
+void init()
 {
-    linkConnection = &connection_ref;
-    connection_ref.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
+    data.connection.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
     irq::replace_or_push_back_disabled(irq::id::SERIAL, _serial_intr);
     irq::replace_or_push_back_disabled(irq::id::TIMER1, _timer_intr);
-    linkConnection->deactivate();
+    data.connection.deactivate();
+}
+
+bool active()
+{
+    return data.active;
+}
+
+void enable()
+{
+    data.connection.activate();
+    irq::enable(irq::id::SERIAL);
+    irq::enable(irq::id::TIMER1);
+}
+
+void disable()
+{
+    irq::disable(irq::id::TIMER1);
+    irq::disable(irq::id::SERIAL);
+    data.connection.deactivate();
+}
+
+void deactivate()
+{
+    if(data.active)
+    {
+        data.active = false;
+        disable();
+    }
 }
 
 void send(int data_to_send)
 {
+    _check_active();
+
     data.blockSendMessages = true;
 
     if(data.sendMessages.full())
@@ -133,8 +171,10 @@ void send(int data_to_send)
     }
 }
 
-bool receive(LinkConnection::Response& response)
+bool receive(LinkResponse& response)
 {
+    _check_active();
+
     data.blockReceivedMessages = true;
 
     bool success = ! data.firstReceivedMessages.empty();
@@ -164,12 +204,20 @@ bool receive(LinkConnection::Response& response)
 
 void _serial_intr()
 {
-    linkConnection->_onSerial();
+    data.connection._onSerial();
 }
 
 void _timer_intr()
 {
-    linkConnection->_onTimer();
+    data.connection._onTimer();
+}
+
+void commit()
+{
+    if(data.active)
+    {
+        data.connection._onVBlank();
+    }
 }
 
 }

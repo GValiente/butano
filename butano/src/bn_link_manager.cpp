@@ -12,46 +12,20 @@
 namespace bn::link_manager
 {
 
-namespace
-{
-    class static_data
-    {
-
-    public:
-        LinkConnection connection;
-        bool activated = false;
-    };
-
-    BN_DATA_EWRAM static_data data;
-
-
-    void _check_activated()
-    {
-        if(! data.activated)
-        {
-            hw::link::enable();
-            data.activated = true;
-        }
-    }
-}
-
 void init()
 {
-    hw::link::init(data.connection);
+    hw::link::init();
 }
 
 void send(int data_to_send)
 {
-    _check_activated();
-
     hw::link::send(data_to_send + 1);
 }
 
 optional<link_state> receive()
 {
-    LinkConnection::Response response;
+    LinkResponse response;
     optional<link_state> result;
-    _check_activated();
 
     if(hw::link::receive(response))
     {
@@ -80,16 +54,12 @@ optional<link_state> receive()
 
 void deactivate()
 {
-    if(data.activated)
-    {
-        data.activated = false;
-        hw::link::disable();
-    }
+    hw::link::deactivate();
 }
 
 void enable()
 {
-    if(data.activated)
+    if(hw::link::active())
     {
         hw::link::enable();
     }
@@ -97,7 +67,7 @@ void enable()
 
 void disable()
 {
-    if(data.activated)
+    if(hw::link::active())
     {
         hw::link::disable();
     }
@@ -105,10 +75,7 @@ void disable()
 
 void commit()
 {
-    if(data.activated)
-    {
-        hw::link::commit();
-    }
+    hw::link::commit();
 }
 
 }

@@ -84,16 +84,16 @@ struct LinkState {
     }
 };
 
+struct LinkResponse
+{
+    u16 incomingMessages[LINK_MAX_PLAYERS] = { LINK_NO_DATA };
+    u16 currentPlayerId;
+};
+
 class LinkConnection {
 public:
-    struct Response
-    {
-        u16 incomingMessages[LINK_MAX_PLAYERS] = { LINK_NO_DATA };
-        u16 currentPlayerId;
-    };
-
     using FuncType = void(*)();
-    using ResponseFuncType = void(*)(const Response&);
+    using ResponseFuncType = void(*)(const LinkResponse&);
 
     LinkState linkState;
     
@@ -159,7 +159,7 @@ public:
         linkState._IRQFlag = true;
         linkState._IRQTimeout = 0;
         
-        Response response;
+        LinkResponse response;
         unsigned newPlayerCount = 0;
         bool validResponse = false;
 

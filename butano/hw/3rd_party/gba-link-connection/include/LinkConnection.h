@@ -72,7 +72,6 @@ u16 LINK_QUEUE_POP(bn::ideque<u16>& q);
 void LINK_QUEUE_CLEAR(bn::ideque<u16>& q);
 
 struct LinkState {
-    bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _incomingMessages[LINK_MAX_PLAYERS];
     bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _outgoingMessages;
     int _timeouts[LINK_MAX_PLAYERS];
     u32 _IRQTimeout;
@@ -83,27 +82,24 @@ struct LinkState {
     bool isConnected() {
         return playerCount > 1 && currentPlayerId < playerCount;
     }
-    
-    bool hasMessage(u8 playerId) {
-        if (playerId >= playerCount)
-            return false;
-        
-        return !_incomingMessages[playerId].empty();
-    }
-    
-    u16 readMessage(u8 playerId) {
-        return LINK_QUEUE_POP(_incomingMessages[playerId]);
-    }
 };
 
 class LinkConnection {
 public:
-    using func_type = void(*)();
+    struct Response
+    {
+        u16 incomingMessages[LINK_MAX_PLAYERS] = { LINK_NO_DATA };
+        u16 currentPlayerId;
+    };
+
+    using FuncType = void(*)();
+    using ResponseFuncType = void(*)(const Response&);
 
     LinkState linkState;
     
-    void init(func_type _sendDataCallback, func_type _resetStateCallback) {
+    void init(FuncType _sendDataCallback, ResponseFuncType _receiveResponseCallback, FuncType _resetStateCallback) {
         sendDataCallback = _sendDataCallback;
+        receiveResponseCallback = _receiveResponseCallback;
         resetStateCallback = _resetStateCallback;
         stop();
     }
@@ -122,14 +118,6 @@ public:
         resetState();
         stop();
     }
-
-    void block() {
-        isBlocked = true;
-    }
-
-    void unblock() {
-        isBlocked = false;
-    }
     
     void send(u16 data) {
         if (data == LINK_DISCONNECTED || data == LINK_NO_DATA)
@@ -139,7 +127,7 @@ public:
     }
     
     void _onVBlank() {
-        if (!isEnabled || isBlocked)
+        if (!isEnabled)
             return;
         
         if (!linkState._IRQFlag)
@@ -149,7 +137,7 @@ public:
     }
     
     void _onTimer() {
-        if (!isEnabled || isBlocked)
+        if (!isEnabled)
             return;
         
         if (didTimeout()) {
@@ -162,7 +150,7 @@ public:
     }
     
     void _onSerial() {
-        if (!isEnabled || isBlocked)
+        if (!isEnabled)
             return;
         
         if (resetIfNeeded())
@@ -171,19 +159,23 @@ public:
         linkState._IRQFlag = true;
         linkState._IRQTimeout = 0;
         
+        Response response;
         unsigned newPlayerCount = 0;
+        bool validResponse = false;
+
         for (u32 i = 0; i < LINK_MAX_PLAYERS; i++) {
             u16 data = REG_SIOMULTI[i];
             
             if (data != LINK_DISCONNECTED) {
-                if (data != LINK_NO_DATA && i != linkState.currentPlayerId)
-                    push(linkState._incomingMessages[i], data);
+                if (data != LINK_NO_DATA && i != linkState.currentPlayerId) {
+                    response.incomingMessages[i] = data;
+                    validResponse = true;
+                }
                 newPlayerCount++;
                 linkState._timeouts[i] = 0;
             }
             else if (linkState._timeouts[i] > LINK_REMOTE_TIMEOUT_OFFLINE) {
                 if (linkState._timeouts[i] >= LINK_DEFAULT_REMOTE_TIMEOUT) {
-                    LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
                     linkState._timeouts[i] = LINK_REMOTE_TIMEOUT_OFFLINE;
                 }
                 else {
@@ -192,20 +184,25 @@ public:
                 }
             }
         }
-        
+
+        u8 currentPlayerId = (REG_SIOCNT & (0b11 << LINK_BITS_PLAYER_ID)) >> LINK_BITS_PLAYER_ID;
+        linkState.currentPlayerId = currentPlayerId;
         linkState.playerCount = newPlayerCount;
-        linkState.currentPlayerId =
-                (REG_SIOCNT & (0b11 << LINK_BITS_PLAYER_ID)) >> LINK_BITS_PLAYER_ID;
+
+        if (validResponse && linkState.isConnected()) {
+            response.currentPlayerId = currentPlayerId;
+            receiveResponseCallback(response);
+        }
         
         if (!isMaster())
             sendPendingData();
     }
     
 private:
-    func_type sendDataCallback;
-    func_type resetStateCallback;
+    FuncType sendDataCallback;
+    ResponseFuncType receiveResponseCallback;
+    FuncType resetStateCallback;
     volatile bool isEnabled = false;
-    volatile bool isBlocked = false;
     
     bool isReady() { return isBitHigh(LINK_BIT_READY); }
     bool hasError() { return isBitHigh(LINK_BIT_ERROR); }
@@ -245,7 +242,6 @@ private:
         linkState.playerCount = 0;
         linkState.currentPlayerId = 0;
         for (u32 i = 0; i < LINK_MAX_PLAYERS; i++) {
-            LINK_QUEUE_CLEAR(linkState._incomingMessages[i]);
             linkState._timeouts[i] = LINK_REMOTE_TIMEOUT_OFFLINE;
         }
         LINK_QUEUE_CLEAR(linkState._outgoingMessages);

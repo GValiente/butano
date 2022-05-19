@@ -18,9 +18,6 @@
 
 namespace bn::hw::link
 {
-    using connection = LinkConnection;
-    using state = LinkState;
-
     void _serial_intr();
 
     void _timer_intr();
@@ -39,31 +36,11 @@ namespace bn::hw::link
         irq::disable(irq::id::SERIAL);
     }
 
-    void init(connection& connection_ref);
-
-    inline void block()
-    {
-        linkConnection->block();
-    }
-
-    inline void unblock()
-    {
-        linkConnection->unblock();
-    }
-
-    inline state* current_state()
-    {
-        state& link_state = linkConnection->linkState;
-
-        if(! link_state.isConnected())
-        {
-            return nullptr;
-        }
-
-        return &link_state;
-    }
+    void init(LinkConnection& connection_ref);
 
     void send(int data_to_send);
+
+    [[nodiscard]] bool receive(LinkConnection::Response& response);
 
     inline void commit()
     {

@@ -18,7 +18,7 @@ namespace
     {
 
     public:
-        hw::link::connection connection;
+        LinkConnection connection;
         bool activated = false;
     };
 
@@ -49,47 +49,30 @@ void send(int data_to_send)
 
 optional<link_state> receive()
 {
-    int current_player_id = 0;
-    int player_datas[4]  = { LINK_NO_DATA, LINK_NO_DATA, LINK_NO_DATA, LINK_NO_DATA };
+    LinkConnection::Response response;
+    optional<link_state> result;
     _check_activated();
 
-    hw::link::block();
-
-    if(hw::link::state* link_state = hw::link::current_state())
+    if(hw::link::receive(response))
     {
-        int players_count = bn::max(int(link_state->playerCount), 4);
-        current_player_id = int(link_state->currentPlayerId);
+        vector<link_player, 3> other_players;
 
-        for(int player_id = 0; player_id < players_count; ++player_id)
+        for(int player_id = 0; player_id < 4; ++player_id)
         {
-            if(player_id != current_player_id)
+            int player_data = response.incomingMessages[player_id];
+
+            if(player_data != LINK_NO_DATA)
             {
-                player_datas[player_id] = link_state->readMessage(uint8_t(player_id));
+                BN_ASSERT(! other_players.full(), "Too much players");
+
+                other_players.emplace_back(player_id, player_data - 1);
             }
         }
-    }
 
-    hw::link::unblock();
-
-    vector<link_player, 3> other_players;
-
-    for(int player_id = 0; player_id < 4; ++player_id)
-    {
-        int player_data = player_datas[player_id];
-
-        if(player_data != LINK_NO_DATA && player_data != LINK_DISCONNECTED)
+        if(! other_players.empty())
         {
-            BN_ASSERT(! other_players.full(), "Too much players");
-
-            other_players.emplace_back(player_id, player_data - 1);
+            result.emplace(response.currentPlayerId, other_players);
         }
-    }
-
-    optional<link_state> result;
-
-    if(! other_players.empty())
-    {
-        result.emplace(current_player_id, other_players);
     }
 
     return result;

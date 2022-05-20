@@ -24,18 +24,18 @@ IRQ_GlobalInterruptHandler:
 
     .extern IRQ_VectorTable
 
-    ldr     r3, =IRQ_VectorTable
+    ldr     r3, =IRQ_VectorTable + 4
 
-    mov     r2, #(1 << 0) // VBLANK
-    tst     r1, r2
-    bne     interrupt_found
-
-    add     r3, r3, #4
     mov     r2, #(1 << 1) // HBLANK
     tst     r1, r2
     bne     interrupt_found
 
-    add     r3, r3, #4
+    sub     r3, r3, #4
+    mov     r2, #(1 << 0) // VBLANK
+    tst     r1, r2
+    bne     interrupt_found
+
+    add     r3, r3, #8
     mov     r2, #(1 << 2) // VCOUNT
     tst     r1, r2
     bne     interrupt_found

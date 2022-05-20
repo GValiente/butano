@@ -72,6 +72,12 @@
               const <a href="classbn_1_1vector.html" class="m-doc">vector</a>&lt;<a href="classbn_1_1link__player.html" class="m-doc">link_<wbr />player</a>, 3&gt;&amp; other_players)</span>
             </dt>
             <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ab9258887060789aa6bc0ed0ef9ef978e" class="m-doc">link_state</a>(</span><span class="m-doc-wrap">int current_player_id,
+              int player_count,
+              const <a href="classbn_1_1vector.html" class="m-doc">vector</a>&lt;<a href="classbn_1_1link__player.html" class="m-doc">link_<wbr />player</a>, 3&gt;&amp; other_players)</span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -81,6 +87,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ab62dcee2ac768cf615cebb617fea033a" class="m-doc-self">current_player_id</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
             </dt>
             <dd>Returns the ID of this player.</dd>
+            <dt id="a78d74a82ae819165ca3a2f6bdb530810">
+              <span class="m-doc-wrap-bumper">auto <a href="#a78d74a82ae819165ca3a2f6bdb530810" class="m-doc-self">player_count</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of connected players (including this one).</dd>
             <dt id="ac793eab8576d264605b695a8071b9c67">
               <span class="m-doc-wrap-bumper">auto <a href="#ac793eab8576d264605b695a8071b9c67" class="m-doc-self">other_players</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbn_1_1link__player.html" class="m-doc">link_<wbr />player</a>&gt;&amp;</span>
             </dt>
@@ -113,6 +123,33 @@
                 <tr>
                   <td style="width: 1%">current_player_id</td>
                   <td>ID of this player, in the range [0..3].</td>
+                </tr>
+                <tr>
+                  <td>other_players</td>
+                  <td>Data provided by the other players.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab9258887060789aa6bc0ed0ef9ef978e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />link_state::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab9258887060789aa6bc0ed0ef9ef978e" class="m-doc-self">link_state</a>(</span><span class="m-doc-wrap">int current_player_id,
+              int player_count,
+              const <a href="classbn_1_1vector.html" class="m-doc">vector</a>&lt;<a href="classbn_1_1link__player.html" class="m-doc">link_<wbr />player</a>, 3&gt;&amp; other_players)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">current_player_id</td>
+                  <td>ID of this player, in the range [0..3].</td>
+                </tr>
+                <tr>
+                  <td>player_count</td>
+                  <td>Number of connected players (including this one).</td>
                 </tr>
                 <tr>
                   <td>other_players</td>

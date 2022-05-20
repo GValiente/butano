@@ -37,15 +37,13 @@ optional<link_state> receive()
 
             if(player_data != LINK_NO_DATA)
             {
-                BN_ASSERT(! other_players.full(), "Too much players");
-
                 other_players.emplace_back(player_id, player_data - 1);
             }
         }
 
         if(! other_players.empty())
         {
-            result.emplace(response.currentPlayerId, other_players);
+            result.emplace(response.currentPlayerId, response.playerCount, other_players);
         }
     }
 

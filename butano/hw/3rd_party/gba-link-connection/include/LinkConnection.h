@@ -87,7 +87,8 @@ struct LinkState {
 struct LinkResponse
 {
     u16 incomingMessages[LINK_MAX_PLAYERS] = { LINK_NO_DATA };
-    u16 currentPlayerId;
+    u8 currentPlayerId;
+    u8 playerCount;
 };
 
 class LinkConnection {
@@ -160,18 +161,19 @@ public:
         linkState._IRQTimeout = 0;
         
         LinkResponse response;
-        unsigned newPlayerCount = 0;
+        u8 currentPlayerId = (REG_SIOCNT & (0b11 << LINK_BITS_PLAYER_ID)) >> LINK_BITS_PLAYER_ID;
+        unsigned playerCount = 0;
         bool validResponse = false;
 
         for (u32 i = 0; i < LINK_MAX_PLAYERS; i++) {
             u16 data = REG_SIOMULTI[i];
             
             if (data != LINK_DISCONNECTED) {
-                if (data != LINK_NO_DATA && i != linkState.currentPlayerId) {
+                if (data != LINK_NO_DATA && i != currentPlayerId) {
                     response.incomingMessages[i] = data;
                     validResponse = true;
                 }
-                newPlayerCount++;
+                playerCount++;
                 linkState._timeouts[i] = 0;
             }
             else if (linkState._timeouts[i] > LINK_REMOTE_TIMEOUT_OFFLINE) {
@@ -180,17 +182,17 @@ public:
                 }
                 else {
                     linkState._timeouts[i]++;
-                    newPlayerCount++;
+                    playerCount++;
                 }
             }
         }
 
-        u8 currentPlayerId = (REG_SIOCNT & (0b11 << LINK_BITS_PLAYER_ID)) >> LINK_BITS_PLAYER_ID;
         linkState.currentPlayerId = currentPlayerId;
-        linkState.playerCount = newPlayerCount;
+        linkState.playerCount = playerCount;
 
         if (validResponse && linkState.isConnected()) {
             response.currentPlayerId = currentPlayerId;
+            response.playerCount = playerCount;
             receiveResponseCallback(response);
         }
         

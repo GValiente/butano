@@ -1,4 +1,4 @@
-// GBT Player v4.3.0
+// GBT Player v4.4.0
 //
 // SPDX-License-Identifier: MIT
 //
@@ -556,6 +556,11 @@ void gbt_volume(unsigned int left, unsigned int right)
         gbt.global_volume |= SOUNDCNT_L_PSG_VOL_RIGHT_SET(right - 1);
         gbt.pan_volume_mask |= right_mask;
     }
+}
+
+int gbt_is_playing(void)
+{
+    return gbt.playing;
 }
 
 void gbt_pause(int play)

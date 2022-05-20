@@ -1881,7 +1881,7 @@
  * * bn::dmg_music_volume_to_action, bn::dmg_music_volume_loop_action and bn::dmg_music_volume_toggle_action added.
  * * bn::link_state::player_count added.
  * * An external `mod2gbt` executable is no longer necessary for importing DMG music with `*.mod` extension.
- * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.3.0.
+ * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.4.0.
  * * New interrupt manager implemented by <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a>.
  * * Audio commands list management optimized (ROM, EWRAM and CPU usage reduced).
  * * Missed link messages frequency reduced.

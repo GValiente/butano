@@ -1,4 +1,4 @@
-mod2gbt v4.3.0
+mod2gbt v4.4.0
 ==============
 
 This tool can convert a special template of MOD into a GBT converted song.

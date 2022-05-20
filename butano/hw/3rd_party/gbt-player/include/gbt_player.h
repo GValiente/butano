@@ -1,4 +1,4 @@
-// GBT Player v4.3.0
+// GBT Player v4.4.0
 //
 // SPDX-License-Identifier: MIT
 //
@@ -33,6 +33,9 @@ void gbt_stop(void);
 
 // Updates the player, must be called each VBL.
 void gbt_update(void);
+
+// Returns 1 if a song is playing, 0 otherwise.
+int gbt_is_playing(void);
 
 // Song control
 // ------------

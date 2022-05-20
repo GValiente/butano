@@ -1,4 +1,4 @@
-s3m2gbt v4.3.0
+s3m2gbt v4.4.0
 ==============
 
 This tool can convert a special template of S3M into a GBT converted song.

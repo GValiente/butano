@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 
-# s3m2gbt v4.3.0 (Part of GBT Player)
+# s3m2gbt v4.4.0 (Part of GBT Player)
 #
 # SPDX-License-Identifier: MIT
 #
 # Copyright (c) 2022 Antonio Niño Díaz <antonio_nd@outlook.com>
-
-from s3m2gbt import kaitaistruct
-
-from s3m2gbt.s3m import S3m
 
 class RowConversionError(Exception):
     def __init__(self, message, pattern = -1, row = -1, channel = -1):
@@ -22,6 +18,244 @@ class RowConversionError(Exception):
 
 class S3MFormatError(Exception):
     pass
+
+class S3MFormatReader:
+
+    def read_u8(self):
+        offset = self.read_ptr
+        self.read_ptr += 1
+        return int(self.data[offset])
+
+    def read_u16(self):
+        offset = self.read_ptr
+        self.read_ptr += 2
+        return int((self.data[offset + 1] << 8) | self.data[offset])
+
+    def read_memseg(self):
+        offset = self.read_ptr
+        self.read_ptr += 3
+        part1 = self.data[offset + 0]
+        part2 = self.data[offset + 1]
+        part3 = self.data[offset + 2]
+        return int((part1 << 16) | (part3 << 8) | part2)
+
+    def read_string(self, size):
+        offset = self.read_ptr
+        self.read_ptr += size
+        return self.data[offset:offset+size]
+
+class S3MFileInstrument(S3MFormatReader):
+
+    def __init__(self, data, offset):
+        self.data = data
+        self.read_ptr = offset
+
+        instrument_type = self.read_u8()
+        if instrument_type != 1:
+            self.exists = False
+            return
+        self.exists = True
+
+        self.dos_filename = self.read_string(12).decode("utf-8")
+
+        self.sample_data_offset = self.read_memseg() * 16
+
+        self.length = self.read_u16()
+        self.length |= self.read_u16() << 16
+
+        self.read_ptr += 4 + 4 # Skip loop begin and loop end
+
+        self.default_volume = self.read_u8()
+
+        self.read_ptr = offset + 0x30
+
+        self.sample_name = self.read_string(28).decode("utf-8")
+
+        if self.read_string(4) != b'SCRS':
+            raise S3MFormatError("Invalid magic string in instrument")
+
+        start = self.sample_data_offset
+        end = start + self.length
+        self.sample_data = self.data[start:end]
+
+class S3MFilePatternCell():
+
+    def __init__(self, header, channel, note, instrument, volume,
+                 effect, effect_args):
+
+        if header == 0:
+            self.empty = True
+            return
+
+        self.empty = False
+
+        self.channel = channel
+
+        if (note != None) or (instrument != None):
+            self.has_note_and_instrument = True
+            self.note = note
+            self.instrument = instrument
+        else:
+            self.has_note_and_instrument = False
+
+        if volume != None:
+            self.has_volume = True
+            self.volume = volume
+        else:
+            self.has_volume = False
+
+        if (effect != None) or (effect_args != None):
+            self.has_effect = True
+            self.effect = effect
+            self.effect_args = effect_args
+        else:
+            self.has_effect = False
+
+class S3MFilePattern(S3MFormatReader):
+
+    def __init__(self, data, offset):
+
+        # Check if we have asked to generate an empty pattern
+        if data == None:
+            cell = S3MFilePatternCell(0, 0, 0, 0, 0, 0, 0)
+            self.cells = []
+            for i in range(0, 64):
+                self.cells.append(cell)
+            return
+
+        self.data = data
+        self.read_ptr = offset
+
+        length = self.read_u16() - 2
+
+        self.cells = []
+
+        while length > 0:
+            header = self.read_u8()
+            length -= 1
+
+            channel = header & 31
+
+            note = None
+            instrument = None
+            volume = None
+            effect = None
+            effect_args = None
+
+            if (header & (1 << 5)) != 0: # Has note and instrument
+                note = self.read_u8()
+                instrument = self.read_u8()
+                length -= 2
+
+            if (header & (1 << 6)) != 0: # Has volume
+                volume = self.read_u8()
+                length -= 1
+
+            if (header & (1 << 7)) != 0: # Has effect
+                effect = self.read_u8()
+                effect_args = self.read_u8()
+                length -= 2
+
+            cell = S3MFilePatternCell(header, channel, note, instrument, volume,
+                                      effect, effect_args)
+            self.cells.append(cell)
+
+class S3MFile(S3MFormatReader):
+
+    def __init__(self, data):
+
+        # Save data for now
+
+        self.data = data
+        self.read_ptr = 0
+
+        self.name = self.read_string(28).decode("utf-8")
+        print(f"Song Name: '{self.name}'")
+
+        self.read_ptr += 1 + 1 + 2 # Ignore fields
+
+        self.song_length = self.read_u16()
+        print(f"Song Length: {self.song_length}")
+
+        self.num_instruments = self.read_u16()
+        self.num_patterns = self.read_u16()
+
+        self.read_ptr += 6 # Ignore fields
+
+        if self.read_string(4) != b'SCRM':
+            raise S3MFormatError("Invalid magic string in file")
+
+        self.read_ptr += 1 # Ignore global volume
+
+        self.initial_speed = self.read_u8()
+
+        if self.read_u8() != 150:
+            raise S3MFormatError("Invalid tempo: It must be 150")
+
+        self.read_ptr += 2 # Ignore master volume and ultraclick removal
+
+        # Save this for later
+        has_custom_pan = False
+        if self.read_u8() == 252:
+            has_custom_pan = True
+
+        self.read_ptr = 0x40
+        channel_settings = self.read_string(4)
+        if channel_settings[0] >= 16 or channel_settings[1] >= 16 or \
+           channel_settings[2] >= 16 or channel_settings[3] >= 16:
+            raise S3MFormatError("Invalid channel settings: Channels 0-3 must be enabled")
+
+        # Read orders
+
+        self.read_ptr = 0x60
+
+        self.song_orders = self.read_string(self.song_length)
+        if self.song_length % 2 == 1:
+            self.read_ptr += 1 # Align to 2
+
+        # Read instrument parapointers
+
+        self.instrument_offsets = [None] * self.num_instruments
+        for i in range(0, self.num_instruments):
+            self.instrument_offsets[i] = self.read_u16() * 16
+
+        # Read pattern parapointers
+
+        self.pattern_offsets = [None] * self.num_patterns
+        for i in range(0, self.num_patterns):
+            self.pattern_offsets[i] = self.read_u16() * 16
+
+        # Read default panning
+
+        if has_custom_pan:
+            self.channel_pan = [b & 0xF for b in self.read_string(4)]
+        else:
+            self.channel_pan = [8, 8, 8, 8]
+
+        # Load instruments
+
+        self.instruments = [None] * self.num_instruments
+        for i in range(0, len(self.instrument_offsets)):
+            offset = self.instrument_offsets[i]
+            if offset != 0:
+                instr = S3MFileInstrument(self.data, offset)
+                if instr.exists:
+                    self.instruments[i] = instr
+
+        # Load patterns
+
+        self.patterns = [None] * self.num_patterns
+        for i in range(0, len(self.pattern_offsets)):
+            offset = self.pattern_offsets[i]
+            if offset != 0:
+                self.patterns[i] = S3MFilePattern(self.data, offset)
+            else:
+                # A NULL pointer means that the pattern is empty
+                self.patterns[i] = S3MFilePattern(None, 0)
+
+        # The file data is no longer needed
+
+        self.data = []
 
 # Channels 1, 2, 4
 def s3m_volume_to_gb(s3m_vol):
@@ -364,7 +598,7 @@ def initial_state_array(speed, panning_array, instruments):
     if instruments is not None:
         print("Exporting instruments...")
         count = 0
-        for i in instruments:
+        for inst in instruments:
             # In the tracker, instruments start at index 1, but they start at
             # index 0 in the S3M file.
             count += 1
@@ -373,38 +607,24 @@ def initial_state_array(speed, panning_array, instruments):
             if count < 8 or count > 15:
                 continue
 
-            try:
-                body = i.body
-                name = body.sample_name.decode("utf-8")
+            name = inst.sample_name
 
-                if body.type != S3m.Instrument.InstTypes.sample:
-                    raise S3MFormatError(f"Sample '{name}': Unsupported instrument type!")
+            size = inst.length
+            if size != 32 and size != 64:
+                raise S3MFormatError(f"Sample '{name}': Invalid sample length: {size}")
+            else:
+                flags = count - 8 # The low bits are the instrument index
+                if size == 64:
+                    flags |= SAMPLE_64_ENTRIES
 
-                size = len(body.body.sample)
-                if size != 32 and size != 64:
-                    raise S3MFormatError(f"Sample '{name}': Invalid sample length: {size}")
-                else:
-                    flags = count - 8
-                    if size == 64:
-                        flags |= SAMPLE_64_ENTRIES
+                array.extend([STARTUP_CMD_CHANNEL3_INSTRUMENT, flags])
 
-                    array.extend([STARTUP_CMD_CHANNEL3_INSTRUMENT, flags])
-
-                    # Convert from 8 bit to 4 bit
-                    for i in range(0, size, 2):
-                        sample_hi = body.body.sample[i + 0] >> 4
-                        sample_lo = body.body.sample[i + 1] >> 4
-                        value = (sample_hi << 4) | sample_lo
-                        array.extend([value])
-
-            except kaitaistruct.ValidationNotEqualError as e:
-                if e.src_path == u"/types/instrument/seq/6":
-                    # This may be caused by an empty instrument, don't crash!
-                    pass
-                else:
-                    raise S3MFormatError("Error while decoding instruments")
-            except Exception as e:
-                raise e
+                # Convert from 8 bit to 4 bit
+                for i in range(0, size, 2):
+                    sample_hi = inst.sample_data[i + 0] >> 4
+                    sample_lo = inst.sample_data[i + 1] >> 4
+                    value = (sample_hi << 4) | sample_lo
+                    array.extend([value])
 
     # End commands
     # ------------
@@ -415,65 +635,56 @@ def initial_state_array(speed, panning_array, instruments):
 
 def convert_file(module_path, song_name, output_path, export_instruments):
 
-    data = S3m.from_file(module_path)
+    with open(module_path, "rb") as file:
+        file_byte_array = bytearray(file.read())
+
+    s3m = S3MFile(file_byte_array)
 
     if output_path == None:
         output_path = song_name + ".c"
 
-    fileout = open(output_path, "w")
+    with open(output_path, "w") as fileout:
 
-    name = data.song_name.decode("utf-8")
-    print(f"Song Name: '{name}'")
-    print(f"Num. Orders: {data.num_orders}")
-    print(f"Num. Patterns: {data.num_patterns}")
+        fileout.write("// File created by s3m2gbt\n\n"
+                      "#include <stddef.h>\n#include <stdint.h>\n\n")
 
-    fileout.write("// File created by s3m2gbt\n\n"
-                  "#include <stddef.h>\n#include <stdint.h>\n\n")
+        # Export patterns
+        # ---------------
 
-    # Export patterns
-    # ---------------
+        print(f"Exporting patterns...")
 
-    print(f"Exporting patterns...")
+        pattern = -1
+        for p in s3m.patterns:
+            pattern += 1
 
-    pattern = -1
-    for p in data.patterns:
-        pattern += 1
+            # Check if pattern is actually used in the order list. If it isn't
+            # used, don't export it.
+            if pattern not in s3m.song_orders:
+                print(f"Pattern {pattern} not exported: Not in the order list")
+                continue
 
-        # Check if pattern is actually used in the order list. If it isn't used,
-        # don't export it.
-        if pattern not in data.orders:
-            print(f"Pattern {pattern} not exported: Not in the order list")
-            continue
+            fileout.write(f"static const uint8_t {song_name}_{pattern}[] = {{\n")
 
-        fileout.write(f"static const uint8_t {song_name}_{pattern}[] = ")
-        fileout.write("{\n")
+            row = 0
 
-        row = 0
-        try:
             cmd1 = [0]
             cmd2 = [0]
             cmd3 = [0]
             cmd4 = [0]
 
-            for c in p.body.body.cells:
+            for c in p.cells:
 
                 # If an end of row marker is reached, print the previous row.
                 # Trust that the S3M file is generated in a valid way and it
                 # doesn't have markers at weird positions, and that there is one
                 # marker right at the end of each pattern.
-                if c.channel_num == 0 and (not c.has_volume) and \
-                    (not c.has_fx) and (not c.has_note_and_instrument):
+                if c.empty:
 
                     # Write row
                     fileout.write("    ")
 
-                    for b in cmd1:
-                        fileout.write(f"0x{b:02X},")
-                    for b in cmd2:
-                        fileout.write(f"0x{b:02X},")
-                    for b in cmd3:
-                        fileout.write(f"0x{b:02X},")
-                    for b in cmd4:
+                    cmd = cmd1 + cmd2 + cmd3 + cmd4
+                    for b in cmd:
                         fileout.write(f"0x{b:02X},")
 
                     fileout.write("\n")
@@ -485,6 +696,9 @@ def convert_file(module_path, song_name, output_path, export_instruments):
                     cmd2 = [0]
                     cmd3 = [0]
                     cmd4 = [0]
+
+                    # Next iteration
+                    continue
 
                 volume = -1
                 if c.has_volume:
@@ -499,17 +713,17 @@ def convert_file(module_path, song_name, output_path, export_instruments):
                     # Rows with note and instrument but no volume use the
                     # default volume of the sample.
                     if instrument > 0 and volume == -1:
-                        this_instrument = data.instruments[instrument - 1].body
-                        volume = this_instrument.body.default_volume
+                        this_instr = s3m.instruments[instrument - 1]
+                        volume = this_instr.default_volume
 
                 effectnum = None
                 effectparams = None
-                if c.has_fx:
+                if c.has_effect:
                     # Convert type to ASCII to match the documentation
-                    effectnum = chr(c.fx_type + ord('A') - 1)
-                    effectparams = c.fx_value
+                    effectnum = chr(c.effect + ord('A') - 1)
+                    effectparams = c.effect_args
 
-                channel = c.channel_num + 1
+                channel = c.channel + 1
 
                 try:
                     if channel == 1:
@@ -532,95 +746,83 @@ def convert_file(module_path, song_name, output_path, export_instruments):
                     e.channel = channel
                     raise e
 
-        except kaitaistruct.ValidationNotEqualError as e:
-            info = str(vars(e))
-            raise S3MFormatError(f"Unknown error: {info}")
+            fileout.write("};\n")
+            fileout.write("\n")
+
+        # Export initial state
+        # --------------------
+
+        print(f"Exporting initial state...")
+
+        fileout.write(f"const uint8_t {song_name}_init_state[] = {{\n")
+
+        default_pan = [8, 8, 8, 8]
+        for i in range(0, 4):
+            default_pan[i] = s3m.channel_pan[i]
+
+        gb_default_pan = [
+            s3m_pan_to_gb(default_pan[0], 1),
+            s3m_pan_to_gb(default_pan[1], 2),
+            s3m_pan_to_gb(default_pan[2], 3),
+            s3m_pan_to_gb(default_pan[3], 4)
+        ]
+
+        instr = None
+        if export_instruments:
+            instr = s3m.instruments
+
+        state_array = initial_state_array(s3m.initial_speed, gb_default_pan, instr)
+
+        # Write rows of 8 bytes until the end of the array
+        while True:
+            left = len(state_array)
+
+            write = []
+            if left == 0:
+                break
+            elif left <= 8:
+                write = state_array
+                state_array = []
+            else:
+                write = state_array[0:8]
+                state_array = state_array[8:]
+
+            fileout.write("    ")
+            for s in write:
+                fileout.write(f"0x{s:02X},")
+            fileout.write("\n")
 
         fileout.write("};\n")
         fileout.write("\n")
 
-    # Export initial state
-    # --------------------
+        # Export orders
+        # -------------
 
-    print(f"Exporting initial state...")
+        print(f"Exporting orders...")
 
-    fileout.write(f"const uint8_t {song_name}_init_state[] = ")
-    fileout.write("{\n")
+        fileout.write(f"const uint8_t *{song_name}[] = {{\n")
 
-    default_pan = [8, 8, 8, 8]
-    if data.has_custom_pan == 252:
-        print("Song contains custom panning values")
-        for i in range(0, 4):
-            if data.channel_pans[i].has_custom_pan:
-                default_pan[i] = data.channel_pans[i].pan
-
-    gb_default_pan = [
-        s3m_pan_to_gb(default_pan[0], 1),
-        s3m_pan_to_gb(default_pan[1], 2),
-        s3m_pan_to_gb(default_pan[2], 3),
-        s3m_pan_to_gb(default_pan[3], 4)
-    ]
-
-    instr = None
-    if export_instruments:
-        instr = data.instruments
-
-    state_array = initial_state_array(data.initial_speed, gb_default_pan, instr)
-
-    # Write rows of 8 bytes until the end of the array
-    while True:
-        left = len(state_array)
-
-        write = []
-        if left == 0:
-            break
-        elif left <= 8:
-            write = state_array
-            state_array = []
-        else:
-            write = state_array[0:8]
-            state_array = state_array[8:]
-
-        fileout.write("    ")
-        for s in write:
-            fileout.write(f"0x{s:02X},")
+        fileout.write(f"    {song_name}_init_state,")
         fileout.write("\n")
 
-    fileout.write("};\n")
-    fileout.write("\n")
+        for o in s3m.song_orders:
+            pattern = int(o)
+            if pattern >= s3m.num_patterns:
+                # TODO: Warn if the pattern goes over the limit?
+                continue
+            fileout.write(f"    {song_name}_{pattern},")
+            fileout.write("\n")
 
-    # Export orders
-    # -------------
-
-    print(f"Exporting orders...")
-
-    fileout.write(f"const uint8_t *{song_name}[] = ")
-    fileout.write("{\n")
-
-    fileout.write(f"    {song_name}_init_state,")
-    fileout.write("\n")
-
-    for o in data.orders:
-        pattern = int(o)
-        if pattern >= data.num_patterns:
-            # TODO: Warn if the pattern goes over the limit?
-            continue
-        fileout.write(f"    {song_name}_{pattern},")
-        fileout.write("\n")
-
-    fileout.write("    NULL\n")
-    fileout.write("};\n")
-
-    fileout.close()
+        fileout.write("    NULL\n")
+        fileout.write("};\n")
 
 if __name__ == "__main__":
 
     import argparse
     import sys
 
-    print("s3m2gbt v4.3.0 (part of GBT Player)")
+    print("s3m2gbt v4.4.0 (part of GBT Player)")
     print("Copyright (c) 2022 Antonio Niño Díaz <antonio_nd@outlook.com>")
-    print("Copyright (c) 2015-2022 Kaitai Project")
     print("All rights reserved")
     print("")
 

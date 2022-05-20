@@ -1885,6 +1885,7 @@
  * * Missed link messages frequency reduced.
  * * Link data sending race condition fixed.
  * * Link race condition on V-Blank fixed.
+ * * Audio pause/resume No$gba error removed.
  *
  *
  * @section changelog_9_4_1 9.4.1

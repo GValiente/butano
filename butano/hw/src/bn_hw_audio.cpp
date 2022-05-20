@@ -8,6 +8,7 @@
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
 #include "../include/bn_hw_irq.h"
+#include "../include/bn_hw_tonc.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
 
@@ -36,7 +37,6 @@ namespace
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
         func_type hp_vblank_function = nullptr;
         func_type lp_vblank_function = nullptr;
-        uint16_t stat_value = 0;
         uint16_t direct_sound_control_value = 0;
         uint16_t dmg_control_value = 0;
         bool update_on_vblank = false;
@@ -168,7 +168,6 @@ void enable()
 {
     REG_SNDDMGCNT = data.dmg_control_value;
     REG_SNDDSCNT = data.direct_sound_control_value;
-    REG_SNDSTAT = data.stat_value;
 
     irq::enable(irq::id::VBLANK);
 }
@@ -177,11 +176,9 @@ void disable()
 {
     irq::disable(irq::id::VBLANK);
 
-    data.stat_value = REG_SNDSTAT;
     data.direct_sound_control_value = REG_SNDDSCNT;
     data.dmg_control_value = REG_SNDDMGCNT;
 
-    REG_SNDSTAT = 0;
     REG_SNDDSCNT = 0;
     REG_SNDDMGCNT = 0;
 }

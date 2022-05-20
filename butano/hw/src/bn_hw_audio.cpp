@@ -145,7 +145,8 @@ void init(func_type hp_vblank_function, func_type lp_vblank_function)
     data.hp_vblank_function = hp_vblank_function;
     data.lp_vblank_function = lp_vblank_function;
 
-    irq::replace_or_push_back_enabled(irq::id::VBLANK, mmVBlank);
+    irq::set_isr(irq::id::VBLANK, mmVBlank);
+    irq::enable(irq::id::VBLANK);
 
     mm_gba_system maxmod_info;
     maxmod_info.mixing_mode = mm_mixmode(BN_CFG_AUDIO_MIXING_RATE);

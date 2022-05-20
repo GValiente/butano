@@ -297,7 +297,7 @@ void init(const string_view& keypad_commands)
 {
     // Init irq system:
     hw::irq::init();
-    hw::irq::replace_or_push_back_disabled(hw::irq::id::HBLANK, hw::hblank_effects::_intr);
+    hw::irq::set_isr(hw::irq::id::HBLANK, hw::hblank_effects::_intr);
 
     // Init audio system:
     audio_manager::init(hp_vblank_function, link_manager::commit);
@@ -425,13 +425,13 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
 
     // Enable keypad interrupt with the specified wake up keys:
     keypad_manager::set_interrupt(wake_up_keys);
-    hw::irq::replace_or_push_back_enabled(hw::irq::id::KEYPAD, nullptr);
+    hw::irq::enable(hw::irq::id::KEYPAD);
 
     // Enable sleep mode:
     hw::core::sleep();
 
     // Remove keypad interrupt:
-    hw::irq::remove(hw::irq::id::KEYPAD);
+    hw::irq::disable(hw::irq::id::KEYPAD);
 
     // Enable irqs:
     enable();

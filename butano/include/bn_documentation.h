@@ -667,7 +667,7 @@
  * Before anything, it is convenient to have a GBA emulator at hand,
  * so you don't have to test in real hardware each change you make in your project.
  *
- * For developing GBA games, <a href="https://mgba.io/">mGBA</a>
+ * For developing GBA games, <a href="https://mgba.io">mGBA</a>
  * and the debug version of <a href="https://problemkaputt.de/gba.htm">No$gba</a> are recommended.
  *
  *
@@ -1881,11 +1881,12 @@
  * * bn::dmg_music_volume_to_action, bn::dmg_music_volume_loop_action and bn::dmg_music_volume_toggle_action added.
  * * An external `mod2gbt` executable is no longer necessary for importing DMG music with `*.mod` extension.
  * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.3.0.
+ * * New interrupt manager implemented by <a href="https://github.com/AntonioND/libugba">Universal GBA Library</a>.
  * * Audio commands list management optimized (ROM, EWRAM and CPU usage reduced).
  * * Missed link messages frequency reduced.
  * * Link data sending race condition fixed.
  * * Link race condition on V-Blank fixed.
- * * Audio pause/resume No$gba error removed.
+ * * Audio pause/resume <a href="https://problemkaputt.de/gba.htm">No$gba</a> error removed.
  *
  *
  * @section changelog_9_4_1 9.4.1
@@ -1908,7 +1909,8 @@
  *
  * * bn::sram::clear and bn::sram::set_bytes added.
  * * bn::music::playing_item added.
- * * SRAM code moved back from ROM to EWRAM again, since it doesn't seem to crash No$gba anymore.
+ * * SRAM code moved back from ROM to EWRAM again, since it doesn't seem to crash
+ * <a href="https://problemkaputt.de/gba.htm">No$gba</a> anymore.
  * * bn::power_of_two optimized.
  * * Keypad with frame skipping fixed.
  *
@@ -1960,7 +1962,7 @@
  * * Integer to string conversion optimized.
  * * Slot index added to palettes manager status log.
  * * bn::calloc and bn::memory::ewram_calloc interface fixed.
- * * `.elf` files No$gba support restored.
+ * * `.elf` files <a href="https://problemkaputt.de/gba.htm">No$gba</a> support restored.
  * * `-O0` builds support restored.
  * * More questions added to @ref faq page.
  *
@@ -2193,8 +2195,9 @@
  * @section changelog_6_15_0 6.15.0
  *
  * * bn::rect::top_right, bn::rect::bottom_left, bn::fixed_rect::top_right and bn::fixed_rect::bottom_left added.
- * * GPIO register is not setup unless needed (avoids mGBA warning at startup).
- * * SRAM code moved from EWRAM to ROM in order to avoid a No$gba error.
+ * * GPIO register is not setup unless needed (avoids <a href="https://mgba.io">mGBA</a> warning at startup).
+ * * SRAM code moved from EWRAM to ROM in order to avoid a
+ * <a href="https://problemkaputt.de/gba.htm">No$gba</a> error.
  * * bn::abs for unsigned arguments improved.
  * * `*.elfbin` output files renamed to `*.elf` as it should.
  * * bn::unordered_map::erase and bn::unordered_set::erase fixed.
@@ -2408,8 +2411,10 @@
  * @section changelog_4_3_0 4.3.0
  *
  * * H-Blank effects EWRAM usage reduced (more than 2KB by default).
- * * Optimization level changed to `-O2` to avoid another No$gba crash.
- * * SRAM code moved back from ROM to EWRAM, since doing that doesn't make No$gba crash anymore.
+ * * Optimization level changed to `-O2` to avoid another
+ * <a href="https://problemkaputt.de/gba.htm">No$gba</a> crash.
+ * * SRAM code moved back from ROM to EWRAM, since doing that doesn't make
+ * <a href="https://problemkaputt.de/gba.htm">No$gba</a> crash anymore.
  * * Redundant reset code removed.
  *
  *
@@ -2423,7 +2428,7 @@
  * @section changelog_4_1_0 4.1.0
  *
  * * H-Blank effects optimized (it fixes `world_map` example flickering).
- * * SRAM code moved from EWRAM to ROM to avoid a No$gba crash.
+ * * SRAM code moved from EWRAM to ROM to avoid a <a href="https://problemkaputt.de/gba.htm">No$gba</a> crash.
  *
  *
  * @section changelog_4_0_0 4.0.0

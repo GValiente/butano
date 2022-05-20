@@ -6,7 +6,7 @@
 #ifndef BN_HW_IRQ_H
 #define BN_HW_IRQ_H
 
-#include "bn_hw_tonc.h"
+#include "bn_common.h"
 
 namespace bn::hw::irq
 {
@@ -28,35 +28,13 @@ namespace bn::hw::irq
         GAMEPAK
     };
 
-    inline void init()
-    {
-        irq_init(nullptr);
-    }
+    void init();
 
-    inline void replace_or_push_back_enabled(id irq_id, void(*isr)())
-    {
-        irq_add(eIrqIndex(irq_id), isr);
-    }
+    void set_isr(id irq_id, void(*isr)());
 
-    inline void replace_or_push_back_disabled(id irq_id, void(*isr)())
-    {
-        irq_add_disabled(eIrqIndex(irq_id), isr);
-    }
+    void enable(id irq_id);
 
-    inline void remove(id irq_id)
-    {
-        irq_delete(eIrqIndex(irq_id));
-    }
-
-    inline void enable(id irq_id)
-    {
-        irq_enable(eIrqIndex(irq_id));
-    }
-
-    inline void disable(id irq_id)
-    {
-        irq_disable(eIrqIndex(irq_id));
-    }
+    void disable(id irq_id);
 }
 
 #endif

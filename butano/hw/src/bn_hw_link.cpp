@@ -112,8 +112,8 @@ namespace
 void init()
 {
     data.connection.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
-    irq::replace_or_push_back_disabled(irq::id::SERIAL, _serial_intr);
-    irq::replace_or_push_back_disabled(irq::id::TIMER1, _timer_intr);
+    irq::set_isr(irq::id::SERIAL, _serial_intr);
+    irq::set_isr(irq::id::TIMER1, _timer_intr);
     data.connection.deactivate();
 }
 

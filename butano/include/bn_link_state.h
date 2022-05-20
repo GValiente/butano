@@ -35,8 +35,8 @@ public:
      */
     link_state(int current_player_id, const vector<link_player, 3>& other_players) :
         _other_players(other_players),
-        _current_player_id(current_player_id),
-        _player_count(other_players.size() + 1)
+        _current_player_id(uint16_t(current_player_id)),
+        _player_count(uint16_t(other_players.size() + 1))
     {
         BN_ASSERT(current_player_id >= 0 && current_player_id <= 3,
                   "Invalid current player id: ", current_player_id);
@@ -50,8 +50,8 @@ public:
      */
     link_state(int current_player_id, int player_count, const vector<link_player, 3>& other_players) :
         _other_players(other_players),
-        _current_player_id(current_player_id),
-        _player_count(player_count)
+        _current_player_id(uint16_t(current_player_id)),
+        _player_count(uint16_t(player_count))
     {
         BN_ASSERT(current_player_id >= 0 && current_player_id <= 3,
                   "Invalid current player id: ", current_player_id);

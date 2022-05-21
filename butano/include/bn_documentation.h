@@ -1532,6 +1532,7 @@
  * error: variable 'bn::regular_bg_ptr bg' has initializer but incomplete type
  * error: invalid use of incomplete type 'class bn::regular_bg_ptr'
  * error: aggregate 'bn::fixed' has incomplete type and cannot be defined
+ * error: static assertion failed: template argument must be a complete class or an unbounded array
  * @endcode
  *
  * It is almost always because of lack of included headers.
@@ -1888,6 +1889,7 @@
  * * Link data sending race condition fixed.
  * * Link race condition on V-Blank fixed.
  * * Audio pause/resume <a href="https://problemkaputt.de/gba.htm">No$gba</a> error removed.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_9_4_1 9.4.1

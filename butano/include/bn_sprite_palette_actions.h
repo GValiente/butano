@@ -782,7 +782,7 @@ public:
 
     /**
      * @brief Sets the number of colors to rotate to the right in the given sprite_palette_ptr.
-     * @param count Number of colors to rotate to the right in the range [1 - colors_count() .. colors_count() - 1].
+     * @param count Number of colors to rotate to the right in the range [2 - colors_count() .. colors_count() - 2].
      * @param palette sprite_palette_ptr to modify.
      */
     static void set(int count, sprite_palette_ptr& palette)
@@ -879,7 +879,7 @@ public:
      * @param final_count Number of colors to rotate to the right
      * when the action is updated duration_updates times.
      *
-     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
      */
     sprite_palette_rotate_to_action(const sprite_palette_ptr& palette, int duration_updates, int final_count) :
         to_value_template_action(palette, duration_updates, final_count)
@@ -896,7 +896,7 @@ public:
      * @param final_count Number of colors to rotate to the right
      * when the action is updated duration_updates times.
      *
-     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
      */
     sprite_palette_rotate_to_action(sprite_palette_ptr&& palette, int duration_updates, int final_count) :
         to_value_template_action(move(palette), duration_updates, final_count)
@@ -946,7 +946,7 @@ public:
      * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
      * it goes back to its initial state and vice versa.
      *
-     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
      */
     sprite_palette_rotate_loop_action(const sprite_palette_ptr& palette, int duration_updates, int final_count) :
         loop_value_template_action(palette, duration_updates, final_count)
@@ -963,7 +963,7 @@ public:
      * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
      * it goes back to its initial state and vice versa.
      *
-     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
      */
     sprite_palette_rotate_loop_action(sprite_palette_ptr&& palette, int duration_updates, int final_count) :
         loop_value_template_action(move(palette), duration_updates, final_count)
@@ -1012,7 +1012,7 @@ public:
      * @param new_count New number of colors to rotate to the right
      * when the action is updated duration_updates times.
      *
-     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
      */
     sprite_palette_rotate_toggle_action(const sprite_palette_ptr& palette, int duration_updates, int new_count) :
         toggle_value_template_action(palette, duration_updates, new_count)
@@ -1029,7 +1029,7 @@ public:
      * @param new_count New number of colors to rotate to the right
      * when the action is updated duration_updates times.
      *
-     * This count must be in the range [1 - colors_count() .. colors_count() - 1].
+     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
      */
     sprite_palette_rotate_toggle_action(sprite_palette_ptr&& palette, int duration_updates, int new_count) :
         toggle_value_template_action(move(palette), duration_updates, new_count)

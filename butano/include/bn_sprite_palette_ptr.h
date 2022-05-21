@@ -220,7 +220,7 @@ public:
 
     /**
      * @brief Sets the number of colors to rotate to the right in this palette.
-     * @param count Number of colors to rotate to the right in the range [1 - colors_count() .. colors_count() - 1].
+     * @param count Number of colors to rotate to the right in the range [2 - colors_count() .. colors_count() - 2].
      */
     void set_rotate_count(int count);
 

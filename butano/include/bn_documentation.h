@@ -1889,6 +1889,7 @@
  * * Link data sending race condition fixed.
  * * Link race condition on V-Blank fixed.
  * * Audio pause/resume <a href="https://problemkaputt.de/gba.htm">No$gba</a> error removed.
+ * * Palette rotate range documentation fixed.
  * * @ref faq page improved.
  *
  *

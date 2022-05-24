@@ -1874,7 +1874,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_9_5_0 9.5.0 (next release)
+ * @section changelog_9_5_0 9.5.0
  *
  * * bn::dmg_music::left_volume, bn::dmg_music::right_volume, bn::dmg_music::set_left_volume,
  * bn::dmg_music::set_right_volume and bn::dmg_music::set_volume added.

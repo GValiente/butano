@@ -1878,7 +1878,8 @@
  *
  * * Custom linker flags can be specified in the project's `Makefile`.
  * * Asserts ROM usage reduced.
- * * Audio startup with link-time optimization fixed.
+ * * Audio startup fixed when link-time optimization is enabled.
+ * * Audio stop fixed when link communication is active.
  * * Parallel link-time optimization temporal files ignored and added to the list of files to clean.
  *
  *

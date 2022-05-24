@@ -128,7 +128,7 @@ namespace
         gbt_update();
     }
 
-    void _vblank_handler()
+    void _enabled_vblank_handler()
     {
         data.hp_vblank_function();
 
@@ -137,6 +137,12 @@ namespace
             _commit();
         }
 
+        data.lp_vblank_function();
+    }
+
+    void _disabled_vblank_handler()
+    {
+        data.hp_vblank_function();
         data.lp_vblank_function();
     }
 }
@@ -163,7 +169,7 @@ void init(func_type hp_vblank_function, func_type lp_vblank_function)
     maxmod_info.soundbank = mm_addr(_bn_audio_soundbank_bin);
     mmInit(&maxmod_info);
 
-    mmSetVBlankHandler(reinterpret_cast<void*>(_vblank_handler));
+    mmSetVBlankHandler(reinterpret_cast<void*>(_enabled_vblank_handler));
 }
 
 void enable()
@@ -267,7 +273,7 @@ void set_update_on_vblank(bool update_on_vblank)
 
 void disable_vblank_handler()
 {
-    mmSetVBlankHandler(reinterpret_cast<void*>(data.hp_vblank_function));
+    mmSetVBlankHandler(reinterpret_cast<void*>(_disabled_vblank_handler));
 }
 
 void update()

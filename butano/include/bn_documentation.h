@@ -1874,7 +1874,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_10_0_0 10.0.0 (next release)
+ * @section changelog_10_0_0 10.0.0
  *
  * * Custom linker flags can be specified in the project's `Makefile`.
  * * Asserts ROM usage reduced.

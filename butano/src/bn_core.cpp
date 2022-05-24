@@ -8,7 +8,6 @@
 #include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_timer.h"
-#include "bn_string.h"
 #include "bn_keypad.h"
 #include "bn_timers.h"
 #include "bn_version.h"
@@ -323,11 +322,6 @@ void init(const string_view& keypad_commands)
     sprites_manager::init();
     bg_blocks_manager::init();
     keypad_manager::init(keypad_commands);
-
-    // WTF hack (if it isn't present and flto is enabled, sometimes everything crash):
-    string<32> hack_string;
-    ostringstream hack_string_stream(hack_string);
-    hack_string_stream.append(2);
 
     // Init timer system:
     hw::timer::init();

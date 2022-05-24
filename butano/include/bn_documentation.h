@@ -1878,6 +1878,7 @@
  *
  * * Custom linker flags can be specified in the project's `Makefile`.
  * * Asserts ROM usage reduced.
+ * * Audio startup with link-time optimization fixed.
  *
  *
  * @section changelog_9_5_0 9.5.0

@@ -3,6 +3,10 @@ build/
 .qtc_clangd/
 *.gba
 *.elf
+*.elf.ltrans*
+*.elf.lto_wrapper_args
+*.elf.res
+*.elf.wpa.args.*
 *.sav
 *.creator
 *.user

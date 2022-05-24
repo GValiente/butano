@@ -58,7 +58,7 @@ CPPWARNINGS	:=	-Wuseless-cast -Wnon-virtual-dtor -Woverloaded-virtual
 CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++20 -fno-rtti -fno-exceptions
 
 ASFLAGS     :=	-gdwarf-4 $(ARCH)
-LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,-Map,$(notdir $*.map)
+LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project:

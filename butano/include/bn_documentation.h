@@ -1874,6 +1874,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_10_0_0 10.0.0 (next release)
+ *
+ * Custom linker flags can be specified in the project's `Makefile`.
+ *
+ *
  * @section changelog_9_5_0 9.5.0
  *
  * * bn::dmg_music::left_volume, bn::dmg_music::right_volume, bn::dmg_music::set_left_volume,

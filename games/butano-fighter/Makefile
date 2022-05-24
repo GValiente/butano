@@ -37,7 +37,7 @@ DMGAUDIO    :=  dmg_audio
 ROMTITLE    :=  BUTANO FIGHT
 ROMCODE     :=  SBFP
 USERFLAGS   :=  -flto
-USERLDFLAGS	:=  -flto=auto -save-temps
+USERLDFLAGS	:=  
 USERLIBDIRS :=  
 USERLIBS    :=  
 USERBUILD   :=  

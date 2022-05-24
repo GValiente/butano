@@ -37,7 +37,7 @@ DMGAUDIO    :=  dmg_audio ../../common/dmg_audio
 ROMTITLE    :=  BUTANO HDMAP
 ROMCODE     :=  SBTP
 USERFLAGS   :=  -flto
-USERLDFLAGS :=  -flto=auto -save-temps
+USERLDFLAGS :=  
 USERLIBDIRS :=  
 USERLIBS    :=  
 USERBUILD   :=  

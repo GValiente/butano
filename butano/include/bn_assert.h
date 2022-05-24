@@ -99,9 +99,7 @@
                 { \
                     if(! (condition)) [[unlikely]] \
                     { \
-                        constexpr _bn::assert::file_name<_bn::assert::file_name_size(__FILE__) + 1> _bn_assert_file_name(__FILE__); \
-                        _bn::assert::show_args(#condition, _bn_assert_file_name.characters, __func__, \
-                                __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                        _bn::assert::show_args(#condition, __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                     } \
                 } \
             } while(false)
@@ -119,9 +117,7 @@
                 } \
                 else \
                 { \
-                    constexpr _bn::assert::file_name<_bn::assert::file_name_size(__FILE__) + 1> _bn_error_file_name(__FILE__); \
-                    _bn::assert::show_args("", _bn_error_file_name.characters, __func__, \
-                            __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                    _bn::assert::show_args("", __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                 } \
             } while(false)
 
@@ -132,54 +128,6 @@
     namespace _bn::assert
     {
         static_assert(BN_CFG_ASSERT_BUFFER_SIZE >= 64);
-
-        constexpr int file_name_size(const char* path)
-        {
-            const char* name_path = path;
-
-            while(*path)
-            {
-                if(*path == '/' || *path == '\\')
-                {
-                    name_path = path + 1;
-                }
-
-                ++path;
-            }
-
-            return path - name_path;
-        }
-
-        template<int Size>
-        struct file_name
-        {
-            static_assert(Size > 0 && Size < BN_CFG_ASSERT_BUFFER_SIZE);
-
-            alignas(int) char characters[Size < 20 ? 20 : Size];
-
-            constexpr explicit file_name(const char* path) :
-                characters()
-            {
-                int index = 0;
-
-                while(*path)
-                {
-                    if(*path == '/' || *path == '\\')
-                    {
-                        index = 0;
-                    }
-                    else if(index < Size)
-                    {
-                        characters[index] = *path;
-                        ++index;
-                    }
-
-                    ++path;
-                }
-
-                characters[index] = '\0';
-            }
-        };
 
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const char* message);

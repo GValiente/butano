@@ -152,6 +152,7 @@ namespace
 
         bn::music::stop();
         bn::dmg_music::stop();
+        bn::audio::set_dmg_sync_enabled(false);
     }
 }
 

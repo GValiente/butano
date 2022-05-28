@@ -264,11 +264,6 @@ void set_music_volume(int volume)
     mmSetModuleVolume(mm_word(volume));
 }
 
-void set_dmg_sync_enabled(bool enabled)
-{
-    data.dmg_sync = enabled;
-}
-
 void play_sound(int priority, int id)
 {
     _check_sounds_queue();
@@ -308,11 +303,12 @@ void disable_vblank_handler()
     mmSetVBlankHandler(reinterpret_cast<void*>(_disabled_vblank_handler));
 }
 
-void update()
+void update(bool dmg_sync)
 {
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
     auto end = data.sounds_queue.end();
+    data.dmg_sync = dmg_sync;
     data.delay_commit = ! data.update_on_vblank;
 
     while(it != end)

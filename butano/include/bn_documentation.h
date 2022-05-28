@@ -1877,7 +1877,7 @@
  * @section changelog_10_1_0 10.1.0 (next release)
  *
  * * bn::audio::dmg_sync_enabled and bn::audio::set_dmg_sync_enabled added.
- * * Audio volume and synchronization setup optimized.
+ * * Audio volume setup optimized.
  * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.4.1.
  *
  *

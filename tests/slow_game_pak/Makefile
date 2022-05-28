@@ -14,6 +14,7 @@
 # USERFLAGS is a list of additional compiler flags:
 #     Pass -flto to enable link-time optimization.
 #     Pass -O0 to improve debugging.
+# USERASFLAGS is a list of additional assembler flags.
 # USERLDFLAGS is a list of additional linker flags:
 #     Pass -flto=auto -save-temps to enable parallel link-time optimization.
 # USERLIBDIRS is a list of additional directories containing libraries.
@@ -38,6 +39,7 @@ ROMTITLE    :=  BUTANO SLGPK
 ROMCODE     :=  SBTP
 USERFLAGS   :=  -DBN_CFG_GAME_PAK_WAIT_STATE_FIRST=BN_GAME_PAK_WAIT_STATE_FIRST_AUTO \
                     -DBN_CFG_GAME_PAK_WAIT_STATE_SECOND=BN_GAME_PAK_WAIT_STATE_SECOND_AUTO
+USERASFLAGS :=  
 USERLDFLAGS :=  
 USERLIBDIRS :=  
 USERLIBS    :=  

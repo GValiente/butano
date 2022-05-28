@@ -1877,6 +1877,7 @@
  * @section changelog_10_1_0 10.1.0 (next release)
  *
  * * bn::audio::dmg_sync_enabled and bn::audio::set_dmg_sync_enabled added.
+ * * Custom assembler flags can be specified in the project's `Makefile`.
  * * Audio volume setup optimized.
  * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.4.1.
  *

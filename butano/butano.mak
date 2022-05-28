@@ -57,7 +57,7 @@ CFLAGS      +=	$(USERFLAGS)
 CPPWARNINGS	:=	-Wuseless-cast -Wnon-virtual-dtor -Woverloaded-virtual
 CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++20 -fno-rtti -fno-exceptions
 
-ASFLAGS     :=	-gdwarf-4 $(ARCH)
+ASFLAGS     :=	-gdwarf-4 $(ARCH) $(USERASFLAGS)
 LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------

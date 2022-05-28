@@ -14,6 +14,7 @@
 # USERFLAGS is a list of additional compiler flags:
 #     Pass -flto to enable link-time optimization.
 #     Pass -O0 to improve debugging.
+# USERASFLAGS is a list of additional assembler flags.
 # USERLDFLAGS is a list of additional linker flags:
 #     Pass -flto=auto -save-temps to enable parallel link-time optimization.
 # USERLIBDIRS is a list of additional directories containing libraries.
@@ -37,6 +38,7 @@ DMGAUDIO    :=  dmg_audio ../../common/dmg_audio
 ROMTITLE    :=  BUTANO PRFLR
 ROMCODE     :=  SBTP
 USERFLAGS   :=  -DBN_CFG_PROFILER_ENABLED=true -flto
+USERASFLAGS :=  
 USERLDFLAGS :=  
 USERLIBDIRS :=  
 USERLIBS    :=  

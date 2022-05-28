@@ -1880,6 +1880,7 @@
  * * Custom assembler flags can be specified in the project's `Makefile`.
  * * Audio volume setup optimized.
  * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.4.1.
+ * * Clouds restored in `world_map` example.
  *
  *
  * @section changelog_10_0_0 10.0.0

@@ -1876,7 +1876,8 @@
  *
  * @section changelog_10_1_0 10.1.0 (next release)
  *
- * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.4.1.
+ * * bn::audio::dmg_sync_enabled and bn::audio::set_dmg_sync_enabled added.
+ * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.4.1.
  *
  *
  * @section changelog_10_0_0 10.0.0

@@ -75,6 +75,8 @@ namespace bn::hw::audio
         gbt_volume(unsigned(left_volume), unsigned(right_volume));
     }
 
+    void set_dmg_sync_enabled(bool enabled);
+
     void play_sound(int priority, int id);
 
     void play_sound(int priority, int id, int volume, int speed, int panning);

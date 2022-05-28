@@ -20,4 +20,14 @@ void set_update_on_vblank(bool update_on_vblank)
     audio_manager::set_update_on_vblank(update_on_vblank);
 }
 
+bool dmg_sync_enabled()
+{
+    return audio_manager::dmg_sync_enabled();
+}
+
+void set_dmg_sync_enabled(bool dmg_sync_enabled)
+{
+    return audio_manager::set_dmg_sync_enabled(dmg_sync_enabled);
+}
+
 }

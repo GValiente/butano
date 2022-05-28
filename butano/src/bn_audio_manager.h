@@ -81,6 +81,10 @@ namespace bn::audio_manager
 
     void set_dmg_music_volume(fixed left_volume, fixed right_volume);
 
+    [[nodiscard]] bool dmg_sync_enabled();
+
+    void set_dmg_sync_enabled(bool enabled);
+
     // sound
 
     void play_sound(int priority, sound_item item);

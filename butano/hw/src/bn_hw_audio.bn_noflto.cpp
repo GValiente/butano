@@ -42,6 +42,7 @@ namespace
         uint16_t dmg_control_value = 0;
         bool update_on_vblank = false;
         bool delay_commit = false;
+        bool dmg_sync = false;
     };
 
     BN_DATA_EWRAM static_data data;
@@ -125,7 +126,33 @@ namespace
     void _commit()
     {
         mmFrame();
-        gbt_update();
+
+        if(data.dmg_sync && mmActive() && gbt_is_playing())
+        {
+            auto mmPosition = int(mmGetPosition());
+            auto mmRow = int(mmGetPositionRow());
+            auto mmTick = int(mmGetPositionTick());
+            int gbtPosition;
+            int gbtRow;
+            int gbtTick;
+            int tries = 5;
+
+            while(tries > 0)
+            {
+                gbt_update();
+                gbt_get_position(&gbtPosition, &gbtRow, &gbtTick);
+                --tries;
+
+                if(gbtPosition == mmPosition && gbtRow == mmRow && gbtTick == mmTick)
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            gbt_update();
+        }
     }
 
     void _enabled_vblank_handler()
@@ -235,6 +262,11 @@ void set_music_position(int position)
 void set_music_volume(int volume)
 {
     mmSetModuleVolume(mm_word(volume));
+}
+
+void set_dmg_sync_enabled(bool enabled)
+{
+    data.dmg_sync = enabled;
 }
 
 void play_sound(int priority, int id)

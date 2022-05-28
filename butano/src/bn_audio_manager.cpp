@@ -153,6 +153,25 @@ namespace
     };
 
 
+    class set_dmg_sync_enabled_command
+    {
+
+    public:
+        explicit set_dmg_sync_enabled_command(bool enabled) :
+            _enabled(enabled)
+        {
+        }
+
+        void execute() const
+        {
+            hw::audio::set_dmg_sync_enabled(_enabled);
+        }
+
+    private:
+        int _enabled;
+    };
+
+
     class play_sound_command
     {
 
@@ -215,6 +234,7 @@ namespace
         DMG_MUSIC_RESUME,
         DMG_MUSIC_SET_POSITION,
         DMG_MUSIC_SET_VOLUME,
+        DMG_MUSIC_SET_SYNC_ENABLED,
         SOUND_PLAY,
         SOUND_PLAY_EX,
         SOUND_STOP_ALL
@@ -248,6 +268,7 @@ namespace
         bool music_playing = false;
         bool music_paused = false;
         bool dmg_music_paused = false;
+        bool dmg_sync_enabled = false;
     };
 
     BN_DATA_EWRAM static_data data;
@@ -555,6 +576,23 @@ void set_dmg_music_volume(fixed left_volume, fixed right_volume)
     data.dmg_music_right_volume = right_volume;
 }
 
+bool dmg_sync_enabled()
+{
+    return data.dmg_sync_enabled;
+}
+
+void set_dmg_sync_enabled(bool enabled)
+{
+    int commands = data.commands_count;
+    BN_ASSERT(commands < max_commands, "No more audio commands available");
+
+    data.command_codes[commands] = DMG_MUSIC_SET_SYNC_ENABLED;
+    new(data.command_datas + commands) set_dmg_sync_enabled_command(enabled);
+    data.commands_count = commands + 1;
+
+    data.dmg_sync_enabled = enabled;
+}
+
 void play_sound(int priority, sound_item item)
 {
     int commands = data.commands_count;
@@ -655,6 +693,10 @@ void update()
 
         case DMG_MUSIC_SET_VOLUME:
             reinterpret_cast<const set_dmg_music_volume_command&>(data.command_datas[index].data).execute();
+            break;
+
+        case DMG_MUSIC_SET_SYNC_ENABLED:
+            reinterpret_cast<const set_dmg_sync_enabled_command&>(data.command_datas[index].data).execute();
             break;
 
         case SOUND_PLAY:

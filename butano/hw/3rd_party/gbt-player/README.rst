@@ -7,6 +7,9 @@ Boy and Game Boy Color as a `RGBDS <https://github.com/gbdev/rgbds>`_ library.
 There is also a legacy version that uses GBDK. If you're interested in the
 changes introduced with each version, check the `changelog <./changelog.rst>`_.
 
+On GBA it is possible to use GBT Player at the same time as other players like
+Maxmod, check this `example <./gba/examples/combined_maxmod>`_.
+
 Introduction
 ------------
 

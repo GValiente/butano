@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# mod2gbt v4.4.0 (Part of GBT Player)
+# mod2gbt v4.4.1 (Part of GBT Player)
 #
 # SPDX-License-Identifier: MIT
 #
@@ -473,7 +473,7 @@ if __name__ == "__main__":
     import argparse
     import sys
 
-    print("mod2gbt v4.4.0 (part of GBT Player)")
+    print("mod2gbt v4.4.1 (part of GBT Player)")
     print("Copyright (c) 2009-2022 Antonio Niño Díaz <antonio_nd@outlook.com>")
     print("All rights reserved")
     print("")

@@ -1,4 +1,4 @@
-// GBT Player v4.4.0
+// GBT Player v4.4.1
 //
 // SPDX-License-Identifier: MIT
 //
@@ -38,6 +38,11 @@ typedef struct {
     uint8_t ticks_elapsed;
     uint8_t current_row;
     uint8_t current_order;
+
+    // This keeps track of the step that has just been executed so that it can
+    // be returned by gbt_get_position().
+    uint8_t previous_row;
+    uint8_t previous_order;
 
     // This is initialized to 0 before main() is called, so all channels are
     // enabled by default.
@@ -414,6 +419,9 @@ void gbt_play(const void *song, int speed)
     gbt.ticks_elapsed = 0;
     gbt.current_row = 0;
     gbt.current_order = 0;
+
+    gbt.previous_row = 0;
+    gbt.previous_order = 0;
 
     gbt_refresh_pattern_ptr();
 
@@ -1517,6 +1525,12 @@ void gbt_update(void)
         }
     }
 
+    // Update saved position
+    // ---------------------
+
+    gbt.previous_row = gbt.current_row;
+    gbt.previous_order = gbt.current_order;
+
     // Update channels
     // ---------------
 
@@ -1574,9 +1588,9 @@ void gbt_get_position(int *order, int *row, int *tick)
     else
     {
         if (order)
-            *order = gbt.current_order;
+            *order = gbt.previous_order;
         if (row)
-            *row = gbt.current_row;
+            *row = gbt.previous_row;
         if (tick)
             *tick = gbt.ticks_elapsed;
     }

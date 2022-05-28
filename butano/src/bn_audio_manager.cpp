@@ -424,16 +424,19 @@ fixed music_volume()
 
 void set_music_volume(fixed volume)
 {
-    BN_ASSERT(data.music_playing, "There's no music playing");
+    if(volume != data.music_volume)
+    {
+        BN_ASSERT(data.music_playing, "There's no music playing");
 
-    int commands = data.commands_count;
-    BN_ASSERT(commands < max_commands, "No more audio commands available");
+        int commands = data.commands_count;
+        BN_ASSERT(commands < max_commands, "No more audio commands available");
 
-    data.command_codes[commands] = MUSIC_SET_VOLUME;
-    new(data.command_datas + commands) set_music_volume_command(_hw_music_volume(volume));
-    data.commands_count = commands + 1;
+        data.command_codes[commands] = MUSIC_SET_VOLUME;
+        new(data.command_datas + commands) set_music_volume_command(_hw_music_volume(volume));
+        data.commands_count = commands + 1;
 
-    data.music_volume = volume;
+        data.music_volume = volume;
+    }
 }
 
 bool dmg_music_playing()
@@ -562,18 +565,21 @@ void set_dmg_music_right_volume(fixed right_volume)
 
 void set_dmg_music_volume(fixed left_volume, fixed right_volume)
 {
-    BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    if(left_volume != data.dmg_music_left_volume || right_volume != data.dmg_music_right_volume)
+    {
+        BN_ASSERT(data.dmg_music_data, "There's no DMG music playing");
 
-    int commands = data.commands_count;
-    BN_ASSERT(commands < max_commands, "No more audio commands available");
+        int commands = data.commands_count;
+        BN_ASSERT(commands < max_commands, "No more audio commands available");
 
-    data.command_codes[commands] = DMG_MUSIC_SET_VOLUME;
-    new(data.command_datas + commands) set_dmg_music_volume_command(
-                _hw_dmg_music_volume(left_volume), _hw_dmg_music_volume(right_volume));
-    data.commands_count = commands + 1;
+        data.command_codes[commands] = DMG_MUSIC_SET_VOLUME;
+        new(data.command_datas + commands) set_dmg_music_volume_command(
+                    _hw_dmg_music_volume(left_volume), _hw_dmg_music_volume(right_volume));
+        data.commands_count = commands + 1;
 
-    data.dmg_music_left_volume = left_volume;
-    data.dmg_music_right_volume = right_volume;
+        data.dmg_music_left_volume = left_volume;
+        data.dmg_music_right_volume = right_volume;
+    }
 }
 
 bool dmg_sync_enabled()
@@ -583,14 +589,17 @@ bool dmg_sync_enabled()
 
 void set_dmg_sync_enabled(bool enabled)
 {
-    int commands = data.commands_count;
-    BN_ASSERT(commands < max_commands, "No more audio commands available");
+    if(enabled != data.dmg_sync_enabled)
+    {
+        int commands = data.commands_count;
+        BN_ASSERT(commands < max_commands, "No more audio commands available");
 
-    data.command_codes[commands] = DMG_MUSIC_SET_SYNC_ENABLED;
-    new(data.command_datas + commands) set_dmg_sync_enabled_command(enabled);
-    data.commands_count = commands + 1;
+        data.command_codes[commands] = DMG_MUSIC_SET_SYNC_ENABLED;
+        new(data.command_datas + commands) set_dmg_sync_enabled_command(enabled);
+        data.commands_count = commands + 1;
 
-    data.dmg_sync_enabled = enabled;
+        data.dmg_sync_enabled = enabled;
+    }
 }
 
 void play_sound(int priority, sound_item item)

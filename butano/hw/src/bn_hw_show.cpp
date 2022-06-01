@@ -29,6 +29,7 @@ namespace bn::hw::show
 namespace
 {
     #if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
+        constexpr color light_blue(10, 10, 31);
         constexpr int tte_margin = 12;
 
         void init_tte(const system_font& system_font)
@@ -68,7 +69,7 @@ namespace
         tte_write("\n");
 
         // Show function and line:
-        tte_set_ink(colors::blue.data());
+        tte_set_ink(light_blue.data());
 
         if(function.empty())
         {
@@ -255,7 +256,7 @@ namespace
                     const entry& entry = entries[index];
                     buffer.clear();
                     buffer_stream << index + 1 << '.';
-                    tte_set_ink(colors::blue.data());
+                    tte_set_ink(light_blue.data());
                     tte_write(buffer.c_str());
 
                     tte_set_pos(x + max_index_width + index_margin, y);

@@ -29,6 +29,7 @@ namespace bn::hw::show
 namespace
 {
     #if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
+        constexpr color light_red(31, 7, 7);
         constexpr color light_blue(10, 10, 31);
         constexpr int tte_margin = 12;
 
@@ -53,7 +54,7 @@ namespace
         init_tte(system_font);
 
         // Show file name:
-        tte_set_ink(colors::red.data());
+        tte_set_ink(light_red.data());
         tte_write("ERROR in ");
 
         if(file_name.empty())

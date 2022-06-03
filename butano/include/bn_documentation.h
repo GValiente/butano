@@ -1874,7 +1874,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_10_1_0 10.1.0 (next release)
+ * @section changelog_10_1_0 10.1.0
  *
  * * bn::audio::dmg_sync_enabled and bn::audio::set_dmg_sync_enabled added.
  * * Custom assembler flags can be specified in the project's `Makefile`.

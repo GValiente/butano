@@ -5,9 +5,7 @@
 
 #include "bn_affine_bg_pc_register_hbe_ptr.h"
 
-#include "bn_span.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_affine_bg_mat_attributes.h"
 #include "bn_hblank_effects_manager.h"
 

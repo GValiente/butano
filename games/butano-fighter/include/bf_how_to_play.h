@@ -6,7 +6,6 @@
 #ifndef BF_HOW_TO_PLAY_H
 #define BF_HOW_TO_PLAY_H
 
-#include "bn_optional.h"
 #include "bn_music_actions.h"
 #include "bn_sprite_actions.h"
 #include "bn_blending_actions.h"

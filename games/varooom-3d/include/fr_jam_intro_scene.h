@@ -6,7 +6,6 @@
 #ifndef FR_JAM_INTRO_SCENE_H
 #define FR_JAM_INTRO_SCENE_H
 
-#include "bn_optional.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_bg_palettes_actions.h"
 #include "bn_sprite_palettes_actions.h"

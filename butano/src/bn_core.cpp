@@ -5,8 +5,6 @@
 
 #include "bn_core.h"
 
-#include "bn_span.h"
-#include "bn_fixed.h"
 #include "bn_timer.h"
 #include "bn_keypad.h"
 #include "bn_timers.h"

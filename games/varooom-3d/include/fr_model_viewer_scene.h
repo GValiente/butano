@@ -8,7 +8,6 @@
 
 #include "bn_deque.h"
 #include "bn_vector.h"
-#include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_music_actions.h"
 #include "bn_regular_bg_ptr.h"

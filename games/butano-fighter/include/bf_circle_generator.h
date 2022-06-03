@@ -6,9 +6,9 @@
 #ifndef BF_CIRCLE_GENERATOR_H
 #define BF_CIRCLE_GENERATOR_H
 
+#include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_memory.h"
-#include "bn_span_fwd.h"
 
 namespace bf
 {

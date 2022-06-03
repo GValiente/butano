@@ -13,7 +13,6 @@
  * @ingroup math
  */
 
-#include "bn_limits.h"
 #include "bn_compare.h"
 #include "bn_fixed_fwd.h"
 #include "bn_functional.h"

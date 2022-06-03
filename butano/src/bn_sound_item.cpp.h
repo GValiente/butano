@@ -5,7 +5,6 @@
 
 #include "bn_sound_item.h"
 
-#include "bn_fixed.h"
 #include "bn_sound.h"
 
 namespace bn

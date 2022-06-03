@@ -3,7 +3,6 @@
 
 #include "bn_vector.h"
 #include "bn_display.h"
-#include "bn_span_fwd.h"
 #include "bn_sprite_tiles_ptr.h"
 #include "bn_sprite_palette_ptr.h"
 

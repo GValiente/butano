@@ -6,7 +6,6 @@
 #ifndef BF_BUTANO_BACKGROUND_H
 #define BF_BUTANO_BACKGROUND_H
 
-#include "bn_optional.h"
 #include "bn_sprite_actions.h"
 #include "bn_regular_bg_actions.h"
 #include "bn_bg_palette_color_hbe_ptr.h"

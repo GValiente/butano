@@ -6,8 +6,8 @@
 #ifndef BN_KEYPAD_MANAGER_H
 #define BN_KEYPAD_MANAGER_H
 
+#include "bn_span.h"
 #include "bn_keypad.h"
-#include "bn_span_fwd.h"
 
 namespace bn
 {

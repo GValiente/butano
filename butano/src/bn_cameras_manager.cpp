@@ -6,6 +6,7 @@
 #include "bn_cameras_manager.h"
 
 #include "bn_vector.h"
+#include "bn_limits.h"
 #include "bn_config_cameras.h"
 #include "bn_bgs_manager.h"
 #include "bn_sprites_manager.h"

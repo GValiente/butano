@@ -6,7 +6,7 @@
 #ifndef BN_LINK_MANAGER_H
 #define BN_LINK_MANAGER_H
 
-#include "bn_optional_fwd.h"
+#include "bn_optional.h"
 
 namespace bn
 {

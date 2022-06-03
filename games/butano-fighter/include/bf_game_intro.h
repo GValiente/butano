@@ -8,7 +8,6 @@
 
 #include "bn_vector.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_sprite_actions.h"
 #include "bn_rect_window_actions.h"
 #include "bn_sprite_palette_actions.h"

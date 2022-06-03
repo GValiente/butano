@@ -6,9 +6,8 @@
 #ifndef BN_DISPLAY_MANAGER_H
 #define BN_DISPLAY_MANAGER_H
 
-#include "bn_utility.h"
-#include "bn_fixed_fwd.h"
-#include "bn_optional_fwd.h"
+#include "bn_fixed.h"
+#include "bn_optional.h"
 
 namespace bn
 {

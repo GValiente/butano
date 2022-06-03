@@ -8,7 +8,6 @@
 
 #include "bn_deque.h"
 #include "bn_random.h"
-#include "bn_optional.h"
 #include "bn_music_actions.h"
 #include "bn_sprite_actions.h"
 #include "bn_blending_actions.h"

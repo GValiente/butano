@@ -7,7 +7,6 @@
 #define FR_LOSE_SCENE_H
 
 #include "bn_vector.h"
-#include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_bg_palettes_actions.h"
 #include "bn_sprite_palettes_actions.h"

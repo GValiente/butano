@@ -13,7 +13,7 @@
  * @ingroup blending
  */
 
-#include "bn_fixed_fwd.h"
+#include "bn_fixed.h"
 
 namespace bn
 {

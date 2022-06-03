@@ -6,7 +6,6 @@
 #include "bn_core.h"
 #include "bn_keypad.h"
 #include "bn_blending.h"
-#include "bn_optional.h"
 #include "bn_rect_window.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_camera_actions.h"

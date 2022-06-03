@@ -8,7 +8,6 @@
 
 #include <cmath>
 #include "bn_math.h"
-#include "bn_fixed.h"
 #include "tests.h"
 
 class sqrt_tests : public tests

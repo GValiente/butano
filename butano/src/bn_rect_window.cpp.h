@@ -5,7 +5,6 @@
 
 #include "bn_rect_window.h"
 
-#include "bn_optional.h"
 #include "bn_fixed_rect.h"
 #include "bn_camera_ptr.h"
 #include "bn_display_manager.h"

@@ -7,7 +7,6 @@
 #define BN_RECT_WINDOW_HORIZONTAL_BOUNDARIES_HBE_HANDLER_H
 
 #include "bn_any.h"
-#include "bn_fixed.h"
 #include "bn_display_manager.h"
 #include "../hw/include/bn_hw_display.h"
 

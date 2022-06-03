@@ -9,6 +9,7 @@
 #include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_color.h"
+#include "bn_limits.h"
 #include "bn_optional.h"
 #include "bn_config_log.h"
 #include "bn_unordered_map.h"

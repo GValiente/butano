@@ -17,8 +17,7 @@
 
 #include "bn_size.h"
 #include "bn_point.h"
-#include "bn_alignment.h"
-#include "bn_optional_fwd.h"
+#include "bn_optional.h"
 #include "bn_compression_type.h"
 #include "bn_regular_bg_map_cell.h"
 

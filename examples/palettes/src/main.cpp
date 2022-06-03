@@ -7,7 +7,6 @@
 #include "bn_keypad.h"
 #include "bn_colors.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_bg_palette_actions.h"
 #include "bn_bg_palettes_actions.h"

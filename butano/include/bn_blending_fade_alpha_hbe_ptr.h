@@ -14,7 +14,8 @@
  * @ingroup hblank_effect
  */
 
-#include "bn_optional_fwd.h"
+#include "bn_span.h"
+#include "bn_optional.h"
 #include "bn_hbe_ptr.h"
 
 namespace bn

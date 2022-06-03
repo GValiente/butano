@@ -17,7 +17,7 @@
 
 #include "bn_span.h"
 #include "bn_tile.h"
-#include "bn_optional_fwd.h"
+#include "bn_optional.h"
 #include "bn_compression_type.h"
 
 namespace bn

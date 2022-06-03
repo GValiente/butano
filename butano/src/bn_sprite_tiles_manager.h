@@ -6,9 +6,9 @@
 #ifndef BN_SPRITE_TILES_MANAGER_H
 #define BN_SPRITE_TILES_MANAGER_H
 
-#include "bn_span_fwd.h"
+#include "bn_span.h"
+#include "bn_optional.h"
 #include "bn_config_log.h"
-#include "bn_optional_fwd.h"
 
 namespace bn
 {

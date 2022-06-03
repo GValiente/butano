@@ -5,7 +5,6 @@
 
 #include "bf_circle_generator.h"
 
-#include "bn_span.h"
 #include "bn_cstring.h"
 #include "bn_display.h"
 

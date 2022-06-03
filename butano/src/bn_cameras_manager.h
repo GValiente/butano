@@ -6,8 +6,7 @@
 #ifndef BN_CAMERAS_MANAGER_H
 #define BN_CAMERAS_MANAGER_H
 
-#include "bn_fixed_fwd.h"
-#include "bn_optional_fwd.h"
+#include "bn_fixed.h"
 
 namespace bn
 {

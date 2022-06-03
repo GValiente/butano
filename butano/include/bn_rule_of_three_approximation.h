@@ -13,8 +13,8 @@
  * @ingroup math
  */
 
+#include "bn_fixed.h"
 #include "bn_assert.h"
-#include "bn_fixed_fwd.h"
 
 namespace bn
 {

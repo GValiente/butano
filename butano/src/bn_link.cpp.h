@@ -5,7 +5,6 @@
 
 #include "bn_link.h"
 
-#include "bn_optional.h"
 #include "bn_link_state.h"
 #include "bn_link_manager.h"
 

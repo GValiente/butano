@@ -9,7 +9,6 @@
 #include "bn_keypad.h"
 #include "bn_rumble.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_blending.h"
 #include "bn_music_items.h"
 #include "bn_sound_items.h"

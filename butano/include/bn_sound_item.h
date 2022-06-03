@@ -14,8 +14,7 @@
  * @ingroup tool
  */
 
-#include "bn_fixed_fwd.h"
-#include "bn_functional.h"
+#include "bn_fixed.h"
 
 namespace bn
 {

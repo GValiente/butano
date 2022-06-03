@@ -6,7 +6,6 @@
 #ifndef FR_PLAYER_CAR_H
 #define FR_PLAYER_CAR_H
 
-#include "bn_optional.h"
 #include "bn_sprite_palette_actions.h"
 
 #include "fr_sprite_3d_item.h"

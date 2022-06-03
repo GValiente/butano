@@ -14,7 +14,7 @@
  * @ingroup palette
  */
 
-#include "bn_fixed_fwd.h"
+#include "bn_fixed.h"
 #include "bn_config_log.h"
 #include "bn_config_doxygen.h"
 

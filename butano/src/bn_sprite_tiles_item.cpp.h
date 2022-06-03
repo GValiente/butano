@@ -5,7 +5,6 @@
 
 #include "bn_sprite_tiles_item.h"
 
-#include "bn_optional.h"
 #include "bn_sprite_tiles_ptr.h"
 #include "../hw/include/bn_hw_decompress.h"
 

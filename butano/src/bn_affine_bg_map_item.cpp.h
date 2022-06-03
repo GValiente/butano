@@ -5,7 +5,6 @@
 
 #include "bn_affine_bg_map_item.h"
 
-#include "bn_optional.h"
 #include "bn_bg_palette_ptr.h"
 #include "bn_affine_bg_map_ptr.h"
 #include "bn_affine_bg_tiles_ptr.h"

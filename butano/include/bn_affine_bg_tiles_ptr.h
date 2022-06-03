@@ -14,10 +14,7 @@
  * @ingroup tile
  */
 
-#include "bn_utility.h"
-#include "bn_span_fwd.h"
-#include "bn_functional.h"
-#include "bn_optional_fwd.h"
+#include "bn_optional.h"
 
 namespace bn
 {

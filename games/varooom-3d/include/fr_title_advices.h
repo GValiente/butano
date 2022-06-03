@@ -7,7 +7,6 @@
 #define FR_TITLE_ADVICES_H
 
 #include "bn_deque.h"
-#include "bn_fixed.h"
 #include "bn_sprite_ptr.h"
 #include "bn_sprite_affine_mat_ptr.h"
 

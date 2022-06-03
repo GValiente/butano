@@ -6,8 +6,6 @@
 #ifndef FR_RACE_OUTRO_H
 #define FR_RACE_OUTRO_H
 
-#include "bn_fixed.h"
-#include "bn_optional.h"
 #include "bn_music_actions.h"
 #include "bn_bg_palettes_actions.h"
 #include "bn_sprite_palettes_actions.h"

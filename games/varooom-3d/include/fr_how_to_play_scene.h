@@ -7,7 +7,6 @@
 #define FR_HOW_TO_PLAY_SCENE_H
 
 #include "bn_vector.h"
-#include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_regular_bg_actions.h"

@@ -6,6 +6,7 @@
 #include "bn_bg_blocks_manager.h"
 
 #include "bn_vector.h"
+#include "bn_limits.h"
 #include "bn_string_view.h"
 #include "bn_bgs_manager.h"
 #include "bn_unordered_map.h"

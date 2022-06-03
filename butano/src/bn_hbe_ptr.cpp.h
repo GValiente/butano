@@ -5,7 +5,6 @@
 
 #include "bn_hbe_ptr.h"
 
-#include "bn_span.h"
 #include "bn_hblank_effects_manager.h"
 
 namespace bn

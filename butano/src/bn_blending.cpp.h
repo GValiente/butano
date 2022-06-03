@@ -5,7 +5,6 @@
 
 #include "bn_blending.h"
 
-#include "bn_fixed.h"
 #include "bn_assert.h"
 #include "bn_blending_fade_alpha.h"
 #include "bn_blending_transparency_attributes.h"

@@ -8,7 +8,6 @@
 
 #include "bn_math.h"
 #include "bn_span.h"
-#include "bn_fixed.h"
 
 namespace bf
 {

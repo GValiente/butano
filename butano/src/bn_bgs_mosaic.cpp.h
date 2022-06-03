@@ -5,7 +5,6 @@
 
 #include "bn_bgs_mosaic.h"
 
-#include "bn_fixed.h"
 #include "bn_assert.h"
 #include "bn_display_manager.h"
 

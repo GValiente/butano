@@ -15,6 +15,7 @@
  * @ingroup hblank_effect
  */
 
+#include "bn_span.h"
 #include "bn_sprite_affine_mat_pa_register_hbe_ptr.h"
 #include "bn_sprite_affine_mat_pb_register_hbe_ptr.h"
 #include "bn_sprite_affine_mat_pc_register_hbe_ptr.h"

@@ -6,9 +6,7 @@
 #ifndef BF_ENDING_H
 #define BF_ENDING_H
 
-#include "bn_fixed.h"
 #include "bn_vector.h"
-#include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_blending_actions.h"

@@ -18,8 +18,7 @@
 #include "bn_span.h"
 #include "bn_color.h"
 #include "bn_bpp_mode.h"
-#include "bn_alignment.h"
-#include "bn_optional_fwd.h"
+#include "bn_optional.h"
 #include "bn_compression_type.h"
 
 namespace bn

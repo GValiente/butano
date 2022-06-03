@@ -5,7 +5,6 @@
 
 #include "bn_core.h"
 #include "bn_colors.h"
-#include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_bg_palettes.h"
 #include "bn_config_assert.h"

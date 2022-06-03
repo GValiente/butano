@@ -7,7 +7,6 @@
 #define BF_GAME_BOSS_INTRO_H
 
 #include "bn_vector.h"
-#include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_music_actions.h"
 #include "bn_sprite_affine_mat_attributes_hbe_ptr.h"

@@ -5,7 +5,6 @@
 
 #include "bn_music_item.h"
 
-#include "bn_fixed.h"
 #include "bn_music.h"
 
 namespace bn

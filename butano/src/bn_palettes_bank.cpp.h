@@ -6,7 +6,6 @@
 #include "bn_palettes_bank.h"
 
 #include "bn_math.h"
-#include "bn_span.h"
 #include "bn_limits.h"
 #include "bn_display.h"
 #include "bn_bpp_mode.h"

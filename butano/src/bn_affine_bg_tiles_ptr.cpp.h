@@ -5,7 +5,6 @@
 
 #include "bn_affine_bg_tiles_ptr.h"
 
-#include "bn_optional.h"
 #include "bn_affine_bg_tiles_item.h"
 #include "bn_bg_blocks_manager.h"
 

@@ -6,6 +6,7 @@
 #ifndef BF_GAME_HERO_BULLET_EVENT_H
 #define BF_GAME_HERO_BULLET_EVENT_H
 
+#include "bn_limits.h"
 #include "bn_fixed_point.h"
 #include "bf_constants.h"
 

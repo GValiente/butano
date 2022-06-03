@@ -14,6 +14,7 @@
  * @ingroup hblank_effect
  */
 
+#include "bn_span.h"
 #include "bn_sprite_ptr.h"
 #include "bn_hbe_ptr.h"
 

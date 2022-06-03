@@ -7,7 +7,6 @@
 
 #include "bn_keypad.h"
 #include "bn_string.h"
-#include "bn_optional.h"
 #include "bn_regular_bg_ptr.h"
 
 #include "fr_common_stuff.h"

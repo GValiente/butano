@@ -5,8 +5,6 @@
 
 #include "bn_regular_bg_item.h"
 
-#include "bn_fixed.h"
-#include "bn_optional.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_regular_bg_map_ptr.h"
 

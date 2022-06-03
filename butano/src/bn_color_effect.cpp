@@ -5,9 +5,7 @@
 
 #include "bn_color_effect.h"
 
-#include "bn_span.h"
 #include "bn_math.h"
-#include "bn_fixed.h"
 #include "bn_memory.h"
 #include "bn_alignment.h"
 #include "../hw/include/bn_hw_palettes.h"

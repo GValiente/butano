@@ -13,7 +13,6 @@
  * @ingroup affine_bg
  */
 
-#include "bn_optional.h"
 #include "bn_camera_ptr.h"
 #include "bn_fixed_point.h"
 #include "bn_affine_bg_item.h"

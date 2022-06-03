@@ -7,7 +7,6 @@
 #include "bn_math.h"
 #include "bn_keypad.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_bg_palettes.h"
 #include "bn_affine_mat_attributes.h"
 #include "bn_sprite_text_generator.h"

@@ -10,7 +10,6 @@
 #include "bn_keypad.h"
 #include "bn_string.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_blending.h"
 #include "bn_link_state.h"
 #include "bn_rect_window.h"

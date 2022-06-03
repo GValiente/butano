@@ -14,7 +14,7 @@
  * @ingroup mosaic
  */
 
-#include "bn_fixed_fwd.h"
+#include "bn_fixed.h"
 
 /**
  * @brief Functions related with the mosaic applied to the backgrounds.

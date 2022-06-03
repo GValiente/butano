@@ -5,8 +5,6 @@
 
 #include "bn_dmg_music.h"
 
-#include "bn_fixed.h"
-#include "bn_optional.h"
 #include "bn_dmg_music_item.h"
 #include "bn_dmg_music_position.h"
 #include "bn_audio_manager.h"

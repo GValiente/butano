@@ -5,9 +5,6 @@
 
 #include "bn_affine_bg_mat_attributes_hbe_ptr.h"
 
-#include "bn_span.h"
-#include "bn_optional.h"
-
 namespace bn
 {
 

@@ -7,7 +7,6 @@
 #define BF_GAME_ENEMY_BULLETS_H
 
 #include "bn_array.h"
-#include "bn_optional.h"
 #include "bn_forward_list.h"
 #include "bn_sprite_actions.h"
 #include "bn_sprite_tiles_ptr.h"

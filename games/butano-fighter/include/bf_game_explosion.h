@@ -7,7 +7,6 @@
 #define BF_GAME_EXPLOSION_H
 
 #include "bn_vector.h"
-#include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_sprite_affine_mat_ptr.h"
 

@@ -7,7 +7,6 @@
 #define BF_GAME_OBJECTS_H
 
 #include "bn_deque.h"
-#include "bn_optional.h"
 #include "bn_forward_list.h"
 #include "bf_game_gem.h"
 #include "bf_constants.h"

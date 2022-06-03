@@ -7,7 +7,6 @@
 #define BF_GAME_BACKGROUND_H
 
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_blending_actions.h"
 #include "bn_regular_bg_actions.h"
 #include "bn_bg_palette_actions.h"

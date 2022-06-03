@@ -5,10 +5,8 @@
 
 #include "bn_sprite_palette_color_hbe_ptr.h"
 
-#include "bn_span.h"
 #include "bn_color.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_palette_target_id.h"
 #include "bn_hblank_effects_manager.h"
 

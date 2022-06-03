@@ -5,10 +5,7 @@
 
 #include "bn_affine_bg_pivot_position_hbe_ptr.h"
 
-#include "bn_span.h"
-#include "bn_fixed.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_hblank_effects_manager.h"
 
 namespace bn

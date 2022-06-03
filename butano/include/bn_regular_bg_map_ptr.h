@@ -14,10 +14,8 @@
  * @ingroup bg_map
  */
 
-#include "bn_utility.h"
-#include "bn_span_fwd.h"
-#include "bn_functional.h"
-#include "bn_optional_fwd.h"
+#include "bn_span.h"
+#include "bn_optional.h"
 #include "bn_regular_bg_map_cell.h"
 
 namespace bn

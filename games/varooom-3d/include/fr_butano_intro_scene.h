@@ -7,7 +7,6 @@
 #define FR_BUTANO_INTRO_SCENE_H
 
 #include "bn_vector.h"
-#include "bn_optional.h"
 #include "bn_sprite_ptr.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_affine_bg_actions.h"

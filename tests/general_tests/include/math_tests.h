@@ -8,8 +8,6 @@
 
 #include <cmath>
 #include "bn_math.h"
-#include "bn_fixed.h"
-#include "bn_rule_of_three_approximation.h"
 #include "tests.h"
 
 class math_tests : public tests

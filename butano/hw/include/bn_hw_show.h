@@ -9,7 +9,7 @@
 #include "bn_config_assert.h"
 #include "bn_config_profiler.h"
 
-#if BN_CFG_ASSERT_ENABLED
+#if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
     #include "bn_string_fwd.h"
 
     namespace bn

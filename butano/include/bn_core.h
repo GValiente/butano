@@ -13,8 +13,8 @@
  * @ingroup core
  */
 
-#include "bn_span_fwd.h"
-#include "bn_fixed_fwd.h"
+#include "bn_span.h"
+#include "bn_fixed.h"
 
 namespace bn
 {

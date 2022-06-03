@@ -2,7 +2,6 @@
 #define POLYGON_SPRITE_H
 
 #include "bn_array.h"
-#include "bn_fixed.h"
 #include "bn_vector.h"
 #include "bn_display.h"
 #include "bn_sprite_position_hbe_ptr.h"

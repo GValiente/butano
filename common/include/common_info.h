@@ -6,8 +6,8 @@
 #ifndef COMMON_INFO_H
 #define COMMON_INFO_H
 
+#include "bn_span.h"
 #include "bn_vector.h"
-#include "bn_span_fwd.h"
 #include "bn_sprite_ptr.h"
 #include "bn_string_view.h"
 

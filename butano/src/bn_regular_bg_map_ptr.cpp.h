@@ -5,7 +5,6 @@
 
 #include "bn_regular_bg_map_ptr.h"
 
-#include "bn_optional.h"
 #include "bn_bg_palette_ptr.h"
 #include "bn_regular_bg_item.h"
 #include "bn_bg_blocks_manager.h"

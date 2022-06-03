@@ -6,7 +6,6 @@
 #ifndef FR_SCOREBOARD_NUMBER_H
 #define FR_SCOREBOARD_NUMBER_H
 
-#include "bn_fixed.h"
 #include "bn_vector.h"
 #include "bn_string.h"
 #include "bn_sprite_ptr.h"

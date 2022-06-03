@@ -13,7 +13,6 @@
  * @ingroup sprite
  */
 
-#include "bn_optional.h"
 #include "bn_camera_ptr.h"
 #include "bn_sprite_item.h"
 #include "bn_fixed_point.h"

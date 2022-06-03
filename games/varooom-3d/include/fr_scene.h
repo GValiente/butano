@@ -6,7 +6,7 @@
 #ifndef FR_SCENE_H
 #define FR_SCENE_H
 
-#include "bn_optional_fwd.h"
+#include "bn_optional.h"
 
 namespace fr
 {

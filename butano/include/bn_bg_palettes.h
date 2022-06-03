@@ -14,9 +14,9 @@
  * @ingroup palette
  */
 
-#include "bn_fixed_fwd.h"
+#include "bn_fixed.h"
+#include "bn_optional.h"
 #include "bn_config_log.h"
-#include "bn_optional_fwd.h"
 #include "bn_config_doxygen.h"
 
 namespace bn

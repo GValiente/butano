@@ -6,8 +6,6 @@
 #ifndef BF_GAME_PAUSE_H
 #define BF_GAME_PAUSE_H
 
-#include "bn_fixed.h"
-#include "bn_optional.h"
 #include "bn_regular_bg_ptr.h"
 
 namespace bf

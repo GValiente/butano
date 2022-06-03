@@ -5,7 +5,6 @@
 
 #include "bf_keypad_shortcuts.h"
 
-#include "bn_span.h"
 #include "bn_core.h"
 #include "bn_fixed.h"
 #include "bn_keypad.h"

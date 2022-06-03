@@ -9,7 +9,6 @@
 #include "bn_keypad.h"
 #include "bn_colors.h"
 #include "bn_version.h"
-#include "bn_optional.h"
 #include "bn_sprite_text_generator.h"
 #include "bf_scene_type.h"
 #include "bf_butano_background.h"

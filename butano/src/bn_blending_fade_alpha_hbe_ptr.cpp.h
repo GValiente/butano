@@ -5,9 +5,7 @@
 
 #include "bn_blending_fade_alpha_hbe_ptr.h"
 
-#include "bn_span.h"
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_display_manager.h"
 #include "bn_blending_fade_alpha.h"
 #include "bn_hblank_effects_manager.h"

@@ -6,7 +6,7 @@
 #ifndef BF_GAME_ENEMY_DATA_H
 #define BF_GAME_ENEMY_DATA_H
 
-#include "bn_span.h"
+#include "bn_limits.h"
 #include "bn_fixed_size.h"
 #include "bn_sound_item.h"
 #include "bn_sprite_item.h"

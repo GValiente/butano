@@ -14,7 +14,7 @@
  * @ingroup tool
  */
 
-#include "bn_fixed_fwd.h"
+#include "bn_fixed.h"
 #include "bn_bg_palette_item.h"
 #include "bn_affine_bg_map_item.h"
 #include "bn_affine_bg_tiles_item.h"

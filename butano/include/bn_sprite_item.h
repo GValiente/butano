@@ -14,7 +14,7 @@
  * @ingroup tool
  */
 
-#include "bn_fixed_fwd.h"
+#include "bn_fixed.h"
 #include "bn_sprite_shape_size.h"
 #include "bn_sprite_tiles_item.h"
 #include "bn_sprite_palette_item.h"

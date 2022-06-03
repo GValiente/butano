@@ -6,7 +6,6 @@
 #ifndef FR_MODEL_3D_ITEM_H
 #define FR_MODEL_3D_ITEM_H
 
-#include "bn_span.h"
 #include "bn_math.h"
 #include "bn_sprite_tiles_item.h"
 #include "bn_sprite_palette_item.h"

@@ -5,7 +5,7 @@
 
 #include "bn_audio_manager.h"
 
-#include "bn_optional.h"
+#include "bn_math.h"
 #include "bn_config_audio.h"
 #include "bn_dmg_music_position.h"
 #include "../hw/include/bn_hw_audio.h"

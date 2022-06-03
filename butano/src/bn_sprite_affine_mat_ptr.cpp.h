@@ -5,8 +5,6 @@
 
 #include "bn_sprite_affine_mat_ptr.h"
 
-#include "bn_fixed.h"
-#include "bn_optional.h"
 #include "bn_sprite_affine_mats_manager.h"
 
 namespace bn

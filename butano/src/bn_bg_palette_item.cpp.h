@@ -5,7 +5,6 @@
 
 #include "bn_bg_palette_item.h"
 
-#include "bn_optional.h"
 #include "bn_bg_palette_ptr.h"
 #include "../hw/include/bn_hw_decompress.h"
 

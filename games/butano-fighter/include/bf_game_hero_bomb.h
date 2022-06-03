@@ -7,7 +7,6 @@
 #define BF_GAME_HERO_BOMB_H
 
 #include "bn_display.h"
-#include "bn_optional.h"
 #include "bn_blending_actions.h"
 #include "bn_regular_bg_actions.h"
 #include "bn_rect_window_actions.h"

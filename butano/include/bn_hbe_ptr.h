@@ -14,7 +14,6 @@
  */
 
 #include "bn_utility.h"
-#include "bn_span_fwd.h"
 #include "bn_functional.h"
 
 namespace bn

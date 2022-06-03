@@ -13,8 +13,8 @@
  * @ingroup rect_window
  */
 
-#include "bn_fixed_fwd.h"
-#include "bn_optional_fwd.h"
+#include "bn_fixed.h"
+#include "bn_optional.h"
 #include "bn_inside_window.h"
 
 namespace bn

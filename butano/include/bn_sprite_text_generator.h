@@ -17,13 +17,13 @@
 #include "bn_fixed.h"
 #include "bn_vector.h"
 #include "bn_sprite_font.h"
+#include "bn_string_view.h"
 
 namespace bn
 {
 
 class sprite_ptr;
 class fixed_point;
-class string_view;
 
 /**
  * @brief Generates sprites containing text from a given sprite_font.

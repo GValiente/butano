@@ -7,7 +7,6 @@
 
 #include "bn_sprites.h"
 #include "bn_sprite_ptr.h"
-#include "bn_string_view.h"
 #include "bn_sprite_builder.h"
 #include "../hw/include/bn_hw_sprite_tiles.h"
 

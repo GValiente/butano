@@ -9,7 +9,6 @@
     #include "bn_colors.h"
     #include "bn_string.h"
     #include "bn_display.h"
-    #include "bn_string_view.h"
     #include "bn_system_font.h"
     #include "../include/bn_hw_tonc.h"
     #include "../include/bn_hw_display.h"

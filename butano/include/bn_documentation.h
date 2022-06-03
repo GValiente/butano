@@ -1879,7 +1879,7 @@
  * * bn::audio::dmg_sync_enabled and bn::audio::set_dmg_sync_enabled added.
  * * Custom assembler flags can be specified in the project's `Makefile`.
  * * <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> updated to 4.4.1.
- * * bn::fixed, bn::optional and bn::span are no longer forward declared in the public API.
+ * * bn::fixed, bn::optional, bn::string_view and bn::span are no longer forward declared in the public API.
  * * Text color in assert and profile screens improved.
  * * Audio volume setup optimized.
  * * Clouds restored in `world_map` example.

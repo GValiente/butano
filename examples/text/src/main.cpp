@@ -9,7 +9,6 @@
 #include "bn_display.h"
 #include "bn_sprite_ptr.h"
 #include "bn_bg_palettes.h"
-#include "bn_string_view.h"
 #include "bn_sprite_text_generator.h"
 
 #include "fixed_32x64_sprite_font.h"

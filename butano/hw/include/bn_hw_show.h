@@ -10,11 +10,10 @@
 #include "bn_config_profiler.h"
 
 #if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
-    #include "bn_string_fwd.h"
+    #include "bn_string_view.h"
 
     namespace bn
     {
-        class string_view;
         class system_font;
     }
 #endif

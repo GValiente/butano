@@ -15,10 +15,10 @@
 
 #include "bn_span.h"
 #include "bn_fixed.h"
+#include "bn_string_view.h"
 
 namespace bn
 {
-    class string_view;
     class system_font;
 }
 

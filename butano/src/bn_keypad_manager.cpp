@@ -5,7 +5,6 @@
 
 #include "bn_keypad_manager.h"
 
-#include "bn_string_view.h"
 #include "bn_config_keypad.h"
 #include "../hw/include/bn_hw_keypad.h"
 

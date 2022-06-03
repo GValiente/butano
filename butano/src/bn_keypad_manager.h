@@ -8,11 +8,7 @@
 
 #include "bn_span.h"
 #include "bn_keypad.h"
-
-namespace bn
-{
-    class string_view;
-}
+#include "bn_string_view.h"
 
 namespace bn::keypad_manager
 {

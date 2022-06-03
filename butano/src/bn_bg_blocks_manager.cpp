@@ -43,9 +43,9 @@ namespace
 
 
     #if BN_CFG_LOG_ENABLED
-        constexpr bn::string_view _status_log_message = "\nBG blocks manager status has been logged.";
+        constexpr string_view _status_log_message = "\nBG blocks manager status has been logged.";
     #else
-        constexpr bn::string_view _status_log_message = "";
+        constexpr string_view _status_log_message = "";
     #endif
 
 

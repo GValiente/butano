@@ -10,7 +10,6 @@
 #include "bn_timers.h"
 #include "bn_version.h"
 #include "bn_profiler.h"
-#include "bn_string_view.h"
 #include "bn_system_font.h"
 #include "bn_bgs_manager.h"
 #include "bn_hdma_manager.h"

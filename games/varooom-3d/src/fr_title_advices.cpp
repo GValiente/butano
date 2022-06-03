@@ -6,7 +6,6 @@
 #include "fr_title_advices.h"
 
 #include "bn_display.h"
-#include "bn_string_view.h"
 
 #include "fr_common_stuff.h"
 

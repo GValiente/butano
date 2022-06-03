@@ -7,7 +7,6 @@
 
 #include "bn_sram.h"
 #include "bn_sstream.h"
-#include "bn_string_view.h"
 #include "bn_bg_palettes.h"
 #include "bn_sprite_palettes.h"
 #include "bf_game_stage_1.h"

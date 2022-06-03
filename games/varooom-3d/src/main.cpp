@@ -5,7 +5,6 @@
 
 #include "bn_core.h"
 #include "bn_memory.h"
-#include "bn_string_view.h"
 
 #include "fr_win_scene.h"
 #include "fr_scene_type.h"

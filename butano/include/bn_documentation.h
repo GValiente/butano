@@ -1874,6 +1874,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_10_2_0 10.2.0 (next release)
+ *
+ * Memory operations like `memcpy` and `memset` implemented by
+ * <a href="https://github.com/felixjones/agbabi">agbabi</a>.
+ *
+ *
  * @section changelog_10_1_0 10.1.0
  *
  * * bn::audio::dmg_sync_enabled and bn::audio::set_dmg_sync_enabled added.

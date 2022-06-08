@@ -7,6 +7,8 @@
 #define BN_HW_MEMORY_H
 
 #include "bn_hw_tonc.h"
+#include "../3rd_party/agbabi/include/aeabi.h"
+#include "../3rd_party/agbabi/include/agbabi.h"
 
 namespace bn::hw::memory
 {
@@ -36,22 +38,22 @@ namespace bn::hw::memory
 
     inline void copy_bytes(const void* source, int bytes, void* destination)
     {
-        tonccpy(destination, source, unsigned(bytes));
+        __aeabi_memcpy(destination, source, size_t(bytes));
     }
 
     inline void copy_half_words(const void* source, int half_words, void* destination)
     {
-        memcpy16(destination, source, unsigned(half_words));
+        __agbabi_memcpy2(destination, source, size_t(half_words) * 2);
     }
 
     inline void copy_words(const void* source, int words, void* destination)
     {
-        memcpy32(destination, source, unsigned(words));
+        __aeabi_memcpy4(destination, source, size_t(words) * 4);
     }
 
     inline void set_bytes(uint8_t value, int bytes, void* destination)
     {
-        toncset(destination, value, unsigned(bytes));
+        __aeabi_memset(destination, size_t(bytes), int(value));
     }
 
     inline void set_half_words(uint16_t value, int half_words, void* destination)
@@ -61,7 +63,7 @@ namespace bn::hw::memory
 
     inline void set_words(unsigned value, int words, void* destination)
     {
-        memset32(destination, value, unsigned(words));
+        __agbabi_wordset4(destination, size_t(words) * 4, int(value));
     }
 }
 

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 //
-// Copyright (c) 2020 Antonio Niño Díaz
+// Copyright (c) 2020-2022 Antonio Niño Díaz
 
     .section .iwram, "ax", %progbits
     .code 32
@@ -24,23 +24,33 @@ IRQ_GlobalInterruptHandler:
 
     .extern IRQ_VectorTable
 
+    // Notes on the default priority of interrupts:
+    //
+    // - HBLANK is first because it's very short, so saving a few cycles is
+    //   important, specially because it is called every scanline.
+    // - VCOUNT is second because it's similar to HBLANK, but it is triggered
+    //   less often. However, it needs higher priority than VBL because they
+    //   are both triggered at the same time when VBL starts, and VBL is much
+    //   longer.
+
     ldr     r3, =IRQ_VectorTable + 4
 
     mov     r2, #(1 << 1) // HBLANK
     tst     r1, r2
     bne     interrupt_found
 
+    # add     r3, r3, #4
+    # mov     r2, #(1 << 2) // VCOUNT
+    # tst     r1, r2
+    # bne     interrupt_found
+
+    # sub     r3, r3, #8
     sub     r3, r3, #4
     mov     r2, #(1 << 0) // VBLANK
     tst     r1, r2
     bne     interrupt_found
 
-    add     r3, r3, #8
-    mov     r2, #(1 << 2) // VCOUNT
-    tst     r1, r2
-    bne     interrupt_found
-
-    add     r3, r3, #4
+    add     r3, r3, #12
     mov     r2, #(1 << 3) // TIMER0
     tst     r1, r2
     bne     interrupt_found
@@ -50,27 +60,29 @@ IRQ_GlobalInterruptHandler:
     tst     r1, r2
     bne     interrupt_found
 
-    add     r3, r3, #4
-    mov     r2, #(1 << 5) // TIMER2
-    tst     r1, r2
-    bne     interrupt_found
+    # add     r3, r3, #4
+    # mov     r2, #(1 << 5) // TIMER2
+    # tst     r1, r2
+    # bne     interrupt_found
 
-    add     r3, r3, #4
-    mov     r2, #(1 << 6) // TIMER3
-    tst     r1, r2
-    bne     interrupt_found
+    # add     r3, r3, #4
+    # mov     r2, #(1 << 6) // TIMER3
+    # tst     r1, r2
+    # bne     interrupt_found
 
-    add     r3, r3, #4
+    # add     r3, r3, #4
+    add     r3, r3, #12
     mov     r2, #(1 << 7) // SERIAL
     tst     r1, r2
     bne     interrupt_found
 
-    add     r3, r3, #4
-    mov     r2, #(1 << 8) // DMA0
-    tst     r1, r2
-    bne     interrupt_found
+    # add     r3, r3, #4
+    # mov     r2, #(1 << 8) // DMA0
+    # tst     r1, r2
+    # bne     interrupt_found
 
-    add     r3, r3, #4
+    # add     r3, r3, #4
+    add     r3, r3, #8
     mov     r2, #(1 << 9) // DMA1
     tst     r1, r2
     bne     interrupt_found
@@ -80,20 +92,21 @@ IRQ_GlobalInterruptHandler:
     tst     r1, r2
     bne     interrupt_found
 
-    add     r3, r3, #4
-    mov     r2, #(1 << 11) // DMA3
-    tst     r1, r2
-    bne     interrupt_found
+    # add     r3, r3, #4
+    # mov     r2, #(1 << 11) // DMA3
+    # tst     r1, r2
+    # bne     interrupt_found
 
-    add     r3, r3, #4
+    # add     r3, r3, #4
+    add     r3, r3, #8
     mov     r2, #(1 << 12) // KEYPAD
     tst     r1, r2
     bne     interrupt_found
 
-    add     r3, r3, #4
-    mov     r2, #(1 << 13) // GAMEPAK
-    tst     r1, r2
-    bne     interrupt_found
+    # add     r3, r3, #4
+    # mov     r2, #(1 << 13) // GAMEPAK
+    # tst     r1, r2
+    # bne     interrupt_found
 
     // If no interrupt flag is set, fall to the next section of code.
 

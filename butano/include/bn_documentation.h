@@ -1878,7 +1878,7 @@
  *
  * * Memory operations like `memcpy` and `memset` implemented by
  * <a href="https://github.com/felixjones/agbabi">agbabi</a>.
- * * Unused interrupts removed from interrupt manager.
+ * * Unused interrupts removed from the interrupt manager.
  *
  *
  * @section changelog_10_1_0 10.1.0

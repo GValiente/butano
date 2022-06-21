@@ -197,6 +197,17 @@ char* __agbabi_ufixed_tostr(unsigned int value, char* str, unsigned int precisio
 /// \return Pointer to the null-terminator written at the end of the string
 char* __agbabi_fixed_tostr(int value, char* str, unsigned int precision);
 
+/// Calculates the integer square root of x
+/// \param x
+/// \return Square root of x
+int __agbabi_sqrt(unsigned int x);
+
+/// Calculates the arc tangent of x, y
+/// \param x coord around circle
+/// \param y coord around circle
+/// \return 16-bit binary angle measurement
+int __agbabi_atan2(int x, int y);
+
 #if defined __has_attribute
 #if __has_attribute(__vector_size__)
 

@@ -95,9 +95,21 @@ int main()
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("atan2");
+    BN_PROFILER_START("bios_atan2");
 
     int its_sqrt_half = its_sqrt / 2;
+
+    for(int y = -its_sqrt_half; y < its_sqrt_half; ++y)
+    {
+        for(int x = -its_sqrt_half; x < its_sqrt_half; ++x)
+        {
+            integer += int(ArcTan2(int16_t(x), int16_t(y)));
+        }
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("atan2");
 
     for(int y = -its_sqrt_half; y < its_sqrt_half; ++y)
     {

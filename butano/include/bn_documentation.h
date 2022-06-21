@@ -1876,8 +1876,9 @@
  *
  * @section changelog_10_2_0 10.2.0 (next release)
  *
- * * Memory operations like `memcpy` and `memset` implemented by
+ * * Memory operations like `memcpy` and `memset` optimized thanks to
  * <a href="https://github.com/felixjones/agbabi">agbabi</a>.
+ * * bn::atan2 and bn::degrees_atan2 optimized thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  * * Unused interrupts removed from the interrupt manager.
  *
  *

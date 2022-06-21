@@ -6,8 +6,8 @@
 #ifndef BN_HW_MATH_H
 #define BN_HW_MATH_H
 
+#include "../3rd_party/agbabi/include/agbabi.h"
 #include "../3rd_party/gba-modern/include/gba-modern.h"
-#include "bn_hw_tonc.h"
 
 namespace bn::hw::math
 {
@@ -18,7 +18,7 @@ namespace bn::hw::math
 
     [[nodiscard]] inline int atan2(int y, int x)
     {
-        return int(uint16_t(ArcTan2(int16_t(x), int16_t(y))));
+        return __agbabi_atan2(x, y);
     }
 }
 

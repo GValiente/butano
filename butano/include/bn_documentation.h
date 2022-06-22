@@ -1879,6 +1879,7 @@
  * * bn::reciprocal_16_lut added.
  * * Memory operations like `memcpy` and `memset` optimized thanks to
  * <a href="https://github.com/felixjones/agbabi">agbabi</a>.
+ * * bn::affine_mat_attributes scale setup optimized (CPU and ROM usage reduced).
  * * bn::atan2 and bn::degrees_atan2 optimized thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  * * Unused interrupts removed from the interrupt manager.
  *

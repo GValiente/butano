@@ -91,7 +91,7 @@ public:
      */
     constexpr void set_position(fixed x, fixed y)
     {
-        _position = bn::fixed_point(x, y);
+        _position = fixed_point(x, y);
     }
 
     /**
@@ -117,7 +117,7 @@ public:
      */
     constexpr void set_dimensions(fixed width, fixed height)
     {
-        _dimensions = bn::fixed_size(width, height);
+        _dimensions = fixed_size(width, height);
     }
 
     /**

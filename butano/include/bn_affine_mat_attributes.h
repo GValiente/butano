@@ -367,8 +367,8 @@ public:
     }
 
 private:
-    constexpr static const bn::fixed min_inv_scale = 128;
-    constexpr static const bn::fixed min_scale = 1 / min_inv_scale;
+    constexpr static fixed _min_inv_scale = 128;
+    constexpr static fixed _min_scale = 1 / _min_inv_scale;
 
     fixed _rotation_angle = 0;
     fixed _horizontal_scale = 1;
@@ -388,28 +388,21 @@ private:
 
     [[nodiscard]] constexpr static uint16_t _output_scale(fixed scale)
     {
-        if(scale == 1)
+        if(scale <= _min_scale)
         {
-            return uint16_t(fixed_t<8>(1).data());
-        }
-
-        if(scale <= min_scale)
-        {
-            return uint16_t(fixed_t<8>(min_inv_scale).data());
+            return uint16_t(fixed_t<8>(_min_inv_scale).data());
         }
 
         fixed_t<8> scale_8(scale);
         int scale_8_data = scale_8.data();
 
-        if(scale_8_data < reciprocal_lut_size)
+        if(scale_8_data < reciprocal_16_lut_size) [[likely]]
         {
-            fixed_t<20> reciprocal = is_constant_evaluated() ?
-                        calculate_reciprocal_lut_value(scale_8_data) : reciprocal_lut._data[scale_8_data];
-
-            return uint16_t(reciprocal.data() >> 4);
+            return is_constant_evaluated() ? calculate_reciprocal_lut_value<16>(scale_8_data).data() :
+                                             reciprocal_16_lut._data[scale_8_data];
         }
 
-        return uint16_t(fixed_t<16>(1).data() / scale_8_data);
+        return calculate_reciprocal_lut_value<16>(scale_8_data).data();
     }
 
     constexpr void _update_rotation_angle()

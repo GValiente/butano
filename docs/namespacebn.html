@@ -2607,9 +2607,10 @@
             </dt>
             <dd>Indicates if the given value is a power of two or not.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga17b2f77697745c7074ce34a66bb3188c" class="m-doc">calculate_reciprocal_lut_value</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;20&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <div class="m-doc-template">template&lt;int Precision = 20&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="group__math.html#gaed12c1a0fcf4bc1baf516dc80bcefec8" class="m-doc">calculate_reciprocal_lut_value</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Calculates the value to store in reciprocal_lut for the given value.</dd>
+            <dd>Calculates the value to store in a reciprocal LUT for the given value.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="group__math.html#ga82b19260c9629813641b3b12d41f6c4c" class="m-doc">calculate_sin_lut_value</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -2793,11 +2794,19 @@
             <dt>
               int <a href="group__math.html#ga61bcfd89f00ba61921ec65d0d63d2929" class="m-doc">reciprocal_lut_size</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>
-            <dd>Reciprocal LUT size.</dd>
+            <dd>Reciprocal 20bit LUT size.</dd>
             <dt>
               const <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;<a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;20&gt;, <a href="group__math.html#ga61bcfd89f00ba61921ec65d0d63d2929" class="m-doc">reciprocal_<wbr />lut_<wbr />size</a>&gt;&amp; <a href="group__math.html#ga21a22d7f03116a7613dd016d4dfdf37f" class="m-doc">reciprocal_lut</a>
             </dt>
-            <dd>Reciprocal LUT.</dd>
+            <dd>Reciprocal 20bit LUT.</dd>
+            <dt>
+              int <a href="group__math.html#gaf652abc9f83efb92dfe600eb7a4f41f8" class="m-doc">reciprocal_16_lut_size</a> <span class="m-label m-flat m-primary">constexpr</span>
+            </dt>
+            <dd>Reciprocal 16bit LUT size.</dd>
+            <dt>
+              const <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;uint16_t, <a href="group__math.html#gaf652abc9f83efb92dfe600eb7a4f41f8" class="m-doc">reciprocal_<wbr />16_<wbr />lut_<wbr />size</a>&gt;&amp; <a href="group__math.html#ga04a69179088d3b9b510a9ca99770cc63" class="m-doc">reciprocal_16_lut</a>
+            </dt>
+            <dd>Reciprocal 16bit LUT.</dd>
             <dt>
               int <a href="group__math.html#ga170826a79a9cb7f906d35193f51ec36a" class="m-doc">sin_lut_size</a> <span class="m-label m-flat m-primary">constexpr</span>
             </dt>

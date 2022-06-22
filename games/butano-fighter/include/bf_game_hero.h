@@ -111,7 +111,7 @@ private:
         bool looking_down = false;
     };
 
-    constexpr static const int body_snapshots_count = 16;
+    constexpr static int body_snapshots_count = 16;
 
     status& _status;
     const bn::sprite_item& _body_sprite_item;

@@ -1876,6 +1876,7 @@
  *
  * @section changelog_10_2_0 10.2.0 (next release)
  *
+ * * bn::reciprocal_16_lut added.
  * * Memory operations like `memcpy` and `memset` optimized thanks to
  * <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  * * bn::atan2 and bn::degrees_atan2 optimized thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.

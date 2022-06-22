@@ -1540,6 +1540,16 @@
  * You can find the header of each Butano class in its documentation page.
  *
  *
+ * @subsection faq_common_folder Why can't I use the content of the common folder in a new project?
+ *
+ * The `common` folder contains code and assets used by most Butano examples and tests.
+ *
+ * It is not part of Butano (the library), so it is not included by default in new projects.
+ *
+ * As the content of the `common` folder could change in future Butano versions,
+ * you should copy its content to your project if you want to use it.
+ *
+ *
  * @subsection faq_containers Why there's std like containers included with Butano?
  *
  * Butano containers differ from the standard library ones in two important points:
@@ -1882,6 +1892,7 @@
  * * bn::affine_mat_attributes scale setup optimized (CPU and ROM usage reduced).
  * * bn::atan2 and bn::degrees_atan2 optimized thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  * * Unused interrupts removed from the interrupt manager.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_10_1_0 10.1.0

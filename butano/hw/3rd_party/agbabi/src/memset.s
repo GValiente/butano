@@ -32,10 +32,20 @@ __aeabi_memset:
     // Fallthrough
 
 .LskipShifts:
-    mov     r3, #0
+    // Handle <= 2 byte set byte-by-byte
     cmp     r1, #2
+    bgt     .LskipShortHead
     // JoaoBapt carry & sign bit test
-    rsbgt   r3, r0, #4
+    movs    r1, r1, lsl #31
+    // Set byte and half
+    strmib  r2, [r0], #1
+    strcsb  r2, [r0], #1
+    strcsb  r2, [r0]
+    bx      lr
+
+.LskipShortHead:
+    rsb     r3, r0, #4
+    // JoaoBapt carry & sign bit test
     movs    r3, r3, lsl #31
     // Set half and byte head
     strmib  r2, [r0], #1
@@ -90,6 +100,7 @@ __agbabi_wordset4:
     bhs     .LsetWords
 
     // Set half and byte tail
+    // JoaoBapt carry & sign bit test
     movs    r3, r1, lsl #31
     strcsh  r2, [r0], #2
     strmib  r2, [r0]

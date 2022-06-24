@@ -28,12 +28,10 @@ __aeabi_memcpy:
     bcs     .Lcopy2
 
 .Lcopy4:
-    // Handle <= 2 byte copies byte-by-byte
-    cmp     r2, #2
-    ble     .Lcopy1
-
     // Copy half and byte head
-    rsb     r3, r0, #4
+    cmp     r2, #2
+    rsbgt   r3, r0, #4
+    // JoaoBapt carry & sign bit test
     movs    r3, r3, lsl #31
     ldrmib  r3, [r1], #1
     strmib  r3, [r0], #1
@@ -80,7 +78,6 @@ __aeabi_memcpy4:
 .Lcopy2:
     // Copy byte head
     tst     r0, #1
-    cmpne   r2, #0
     ldrneb  r3, [r1], #1
     strneb  r3, [r0], #1
     subne   r2, r2, #1

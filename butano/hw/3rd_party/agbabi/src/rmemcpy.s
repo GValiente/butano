@@ -28,12 +28,10 @@ __agbabi_rmemcpy:
     bcs     .Lcopy2
 
 .Lcopy4:
-    // Handle <= 2 byte copies byte-by-byte
-    cmp     r2, #2
-    ble     .Lcopy1
-
     // Copy byte and half tail
-    movs    r3, r0, lsl #31
+    cmp     r2, #2
+    // JoaoBapt carry & sign bit test
+    movgts  r3, r0, lsl #31
     ldrmib  r3, [r1, #-1]!
     strmib  r3, [r0, #-1]!
     submi   r2, r2, #1

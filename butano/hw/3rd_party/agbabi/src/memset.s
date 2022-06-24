@@ -32,19 +32,10 @@ __aeabi_memset:
     // Fallthrough
 
 .LskipShifts:
-    // Handle <= 2 byte set byte-by-byte
+    mov     r3, #0
     cmp     r1, #2
-    bgt     .LskipShortHead
-    movs    r1, r1, lsl #31
-    // Set byte and half
-    strmib  r2, [r0], #1
-    strcsb  r2, [r0], #1
-    strcsb  r2, [r0]
-    bx      lr
-
-.LskipShortHead:
     // JoaoBapt carry & sign bit test
-    rsb     r3, r0, #4
+    rsbgt   r3, r0, #4
     movs    r3, r3, lsl #31
     // Set half and byte head
     strmib  r2, [r0], #1

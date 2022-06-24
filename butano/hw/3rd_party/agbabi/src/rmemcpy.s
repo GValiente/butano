@@ -83,6 +83,7 @@ __agbabi_rmemcpy4:
 .Lcopy2:
     // Copy byte tail
     tst     r0, #1
+    cmpne   r2, #0
     ldrneb  r3, [r1, #-1]!
     strneb  r3, [r0, #-1]!
     subne   r2, r2, #1

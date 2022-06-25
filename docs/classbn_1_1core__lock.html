@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Display &raquo; Text module | Butano Docs</title>
+  <title>bn::core_lock class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,61 +47,44 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__display.html">Display</a> &raquo;</span>
-          Text <span class="m-thin">module</span></h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>core_lock <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core__lock_8h.html">&lt;bn_core_lock.h&gt;</a></div>
+        </h1>
+        <p>All Butano subsystems (including interrupts and HDMA) are disabled as long as an object of this class is active.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>Butano text system, based on sprites.</p><p>Currently, it supports 4 bits per pixel (16 colors) fixed width AND variable width characters.</p><p>Text can be printed in one sprite per character or multiple characters per sprite.</p><p>Also, UTF-8 characters are supported.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
+<p>If a Butano function or method is called while a <a href="classbn_1_1core__lock.html" class="m-doc">core_<wbr />lock</a> object is alive, the behavior is undefined.</p>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="bn__sprite__font_8h.html" class="m-doc">bn_sprite_font.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__sprite__text__generator_8h.html" class="m-doc">bn_sprite_text_generator.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__character_8h.html" class="m-doc">bn_utf8_character.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__characters__map_8h.html" class="m-doc">bn_utf8_characters_map.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__utf8__characters__map__ref_8h.html" class="m-doc">bn_utf8_characters_map_ref.h</a></dt>
-            <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ab4c39b56f5737e5e43f4335f9d993126" class="m-doc">core_lock</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Disables all Butano subsystems (including interrupts and HDMA).</dd>
+            <dt id="a13598101e1346267e219f71dfadf694d">
+              <span class="m-doc-wrap-bumper"><a href="#a13598101e1346267e219f71dfadf694d" class="m-doc-self">~core_lock</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Restores all Butano subsystems (including interrupts and HDMA).</dd>
           </dl>
         </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1sprite__font.html" class="m-doc">bn::sprite_font</a>
-            </dt>
-            <dd>Contains the required information to generate text sprites.</dd>
-            <dt>
-              class <a href="classbn_1_1sprite__text__generator.html" class="m-doc">bn::sprite_text_generator</a>
-            </dt>
-            <dd>Generates sprites containing text from a given <a href="classbn_1_1sprite__font.html" class="m-doc">sprite_<wbr />font</a>.</dd>
-            <dt>
-              class <a href="classbn_1_1utf8__character.html" class="m-doc">bn::utf8_character</a>
-            </dt>
-            <dd>Decodes a single UTF-8 character from a string.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1utf8__character.html" class="m-doc">utf8_<wbr />character</a>&gt;&amp; Utf8Characters&gt;</div>
-              class <a href="classbn_1_1utf8__characters__map.html" class="m-doc">bn::utf8_characters_map</a>
-            </dt>
-            <dd>Maps a list of UTF-8 characters to their position in the list.</dd>
-            <dt>
-              class <a href="classbn_1_1utf8__characters__map__ref.html" class="m-doc">bn::utf8_characters_map_ref</a>
-            </dt>
-            <dd>Maps a list of UTF-8 characters to their position in the list.</dd>
-          </dl>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ab4c39b56f5737e5e43f4335f9d993126"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />core_lock::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab4c39b56f5737e5e43f4335f9d993126" class="m-doc-self">core_lock</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Disables all Butano subsystems (including interrupts and HDMA).</p>
+<p>If a Butano function or method is called while a <a href="classbn_1_1core__lock.html" class="m-doc">core_<wbr />lock</a> object is alive, the behavior is undefined.</p>
+          </div></section>
         </section>
       </div>
     </div>

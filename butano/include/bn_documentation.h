@@ -55,7 +55,7 @@
  * There's 8 bits per pixel palettes (which can refer to all colors)
  * and 4 bits per pixel palettes (which can access only to 16 consecutive colors).
  *
- * Butano's color palettes system allows to manage individual 4 bits per pixel palettes for sprites and backgrounds,
+ * Butano color palettes system allows to manage individual 4 bits per pixel palettes for sprites and backgrounds,
  * but it only can be one 8 bits per pixel backgrounds palette and one 8 bits per pixel sprites palette:
  * all 8 bits per pixel backgrounds share the same 8 bits per pixel backgrounds palette
  * and all 8 bits per pixel sprites share the same 8 bits per pixel sprites palette.
@@ -210,7 +210,7 @@
 /**
  * @defgroup text Text
  *
- * Butano's text system, based on sprites.
+ * Butano text system, based on sprites.
  *
  * Currently, it supports 4 bits per pixel (16 colors) fixed width AND variable width characters.
  *
@@ -318,7 +318,7 @@
 /**
  * @defgroup assert Asserts
  *
- * Butano's assert system.
+ * Butano assert system.
  *
  * It can be enabled or disabled by overloading the definition of @a BN_CFG_ASSERT_ENABLED @a .
  *
@@ -328,7 +328,7 @@
 /**
  * @defgroup log Logging
  *
- * Butano's logging system.
+ * Butano logging system.
  *
  * It allows to print information on the console of multiple emulators.
  *
@@ -341,7 +341,7 @@
 /**
  * @defgroup profiler Profiler
  *
- * Butano's profiling system.
+ * Butano profiling system.
  *
  * It allows to measure elapsed time between code blocks defined by the user.
  *
@@ -351,7 +351,7 @@
 /**
  * @defgroup std Standard library
  *
- * Butano's standard library replacement.
+ * Butano standard library replacement.
  *
  * The biggest difference against C++'s standard library is the usage of asserts instead of exceptions
  * and that it avoids the heap when possible.
@@ -566,7 +566,7 @@
  *
  * Actions allow the transformation of properties in time.
  *
- * Some of Butano's classes and namespaces can have actions performed on it.
+ * Some of Butano classes and namespaces can have actions performed on it.
  *
  * For example, you can move a sprite from its current position to another and do it over a span of time.
  */
@@ -574,7 +574,7 @@
 /**
  * @defgroup template_action Action templates
  *
- * Templates used to build Butano's actions.
+ * Templates used to build Butano actions.
  *
  * You can use them to build your own actions too.
  *
@@ -1384,7 +1384,7 @@
  *
  * Since it has lots of C++ advanced features for a free IDE, it is a good fit for Butano projects.
  *
- * This is a small tutorial for setting up Butano's template project in Qt Creator 4.14.
+ * This is a small tutorial for setting up Butano template project in Qt Creator 4.14.
  * Although the guide has been made in Windows, the steps for other operating systems are similar if not the same.
  *
  *
@@ -1422,7 +1422,7 @@
  *
  * @section qt_creator_import Import template project
  *
- * Now that you have the kit setup, import Butano's template project from `File -> New File or Project...`:
+ * Now that you have the kit setup, import Butano template project from `File -> New File or Project...`:
  *
  * @image html qt_creator/qt_4.png
  *
@@ -1886,6 +1886,7 @@
  *
  * @section changelog_10_2_0 10.2.0 (next release)
  *
+ * * bn::core_lock added.
  * * bn::reciprocal_16_lut added.
  * * Memory operations like `memcpy` and `memset` optimized thanks to
  * <a href="https://github.com/felixjones/agbabi">agbabi</a>.

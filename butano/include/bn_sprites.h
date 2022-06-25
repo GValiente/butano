@@ -71,14 +71,14 @@ namespace bn::sprites
     }
 
     /**
-     * @brief Returns the number of hardware sprite handles not used by Butano's sprites manager.
+     * @brief Returns the number of hardware sprite handles not used by Butano sprites manager.
      *
      * Normally you should not need to reserve handles, but it can be useful for messing with HDMA for example.
      */
     [[nodiscard]] int reserved_handles_count();
 
     /**
-     * @brief Sets the number of hardware sprite handles not used by Butano's sprites manager.
+     * @brief Sets the number of hardware sprite handles not used by Butano sprites manager.
      *
      * Normally you should not need to reserve handles, but it can be useful for messing with HDMA for example.
      *

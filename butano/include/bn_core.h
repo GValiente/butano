@@ -62,7 +62,7 @@ namespace bn::core
     void set_skip_frames(int skip_frames);
 
     /**
-     * @brief Updates the screen and all of Butano's subsystems.
+     * @brief Updates the screen and all Butano subsystems.
      */
     void update();
 

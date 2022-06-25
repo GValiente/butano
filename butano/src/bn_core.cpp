@@ -4,6 +4,7 @@
  */
 
 #include "bn_core.h"
+#include "bn_core_lock.h"
 
 #include "bn_timer.h"
 #include "bn_keypad.h"
@@ -405,14 +406,11 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
         }
     }
 
-    // Sleep gpio:
-    gpio_manager::sleep();
+    // Lock core updates:
+    core_lock lock;
 
     // Sleep display:
     display_manager::sleep();
-
-    // Disable irqs:
-    disable(true);
 
     // Enable keypad interrupt with the specified wake up keys:
     keypad_manager::set_interrupt(wake_up_keys);
@@ -423,26 +421,6 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
 
     // Remove keypad interrupt:
     hw::irq::disable(hw::irq::id::KEYPAD);
-
-    // Enable irqs:
-    enable();
-
-    // Update keypad:
-    keypad_manager::update();
-
-    // Wait for vblank:
-    hw::core::wait_for_vblank();
-
-    // Restart CPU usage timer:
-    BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
-    data.cpu_usage_timer.restart();
-    BN_PROFILER_ENGINE_DETAILED_STOP();
-
-    // Wake up display:
-    display_manager::wake_up();
-
-    // Wake up gpio:
-    gpio_manager::wake_up();
 }
 
 void reset()
@@ -490,6 +468,46 @@ const string_view& assert_tag()
 void set_assert_tag(const string_view& assert_tag)
 {
     data.assert_tag = assert_tag;
+}
+
+}
+
+namespace bn
+{
+
+core_lock::core_lock()
+{
+    // Update core before disabling irqs:
+    core::update();
+
+    // Sleep gpio:
+    gpio_manager::sleep();
+
+    // Disable irqs:
+    core::disable(true);
+}
+
+core_lock::~core_lock()
+{
+    // Enable irqs:
+    core::enable();
+
+    // Update keypad:
+    keypad_manager::update();
+
+    // Wait for vblank:
+    hw::core::wait_for_vblank();
+
+    // Restart CPU usage timer:
+    BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
+    core::data.cpu_usage_timer.restart();
+    BN_PROFILER_ENGINE_DETAILED_STOP();
+
+    // Wake up display (maybe display_manager::sleep() has not been called):
+    display_manager::wake_up();
+
+    // Wake up gpio:
+    gpio_manager::wake_up();
 }
 
 }

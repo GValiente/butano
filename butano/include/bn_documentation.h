@@ -1884,7 +1884,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_10_2_0 10.2.0 (next release)
+ * @section changelog_10_2_0 10.2.0
  *
  * * bn::core_lock added.
  * * bn::reciprocal_16_lut added.

@@ -14,6 +14,7 @@
  * @ingroup tile
  */
 
+#include "bn_span.h"
 #include "bn_optional.h"
 
 namespace bn

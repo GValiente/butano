@@ -12,7 +12,7 @@
 
 void* operator new(unsigned bytes)
 {
-    void* ptr = bn::memory_manager::ewram_alloc(bytes);
+    void* ptr = bn::memory_manager::ewram_alloc(int(bytes));
     BN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
 
     return ptr;
@@ -30,7 +30,7 @@ void operator delete(void* ptr, [[maybe_unused]] unsigned bytes) noexcept
 
 void* operator new[](unsigned bytes)
 {
-    void* ptr = bn::memory_manager::ewram_alloc(bytes);
+    void* ptr = bn::memory_manager::ewram_alloc(int(bytes));
     BN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
 
     return ptr;

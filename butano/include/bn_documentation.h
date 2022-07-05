@@ -1260,6 +1260,41 @@
  * @endcode
  *
  *
+ * @subsection import_affine_bg_tiles Affine background tiles
+ *
+ * An image file can contain up to 256 affine background tiles.
+ *
+ * An example of the `*.json` files required for affine backgrounds is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "affine_bg_tiles"
+ * }
+ * @endcode
+ *
+ * The fields for affine backgrounds are the following:
+ * * `"type"`: must be `"affine_bg_tiles"` for affine background tiles.
+ * * `"compression"`: optional field which specifies the compression of the tiles data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: Run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ *
+ * If the conversion process has finished successfully,
+ * a bn::affine_bg_tiles_item should have been generated in the `build` folder.
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_affine_bg_tiles_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create affine background tiles with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * #include "bn_affine_bg_tiles_items_image.h"
+ *
+ * bn::affine_bg_tiles_ptr affine_bg_tiles = bn::affine_bg_tiles_items::image.create_tiles();
+ * @endcode
+ *
+ *
  * @subsection import_bg_palette Background palettes
  *
  * An example of the `*.json` files required for background palettes is the following:
@@ -1882,6 +1917,12 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_10_3_0 10.3.0 (next release)
+ *
+ * Import tool now can generate bn::affine_bg_tiles_item objects without maps nor palettes.
+ * See the @ref import_affine_bg_tiles import guide to learn how to import them.
  *
  *
  * @section changelog_10_2_0 10.2.0

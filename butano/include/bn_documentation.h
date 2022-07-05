@@ -1029,17 +1029,17 @@
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1083,7 +1083,7 @@
  * * `"compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1117,7 +1117,7 @@
  * * `"compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1171,22 +1171,22 @@
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"map_compression"`: optional field which specifies the compression of the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"compression"`: optional field which specifies the compression of the tiles, the colors and the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1201,6 +1201,46 @@
  * #include "bn_regular_bg_items_image.h"
  *
  * bn::regular_bg_ptr regular_bg = bn::regular_bg_items::image.create_bg(0, 0);
+ * @endcode
+ *
+ *
+ * @subsection import_regular_bg_tiles Regular background tiles
+ *
+ * An image file can contain up to 1024 regular background tiles.
+ *
+ * An example of the `*.json` files required for regular background tiles is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "regular_bg_tiles",
+ *     "bpp_mode": "bpp_8"
+ * }
+ * @endcode
+ *
+ * The fields for regular background tiles are the following:
+ * * `"type"`: must be `"regular_bg_tiles"` for regular background tiles.
+ * * `"bpp_mode"`: specifies the bits per pixel of the regular background tiles.
+ *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
+ *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
+ * Butano expects that the image color palette is already valid for this mode.
+ * * `"compression"`: optional field which specifies the compression of the tiles data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: run-length compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ *
+ * If the conversion process has finished successfully,
+ * a bn::regular_bg_tiles_item should have been generated in the `build` folder.
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_regular_bg_tiles_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create regular background tiles with only one line of C++ code:
+ *
+ * @code{.cpp}
+ * #include "bn_regular_bg_tiles_items_image.h"
+ *
+ * bn::regular_bg_tiles_ptr regular_bg_tiles = bn::regular_bg_tiles_items::image.create_tiles();
  * @endcode
  *
  *
@@ -1227,22 +1267,22 @@
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"map_compression"`: optional field which specifies the compression of the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"compression"`: optional field which specifies the compression of the tiles, the colors and the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1264,7 +1304,7 @@
  *
  * An image file can contain up to 256 affine background tiles.
  *
- * An example of the `*.json` files required for affine backgrounds is the following:
+ * An example of the `*.json` files required for affine background tiles is the following:
  *
  * @code{.json}
  * {
@@ -1272,12 +1312,12 @@
  * }
  * @endcode
  *
- * The fields for affine backgrounds are the following:
+ * The fields for affine background tiles are the following:
  * * `"type"`: must be `"affine_bg_tiles"` for affine background tiles.
  * * `"compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1315,7 +1355,7 @@
  * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
- *   * `"run_length"`: Run-length compressed data.
+ *   * `"run_length"`: run-length compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1921,8 +1961,8 @@
  *
  * @section changelog_10_3_0 10.3.0 (next release)
  *
- * Import tool now can generate bn::affine_bg_tiles_item objects without maps nor palettes.
- * See the @ref import_affine_bg_tiles import guide to learn how to import them.
+ * Import tool now can generate regular and affine background tiles without maps nor palettes.
+ * See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides to learn how to import them.
  *
  *
  * @section changelog_10_2_0 10.2.0

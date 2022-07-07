@@ -1961,8 +1961,9 @@
  *
  * @section changelog_10_3_0 10.3.0 (next release)
  *
- * Import tool now can generate regular and affine background tiles without maps nor palettes.
+ * * Import tool now can generate regular and affine background tiles without maps nor palettes.
  * See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides to learn how to import them.
+ * * BG blocks manager ROM usage reduced.
  *
  *
  * @section changelog_10_2_0 10.2.0

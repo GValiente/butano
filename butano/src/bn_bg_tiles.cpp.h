@@ -30,6 +30,16 @@ int available_blocks_count()
     return bg_blocks_manager::available_tile_blocks_count();
 }
 
+bool allow_offset()
+{
+    return bg_blocks_manager::allow_tiles_offset();
+}
+
+void set_allow_offset(bool allow_offset)
+{
+    bg_blocks_manager::set_allow_tiles_offset(allow_offset);
+}
+
 #if BN_CFG_LOG_ENABLED
     void log_status()
     {

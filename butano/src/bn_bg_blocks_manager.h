@@ -47,6 +47,10 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] int available_map_blocks_count();
 
+    [[nodiscard]] bool allow_tiles_offset();
+
+    void set_allow_tiles_offset(bool allow_tiles_offset);
+
     #if BN_CFG_LOG_ENABLED
         void log_status();
     #endif

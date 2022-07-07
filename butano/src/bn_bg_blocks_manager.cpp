@@ -127,8 +127,9 @@ namespace
 
     enum class create_type : uint8_t
     {
-        REGULAR_TILES,
-        AFFINE_TILES,
+        REGULAR_TILES_WITH_OFFSET,
+        AFFINE_TILES_WITH_OFFSET,
+        TILES_WITHOUT_OFFSET,
         MAP
     };
 
@@ -350,6 +351,23 @@ namespace
     };
 
 
+    class static_data
+    {
+
+    public:
+        items_list items;
+        unordered_map<const void*, int, max_items * 2> items_map;
+        vector<uint16_t, max_items> to_commit_items;
+        int free_blocks_count = 0;
+        int to_remove_blocks_count = 0;
+        bool allow_tiles_offset = true;
+        bool check_commit = false;
+        bool delay_commit = false;
+    };
+
+    BN_DATA_EWRAM static_data data;
+
+
     struct create_data
     {
         const uint16_t* data_ptr;
@@ -368,15 +386,21 @@ namespace
                                               compression_type compression)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
+            create_type create_type = data.allow_tiles_offset ?
+                        create_type::REGULAR_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
+
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
-                        create_type::REGULAR_TILES, bpp, compression, false };
+                        create_type, bpp, compression, false };
         }
 
         static create_data from_affine_tiles(const uint16_t* data_ptr, int half_words, compression_type compression)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
+            create_type create_type = data.allow_tiles_offset ?
+                        create_type::AFFINE_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
+
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
-                        create_type::AFFINE_TILES, bpp_mode::BPP_8, compression, true };
+                        create_type, bpp_mode::BPP_8, compression, true };
         }
 
         static create_data from_regular_map(
@@ -414,44 +438,39 @@ namespace
             {
                 int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
                 int extra_blocks_count = start_block % alignment_blocks_count;
-                int max_blocks_count;
 
-                if(create_type == create_type::REGULAR_TILES)
+                if(create_type == create_type::TILES_WITHOUT_OFFSET)
                 {
-                    max_blocks_count = bpp == bpp_mode::BPP_4 ?
-                                            hw::bg_blocks::max_bpp_4_regular_tiles_blocks_count() :
-                                            hw::bg_blocks::max_bpp_8_regular_tiles_blocks_count();
+                    if(extra_blocks_count)
+                    {
+                        result = alignment_blocks_count - extra_blocks_count;
+                    }
                 }
                 else
                 {
-                    max_blocks_count = hw::bg_blocks::max_affine_tiles_blocks_count();
-                }
+                    int max_blocks_count;
 
-                if(blocks_count + extra_blocks_count > max_blocks_count)
-                {
-                    result = alignment_blocks_count - extra_blocks_count;
+                    if(create_type == create_type::REGULAR_TILES_WITH_OFFSET)
+                    {
+                        max_blocks_count = bpp == bpp_mode::BPP_4 ?
+                                                hw::bg_blocks::max_bpp_4_regular_tiles_blocks_count() :
+                                                hw::bg_blocks::max_bpp_8_regular_tiles_blocks_count();
+                    }
+                    else
+                    {
+                        max_blocks_count = hw::bg_blocks::max_affine_tiles_blocks_count();
+                    }
+
+                    if(blocks_count + extra_blocks_count > max_blocks_count)
+                    {
+                        result = alignment_blocks_count - extra_blocks_count;
+                    }
                 }
             }
 
             return result;
         }
     };
-
-
-    class static_data
-    {
-
-    public:
-        items_list items;
-        unordered_map<const void*, int, max_items * 2> items_map;
-        vector<uint16_t, max_items> to_commit_items;
-        int free_blocks_count = 0;
-        int to_remove_blocks_count = 0;
-        bool check_commit = false;
-        bool delay_commit = false;
-    };
-
-    BN_DATA_EWRAM static_data data;
 
 
     #if BN_CFG_BG_BLOCKS_LOG_ENABLED
@@ -520,6 +539,7 @@ namespace
 
             BN_LOG("free_blocks_count: ", data.free_blocks_count);
             BN_LOG("to_remove_blocks_count: ", data.to_remove_blocks_count);
+            BN_LOG("allow_tiles_offset: ", (data.allow_tiles_offset ? "true" : "false"));
             BN_LOG("check_commit: ", (data.check_commit ? "true" : "false"));
             BN_LOG("delay_commit: ", (data.delay_commit ? "true" : "false"));
         }
@@ -1116,6 +1136,16 @@ int used_map_blocks_count()
 int available_map_blocks_count()
 {
     return data.free_blocks_count;
+}
+
+bool allow_tiles_offset()
+{
+    return data.allow_tiles_offset;
+}
+
+void set_allow_tiles_offset(bool allow_tiles_offset)
+{
+    data.allow_tiles_offset = allow_tiles_offset;
 }
 
 #if BN_CFG_LOG_ENABLED

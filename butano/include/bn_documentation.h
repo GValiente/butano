@@ -1966,6 +1966,7 @@
  * See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides to learn how to import them.
  * * Audio update can be interrupted.
  * * BG blocks manager ROM usage reduced.
+ * * Missing license files added.
  *
  *
  * @section changelog_10_2_0 10.2.0

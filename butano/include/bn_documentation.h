@@ -1968,6 +1968,7 @@
  * * SRAM reads and writes optimized.
  * * BG blocks manager ROM usage reduced.
  * * <a href="https://github.com/felixjones/agbabi">agbabi</a> memory routines updated.
+ * * Missing `__FILE_NAME__` macro check added.
  * * Missing license files added.
  *
  *

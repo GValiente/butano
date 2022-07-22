@@ -86,6 +86,10 @@
     #include "bn_sstream.h"
     #include "bn_istring_base.h"
 
+    #ifndef __FILE_NAME__
+        #error "__FILE_NAME__ is not defined. Please update devkitARM."
+    #endif
+
     #ifndef BN_ASSERT
 
         #define BN_ASSERT(condition, ...) \

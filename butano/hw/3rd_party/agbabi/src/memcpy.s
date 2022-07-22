@@ -102,9 +102,9 @@ __agbabi_memcpy2:
     bxeq    lr
 
     // Copy byte tail
-    adds r2, r2, #2
-    ldrneb r3, [r1]
-    strneb r3, [r0]
+    adds    r2, r2, #2
+    ldrneb  r3, [r1]
+    strneb  r3, [r0]
     bx      lr
 
     .global __agbabi_memcpy1

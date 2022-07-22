@@ -88,14 +88,13 @@ __agbabi_lwordset4:
 
     // Copy word tail
     adds    r1, r1, #4
-    strle   r2, [r0], #4
+    strge   r2, [r0], #4
     bxeq    lr
 
 .Lset_tail3:
     joaobapt_test r1
-    strmib  r2, [r0], #1
-    strcsb  r2, [r0], #1
-    strcsb  r2, [r0]
+    strcsh  r2, [r0], #2
+    strmib  r2, [r0]
     bx      lr
 
     .section .iwram.memset, "ax", %progbits

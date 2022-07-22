@@ -2,7 +2,7 @@
 ===============================================================================
 
  Support:
-    __agbabi_rmemcpy, __agbabi_rmemcpy2, __agbabi_rmemcpy4
+    __agbabi_rmemcpy, __agbabi_rmemcpy1
 
  Copyright (C) 2021-2022 agbabi contributors
  For conditions of distribution and use, see copyright notice in LICENSE.md
@@ -10,111 +10,97 @@
 ===============================================================================
 */
 
+#include "macros.inc"
+
     .arm
     .align 2
 
     .section .iwram.__agbabi_rmemcpy, "ax", %progbits
     .global __agbabi_rmemcpy
 __agbabi_rmemcpy:
-    // Adjust pointers
-    add     r0, r0, r2
-    add     r1, r1, r2
+    // >6-bytes is roughly the threshold when byte-by-byte copy is slower
+    cmp     r2, #6
+    ble     __agbabi_rmemcpy1
 
-    // Check pointer alignment
-    eor     r3, r1, r0
-    // JoaoBapt carry & sign bit test
-    movs    r3, r3, lsl #31
-    bmi     .Lcopy1
-    bcs     .Lcopy2
+    align_switch r0, r1, r3, __agbabi_rmemcpy1, .Lcopy_halves
 
-.Lcopy4:
-    // Handle <= 2 byte copies byte-by-byte
-    cmp     r2, #2
-    ble     .Lcopy1
+    // Check if end needs word aligning
+    add     r3, r0, r2
+    joaobapt_test r3
 
-    // Copy byte and half tail
-    movs    r3, r0, lsl #31
-    ldrmib  r3, [r1, #-1]!
-    strmib  r3, [r0, #-1]!
+    // Copy byte tail to align
     submi   r2, r2, #1
-    ldrcsh  r3, [r1, #-2]!
-    strcsh  r3, [r0, #-2]!
+    ldrmib  r3, [r1, r2]
+    strmib  r3, [r0, r2]
+    // r2 is now half aligned
+
+    // Copy half tail to align
     subcs   r2, r2, #2
+    ldrcsh  r3, [r1, r2]
+    strcsh  r3, [r0, r2]
+    // r2 is now word aligned
 
-    b       .LskipAdjust4
+    cmp     r2, #32
+    blt     .Lcopy_words
 
-    .global __agbabi_rmemcpy4
-__agbabi_rmemcpy4:
-    // Adjust pointers
+    // Word aligned, 32-byte copy
+    push    {r0-r1, r4-r10, r12} // r12 for alignment
     add     r0, r0, r2
     add     r1, r1, r2
+.Lloop_32:
+    subs    r2, r2, #32
+    ldmgedb r1!, {r3-r10}
+    stmgedb r0!, {r3-r10}
+    bgt     .Lloop_32
+    pop     {r0-r1, r4-r10, r12} // r12 for alignment
+    bxeq    lr
 
-.LskipAdjust4:
-    // Copy 8 words
-    movs    r12, r2, lsr #5
-    beq     .Lskip32
-    lsl     r3, r12, #5
-    sub     r2, r2, r3
-    push    {r4-r10}
-.LcopyWords8:
-    ldmdb   r1!, {r3-r10}
-    stmdb   r0!, {r3-r10}
-    subs    r12, r12, #1
-    bne     .LcopyWords8
-    pop     {r4-r10}
-.Lskip32:
+    // < 32 bytes remaining to be copied
+    add     r2, r2, #32
 
-    // Copy words
-    movs    r12, r2, lsr #2
-.LcopyWords:
-    subs    r12, r12, #1
-    ldrhs   r3, [r1, #-4]!
-    strhs   r3, [r0, #-4]!
-    bhs     .LcopyWords
+.Lcopy_words:
+    subs    r2, r2, #4
+    ldrge   r3, [r1, r2]
+    strge   r3, [r0, r2]
+    bgt     .Lcopy_words
+    bxeq    lr
 
-    // Copy half and byte head
-    // JoaoBapt carry & sign bit test
-    movs    r3, r2, lsl #31
-    ldrcsh  r3, [r1, #-2]!
-    strcsh  r3, [r0, #-2]!
-    ldrmib  r3, [r1, #-1]
-    strmib  r3, [r0, #-1]
+    // Copy byte & half head
+    joaobapt_test_into r3, r2
+    // Copy half
+    addcs   r2, r2, #2
+    ldrcsh  r3, [r1, r2]
+    strcsh  r3, [r0, r2]
+    // Copy byte
+    ldrmib  r3, [r1]
+    strmib  r3, [r0]
     bx      lr
 
-.Lcopy2:
-    // Copy byte tail
-    tst     r0, #1
-    cmpne   r2, #0
-    ldrneb  r3, [r1, #-1]!
-    strneb  r3, [r0, #-1]!
+.Lcopy_halves:
+    // Copy byte tail to align
+    add     r3, r0, r2
+    tst     r3, #1
     subne   r2, r2, #1
+    ldrneb  r3, [r1, r2]
+    strneb  r3, [r0, r2]
+    // r2 is now half aligned
 
-    b       .LskipAdjust2
-
-    .global __agbabi_rmemcpy2
-__agbabi_rmemcpy2:
-    // Adjust pointers
-    add     r0, r0, r2
-    add     r1, r1, r2
-
-.LskipAdjust2:
-    // Copy halves
-    movs    r12, r2, lsr #1
-.LcopyHalves:
-    subs    r12, r12, #1
-    ldrhsh  r3, [r1, #-2]!
-    strhsh  r3, [r0, #-2]!
-    bhs     .LcopyHalves
+.Lloop_2:
+    subs    r2, r2, #2
+    ldrgeh  r3, [r1, r2]
+    strgeh  r3, [r0, r2]
+    bgt     .Lloop_2
+    bxeq    lr
 
     // Copy byte head
-    tst     r2, #1
-    ldrneb  r3, [r1, #-1]
-    strneb  r3, [r0, #-1]
+    ldrb    r3, [r1]
+    strb    r3, [r0]
     bx      lr
 
-.Lcopy1:
+    .global __agbabi_rmemcpy1
+__agbabi_rmemcpy1:
     subs    r2, r2, #1
-    ldrhsb  r3, [r1, #-1]!
-    strhsb  r3, [r0, #-1]!
-    bhs     .Lcopy1
+    ldrgeb  r3, [r1, r2]
+    strgeb  r3, [r0, r2]
+    bgt     __agbabi_rmemcpy1
     bx      lr

@@ -29,18 +29,18 @@ __aeabi_memmove8:
     .global __aeabi_memmove4
 __aeabi_memmove4:
     cmp     r0, r1
-    .extern __agbabi_rmemcpy4
-    bgt     __agbabi_rmemcpy4
+    .extern __agbabi_rmemcpy
+    bgt     __agbabi_rmemcpy
     .extern __aeabi_memcpy4
     b       __aeabi_memcpy4
 
-    .global __agbabi_memmove2
-__agbabi_memmove2:
+    .global __agbabi_memmove1
+__agbabi_memmove1:
     cmp     r0, r1
-    .extern __agbabi_rmemcpy2
-    bgt     __agbabi_rmemcpy2
-    .extern __agbabi_memcpy2
-    b       __agbabi_memcpy2
+    .extern __agbabi_rmemcpy1
+    bgt     __agbabi_rmemcpy1
+    .extern __agbabi_memcpy1
+    b       __agbabi_memcpy1
 
     .section .iwram.memmove, "ax", %progbits
     .global memmove

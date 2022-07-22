@@ -26,12 +26,28 @@ extern "C" {
 /// \param n Number of bytes to copy
 void __agbabi_memcpy2(void *__restrict__ dest, const void *__restrict__ src, size_t n);
 
+/// Copies n bytes from src to dest (forward)
+/// This is a slow, unaligned, byte-by-byte copy: ideal for SRAM
+/// \param dest Destination address
+/// \param src Source address
+/// \param n Number of bytes to copy
+void __agbabi_memcpy1(void *__restrict__ dest, const void *__restrict__ src, size_t n);
+
 /// Fills dest with n bytes of c
 /// Assumes dest is 4-byte aligned
+/// Trailing copy uses the low byte of c
 /// \param dest Destination address
 /// \param n Number of bytes to set
 /// \param c Value to set
 void __agbabi_wordset4(void *dest, size_t n, int c);
+
+/// Fills dest with n bytes of c
+/// Assumes dest is 4-byte aligned
+/// Trailing copy uses the low word of c, and the low byte of c
+/// \param dest Destination address
+/// \param n Number of bytes to set
+/// \param c Value to set
+void __agbabi_lwordset4(void *dest, size_t n, long long c);
 
 /// Copies n bytes from src to dest (backwards)
 /// \param dest Destination address
@@ -40,18 +56,11 @@ void __agbabi_wordset4(void *dest, size_t n, int c);
 void __agbabi_rmemcpy(void *__restrict__ dest, const void *__restrict__ src, size_t n);
 
 /// Copies n bytes from src to dest (backwards)
-/// Assumes dest and src are 2-byte aligned
+/// This is a slow, unaligned, byte-by-byte copy: ideal for SRAM
 /// \param dest Destination address
 /// \param src Source address
 /// \param n Number of bytes to copy
-void __agbabi_rmemcpy2(void *__restrict__ dest, const void *__restrict__ src, size_t n);
-
-/// Copies n bytes from src to dest (backwards)
-/// Assumes dest and src are 4-byte aligned
-/// \param dest Destination address
-/// \param src Source address
-/// \param n Number of bytes to copy
-void __agbabi_rmemcpy4(void *__restrict__ dest, const void *__restrict__ src, size_t n);
+void __agbabi_rmemcpy1(void *__restrict__ dest, const void *__restrict__ src, size_t n);
 
 /// Unsigned 64-bit / 32-bit -> 64-bit division
 /// \param numerator
@@ -207,6 +216,20 @@ int __agbabi_sqrt(unsigned int x);
 /// \param y coord around circle
 /// \return 16-bit binary angle measurement
 int __agbabi_atan2(int x, int y);
+
+/// Copies n bytes from src to dest (forward) using FIQ mode
+/// Assumes dest and src are 4-byte aligned
+/// \param dest Destination address
+/// \param src Source address
+/// \param n Number of bytes to copy
+void __agbabi_fiq_memcpy4(void *__restrict__ dest, const void *__restrict__ src, size_t n);
+
+/// Copies n bytes in multiples of 16 bytes from src to dest (forward) using FIQ mode
+/// Assumes dest and src are 4-byte aligned
+/// \param dest Destination address
+/// \param src Source address
+/// \param n Number of bytes to copy, must be a multiple of 16
+void __agbabi_fiq_memcpy4x4(void *__restrict__ dest, const void *__restrict__ src, size_t n);
 
 #if defined __has_attribute
 #if __has_attribute(__vector_size__)

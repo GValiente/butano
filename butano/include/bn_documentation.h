@@ -1966,6 +1966,7 @@
  * See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides to learn how to import them.
  * * Audio update can be interrupted.
  * * BG blocks manager ROM usage reduced.
+ * * <a href="https://github.com/felixjones/agbabi">agbabi</a> memory routines updated.
  * * Missing license files added.
  *
  *

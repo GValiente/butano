@@ -7,12 +7,11 @@
 #define BN_HW_SRAM_H
 
 #include "bn_hw_tonc.h"
+#include "../3rd_party/agbabi/include/agbabi.h"
 
 namespace bn::hw::sram
 {
     void init();
-
-    BN_CODE_EWRAM void _copy(const uint8_t* source, int size, uint8_t* destination);
 
     BN_CODE_EWRAM void _fill(uint8_t value, int size, uint8_t* destination);
 
@@ -20,14 +19,14 @@ namespace bn::hw::sram
     {
         auto source_ptr = reinterpret_cast<const uint8_t*>(source);
         auto destination_ptr = reinterpret_cast<uint8_t*>(MEM_SRAM) + offset;
-        _copy(source_ptr, size, destination_ptr);
+        __agbabi_memcpy1(destination_ptr, source_ptr, size);
     }
 
     inline void read(void* destination, int size, int offset)
     {
         auto source_ptr = reinterpret_cast<const uint8_t*>(MEM_SRAM) + offset;
         auto destination_ptr = reinterpret_cast<uint8_t*>(destination);
-        _copy(source_ptr, size, destination_ptr);
+        __agbabi_memcpy1(destination_ptr, source_ptr, size);
     }
 
     inline void set_bytes(uint8_t value, int size, int offset)

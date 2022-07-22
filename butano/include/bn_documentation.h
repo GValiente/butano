@@ -1080,6 +1080,9 @@
  * * `"type"`: must be `"sprite_tiles"` for sprite tiles.
  * * `"height"`: height of each sprite tiles set in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite tiles sets.
+ * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite tiles:
+ *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
+ *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
  * * `"compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1219,7 +1222,7 @@
  *
  * The fields for regular background tiles are the following:
  * * `"type"`: must be `"regular_bg_tiles"` for regular background tiles.
- * * `"bpp_mode"`: specifies the bits per pixel of the regular background tiles.
+ * * `"bpp_mode"`: specifies the bits per pixel of the regular background tiles:
  *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
  *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
  * Butano expects that the image color palette is already valid for this mode.
@@ -1964,6 +1967,8 @@
  * * bn::bg_tiles::allow_offset and bn::bg_tiles::set_allow_offset added.
  * * Import tool now can generate regular and affine background tiles without maps nor palettes.
  * See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides to learn how to import them.
+ * * BPP mode can be specified when importing sprite tiles.
+ * See the @ref import_sprite_tiles import guide to learn how to specify it.
  * * Audio updates can be interrupted.
  * * SRAM reads and writes optimized.
  * * BG blocks manager ROM usage reduced.

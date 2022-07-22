@@ -273,7 +273,6 @@ class SpriteTilesItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-        self.__colors_count = bmp.colors_count
 
         try:
             height = int(info['height'])
@@ -285,6 +284,18 @@ class SpriteTilesItem:
 
         self.__graphics = int(bmp.height / height)
         self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
+
+        try:
+            bpp_mode = str(info['bpp_mode'])
+
+            if bpp_mode == 'bpp_8':
+                self.__bpp_8 = True
+            elif bpp_mode == 'bpp_4':
+                self.__bpp_8 = False
+            else:
+                raise ValueError('Invalid BPP mode: ' + bpp_mode)
+        except KeyError:
+            self.__bpp_8 = bmp.colors_count > 16
 
         try:
             self.__compression = info['compression']
@@ -340,11 +351,11 @@ class SpriteTilesItem:
 
         remove_file(grit_file_path)
 
-        if self.__colors_count == 16:
-            bpp_mode_label = 'bpp_mode::BPP_4'
-        else:
+        if self.__bpp_8:
             bpp_mode_label = 'bpp_mode::BPP_8'
             tiles_count *= 2
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_4'
 
         grit_data = re.sub(r'Tiles\[([0-9]+)]', 'Tiles[' + str(tiles_count) + ']', grit_data)
 
@@ -377,10 +388,10 @@ class SpriteTilesItem:
     def __execute_command(self, compression):
         command = ['grit', self.__file_path, '-gt', '-p!']
 
-        if self.__colors_count == 16:
-            command.append('-gB4')
-        else:
+        if self.__bpp_8:
             command.append('-gB8')
+        else:
+            command.append('-gB4')
 
         if compression == 'lz77':
             command.append('-gzl')

@@ -1962,7 +1962,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_10_3_0 10.3.0 (next release)
+ * @section changelog_10_3_0 10.3.0
  *
  * * bn::bg_tiles::allow_offset and bn::bg_tiles::set_allow_offset added.
  * * Import tool now can generate regular and affine background tiles without maps nor palettes.

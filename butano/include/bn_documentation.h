@@ -1962,7 +1962,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_10_4_0 10.4.0 (next release)
+ * @section changelog_10_4_0 10.4.0
  *
  * * Avoid data decompression in V-Blank if possible.
  * * Audio updates can no longer be interrupted.

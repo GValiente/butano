@@ -1962,6 +1962,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_10_4_0 10.4.0 (next release)
+ *
+ * Avoid data decompression in V-Blank if possible.
+ *
+ *
  * @section changelog_10_3_0 10.3.0
  *
  * * bn::bg_tiles::allow_offset and bn::bg_tiles::set_allow_offset added.

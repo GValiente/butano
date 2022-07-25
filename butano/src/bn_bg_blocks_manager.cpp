@@ -924,7 +924,8 @@ namespace
         int blocks_count = create_data.blocks_count;
         int to_remove_blocks_count = data.to_remove_blocks_count;
 
-        if(blocks_count <= to_remove_blocks_count)
+        if(blocks_count <= to_remove_blocks_count &&
+                (data.delay_commit || create_data.compression == compression_type::NONE))
         {
             for(auto iterator = begin; iterator != end; ++iterator)
             {

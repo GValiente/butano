@@ -554,7 +554,8 @@ namespace
     {
         int to_remove_tiles_count = data.to_remove_tiles_count;
 
-        if(tiles_count <= to_remove_tiles_count)
+        if(tiles_count <= to_remove_tiles_count &&
+                (data.delay_commit || compression == compression_type::NONE))
         {
             auto to_remove_items_end = data.to_remove_items.end();
             auto to_remove_items_it = lower_bound(

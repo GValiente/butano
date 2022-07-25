@@ -159,8 +159,6 @@ namespace
         else
         {
             hdma_manager::commit();
-
-            hw::irq::unlock_current();
         }
     }
 
@@ -268,8 +266,6 @@ namespace
         BN_PROFILER_ENGINE_DETAILED_START("eng_bg_blocks_commit");
         bg_blocks_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        hw::irq::unlock_current();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
         result.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();

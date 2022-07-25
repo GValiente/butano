@@ -35,13 +35,6 @@ namespace bn::hw::irq
     void enable(id irq_id);
 
     void disable(id irq_id);
-
-    inline void unlock_current()
-    {
-        volatile uint16_t& ime_register = *reinterpret_cast<uint16_t*>(0x04000208);
-
-        ime_register = 1;
-    }
 }
 
 #endif

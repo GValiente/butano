@@ -111,6 +111,7 @@ namespace
     {
 
     public:
+        vblank_callback_type vblank_callback = nullptr;
         timer cpu_usage_timer;
         ticks last_ticks;
         bn::system_font system_font;
@@ -265,6 +266,13 @@ namespace
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_bg_blocks_commit");
         bg_blocks_manager::commit();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_vblank_callback");
+        if(vblank_callback_type vblank_callback = data.vblank_callback)
+        {
+            vblank_callback();
+        }
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
@@ -443,6 +451,16 @@ fixed last_cpu_usage()
 fixed last_vblank_usage()
 {
     return fixed(data.last_ticks.vblank_usage_ticks) / (timers::ticks_per_vblank() * data.last_update_frames);
+}
+
+vblank_callback_type vblank_callback()
+{
+    return data.vblank_callback;
+}
+
+void set_vblank_callback(vblank_callback_type vblank_callback)
+{
+    data.vblank_callback = vblank_callback;
 }
 
 bool slow_game_pak()

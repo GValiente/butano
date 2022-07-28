@@ -16,6 +16,7 @@
 #include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_string_view.h"
+#include "bn_vblank_callback_type.h"
 
 namespace bn
 {
@@ -104,6 +105,16 @@ namespace bn::core
      * before all of GBA display components being updated.
      */
     [[nodiscard]] fixed last_vblank_usage();
+
+    /**
+     * @brief Returns the user function called in V-Blank.
+     */
+    [[nodiscard]] vblank_callback_type vblank_callback();
+
+    /**
+     * @brief Sets the user function called in V-Blank.
+     */
+    void set_vblank_callback(vblank_callback_type vblank_callback);
 
     /**
      * @brief Indicates if a slow game pak like the SuperCard SD has been detected or not.

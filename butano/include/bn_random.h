@@ -39,14 +39,7 @@ public:
      */
     [[nodiscard]] constexpr unsigned get()
     {
-        _x ^= _x << 16;
-        _x ^= _x >> 5;
-        _x ^= _x << 1;
-
-        unsigned t = _x;
-        _x = _y;
-        _y = _z;
-        _z = t ^ _x ^ _y;
+        update();
         return _z;
     }
 
@@ -128,6 +121,21 @@ public:
 
         unsigned result = get() % unsigned(range_data);
         return minimum + fixed::from_data(int(result));
+    }
+
+    /**
+     * @brief Updates the value of the internal seed.
+     */
+    constexpr void update()
+    {
+        _x ^= _x << 16;
+        _x ^= _x >> 5;
+        _x ^= _x << 1;
+
+        unsigned t = _x;
+        _x = _y;
+        _y = _z;
+        _z = t ^ _x ^ _y;
     }
 
 private:

@@ -1964,7 +1964,8 @@
  *
  * @section changelog_10_5_0 10.5.0 (next release)
  *
- * bn::core::vblank_callback and bn::core::set_vblank_callback added.
+ * * bn::core::vblank_callback and bn::core::set_vblank_callback added.
+ * * bn::random::update added.
  *
  *
  * @section changelog_10_4_0 10.4.0

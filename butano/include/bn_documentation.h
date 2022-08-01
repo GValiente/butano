@@ -1966,6 +1966,7 @@
  *
  * * bn::core::vblank_callback and bn::core::set_vblank_callback added.
  * * bn::random::update added.
+ * * H-Blank effects input data validation fixed.
  *
  *
  * @section changelog_10_4_0 10.4.0

@@ -1190,7 +1190,7 @@ void disable()
 
 int create(const void* values_ptr, [[maybe_unused]] int values_count, intptr_t target_id, handler_type handler)
 {
-    BN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BN_ASSERT(values_count >= display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
     return _create(values_ptr, target_id, handler, false);
 }
@@ -1198,7 +1198,7 @@ int create(const void* values_ptr, [[maybe_unused]] int values_count, intptr_t t
 int create_optional(const void* values_ptr, [[maybe_unused]] int values_count, intptr_t target_id,
                     handler_type handler)
 {
-    BN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BN_ASSERT(values_count >= display::height(), "Invalid values count: ", values_count, " - ", display::height());
 
     return _create(values_ptr, target_id, handler, true);
 }
@@ -1249,7 +1249,7 @@ const void* values_ref(int id)
 
 void set_values_ref(int id, const void* values_ptr, [[maybe_unused]] int values_count)
 {
-    BN_ASSERT(values_count == display::height(), "Invalid values count: ", values_count, " - ", display::height());
+    BN_ASSERT(values_count >= display::height(), "Invalid values count: ", values_count, " - ", display::height());
     BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
 
     item_type& item = external_data.items[id];

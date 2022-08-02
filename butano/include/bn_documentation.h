@@ -1962,6 +1962,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_10_6_0 10.6.0 (next release)
+ *
+ * Keypad logging EWRAM and maximum CPU usage reduced.
+ *
+ *
  * @section changelog_10_5_0 10.5.0
  *
  * * bn::core::vblank_callback and bn::core::set_vblank_callback added.

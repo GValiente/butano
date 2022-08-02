@@ -50,4 +50,6 @@
     #define BN_CFG_LOG_MAX_SIZE 0x100
 #endif
 
+static_assert(BN_CFG_LOG_MAX_SIZE >= 16);
+
 #endif

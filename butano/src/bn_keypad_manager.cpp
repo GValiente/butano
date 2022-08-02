@@ -55,7 +55,7 @@ namespace
             }
 
         private:
-            string<BN_CFG_LOG_MAX_SIZE - 8> _buffer;
+            string<min(BN_CFG_LOG_MAX_SIZE - 8, 128)> _buffer;
         };
     #endif
 

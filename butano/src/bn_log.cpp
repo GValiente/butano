@@ -10,8 +10,6 @@
 
     namespace bn
     {
-        static_assert(BN_CFG_LOG_MAX_SIZE >= 16);
-
         void log(const istring_base& message)
         {
             hw::log(message);

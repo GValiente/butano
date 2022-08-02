@@ -13,6 +13,7 @@
  * @ingroup text
  */
 
+#include "bn_functional.h"
 #include "bn_power_of_two.h"
 #include "bn_utf8_character.h"
 

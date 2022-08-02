@@ -11,8 +11,8 @@
     #if BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_NOCASHGBA
         #include "../include/bn_hw_tonc.h"
     #elif BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_MGBA
-        #include <cstring>
         #include "bn_algorithm.h"
+        #include "../include/bn_hw_memory.h"
     #else
     #endif
 
@@ -30,15 +30,11 @@
                 const char* message_data = message.data();
                 int characters_left = message.size();
 
-                while(characters_left > 0)
+                while(characters_left)
                 {
                     int characters_to_write = bn::min(characters_left, max_characters_per_line);
                     auto debug_string_register = reinterpret_cast<char*>(0x4FFF600);
-
-                    for(int index = 0; index < characters_to_write; ++index)
-                    {
-                        debug_string_register[index] = message_data[index];
-                    }
+                    memory::copy_bytes(message_data, characters_to_write, debug_string_register);
 
                     volatile uint16_t& debug_flags_register = *reinterpret_cast<uint16_t*>(0x4FFF700);
                     debug_flags_register = 2 | 0x100;

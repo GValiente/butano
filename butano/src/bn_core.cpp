@@ -119,7 +119,7 @@ namespace
         int skip_frames = 0;
         int last_update_frames = 1;
         bool slow_game_pak = false;
-        bool restart_cpu_usage_timer = false;
+        volatile bool restart_cpu_usage_timer = false;
     };
 
     BN_DATA_EWRAM static_data data;
@@ -130,29 +130,10 @@ namespace
         {
             data.cpu_usage_timer.restart();
 
-            hdma_manager::update();
-            audio_manager::update();
-
             BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
 
-            BN_PROFILER_ENGINE_DETAILED_START("eng_display_commit");
-            display_manager::commit();
-            BN_PROFILER_ENGINE_DETAILED_STOP();
-
-            BN_PROFILER_ENGINE_DETAILED_START("eng_sprites_commit");
-            sprites_manager::commit();
-            BN_PROFILER_ENGINE_DETAILED_STOP();
-
-            BN_PROFILER_ENGINE_DETAILED_START("eng_bgs_commit");
-            bgs_manager::commit();
-            BN_PROFILER_ENGINE_DETAILED_STOP();
-
-            BN_PROFILER_ENGINE_DETAILED_START("eng_palettes_commit");
-            palettes_manager::commit();
-            BN_PROFILER_ENGINE_DETAILED_STOP();
-
-            BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_commit");
-            hdma_manager::commit();
+            BN_PROFILER_ENGINE_DETAILED_START("eng_audio_update");
+            audio_manager::update();
             BN_PROFILER_ENGINE_DETAILED_STOP();
 
             data.restart_cpu_usage_timer = false;
@@ -251,6 +232,28 @@ namespace
         data.restart_cpu_usage_timer = true;
 
         hw::core::wait_for_vblank();
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_display_commit");
+        display_manager::commit();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_sprites_commit");
+        sprites_manager::commit();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_bgs_commit");
+        bgs_manager::commit();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_palettes_commit");
+        palettes_manager::commit();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_update");
+        hdma_manager::update();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        hdma_manager::commit();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_hblank_fx_commit");
         hblank_effects_manager::commit();

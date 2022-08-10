@@ -1964,6 +1964,7 @@
  *
  * @section changelog_10_6_0 10.6.0 (next release)
  *
+ * * bn::sprite_animate_action::set_wait_updates and bn::sprite_cached_animate_action::set_wait_updates added.
  * * <a href="https://mgba.io">mGBA</a> logging CPU usage reduced.
  * * Keypad logging EWRAM and maximum CPU usage reduced.
  *

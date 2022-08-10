@@ -156,11 +156,30 @@ public:
     }
 
     /**
-     * @brief Returns the number of times the action must be updated before changing the tiles of the given sprite_ptr.
+     * @brief Returns the number of times the action must be updated before changing the tiles
+     * of the given sprite_ptr.
      */
     [[nodiscard]] int wait_updates() const
     {
         return _wait_updates;
+    }
+
+    /**
+     * @brief Sets the number of times the action must be updated before changing the tiles
+     * of the given sprite_ptr.
+     */
+    void set_wait_updates(int wait_updates)
+    {
+        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
+        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
+                   "Too much wait updates: ", wait_updates);
+
+        _wait_updates = uint16_t(wait_updates);
+
+        if(wait_updates < _current_wait_updates)
+        {
+            _current_wait_updates = wait_updates;
+        }
     }
 
     /**
@@ -209,14 +228,12 @@ private:
                           bool forever, const span<const uint16_t>& graphics_indexes) :
         _sprite(sprite),
         _tiles_item(tiles_item),
-        _wait_updates(uint16_t(wait_updates)),
         _forever(forever)
     {
-        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-                   "Too much wait updates: ", wait_updates);
         BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
+
+        set_wait_updates(wait_updates);
 
         for(uint16_t graphics_index : graphics_indexes)
         {
@@ -228,14 +245,12 @@ private:
                           const span<const uint16_t>& graphics_indexes) :
         _sprite(move(sprite)),
         _tiles_item(tiles_item),
-        _wait_updates(uint16_t(wait_updates)),
         _forever(forever)
     {
-        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-                   "Too much wait updates: ", wait_updates);
         BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
+
+        set_wait_updates(wait_updates);
 
         for(uint16_t graphics_index : graphics_indexes)
         {
@@ -499,11 +514,30 @@ public:
     }
 
     /**
-     * @brief Returns the number of times the action must be updated before changing the tiles of the given sprite_ptr.
+     * @brief Returns the number of times the action must be updated before changing the tiles
+     * of the given sprite_ptr.
      */
     [[nodiscard]] int wait_updates() const
     {
         return _wait_updates;
+    }
+
+    /**
+     * @brief Sets the number of times the action must be updated before changing the tiles
+     * of the given sprite_ptr.
+     */
+    void set_wait_updates(int wait_updates)
+    {
+        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
+        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
+                   "Too much wait updates: ", wait_updates);
+
+        _wait_updates = uint16_t(wait_updates);
+
+        if(wait_updates < _current_wait_updates)
+        {
+            _current_wait_updates = wait_updates;
+        }
     }
 
     /**
@@ -541,14 +575,12 @@ private:
     sprite_cached_animate_action(const sprite_ptr& sprite, int wait_updates, const sprite_tiles_item& tiles_item,
                                  bool forever, const span<const uint16_t>& graphics_indexes) :
         _sprite(sprite),
-        _wait_updates(uint16_t(wait_updates)),
         _forever(forever)
     {
-        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-                   "Too much wait updates: ", wait_updates);
         BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
+
+        set_wait_updates(wait_updates);
 
         for(int graphics_index : graphics_indexes)
         {
@@ -559,14 +591,12 @@ private:
     sprite_cached_animate_action(sprite_ptr&& sprite, int wait_updates, const sprite_tiles_item& tiles_item,
                                  bool forever, const span<const uint16_t>& graphics_indexes) :
         _sprite(move(sprite)),
-        _wait_updates(uint16_t(wait_updates)),
         _forever(forever)
     {
-        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-                   "Too much wait updates: ", wait_updates);
         BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= MaxSize,
                    "Invalid graphics indexes: ", graphics_indexes.size());
+
+        set_wait_updates(wait_updates);
 
         for(int graphics_index : graphics_indexes)
         {
@@ -577,13 +607,11 @@ private:
     sprite_cached_animate_action(const sprite_ptr& sprite, int wait_updates, bool forever,
                                  span<sprite_tiles_ptr> tiles_list) :
         _sprite(sprite),
-        _wait_updates(uint16_t(wait_updates)),
         _forever(forever)
     {
-        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-                   "Too much wait updates: ", wait_updates);
         BN_ASSERT(tiles_list.size() > 1 && tiles_list.size() <= MaxSize, "Invalid tiles ptrs: ", tiles_list.size());
+
+        set_wait_updates(wait_updates);
 
         for(sprite_tiles_ptr& tiles : tiles_list)
         {
@@ -594,13 +622,11 @@ private:
     sprite_cached_animate_action(sprite_ptr&& sprite, int wait_updates, bool forever,
                                  span<sprite_tiles_ptr> tiles_list) :
         _sprite(move(sprite)),
-        _wait_updates(uint16_t(wait_updates)),
         _forever(forever)
     {
-        BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
-        BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-                   "Too much wait updates: ", wait_updates);
         BN_ASSERT(tiles_list.size() > 1 && tiles_list.size() <= MaxSize, "Invalid tiles ptrs: ", tiles_list.size());
+
+        set_wait_updates(wait_updates);
 
         for(sprite_tiles_ptr& tiles : tiles_list)
         {

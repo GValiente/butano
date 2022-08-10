@@ -6,7 +6,7 @@
 #include "bn_hdma_manager.h"
 
 #include "bn_display.h"
-#include "../hw/include/bn_hw_hdma.h"
+#include "../hw/include/bn_hw_dma.h"
 #include "../hw/include/bn_hw_memory.h"
 
 #include "bn_hdma.cpp.h"
@@ -41,7 +41,7 @@ namespace
 
         void disable()
         {
-            hw::hdma::stop(_channel);
+            hw::dma::stop_hdma(_channel);
         }
 
         void start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
@@ -87,21 +87,30 @@ namespace
             }
         }
 
-        void commit()
+        void commit(bool use_dma)
         {
             const state& current_state = _current_state();
 
             if(int elements = current_state.elements)
             {
                 const uint16_t* source_ptr = current_state.source_ptr;
+                const uint16_t* initial_copy_source_ptr = source_ptr + ((display::height() - 1) * elements);
                 uint16_t* destination_ptr = current_state.destination_ptr;
-                hw::memory::copy_half_words(source_ptr + ((display::height() - 1) * elements),
-                                            elements, destination_ptr);
-                hw::hdma::start(_channel, source_ptr, elements, destination_ptr);
+
+                if(use_dma)
+                {
+                    hw::dma::copy_half_words(initial_copy_source_ptr, elements, destination_ptr);
+                }
+                else
+                {
+                    hw::memory::copy_half_words(initial_copy_source_ptr, elements, destination_ptr);
+                }
+
+                hw::dma::start_hdma(_channel, source_ptr, elements, destination_ptr);
             }
             else
             {
-                hw::hdma::stop(_channel);
+                hw::dma::stop_hdma(_channel);
             }
         }
 
@@ -136,8 +145,8 @@ namespace
     {
 
     public:
-        entry low_priority_entry = entry(hw::hdma::low_priority_channel());
-        entry high_priority_entry = entry(hw::hdma::high_priority_channel());
+        entry low_priority_entry = entry(hw::dma::low_priority_channel());
+        entry high_priority_entry = entry(hw::dma::high_priority_channel());
     };
 
     BN_DATA_EWRAM static_data data;
@@ -145,7 +154,7 @@ namespace
 
 void enable()
 {
-    commit();
+    commit(false);
 }
 
 void disable()
@@ -192,14 +201,14 @@ void high_priority_stop()
 
 void update()
 {
-    data.low_priority_entry.update();
     data.high_priority_entry.update();
+    data.low_priority_entry.update();
 }
 
-void commit()
+void commit(bool use_dma)
 {
-    data.low_priority_entry.commit();
-    data.high_priority_entry.commit();
+    data.high_priority_entry.commit(use_dma);
+    data.low_priority_entry.commit(use_dma);
 }
 
 }

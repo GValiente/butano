@@ -217,7 +217,7 @@ namespace sprites_manager
 
     void update();
 
-    void commit();
+    void commit(bool use_dma);
 
     [[nodiscard]] BN_CODE_IWRAM bool _check_items_on_screen_impl(
             void* hw_handles, intrusive_list<sorted_sprites::layer>& layers, bool rebuild_handles,

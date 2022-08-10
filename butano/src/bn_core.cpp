@@ -140,7 +140,7 @@ namespace
         }
         else
         {
-            hdma_manager::commit();
+            hdma_manager::commit(false);
         }
     }
 
@@ -226,6 +226,8 @@ namespace
         hblank_effects_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
+        bool use_dma = ! link_manager::active();
+
         BN_PROFILER_ENGINE_GENERAL_STOP();
 
         result.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
@@ -238,7 +240,7 @@ namespace
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_sprites_commit");
-        sprites_manager::commit();
+        sprites_manager::commit(use_dma);
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_bgs_commit");
@@ -246,14 +248,14 @@ namespace
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_palettes_commit");
-        palettes_manager::commit();
+        palettes_manager::commit(use_dma);
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_update");
         hdma_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        hdma_manager::commit();
+        hdma_manager::commit(use_dma);
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_hblank_fx_commit");
         hblank_effects_manager::commit();

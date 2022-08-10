@@ -7,7 +7,7 @@
 #define BN_HW_PALETTES_H
 
 #include "bn_color.h"
-#include "bn_hw_tonc.h"
+#include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
 
 namespace bn::hw::palettes
@@ -32,9 +32,21 @@ namespace bn::hw::palettes
         static_assert(sizeof(color) == sizeof(COLOR));
         static_assert(alignof(color) == alignof(COLOR));
 
-        inline void commit(const color* source_colors_ptr, int offset, int count, color* destination_colors_ptr)
+        inline void commit(const color* source_colors_ptr, int offset, int count, color* destination_colors_ptr,
+                           bool use_dma)
         {
-            hw::memory::copy_words(source_colors_ptr + offset, count / 2, destination_colors_ptr + offset);
+            const void* source = source_colors_ptr + offset;
+            int words = count / 2;
+            void* destination = destination_colors_ptr + offset;
+
+            if(use_dma)
+            {
+                hw::dma::copy_words(source, words, destination);
+            }
+            else
+            {
+                hw::memory::copy_words(source, words, destination);
+            }
         }
     }
 
@@ -106,14 +118,14 @@ namespace bn::hw::palettes
 
     void rotate(const color* source_colors_ptr, int rotate_count, int colors_count, color* destination_colors_ptr);
 
-    inline void commit_sprites(const color* colors_ptr, int offset, int count)
+    inline void commit_sprites(const color* colors_ptr, int offset, int count, bool use_dma)
     {
-        commit(colors_ptr, offset, count, reinterpret_cast<color*>(MEM_PAL_OBJ));
+        commit(colors_ptr, offset, count, reinterpret_cast<color*>(MEM_PAL_OBJ), use_dma);
     }
 
-    inline void commit_bgs(const color* colors_ptr, int offset, int count)
+    inline void commit_bgs(const color* colors_ptr, int offset, int count, bool use_dma)
     {
-        commit(colors_ptr, offset, count, reinterpret_cast<color*>(MEM_PAL_BG));
+        commit(colors_ptr, offset, count, reinterpret_cast<color*>(MEM_PAL_BG), use_dma);
     }
 
     [[nodiscard]] inline uint16_t* sprite_color_register(int index)

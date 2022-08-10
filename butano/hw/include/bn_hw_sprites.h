@@ -8,7 +8,7 @@
 
 #include "bn_sprite_builder.h"
 #include "bn_hw_bfn.h"
-#include "bn_hw_tonc.h"
+#include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
 
 namespace bn::hw::sprites
@@ -315,9 +315,20 @@ namespace bn::hw::sprites
         }
     }
 
-    inline void commit(const handle_type& sprites_ref, int offset, int count)
+    inline void commit(const handle_type& sprites_ref, int offset, int count, bool use_dma)
     {
-        hw::memory::copy_words((&sprites_ref) + offset, count * int(sizeof(handle_type) / 4), vram() + offset);
+        const void* source = (&sprites_ref) + offset;
+        int words = count * int(sizeof(handle_type) / 4);
+        void* destination = vram() + offset;
+
+        if(use_dma)
+        {
+            hw::dma::copy_words(source, words, destination);
+        }
+        else
+        {
+            hw::memory::copy_words(source, words, destination);
+        }
     }
 
     [[nodiscard]] inline uint16_t* first_attributes_register(int id)

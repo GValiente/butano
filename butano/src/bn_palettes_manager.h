@@ -21,7 +21,7 @@ namespace palettes_manager
 
     void update();
 
-    void commit();
+    void commit(bool use_dma);
 
     void stop();
 }

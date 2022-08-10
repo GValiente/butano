@@ -17,6 +17,8 @@ namespace bn::link_manager
 {
     void init();
 
+    [[nodiscard]] bool active();
+
     void send(int data_to_send);
 
     [[nodiscard]] optional<link_state> receive();

@@ -45,21 +45,21 @@ void update()
     data.bg_palettes_bank.update();
 }
 
-void commit()
+void commit(bool use_dma)
 {
-    optional<palettes_bank::commit_data> commit_data = data.sprite_palettes_bank.retrieve_commit_data();
+    optional<palettes_bank::commit_data> sprite_commit_data = data.sprite_palettes_bank.retrieve_commit_data();
 
-    if(palettes_bank::commit_data* commit_data_ptr = commit_data.get())
+    if(palettes_bank::commit_data* commit_data = sprite_commit_data.get())
     {
-        hw::palettes::commit_sprites(commit_data_ptr->colors_ptr, commit_data_ptr->offset, commit_data_ptr->count);
+        hw::palettes::commit_sprites(commit_data->colors_ptr, commit_data->offset, commit_data->count, use_dma);
         data.sprite_palettes_bank.reset_commit_data();
     }
 
-    commit_data = data.bg_palettes_bank.retrieve_commit_data();
+    optional<palettes_bank::commit_data> bg_commit_data = data.bg_palettes_bank.retrieve_commit_data();
 
-    if(palettes_bank::commit_data* commit_data_ptr = commit_data.get())
+    if(palettes_bank::commit_data* commit_data = bg_commit_data.get())
     {
-        hw::palettes::commit_bgs(commit_data_ptr->colors_ptr, commit_data_ptr->offset, commit_data_ptr->count);
+        hw::palettes::commit_bgs(commit_data->colors_ptr, commit_data->offset, commit_data->count, use_dma);
         data.bg_palettes_bank.reset_commit_data();
     }
 }

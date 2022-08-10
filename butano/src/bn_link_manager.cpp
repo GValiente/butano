@@ -17,6 +17,11 @@ void init()
     hw::link::init();
 }
 
+bool active()
+{
+    return hw::link::active();
+}
+
 void send(int data_to_send)
 {
     hw::link::send(data_to_send + 1);

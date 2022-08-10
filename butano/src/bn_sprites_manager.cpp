@@ -1322,7 +1322,7 @@ void update()
     _rebuild_handles();
 }
 
-void commit()
+void commit(bool use_dma)
 {
     int first_index_to_commit = data.first_index_to_commit;
     int last_index_to_commit = data.last_index_to_commit;
@@ -1339,7 +1339,7 @@ void commit()
     if(first_index_to_commit < hw::sprites::count())
     {
         int commit_items_count = last_index_to_commit - first_index_to_commit + 1;
-        hw::sprites::commit(data.handles[0], first_index_to_commit, commit_items_count);
+        hw::sprites::commit(data.handles[0], first_index_to_commit, commit_items_count, use_dma);
         data.first_index_to_commit = hw::sprites::count();
         data.last_index_to_commit = 0;
     }

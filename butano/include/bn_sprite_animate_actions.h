@@ -148,6 +148,15 @@ public:
     }
 
     /**
+     * @brief Resets the action to its initial state.
+     */
+    void reset()
+    {
+        _current_graphics_indexes_index = 0;
+        _current_wait_updates = 0;
+    }
+
+    /**
      * @brief Returns the sprite_ptr to modify.
      */
     [[nodiscard]] const sprite_ptr& sprite() const
@@ -503,6 +512,15 @@ public:
     [[nodiscard]] bool done() const
     {
         return _current_tiles_list_index == _tiles_list.size();
+    }
+
+    /**
+     * @brief Resets the action to its initial state.
+     */
+    void reset()
+    {
+        _current_tiles_list_index = 0;
+        _current_wait_updates = 0;
     }
 
     /**

@@ -59,7 +59,7 @@ and [GBT Player](https://github.com/AntonioND/gbt-player).
 
 If you spotted a bug, need a feature or have an awesome idea,
 the best you can do is to head over to the [issues page](https://github.com/GValiente/butano/issues) 
-and to the [gbadev Discord server](https://discord.gg/2WS7bpJ).
+and to the [gbadev Discord server](https://discord.io/gbadev).
 
 
 ## Licenses

@@ -1966,6 +1966,7 @@
  *
  * * bn::sprite_animate_action::set_wait_updates and bn::sprite_cached_animate_action::set_wait_updates added.
  * * bn::sprite_animate_action::reset and bn::sprite_cached_animate_action::reset added.
+ * * Backgrounds management optimized (EWRAM and CPU usage reduced).
  * * Sprites, sprite tiles, palettes and HDMA commit CPU usage reduced.
  * * Missed link messages frequency reduced.
  * * <a href="https://mgba.io">mGBA</a> logging CPU usage reduced.

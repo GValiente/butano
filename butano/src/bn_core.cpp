@@ -244,7 +244,7 @@ namespace
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_bgs_commit");
-        bgs_manager::commit();
+        bgs_manager::commit(use_dma);
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_palettes_commit");

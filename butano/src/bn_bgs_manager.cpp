@@ -42,13 +42,14 @@ namespace
         affine_bg_mat_attributes affine_mat_attributes;
         point hw_position;
         size half_dimensions;
+        hw::bgs::affine_attributes hw_affine_attributes;
         unsigned usages = 1;
         sort_key bg_sort_key;
-        hw::bgs::handle handle;
         bool visible_in_windows[hw::display::windows_count()];
         optional<regular_bg_map_ptr> regular_map;
         optional<affine_bg_map_ptr> affine_map;
         optional<camera_ptr> camera;
+        uint16_t hw_cnt;
         uint16_t old_big_map_x = 0;
         uint16_t old_big_map_y = 0;
         uint16_t new_big_map_x = 0;
@@ -75,7 +76,7 @@ namespace
                 visible_in_window = true;
             }
 
-            hw::bgs::setup_regular(builder, handle);
+            hw::bgs::setup_regular(builder, hw_cnt);
             update_regular_map();
         }
 
@@ -95,17 +96,18 @@ namespace
                 visible_in_window = true;
             }
 
-            hw::bgs::setup_affine(builder, handle);
-            update_affine_map(true);
+            hw::bgs::setup_affine(builder, hw_cnt);
+
+            [[maybe_unused]] bool affine_mat_attributes_updated = update_affine_map(true);
         }
 
         void update_regular_map()
         {
             const regular_bg_map_ptr& map_ref = *regular_map;
-            hw::bgs::handle new_handle = handle;
-            hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), new_handle);
-            hw::bgs::set_map_sbb(map_ref.id(), new_handle);
-            hw::bgs::set_bpp(map_ref.bpp(), new_handle);
+            uint16_t new_hw_cnt = hw_cnt;
+            hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), new_hw_cnt);
+            hw::bgs::set_map_sbb(map_ref.id(), new_hw_cnt);
+            hw::bgs::set_bpp(map_ref.bpp(), new_hw_cnt);
 
             size map_dimensions = map_ref.dimensions();
             int map_width = map_dimensions.width();
@@ -134,18 +136,18 @@ namespace
             commit_big_map = big_map;
             full_commit_big_map = big_map;
 
-            hw::bgs::set_map_dimensions(map_size, new_handle);
-            handle = new_handle;
+            hw::bgs::set_map_dimensions(map_size, new_hw_cnt);
+            hw_cnt = new_hw_cnt;
             half_dimensions = map_dimensions * 4;
             update_regular_hw_position();
         }
 
-        void update_affine_map(bool force_affine_mat_attributes_update)
+        [[nodiscard]] bool update_affine_map(bool force_affine_mat_attributes_update)
         {
             const affine_bg_map_ptr& map_ref = *affine_map;
-            hw::bgs::handle new_handle = handle;
-            hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), new_handle);
-            hw::bgs::set_map_sbb(map_ref.id(), new_handle);
+            uint16_t new_hw_cnt = hw_cnt;
+            hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), new_hw_cnt);
+            hw::bgs::set_map_sbb(map_ref.id(), new_hw_cnt);
 
             size map_dimensions = map_ref.dimensions();
             int map_width = map_dimensions.width();
@@ -187,13 +189,15 @@ namespace
             commit_big_map = big_map;
             full_commit_big_map = big_map;
 
-            hw::bgs::set_map_dimensions(map_size, new_handle);
-            handle = new_handle;
+            bool affine_mat_attributes_updated;
+            hw::bgs::set_map_dimensions(map_size, new_hw_cnt);
+            hw_cnt = new_hw_cnt;
             half_dimensions = map_dimensions * 4;
 
             if(force_affine_mat_attributes_update)
             {
                 update_affine_mat_attributes();
+                affine_mat_attributes_updated = true;
             }
             else
             {
@@ -203,8 +207,20 @@ namespace
                 {
                     affine_mat_attributes.set_half_dimensions(fixed_half_dimensions);
                     update_affine_mat_attributes();
+                    affine_mat_attributes_updated = true;
+                }
+                else
+                {
+                    affine_mat_attributes_updated = false;
                 }
             }
+
+            return affine_mat_attributes_updated;
+        }
+
+        [[nodiscard]] hw::bgs::regular_offset regular_hw_offset() const
+        {
+            return { uint16_t(hw_position.x()), uint16_t(hw_position.y()) };
         }
 
         void update_regular_hw_position()
@@ -230,7 +246,7 @@ namespace
 
         void update_affine_mat_attributes()
         {
-            hw::bgs::set_affine_mat_attributes(affine_mat_attributes.mat_attributes(), handle);
+            hw::bgs::set_affine_mat_attributes(affine_mat_attributes.mat_attributes(), hw_affine_attributes);
             update_affine_hw_x();
             update_affine_hw_y();
         }
@@ -252,14 +268,12 @@ namespace
 
         void commit_regular_hw_x()
         {
-            int x = hw_position.x();
-            hw::bgs::set_regular_x(x, handle);
-
             if(big_map)
             {
-                BN_ASSERT(x >= 0 && x <= (half_dimensions.width() * 2) - display::width(),
+                BN_ASSERT(hw_position.x() >= 0 &&
+                          hw_position.x() <= (half_dimensions.width() * 2) - display::width(),
                           "Regular BGs with big maps\ndon't allow horizontal wrapping: ",
-                          x, " - ", (half_dimensions.width() * 2) - display::width());
+                          hw_position.x(), " - ", (half_dimensions.width() * 2) - display::width());
 
                 commit_big_map = true;
             }
@@ -267,14 +281,12 @@ namespace
 
         void commit_regular_hw_y()
         {
-            int y = hw_position.y();
-            hw::bgs::set_regular_y(y, handle);
-
             if(big_map)
             {
-                BN_ASSERT(y >= 0 && y <= (half_dimensions.height() * 2) - display::height(),
+                BN_ASSERT(hw_position.y() >= 0 &&
+                          hw_position.y() <= (half_dimensions.height() * 2) - display::height(),
                           "Regular BGs with big maps\ndon't allow vertical wrapping: ",
-                          y, " - ", (half_dimensions.height() * 2) - display::height());
+                          hw_position.y(), " - ", (half_dimensions.height() * 2) - display::height());
 
                 commit_big_map = true;
             }
@@ -297,7 +309,7 @@ namespace
         {
             int dx = affine_mat_attributes.dx_register_value();
             hw_position.set_x(dx);
-            hw::bgs::set_affine_x(dx, handle);
+            hw_affine_attributes.dx = dx;
 
             if(big_map)
             {
@@ -314,7 +326,7 @@ namespace
         {
             int dy = affine_mat_attributes.dy_register_value();
             hw_position.set_y(dy);
-            hw::bgs::set_affine_y(dy, handle);
+            hw_affine_attributes.dy = dy;
 
             if(big_map)
             {
@@ -357,7 +369,7 @@ namespace
     public:
         pool<item_type, BN_CFG_BGS_MAX_ITEMS> items_pool;
         vector<item_type*, BN_CFG_BGS_MAX_ITEMS> items_vector;
-        hw::bgs::handle handles[hw::bgs::count()];
+        hw::bgs::commit_data commit_data;
         bool rebuild_handles = false;
         bool commit = false;
     };
@@ -421,11 +433,29 @@ namespace
         data.items_vector.push_back(&new_item);
     }
 
-    void _update_item(const item_type& item)
+    void _update_item_hw_cnt(const item_type& item)
     {
         if(! data.rebuild_handles && item.visible)
         {
-            data.handles[item.handles_index] = item.handle;
+            data.commit_data.cnts[item.handles_index] = item.hw_cnt;
+            data.commit = true;
+        }
+    }
+
+    void _update_item_hw_regular_offset(const item_type& item)
+    {
+        if(! data.rebuild_handles && item.visible)
+        {
+            data.commit_data.regular_offsets[item.handles_index] = item.regular_hw_offset();
+            data.commit = true;
+        }
+    }
+
+    void _update_item_hw_affine_attributes(const item_type& item)
+    {
+        if(! data.rebuild_handles && item.visible)
+        {
+            data.commit_data.affine_attribute_sets[item.handles_index - 2] = item.hw_affine_attributes;
             data.commit = true;
         }
     }
@@ -633,7 +663,8 @@ void set_regular_map(id_type id, const regular_bg_map_ptr& map)
         item->update_regular_map();
         BN_ASSERT(_check_unique_regular_big_map(*item), "Two or more regular BGs have the same big map");
 
-        _update_item(*item);
+        _update_item_hw_cnt(*item);
+        _update_item_hw_regular_offset(*item);
     }
 }
 
@@ -644,10 +675,16 @@ void set_affine_map(id_type id, const affine_bg_map_ptr& map)
     if(map != item->affine_map)
     {
         item->affine_map = map;
-        item->update_affine_map(false);
+
+        bool affine_mat_attributes_updated = item->update_affine_map(false);
         BN_ASSERT(_check_unique_affine_big_map(*item), "Two or more affine BGs have the same big map");
 
-        _update_item(*item);
+        _update_item_hw_cnt(*item);
+
+        if(affine_mat_attributes_updated)
+        {
+            _update_item_hw_affine_attributes(*item);
+        }
     }
 }
 
@@ -661,7 +698,8 @@ void set_regular_map(id_type id, regular_bg_map_ptr&& map)
         item->update_regular_map();
         BN_ASSERT(_check_unique_regular_big_map(*item), "Two or more regular BGs have the same big map");
 
-        _update_item(*item);
+        _update_item_hw_cnt(*item);
+        _update_item_hw_regular_offset(*item);
     }
 }
 
@@ -672,10 +710,16 @@ void set_affine_map(id_type id, affine_bg_map_ptr&& map)
     if(map != item->affine_map)
     {
         item->affine_map = move(map);
-        item->update_affine_map(false);
+
+        bool affine_mat_attributes_updated = item->update_affine_map(false);
         BN_ASSERT(_check_unique_affine_big_map(*item), "Two or more affine BGs have the same big map");
 
-        _update_item(*item);
+        _update_item_hw_cnt(*item);
+
+        if(affine_mat_attributes_updated)
+        {
+            _update_item_hw_affine_attributes(*item);
+        }
     }
 }
 
@@ -717,7 +761,7 @@ void set_regular_x(id_type id, fixed x)
     {
         item->hw_position.set_x(item->hw_position.x() - diff);
         item->commit_regular_hw_x();
-        _update_item(*item);
+        _update_item_hw_regular_offset(*item);
     }
 }
 
@@ -736,7 +780,7 @@ void set_affine_x(id_type id, fixed x)
 
         item->affine_mat_attributes.set_x(x);
         item->update_affine_hw_x();
-        _update_item(*item);
+        _update_item_hw_affine_attributes(*item);
     }
 }
 
@@ -754,7 +798,7 @@ void set_regular_y(id_type id, fixed y)
     {
         item->hw_position.set_y(item->hw_position.y() - diff);
         item->commit_regular_hw_y();
-        _update_item(*item);
+        _update_item_hw_regular_offset(*item);
     }
 }
 
@@ -773,7 +817,7 @@ void set_affine_y(id_type id, fixed y)
 
         item->affine_mat_attributes.set_y(y);
         item->update_affine_hw_y();
-        _update_item(*item);
+        _update_item_hw_affine_attributes(*item);
     }
 }
 
@@ -792,7 +836,7 @@ void set_regular_position(id_type id, const fixed_point& position)
         item->hw_position -= diff;
         item->commit_regular_hw_x();
         item->commit_regular_hw_y();
-        _update_item(*item);
+        _update_item_hw_regular_offset(*item);
     }
 }
 
@@ -818,7 +862,7 @@ void set_affine_position(id_type id, const fixed_point& position)
 
         item->update_affine_hw_x();
         item->update_affine_hw_y();
-        _update_item(*item);
+        _update_item_hw_affine_attributes(*item);
     }
 }
 
@@ -841,7 +885,7 @@ void set_rotation_angle(id_type id, fixed rotation_angle)
         if(affine_mat_registers(affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -866,7 +910,7 @@ void set_horizontal_scale(id_type id, fixed horizontal_scale)
         if(affine_mat_attributes.pa_register_value() != pa || affine_mat_attributes.pb_register_value() != pb)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -891,7 +935,7 @@ void set_vertical_scale(id_type id, fixed vertical_scale)
         if(affine_mat_attributes.pc_register_value() != pc || affine_mat_attributes.pd_register_value() != pd)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -909,7 +953,7 @@ void set_scale(id_type id, fixed scale)
         if(affine_mat_registers(affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -928,7 +972,7 @@ void set_scale(id_type id, fixed horizontal_scale, fixed vertical_scale)
         if(affine_mat_registers(affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -952,7 +996,7 @@ void set_horizontal_shear(id_type id, fixed horizontal_shear)
         if(affine_mat_attributes.pb_register_value() != pb)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -976,7 +1020,7 @@ void set_vertical_shear(id_type id, fixed vertical_shear)
         if(affine_mat_attributes.pc_register_value() != pc)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -995,7 +1039,7 @@ void set_shear(id_type id, fixed shear)
         if(affine_mat_attributes.pb_register_value() != pb || affine_mat_attributes.pc_register_value() != pc)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -1015,7 +1059,7 @@ void set_shear(id_type id, fixed horizontal_shear, fixed vertical_shear)
         if(affine_mat_attributes.pb_register_value() != pb || affine_mat_attributes.pc_register_value() != pc)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -1035,7 +1079,7 @@ void set_horizontal_flip(id_type id, bool horizontal_flip)
     {
         affine_mat_attributes.set_horizontal_flip(horizontal_flip);
         item->update_affine_mat_attributes();
-        _update_item(*item);
+        _update_item_hw_affine_attributes(*item);
     }
 }
 
@@ -1054,7 +1098,7 @@ void set_vertical_flip(id_type id, bool vertical_flip)
     {
         affine_mat_attributes.set_vertical_flip(vertical_flip);
         item->update_affine_mat_attributes();
-        _update_item(*item);
+        _update_item_hw_affine_attributes(*item);
     }
 }
 
@@ -1072,7 +1116,7 @@ void set_pivot_x(id_type id, fixed pivot_x)
     {
         item->affine_mat_attributes.set_pivot_x(pivot_x);
         item->update_affine_hw_x();
-        _update_item(*item);
+        _update_item_hw_affine_attributes(*item);
     }
 }
 
@@ -1084,7 +1128,7 @@ void set_pivot_y(id_type id, fixed pivot_y)
     {
         item->affine_mat_attributes.set_pivot_y(pivot_y);
         item->update_affine_hw_y();
-        _update_item(*item);
+        _update_item_hw_affine_attributes(*item);
     }
 }
 
@@ -1097,7 +1141,7 @@ void set_pivot_position(id_type id, const fixed_point& pivot_position)
         item->affine_mat_attributes.set_pivot_position(pivot_position);
         item->update_affine_hw_x();
         item->update_affine_hw_y();
-        _update_item(*item);
+        _update_item_hw_affine_attributes(*item);
     }
 }
 
@@ -1119,7 +1163,7 @@ void set_mat_attributes(id_type id, const affine_mat_attributes& mat_attributes)
         if(affine_mat_registers(item->affine_mat_attributes) != old_registers)
         {
             item->update_affine_mat_attributes();
-            _update_item(*item);
+            _update_item_hw_affine_attributes(*item);
         }
     }
 }
@@ -1139,7 +1183,7 @@ void set_priority(id_type id, int priority)
         BN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
 
         item->bg_sort_key.set_priority(priority);
-        hw::bgs::set_priority(priority, item->handle);
+        hw::bgs::set_priority(priority, item->hw_cnt);
         erase(data.items_vector, item);
         _insert_item(*item);
     }
@@ -1232,27 +1276,27 @@ void put_below(id_type id)
 bool wrapping_enabled(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return hw::bgs::wrapping_enabled(item->handle);
+    return hw::bgs::wrapping_enabled(item->hw_cnt);
 }
 
 void set_wrapping_enabled(id_type id, bool wrapping_enabled)
 {
     auto item = static_cast<item_type*>(id);
-    hw::bgs::set_wrapping_enabled(wrapping_enabled, item->handle);
-    _update_item(*item);
+    hw::bgs::set_wrapping_enabled(wrapping_enabled, item->hw_cnt);
+    _update_item_hw_cnt(*item);
 }
 
 bool mosaic_enabled(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return hw::bgs::mosaic_enabled(item->handle);
+    return hw::bgs::mosaic_enabled(item->hw_cnt);
 }
 
 void set_mosaic_enabled(id_type id, bool mosaic_enabled)
 {
     auto item = static_cast<item_type*>(id);
-    hw::bgs::set_mosaic_enabled(mosaic_enabled, item->handle);
-    _update_item(*item);
+    hw::bgs::set_mosaic_enabled(mosaic_enabled, item->hw_cnt);
+    _update_item_hw_cnt(*item);
 }
 
 regular_bg_attributes regular_attributes(id_type id)
@@ -1398,13 +1442,13 @@ void set_camera(id_type id, camera_ptr&& camera)
         if(item->regular_map)
         {
             item->update_regular_hw_position();
+            _update_item_hw_regular_offset(*item);
         }
         else
         {
             item->update_affine_camera();
+            _update_item_hw_affine_attributes(*item);
         }
-
-        _update_item(*item);
     }
 }
 
@@ -1419,13 +1463,13 @@ void remove_camera(id_type id)
         if(item->regular_map)
         {
             item->update_regular_hw_position();
+            _update_item_hw_regular_offset(*item);
         }
         else
         {
             item->update_affine_camera();
+            _update_item_hw_affine_attributes(*item);
         }
-
-        _update_item(*item);
     }
 }
 
@@ -1438,13 +1482,13 @@ void update_cameras()
             if(item->regular_map)
             {
                 item->update_regular_hw_position();
+                _update_item_hw_regular_offset(*item);
             }
             else
             {
                 item->update_affine_camera();
+                _update_item_hw_affine_attributes(*item);
             }
-
-            _update_item(*item);
         }
     }
 }
@@ -1457,8 +1501,8 @@ void update_regular_map_tiles_cbb(int map_id, int tiles_cbb)
 
         if(item_regular_map && item_regular_map->id() == map_id)
         {
-            hw::bgs::set_tiles_cbb(tiles_cbb, item->handle);
-            _update_item(*item);
+            hw::bgs::set_tiles_cbb(tiles_cbb, item->hw_cnt);
+            _update_item_hw_cnt(*item);
         }
     }
 }
@@ -1471,8 +1515,8 @@ void update_affine_map_tiles_cbb(int map_id, int tiles_cbb)
 
         if(item_affine_map && item_affine_map->id() == map_id)
         {
-            hw::bgs::set_tiles_cbb(tiles_cbb, item->handle);
-            _update_item(*item);
+            hw::bgs::set_tiles_cbb(tiles_cbb, item->hw_cnt);
+            _update_item_hw_cnt(*item);
         }
     }
 }
@@ -1485,8 +1529,8 @@ void update_regular_map_palette_bpp(int map_id, bpp_mode bpp)
 
         if(item_regular_map && item_regular_map->id() == map_id)
         {
-            hw::bgs::set_bpp(bpp, item->handle);
-            _update_item(*item);
+            hw::bgs::set_bpp(bpp, item->hw_cnt);
+            _update_item_hw_cnt(*item);
         }
     }
 }
@@ -1516,7 +1560,7 @@ void fill_hblank_effect_regular_positions(int base_position, const fixed* positi
 
 void fill_hblank_effect_pivot_horizontal_positions(id_type id, const fixed* positions_ptr, unsigned* dest_ptr)
 {
-    constexpr int right_shift = fixed::precision() - hw::bgs::affine_precision;
+    constexpr int right_shift = fixed::precision() - hw::bgs::affine_precision();
 
     auto item = static_cast<item_type*>(id);
     int base_dx = item->affine_mat_attributes.dx_register_value();
@@ -1532,7 +1576,7 @@ void fill_hblank_effect_pivot_horizontal_positions(id_type id, const fixed* posi
 
 void fill_hblank_effect_pivot_vertical_positions(id_type id, const fixed* positions_ptr, unsigned* dest_ptr)
 {
-    constexpr int right_shift = fixed::precision() - hw::bgs::affine_precision;
+    constexpr int right_shift = fixed::precision() - hw::bgs::affine_precision();
 
     auto item = static_cast<item_type*>(id);
     int base_dy = item->affine_mat_attributes.dy_register_value();
@@ -1550,7 +1594,7 @@ void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attribut
 {
     auto item = static_cast<item_type*>(id);
     [[maybe_unused]] bn::size current_dimensions = item->regular_map->dimensions();
-    uint16_t bg_cnt = item->handle.cnt;
+    uint16_t hw_cnt = item->hw_cnt;
 
     for(int index = 0, limit = display::height(); index < limit; ++index)
     {
@@ -1558,13 +1602,13 @@ void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attribut
         const regular_bg_map_ptr& attributes_map = attributes.map();
         BN_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
 
-        uint16_t dest_cnt = bg_cnt;
-        hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_cnt);
-        hw::bgs::set_map_sbb(attributes_map.id(), dest_cnt);
-        hw::bgs::set_bpp(attributes_map.bpp(), dest_cnt);
-        hw::bgs::set_priority(attributes.priority(), dest_cnt);
-        hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_cnt);
-        dest_ptr[index] = dest_cnt;
+        uint16_t dest_hw_cnt = hw_cnt;
+        hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_hw_cnt);
+        hw::bgs::set_map_sbb(attributes_map.id(), dest_hw_cnt);
+        hw::bgs::set_bpp(attributes_map.bpp(), dest_hw_cnt);
+        hw::bgs::set_priority(attributes.priority(), dest_hw_cnt);
+        hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_hw_cnt);
+        dest_ptr[index] = dest_hw_cnt;
     }
 }
 
@@ -1572,7 +1616,7 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
 {
     auto item = static_cast<item_type*>(id);
     [[maybe_unused]] bn::size current_dimensions = item->affine_map->dimensions();
-    uint16_t bg_cnt = item->handle.cnt;
+    uint16_t hw_cnt = item->hw_cnt;
 
     for(int index = 0, limit = display::height(); index < limit; ++index)
     {
@@ -1580,13 +1624,13 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
         const affine_bg_map_ptr& attributes_map = attributes.map();
         BN_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
 
-        uint16_t dest_cnt = bg_cnt;
-        hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_cnt);
-        hw::bgs::set_map_sbb(attributes_map.id(), dest_cnt);
-        hw::bgs::set_priority(attributes.priority(), dest_cnt);
-        hw::bgs::set_wrapping_enabled(attributes.wrapping_enabled(), dest_cnt);
-        hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_cnt);
-        dest_ptr[index] = dest_cnt;
+        uint16_t dest_hw_cnt = hw_cnt;
+        hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_hw_cnt);
+        hw::bgs::set_map_sbb(attributes_map.id(), dest_hw_cnt);
+        hw::bgs::set_priority(attributes.priority(), dest_hw_cnt);
+        hw::bgs::set_wrapping_enabled(attributes.wrapping_enabled(), dest_hw_cnt);
+        hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_hw_cnt);
+        dest_ptr[index] = dest_hw_cnt;
     }
 }
 
@@ -1643,6 +1687,7 @@ void rebuild_handles()
                 {
                     id = affine_id;
                     --affine_id;
+                    data.commit_data.affine_attribute_sets[id - 2] = item->hw_affine_attributes;
                 }
                 else
                 {
@@ -1650,10 +1695,11 @@ void rebuild_handles()
 
                     id = regular_id;
                     --regular_id;
+                    data.commit_data.regular_offsets[id] = item->regular_hw_offset();
                 }
 
                 item->handles_index = int8_t(id);
-                data.handles[id] = item->handle;
+                data.commit_data.cnts[id] = item->hw_cnt;
                 display_manager::set_bg_enabled(id, true);
                 display_manager::set_blending_bg_enabled(id, item->blending_enabled);
             }
@@ -1671,11 +1717,11 @@ void update()
     _update_big_maps();
 }
 
-void commit()
+void commit(bool use_dma)
 {
     if(data.commit)
     {
-        hw::bgs::commit(data.handles);
+        hw::bgs::commit(data.commit_data, use_dma);
         data.commit = false;
     }
 }

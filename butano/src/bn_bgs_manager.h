@@ -208,7 +208,7 @@ namespace bgs_manager
 
     void update();
 
-    void commit();
+    void commit(bool use_dma);
 
     void commit_big_maps();
 

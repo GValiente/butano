@@ -435,23 +435,23 @@ namespace
         {
             item.commit = true;
 
-            switch(item.compression())
-            {
+            vector<uint16_t, max_items>& to_commit_items =
+                    item.compression() == compression_type::NONE ?
+                        data.to_commit_uncompressed_items : data.to_commit_compressed_items;
+            to_commit_items.push_back(id);
+        }
+    }
 
-            case compression_type::NONE:
-                data.to_commit_uncompressed_items.push_back(id);
-                break;
+    void _erase_to_commit_item(int id, item_type& item)
+    {
+        if(item.commit)
+        {
+            item.commit = false;
 
-            case compression_type::LZ77:
-            case compression_type::RUN_LENGTH:
-            case compression_type::HUFFMAN:
-                data.to_commit_compressed_items.push_back(id);
-                break;
-
-            default:
-                BN_ERROR("Unknown compression type: ", int(compression));
-                break;
-            }
+            vector<uint16_t, max_items>& to_commit_items =
+                    item.compression() == compression_type::NONE ?
+                        data.to_commit_uncompressed_items : data.to_commit_compressed_items;
+            to_commit_items.erase(bn::find(to_commit_items.begin(), to_commit_items.end(), id));
         }
     }
 
@@ -954,6 +954,7 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         item.set_status(status_type::TO_REMOVE);
+        _erase_to_commit_item(id, item);
         _insert_to_remove_item(id);
         data.to_remove_tiles_count += int(item.tiles_count);
     }
@@ -1001,6 +1002,8 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
     BN_ASSERT(int(item.tiles_count) == tiles_ref.size(), "Tiles count does not match item tiles count: ",
               int(item.tiles_count), " - ", tiles_ref.size());
 
+    compression_type item_compression = item.compression();
+
     if(old_tiles_data != new_tiles_data)
     {
         BN_ASSERT(old_tiles_data, "Item has no data");
@@ -1010,14 +1013,28 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
         data.items_map.erase(old_tiles_data);
         data.items_map.insert(new_tiles_data, id);
 
+        if(compression != item_compression)
+        {
+            if(compression == compression_type::NONE || item_compression == compression_type::NONE)
+            {
+                _erase_to_commit_item(id, item);
+            }
+
+            item.set_compression(compression);
+        }
+
         item.data = new_tiles_data;
-        item.set_compression(compression);
         _insert_to_commit_item(id, item);
 
         BN_SPRITE_TILES_LOG_STATUS();
     }
-    else if(compression != item.compression())
+    else if(compression != item_compression)
     {
+        if(compression == compression_type::NONE || item_compression == compression_type::NONE)
+        {
+            _erase_to_commit_item(id, item);
+        }
+
         item.set_compression(compression);
         _insert_to_commit_item(id, item);
 
@@ -1072,7 +1089,6 @@ void update()
             }
 
             item.set_status(status_type::FREE);
-            item.commit = false;
             data.free_tiles_count += int(item.tiles_count);
 
             auto next_iterator = iterator;
@@ -1131,12 +1147,8 @@ void commit_uncompressed(bool use_dma)
             for(int item_index : data.to_commit_uncompressed_items)
             {
                 item_type& item = data.items.item(item_index);
-
-                if(item.commit)
-                {
-                    hw::sprite_tiles::commit_with_dma(item.data, int(item.start_tile), int(item.tiles_count));
-                    item.commit = false;
-                }
+                hw::sprite_tiles::commit_with_dma(item.data, int(item.start_tile), int(item.tiles_count));
+                item.commit = false;
             }
         }
         else
@@ -1144,12 +1156,8 @@ void commit_uncompressed(bool use_dma)
             for(int item_index : data.to_commit_uncompressed_items)
             {
                 item_type& item = data.items.item(item_index);
-
-                if(item.commit)
-                {
-                    hw::sprite_tiles::commit_with_cpu(item.data, int(item.start_tile), int(item.tiles_count));
-                    item.commit = false;
-                }
+                hw::sprite_tiles::commit_with_cpu(item.data, int(item.start_tile), int(item.tiles_count));
+                item.commit = false;
             }
         }
 
@@ -1168,12 +1176,8 @@ void commit_compressed()
         for(int item_index : data.to_commit_compressed_items)
         {
             item_type& item = data.items.item(item_index);
-
-            if(item.commit)
-            {
-                hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
-                item.commit = false;
-            }
+            hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
+            item.commit = false;
         }
 
         data.to_commit_compressed_items.clear();

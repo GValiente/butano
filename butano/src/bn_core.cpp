@@ -284,9 +284,7 @@ namespace
         }
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
         result.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commit");
         audio_manager::commit();
@@ -526,9 +524,7 @@ core_lock::~core_lock()
     hw::core::wait_for_vblank();
 
     // Restart CPU usage timer:
-    BN_PROFILER_ENGINE_DETAILED_START("eng_cpu_usage");
     core::data.cpu_usage_timer.restart();
-    BN_PROFILER_ENGINE_DETAILED_STOP();
 
     // Wake up display (maybe display_manager::sleep() has not been called):
     display_manager::wake_up();

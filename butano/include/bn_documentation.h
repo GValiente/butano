@@ -1971,6 +1971,7 @@
  * * Missed link messages frequency reduced.
  * * <a href="https://mgba.io">mGBA</a> logging CPU usage reduced.
  * * Keypad logging EWRAM and maximum CPU usage reduced.
+ * * CPU usage profiler entries removed.
  * * Some assert messages improved.
  *
  *

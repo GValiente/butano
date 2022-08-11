@@ -67,7 +67,9 @@ namespace bn::sprite_tiles_manager
 
     void update();
 
-    void commit();
+    void commit_uncompressed(bool use_dma);
+
+    void commit_compressed();
 }
 
 #endif

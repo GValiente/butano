@@ -9,6 +9,7 @@
 #include "bn_tile.h"
 #include "bn_assert.h"
 #include "bn_compression_type.h"
+#include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
 #include "bn_hw_decompress.h"
 
@@ -40,27 +41,35 @@ namespace bn::hw::sprite_tiles
         return tile_vram(index);
     }
 
+    inline void commit_with_cpu(const tile* source_tiles_ptr, int index, int count)
+    {
+        hw::memory::copy_words(source_tiles_ptr, count * int(sizeof(tile) / 4), tile_vram(index));
+    }
+
+    inline void commit_with_dma(const tile* source_tiles_ptr, int index, int count)
+    {
+        hw::dma::copy_words(source_tiles_ptr, count * int(sizeof(tile) / 4), tile_vram(index));
+    }
+
     inline void commit(const tile* source_tiles_ptr, compression_type compression, int index, int count)
     {
-        tile* destination_tiles_ptr = tile_vram(index);
-
         switch(compression)
         {
 
         case compression_type::NONE:
-            hw::memory::copy_words(source_tiles_ptr, count * int(sizeof(tile) / 4), destination_tiles_ptr);
+            commit_with_cpu(source_tiles_ptr, index, count);
             break;
 
         case compression_type::LZ77:
-            hw::decompress::lz77_vram(source_tiles_ptr, destination_tiles_ptr);
+            hw::decompress::lz77_vram(source_tiles_ptr, tile_vram(index));
             break;
 
         case compression_type::RUN_LENGTH:
-            hw::decompress::rl_vram(source_tiles_ptr, destination_tiles_ptr);
+            hw::decompress::rl_vram(source_tiles_ptr, tile_vram(index));
             break;
 
         case compression_type::HUFFMAN:
-            hw::decompress::huff(source_tiles_ptr, destination_tiles_ptr);
+            hw::decompress::huff(source_tiles_ptr, tile_vram(index));
             break;
 
         default:

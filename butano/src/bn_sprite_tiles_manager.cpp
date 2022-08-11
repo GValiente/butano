@@ -275,7 +275,8 @@ namespace
         unordered_map<const tile*, int, max_items * 2> items_map;
         vector<uint16_t, max_items> free_items;
         vector<uint16_t, max_items> to_remove_items;
-        vector<uint16_t, max_items> to_commit_items;
+        vector<uint16_t, max_items> to_commit_uncompressed_items;
+        vector<uint16_t, max_items> to_commit_compressed_items;
         int free_tiles_count = 0;
         int to_remove_tiles_count = 0;
         bool delay_commit = false;
@@ -432,8 +433,25 @@ namespace
     {
         if(! item.commit)
         {
-            data.to_commit_items.push_back(id);
             item.commit = true;
+
+            switch(item.compression())
+            {
+
+            case compression_type::NONE:
+                data.to_commit_uncompressed_items.push_back(id);
+                break;
+
+            case compression_type::LZ77:
+            case compression_type::RUN_LENGTH:
+            case compression_type::HUFFMAN:
+                data.to_commit_compressed_items.push_back(id);
+                break;
+
+            default:
+                BN_ERROR("Unknown compression type: ", int(compression));
+                break;
+            }
         }
     }
 
@@ -1102,13 +1120,52 @@ void update()
     data.delay_commit = false;
 }
 
-void commit()
+void commit_uncompressed(bool use_dma)
 {
-    if(! data.to_commit_items.empty())
+    if(! data.to_commit_uncompressed_items.empty())
     {
-        BN_SPRITE_TILES_LOG("sprite_tiles_manager - COMMIT");
+        BN_SPRITE_TILES_LOG("sprite_tiles_manager - COMMIT UNCOMPRESSED");
 
-        for(int item_index : data.to_commit_items)
+        if(use_dma)
+        {
+            for(int item_index : data.to_commit_uncompressed_items)
+            {
+                item_type& item = data.items.item(item_index);
+
+                if(item.commit)
+                {
+                    hw::sprite_tiles::commit_with_dma(item.data, int(item.start_tile), int(item.tiles_count));
+                    item.commit = false;
+                }
+            }
+        }
+        else
+        {
+            for(int item_index : data.to_commit_uncompressed_items)
+            {
+                item_type& item = data.items.item(item_index);
+
+                if(item.commit)
+                {
+                    hw::sprite_tiles::commit_with_cpu(item.data, int(item.start_tile), int(item.tiles_count));
+                    item.commit = false;
+                }
+            }
+        }
+
+        data.to_commit_uncompressed_items.clear();
+
+        BN_SPRITE_TILES_LOG_STATUS();
+    }
+}
+
+void commit_compressed()
+{
+    if(! data.to_commit_compressed_items.empty())
+    {
+        BN_SPRITE_TILES_LOG("sprite_tiles_manager - COMMIT COMPRESSED");
+
+        for(int item_index : data.to_commit_compressed_items)
         {
             item_type& item = data.items.item(item_index);
 
@@ -1119,7 +1176,7 @@ void commit()
             }
         }
 
-        data.to_commit_items.clear();
+        data.to_commit_compressed_items.clear();
 
         BN_SPRITE_TILES_LOG_STATUS();
     }

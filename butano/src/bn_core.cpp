@@ -251,6 +251,10 @@ namespace
         palettes_manager::commit(use_dma);
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
+        BN_PROFILER_ENGINE_DETAILED_START("eng_spr_tiles_unc_commit");
+        sprite_tiles_manager::commit_uncompressed(use_dma);
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
         BN_PROFILER_ENGINE_DETAILED_START("eng_hdma_update");
         hdma_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();
@@ -261,8 +265,8 @@ namespace
         hblank_effects_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_DETAILED_START("eng_spr_tiles_commit");
-        sprite_tiles_manager::commit();
+        BN_PROFILER_ENGINE_DETAILED_START("eng_spr_tiles_cmp_commit");
+        sprite_tiles_manager::commit_compressed();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_big_maps_commit");

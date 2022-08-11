@@ -232,7 +232,7 @@ int available_items_count()
 id_type create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
                sprite_palette_ptr&& palette)
 {
-    BN_ASSERT(! data.items_pool.full(), "No more sprite items available");
+    BN_ASSERT(! data.items_pool.full(), "No more items available");
 
     item_type& new_item = data.items_pool.create(position, shape_size, move(tiles), move(palette));
     data.sorter.insert(new_item);
@@ -258,7 +258,7 @@ id_type create_optional(const fixed_point& position, const sprite_shape_size& sh
 
 id_type create(sprite_builder&& builder)
 {
-    BN_ASSERT(! data.items_pool.full(), "No more sprite items available");
+    BN_ASSERT(! data.items_pool.full(), "No more items available");
 
     item_type& new_item = data.items_pool.create(move(builder));
     data.sorter.insert(new_item);

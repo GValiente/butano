@@ -1076,7 +1076,7 @@ namespace
 
         if(external_data.free_item_indexes.empty())
         {
-            BN_ASSERT(optional, "No more available H-Blank effects");
+            BN_ASSERT(optional, "No more H-Blank effects available");
             return -1;
         }
 
@@ -1093,7 +1093,7 @@ namespace
             }
             else
             {
-                BN_ASSERT(optional, "No more available 32 bits H-Blank effects");
+                BN_ASSERT(optional, "No more 32 bits H-Blank effects available");
                 return -1;
             }
         }
@@ -1113,7 +1113,7 @@ namespace
             }
             else
             {
-                BN_ASSERT(optional, "No more available 32 bits H-Blank effects");
+                BN_ASSERT(optional, "No more 32 bits H-Blank effects available");
                 return -1;
             }
         }

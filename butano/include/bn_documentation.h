@@ -1962,7 +1962,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_10_6_0 10.6.0 (next release)
+ * @section changelog_10_6_0 10.6.0
  *
  * * bn::sprite_animate_action::set_wait_updates and bn::sprite_cached_animate_action::set_wait_updates added.
  * * bn::sprite_animate_action::reset and bn::sprite_cached_animate_action::reset added.

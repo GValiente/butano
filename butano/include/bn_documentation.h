@@ -1962,7 +1962,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_10_6_1 10.6.1 (next release)
+ * @section changelog_10_6_1 10.6.1
  *
  * bn::bitset AND, OR and XOR operators fixed.
  *

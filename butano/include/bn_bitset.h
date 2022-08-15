@@ -713,7 +713,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary AND of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator&(const ibitset& a, const ibitset& b)
+    [[nodiscard]] constexpr friend bitset operator&(const bitset& a, const bitset& b)
     {
         bitset result(a);
         result &= b;
@@ -723,7 +723,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary OR of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator|(const ibitset& a, const ibitset& b)
+    [[nodiscard]] constexpr friend bitset operator|(const bitset& a, const bitset& b)
     {
         bitset result(a);
         result |= b;
@@ -733,7 +733,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary XOR of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator^(const ibitset& a, const ibitset& b)
+    [[nodiscard]] constexpr friend bitset operator^(const bitset& a, const bitset& b)
     {
         bitset result(a);
         result ^= b;

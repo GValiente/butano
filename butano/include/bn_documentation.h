@@ -1962,6 +1962,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_10_6_1 10.6.1 (next release)
+ *
+ * bn::bitset AND, OR and XOR operators fixed.
+ *
+ *
  * @section changelog_10_6_0 10.6.0
  *
  * * bn::sprite_animate_action::set_wait_updates and bn::sprite_cached_animate_action::set_wait_updates added.

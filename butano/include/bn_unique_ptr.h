@@ -54,6 +54,17 @@ public:
     {
     }
 
+    /**
+     * @brief Move constructor.
+     * @param other unique_ptr object to move with different type and deleter.
+     */
+    template<typename OtherType, typename OtherDeleter>
+    unique_ptr(unique_ptr<OtherType, OtherDeleter>&& other) :
+        _ptr(other.release()),
+        _deleter(forward<OtherDeleter>(other.get_deleter()))
+    {
+    }
+
     unique_ptr& operator=(const unique_ptr& other) = delete;
 
     /**
@@ -65,6 +76,19 @@ public:
     {
         reset(other.release());
         _deleter = move(other._deleter);
+        return *this;
+    }
+
+    /**
+     * @brief Move assignment operator.
+     * @param other unique_ptr object to move with different type and deleter.
+     * @return Reference to this.
+     */
+    template<typename OtherType, typename OtherDeleter>
+    unique_ptr& operator=(unique_ptr<OtherType, OtherDeleter>&& other)
+    {
+        reset(other.release());
+        _deleter = forward<OtherDeleter>(other.get_deleter());
         return *this;
     }
 
@@ -181,6 +205,20 @@ public:
      * @param ptr Pointer to the new object to manage.
      */
     void reset(pointer ptr)
+    {
+        if(ptr != _ptr)
+        {
+            reset();
+            _ptr = ptr;
+        }
+    }
+
+    /**
+     * @brief Disposes the managed object and replaces it with the given one.
+     * @param ptr Pointer to the new object to manage with different type.
+     */
+    template<typename OtherType>
+    void reset(OtherType* ptr)
     {
         if(ptr != _ptr)
         {

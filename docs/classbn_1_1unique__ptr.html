@@ -114,6 +114,11 @@
               <span class="m-doc-wrap-bumper"><a href="#a098203ec6ec691dbeeaccee996fed5e7" class="m-doc">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Move constructor.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename OtherType, typename OtherDeleter&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#a768c7551d25529c871571f07323a1a86" class="m-doc">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;OtherType, OtherDeleter&gt;&amp;&amp; other)</span>
+            </dt>
+            <dd>Move constructor.</dd>
             <dt id="ac42efcad1e1748283e023e5df70cafe6">
               <span class="m-doc-wrap-bumper"><a href="#ac42efcad1e1748283e023e5df70cafe6" class="m-doc-self">~unique_ptr</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
@@ -129,6 +134,11 @@
           <dl class="m-doc">
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aaa1f8251e68d4885c604fd3b92ff97fe" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename OtherType, typename OtherDeleter&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0a687d916b3079569dab65a478317206" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;OtherType, OtherDeleter&gt;&amp;&amp; other) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp;</span>
             </dt>
             <dd>Move assignment operator.</dd>
             <dt id="ac6f04eea9200368b91c902a259adc17e">
@@ -173,6 +183,11 @@
             <dd>Disposes the managed object.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#aab764ae12bb019fcf4e50c46596d7590" class="m-doc">reset</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr)</span>
+            </dt>
+            <dd>Disposes the managed object and replaces it with the given one.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename OtherType&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#a5a6b72bb6a0c87f2160696211f025adf" class="m-doc">reset</a>(</span><span class="m-doc-wrap">OtherType* ptr)</span>
             </dt>
             <dd>Disposes the managed object and replaces it with the given one.</dd>
             <dt>
@@ -293,6 +308,27 @@
               </tbody>
             </table>
           </div></section>
+          <section class="m-doc-details" id="a768c7551d25529c871571f07323a1a86"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, typename Deleter&gt;
+                template&lt;typename OtherType, typename OtherDeleter&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a768c7551d25529c871571f07323a1a86" class="m-doc-self">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;OtherType, OtherDeleter&gt;&amp;&amp; other)</span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> object to move with different type and deleter.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="aaa1f8251e68d4885c604fd3b92ff97fe"><div>
             <h3>
               <div class="m-doc-template">
@@ -309,6 +345,33 @@
                 <tr>
                   <td style="width: 1%">other</td>
                   <td><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> object to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0a687d916b3079569dab65a478317206"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, typename Deleter&gt;
+                template&lt;typename OtherType, typename OtherDeleter&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0a687d916b3079569dab65a478317206" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;OtherType, OtherDeleter&gt;&amp;&amp; other)</span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> object to move with different type and deleter.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -352,6 +415,27 @@
                 <tr>
                   <td style="width: 1%">ptr</td>
                   <td>Pointer to the new object to manage.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5a6b72bb6a0c87f2160696211f025adf"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, typename Deleter&gt;
+                template&lt;typename OtherType&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5a6b72bb6a0c87f2160696211f025adf" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap">OtherType* ptr)</span></span>
+            </h3>
+            <p>Disposes the managed object and replaces it with the given one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Pointer to the new object to manage with different type.</td>
                 </tr>
               </tbody>
             </table>

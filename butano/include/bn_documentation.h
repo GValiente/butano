@@ -724,8 +724,9 @@
  *
  * Make sure that you are able to build and run some of them:
  * * They are located in `/path/to/butano/examples/`.
- * * As with devkitARM examples, to build a Butano example open the console, `cd` to the folder of the example
- *   you want to build and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
+ * * As with <a href="https://devkitpro.org/">devkitARM</a> examples, to build a Butano example open the console,
+ *   `cd` to the folder of the example you want to build and type `make -j8` if your CPU has 8 cores,
+ *   `make -j16` if it has 16 and so on.
  *
  * When trying to build the `sprites` example, if everything went as expected,
  * a `sprites.gba` file should have been generated in the `sprites` folder,
@@ -1482,7 +1483,8 @@
  *
  * @section qt_creator_compilers Compilers
  *
- * Once you have Qt Creator installed, add devkitARM GCC and G++ compilers from `Tools -> Options -> Kits -> Compilers`:
+ * Once you have Qt Creator installed, add <a href="https://devkitpro.org/">devkitARM</a>
+ * GCC and G++ compilers from `Tools -> Options -> Kits -> Compilers`:
  *
  * @image html qt_creator/qt_1.png
  *
@@ -1491,7 +1493,8 @@
  *
  * @section qt_creator_kit Kit
  *
- * Add a new kit with the previous devkitARM compilers from `Tools -> Options -> Kits -> Kits`:
+ * Add a new kit with the previous <a href="https://devkitpro.org/">devkitARM</a> compilers from
+ * `Tools -> Options -> Kits -> Kits`:
  *
  * @image html qt_creator/qt_3.png
  *
@@ -1604,7 +1607,7 @@
  *
  * @subsection faq_incomplete_type Why I get an incomplete type error when trying to use a Butano class?
  *
- * If you have an error like these:
+ * If you get an error message like these:
  *
  * @code{.cpp}
  * error: variable 'bn::regular_bg_ptr bg' has initializer but incomplete type
@@ -1626,6 +1629,20 @@
  *
  * As the content of the `common` folder could change in future Butano versions,
  * you should copy its content to your project if you want to use it.
+ *
+ *
+ * @subsection faq_error_after_update Why I get undefined reference errors after updating Butano?
+ *
+ * If after updating Butano you get error messages like this:
+ *
+ * @code{.cpp}
+ * error: undefined reference to 'bn::reciprocal_lut_16'
+ * @endcode
+ *
+ * They usually go away with a full rebuild of your project (`make clean` before `make`).
+ *
+ * Also make sure you update <a href="https://devkitpro.org/">devkitARM</a> when you update Butano,
+ * since some Butano features don't work with older devkitARM releases.
  *
  *
  * @subsection faq_containers Why there's std like containers included with Butano?
@@ -1842,7 +1859,7 @@
  *
  * @subsection faq_bg_wrapping Why some backgrounds don't allow wrapping?
  *
- * If you try to move a big background beyond its boundaries, an error like this one should be displayed:
+ * If you try to move a big background beyond its boundaries, an error message like this one should be displayed:
  *
  * @image html faq_bg_wrapping.png
  *
@@ -1960,6 +1977,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_10_7_0 10.7.0 (next release)
+ *
+ * More questions added to @ref faq page.
  *
  *
  * @section changelog_10_6_1 10.6.1

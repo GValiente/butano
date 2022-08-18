@@ -516,6 +516,8 @@
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
+ * Unlike most Butano containers, it uses the heap instead of the stack.
+ *
  * @ingroup container
  */
 
@@ -1654,6 +1656,8 @@
  * Since avoiding heap usage and exceptions is usually good for GBA development,
  * use Butano containers whenever possible.
  *
+ * Keep in mind that unlike most Butano containers, bn::unique_ptr uses the heap instead of the stack.
+ *
  *
  * @subsection faq_heap So I shouldn't use the heap?
  *
@@ -1981,7 +1985,8 @@
  *
  * @section changelog_10_7_0 10.7.0 (next release)
  *
- * More questions added to @ref faq page.
+ * * More questions added to @ref faq page.
+ * * bn::unique_ptr documentation improved.
  *
  *
  * @section changelog_10_6_1 10.6.1

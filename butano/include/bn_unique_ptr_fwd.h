@@ -42,6 +42,8 @@ struct default_delete
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
+ * Unlike most Butano containers, it uses the heap instead of the stack.
+ *
  * @tparam Type Type of the managed object.
  * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
  *

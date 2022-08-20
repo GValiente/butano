@@ -353,8 +353,8 @@
  *
  * Butano standard library replacement.
  *
- * The biggest difference against C++'s standard library is the usage of asserts instead of exceptions
- * and that it avoids the heap when possible.
+ * Main differences against C++'s standard library is the usage of asserts instead of exceptions
+ * and that it avoids heap usage when possible.
  */
 
 /**
@@ -1664,6 +1664,8 @@
  * Since heap usage is slow and the heap allocator included with Butano is very limited,
  * avoid heap usage whenever possible.
  *
+ * Also, remember to call bn::core::init before using the heap.
+ *
  *
  * @subsection faq_memory_types Why I run out of memory so often?
  *
@@ -1674,7 +1676,7 @@
  * Data is allocated in IWRAM by default, so it is common to run out of memory if you don't use EWRAM.
  *
  * To place data in EWRAM, you can:
- * * Allocate memory in the heap, since it is in EWRAM.
+ * * Allocate memory in the heap, since it is placed in EWRAM.
  * * Declare static data with the `BN_DATA_EWRAM` macro:
  * @code{.cpp}
  * BN_DATA_EWRAM static_data data;
@@ -1759,7 +1761,7 @@
  * @subsection faq_global_objects Does Butano allow to declare bn::sprite_ptr or bn::regular_bg_ptr objects globally?
  *
  * In general, you should not do anything with Butano before calling bn::core::init,
- * including creating global Butano objects.
+ * including creating global Butano objects and allocating memory in the heap.
  *
  * If you want to declare global Butano objects, you can do something like this instead:
  *
@@ -1987,8 +1989,9 @@
  *
  * * bn::unique_ptr move constructor, move assignment operator and bn::unique_ptr::reset
  *   allow to manage pointers and deleters with different type.
- * * More questions added to @ref faq page.
  * * bn::unique_ptr documentation improved.
+ * * More questions added to @ref faq page.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_10_6_1 10.6.1

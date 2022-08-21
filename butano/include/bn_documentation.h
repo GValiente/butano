@@ -2001,7 +2001,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_11_0_0 11.0.0 (next release)
+ * @section changelog_11_0_0 11.0.0
  *
  * Huffman images compression support
  * (make sure to update <a href="https://devkitpro.org/">devkitARM</a> before using it).

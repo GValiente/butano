@@ -1985,7 +1985,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_10_7_0 10.7.0 (next release)
+ * @section changelog_10_7_0 10.7.0
  *
  * * bn::unique_ptr move constructor, move assignment operator and bn::unique_ptr::reset
  *   allow to manage pointers and deleters with different type.

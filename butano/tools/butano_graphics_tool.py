@@ -16,7 +16,7 @@ from file_info import FileInfo
 
 
 def validate_compression(compression):
-    if compression != 'none' and compression != 'lz77' and compression != 'run_length' and compression != 'auto':
+    if compression not in ['none', 'lz77', 'run_length', 'huffman', 'auto']:
         raise ValueError('Unknown compression: ' + str(compression))
 
 
@@ -35,7 +35,19 @@ def compression_label(compression):
     if compression == 'run_length':
         return 'compression_type::RUN_LENGTH'
 
+    if compression == 'huffman':
+        return 'compression_type::HUFFMAN'
+
     raise ValueError('Unknown compression: ' + str(compression))
+
+
+def append_compression_command(tag, compression, command):
+    if compression == 'lz77':
+        command.append('-' + tag + 'zl')
+    elif compression == 'run_length':
+        command.append('-' + tag + 'zr')
+    elif compression == 'huffman':
+        command.append('-' + tag + 'zh')
 
 
 class SpriteItem:
@@ -143,6 +155,7 @@ class SpriteItem:
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'huffman', file_size)
 
         if palette_compression == 'auto':
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
@@ -243,16 +256,8 @@ class SpriteItem:
         else:
             command.append('-gB8')
 
-        if tiles_compression == 'lz77':
-            command.append('-gzl')
-        elif tiles_compression == 'run_length':
-            command.append('-gzr')
-
-        if palette_compression == 'lz77':
-            command.append('-pzl')
-        elif palette_compression == 'run_length':
-            command.append('-pzr')
-
+        append_compression_command('g', tiles_compression, command)
+        append_compression_command('p', palette_compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
@@ -310,6 +315,7 @@ class SpriteTilesItem:
             compression, file_size = self.__test_compression(compression, 'none', None)
             compression, file_size = self.__test_compression(compression, 'run_length', file_size)
             compression, file_size = self.__test_compression(compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(compression, 'huffman', file_size)
 
         self.__execute_command(compression)
         return self.__write_header(compression, False)
@@ -393,11 +399,7 @@ class SpriteTilesItem:
         else:
             command.append('-gB4')
 
-        if compression == 'lz77':
-            command.append('-gzl')
-        elif compression == 'run_length':
-            command.append('-gzr')
-
+        append_compression_command('g', compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
@@ -506,12 +508,7 @@ class SpritePaletteItem:
 
     def __execute_command(self, compression):
         command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
-
-        if compression == 'lz77':
-            command.append('-pzl')
-        elif compression == 'run_length':
-            command.append('-pzr')
-
+        append_compression_command('p', compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
@@ -639,6 +636,7 @@ class RegularBgItem:
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'huffman', file_size)
 
         if palette_compression == 'auto':
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
@@ -650,6 +648,7 @@ class RegularBgItem:
             map_compression, file_size = self.__test_map_compression(map_compression, 'none', None)
             map_compression, file_size = self.__test_map_compression(map_compression, 'run_length', file_size)
             map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
+            map_compression, file_size = self.__test_map_compression(map_compression, 'huffman', file_size)
 
         self.__execute_command(tiles_compression, palette_compression, map_compression)
         return self.__write_header(tiles_compression, palette_compression, map_compression, False)
@@ -798,21 +797,9 @@ class RegularBgItem:
         else:
             command.append('-mLf')
 
-        if tiles_compression == 'lz77':
-            command.append('-gzl')
-        elif tiles_compression == 'run_length':
-            command.append('-gzr')
-
-        if palette_compression == 'lz77':
-            command.append('-pzl')
-        elif palette_compression == 'run_length':
-            command.append('-pzr')
-
-        if map_compression == 'lz77':
-            command.append('-mzl')
-        elif map_compression == 'run_length':
-            command.append('-mzr')
-
+        append_compression_command('g', tiles_compression, command)
+        append_compression_command('p', palette_compression, command)
+        append_compression_command('m', map_compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
@@ -854,6 +841,7 @@ class RegularBgTilesItem:
             compression, file_size = self.__test_compression(compression, 'none', None)
             compression, file_size = self.__test_compression(compression, 'run_length', file_size)
             compression, file_size = self.__test_compression(compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(compression, 'huffman', file_size)
 
         self.__execute_command(compression)
         return self.__write_header(compression, False)
@@ -936,11 +924,7 @@ class RegularBgTilesItem:
         else:
             command.append('-gB4')
 
-        if compression == 'lz77':
-            command.append('-gzl')
-        elif compression == 'run_length':
-            command.append('-gzr')
-
+        append_compression_command('g', compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
@@ -1040,6 +1024,7 @@ class AffineBgItem:
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
             tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'huffman', file_size)
 
         if palette_compression == 'auto':
             palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
@@ -1051,6 +1036,7 @@ class AffineBgItem:
             map_compression, file_size = self.__test_map_compression(map_compression, 'none', None)
             map_compression, file_size = self.__test_map_compression(map_compression, 'run_length', file_size)
             map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
+            map_compression, file_size = self.__test_map_compression(map_compression, 'huffman', file_size)
 
         self.__execute_command(tiles_compression, palette_compression, map_compression)
         return self.__write_header(tiles_compression, palette_compression, map_compression, False)
@@ -1171,21 +1157,9 @@ class AffineBgItem:
         else:
             command.append('-mR!')
 
-        if tiles_compression == 'lz77':
-            command.append('-gzl')
-        elif tiles_compression == 'run_length':
-            command.append('-gzr')
-
-        if palette_compression == 'lz77':
-            command.append('-pzl')
-        elif palette_compression == 'run_length':
-            command.append('-pzr')
-
-        if map_compression == 'lz77':
-            command.append('-mzl')
-        elif map_compression == 'run_length':
-            command.append('-mzr')
-
+        append_compression_command('g', tiles_compression, command)
+        append_compression_command('p', palette_compression, command)
+        append_compression_command('m', map_compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
@@ -1215,6 +1189,7 @@ class AffineBgTilesItem:
             compression, file_size = self.__test_compression(compression, 'none', None)
             compression, file_size = self.__test_compression(compression, 'run_length', file_size)
             compression, file_size = self.__test_compression(compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(compression, 'huffman', file_size)
 
         self.__execute_command(compression)
         return self.__write_header(compression, False)
@@ -1286,12 +1261,7 @@ class AffineBgTilesItem:
 
     def __execute_command(self, compression):
         command = ['grit', self.__file_path, '-gB8', '-m!', '-p!']
-
-        if compression == 'lz77':
-            command.append('-gzl')
-        elif compression == 'run_length':
-            command.append('-gzr')
-
+        append_compression_command('g', compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
@@ -1412,12 +1382,7 @@ class BgPaletteItem:
 
     def __execute_command(self, compression):
         command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
-
-        if compression == 'lz77':
-            command.append('-pzl')
-        elif compression == 'run_length':
-            command.append('-pzr')
-
+        append_compression_command('p', compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 

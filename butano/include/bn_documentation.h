@@ -1033,16 +1033,19 @@
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1090,6 +1093,7 @@
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1124,6 +1128,7 @@
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1178,21 +1183,25 @@
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"map_compression"`: optional field which specifies the compression of the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"compression"`: optional field which specifies the compression of the tiles, the colors and the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1233,6 +1242,7 @@
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1274,21 +1284,25 @@
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"map_compression"`: optional field which specifies the compression of the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  * * `"compression"`: optional field which specifies the compression of the tiles, the colors and the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1324,6 +1338,7 @@
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1362,6 +1377,7 @@
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
@@ -1983,6 +1999,12 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_11_0_0 11.0.0 (next release)
+ *
+ * Huffman images compression support
+ * (make sure to update <a href="https://devkitpro.org/">devkitARM</a> before using it).
  *
  *
  * @section changelog_10_7_0 10.7.0

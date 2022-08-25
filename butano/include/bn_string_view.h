@@ -303,7 +303,7 @@ public:
      */
     [[nodiscard]] constexpr bool starts_with(value_type value) const
     {
-        return ! empty() && front() == value;
+        return ! empty() && *_begin == value;
     }
 
     /**
@@ -352,7 +352,14 @@ public:
 
         for(size_type index = 0, limit = size(); index < limit; ++index)
         {
-            if(*this_char_array_ptr != *char_array_ptr)
+            value_type character = *char_array_ptr;
+
+            if(character == 0)
+            {
+                return true;
+            }
+
+            if(character != *this_char_array_ptr)
             {
                 return false;
             }
@@ -371,7 +378,7 @@ public:
      */
     [[nodiscard]] constexpr bool ends_with(value_type value) const
     {
-        return ! empty() && back() == value;
+        return ! empty() && *(_end - 1) == value;
     }
 
     /**

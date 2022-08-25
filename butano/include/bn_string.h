@@ -242,7 +242,14 @@ public:
 
         for(size_type index = 0, limit = size(); index < limit; ++index)
         {
-            if(*this_char_array_ptr != *char_array_ptr)
+            value_type character = *char_array_ptr;
+
+            if(character == 0)
+            {
+                return true;
+            }
+
+            if(character != *this_char_array_ptr)
             {
                 return false;
             }

@@ -2001,7 +2001,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_11_0_1 11.0.1 (next release)
+ * @section changelog_11_0_1 11.0.1
  *
  * bn::string::starts_with and bn::string_view::starts_with fixed.
  *

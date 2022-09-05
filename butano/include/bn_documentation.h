@@ -2001,7 +2001,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_12_0_0 12.0.0 (next release)
+ * @section changelog_12_0_0 12.0.0
  *
  * * <b>(Breaking change)</b> bn::aligned fixed.
  * * Color effects optimized.

@@ -494,7 +494,7 @@ namespace
 
         common::info info("Transparent color H-Blank effect", info_text_lines, text_generator);
 
-        bn::array<bn::color, bn::display::height()> colors;
+        alignas(int) bn::color colors[bn::display::height()];
         bn::fixed max_red_inc(16);
 
         for(int index = 0, amplitude = bn::display::height() / 2; index < amplitude; ++index)
@@ -524,7 +524,7 @@ namespace
         common::info info("Palette color H-Blank effect", info_text_lines, text_generator);
 
         bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
-        bn::array<bn::color, bn::display::height()> colors;
+        alignas(int) bn::color colors[bn::display::height()];
         bn::fixed max_green_dec(16);
 
         for(int index = 0, amplitude = bn::display::height() / 2; index < amplitude; ++index)

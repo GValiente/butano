@@ -22,7 +22,7 @@ regular_bg_map_item regular_bg_map_item::decompress(regular_bg_map_cell& decompr
               decompressed_dimensions.width(), " - ", _dimensions.width(), " - ",
               decompressed_dimensions.height(), " - ", _dimensions.height());
 
-    BN_ASSERT(aligned<alignof(int)>(&decompressed_cells_ref), "Destination map cells are not aligned");
+    BN_ASSERT(aligned<4>(&decompressed_cells_ref), "Destination map cells are not aligned");
 
     regular_bg_map_item result = *this;
 

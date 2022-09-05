@@ -96,8 +96,7 @@ namespace bn::hw::bg_blocks
     inline void commit_offset(const uint16_t* source_data_ptr, int half_words, uint16_t offset,
                               uint16_t* destination_vram_ptr)
     {
-        if(half_words % 4 == 0 && bn::aligned<sizeof(unsigned)>(source_data_ptr) &&
-                bn::aligned<sizeof(unsigned)>(destination_vram_ptr))
+        if(half_words % 4 == 0 && aligned<4>(source_data_ptr) && aligned<4>(destination_vram_ptr))
         {
             auto unsigned_source_ptr = reinterpret_cast<const unsigned*>(source_data_ptr);
             auto unsigned_destination_ptr = reinterpret_cast<unsigned*>(destination_vram_ptr);

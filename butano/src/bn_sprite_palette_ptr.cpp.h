@@ -90,7 +90,7 @@ optional<sprite_palette_ptr> sprite_palette_ptr::find(const sprite_palette_item&
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors_per_palette()];
+        alignas(int) color decompressed_colors[hw::palettes::colors_per_palette()];
         result = find(palette_item.decompress(decompressed_colors));
     }
 
@@ -107,7 +107,7 @@ sprite_palette_ptr sprite_palette_ptr::create(const sprite_palette_item& palette
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors_per_palette()];
+        alignas(int) color decompressed_colors[hw::palettes::colors_per_palette()];
         id = _create_impl(palette_item.decompress(decompressed_colors), true);
     }
 
@@ -124,7 +124,7 @@ sprite_palette_ptr sprite_palette_ptr::create_new(const sprite_palette_item& pal
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors_per_palette()];
+        alignas(int) color decompressed_colors[hw::palettes::colors_per_palette()];
         id = _create_new_impl(palette_item.decompress(decompressed_colors), true);
     }
 
@@ -141,7 +141,7 @@ optional<sprite_palette_ptr> sprite_palette_ptr::create_optional(const sprite_pa
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors_per_palette()];
+        alignas(int) color decompressed_colors[hw::palettes::colors_per_palette()];
         id = _create_impl(palette_item.decompress(decompressed_colors), false);
     }
 
@@ -161,7 +161,7 @@ optional<sprite_palette_ptr> sprite_palette_ptr::create_new_optional(const sprit
 
     if(palette_item.compression() == compression_type::NONE || palette_item.bpp() == bpp_mode::BPP_8)
     {
-        color decompressed_colors[hw::palettes::colors_per_palette()];
+        alignas(int) color decompressed_colors[hw::palettes::colors_per_palette()];
         id = _create_new_impl(palette_item.decompress(decompressed_colors), false);
     }
     else
@@ -219,7 +219,7 @@ void sprite_palette_ptr::set_colors(const sprite_palette_item& palette_item)
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors()];
+        alignas(int) color decompressed_colors[hw::palettes::colors()];
         set_colors(palette_item.decompress(decompressed_colors));
     }
 }

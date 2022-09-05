@@ -33,7 +33,7 @@ namespace
         static constexpr int rows = 32;
         static constexpr int cells_count = columns * rows;
 
-        bn::regular_bg_map_cell cells[cells_count];
+        alignas(int) bn::regular_bg_map_cell cells[cells_count];
         bn::regular_bg_map_item map_item;
 
         bg_map() :

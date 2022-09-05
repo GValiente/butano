@@ -18,12 +18,12 @@
 namespace bn
 {
     /**
-     * @brief Indicates if the given pointer is aligned to the given Bytes.
+     * @brief Indicates if the given `void` pointer is aligned to the given Bytes.
      *
      * @ingroup memory
      */
     template<int Bytes>
-    [[nodiscard]] constexpr bool aligned(const void* pointer)
+    [[nodiscard]] bool aligned(const void* pointer)
     {
         static_assert(Bytes > 0);
 
@@ -31,17 +31,16 @@ namespace bn
     }
 
     /**
-     * @brief Indicates if the given reference to a Type object is aligned to the given Bytes.
+     * @brief Indicates if the given Type pointer is aligned to the given Bytes.
      *
      * @ingroup memory
      */
     template<int Bytes, typename Type>
-    [[nodiscard]] constexpr bool aligned(const Type& reference)
+    [[nodiscard]] bool aligned(const Type* pointer)
     {
         static_assert(Bytes > 0);
 
-        return alignof(Type) % unsigned(Bytes) == 0 ||
-                uintptr_t(&reference) % unsigned(Bytes) == 0;
+        return alignof(Type) % unsigned(Bytes) == 0 || uintptr_t(pointer) % unsigned(Bytes) == 0;
     }
 }
 

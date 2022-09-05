@@ -72,7 +72,6 @@ public:
         _bpp(bpp),
         _compression(compression)
     {
-        BN_ASSERT(aligned<alignof(int)>(colors_ref.data()), "Colors are not aligned");
         BN_ASSERT((bpp == bpp_mode::BPP_4 && colors_ref.size() == 16) ||
                   (bpp == bpp_mode::BPP_8 && colors_ref.size() >= 16 && colors_ref.size() <= 256 &&
                         colors_ref.size() % 16 == 0),

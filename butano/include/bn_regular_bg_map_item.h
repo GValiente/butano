@@ -75,7 +75,6 @@ public:
         _dimensions(dimensions),
         _compression(compression)
     {
-        BN_ASSERT(aligned<alignof(int)>(&cells_ref), "Map cells are not aligned");
         BN_ASSERT(dimensions.width() >= 32 && dimensions.width() % 32 == 0,
                   "Invalid width: ", dimensions.width());
         BN_ASSERT(dimensions.height() >= 32 && dimensions.height() % 32 == 0,

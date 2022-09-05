@@ -103,14 +103,14 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;int Bytes&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga6886f0fcbb7a746ce13e7929cc43f65b" class="m-doc">aligned</a>(</span><span class="m-doc-wrap">const void* pointer) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga3e6c93fe7f9ba3d81b89c2c87ccdee74" class="m-doc">aligned</a>(</span><span class="m-doc-wrap">const void* pointer) -&gt; bool</span>
             </dt>
-            <dd>Indicates if the given pointer is aligned to the given Bytes.</dd>
+            <dd>Indicates if the given <code>void</code> pointer is aligned to the given Bytes.</dd>
             <dt>
               <div class="m-doc-template">template&lt;int Bytes, typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga3cb6a72a9c41089559937631150a7b51" class="m-doc">aligned</a>(</span><span class="m-doc-wrap">const Type&amp; reference) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaaad17aa76ce6c0921c955bbbd9580d37" class="m-doc">aligned</a>(</span><span class="m-doc-wrap">const Type* pointer) -&gt; bool</span>
             </dt>
-            <dd>Indicates if the given reference to a Type object is aligned to the given Bytes.</dd>
+            <dd>Indicates if the given Type pointer is aligned to the given Bytes.</dd>
           </dl>
         </section>
         <section id="define-members">
@@ -136,25 +136,25 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ga6886f0fcbb7a746ce13e7929cc43f65b"><div>
+          <section class="m-doc-details" id="ga3e6c93fe7f9ba3d81b89c2c87ccdee74"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__alignment_8h.html">&lt;bn_alignment.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;int Bytes&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga6886f0fcbb7a746ce13e7929cc43f65b" class="m-doc-self">aligned</a>(</span><span class="m-doc-wrap">const void* pointer) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3e6c93fe7f9ba3d81b89c2c87ccdee74" class="m-doc-self">aligned</a>(</span><span class="m-doc-wrap">const void* pointer)</span></span>
             </h3>
-            <p>Indicates if the given pointer is aligned to the given Bytes.</p>
+            <p>Indicates if the given <code>void</code> pointer is aligned to the given Bytes.</p>
           </div></section>
-          <section class="m-doc-details" id="ga3cb6a72a9c41089559937631150a7b51"><div>
+          <section class="m-doc-details" id="gaaad17aa76ce6c0921c955bbbd9580d37"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__alignment_8h.html">&lt;bn_alignment.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;int Bytes, typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3cb6a72a9c41089559937631150a7b51" class="m-doc-self">aligned</a>(</span><span class="m-doc-wrap">const Type&amp; reference) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaaad17aa76ce6c0921c955bbbd9580d37" class="m-doc-self">aligned</a>(</span><span class="m-doc-wrap">const Type* pointer)</span></span>
             </h3>
-            <p>Indicates if the given reference to a Type object is aligned to the given Bytes.</p>
+            <p>Indicates if the given Type pointer is aligned to the given Bytes.</p>
           </div></section>
         </section>
         <section>

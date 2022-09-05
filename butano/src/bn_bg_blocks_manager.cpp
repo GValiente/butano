@@ -1364,6 +1364,7 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
         return result;
     }
 
+    BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
     BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(dimensions.width(), dimensions.height()),
@@ -1418,6 +1419,7 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
         return result;
     }
 
+    BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
     BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(dimensions.width(), dimensions.height()),
               "Compressed big affine maps are not supported");
@@ -1553,6 +1555,7 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
                      int(compression));
 
+    BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
     BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(dimensions.width(), dimensions.height()),
@@ -1602,6 +1605,7 @@ int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_pt
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
                      int(compression));
 
+    BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
     BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(dimensions.width(), dimensions.height()),
               "Compressed big affine maps are not supported");
@@ -2029,6 +2033,7 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
     if(item_data != data_ptr)
     {
         BN_ASSERT(item_data, "Item has no data");
+        BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
         BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                   "Multiple copies of the same data not supported");
 
@@ -2073,6 +2078,7 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
     if(item_data != data_ptr)
     {
         BN_ASSERT(item_data, "Item has no data");
+        BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
         BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                   "Multiple copies of the same data not supported");
 

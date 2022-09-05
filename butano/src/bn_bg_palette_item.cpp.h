@@ -19,7 +19,7 @@ bg_palette_item bg_palette_item::decompress(span<color> decompressed_colors_ref)
               decompressed_colors_ref.size(), " - ", source_colors_count);
 
     color* dest_colors_ptr = decompressed_colors_ref.data();
-    BN_ASSERT(aligned<alignof(int)>(dest_colors_ptr), "Destination colors are not aligned");
+    BN_ASSERT(aligned<4>(dest_colors_ptr), "Destination colors are not aligned");
 
     bg_palette_item result = *this;
 

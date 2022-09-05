@@ -37,6 +37,22 @@ public:
 
         bn::free(ptr);
         BN_ASSERT(bn::memory::used_alloc_ewram() == 0);
+
+        uint32_t u32_array[3];
+        BN_ASSERT(bn::aligned<4>(u32_array));
+        BN_ASSERT(bn::aligned<4>(static_cast<const void*>(u32_array)));
+        BN_ASSERT(bn::aligned<4>(u32_array + 1));
+        BN_ASSERT(bn::aligned<4>(static_cast<const void*>(u32_array + 1)));
+        BN_ASSERT(bn::aligned<4>(u32_array + 2));
+        BN_ASSERT(bn::aligned<4>(static_cast<const void*>(u32_array + 2)));
+
+        alignas(4) uint16_t u16_array[3];
+        BN_ASSERT(bn::aligned<4>(u16_array));
+        BN_ASSERT(bn::aligned<4>(static_cast<const void*>(u16_array)));
+        BN_ASSERT(! bn::aligned<4>(u16_array + 1));
+        BN_ASSERT(! bn::aligned<4>(static_cast<const void*>(u16_array + 1)));
+        BN_ASSERT(bn::aligned<4>(u16_array + 2));
+        BN_ASSERT(bn::aligned<4>(static_cast<const void*>(u16_array + 2)));
     }
 };
 

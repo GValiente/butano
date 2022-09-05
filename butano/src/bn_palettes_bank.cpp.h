@@ -32,6 +32,9 @@ namespace
 
 uint16_t palettes_bank::colors_hash(const span<const color>& colors)
 {
+    const color* colors_data = colors.data();
+    BN_ASSERT(aligned<4>(colors_data), "Colors are not aligned");
+
     auto int_colors = reinterpret_cast<const unsigned*>(colors.data());
     auto result = unsigned(colors.size());
     result += int_colors[0];
@@ -214,13 +217,15 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, compression_typ
                 _palettes[slot].locked = true;
             }
 
-            color dest_colors_array[hw::palettes::colors()];
+            alignas(int) color dest_colors_array[hw::palettes::colors()];
             span<const color> dest_colors_span;
 
             switch(compression)
             {
 
             case compression_type::NONE:
+                BN_ASSERT(aligned<4>(colors.data()), "Colors are not aligned");
+
                 dest_colors_span = colors;
                 break;
 
@@ -312,7 +317,11 @@ void palettes_bank::set_colors(int id, const span<const color>& colors)
 
     palette& pal = _palettes[id];
 
-    if(! pal.bpp_8)
+    if(pal.bpp_8)
+    {
+        BN_ASSERT(aligned<4>(colors.data()), "Colors are not aligned");
+    }
+    else
     {
         uint16_t old_hash = pal.hash;
         uint16_t new_hash = colors_hash(colors);

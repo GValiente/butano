@@ -90,7 +90,7 @@ namespace bn::hw::palettes
         }
         else
         {
-            COLOR temp_colors[colors()];
+            alignas(int) COLOR temp_colors[colors()];
             clr_grayscale(temp_colors, tonc_src_ptr, unsigned(count));
             clr_blend_fast(tonc_src_ptr, temp_colors, tonc_dst_ptr, unsigned(count), unsigned(intensity));
         }

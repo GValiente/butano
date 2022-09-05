@@ -90,7 +90,7 @@ optional<bg_palette_ptr> bg_palette_ptr::find(const bg_palette_item& palette_ite
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors()];
+        alignas(int) color decompressed_colors[hw::palettes::colors()];
         result = find(palette_item.decompress(decompressed_colors));
     }
 
@@ -107,7 +107,7 @@ bg_palette_ptr bg_palette_ptr::create(const bg_palette_item& palette_item)
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors()];
+        alignas(int) color decompressed_colors[hw::palettes::colors()];
         id = _create_impl(palette_item.decompress(decompressed_colors), true);
     }
 
@@ -124,7 +124,7 @@ bg_palette_ptr bg_palette_ptr::create_new(const bg_palette_item& palette_item)
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors()];
+        alignas(int) color decompressed_colors[hw::palettes::colors()];
         id = _create_new_impl(palette_item.decompress(decompressed_colors), true);
     }
 
@@ -141,7 +141,7 @@ optional<bg_palette_ptr> bg_palette_ptr::create_optional(const bg_palette_item& 
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors()];
+        alignas(int) color decompressed_colors[hw::palettes::colors()];
         id = _create_impl(palette_item.decompress(decompressed_colors), false);
     }
 
@@ -165,7 +165,7 @@ optional<bg_palette_ptr> bg_palette_ptr::create_new_optional(const bg_palette_it
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors()];
+        alignas(int) color decompressed_colors[hw::palettes::colors()];
         id = _create_new_impl(palette_item.decompress(decompressed_colors), false);
     }
 
@@ -219,7 +219,7 @@ void bg_palette_ptr::set_colors(const bg_palette_item& palette_item)
     }
     else
     {
-        color decompressed_colors[hw::palettes::colors()];
+        alignas(int) color decompressed_colors[hw::palettes::colors()];
         set_colors(palette_item.decompress(decompressed_colors));
     }
 }

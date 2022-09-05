@@ -187,7 +187,7 @@ ibest_fit_allocator::ibest_fit_allocator(ilist<item_type>& items, ivector<items_
 void ibest_fit_allocator::_init(void* start, size_type bytes)
 {
     BN_ASSERT(start, "Start is null");
-    BN_ASSERT(aligned<sizeof(int)>(start), "Start is not aligned");
+    BN_ASSERT(aligned<4>(start), "Start is not aligned");
     BN_ASSERT(bytes > 0 && bytes % size_type(sizeof(int)) == 0, "Invalid bytes: ", bytes);
 
     _total_bytes_count = bytes;

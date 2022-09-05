@@ -1072,7 +1072,7 @@ namespace
 
     [[nodiscard]] int _create(const void* values_ptr, intptr_t target_id, handler_type handler, bool optional)
     {
-        BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
+        BN_ASSERT(aligned<4>(values_ptr), "Values are not aligned");
 
         if(external_data.free_item_indexes.empty())
         {
@@ -1249,8 +1249,9 @@ const void* values_ref(int id)
 
 void set_values_ref(int id, const void* values_ptr, [[maybe_unused]] int values_count)
 {
-    BN_ASSERT(values_count >= display::height(), "Invalid values count: ", values_count, " - ", display::height());
-    BN_ASSERT(aligned<alignof(int)>(values_ptr), "Values are not aligned");
+    BN_ASSERT(values_count >= display::height(),
+              "Invalid values count: ", values_count, " - ", display::height());
+    BN_ASSERT(aligned<4>(values_ptr), "Values are not aligned");
 
     item_type& item = external_data.items[id];
     item.values_ptr = values_ptr;

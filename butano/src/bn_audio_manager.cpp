@@ -620,6 +620,11 @@ void disable_vblank_handler()
 void update()
 {
     hw::audio::update(data.dmg_sync_enabled);
+}
+
+void execute_commands()
+{
+    hw::audio::update_sounds_queue();
 
     for(int index = 0, limit = data.commands_count; index < limit; ++index)
     {

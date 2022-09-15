@@ -89,6 +89,8 @@ namespace bn::hw::audio
 
     void update(bool dmg_sync);
 
+    void update_sounds_queue();
+
     void commit();
 }
 

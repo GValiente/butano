@@ -41,7 +41,7 @@ namespace
         uint16_t direct_sound_control_value = 0;
         uint16_t dmg_control_value = 0;
         bool update_on_vblank = false;
-        bool delay_commit = false;
+        bool delay_commit = true;
         bool dmg_sync = false;
     };
 
@@ -305,11 +305,15 @@ void disable_vblank_handler()
 
 void update(bool dmg_sync)
 {
+    data.dmg_sync = dmg_sync;
+    data.delay_commit = ! data.update_on_vblank;
+}
+
+void update_sounds_queue()
+{
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
     auto end = data.sounds_queue.end();
-    data.dmg_sync = dmg_sync;
-    data.delay_commit = ! data.update_on_vblank;
 
     while(it != end)
     {

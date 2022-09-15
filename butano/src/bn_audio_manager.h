@@ -101,6 +101,8 @@ namespace bn::audio_manager
 
     void update();
 
+    void execute_commands();
+
     void commit();
 
     void stop();

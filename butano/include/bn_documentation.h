@@ -2001,6 +2001,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_12_1_0 12.1.0 (next release)
+ *
+ * Missed link messages frequency reduced.
+ *
+ *
  * @section changelog_12_0_0 12.0.0
  *
  * * <b>(Breaking change)</b> bn::aligned fixed.

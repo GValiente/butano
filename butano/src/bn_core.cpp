@@ -235,6 +235,10 @@ namespace
 
         hw::core::wait_for_vblank();
 
+        BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commands");
+        audio_manager::execute_commands();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
         BN_PROFILER_ENGINE_DETAILED_START("eng_display_commit");
         display_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();

@@ -2001,7 +2001,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_12_1_0 12.1.0 (next release)
+ * @section changelog_12_1_0 12.1.0
  *
  * * Sprite tiles delayed commit fixed.
  * * V-Blank interrupt management optimized (EWRAM and CPU usage reduced).

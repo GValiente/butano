@@ -2003,6 +2003,8 @@
  *
  * @section changelog_12_1_0 12.1.0 (next release)
  *
+ * * Sprite tiles delayed commit fixed.
+ * * V-Blank interrupt management optimized (EWRAM and CPU usage reduced).
  * * Missed link messages frequency reduced.
  * * bn::timer::elapsed_ticks optimized.
  *

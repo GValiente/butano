@@ -280,9 +280,9 @@ namespace
     }
 }
 
-void init(func_type hp_vblank_function, func_type lp_vblank_function)
+void init()
 {
-    hw::audio::init(hp_vblank_function, lp_vblank_function);
+    hw::audio::init();
 }
 
 void enable()

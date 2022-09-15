@@ -19,9 +19,7 @@ namespace bn
 
 namespace bn::audio_manager
 {
-    using func_type = void(*)();
-
-    void init(func_type hp_vblank_function, func_type lp_vblank_function);
+    void init();
 
     void enable();
 

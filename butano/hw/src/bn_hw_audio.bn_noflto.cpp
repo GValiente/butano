@@ -9,9 +9,15 @@
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
 #include "../include/bn_hw_irq.h"
+#include "../include/bn_hw_link.h"
 #include "../include/bn_hw_tonc.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
+
+namespace bn::core
+{
+    void on_vblank();
+}
 
 namespace bn::hw::audio
 {
@@ -36,8 +42,6 @@ namespace
 
     public:
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
-        func_type hp_vblank_function = nullptr;
-        func_type lp_vblank_function = nullptr;
         uint16_t direct_sound_control_value = 0;
         uint16_t dmg_control_value = 0;
         bool update_on_vblank = false;
@@ -157,28 +161,25 @@ namespace
 
     void _enabled_vblank_handler()
     {
-        data.hp_vblank_function();
+        core::on_vblank();
 
         if(! data.delay_commit)
         {
             _commit();
         }
 
-        data.lp_vblank_function();
+        hw::link::commit();
     }
 
     void _disabled_vblank_handler()
     {
-        data.hp_vblank_function();
-        data.lp_vblank_function();
+        core::on_vblank();
+        hw::link::commit();
     }
 }
 
-void init(func_type hp_vblank_function, func_type lp_vblank_function)
+void init()
 {
-    data.hp_vblank_function = hp_vblank_function;
-    data.lp_vblank_function = lp_vblank_function;
-
     irq::set_isr(irq::id::VBLANK, mmVBlank);
     irq::enable(irq::id::VBLANK);
 

@@ -76,9 +76,4 @@ void disable()
     }
 }
 
-void commit()
-{
-    hw::link::commit();
-}
-
 }

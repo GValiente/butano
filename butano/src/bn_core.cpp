@@ -119,30 +119,10 @@ namespace
         int skip_frames = 0;
         int last_update_frames = 1;
         bool slow_game_pak = false;
-        volatile bool restart_cpu_usage_timer = false;
+        volatile bool waiting_for_vblank = false;
     };
 
     BN_DATA_EWRAM static_data data;
-
-    void hp_vblank_function()
-    {
-        if(data.restart_cpu_usage_timer)
-        {
-            data.cpu_usage_timer.restart();
-
-            BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
-
-            BN_PROFILER_ENGINE_DETAILED_START("eng_audio_update");
-            audio_manager::update();
-            BN_PROFILER_ENGINE_DETAILED_STOP();
-
-            data.restart_cpu_usage_timer = false;
-        }
-        else
-        {
-            hdma_manager::commit(false);
-        }
-    }
 
     void enable()
     {
@@ -231,9 +211,13 @@ namespace
         BN_PROFILER_ENGINE_GENERAL_STOP();
 
         result.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-        data.restart_cpu_usage_timer = true;
+        data.waiting_for_vblank = true;
 
         hw::core::wait_for_vblank();
+
+        data.cpu_usage_timer.restart();
+
+        BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commands");
         audio_manager::execute_commands();
@@ -316,7 +300,7 @@ void init(const string_view& keypad_commands)
     hw::irq::set_isr(hw::irq::id::HBLANK, hw::hblank_effects::_intr);
 
     // Init audio system:
-    audio_manager::init(hp_vblank_function, link_manager::commit);
+    audio_manager::init();
 
     // Init storage systems:
     data.slow_game_pak = hw::game_pak::init();
@@ -393,6 +377,22 @@ void update()
     BN_PROFILER_ENGINE_DETAILED_START("eng_keypad");
     keypad_manager::update();
     BN_PROFILER_ENGINE_DETAILED_STOP();
+}
+
+void on_vblank()
+{
+    if(data.waiting_for_vblank)
+    {
+        BN_PROFILER_ENGINE_DETAILED_START("eng_audio_update");
+        audio_manager::update();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        data.waiting_for_vblank = false;
+    }
+    else
+    {
+        hdma_manager::commit(false);
+    }
 }
 
 void sleep(keypad::key_type wake_up_key)

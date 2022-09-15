@@ -78,6 +78,7 @@ namespace
 
     public:
         bool commit: 1 = false;
+        bool commit_if_recovered: 1 = false;
 
         [[nodiscard]] status_type status() const
         {
@@ -488,6 +489,12 @@ namespace
                 item.set_status(status_type::USED);
                 _erase_to_remove_item(id);
                 data.to_remove_tiles_count -= int(item.tiles_count);
+
+                if(item.commit_if_recovered)
+                {
+                    item.commit_if_recovered = false;
+                    _insert_to_commit_item(id, item);
+                }
                 break;
 
             default:
@@ -524,6 +531,7 @@ namespace
             break;
 
         case status_type::TO_REMOVE:
+            item.commit_if_recovered = false;
             data.items_map.erase(item.data);
             data.to_remove_tiles_count -= tiles_count;
             break;
@@ -954,6 +962,7 @@ void decrease_usages(int id)
     if(! item.usages)
     {
         item.set_status(status_type::TO_REMOVE);
+        item.commit_if_recovered = item.commit;
         _erase_to_commit_item(id, item);
         _insert_to_remove_item(id);
         data.to_remove_tiles_count += int(item.tiles_count);
@@ -1089,6 +1098,7 @@ void update()
             }
 
             item.set_status(status_type::FREE);
+            item.commit_if_recovered = false;
             data.free_tiles_count += int(item.tiles_count);
 
             auto next_iterator = iterator;

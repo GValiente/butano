@@ -257,7 +257,7 @@ namespace
 
         void _remove_node(int position_index)
         {
-            node_type& position_node = _items[position_index];
+            const node_type& position_node = _items[position_index];
             int prev_index = position_node.prev_index;
             node_type& prev_node = _items[prev_index];
             int next_index = position_node.next_index;
@@ -513,8 +513,8 @@ namespace
         return -1;
     }
 
-    [[nodiscard]] optional<int> _create_item(int id, const tile* tiles_data, compression_type compression,
-                                             int tiles_count, bool delay_commit)
+    [[nodiscard]] int _create_item(
+            int id, const tile* tiles_data, compression_type compression, int tiles_count, bool delay_commit)
     {
         item_type& item = data.items.item(id);
         int new_item_tiles_count = int(item.tiles_count) - tiles_count;
@@ -559,7 +559,7 @@ namespace
             }
         }
 
-        optional<int> new_free_item_id;
+        int new_free_item_id;
 
         if(new_item_tiles_count)
         {
@@ -571,6 +571,10 @@ namespace
 
             auto new_item_iterator = data.items.insert(item.next_index, new_item);
             new_free_item_id = new_item_iterator.id();
+        }
+        else
+        {
+            new_free_item_id = -1;
         }
 
         return new_free_item_id;
@@ -597,12 +601,11 @@ namespace
                 {
                     data.to_remove_items.erase(to_remove_items_it);
 
-                    optional<int> new_free_item_id = _create_item(
-                                id, tiles_data, compression, tiles_count, true);
+                    int new_free_item_id = _create_item(id, tiles_data, compression, tiles_count, true);
 
-                    if(int* new_free_item_id_ptr = new_free_item_id.get())
+                    if(new_free_item_id >= 0)
                     {
-                        _insert_free_item(*new_free_item_id_ptr);
+                        _insert_free_item(new_free_item_id);
                     }
 
                     return id;
@@ -619,12 +622,11 @@ namespace
             if(free_items_it != free_items_end)
             {
                 int id = *free_items_it;
-                optional<int> new_free_item_id = _create_item(
-                            id, tiles_data, compression, tiles_count, data.delay_commit);
+                int new_free_item_id = _create_item(id, tiles_data, compression, tiles_count, data.delay_commit);
 
-                if(int* new_free_item_id_ptr = new_free_item_id.get())
+                if(new_free_item_id >= 0)
                 {
-                    _insert_free_item(*new_free_item_id_ptr, free_items_it);
+                    _insert_free_item(new_free_item_id, free_items_it);
                     ++free_items_it;
                 }
 
@@ -659,12 +661,11 @@ namespace
             if(free_items_it != free_items_end)
             {
                 int id = *free_items_it;
-                optional<int> new_free_item_id = _create_item(
-                            id, nullptr, compression_type::NONE, tiles_count, false);
+                int new_free_item_id = _create_item(id, nullptr, compression_type::NONE, tiles_count, false);
 
-                if(int* new_free_item_id_ptr = new_free_item_id.get())
+                if(new_free_item_id >= 0)
                 {
-                    _insert_free_item(*new_free_item_id_ptr, free_items_it);
+                    _insert_free_item(new_free_item_id, free_items_it);
                     ++free_items_it;
                 }
 
@@ -758,14 +759,14 @@ int create(const span<const tile>& tiles_ref, compression_type compression)
 
     int result = _find_impl(tiles_data, compression, tiles_count);
 
-    if(result != -1)
+    if(result >= 0)
     {
         return result;
     }
 
     result = _create_impl(tiles_data, compression, tiles_count);
 
-    if(result != -1)
+    if(result >= 0)
     {
         data.items_map.insert(tiles_data, result);
 
@@ -803,7 +804,7 @@ int create_new(const span<const tile>& tiles_ref, compression_type compression)
 
     int result = _create_impl(tiles_data, compression, tiles_count);
 
-    if(result != -1)
+    if(result >= 0)
     {
         data.items_map.insert(tiles_data, result);
 
@@ -868,14 +869,14 @@ int create_optional(const span<const tile>& tiles_ref, compression_type compress
 
     int result = _find_impl(tiles_data, compression, tiles_count);
 
-    if(result != -1)
+    if(result >= 0)
     {
         return result;
     }
 
     result = _create_impl(tiles_data, compression, tiles_count);
 
-    if(result != -1)
+    if(result >= 0)
     {
         data.items_map.insert(tiles_data, result);
 
@@ -903,7 +904,7 @@ int create_new_optional(const span<const tile>& tiles_ref, compression_type comp
 
     int result = _create_impl(tiles_data, compression, tiles_count);
 
-    if(result != -1)
+    if(result >= 0)
     {
         data.items_map.insert(tiles_data, result);
 

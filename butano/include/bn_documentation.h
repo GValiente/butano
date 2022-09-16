@@ -2001,6 +2001,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_12_2_0 12.2.0 (next release)
+ *
+ * Sprite tiles management CPU usage reduced.
+ *
+ *
  * @section changelog_12_1_0 12.1.0
  *
  * * Sprite tiles delayed commit fixed.

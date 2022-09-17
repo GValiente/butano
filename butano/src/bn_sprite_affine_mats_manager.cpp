@@ -195,7 +195,7 @@ int available_count()
 int create()
 {
     int id = create_optional();
-    BN_ASSERT(id != -1, "No more sprite affine mats available");
+    BN_ASSERT(id >= 0, "No more sprite affine mats available");
 
     return id;
 }
@@ -203,7 +203,7 @@ int create()
 int create(const affine_mat_attributes& attributes)
 {
     int id = create_optional(attributes);
-    BN_ASSERT(id != -1, "No more sprite affine mats available");
+    BN_ASSERT(id >= 0, "No more sprite affine mats available");
 
     return id;
 }
@@ -212,7 +212,7 @@ int create_optional()
 {
     int item_index = _new_item_index();
 
-    if(item_index != -1)
+    if(item_index >= 0)
     {
         item_type& new_item = data.items[item_index];
         new_item.init();
@@ -227,7 +227,7 @@ int create_optional(const affine_mat_attributes& attributes)
 {
     int item_index = _new_item_index();
 
-    if(item_index != -1)
+    if(item_index >= 0)
     {
         item_type& new_item = data.items[item_index];
         new_item.init(attributes);
@@ -645,9 +645,9 @@ void update()
     }
 }
 
-optional<commit_data> retrieve_commit_data()
+commit_data retrieve_commit_data()
 {
-    optional<commit_data> result;
+    commit_data result;
     int first_index_to_commit = data.first_index_to_commit;
 
     if(first_index_to_commit < max_items)
@@ -657,6 +657,10 @@ optional<commit_data> retrieve_commit_data()
         result = { offset, count };
         data.first_index_to_commit = max_items;
         data.last_index_to_commit = 0;
+    }
+    else
+    {
+        result = { 0, 0 };
     }
 
     return result;

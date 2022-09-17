@@ -50,7 +50,7 @@ namespace
     {
         int handles_index = item.handles_index;
 
-        if(handles_index != -1)
+        if(handles_index >= 0)
         {
             hw::sprites::copy_handle(item.handle, data.handles[handles_index]);
 
@@ -151,7 +151,7 @@ namespace
             }
 
             int visible_items_count = _rebuild_handles_impl(reserved_count, handles, data.sorter.layers());
-            BN_ASSERT(visible_items_count != -1, "Too much on screen sprites");
+            BN_ASSERT(visible_items_count >= 0, "Too much on screen sprites");
 
             int last_visible_items_count = data.last_visible_items_count;
             data.rebuild_handles = false;
@@ -1324,14 +1324,16 @@ void update()
 
 void commit(bool use_dma)
 {
+    sprite_affine_mats_manager::commit_data affine_mats_commit_data =
+            sprite_affine_mats_manager::retrieve_commit_data();
     int first_index_to_commit = data.first_index_to_commit;
     int last_index_to_commit = data.last_index_to_commit;
 
-    if(auto affine_mats_commit_data = sprite_affine_mats_manager::retrieve_commit_data())
+    if(int count = affine_mats_commit_data.count)
     {
         int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
-        int first_mat_index_to_commit = affine_mats_commit_data->offset * multiplier;
-        int last_mat_index_to_commit = first_mat_index_to_commit + (affine_mats_commit_data->count * multiplier) - 1;
+        int first_mat_index_to_commit = affine_mats_commit_data.offset * multiplier;
+        int last_mat_index_to_commit = first_mat_index_to_commit + (count * multiplier) - 1;
         first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);
         last_index_to_commit = max(last_index_to_commit, last_mat_index_to_commit);
     }

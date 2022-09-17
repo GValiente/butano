@@ -7,7 +7,6 @@
 #define BN_SPRITES_AFFINE_MATS_MANAGER_H
 
 #include "bn_fixed.h"
-#include "bn_optional.h"
 #include "bn_intrusive_list.h"
 
 namespace bn
@@ -102,7 +101,7 @@ namespace bn::sprite_affine_mats_manager
 
     void update();
 
-    [[nodiscard]] optional<commit_data> retrieve_commit_data();
+    [[nodiscard]] commit_data retrieve_commit_data();
 }
 
 #endif

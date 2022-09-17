@@ -239,7 +239,7 @@ public:
      */
     [[nodiscard]] constexpr bool horizontal_flip() const
     {
-        return _hflip == -1;
+        return _hflip < 0;
     }
 
     /**
@@ -257,7 +257,7 @@ public:
      */
     [[nodiscard]] constexpr bool vertical_flip() const
     {
-        return _vflip == -1;
+        return _vflip < 0;
     }
 
     /**
@@ -276,7 +276,7 @@ public:
     [[nodiscard]] constexpr bool identity() const
     {
         return _rotation_angle == 0 && _horizontal_scale == 1 && _vertical_scale == 1 &&
-                _horizontal_shear == 0 && _vertical_shear == 0 && _hflip == 1 && _vflip == 1 &&
+                _horizontal_shear == 0 && _vertical_shear == 0 && _hflip >= 0 && _vflip >= 0 &&
                 _pa == 256 && _pb == 0 && _pc == 0 && _pd == 256;
     }
 

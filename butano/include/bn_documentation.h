@@ -2004,6 +2004,7 @@
  * @section changelog_12_2_0 12.2.0 (next release)
  *
  * * Sprite tiles management optimized (EWRAM and CPU usage reduced).
+ * * Background tiles and maps management optimized (EWRAM and CPU usage reduced).
  * * Color palettes management CPU usage reduced.
  *
  *

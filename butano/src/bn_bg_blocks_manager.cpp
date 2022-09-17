@@ -5,7 +5,6 @@
 
 #include "bn_bg_blocks_manager.h"
 
-#include "bn_vector.h"
 #include "bn_limits.h"
 #include "bn_string_view.h"
 #include "bn_bgs_manager.h"
@@ -266,22 +265,20 @@ namespace
 
         void init()
         {
-            _free_indices.resize(max_items);
-
             for(int index = 0; index < max_items; ++index)
             {
-                _free_indices[index] = int8_t(index + 1);
+                _free_indices_array[index] = int8_t(index + 1);
             }
         }
 
         [[nodiscard]] int size() const
         {
-            return _free_indices.available();
+            return _free_indices_size;
         }
 
         [[nodiscard]] bool full() const
         {
-            return _free_indices.empty();
+            return ! _free_indices_size;
         }
 
         [[nodiscard]] item_type& item(int index)
@@ -311,8 +308,9 @@ namespace
 
         iterator insert_after(int index, const item_type& value)
         {
-            int free_index = _free_indices.back();
-            _free_indices.pop_back();
+            --_free_indices_size;
+
+            int free_index = _free_indices_array[_free_indices_size];
             _items[free_index] = value;
             _insert_node_after(index, free_index);
             return iterator(free_index, *this);
@@ -326,7 +324,8 @@ namespace
 
     private:
         item_type _items[max_list_items];
-        vector<int8_t, max_items> _free_indices;
+        alignas(int) int8_t _free_indices_array[max_items] = {};
+        int _free_indices_size = max_items;
 
         void _join(int index, int new_index)
         {
@@ -343,10 +342,22 @@ namespace
         void _remove_node_after(int index)
         {
             auto next_index = int(_items[index].next_index);
-            _free_indices.push_back(int8_t(next_index));
+            _free_indices_array[_free_indices_size] = int8_t(next_index);
+            ++_free_indices_size;
 
             auto next_next_index = int(_items[next_index].next_index);
             _join(index, next_next_index);
+        }
+    };
+
+
+    class identity_hasher
+    {
+
+    public:
+        [[nodiscard]] unsigned operator()(const void* value) const
+        {
+            return unsigned(value);
         }
     };
 
@@ -356,10 +367,11 @@ namespace
 
     public:
         items_list items;
-        unordered_map<const void*, int, max_items * 2> items_map;
-        vector<uint16_t, max_items> to_commit_items;
+        unordered_map<const void*, int, max_items * 2, identity_hasher> items_map;
+        alignas(int) uint16_t to_commit_items_array[max_items];
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
+        int to_commit_items_count = 0;
         bool allow_tiles_offset = true;
         bool check_commit = false;
         bool delay_commit = false;
@@ -1264,14 +1276,14 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
 
     int result = _find_tiles_impl(tiles_data, compression, half_words, false);
 
-    if(result != -1)
+    if(result >= 0)
     {
         return result;
     }
 
     result = _create_impl(create_data::from_regular_tiles(tiles_data, half_words, bpp, compression));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1312,14 +1324,14 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
 
     int result = _find_tiles_impl(tiles_data, compression, half_words, true);
 
-    if(result != -1)
+    if(result >= 0)
     {
         return result;
     }
 
     result = _create_impl(create_data::from_affine_tiles(tiles_data, half_words, compression));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1359,7 +1371,7 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
 
     int result = _find_regular_map_impl(map_item, tiles, palette);
 
-    if(result != -1)
+    if(result >= 0)
     {
         return result;
     }
@@ -1373,7 +1385,7 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
     result = _create_impl(
                 create_data::from_regular_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1414,7 +1426,7 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
 
     int result = _find_affine_map_impl(map_item, tiles, palette);
 
-    if(result != -1)
+    if(result >= 0)
     {
         return result;
     }
@@ -1427,7 +1439,7 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
     result = _create_impl(
                 create_data::from_affine_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1473,7 +1485,7 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optio
 
     int result = _create_impl(create_data::from_regular_tiles(data_ptr, half_words, bpp, compression));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1517,7 +1529,7 @@ int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optiona
 
     int result = _create_impl(create_data::from_affine_tiles(data_ptr, half_words, compression));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1566,7 +1578,7 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
     int result = _create_impl(
                 create_data::from_regular_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1615,7 +1627,7 @@ int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_pt
     int result = _create_impl(
                 create_data::from_affine_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1655,7 +1667,7 @@ int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
 
     int result = _allocate_impl(create_data::from_regular_tiles(nullptr, half_words, bpp, compression_type::NONE));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1692,7 +1704,7 @@ int allocate_affine_tiles(int tiles_count, bool optional)
 
     int result = _allocate_impl(create_data::from_affine_tiles(nullptr, half_words, compression_type::NONE));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1735,7 +1747,7 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
                 create_data::from_regular_map(nullptr, map_dimensions, compression_type::NONE,
                                               move(tiles), move(palette)));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -1779,7 +1791,7 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
                 create_data::from_affine_map(nullptr, map_dimensions, compression_type::NONE,
                                              move(tiles), move(palette)));
 
-    if(result != -1)
+    if(result >= 0)
     {
         BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
@@ -2732,6 +2744,8 @@ void update()
         auto previous_iterator = data.items.before_begin();
         auto iterator = previous_iterator;
         ++iterator;
+
+        int commit_items_count = 0;
         data.to_remove_blocks_count = 0;
         data.check_commit = false;
 
@@ -2782,13 +2796,16 @@ void update()
             else if(item.commit)
             {
                 item.commit = false;
-                data.to_commit_items.push_back(iterator.id());
+                data.to_commit_items_array[commit_items_count] = iterator.id();
+                ++commit_items_count;
             }
 
             before_previous_iterator = previous_iterator;
             previous_iterator = iterator;
             ++iterator;
         }
+
+        data.to_commit_items_count = commit_items_count;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
@@ -2798,17 +2815,17 @@ void update()
 
 void commit()
 {
-    if(! data.to_commit_items.empty())
+    if(int commit_items_count = data.to_commit_items_count)
     {
         BN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT");
 
-        for(int item_index : data.to_commit_items)
+        for(int index = 0; index < commit_items_count; ++index)
         {
-            const item_type& item = data.items.item(item_index);
-            _commit_item(item);
+            int item_index = data.to_commit_items_array[index];
+            _commit_item(data.items.item(item_index));
         }
 
-        data.to_commit_items.clear();
+        data.to_commit_items_count = 0;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }

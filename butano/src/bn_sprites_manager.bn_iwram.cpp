@@ -68,7 +68,7 @@ bool _check_items_on_screen_impl(void* hw_handles, intrusive_list<sorted_sprites
                 {
                     int handles_index = item.handles_index;
 
-                    if(handles_index != -1)
+                    if(handles_index >= 0)
                     {
                         hw::sprites::copy_handle(item.handle, handles[handles_index]);
 

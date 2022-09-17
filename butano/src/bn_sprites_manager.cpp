@@ -318,7 +318,7 @@ void decrease_usages(id_type id)
     auto item = static_cast<item_type*>(id);
     --item->usages;
 
-    if(! item->usages)
+    if(! item->usages) [[likely]]
     {
         data.sorter.erase(*item);
 
@@ -337,18 +337,10 @@ void decrease_usages(id_type id)
     }
 }
 
-optional<int> hw_id(id_type id)
+int hw_id(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    int handles_index = item->handles_index;
-    optional<int> result;
-
-    if(handles_index >= 0)
-    {
-        result = handles_index;
-    }
-
-    return result;
+    return item->handles_index;
 }
 
 sprite_shape shape(id_type id)
@@ -968,6 +960,16 @@ void set_affine_mat(id_type id, sprite_affine_mat_ptr&& affine_mat)
     {
         _assign_affine_mat(*item, move(affine_mat));
     }
+}
+
+void set_new_affine_mat(id_type id, affine_mat_attributes& mat_attributes)
+{
+    auto item = static_cast<item_type*>(id);
+    const hw::sprites::handle_type& handle = item->handle;
+    mat_attributes.set_horizontal_flip(hw::sprites::horizontal_flip(handle));
+    mat_attributes.set_vertical_flip(hw::sprites::vertical_flip(handle));
+    item->remove_affine_mat_when_not_needed = true;
+    _assign_affine_mat(*item, sprite_affine_mat_ptr::create(mat_attributes));
 }
 
 void remove_affine_mat(id_type id)

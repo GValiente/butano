@@ -2006,7 +2006,7 @@
  * * Sprite tiles management optimized (EWRAM and CPU usage reduced).
  * * Background tiles and maps management optimized (EWRAM and CPU usage reduced).
  * * Color palettes management CPU usage reduced.
- * * Sprite affine mats management CPU usage reduced.
+ * * Sprites and sprite affine mats management CPU usage reduced.
  * * Cameras management CPU usage reduced.
  *
  *

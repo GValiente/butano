@@ -21,6 +21,7 @@ class sprite_builder;
 class sprite_tiles_ptr;
 class sprite_shape_size;
 class sprite_palette_ptr;
+class affine_mat_attributes;
 class sprite_affine_mat_ptr;
 class sprite_first_attributes;
 class sprite_third_attributes;
@@ -60,7 +61,7 @@ namespace sprites_manager
 
     void decrease_usages(id_type id);
 
-    [[nodiscard]] optional<int> hw_id(id_type id);
+    [[nodiscard]] int hw_id(id_type id);
 
     [[nodiscard]] sprite_shape shape(id_type id);
 
@@ -158,6 +159,8 @@ namespace sprites_manager
     void set_affine_mat(id_type id, const sprite_affine_mat_ptr& affine_mat);
 
     void set_affine_mat(id_type id, sprite_affine_mat_ptr&& affine_mat);
+
+    void set_new_affine_mat(id_type id, affine_mat_attributes& mat_attributes);
 
     void remove_affine_mat(id_type id);
 

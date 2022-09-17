@@ -2007,6 +2007,7 @@
  * * Background tiles and maps management optimized (EWRAM and CPU usage reduced).
  * * Color palettes management CPU usage reduced.
  * * Sprites and sprite affine mats management CPU usage reduced.
+ * * Backgrounds management CPU usage reduced.
  * * Cameras management CPU usage reduced.
  *
  *

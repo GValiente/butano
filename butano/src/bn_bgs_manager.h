@@ -46,7 +46,7 @@ namespace bgs_manager
 
     void decrease_usages(id_type id);
 
-    [[nodiscard]] optional<int> hw_id(id_type id);
+    [[nodiscard]] int hw_id(id_type id);
 
     [[nodiscard]] size dimensions(id_type id);
 

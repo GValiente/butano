@@ -26,7 +26,7 @@ public:
     [[nodiscard]] static bool target_visible(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
-        return bgs_manager::hw_id(handle).has_value();
+        return bgs_manager::hw_id(handle) >= 0;
     }
 
     [[nodiscard]] static bool target_updated(intptr_t target_id, iany& target_last_value)
@@ -42,7 +42,7 @@ public:
     [[nodiscard]] static uint16_t* output_register(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
-        return hw::bgs::regular_horizontal_position_register(*bgs_manager::hw_id(handle));
+        return hw::bgs::regular_horizontal_position_register(bgs_manager::hw_id(handle));
     }
 
     static void write_output_values(intptr_t, const iany& target_last_value, const void* input_values_ptr,

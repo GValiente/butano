@@ -603,7 +603,7 @@ void decrease_usages(id_type id)
     auto item = static_cast<item_type*>(id);
     --item->usages;
 
-    if(! item->usages)
+    if(! item->usages) [[likely]]
     {
         if(! data.rebuild_handles && item->visible)
         {
@@ -615,18 +615,10 @@ void decrease_usages(id_type id)
     }
 }
 
-optional<int> hw_id(id_type id)
+int hw_id(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    int handles_index = item->handles_index;
-    optional<int> result;
-
-    if(handles_index >= 0)
-    {
-        result = handles_index;
-    }
-
-    return result;
+    return item->handles_index;
 }
 
 size dimensions(id_type id)
@@ -1211,17 +1203,18 @@ void set_z_order(id_type id, int z_order)
 
 void put_above(id_type id)
 {
+    const auto items_vector_data = data.items_vector.data();
     auto item = static_cast<item_type*>(id);
     sort_key this_sort_key = item->bg_sort_key;
     bool order_modified = false;
 
     for(int index = 0, limit = data.items_vector.size() - 1; index < limit; ++index)
     {
-        item_type*& current_item_ptr = data.items_vector[index];
+        item_type*& current_item_ptr = items_vector_data[index];
 
         if(current_item_ptr == item)
         {
-            item_type*& next_item_ptr = data.items_vector[index + 1];
+            item_type*& next_item_ptr = items_vector_data[index + 1];
 
             if(next_item_ptr->bg_sort_key == this_sort_key)
             {
@@ -1243,17 +1236,18 @@ void put_above(id_type id)
 
 void put_below(id_type id)
 {
+    const auto items_vector_data = data.items_vector.data();
     auto item = static_cast<item_type*>(id);
     sort_key this_sort_key = item->bg_sort_key;
     bool order_modified = false;
 
     for(int index = data.items_vector.size() - 1; index > 0; --index)
     {
-        item_type*& current_item_ptr = data.items_vector[index];
+        item_type*& current_item_ptr = items_vector_data[index];
 
         if(current_item_ptr == item)
         {
-            item_type*& previous_item_ptr = data.items_vector[index - 1];
+            item_type*& previous_item_ptr = items_vector_data[index - 1];
 
             if(previous_item_ptr->bg_sort_key == this_sort_key)
             {

@@ -27,7 +27,7 @@ public:
     [[nodiscard]] static bool target_visible(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
-        return bgs_manager::hw_id(handle).has_value();
+        return bgs_manager::hw_id(handle) >= 0;
     }
 
     [[nodiscard]] static bool target_updated(intptr_t, iany&)
@@ -38,7 +38,7 @@ public:
     [[nodiscard]] static uint16_t* output_register(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
-        int hw_id = *bgs_manager::hw_id(handle);
+        int hw_id = bgs_manager::hw_id(handle);
         int* result = &hw::bgs::affine_mat_register(hw_id)->dy;
         return reinterpret_cast<uint16_t*>(result);
     }
@@ -79,7 +79,7 @@ public:
     [[nodiscard]] static bool target_visible(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
-        return bgs_manager::hw_id(handle).has_value();
+        return bgs_manager::hw_id(handle) >= 0;
     }
 
     [[nodiscard]] static bool target_updated(intptr_t, iany&)
@@ -90,7 +90,7 @@ public:
     [[nodiscard]] static uint16_t* output_register(intptr_t target_id)
     {
         auto handle = reinterpret_cast<void*>(target_id);
-        int hw_id = *bgs_manager::hw_id(handle);
+        int hw_id = bgs_manager::hw_id(handle);
         int* result = &hw::bgs::affine_mat_register(hw_id)->dy;
         return reinterpret_cast<uint16_t*>(result);
     }

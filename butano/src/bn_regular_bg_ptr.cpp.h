@@ -438,7 +438,15 @@ optional<int> regular_bg_ptr::hw_id() const
 {
     bgs_manager::rebuild_handles();
 
-    return bgs_manager::hw_id(_handle);
+    optional<int> result;
+    int id = bgs_manager::hw_id(_handle);
+
+    if(id >= 0)
+    {
+        result = id;
+    }
+
+    return result;
 }
 
 void regular_bg_ptr::_destroy()

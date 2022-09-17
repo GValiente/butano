@@ -2003,7 +2003,8 @@
  *
  * @section changelog_12_2_0 12.2.0 (next release)
  *
- * Sprite tiles management CPU usage reduced.
+ * * Sprite tiles management optimized (EWRAM and CPU usage reduced).
+ * * Color palettes management CPU usage reduced.
  *
  *
  * @section changelog_12_1_0 12.1.0

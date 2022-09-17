@@ -189,13 +189,15 @@ sprite_palette_ptr& sprite_palette_ptr::operator=(const sprite_palette_ptr& othe
 {
     if(_id != other._id)
     {
+        palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
+
         if(_id >= 0)
         {
-            palettes_manager::sprite_palettes_bank().decrease_usages(_id);
+            sprite_palettes_bank.decrease_usages(_id);
         }
 
         _id = other._id;
-        palettes_manager::sprite_palettes_bank().increase_usages(_id);
+        sprite_palettes_bank.increase_usages(_id);
     }
 
     return *this;
@@ -213,14 +215,17 @@ span<const color> sprite_palette_ptr::colors() const
 
 void sprite_palette_ptr::set_colors(const sprite_palette_item& palette_item)
 {
+    palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
+
     if(palette_item.compression() == compression_type::NONE)
     {
-        palettes_manager::sprite_palettes_bank().set_colors(_id, palette_item.colors_ref());
+        sprite_palettes_bank.set_colors(_id, palette_item.colors_ref());
     }
     else
     {
         alignas(int) color decompressed_colors[hw::palettes::colors()];
-        set_colors(palette_item.decompress(decompressed_colors));
+        sprite_palette_item decompressed_palette_item = palette_item.decompress(decompressed_colors);
+        sprite_palettes_bank.set_colors(_id, decompressed_palette_item.colors_ref());
     }
 }
 

@@ -40,8 +40,6 @@ uint16_t palettes_bank::colors_hash(const span<const color>& colors)
     result += int_colors[0];
     result += int_colors[1];
     result += int_colors[2];
-    result += int_colors[3];
-    result += result >> 16;
 
     // Active palettes hash > 0:
     return max(uint16_t(result), uint16_t(1));
@@ -282,7 +280,7 @@ void palettes_bank::decrease_usages(int id)
     palette& pal = _palettes[id];
     --pal.usages;
 
-    if(! pal.usages)
+    if(! pal.usages) [[unlikely]]
     {
         for(int slot = 0, slots_count = pal.slots_count; slot < slots_count; ++slot)
         {
@@ -340,11 +338,10 @@ void palettes_bank::set_colors(int id, const span<const color>& colors)
 void palettes_bank::set_inverted(int id, bool inverted)
 {
     palette& pal = _palettes[id];
-    bool update = pal.inverted != inverted;
-    pal.inverted = inverted;
 
-    if(update)
+    if(pal.inverted != inverted)
     {
+        pal.inverted = inverted;
         pal.update = true;
         _update = true;
     }
@@ -429,11 +426,10 @@ void palettes_bank::set_rotate_count(int id, int count)
     BN_ASSERT(abs(count) < colors_count(id) - 1, "Invalid count: ", count, " - ", colors_count(id));
 
     palette& pal = _palettes[id];
-    bool update = pal.rotate_count != count;
-    pal.rotate_count = int16_t(count);
 
-    if(update)
+    if(pal.rotate_count != count)
     {
+        pal.rotate_count = int16_t(count);
         pal.update = true;
         _update = true;
     }
@@ -725,9 +721,9 @@ void palettes_bank::update()
     _last_index_to_commit = last_index;
 }
 
-optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data() const
+palettes_bank::commit_data palettes_bank::retrieve_commit_data() const
 {
-    optional<commit_data> result;
+    commit_data result;
 
     if(_first_index_to_commit != numeric_limits<int>::max())
     {
@@ -737,6 +733,12 @@ optional<palettes_bank::commit_data> palettes_bank::retrieve_commit_data() const
         int colors_count = (last_index - first_index + _palettes[last_index].slots_count) *
                 hw::palettes::colors_per_palette();
         result = { _final_colors, colors_offset, colors_count };
+    }
+    else
+    {
+        result.colors_ptr = nullptr;
+        result.offset = 0;
+        result.count = 0;
     }
 
     return result;

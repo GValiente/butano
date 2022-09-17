@@ -183,7 +183,7 @@ public:
 
     void update();
 
-    [[nodiscard]] optional<commit_data> retrieve_commit_data() const;
+    [[nodiscard]] commit_data retrieve_commit_data() const;
 
     void reset_commit_data();
 

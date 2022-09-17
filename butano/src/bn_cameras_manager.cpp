@@ -5,7 +5,6 @@
 
 #include "bn_cameras_manager.h"
 
-#include "bn_vector.h"
 #include "bn_limits.h"
 #include "bn_config_cameras.h"
 #include "bn_bgs_manager.h"
@@ -22,7 +21,7 @@ namespace
 {
     constexpr int max_items = BN_CFG_CAMERA_MAX_ITEMS;
 
-    static_assert(max_items > 0 && max_items <= numeric_limits<int8_t>::max());
+    static_assert(max_items > 0 && max_items <= numeric_limits<uint8_t>::max());
 
 
     class item_type
@@ -39,7 +38,8 @@ namespace
 
     public:
         item_type items[max_items];
-        vector<int8_t, max_items> free_item_indexes;
+        alignas(int) uint8_t free_item_indexes_array[max_items] = {};
+        int free_item_indexes_size = max_items;
         bool update = false;
     };
 
@@ -48,29 +48,29 @@ namespace
 
 void init()
 {
-    for(int8_t index = max_items - 1; index >= 0; --index)
+    for(int index = 0; index < max_items; ++index)
     {
-        data.free_item_indexes.push_back(index);
+        data.free_item_indexes_array[index] = uint8_t(index);
     }
 }
 
 int used_items_count()
 {
-    return data.free_item_indexes.available();
+    return max_items - data.free_item_indexes_size;
 }
 
 int available_items_count()
 {
-    return data.free_item_indexes.size();
+    return data.free_item_indexes_size;
 }
 
 int create(const fixed_point& position)
 {
-    BN_ASSERT(! data.free_item_indexes.empty(), "No more cameras available");
+    BN_ASSERT(data.free_item_indexes_size, "No more cameras available");
 
-    int item_index = data.free_item_indexes.back();
-    data.free_item_indexes.pop_back();
+    --data.free_item_indexes_size;
 
+    int item_index = data.free_item_indexes_array[data.free_item_indexes_size];
     item_type& new_item = data.items[item_index];
     new_item.position = position;
     new_item.usages = 1;
@@ -79,14 +79,14 @@ int create(const fixed_point& position)
 
 int create_optional(const fixed_point& position)
 {
-    if(data.free_item_indexes.empty())
+    if(! data.free_item_indexes_size)
     {
         return -1;
     }
 
-    int item_index = data.free_item_indexes.back();
-    data.free_item_indexes.pop_back();
+    --data.free_item_indexes_size;
 
+    int item_index = data.free_item_indexes_array[data.free_item_indexes_size];
     item_type& new_item = data.items[item_index];
     new_item.position = position;
     new_item.usages = 1;
@@ -104,9 +104,10 @@ void decrease_usages(int id)
     item_type& item = data.items[id];
     --item.usages;
 
-    if(! item.usages)
+    if(! item.usages) [[unlikely]]
     {
-        data.free_item_indexes.push_back(int8_t(id));
+        data.free_item_indexes_array[data.free_item_indexes_size] = uint8_t(id);
+        ++data.free_item_indexes_size;
     }
 }
 

@@ -112,8 +112,6 @@ namespace
         public:
             friend class items_list;
 
-            iterator() = default;
-
             [[nodiscard]] int id() const
             {
                 return _index;
@@ -166,11 +164,9 @@ namespace
 
         void init()
         {
-            _free_indices.resize(max_items);
-
             for(int index = 0; index < max_items; ++index)
             {
-                _free_indices[index] = int16_t(max_items - index);
+                _free_indices_array[index] = int16_t(max_items - index);
             }
 
             _items[0].next_index = max_list_items - 1;
@@ -179,17 +175,17 @@ namespace
 
         [[nodiscard]] int size() const
         {
-            return _free_indices.available();
+            return _free_indices_size;
         }
 
         [[nodiscard]] int available() const
         {
-            return _free_indices.size();
+            return _free_indices_size;
         }
 
         [[nodiscard]] bool full() const
         {
-            return _free_indices.empty();
+            return ! _free_indices_size;
         }
 
         [[nodiscard]] item_type& item(int index)
@@ -224,8 +220,9 @@ namespace
 
         iterator insert(int index, const item_type& value)
         {
-            int free_index = _free_indices.back();
-            _free_indices.pop_back();
+            --_free_indices_size;
+
+            int free_index = _free_indices_array[_free_indices_size];
             _items[free_index] = value;
             _insert_node(index, free_index);
             return iterator(free_index, *this);
@@ -234,14 +231,16 @@ namespace
         iterator erase(int index)
         {
             int next_index = _items[index].next_index;
-            _free_indices.push_back(int16_t(index));
+            _free_indices_array[_free_indices_size] = int16_t(index);
+            ++_free_indices_size;
             _remove_node(index);
             return iterator(next_index, *this);
         }
 
     private:
         item_type _items[max_list_items];
-        vector<int16_t, max_items> _free_indices;
+        alignas(int) int16_t _free_indices_array[max_items] = {};
+        int _free_indices_size = max_items;
 
         void _insert_node(int position_index, int new_index)
         {
@@ -278,8 +277,8 @@ namespace
         vector<uint16_t, max_items> to_remove_items;
         vector<uint16_t, max_items> to_commit_uncompressed_items;
         vector<uint16_t, max_items> to_commit_compressed_items;
-        int free_tiles_count = 0;
-        int to_remove_tiles_count = 0;
+        uint16_t free_tiles_count = 0;
+        uint16_t to_remove_tiles_count = 0;
         bool delay_commit = false;
     };
 
@@ -488,7 +487,7 @@ namespace
                 item.usages = 1;
                 item.set_status(status_type::USED);
                 _erase_to_remove_item(id);
-                data.to_remove_tiles_count -= int(item.tiles_count);
+                data.to_remove_tiles_count -= item.tiles_count;
 
                 if(item.commit_if_recovered)
                 {
@@ -687,7 +686,7 @@ void init()
     data.items.init();
     data.items.push_front(new_item);
     data.free_items.push_back(data.items.begin().id());
-    data.free_tiles_count = int(new_item.tiles_count);
+    data.free_tiles_count = new_item.tiles_count;
 
     BN_SPRITE_TILES_LOG_STATUS();
 }
@@ -966,7 +965,7 @@ void decrease_usages(int id)
         item.commit_if_recovered = item.commit;
         _erase_to_commit_item(id, item);
         _insert_to_remove_item(id);
-        data.to_remove_tiles_count += int(item.tiles_count);
+        data.to_remove_tiles_count += item.tiles_count;
     }
 
     BN_SPRITE_TILES_LOG_STATUS();
@@ -1100,7 +1099,7 @@ void update()
 
             item.set_status(status_type::FREE);
             item.commit_if_recovered = false;
-            data.free_tiles_count += int(item.tiles_count);
+            data.free_tiles_count += item.tiles_count;
 
             auto next_iterator = iterator;
             ++next_iterator;

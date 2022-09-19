@@ -77,6 +77,27 @@ namespace
         }
     }
 
+    void _update_double_size(const sprite_shape_size& shape_size, item_type& item)
+    {
+        if(sprite_affine_mat_ptr* affine_mat = item.affine_mat.get())
+        {
+            if(sprite_double_size_mode(item.double_size_mode) == sprite_double_size_mode::AUTO)
+            {
+                bool new_double_size = sprite_affine_mats_manager::sprite_double_size(affine_mat->id(), shape_size);
+
+                if(item.double_size != new_double_size)
+                {
+                    item.double_size = new_double_size;
+
+                    if(item.visible)
+                    {
+                        hw::sprites::show_affine(new_double_size, item.handle);
+                    }
+                }
+            }
+        }
+    }
+
     void _assign_affine_mat(item_type& item, sprite_affine_mat_ptr&& affine_mat)
     {
         if(const sprite_affine_mat_ptr* item_affine_mat = item.affine_mat.get())
@@ -424,6 +445,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
         if(shape_size != hw::sprites::shape_size(handle))
         {
             hw::sprites::set_shape_size(shape_size, handle);
+            _update_double_size(shape_size, *item);
             _update_item_dimensions(*item);
         }
         else
@@ -456,6 +478,7 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
         if(shape_size != hw::sprites::shape_size(handle))
         {
             hw::sprites::set_shape_size(shape_size, handle);
+            _update_double_size(shape_size, *item);
             _update_item_dimensions(*item);
         }
         else
@@ -536,6 +559,7 @@ void set_tiles_and_palette(id_type id, const sprite_shape_size& shape_size, spri
         if(different_shape_size)
         {
             hw::sprites::set_shape_size(shape_size, handle);
+            _update_double_size(shape_size, *item);
             _update_item_dimensions(*item);
         }
         else
@@ -848,9 +872,9 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
     {
         item->double_size_mode = unsigned(double_size_mode);
 
-        if(item->affine_mat)
+        if(sprite_affine_mat_ptr* affine_mat = item->affine_mat.get())
         {
-            bool new_double_size = item->new_double_size();
+            bool new_double_size = item->new_double_size(affine_mat->id());
 
             if(item->double_size != new_double_size)
             {
@@ -1297,19 +1321,22 @@ void remove_identity_affine_mat_if_not_needed(id_type id)
     }
 }
 
-void update_affine_mat_double_size(id_type id, bool affine_mat_double_size)
+void update_affine_mat_double_size(id_type id, int affine_mat_id)
 {
     auto item = static_cast<item_type*>(id);
 
     if(sprite_double_size_mode(item->double_size_mode) == sprite_double_size_mode::AUTO)
     {
-        if(item->double_size != affine_mat_double_size)
+        bool new_double_size = sprite_affine_mats_manager::sprite_double_size(
+                    affine_mat_id, hw::sprites::shape_size(item->handle));
+
+        if(item->double_size != new_double_size)
         {
-            item->double_size = affine_mat_double_size;
+            item->double_size = new_double_size;
 
             if(item->visible)
             {
-                hw::sprites::show_affine(affine_mat_double_size, item->handle);
+                hw::sprites::show_affine(new_double_size, item->handle);
             }
 
             _update_item_dimensions(*item);

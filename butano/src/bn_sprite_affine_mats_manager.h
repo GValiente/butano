@@ -11,6 +11,7 @@
 
 namespace bn
 {
+    class sprite_shape_size;
     class affine_mat_attributes;
 
     using sprite_affine_mat_attach_node_type = intrusive_list_node_type;
@@ -93,7 +94,7 @@ namespace bn::sprite_affine_mats_manager
 
     [[nodiscard]] bool flipped_identity(int id);
 
-    [[nodiscard]] bool sprite_double_size(int id);
+    [[nodiscard]] bool sprite_double_size(int id, const sprite_shape_size& shape_size);
 
     void reserve_sprite_handles(int sprite_handles_count);
 

@@ -128,15 +128,10 @@ namespace
         hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[index]);
         _update_indexes_to_commit(index);
 
-        if(! item.attached_nodes.empty())
+        for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
         {
-            bool double_size = sprite_double_size(index);
-
-            for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
-            {
-                sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-                sprites_manager::update_affine_mat_double_size(&sprite_item, double_size);
-            }
+            sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
+            sprites_manager::update_affine_mat_double_size(&sprite_item, index);
         }
     }
 
@@ -169,6 +164,38 @@ namespace
         }
 
         return -1;
+    }
+
+    template<int half_width, int half_height>
+    [[nodiscard]] bool _sprite_double_size(int pa, int pb, int pc, int pd, int divisor)
+    {
+        if(pb || pd)
+        {
+            int ix1 = ((-256 * half_height * pb) - (256 * half_width * pd) + (256 * pb)) / divisor;
+
+            if(ix1 < -half_width || ix1 >= half_width)
+            {
+                return true;
+            }
+
+            int ix2 = ((-256 * half_height * pb) + (256 * half_width * pd) + (256 * pb) - (256 * pd)) / divisor;
+
+            if(ix2 < -half_width || ix2 >= half_width)
+            {
+                return true;
+            }
+        }
+
+        int iy1 = (256 * ((half_height * pa) + (half_width * pc) - pa)) / divisor;
+
+        if(iy1 < -half_height || iy1 >= half_height)
+        {
+            return true;
+        }
+
+        int iy2 = (256 * ((half_height * pa) - (half_width * pc) - pa + pc)) / divisor;
+
+        return iy2 < -half_height || iy2 >= half_height;
     }
 }
 
@@ -514,7 +541,7 @@ bool flipped_identity(int id)
     return item.flipped_identity;
 }
 
-bool sprite_double_size(int id)
+bool sprite_double_size(int id, const sprite_shape_size& shape_size)
 {
     const item_type& item = data.items[id];
 
@@ -528,50 +555,58 @@ bool sprite_double_size(int id)
     int pb = item_attributes.pb_register_value();
     int pc = item_attributes.pc_register_value();
     int pd = item_attributes.pd_register_value();
-
-    if(pb == 0 && pc == 0)
-    {
-        return bn::abs(pa) < 256 || bn::abs(pd) < 256;
-    }
-
-    if(pa == 0 && pd == 0)
-    {
-        return bn::abs(pb) < 256 || bn::abs(pc) < 256;
-    }
-
     int divisor = (pa * pd) - (pb * pc);
 
-    if(! divisor)
+    if(! divisor) [[unlikely]]
     {
         return true;
     }
 
-    constexpr int half_width = 32;
-    constexpr int half_height = 32;
-    int ix1 = ((-256 * half_height * pb) - (256 * half_width * pd) + (256 * pb)) / divisor;
-
-    if(ix1 < -half_width || ix1 >= half_width)
+    switch(shape_size.shape())
     {
-        return true;
+
+    case sprite_shape::SQUARE:
+        return _sprite_double_size<32, 32>(pa, pb, pc, pd, divisor);
+
+    case sprite_shape::WIDE:
+        switch(shape_size.size())
+        {
+
+        case sprite_size::SMALL:
+            return _sprite_double_size<32, 16>(pa, pb, pc, pd, divisor);
+
+        case sprite_size::NORMAL:
+            return _sprite_double_size<32, 8>(pa, pb, pc, pd, divisor);
+
+        case sprite_size::BIG:
+        case sprite_size::HUGE:
+            return _sprite_double_size<32, 16>(pa, pb, pc, pd, divisor);
+
+        default:
+            return false;
+        }
+
+    case sprite_shape::TALL:
+        switch(shape_size.size())
+        {
+
+        case sprite_size::SMALL:
+            return _sprite_double_size<16, 32>(pa, pb, pc, pd, divisor);
+
+        case sprite_size::NORMAL:
+            return _sprite_double_size<8, 32>(pa, pb, pc, pd, divisor);
+
+        case sprite_size::BIG:
+        case sprite_size::HUGE:
+            return _sprite_double_size<16, 32>(pa, pb, pc, pd, divisor);
+
+        default:
+            return false;
+        }
+
+    default:
+        return false;
     }
-
-    int iy1 = (256 * ((half_height * pa) + (half_width * pc) - pa)) / divisor;
-
-    if(iy1 < -half_height || iy1 >= half_height)
-    {
-        return true;
-    }
-
-    int ix2 = ((-256 * half_height * pb) + (256 * half_width * pd) + (256 * pb) - (256 * pd)) / divisor;
-
-    if(ix2 < -half_width || ix2 >= half_width)
-    {
-        return true;
-    }
-
-    int iy2 = (256 * ((half_height * pa) - (half_width * pc) - pa + pc)) / divisor;
-
-    return iy2 < -half_height || iy2 >= half_height;
 }
 
 void reserve_sprite_handles([[maybe_unused]] int sprite_handles_count)

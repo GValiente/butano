@@ -2003,6 +2003,7 @@
  *
  * @section changelog_12_2_0 12.2.0 (next release)
  *
+ * * Automatic sprite double size detection fixed.
  * * Sprite tiles management optimized (EWRAM and CPU usage reduced).
  * * Background tiles and maps management optimized (EWRAM and CPU usage reduced).
  * * Color palettes management CPU usage reduced.

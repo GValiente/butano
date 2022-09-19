@@ -2001,6 +2001,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_12_3_0 12.3.0 (next release)
+ *
+ * Sprite shape and size update ROM usage reduced.
+ *
+ *
  * @section changelog_12_2_0 12.2.0
  *
  * * Automatic sprite double size detection fixed.

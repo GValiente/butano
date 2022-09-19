@@ -2001,7 +2001,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_12_2_0 12.2.0 (next release)
+ * @section changelog_12_2_0 12.2.0
  *
  * * Automatic sprite double size detection fixed.
  * * Sprite tiles management optimized (EWRAM and CPU usage reduced).

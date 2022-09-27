@@ -673,7 +673,7 @@ void palettes_bank::update()
         {
             for(int index = 0, limit = hw::palettes::count(); index < limit; )
             {
-                palette& pal = _palettes[index];
+                const palette& pal = _palettes[index];
 
                 if(pal.usages)
                 {
@@ -689,7 +689,7 @@ void palettes_bank::update()
         {
             for(int index = 0, limit = hw::palettes::count(); index < limit; )
             {
-                palette& pal = _palettes[index];
+                const palette& pal = _palettes[index];
 
                 if(pal.update)
                 {

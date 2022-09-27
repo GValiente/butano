@@ -2003,7 +2003,8 @@
  *
  * @section changelog_12_3_0 12.3.0 (next release)
  *
- * Sprite shape and size update ROM usage reduced.
+ * * Sprite shape and size update ROM usage reduced.
+ * * Some Cppcheck warnings removed.
  *
  *
  * @section changelog_12_2_0 12.2.0

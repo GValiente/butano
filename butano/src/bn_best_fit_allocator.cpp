@@ -149,7 +149,7 @@ void ibest_fit_allocator::free(void* ptr)
         items_iterator previous_items_it = items_it;
         --previous_items_it;
 
-        item_type& previous_item = *previous_items_it;
+        const item_type& previous_item = *previous_items_it;
 
         if(! previous_item.used && previous_item.data + previous_item.size == item.data)
         {
@@ -165,7 +165,7 @@ void ibest_fit_allocator::free(void* ptr)
 
     if(next_items_it != _items.end())
     {
-        item_type& next_item = *next_items_it;
+        const item_type& next_item = *next_items_it;
 
         if(! next_item.used && item.data + item.size == next_item.data)
         {

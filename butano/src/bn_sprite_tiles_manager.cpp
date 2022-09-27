@@ -1106,7 +1106,7 @@ void update()
 
             if(next_iterator != end)
             {
-                item_type& next_item = *next_iterator;
+                const item_type& next_item = *next_iterator;
 
                 if(next_item.status() == status_type::FREE)
                 {
@@ -1122,7 +1122,7 @@ void update()
                 auto previous_iterator = iterator;
                 --previous_iterator;
 
-                item_type& previous_item = *previous_iterator;
+                const item_type& previous_item = *previous_iterator;
 
                 if(previous_item.status() == status_type::FREE)
                 {

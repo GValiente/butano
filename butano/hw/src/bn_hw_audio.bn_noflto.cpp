@@ -111,7 +111,7 @@ namespace
 
         while(it != end)
         {
-            sound_type& sound = *it;
+            const sound_type& sound = *it;
 
             if(sound.priority <= priority)
             {

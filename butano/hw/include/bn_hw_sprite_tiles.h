@@ -78,11 +78,10 @@ namespace bn::hw::sprite_tiles
         }
     }
 
-    void plot_tiles(int width, const tile* source_tiles_ptr, int source_height, int source_y, int destination_y,
+    void plot_tiles(int width, const tile* source_tiles_ptr, int source_y, int destination_y,
                     tile* destination_tiles_ptr);
 
-    BN_CODE_IWRAM void _plot_hideous_tiles(int width, int source_height, const unsigned* srcD, int dstX0,
-                                           unsigned* dstD);
+    BN_CODE_IWRAM void _plot_hideous_tiles(int width, const unsigned* srcD, int dstX0, unsigned* dstD);
 }
 
 #endif

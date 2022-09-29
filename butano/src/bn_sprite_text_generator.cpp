@@ -608,10 +608,8 @@ namespace
 
                 const sprite_tiles_item& tiles_item = _generator.font().item().tiles_item();
                 const tile* source_tiles_data = tiles_item.tiles_ref().data();
-                int source_height = tiles_item.graphics_count() * _character_height;
                 int source_y = graphics_index * _character_height;
-                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height, source_y, _sprite_column,
-                                             tiles_vram);
+                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_y, _sprite_column, tiles_vram);
 
                 _current_position.set_x(_current_position.x() + width_with_space);
                 _sprite_column += width_with_space;
@@ -810,13 +808,9 @@ namespace
 
                 const sprite_tiles_item& tiles_item = _generator.font().item().tiles_item();
                 const tile* source_tiles_data = tiles_item.tiles_ref().data();
-                int source_height = tiles_item.graphics_count() * _character_height;
                 int source_y = graphics_index * _character_height;
-                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
-                                             source_y,
-                                             _sprite_column, tiles_vram);
-                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
-                                             source_y + (_character_height / 2),
+                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_y, _sprite_column, tiles_vram);
+                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_y + (_character_height / 2),
                                              _sprite_column + (_character_height * 2), tiles_vram);
 
                 _current_position.set_x(_current_position.x() + width_with_space);
@@ -906,27 +900,22 @@ namespace
 
                 const sprite_tiles_item& tiles_item = _generator.font().item().tiles_item();
                 const tile* source_tiles_data = tiles_item.tiles_ref().data();
-                int source_height = tiles_item.graphics_count() * _character_height;
                 int source_y = graphics_index * _character_height * 2;
 
                 if(width > 8)
                 {
-                    hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
-                                                 source_y,
+                    hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_y,
                                                  _sprite_column, tiles_vram);
-                    hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
-                                                 source_y + _character_height,
+                    hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_y + _character_height,
                                                  _sprite_column + (_character_height * 2), tiles_vram);
                     source_tiles_data += 1;
                     tiles_vram += 1;
                     width -= 8;
                 }
 
-                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
-                                             source_y,
+                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_y,
                                              _sprite_column, tiles_vram);
-                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_height,
-                                             source_y + _character_height,
+                hw::sprite_tiles::plot_tiles(width, source_tiles_data, source_y + _character_height,
                                              _sprite_column + (_character_height * 2), tiles_vram);
 
                 _current_position.set_x(_current_position.x() + width_with_space);

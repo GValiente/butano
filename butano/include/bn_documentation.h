@@ -2003,6 +2003,7 @@
  *
  * @section changelog_12_3_0 12.3.0 (next release)
  *
+ * * bn::sprite_text_generator variable width fonts rendering fixed and optimized.
  * * Sprite shape and size update ROM usage reduced.
  * * Some Cppcheck warnings removed.
  *

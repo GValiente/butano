@@ -8,7 +8,7 @@
 namespace bn::hw::sprite_tiles
 {
 
-void _plot_hideous_tiles(int width, int source_height, const unsigned* srcD, int dstX0, unsigned* dstD)
+void _plot_hideous_tiles(int width, const unsigned* srcD, int dstX0, unsigned* dstD)
 {
     // From TONC:
     // Hideous cases : srcX0 != dstX0:
@@ -22,36 +22,41 @@ void _plot_hideous_tiles(int width, int source_height, const unsigned* srcD, int
     };
 
     unsigned lsl = 4 * unsigned(dstX0);
-    unsigned lsr = 32 - lsl;
     unsigned mask = lmask(0);
 
-    for(int ix = width; ix > 0; ix -= 8)
+    if(width < 8)
     {
-        if(ix < 8)
+        mask &= rmask(width);
+    }
+
+    if(dstX0 + width <= 8)
+    {
+        for(int iy = 0; iy < 8; ++iy)
         {
-            mask &= rmask(ix);
+            unsigned px = *srcD++ & mask;
+
+            // Write to left tile only:
+            dstD[0] = (dstD[0] &~ (mask << lsl)) | (px << lsl);
+
+            ++dstD;
         }
-
-        unsigned* dstL = dstD;
-        dstD += 8;
-
-        const unsigned* srcL = srcD;
-        srcD += source_height;
+    }
+    else
+    {
+        unsigned lsr = 32 - lsl;
 
         for(int iy = 0; iy < 8; ++iy)
         {
-            unsigned px = *srcL++ & mask;
+            unsigned px = *srcD++ & mask;
 
             // Write to left tile:
-            dstL[0] = (dstL[0] &~ (mask << lsl)) | (px << lsl);
+            dstD[0] = (dstD[0] &~ (mask << lsl)) | (px << lsl);
 
             // Write to right tile:
-            dstL[8] = (dstL[8] &~ (mask >> lsr)) | (px >> lsr);
+            dstD[8] = (dstD[8] &~ (mask >> lsr)) | (px >> lsr);
 
-            ++dstL;
+            ++dstD;
         }
-
-        mask = 0xFFFFFFFF;
     }
 }
 

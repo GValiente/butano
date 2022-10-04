@@ -1302,7 +1302,7 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
                      "\n\tTiles data: ", tiles_data,
                      "\n\tTiles count: ", tiles_count,
                      "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1350,7 +1350,7 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
                      "\n\tTiles data: ", tiles_data,
                      "\n\tTiles count: ", tiles_count,
                      "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1405,7 +1405,7 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
                      "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height()),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1459,7 +1459,7 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
                      "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height()),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1504,7 +1504,7 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optio
                      "\n\tTiles data: ", data_ptr,
                      "\n\tTiles count: ", tiles_count,
                      "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1548,7 +1548,7 @@ int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optiona
                      "\n\tTiles data: ", data_ptr,
                      "\n\tTiles count: ", tiles_count,
                      "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1598,7 +1598,7 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
                      "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height()),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1647,7 +1647,7 @@ int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_pt
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
                      "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height()),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1685,7 +1685,7 @@ int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
             BN_ERROR("Regular BG tiles allocate failed:"
                      "\n\tTiles count: ", tiles_count,
                      "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1722,7 +1722,7 @@ int allocate_affine_tiles(int tiles_count, bool optional)
             BN_ERROR("Affine BG tiles allocate failed:"
                      "\n\tTiles count: ", tiles_count,
                      "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1766,7 +1766,7 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
                      "\n\tMap width: ", map_dimensions.width(),
                      "\n\tMap height: ", map_dimensions.height(),
                      "\n\tBlocks count: ", _regular_map_blocks_count(map_dimensions.width(), map_dimensions.height()),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }
@@ -1810,7 +1810,7 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
                      "\n\tMap width: ", map_dimensions.width(),
                      "\n\tMap height: ", map_dimensions.height(),
                      "\n\tBlocks count: ", _affine_map_blocks_count(map_dimensions.width(), map_dimensions.height()),
-                     "\n\nIt seems there's no more available VRAM.",
+                     "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
     }

@@ -783,7 +783,7 @@ int create(const span<const tile>& tiles_ref, compression_type compression)
         BN_ERROR("Sprite tiles create failed:",
                  "\n\tTiles data: ", tiles_data,
                  "\n\tTiles count: ", tiles_count,
-                 "\n\nIt seems there's no more available VRAM.",
+                 "\n\nThere's no more available VRAM.",
                  _status_log_message);
     }
 
@@ -821,7 +821,7 @@ int create_new(const span<const tile>& tiles_ref, compression_type compression)
         BN_ERROR("Sprite tiles create new failed:",
                  "\n\tTiles data: ", tiles_data,
                  "\n\tTiles count: ", tiles_count,
-                 "\n\nIt seems there's no more available VRAM.",
+                 "\n\nThere's no more available VRAM.",
                  _status_log_message);
     }
 
@@ -851,7 +851,7 @@ int allocate(int tiles_count, bpp_mode bpp)
         #endif
 
         BN_ERROR("Sprite tiles allocate failed. Tiles count: ", tiles_count,
-                 "\n\nIt seems there's no more available VRAM.",
+                 "\n\nThere's no more available VRAM.",
                  _status_log_message);
     }
 

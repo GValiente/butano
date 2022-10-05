@@ -101,13 +101,7 @@ public:
      * @brief Releases the referenced sprite affine transformation matrix
      * if no more sprite_affine_mat_ptr objects reference to it.
      */
-    ~sprite_affine_mat_ptr()
-    {
-        if(_id >= 0)
-        {
-            _destroy();
-        }
-    }
+    ~sprite_affine_mat_ptr();
 
     /**
      * @brief Returns the internal id.
@@ -263,8 +257,6 @@ private:
         _id(int8_t(id))
     {
     }
-
-    void _destroy();
 };
 
 

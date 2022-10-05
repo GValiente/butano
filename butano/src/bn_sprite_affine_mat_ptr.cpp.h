@@ -68,6 +68,14 @@ sprite_affine_mat_ptr& sprite_affine_mat_ptr::operator=(const sprite_affine_mat_
     return *this;
 }
 
+sprite_affine_mat_ptr::~sprite_affine_mat_ptr()
+{
+    if(_id >= 0)
+    {
+        sprite_affine_mats_manager::decrease_usages(_id);
+    }
+}
+
 fixed sprite_affine_mat_ptr::rotation_angle() const
 {
     return sprite_affine_mats_manager::rotation_angle(_id);
@@ -176,11 +184,6 @@ bool sprite_affine_mat_ptr::identity() const
 bool sprite_affine_mat_ptr::flipped_identity() const
 {
     return sprite_affine_mats_manager::flipped_identity(_id);
-}
-
-void sprite_affine_mat_ptr::_destroy()
-{
-    sprite_affine_mats_manager::decrease_usages(_id);
 }
 
 }

@@ -156,6 +156,14 @@ affine_bg_ptr& affine_bg_ptr::operator=(const affine_bg_ptr& other)
     return *this;
 }
 
+affine_bg_ptr::~affine_bg_ptr()
+{
+    if(_handle)
+    {
+        bgs_manager::decrease_usages(_handle);
+    }
+}
+
 size affine_bg_ptr::dimensions() const
 {
     return bgs_manager::dimensions(_handle);
@@ -580,11 +588,6 @@ optional<int> affine_bg_ptr::hw_id() const
     }
 
     return result;
-}
-
-void affine_bg_ptr::_destroy()
-{
-    bgs_manager::decrease_usages(_handle);
 }
 
 }

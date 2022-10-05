@@ -114,13 +114,7 @@ public:
     /**
      * @brief Releases the referenced sprite color palette if no more sprite_palette_ptr objects reference to it.
      */
-    ~sprite_palette_ptr()
-    {
-        if(_id >= 0)
-        {
-            _destroy();
-        }
-    }
+    ~sprite_palette_ptr();
 
     /**
      * @brief Returns the internal id.
@@ -253,8 +247,6 @@ private:
         _id(int8_t(id))
     {
     }
-
-    void _destroy();
 };
 
 

@@ -203,6 +203,14 @@ sprite_palette_ptr& sprite_palette_ptr::operator=(const sprite_palette_ptr& othe
     return *this;
 }
 
+sprite_palette_ptr::~sprite_palette_ptr()
+{
+    if(_id >= 0)
+    {
+        palettes_manager::sprite_palettes_bank().decrease_usages(_id);
+    }
+}
+
 int sprite_palette_ptr::colors_count() const
 {
     return palettes_manager::sprite_palettes_bank().colors_count(_id);
@@ -297,11 +305,6 @@ int sprite_palette_ptr::rotate_count() const
 void sprite_palette_ptr::set_rotate_count(int count)
 {
     palettes_manager::sprite_palettes_bank().set_rotate_count(_id, count);
-}
-
-void sprite_palette_ptr::_destroy()
-{
-    palettes_manager::sprite_palettes_bank().decrease_usages(_id);
 }
 
 }

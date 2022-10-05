@@ -101,13 +101,7 @@ public:
     /**
      * @brief Releases the referenced camera if no more camera_ptr objects reference to it.
      */
-    ~camera_ptr()
-    {
-        if(_id >= 0)
-        {
-            _destroy();
-        }
-    }
+    ~camera_ptr();
 
     /**
      * @brief Returns the internal id.
@@ -185,8 +179,6 @@ private:
         _id(int8_t(id))
     {
     }
-
-    void _destroy();
 };
 
 

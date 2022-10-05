@@ -251,13 +251,7 @@ public:
     /**
      * @brief Releases the referenced map cells if no more affine_bg_map_ptr objects reference to them.
      */
-    ~affine_bg_map_ptr()
-    {
-        if(_handle >= 0)
-        {
-            _destroy();
-        }
-    }
+    ~affine_bg_map_ptr();
 
     /**
      * @brief Returns the internal id.
@@ -409,8 +403,6 @@ private:
         _handle(int8_t(handle))
     {
     }
-
-    void _destroy();
 };
 
 

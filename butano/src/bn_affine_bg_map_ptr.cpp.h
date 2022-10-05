@@ -193,6 +193,14 @@ affine_bg_map_ptr& affine_bg_map_ptr::operator=(const affine_bg_map_ptr& other)
     return *this;
 }
 
+affine_bg_map_ptr::~affine_bg_map_ptr()
+{
+    if(_handle >= 0)
+    {
+        bg_blocks_manager::decrease_usages(_handle);
+    }
+}
+
 int affine_bg_map_ptr::id() const
 {
     return bg_blocks_manager::hw_id(_handle);
@@ -286,11 +294,6 @@ void affine_bg_map_ptr::set_palette(const bg_palette_item& palette_item)
 optional<span<affine_bg_map_cell>> affine_bg_map_ptr::vram()
 {
     return bg_blocks_manager::affine_map_vram(_handle);
-}
-
-void affine_bg_map_ptr::_destroy()
-{
-    bg_blocks_manager::decrease_usages(_handle);
 }
 
 }

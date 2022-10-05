@@ -235,13 +235,7 @@ public:
     /**
      * @brief Releases the referenced sprite if no more sprite_ptr objects reference to it.
      */
-    ~sprite_ptr()
-    {
-        if(_handle)
-        {
-            _destroy();
-        }
-    }
+    ~sprite_ptr();
 
     /**
      * @brief Returns the shape and size of the sprite.
@@ -876,8 +870,6 @@ private:
         _handle(handle)
     {
     }
-
-    void _destroy();
 };
 
 

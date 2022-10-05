@@ -193,6 +193,14 @@ regular_bg_map_ptr& regular_bg_map_ptr::operator=(const regular_bg_map_ptr& othe
     return *this;
 }
 
+regular_bg_map_ptr::~regular_bg_map_ptr()
+{
+    if(_handle >= 0)
+    {
+        bg_blocks_manager::decrease_usages(_handle);
+    }
+}
+
 int regular_bg_map_ptr::id() const
 {
     return bg_blocks_manager::hw_id(_handle);
@@ -348,11 +356,6 @@ void regular_bg_map_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tile
 optional<span<regular_bg_map_cell>> regular_bg_map_ptr::vram()
 {
     return bg_blocks_manager::regular_map_vram(_handle);
-}
-
-void regular_bg_map_ptr::_destroy()
-{
-    bg_blocks_manager::decrease_usages(_handle);
 }
 
 }

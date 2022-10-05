@@ -100,6 +100,14 @@ regular_bg_tiles_ptr& regular_bg_tiles_ptr::operator=(const regular_bg_tiles_ptr
     return *this;
 }
 
+regular_bg_tiles_ptr::~regular_bg_tiles_ptr()
+{
+    if(_handle >= 0)
+    {
+        bg_blocks_manager::decrease_usages(_handle);
+    }
+}
+
 int regular_bg_tiles_ptr::id() const
 {
     return bg_blocks_manager::hw_id(_handle);
@@ -138,11 +146,6 @@ void regular_bg_tiles_ptr::reload_tiles_ref()
 optional<span<tile>> regular_bg_tiles_ptr::vram()
 {
     return bg_blocks_manager::tiles_vram(_handle);
-}
-
-void regular_bg_tiles_ptr::_destroy()
-{
-    bg_blocks_manager::decrease_usages(_handle);
 }
 
 }

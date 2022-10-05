@@ -122,13 +122,7 @@ public:
     /**
      * @brief Releases the referenced background color palette if no more bg_palette_ptr objects reference to it.
      */
-    ~bg_palette_ptr()
-    {
-        if(_id >= 0)
-        {
-            _destroy();
-        }
-    }
+    ~bg_palette_ptr();
 
     /**
      * @brief Returns the internal id.
@@ -261,8 +255,6 @@ private:
         _id(int8_t(id))
     {
     }
-
-    void _destroy();
 };
 
 

@@ -35,13 +35,7 @@ public:
     /**
      * @brief Releases the referenced H-Blank effect if no more hbe_ptr objects reference to it.
      */
-    ~hbe_ptr()
-    {
-        if(_id >= 0)
-        {
-            _destroy();
-        }
-    }
+    ~hbe_ptr();
 
     /**
      * @brief Returns the internal id.
@@ -104,8 +98,6 @@ protected:
 
 private:
     int8_t _id;
-
-    void _destroy();
 };
 
 

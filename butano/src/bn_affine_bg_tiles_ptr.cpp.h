@@ -100,6 +100,14 @@ affine_bg_tiles_ptr& affine_bg_tiles_ptr::operator=(const affine_bg_tiles_ptr& o
     return *this;
 }
 
+affine_bg_tiles_ptr::~affine_bg_tiles_ptr()
+{
+    if(_handle >= 0)
+    {
+        bg_blocks_manager::decrease_usages(_handle);
+    }
+}
+
 int affine_bg_tiles_ptr::id() const
 {
     return bg_blocks_manager::hw_id(_handle);
@@ -138,11 +146,6 @@ void affine_bg_tiles_ptr::reload_tiles_ref()
 optional<span<tile>> affine_bg_tiles_ptr::vram()
 {
     return bg_blocks_manager::tiles_vram(_handle);
-}
-
-void affine_bg_tiles_ptr::_destroy()
-{
-    bg_blocks_manager::decrease_usages(_handle);
 }
 
 }

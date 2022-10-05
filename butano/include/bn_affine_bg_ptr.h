@@ -183,13 +183,7 @@ public:
     /**
      * @brief Releases the referenced affine background if no more affine_bg_ptr objects reference to it.
      */
-    ~affine_bg_ptr()
-    {
-        if(_handle)
-        {
-            _destroy();
-        }
-    }
+    ~affine_bg_ptr();
 
     /**
      * @brief Returns the size in pixels of the affine background.
@@ -687,8 +681,6 @@ private:
         _handle(handle)
     {
     }
-
-    void _destroy();
 };
 
 

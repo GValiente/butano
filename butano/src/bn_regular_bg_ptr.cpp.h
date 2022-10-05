@@ -156,6 +156,14 @@ regular_bg_ptr& regular_bg_ptr::operator=(const regular_bg_ptr& other)
     return *this;
 }
 
+regular_bg_ptr::~regular_bg_ptr()
+{
+    if(_handle)
+    {
+        bgs_manager::decrease_usages(_handle);
+    }
+}
+
 size regular_bg_ptr::dimensions() const
 {
     return bgs_manager::dimensions(_handle);
@@ -447,11 +455,6 @@ optional<int> regular_bg_ptr::hw_id() const
     }
 
     return result;
-}
-
-void regular_bg_ptr::_destroy()
-{
-    bgs_manager::decrease_usages(_handle);
 }
 
 }

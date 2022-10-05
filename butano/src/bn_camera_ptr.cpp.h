@@ -71,6 +71,14 @@ camera_ptr& camera_ptr::operator=(const camera_ptr& other)
     return *this;
 }
 
+camera_ptr::~camera_ptr()
+{
+    if(_id >= 0)
+    {
+        cameras_manager::decrease_usages(_id);
+    }
+}
+
 fixed camera_ptr::x() const
 {
     return position().x();
@@ -104,11 +112,6 @@ void camera_ptr::set_position(fixed x, fixed y)
 void camera_ptr::set_position(const fixed_point& position)
 {
     cameras_manager::set_position(_id, position);
-}
-
-void camera_ptr::_destroy()
-{
-    cameras_manager::decrease_usages(_id);
 }
 
 }

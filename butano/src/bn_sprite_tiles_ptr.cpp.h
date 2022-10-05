@@ -161,6 +161,14 @@ sprite_tiles_ptr& sprite_tiles_ptr::operator=(const sprite_tiles_ptr& other)
     return *this;
 }
 
+sprite_tiles_ptr::~sprite_tiles_ptr()
+{
+    if(_handle >= 0)
+    {
+        sprite_tiles_manager::decrease_usages(_handle);
+    }
+}
+
 int sprite_tiles_ptr::id() const
 {
     return sprite_tiles_manager::start_tile(_handle);
@@ -200,11 +208,6 @@ void sprite_tiles_ptr::reload_tiles_ref()
 optional<span<tile>> sprite_tiles_ptr::vram()
 {
     return sprite_tiles_manager::vram(_handle);
-}
-
-void sprite_tiles_ptr::_destroy()
-{
-    sprite_tiles_manager::decrease_usages(_handle);
 }
 
 }

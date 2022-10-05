@@ -2003,7 +2003,8 @@
  *
  * @section changelog_12_4_0 12.4.0 (next release)
  *
- * Some error messages improved.
+ * * Destructors of classes with `_ptr` suffix ROM usage reduced.
+ * * Some error messages improved.
  *
  *
  * @section changelog_12_3_0 12.3.0

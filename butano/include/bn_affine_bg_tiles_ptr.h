@@ -161,13 +161,7 @@ public:
     /**
      * @brief Releases the referenced background tiles if no more affine_bg_tiles_ptr objects reference to them.
      */
-    ~affine_bg_tiles_ptr()
-    {
-        if(_handle >= 0)
-        {
-            _destroy();
-        }
-    }
+    ~affine_bg_tiles_ptr();
 
     /**
      * @brief Returns the internal id.
@@ -258,8 +252,6 @@ private:
         _handle(int8_t(handle))
     {
     }
-
-    void _destroy();
 };
 
 

@@ -10,6 +10,14 @@
 namespace bn
 {
 
+hbe_ptr::~hbe_ptr()
+{
+    if(_id >= 0)
+    {
+        hblank_effects_manager::decrease_usages(_id);
+    }
+}
+
 bool hbe_ptr::visible() const
 {
     return hblank_effects_manager::visible(_id);
@@ -40,11 +48,6 @@ hbe_ptr& hbe_ptr::operator=(const hbe_ptr& other)
     }
 
     return *this;
-}
-
-void hbe_ptr::_destroy()
-{
-    hblank_effects_manager::decrease_usages(_id);
 }
 
 }

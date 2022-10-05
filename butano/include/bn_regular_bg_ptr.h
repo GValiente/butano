@@ -181,13 +181,7 @@ public:
     /**
      * @brief Releases the referenced regular background if no more regular_bg_ptr objects reference to it.
      */
-    ~regular_bg_ptr()
-    {
-        if(_handle)
-        {
-            _destroy();
-        }
-    }
+    ~regular_bg_ptr();
 
     /**
      * @brief Returns the size in pixels of the regular background.
@@ -560,8 +554,6 @@ private:
         _handle(handle)
     {
     }
-
-    void _destroy();
 };
 
 

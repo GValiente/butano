@@ -207,6 +207,14 @@ sprite_ptr& sprite_ptr::operator=(const sprite_ptr& other)
     return *this;
 }
 
+sprite_ptr::~sprite_ptr()
+{
+    if(_handle)
+    {
+        sprites_manager::decrease_usages(_handle);
+    }
+}
+
 sprite_shape_size sprite_ptr::shape_size() const
 {
     return sprites_manager::shape_size(_handle);
@@ -899,11 +907,6 @@ sprite_third_attributes sprite_ptr::third_attributes() const
 void sprite_ptr::set_third_attributes(const sprite_third_attributes& third_attributes)
 {
     sprites_manager::set_third_attributes(_handle, third_attributes);
-}
-
-void sprite_ptr::_destroy()
-{
-    sprites_manager::decrease_usages(_handle);
 }
 
 }

@@ -526,7 +526,7 @@ int available_count()
 
 id_type create(regular_bg_builder&& builder)
 {
-    BN_ASSERT(! data.items_vector.full(), "No more items available");
+    BN_ASSERT(! data.items_vector.full(), "No more BG items available");
 
     regular_bg_map_ptr map = builder.release_map();
     item_type& item = data.items_pool.create(move(builder), move(map));
@@ -538,7 +538,7 @@ id_type create(regular_bg_builder&& builder)
 
 id_type create(affine_bg_builder&& builder)
 {
-    BN_ASSERT(! data.items_vector.full(), "No more items available");
+    BN_ASSERT(! data.items_vector.full(), "No more BG items available");
 
     affine_bg_map_ptr map = builder.release_map();
     item_type& item = data.items_pool.create(move(builder), move(map));

@@ -826,7 +826,7 @@ namespace
 
         if(padding_blocks_count)
         {
-            BN_ASSERT(! data.items.full(), "No more items available");
+            BN_ASSERT(! data.items.full(), "No more BG block items available");
 
             int new_item_blocks_count = item->blocks_count - padding_blocks_count;
             item->blocks_count = uint8_t(padding_blocks_count);
@@ -844,7 +844,7 @@ namespace
 
         if(int new_item_blocks_count = item->blocks_count - blocks_count)
         {
-            BN_ASSERT(! data.items.full(), "No more items available");
+            BN_ASSERT(! data.items.full(), "No more BG block items available");
 
             int start_block = item->start_block;
             int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();

@@ -2003,7 +2003,7 @@
  *
  * @section changelog_12_4_0 12.4.0 (next release)
  *
- * Some resource allocation error messages improved.
+ * Some error messages improved.
  *
  *
  * @section changelog_12_3_0 12.3.0

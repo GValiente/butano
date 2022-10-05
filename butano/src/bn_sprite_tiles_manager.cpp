@@ -562,7 +562,7 @@ namespace
 
         if(new_item_tiles_count)
         {
-            BN_ASSERT(! data.items.full(), "No more items available");
+            BN_ASSERT(! data.items.full(), "No more sprite tiles items available");
 
             item_type new_item;
             new_item.start_tile = item.start_tile + item.tiles_count;

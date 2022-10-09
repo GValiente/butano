@@ -2004,6 +2004,7 @@
  * @section changelog_12_4_0 12.4.0 (next release)
  *
  * * Destructors of classes with `_ptr` suffix ROM usage reduced.
+ * * `BN_CODE_IWRAM` macro can be used for thumb code too.
  * * Some error messages improved.
  *
  *

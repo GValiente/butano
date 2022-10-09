@@ -12,12 +12,12 @@
 #define BN_DATA_EWRAM __attribute__((section(".ewram")))
 
 /**
- * @brief Store ARM code in IWRAM.
+ * @brief Store code in IWRAM.
  */
-#define BN_CODE_IWRAM __attribute__((section(".iwram"), target("arm")))
+#define BN_CODE_IWRAM __attribute__((section(".iwram")))
 
 /**
- * @brief Store Thumb code in EWRAM.
+ * @brief Store code in EWRAM.
  */
 #define BN_CODE_EWRAM __attribute__((section(".ewram")))
 

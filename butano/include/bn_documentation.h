@@ -2005,6 +2005,7 @@
  *
  * * Destructors of classes with `_ptr` suffix ROM usage reduced.
  * * `BN_CODE_IWRAM` macro can be used for thumb code too.
+ * * 4BPP regular backgrounds quantization improved.
  * * Some error messages improved.
  *
  *

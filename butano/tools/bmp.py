@@ -150,43 +150,39 @@ class BMP:
 
         # Merge pixel sets:
         while True:
+            BMP._erase_tile_pixel_sets(tile_pixel_sets)
+
+            tile_pixel_sets_count = len(tile_pixel_sets)
             minimum_i = None
             minimum_j = None
             minimum_u_set = None
             minimum_u_set_length = 16
-            merged = False
+            maximum_erased_tile_pixel_sets = 0
             i = 0
 
             while i < tile_pixel_sets_count - 1:
                 i_set = tile_pixel_sets[i]
-                i_set_length = len(i_set)
                 j = i + 1
 
                 while j < tile_pixel_sets_count:
                     j_set = tile_pixel_sets[j]
-                    j_set_length = len(j_set)
                     u_set = i_set.union(j_set)
                     u_set_length = len(u_set)
 
-                    if u_set_length == i_set_length or u_set_length == j_set_length:
-                        if u_set_length == j_set_length:
-                            tile_pixel_sets[i] = j_set
-                            i_set = j_set
-                            i_set_length = j_set_length
-
-                        tile_pixel_sets.pop(j)
-                        j -= 1
-                        tile_pixel_sets_count -= 1
-                        minimum_u_set = None
-                        minimum_i = None
-                        minimum_j = None
-                        minimum_u_set_length = 16
-                        merged = True
-                    elif not merged and u_set_length < minimum_u_set_length:
+                    if u_set_length < minimum_u_set_length:
+                        maximum_erased_tile_pixel_sets = BMP._count_erased_tile_pixel_sets(tile_pixel_sets, u_set)
                         minimum_u_set = u_set
                         minimum_i = i
                         minimum_j = j
                         minimum_u_set_length = u_set_length
+                    elif u_set_length == minimum_u_set_length and u_set_length < 16:
+                        erased_tile_pixel_sets = BMP._count_erased_tile_pixel_sets(tile_pixel_sets, u_set)
+
+                        if erased_tile_pixel_sets > maximum_erased_tile_pixel_sets:
+                            maximum_erased_tile_pixel_sets = erased_tile_pixel_sets
+                            minimum_u_set = u_set
+                            minimum_i = i
+                            minimum_j = j
 
                     j += 1
 
@@ -198,8 +194,7 @@ class BMP:
 
                 tile_pixel_sets[minimum_i] = minimum_u_set
                 tile_pixel_sets.pop(minimum_j)
-                tile_pixel_sets_count -= 1
-            elif not merged:
+            else:
                 break
 
         if tile_pixel_sets_count > 16:
@@ -305,3 +300,57 @@ class BMP:
                 output_file.write(input_file_content)
 
         return tile_pixel_sets_count * 16
+
+    @staticmethod
+    def _count_erased_tile_pixel_sets(tile_pixel_sets, u_set):
+        tile_pixel_sets_count = len(tile_pixel_sets)
+        result = 0
+        i = 0
+
+        while i < tile_pixel_sets_count - 1:
+            i_set = tile_pixel_sets[i]
+
+            if i_set.issubset(u_set):
+                j = i + 1
+
+                while j < tile_pixel_sets_count:
+                    j_set = tile_pixel_sets[j]
+
+                    if j_set.issubset(u_set):
+                        result += 1
+
+                    j += 1
+
+            i += 1
+
+        return result
+
+    @staticmethod
+    def _erase_tile_pixel_sets(tile_pixel_sets):
+        tile_pixel_sets_count = len(tile_pixel_sets)
+        i = 0
+
+        while i < tile_pixel_sets_count - 1:
+            i_set = tile_pixel_sets[i]
+            i_set_length = len(i_set)
+            j = i + 1
+
+            while j < tile_pixel_sets_count:
+                j_set = tile_pixel_sets[j]
+                j_set_length = len(j_set)
+                u_set = i_set.union(j_set)
+                u_set_length = len(u_set)
+
+                if u_set_length == i_set_length or u_set_length == j_set_length:
+                    if u_set_length == j_set_length:
+                        tile_pixel_sets[i] = j_set
+                        i_set = j_set
+                        i_set_length = j_set_length
+
+                    tile_pixel_sets.pop(j)
+                    j -= 1
+                    tile_pixel_sets_count -= 1
+
+                j += 1
+
+            i += 1

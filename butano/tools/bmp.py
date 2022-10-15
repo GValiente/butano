@@ -150,14 +150,11 @@ class BMP:
 
         # Merge pixel sets:
         while True:
-            BMP._erase_tile_pixel_sets(tile_pixel_sets)
-
-            tile_pixel_sets_count = len(tile_pixel_sets)
-            minimum_i = None
-            minimum_j = None
-            minimum_u_set = None
-            minimum_u_set_length = 16
-            maximum_erased_tile_pixel_sets = 0
+            best_i = None
+            best_j = None
+            best_u_set = None
+            best_quality = -1000
+            best_erased_tile_pixel_sets = 0
             i = 0
 
             while i < tile_pixel_sets_count - 1:
@@ -167,33 +164,45 @@ class BMP:
                 while j < tile_pixel_sets_count:
                     j_set = tile_pixel_sets[j]
                     u_set = i_set.union(j_set)
-                    u_set_length = len(u_set)
 
-                    if u_set_length < minimum_u_set_length:
-                        maximum_erased_tile_pixel_sets = BMP._count_erased_tile_pixel_sets(tile_pixel_sets, u_set)
-                        minimum_u_set = u_set
-                        minimum_i = i
-                        minimum_j = j
-                        minimum_u_set_length = u_set_length
-                    elif u_set_length == minimum_u_set_length and u_set_length < 16:
-                        erased_tile_pixel_sets = BMP._count_erased_tile_pixel_sets(tile_pixel_sets, u_set)
+                    if len(u_set) < 16:
+                        quality = 0
 
-                        if erased_tile_pixel_sets > maximum_erased_tile_pixel_sets:
-                            maximum_erased_tile_pixel_sets = erased_tile_pixel_sets
-                            minimum_u_set = u_set
-                            minimum_i = i
-                            minimum_j = j
+                        for pixel in u_set:
+                            if pixel in i_set and pixel in j_set:
+                                quality += 1
+                            else:
+                                quality -= 1
+
+                        if quality > best_quality:
+                            best_quality = quality
+                            best_erased_tile_pixel_sets = BMP._count_erased_tile_pixel_sets(tile_pixel_sets, u_set)
+                            best_u_set = u_set
+                            best_i = i
+                            best_j = j
+                        elif quality == best_quality:
+                            erased_tile_pixel_sets = BMP._count_erased_tile_pixel_sets(tile_pixel_sets, u_set)
+
+                            if erased_tile_pixel_sets > best_erased_tile_pixel_sets:
+                                best_erased_tile_pixel_sets = erased_tile_pixel_sets
+                                best_u_set = u_set
+                                best_i = i
+                                best_j = j
 
                     j += 1
 
                 i += 1
 
-            if minimum_u_set is not None:
-                if minimum_i < minimum_j:
-                    minimum_i, minimum_j = minimum_j, minimum_i
+            if best_u_set is not None:
+                if best_i < best_j:
+                    best_i, best_j = best_j, best_i
 
-                tile_pixel_sets[minimum_i] = minimum_u_set
-                tile_pixel_sets.pop(minimum_j)
+                tile_pixel_sets[best_i] = best_u_set
+                tile_pixel_sets.pop(best_j)
+
+                if best_erased_tile_pixel_sets > 0:
+                    BMP._erase_tile_pixel_sets(tile_pixel_sets)
+                    tile_pixel_sets_count = len(tile_pixel_sets)
             else:
                 break
 

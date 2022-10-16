@@ -138,6 +138,10 @@ class BMP:
                         if new_tile_pixel_set.issubset(tile_pixel_set):
                             append = False
                             break
+                        elif tile_pixel_set.issubset(new_tile_pixel_set):
+                            tile_pixel_set.update(new_tile_pixel_set)
+                            append = False
+                            break
 
                     if append:
                         tile_pixel_sets.append(new_tile_pixel_set)
@@ -156,16 +160,32 @@ class BMP:
             best_quality = -1000
             best_erased_tile_pixel_sets = 0
             i = 0
+            merged = False
 
             while i < tile_pixel_sets_count - 1:
                 i_set = tile_pixel_sets[i]
+                i_set_length = len(i_set)
                 j = i + 1
 
                 while j < tile_pixel_sets_count:
                     j_set = tile_pixel_sets[j]
+                    j_set_length = len(j_set)
                     u_set = i_set.union(j_set)
+                    u_set_length = len(u_set)
 
-                    if len(u_set) < 16:
+                    if u_set_length == i_set_length or u_set_length == j_set_length:
+                        if u_set_length == j_set_length:
+                            tile_pixel_sets[i] = j_set
+                            i_set = j_set
+                            i_set_length = j_set_length
+
+                        tile_pixel_sets.pop(j)
+                        j -= 1
+                        tile_pixel_sets_count -= 1
+
+                        best_u_set = None
+                        merged = True
+                    elif not merged and len(u_set) < 16:
                         quality = 0
 
                         for pixel in u_set:
@@ -199,11 +219,8 @@ class BMP:
 
                 tile_pixel_sets[best_i] = best_u_set
                 tile_pixel_sets.pop(best_j)
-
-                if best_erased_tile_pixel_sets > 0:
-                    BMP._erase_tile_pixel_sets(tile_pixel_sets)
-                    tile_pixel_sets_count = len(tile_pixel_sets)
-            else:
+                tile_pixel_sets_count -= 1
+            elif not merged:
                 break
 
         if tile_pixel_sets_count > 16:
@@ -333,33 +350,3 @@ class BMP:
             i += 1
 
         return result
-
-    @staticmethod
-    def _erase_tile_pixel_sets(tile_pixel_sets):
-        tile_pixel_sets_count = len(tile_pixel_sets)
-        i = 0
-
-        while i < tile_pixel_sets_count - 1:
-            i_set = tile_pixel_sets[i]
-            i_set_length = len(i_set)
-            j = i + 1
-
-            while j < tile_pixel_sets_count:
-                j_set = tile_pixel_sets[j]
-                j_set_length = len(j_set)
-                u_set = i_set.union(j_set)
-                u_set_length = len(u_set)
-
-                if u_set_length == i_set_length or u_set_length == j_set_length:
-                    if u_set_length == j_set_length:
-                        tile_pixel_sets[i] = j_set
-                        i_set = j_set
-                        i_set_length = j_set_length
-
-                    tile_pixel_sets.pop(j)
-                    j -= 1
-                    tile_pixel_sets_count -= 1
-
-                j += 1
-
-            i += 1

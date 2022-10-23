@@ -22,9 +22,11 @@ namespace
     alignas(int) __attribute__((used)) const char save_type[] = "SRAM_V113";
 }
 
-void init()
+const char* init()
 {
     BIT_SET(REG_WAITCNT_NV, BN_CFG_SRAM_WAIT_STATE);
+
+    return save_type;
 }
 
 }

@@ -2010,11 +2010,6 @@
  * @tableofcontents
  *
  *
- * @section changelog_12_5_0 12.5.0 (next release)
- *
- * SRAM magic string implementation improved.
- *
- *
  * @section changelog_12_4_0 12.4.0
  *
  * * SRAM magic string fixed.

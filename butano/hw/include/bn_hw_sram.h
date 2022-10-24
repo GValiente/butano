@@ -11,7 +11,7 @@
 
 namespace bn::hw::sram
 {
-    void init();
+    [[nodiscard]] const char* init();
 
     BN_CODE_EWRAM void _fill(uint8_t value, int size, uint8_t* destination);
 

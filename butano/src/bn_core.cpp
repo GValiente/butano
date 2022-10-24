@@ -305,7 +305,8 @@ void init(const string_view& keypad_commands)
     // Init storage systems:
     data.slow_game_pak = hw::game_pak::init();
     hw::memory::init();
-    hw::sram::init();
+
+    [[maybe_unused]] const char* sram_type = hw::sram::init();
 
     // Init display:
     display_manager::init();

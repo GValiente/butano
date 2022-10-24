@@ -215,7 +215,6 @@
     /// @endcond
 #else
     #ifndef BN_ASSERT
-
         #define BN_ASSERT(condition, ...) \
             do \
             { \
@@ -224,11 +223,9 @@
                     assert(condition); \
                 } \
             } while(false)
-
     #endif
 
     #ifndef BN_ERROR
-
         #define BN_ERROR(...) \
             do \
             { \
@@ -237,7 +234,6 @@
                     assert(false); \
                 } \
             } while(false)
-
     #endif
 #endif
 

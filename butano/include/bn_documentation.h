@@ -2010,7 +2010,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_12_5_0 12.5.0 (next release)
+ * @section changelog_12_5_0 12.5.0
  *
  * @ref BN_CFG_ASSERT_SHOW_DIAGNOSTIC added.
  *

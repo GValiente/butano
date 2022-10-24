@@ -16,17 +16,11 @@ static_assert(BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_4 ||
         BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_2 ||
         BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_8);
 
-namespace
+void init()
 {
-    // https://forum.gbadev.org/viewtopic.php?f=4&t=2825
-    alignas(int) __attribute__((used)) const char save_type[] = "SRAM_V113";
-}
+    asm volatile(".align 2; .ascii \"SRAM_V113\"; .align");
 
-const char* init()
-{
     BIT_SET(REG_WAITCNT_NV, BN_CFG_SRAM_WAIT_STATE);
-
-    return save_type;
 }
 
 }

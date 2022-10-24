@@ -91,40 +91,69 @@
     #endif
 
     #ifndef BN_ASSERT
-
-        #define BN_ASSERT(condition, ...) \
-            do \
-            { \
-                if(bn::is_constant_evaluated()) \
+        #if BN_CFG_ASSERT_SHOW_DIAGNOSTIC
+            #define BN_ASSERT(condition, ...) \
+                do \
                 { \
-                    assert(condition); \
-                } \
-                else \
-                { \
-                    if(! (condition)) [[unlikely]] \
+                    if(bn::is_constant_evaluated()) \
                     { \
-                        _bn::assert::show_args(#condition, __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                        assert(condition); \
                     } \
-                } \
-            } while(false)
-
+                    else \
+                    { \
+                        if(! (condition)) [[unlikely]] \
+                        { \
+                            _bn::assert::show_args(#condition, __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                        } \
+                    } \
+                } while(false)
+        #else
+            #define BN_ASSERT(condition, ...) \
+                do \
+                { \
+                    if(bn::is_constant_evaluated()) \
+                    { \
+                        assert(condition); \
+                    } \
+                    else \
+                    { \
+                        if(! (condition)) [[unlikely]] \
+                        { \
+                            _bn::assert::show(#condition, __FILE_NAME__, __func__, __LINE__); \
+                        } \
+                    } \
+                } while(false)
+        #endif
     #endif
 
     #ifndef BN_ERROR
-
-        #define BN_ERROR(...) \
-            do \
-            { \
-                if(bn::is_constant_evaluated()) \
+        #if BN_CFG_ASSERT_SHOW_DIAGNOSTIC
+            #define BN_ERROR(...) \
+                do \
                 { \
-                    assert(false); \
-                } \
-                else \
+                    if(bn::is_constant_evaluated()) \
+                    { \
+                        assert(false); \
+                    } \
+                    else \
+                    { \
+                        _bn::assert::show_args("", __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                    } \
+                } while(false)
+        #else
+            #define BN_ERROR(...) \
+                do \
                 { \
-                    _bn::assert::show_args("", __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
-                } \
-            } while(false)
-
+                    if(bn::is_constant_evaluated()) \
+                    { \
+                        assert(false); \
+                    } \
+                    else \
+                    { \
+                        _bn::assert::show(__FILE_NAME__, __func__, __LINE__); \
+                    } \
+                } while(false)
+        #endif
     #endif
 
     /// @cond DO_NOT_DOCUMENT
@@ -133,21 +162,24 @@
     {
         static_assert(BN_CFG_ASSERT_BUFFER_SIZE >= 64);
 
+        [[noreturn]] void show(const char* file_name, const char* function, int line);
+
+        [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line);
+
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const char* message);
 
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const bn::istring_base& message);
 
-        [[noreturn]] inline void show_args(const char* condition_msg, const char* file, const char* function,
-                                           int line)
+        inline void show_args(const char* condition_msg, const char* file, const char* function, int line)
         {
-            _bn::assert::show(condition_msg, file, function, line, "");
+            _bn::assert::show(condition_msg, file, function, line);
         }
 
         template<typename Arg>
-        [[noreturn]] void show_args(const char* condition_msg, const char* file, const char* function, int line,
-                                    const Arg& arg)
+        void show_args(const char* condition_msg, const char* file, const char* function, int line,
+                       const Arg& arg)
         {
             char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);
@@ -157,8 +189,8 @@
         }
 
         template<typename Arg1, typename Arg2>
-        [[noreturn]] void show_args(const char* condition_msg, const char* file, const char* function, int line,
-                                    const Arg1& arg1, const Arg2& arg2)
+        void show_args(const char* condition_msg, const char* file, const char* function, int line,
+                       const Arg1& arg1, const Arg2& arg2)
         {
             char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);
@@ -169,8 +201,8 @@
         }
 
         template<typename... Args>
-        [[noreturn]] void show_args(const char* condition_msg, const char* file, const char* function, int line,
-                                    const Args&... args)
+        void show_args(const char* condition_msg, const char* file, const char* function, int line,
+                       const Args&... args)
         {
             char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);

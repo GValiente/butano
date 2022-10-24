@@ -27,6 +27,19 @@
 #endif
 
 /**
+ * @def BN_CFG_ASSERT_SHOW_DIAGNOSTIC
+ *
+ * Specifies if asserts diagnostic information must be shown or not.
+ *
+ * Disabling diagnostic information reduces ROM size.
+ *
+ * @ingroup assert
+ */
+#ifndef BN_CFG_ASSERT_SHOW_DIAGNOSTIC
+    #define BN_CFG_ASSERT_SHOW_DIAGNOSTIC true
+#endif
+
+/**
  * @def BN_CFG_ASSERT_BUFFER_SIZE
  *
  * Specifies the maximum size of the messages that can be displayed by an assert.

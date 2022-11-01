@@ -107,6 +107,11 @@ face difficult foes and save your family!
 
 ![](docs_tools/images/symbol_merged_title.png) ![](docs_tools/images/symbol_merged_gameplay.png)
 
+* [notenogram](https://kva64.itch.io/notenogram): chill analog-styled picross/nonogram/hanjie/griddler game,
+with story and creator modes.
+
+![](docs_tools/images/notenogram_title.png) ![](docs_tools/images/notenogram_gameplay.png)
+
 * [LRO - Luggage Retrieval Officer](https://foopod.itch.io/lro): you will work your way to being a highly ranked
 member off staff, retrieving important missing luggage for the likes of the Natural History Museum, 
 NASA and even the FBI!

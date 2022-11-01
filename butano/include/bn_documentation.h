@@ -2014,6 +2014,7 @@
  *
  * * <b>(Breaking change)</b> bn::best_fit_allocator (used by the heap manager) supports unlimited allocations.
  * * bn::best_fit_allocator::log_status and bn::memory::log_alloc_ewram_status added.
+ * * New games made with Butano added to `README.md`.
  *
  *
  * @section changelog_12_5_0 12.5.0

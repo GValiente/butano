@@ -133,7 +133,14 @@ gather owls and upgrades while managing your health and money and defeat the fin
 
 ![](docs_tools/images/knight_owls_title.png) ![](docs_tools/images/knight_owls_gameplay.png)
 
-* [Tremblay Island](https://cinemint.itch.io/tremblay-island): take on the role of any island villager and interact with the others, taking part in the drama while eventually trying to keep a grouchy alligator from taking over the island.
+* [Collie Defence](https://xvayan.itch.io/collie-defence): you're a Border Collie and you need to protect 
+your flock of sheep!
+
+![](docs_tools/images/collie_defence_title.png) ![](docs_tools/images/collie_defence_gameplay.png)
+
+* [Tremblay Island](https://cinemint.itch.io/tremblay-island): take on the role of any island villager and 
+interact with the others, taking part in the drama while eventually trying to keep a grouchy alligator 
+from taking over the island.
 
 ![](docs_tools/images/tremblay_island_title.png) ![](docs_tools/images/tremblay_island_gameplay.png)
 
@@ -149,6 +156,7 @@ to your opponent's base, then place tiles on their base to damage them.
 
 ## More Butano related stuff
 
-* [gba-free-fonts](https://github.com/laqieer/gba-free-fonts): free fonts for GBA development. It comes with tools and examples to import them into a Butano project.
+* [gba-free-fonts](https://github.com/laqieer/gba-free-fonts): free fonts for GBA development. 
+It comes with tools and examples to import them into a Butano project.
 
 ![](docs_tools/images/gba_free_fonts_1.png) ![](docs_tools/images/gba_free_fonts_2.png)

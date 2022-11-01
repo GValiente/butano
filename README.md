@@ -108,7 +108,7 @@ face difficult foes and save your family!
 ![](docs_tools/images/symbol_merged_title.png) ![](docs_tools/images/symbol_merged_gameplay.png)
 
 * [notenogram](https://kva64.itch.io/notenogram): chill analog-styled picross/nonogram/hanjie/griddler game,
-with story and creator modes.
+with story and create modes.
 
 ![](docs_tools/images/notenogram_title.png) ![](docs_tools/images/notenogram_gameplay.png)
 

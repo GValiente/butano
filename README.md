@@ -138,6 +138,11 @@ your flock of sheep!
 
 ![](docs_tools/images/collie_defence_title.png) ![](docs_tools/images/collie_defence_gameplay.png)
 
+* [Nuclear Love](https://foopod.itch.io/nuclear-love): have fun getting to know other survivors in this dating-show, 
+who knows, maybe you might find your future Mr. or Mrs Right?
+
+![](docs_tools/images/nuclear_love_title.png) ![](docs_tools/images/nuclear_love_gameplay.png)
+
 * [Tremblay Island](https://cinemint.itch.io/tremblay-island): take on the role of any island villager and 
 interact with the others, taking part in the drama while eventually trying to keep a grouchy alligator 
 from taking over the island.

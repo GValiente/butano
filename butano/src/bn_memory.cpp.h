@@ -115,15 +115,12 @@ int available_alloc_ewram()
     return memory_manager::available_alloc_ewram();
 }
 
-int used_items_ewram()
-{
-    return memory_manager::used_items_ewram();
-}
-
-int available_items_ewram()
-{
-    return memory_manager::available_items_ewram();
-}
+#if BN_CFG_LOG_ENABLED
+    void log_alloc_ewram_status()
+    {
+        memory_manager::log_alloc_ewram_status();
+    }
+#endif
 
 int used_stack_iwram()
 {

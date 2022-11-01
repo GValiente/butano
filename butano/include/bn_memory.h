@@ -17,6 +17,8 @@
 #include <memory>
 #include "bn_alignment.h"
 #include "bn_unique_ptr.h"
+#include "bn_config_log.h"
+#include "bn_config_doxygen.h"
 
 namespace bn
 {
@@ -119,17 +121,12 @@ namespace bn::memory
      */
     [[nodiscard]] int available_alloc_ewram();
 
-    /**
-     * @brief Returns the number of items allocated in EWRAM with bn::memory::ewram_alloc,
-     * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
-     */
-    [[nodiscard]] int used_items_ewram();
-
-    /**
-     * @brief Returns the number of items that still can be allocated in EWRAM with bn::memory::ewram_alloc,
-     * bn::memory::ewram_calloc and bn::memory::ewram_realloc.
-     */
-    [[nodiscard]] int available_items_ewram();
+    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
+        /**
+         * @brief Logs the current status of the EWRAM allocator.
+         */
+        void log_alloc_ewram_status();
+    #endif
 
     /**
      * @brief Returns the IWRAM used by the stack in bytes.

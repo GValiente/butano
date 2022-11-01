@@ -6,7 +6,7 @@
 #ifndef BN_MEMORY_MANAGER_H
 #define BN_MEMORY_MANAGER_H
 
-#include "bn_common.h"
+#include "bn_config_log.h"
 
 namespace bn::memory_manager
 {
@@ -24,9 +24,9 @@ namespace bn::memory_manager
 
     [[nodiscard]] int available_alloc_ewram();
 
-    [[nodiscard]] int used_items_ewram();
-
-    [[nodiscard]] int available_items_ewram();
+    #if BN_CFG_LOG_ENABLED
+        void log_alloc_ewram_status();
+    #endif
 }
 
 #endif

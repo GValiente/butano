@@ -6,18 +6,23 @@
 #include "bn_best_fit_allocator.h"
 
 #include "bn_memory.h"
+#include "bn_limits.h"
 #include "bn_alignment.h"
+
+#if BN_CFG_LOG_ENABLED
+    #include "bn_log.h"
+#endif
 
 namespace bn
 {
 
 namespace
 {
-    [[nodiscard]] ibest_fit_allocator::size_type _aligned_bytes(ibest_fit_allocator::size_type bytes)
-    {
-        ibest_fit_allocator::size_type alignment_bytes = sizeof(int);
+    constexpr best_fit_allocator::size_type alignment_bytes = sizeof(int);
 
-        if(ibest_fit_allocator::size_type extra_bytes = bytes % alignment_bytes)
+    [[nodiscard]] best_fit_allocator::size_type _aligned_bytes(best_fit_allocator::size_type bytes)
+    {
+        if(best_fit_allocator::size_type extra_bytes = bytes % alignment_bytes)
         {
             bytes += alignment_bytes - extra_bytes;
         }
@@ -26,61 +31,57 @@ namespace
     }
 }
 
-ibest_fit_allocator::~ibest_fit_allocator() noexcept
+best_fit_allocator::~best_fit_allocator() noexcept
 {
-    BN_ASSERT(empty(), "Pool is not empty");
+    BN_ASSERT(empty(), "Allocator is not empty");
 }
 
-void* ibest_fit_allocator::alloc(size_type bytes)
+void* best_fit_allocator::alloc(size_type bytes)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
 
-    bytes = _aligned_bytes(bytes) + size_type(sizeof(items_iterator));
+    bytes = _aligned_bytes(bytes) + _sizeof_item;
 
     if(bytes > _free_bytes_count)
     {
         return nullptr;
     }
 
-    auto free_items_end = _free_items.end();
-    auto free_items_it = lower_bound(_free_items.begin(), free_items_end, bytes, _lower_bound_comparator);
+    item_type* item = _best_free_item(bytes);
 
-    if(free_items_it == free_items_end)
+    if(! item)
     {
         return nullptr;
     }
 
-    items_iterator items_it = *free_items_it;
-    item_type& item = *items_it;
+    size_type new_item_size = item->size - bytes;
 
-    if(size_type new_item_size = item.size - bytes)
+    if(new_item_size > _sizeof_item)
     {
-        if(_items.full())
+        item->size = bytes;
+
+        item_type* new_item = item->next();
+        new_item->previous = item;
+        new_item->size = new_item_size;
+        new_item->used = false;
+
+        item_type* new_next_item = new_item->next();
+
+        if(new_next_item != _end_item())
         {
-            return nullptr;
+            new_next_item->previous = new_item;
         }
-
-        item_type new_item;
-        new_item.data = item.data;
-        new_item.size = new_item_size;
-
-        items_iterator new_items_it = _items.insert(items_it, new_item);
-        _insert_free_item(new_items_it, free_items_it);
-        ++free_items_it;
-        item.data += new_item_size;
-        item.size = bytes;
     }
 
-    item.used = true;
-    _free_items.erase(free_items_it);
+    item->used = true;
+    _free_bytes_count -= item->size;
 
-    items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(item.data);
-    *items_it_ptr = items_it;
-    _free_bytes_count -= bytes;
-    return items_it_ptr + 1;
+    _sanity_check();
+
+    return reinterpret_cast<uint8_t*>(item) + _sizeof_item;
 }
 
-void* ibest_fit_allocator::calloc(size_type num, size_type bytes)
+void* best_fit_allocator::calloc(size_type num, size_type bytes)
 {
     BN_ASSERT(num >= 0, "Invalid num: ", num);
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
@@ -98,7 +99,7 @@ void* ibest_fit_allocator::calloc(size_type num, size_type bytes)
     return result;
 }
 
-void* ibest_fit_allocator::realloc(void* ptr, size_type new_bytes)
+void* best_fit_allocator::realloc(void* ptr, size_type new_bytes)
 {
     if(! ptr)
     {
@@ -107,10 +108,9 @@ void* ibest_fit_allocator::realloc(void* ptr, size_type new_bytes)
 
     BN_ASSERT(new_bytes >= 0, "Invalid new bytes: ", new_bytes);
 
-    items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
-    items_iterator items_it = *items_it_ptr;
-    item_type& item = *items_it;
-    size_type old_bytes = item.size - size_type(sizeof(items_iterator));
+    uint8_t* item_ptr = static_cast<uint8_t*>(ptr) - _sizeof_item;
+    auto item = reinterpret_cast<item_type*>(item_ptr);
+    size_type old_bytes = item->size - _sizeof_item;
 
     if(new_bytes <= old_bytes)
     {
@@ -131,97 +131,163 @@ void* ibest_fit_allocator::realloc(void* ptr, size_type new_bytes)
     return new_ptr;
 }
 
-void ibest_fit_allocator::free(void* ptr)
+void best_fit_allocator::free(void* ptr)
 {
     if(! ptr)
     {
         return;
     }
 
-    items_iterator* items_it_ptr = reinterpret_cast<items_iterator*>(ptr) - 1;
-    items_iterator items_it = *items_it_ptr;
-    item_type& item = *items_it;
-    item.used = false;
-    _free_bytes_count += item.size;
+    uint8_t* item_ptr = static_cast<uint8_t*>(ptr) - _sizeof_item;
+    auto item = reinterpret_cast<item_type*>(item_ptr);
+    item->used = false;
+    _free_bytes_count += item->size;
 
-    if(items_it != _items.begin())
+    if(item_type* previous_item = item->previous)
     {
-        items_iterator previous_items_it = items_it;
-        --previous_items_it;
-
-        const item_type& previous_item = *previous_items_it;
-
-        if(! previous_item.used && previous_item.data + previous_item.size == item.data)
+        if(! previous_item->used)
         {
-            item.data = previous_item.data;
-            item.size += previous_item.size;
-            _erase_free_item(previous_items_it);
-            _items.erase(previous_items_it);
+            previous_item->size += item->size;
+            item = previous_item;
         }
     }
 
-    items_iterator next_items_it = items_it;
-    ++next_items_it;
+    item_type* next_item = item->next();
+    item_type* end_item = _end_item();
 
-    if(next_items_it != _items.end())
+    if(next_item != end_item)
     {
-        const item_type& next_item = *next_items_it;
-
-        if(! next_item.used && item.data + item.size == next_item.data)
+        if(! next_item->used)
         {
-            item.size += next_item.size;
-            _erase_free_item(next_items_it);
-            _items.erase(next_items_it);
+            item->size += next_item->size;
+            next_item = item->next();
+        }
+
+        if(next_item != end_item)
+        {
+            next_item->previous = item;
         }
     }
 
-    _insert_free_item(items_it, _free_items.end());
+    _sanity_check();
 }
 
-ibest_fit_allocator::ibest_fit_allocator(ilist<item_type>& items, ivector<items_iterator>& free_items) :
-    _items(items),
-    _free_items(free_items)
+void best_fit_allocator::reset(void* start, size_type bytes)
 {
-}
+    BN_ASSERT(bytes >= 0 && bytes % size_type(sizeof(int)) == 0, "Invalid bytes: ", bytes);
+    BN_ASSERT(empty(), "Allocator is not empty");
 
-void ibest_fit_allocator::_init(void* start, size_type bytes)
-{
-    BN_ASSERT(start, "Start is null");
-    BN_ASSERT(aligned<4>(start), "Start is not aligned");
-    BN_ASSERT(bytes > 0 && bytes % size_type(sizeof(int)) == 0, "Invalid bytes: ", bytes);
-
-    _total_bytes_count = bytes;
-    _free_bytes_count = bytes;
-
-    item_type new_item;
-    new_item.data = static_cast<char*>(start);
-    new_item.size = bytes;
-    _items.push_front(new_item);
-    _free_items.push_back(_items.begin());
-}
-
-void ibest_fit_allocator::_insert_free_item(
-        items_iterator items_it, ivector<items_iterator>::iterator free_items_last)
-{
-    BN_ASSERT(! _free_items.full(), "Free items is full");
-
-    auto free_items_it = upper_bound(_free_items.begin(), free_items_last, items_it->size,
-                                     _upper_bound_comparator);
-    _free_items.insert(free_items_it, items_it);
-}
-
-void ibest_fit_allocator::_erase_free_item(items_iterator items_it)
-{
-    auto free_items_end = _free_items.end();
-    auto free_items_it = lower_bound(_free_items.begin(), free_items_end, items_it->size,
-                                     _lower_bound_comparator);
-
-    while(*free_items_it != items_it)
+    if(bytes >= _sizeof_item)
     {
-        ++free_items_it;
+        BN_ASSERT(start, "Start is null");
+        BN_ASSERT(aligned<alignment_bytes>(start), "Start is not aligned");
+
+        _start_ptr = static_cast<uint8_t*>(start);
+        _total_bytes_count = bytes;
+        _free_bytes_count = bytes;
+
+        auto first_item = reinterpret_cast<item_type*>(start);
+        first_item->previous = nullptr;
+        first_item->size = bytes;
+        first_item->used = false;
+    }
+    else
+    {
+        _start_ptr = nullptr;
+        _total_bytes_count = 0;
+        _free_bytes_count = 0;
+    }
+}
+
+#if BN_CFG_LOG_ENABLED
+    void best_fit_allocator::log_status() const
+    {
+        BN_LOG("items: ");
+        BN_LOG('[');
+
+        const item_type* item = _begin_item();
+        const item_type* end_item = _end_item();
+
+        while(item != end_item)
+        {
+            BN_LOG("    ",
+                   item->used ? "used" : "free",
+                   " - size: ", item->size);
+
+            item = item->next();
+        }
+
+        BN_LOG(']');
+        BN_LOG("free_bytes_count: ", _free_bytes_count);
+        BN_LOG("total_bytes_count: ", _total_bytes_count);
+    }
+#endif
+
+best_fit_allocator::item_type* best_fit_allocator::_best_free_item(size_type bytes)
+{
+    item_type* item = _begin_item();
+    item_type* end_item = _end_item();
+    item_type* best_free_item = nullptr;
+    size_type best_free_item_bytes = numeric_limits<size_type>::max();
+
+    while(item != end_item)
+    {
+        if(! item->used)
+        {
+            size_type item_bytes = item->size;
+
+            if(item_bytes == bytes)
+            {
+                return item;
+            }
+
+            if(item_bytes > bytes && item_bytes < best_free_item_bytes)
+            {
+                best_free_item = item;
+                best_free_item_bytes = item_bytes;
+            }
+        }
+
+        item = item->next();
     }
 
-    _free_items.erase(free_items_it);
+    return best_free_item;
+}
+
+void best_fit_allocator::_sanity_check() const
+{
+    const item_type* item = _begin_item();
+    const item_type* end_item = _end_item();
+    size_type real_used_bytes = 0;
+
+    while(item != end_item)
+    {
+        if(item->previous)
+        {
+            BN_ASSERT(item->previous->next() == item, item);
+
+            if(! item->used)
+            {
+                BN_ASSERT(item->previous->used, item);
+            }
+        }
+
+        const item_type* next_item = item->next();
+
+        if(next_item != end_item)
+        {
+            BN_ASSERT(next_item->previous == item, item);
+        }
+
+        if(item->used)
+        {
+            real_used_bytes += item->size;
+        }
+
+        item = next_item;
+    }
+
+    BN_ASSERT(real_used_bytes == used_bytes(), real_used_bytes, " - ", used_bytes());
 }
 
 }

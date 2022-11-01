@@ -26,14 +26,14 @@ public:
 
         void* ptr = bn::malloc(4);
         BN_ASSERT(ptr);
-        BN_ASSERT(bn::memory::used_alloc_ewram() == 8);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 12);
 
         bn::free(ptr);
         BN_ASSERT(bn::memory::used_alloc_ewram() == 0);
 
         ptr = bn::malloc(0);
         BN_ASSERT(ptr);
-        BN_ASSERT(bn::memory::used_alloc_ewram() == 4);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 8);
 
         bn::free(ptr);
         BN_ASSERT(bn::memory::used_alloc_ewram() == 0);

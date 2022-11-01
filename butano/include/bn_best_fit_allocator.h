@@ -8,41 +8,53 @@
 
 /**
  * @file
- * bn::ibest_fit_allocator and bn::best_fit_allocator implementation header file.
+ * bn::best_fit_allocator header file.
  *
  * @ingroup allocator
  */
 
-#include "bn_list.h"
-#include "bn_vector.h"
-#include "bn_best_fit_allocator_fwd.h"
+#include "bn_config_log.h"
+#include "bn_config_doxygen.h"
 
 namespace bn
 {
 
 /**
- * @brief Base class of best_fit_allocator.
- *
- * Can be used as a reference type for all best fit allocators.
+ * @brief Manages a chunk of memory with a best fit allocation strategy.
  *
  * @ingroup allocator
  */
-class ibest_fit_allocator
+class best_fit_allocator
 {
 
 public:
     using size_type = int; //!< Size type alias.
 
-    ibest_fit_allocator(const ibest_fit_allocator&) = delete;
+    /**
+     * @brief Default constructor.
+     */
+    best_fit_allocator() = default;
 
-    ibest_fit_allocator& operator=(const ibest_fit_allocator&) = delete;
+    /**
+     * @brief Constructor.
+     * @param start Pointer to the first element of the memory to manage.
+     * @param bytes Size in bytes of the memory to manage.
+     */
+    best_fit_allocator(void* start, size_type bytes)
+    {
+        reset(start, bytes);
+    }
+
+    best_fit_allocator(const best_fit_allocator&) = delete;
+
+    best_fit_allocator& operator=(const best_fit_allocator&) = delete;
 
     /**
      * @brief Destructor.
      *
      * It doesn't destroy its elements, they must be destroyed manually.
      */
-    ~ibest_fit_allocator() noexcept;
+    ~best_fit_allocator() noexcept;
 
     /**
      * @brief Returns the size in bytes of all allocated items.
@@ -61,22 +73,6 @@ public:
     }
 
     /**
-     * @brief Returns the number of allocated items.
-     */
-    [[nodiscard]] size_type used_items() const
-    {
-        return _items.size();
-    }
-
-    /**
-     * @brief Returns the number of items that still can be allocated.
-     */
-    [[nodiscard]] size_type available_items() const
-    {
-        return _items.available();
-    }
-
-    /**
      * @brief Indicates if it doesn't contain any item.
      */
     [[nodiscard]] bool empty() const
@@ -89,7 +85,7 @@ public:
      */
     [[nodiscard]] bool full() const
     {
-        return available_bytes() == 0 || available_items() == 0;
+        return available_bytes() == 0;
     }
 
     /**
@@ -167,71 +163,71 @@ public:
         free(&value);
     }
 
-protected:
-    /// @cond DO_NOT_DOCUMENT
+    /**
+     * @brief Setups the allocator to manage a new chunk of memory.
+     * @param start Pointer to the first element of the memory to manage.
+     * @param bytes Size in bytes of the memory to manage.
+     */
+    void reset(void* start, size_type bytes);
 
+    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
+        /**
+         * @brief Logs the current status of the allocator.
+         */
+        void log_status() const;
+    #endif
+
+private:
     class item_type
     {
 
     public:
-        char* data = nullptr;
-        size_type size: 24 = 0;
-        bool used = false;
+        item_type* previous = nullptr;
+        size_type size: 30 = 0;
+        bool used: 1 = false;
+
+        [[nodiscard]] const item_type* next() const
+        {
+            const uint8_t* next_ptr = reinterpret_cast<const uint8_t*>(this) + size;
+            return reinterpret_cast<const item_type*>(next_ptr);
+        }
+
+        [[nodiscard]] item_type* next()
+        {
+            uint8_t* next_ptr = reinterpret_cast<uint8_t*>(this) + size;
+            return reinterpret_cast<item_type*>(next_ptr);
+        }
     };
 
-    using items_iterator = ilist<item_type>::iterator;
+    static constexpr size_type _sizeof_item = sizeof(item_type);
 
-    ibest_fit_allocator(ilist<item_type>& items, ivector<items_iterator>& free_items);
+    uint8_t* _start_ptr = nullptr;
+    size_type _total_bytes_count = 0;
+    size_type _free_bytes_count = 0;
 
-    void _init(void* start, size_type bytes);
-
-    /// @endcond
-
-private:
-    static_assert(sizeof(items_iterator) == sizeof(int));
-    static_assert(alignof(items_iterator) == alignof(int));
-
-    constexpr static auto _lower_bound_comparator = [](const items_iterator& items_it, size_type size)
+    [[nodiscard]] const item_type* _begin_item() const
     {
-        return items_it->size < size;
-    };
-
-    constexpr static auto _upper_bound_comparator = [](size_type size, const items_iterator& items_it)
-    {
-        return size < items_it->size;
-    };
-
-    ilist<item_type>& _items;
-    ivector<items_iterator>& _free_items;
-    size_type _total_bytes_count;
-    size_type _free_bytes_count;
-
-    void _insert_free_item(items_iterator items_it, ivector<items_iterator>::iterator free_items_last);
-
-    void _erase_free_item(items_iterator items_it);
-};
-
-
-template<int MaxItems>
-class best_fit_allocator : public ibest_fit_allocator
-{
-    static_assert(MaxItems > 0);
-
-public:
-    /**
-     * @brief Default constructor.
-     * @param start Pointer to the first element of the memory to manage.
-     * @param bytes Size in bytes of the memory to manage.
-     */
-    best_fit_allocator(void* start, size_type bytes) :
-        ibest_fit_allocator(_items_buffer, _free_items_buffer)
-    {
-        _init(start, bytes);
+        return reinterpret_cast<const item_type*>(_start_ptr);
     }
 
-private:
-    list<item_type, MaxItems> _items_buffer;
-    vector<items_iterator, (MaxItems / 2) + 2> _free_items_buffer;
+    [[nodiscard]] item_type* _begin_item()
+    {
+        return reinterpret_cast<item_type*>(_start_ptr);
+    }
+
+    [[nodiscard]] const item_type* _end_item() const
+    {
+        return reinterpret_cast<const item_type*>(_start_ptr + _total_bytes_count);
+    }
+
+    [[nodiscard]] item_type* _end_item()
+    {
+        return reinterpret_cast<item_type*>(_start_ptr + _total_bytes_count);
+    }
+
+    [[nodiscard]] item_type* _best_free_item(size_type bytes);
+
+    void _sanity_check() const;
 };
 
 }

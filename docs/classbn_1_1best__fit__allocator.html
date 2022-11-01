@@ -47,64 +47,271 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__best__fit__allocator_8h.html">&lt;bn_best_fit_allocator.h&gt;</a></div>
-          <div class="m-doc-template">template&lt;int MaxItems&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>best_fit_allocator <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__best__fit__allocator_8h.html">&lt;bn_best_fit_allocator.h&gt;</a></div>
         </h1>
-        <p><a href="classbn_1_1ibest__fit__allocator.html" class="m-doc">ibest_<wbr />fit_<wbr />allocator</a> implementation that uses a fixed number of maximum items.</p>
-        <table class="m-table m-fullwidth m-flat">
-          <thead>
-            <tr><th colspan="2">Template parameters</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="width: 1%">MaxItems</td>
-              <td>Maximum number of items that can be stored.</td>
-            </tr>
-          </tbody>
-        </table>
+        <p>Manages a chunk of memory with a best fit allocation strategy.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#pub-types">Public types</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-        <section id="base-classes">
-          <h2><a href="#base-classes">Base classes</a></h2>
+        <section id="pub-types">
+          <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1ibest__fit__allocator.html" class="m-doc">ibest_fit_allocator</a>
+            <dt id="a809c23e52711015a49b2f16057769250">
+              using <a href="#a809c23e52711015a49b2f16057769250" class="m-doc-self">size_type</a> = int
             </dt>
-            <dd>Base class of <a href="classbn_1_1best__fit__allocator.html" class="m-doc">best_<wbr />fit_<wbr />allocator</a>.</dd>
+            <dd>Size type alias.</dd>
           </dl>
         </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a5fb71e9921f1ffd2197a5572d68299c1" class="m-doc">best_fit_allocator</a>(</span><span class="m-doc-wrap">void* start,
-              <a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> bytes)</span>
+            <dt id="ac1584f648b774c2a66b6e4e8e0784897">
+              <span class="m-doc-wrap-bumper"><a href="#ac1584f648b774c2a66b6e4e8e0784897" class="m-doc-self">best_fit_allocator</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
             </dt>
             <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ace6e7ccb38e57c0780e58727a28f1e8c" class="m-doc">best_fit_allocator</a>(</span><span class="m-doc-wrap">void* start,
+              <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> bytes)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ab4e580faa25922fa10e1f1bebcbf9d51" class="m-doc">~best_fit_allocator</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Destructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a3dac825d7c309112331189c221c23fe6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3dac825d7c309112331189c221c23fe6" class="m-doc-self">used_bytes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the size in bytes of all allocated items.</dd>
+            <dt id="a7ab0d4d08b290d154b0d9d51a9bea96d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7ab0d4d08b290d154b0d9d51a9bea96d" class="m-doc-self">available_bytes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the number of bytes that still can be allocated.</dd>
+            <dt id="a07918cf99c8e49656185513affed65fe">
+              <span class="m-doc-wrap-bumper">auto <a href="#a07918cf99c8e49656185513affed65fe" class="m-doc-self">empty</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it doesn&#x27;t contain any item.</dd>
+            <dt id="ae3c42539ffbd2b942168e306b5de2e53">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae3c42539ffbd2b942168e306b5de2e53" class="m-doc-self">full</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if it can&#x27;t contain any more items.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a41a92bb18b55190d4d320f4989ef7e34" class="m-doc">alloc</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> bytes) -&gt; void*</span>
+            </dt>
+            <dd>Allocates uninitialized storage.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a62ba7c077644033141395078105574ac" class="m-doc">calloc</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> num,
+              <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> bytes) -&gt; void*</span>
+            </dt>
+            <dd>Allocates storage for an array of num objects of bytes size and initializes all bytes in it to zero.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae9d903214de6289d3116adcebd7d4dff" class="m-doc">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
+              <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> new_bytes) -&gt; void*</span>
+            </dt>
+            <dd>Reallocates the given storage.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a135bd5c9d1c7643b6a87fa2d5f00ef85" class="m-doc">free</a>(</span><span class="m-doc-wrap">void* ptr)</span>
+            </dt>
+            <dd>Deallocates the storage previously allocated by alloc, calloc or realloc.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, typename... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9f42d9a0e2e6290881a9b8b12430691e" class="m-doc">create</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; Type&amp;</span>
+            </dt>
+            <dd>Constructs a value inside of the allocator.</dd>
+            <dt id="a1cdfbd52053dd28758d44f705dfe6bbf">
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#a1cdfbd52053dd28758d44f705dfe6bbf" class="m-doc-self">destroy</a>(</span><span class="m-doc-wrap">Type&amp; value)</span>
+            </dt>
+            <dd>Destroys the given value, previously allocated with the create method.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af1fc9b06a4cefb4116e5c3d558471952" class="m-doc">reset</a>(</span><span class="m-doc-wrap">void* start,
+              <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> bytes)</span>
+            </dt>
+            <dd>Setups the allocator to manage a new chunk of memory.</dd>
+            <dt id="a4ff7fae927cebb586c7d2f3a25fead28">
+              <span class="m-doc-wrap-bumper">void <a href="#a4ff7fae927cebb586c7d2f3a25fead28" class="m-doc-self">log_status</a>(</span><span class="m-doc-wrap">) const</span>
+            </dt>
+            <dd>Logs the current status of the allocator.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a5fb71e9921f1ffd2197a5572d68299c1"><div>
+          <section class="m-doc-details" id="ace6e7ccb38e57c0780e58727a28f1e8c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />best_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ace6e7ccb38e57c0780e58727a28f1e8c" class="m-doc-self">best_fit_allocator</a>(</span><span class="m-doc-wrap">void* start,
+              <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> bytes)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">start</td>
+                  <td>Pointer to the first element of the memory to manage.</td>
+                </tr>
+                <tr>
+                  <td>bytes</td>
+                  <td>Size in bytes of the memory to manage.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab4e580faa25922fa10e1f1bebcbf9d51"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />best_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab4e580faa25922fa10e1f1bebcbf9d51" class="m-doc-self">~best_fit_allocator</a>(</span><span class="m-doc-wrap">) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Destructor.</p>
+<p>It doesn&#x27;t destroy its elements, they must be destroyed manually.</p>
+          </div></section>
+          <section class="m-doc-details" id="a41a92bb18b55190d4d320f4989ef7e34"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void* bn::<wbr />best_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a41a92bb18b55190d4d320f4989ef7e34" class="m-doc-self">alloc</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> bytes)</span></span>
+            </h3>
+            <p>Allocates uninitialized storage.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bytes</td>
+                  <td>Bytes to allocate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>On success, returns the pointer to the beginning of newly allocated memory. On failure, returns <code>nullptr</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>To avoid a memory leak, the returned pointer must be deallocated with free.</p>
+          </div></section>
+          <section class="m-doc-details" id="a62ba7c077644033141395078105574ac"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void* bn::<wbr />best_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a62ba7c077644033141395078105574ac" class="m-doc-self">calloc</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> num,
+              <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> bytes)</span></span>
+            </h3>
+            <p>Allocates storage for an array of num objects of bytes size and initializes all bytes in it to zero.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">num</td>
+                  <td>Number of objects.</td>
+                </tr>
+                <tr>
+                  <td>bytes</td>
+                  <td>Size in bytes of each object.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>On success, returns the pointer to the beginning of newly allocated memory. On failure, returns <code>nullptr</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>To avoid a memory leak, the returned pointer must be deallocated with free.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae9d903214de6289d3116adcebd7d4dff"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void* bn::<wbr />best_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae9d903214de6289d3116adcebd7d4dff" class="m-doc-self">realloc</a>(</span><span class="m-doc-wrap">void* ptr,
+              <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> new_bytes)</span></span>
+            </h3>
+            <p>Reallocates the given storage.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Pointer to the storage to reallocate.</td>
+                </tr>
+                <tr>
+                  <td>new_bytes</td>
+                  <td>New size in bytes of the reallocated storage.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>On success, returns the pointer to the beginning of newly allocated storage. On failure, returns <code>nullptr</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If ptr was not previously allocated by alloc, calloc or realloc, the behavior is undefined.</p><p>On success, the original pointer ptr is invalidated and any access to it is undefined behavior (even if reallocation was in-place).</p><p>To avoid a memory leak, the returned pointer must be deallocated with free.</p>
+          </div></section>
+          <section class="m-doc-details" id="a135bd5c9d1c7643b6a87fa2d5f00ef85"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />best_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a135bd5c9d1c7643b6a87fa2d5f00ef85" class="m-doc-self">free</a>(</span><span class="m-doc-wrap">void* ptr)</span></span>
+            </h3>
+            <p>Deallocates the storage previously allocated by alloc, calloc or realloc.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Pointer to the storage to deallocate. It is invalidated and any access to it is undefined behavior.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If ptr is <code>nullptr</code>, the function does nothing.</p><p>If ptr was not previously allocated by alloc, calloc or realloc, the behavior is undefined.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9f42d9a0e2e6290881a9b8b12430691e"><div>
             <h3>
               <div class="m-doc-template">
-                template&lt;int MaxItems&gt;
+                template&lt;typename Type, typename... Args&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />best_fit_allocator&lt;MaxItems&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5fb71e9921f1ffd2197a5572d68299c1" class="m-doc-self">best_fit_allocator</a>(</span><span class="m-doc-wrap">void* start,
-              <a href="classbn_1_1ibest__fit__allocator.html#a022ebc21e986b2070d098267c1e6b207" class="m-doc">size_<wbr />type</a> bytes)</span></span>
+              <span class="m-doc-wrap-bumper">Type&amp; bn::<wbr />best_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9f42d9a0e2e6290881a9b8b12430691e" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
             </h3>
-            <p>Default constructor.</p>
+            <p>Constructs a value inside of the allocator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">args</td>
+                  <td>Parameters of the value to construct.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to the new value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af1fc9b06a4cefb4116e5c3d558471952"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />best_fit_allocator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af1fc9b06a4cefb4116e5c3d558471952" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap">void* start,
+              <a href="classbn_1_1best__fit__allocator.html#a809c23e52711015a49b2f16057769250" class="m-doc">size_<wbr />type</a> bytes)</span></span>
+            </h3>
+            <p>Setups the allocator to manage a new chunk of memory.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>

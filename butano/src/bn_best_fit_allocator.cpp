@@ -75,9 +75,6 @@ void* best_fit_allocator::alloc(size_type bytes)
 
     item->used = true;
     _free_bytes_count -= item->size;
-
-    _sanity_check();
-
     return reinterpret_cast<uint8_t*>(item) + _sizeof_item;
 }
 
@@ -168,8 +165,6 @@ void best_fit_allocator::free(void* ptr)
             next_item->previous = item;
         }
     }
-
-    _sanity_check();
 }
 
 void best_fit_allocator::reset(void* start, size_type bytes)
@@ -252,42 +247,6 @@ best_fit_allocator::item_type* best_fit_allocator::_best_free_item(size_type byt
     }
 
     return best_free_item;
-}
-
-void best_fit_allocator::_sanity_check() const
-{
-    const item_type* item = _begin_item();
-    const item_type* end_item = _end_item();
-    size_type real_used_bytes = 0;
-
-    while(item != end_item)
-    {
-        if(item->previous)
-        {
-            BN_ASSERT(item->previous->next() == item, item);
-
-            if(! item->used)
-            {
-                BN_ASSERT(item->previous->used, item);
-            }
-        }
-
-        const item_type* next_item = item->next();
-
-        if(next_item != end_item)
-        {
-            BN_ASSERT(next_item->previous == item, item);
-        }
-
-        if(item->used)
-        {
-            real_used_bytes += item->size;
-        }
-
-        item = next_item;
-    }
-
-    BN_ASSERT(real_used_bytes == used_bytes(), real_used_bytes, " - ", used_bytes());
 }
 
 }

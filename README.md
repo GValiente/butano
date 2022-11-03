@@ -133,6 +133,11 @@ gather owls and upgrades while managing your health and money and defeat the fin
 
 ![](docs_tools/images/knight_owls_title.png) ![](docs_tools/images/knight_owls_gameplay.png)
 
+* [Green Memories](https://tengukaze.itch.io/green-memories-gba): the year is 300 a.f. and protagonist Cytra 
+tries to survive the extreme climate of a post-apocalyptic desert while collecting data from her scientific research.
+
+![](docs_tools/images/green_memories_title.png) ![](docs_tools/images/green_memories_gameplay.png)
+
 * [Collie Defence](https://xvayan.itch.io/collie-defence): you're a Border Collie and you need to protect 
 your flock of sheep!
 

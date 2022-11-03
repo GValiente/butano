@@ -2010,7 +2010,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_0_0 13.0.0 (next release)
+ * @section changelog_13_0_0 13.0.0
  *
  * * <b>(Breaking change)</b> bn::best_fit_allocator (used by the heap manager) supports unlimited allocations.
  * * bn::best_fit_allocator::log_status and bn::memory::log_alloc_ewram_status added.

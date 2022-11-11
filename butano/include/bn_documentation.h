@@ -2012,7 +2012,10 @@
  *
  * @section changelog_13_1_0 13.1.0 (next release)
  *
- * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
+ * * bn::list::remove, bn::list::remove_if, bn::forward_list::remove, bn::forward_list::remove_if,
+ *   bn::intrusive_list::remove, bn::intrusive_list::remove_if, bn::intrusive_forward_list::remove and
+ *   bn::intrusive_forward_list::remove_if added.
+ * * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
  *
  *
  * @section changelog_13_0_0 13.0.0

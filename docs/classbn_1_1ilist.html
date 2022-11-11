@@ -292,6 +292,15 @@
             </dt>
             <dd>Erases a range of elements.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acd7df9bf5771bcb8e13cc807587fd194" class="m-doc">remove</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ilist.html#a7aeefd1cf180f7b681f0a7f5d6a01c2d" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbn_1_1ilist.html#a2157e460353ac5837b4867c67297f8b4" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a717bb90715ee1e53df86b212ce50a763" class="m-doc">remove_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred) -&gt; <a href="classbn_1_1ilist.html#a2157e460353ac5837b4867c67297f8b4" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that satisfy the specified predicate.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a7321f68aed5f9e951b16e52f2d1acdd1" class="m-doc">assign</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ilist.html#a2157e460353ac5837b4867c67297f8b4" class="m-doc">size_<wbr />type</a> count,
               <a href="classbn_1_1ilist.html#a7aeefd1cf180f7b681f0a7f5d6a01c2d" class="m-doc">const_<wbr />reference</a> value)</span>
             </dt>
@@ -702,6 +711,59 @@
               </tfoot>
             </table>
 <p>The range includes all the elements between first and last, including the element pointed by first, but not the one pointed by last.</p>
+          </div></section>
+          <section class="m-doc-details" id="acd7df9bf5771bcb8e13cc807587fd194"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ilist.html#a2157e460353ac5837b4867c67297f8b4" class="m-doc">size_<wbr />type</a> bn::<wbr />ilist&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acd7df9bf5771bcb8e13cc807587fd194" class="m-doc-self">remove</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ilist.html#a7aeefd1cf180f7b681f0a7f5d6a01c2d" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Erases all elements that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a717bb90715ee1e53df86b212ce50a763"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ilist.html#a2157e460353ac5837b4867c67297f8b4" class="m-doc">size_<wbr />type</a> bn::<wbr />ilist&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a717bb90715ee1e53df86b212ce50a763" class="m-doc-self">remove_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
           <section class="m-doc-details" id="a7321f68aed5f9e951b16e52f2d1acdd1"><div>
             <h3>

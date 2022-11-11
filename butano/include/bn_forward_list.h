@@ -520,16 +520,38 @@ public:
      */
     friend size_type erase(iforward_list& list, const_reference value)
     {
+        return list.remove(value);
+    }
+
+    /**
+     * @brief Erases all elements that satisfy the specified predicate.
+     * @param list iforward_list from which to erase.
+     * @param pred Unary predicate which returns `true` if the element should be erased.
+     * @return Number of erased elements.
+     */
+    template<class Pred>
+    friend size_type erase_if(iforward_list& list, const Pred& pred)
+    {
+        return list.remove_if(pred);
+    }
+
+    /**
+     * @brief Erases all elements that are equal to the specified value.
+     * @param value Element to erase.
+     * @return Number of erased elements.
+     */
+    size_type remove(const_reference value)
+    {
         size_type erased_count = 0;
-        iterator previous_it = list.before_begin();
-        iterator it = list.begin();
-        iterator last = list.end();
+        iterator previous_it = before_begin();
+        iterator it = begin();
+        iterator last = end();
 
         while(it != last)
         {
             if(*it == value)
             {
-                list._erase_after(previous_it);
+                _erase_after(previous_it);
                 it = previous_it;
                 ++erased_count;
             }
@@ -546,23 +568,22 @@ public:
 
     /**
      * @brief Erases all elements that satisfy the specified predicate.
-     * @param list iforward_list from which to erase.
      * @param pred Unary predicate which returns `true` if the element should be erased.
      * @return Number of erased elements.
      */
     template<class Pred>
-    friend size_type erase_if(iforward_list& list, const Pred& pred)
+    size_type remove_if(const Pred& pred)
     {
         size_type erased_count = 0;
-        iterator previous_it = list.before_begin();
-        iterator it = list.begin();
-        iterator last = list.end();
+        iterator previous_it = before_begin();
+        iterator it = begin();
+        iterator last = end();
 
         while(it != last)
         {
             if(pred(*it))
             {
-                list._erase_after(previous_it);
+                _erase_after(previous_it);
                 it = previous_it;
                 ++erased_count;
             }

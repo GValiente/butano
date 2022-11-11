@@ -639,9 +639,31 @@ public:
      */
     friend size_type erase(ilist& list, const_reference value)
     {
+        return list.remove(value);
+    }
+
+    /**
+     * @brief Erases all elements that satisfy the specified predicate.
+     * @param list ilist from which to erase.
+     * @param pred Unary predicate which returns `true` if the element should be erased.
+     * @return Number of erased elements.
+     */
+    template<class Pred>
+    friend size_type erase_if(ilist& list, const Pred& pred)
+    {
+        return list.remove_if(pred);
+    }
+
+    /**
+     * @brief Erases all elements that are equal to the specified value.
+     * @param value Element to erase.
+     * @return Number of erased elements.
+     */
+    size_type remove(const_reference value)
+    {
         size_type erased_count = 0;
-        iterator it = list.begin();
-        iterator last = list.end();
+        iterator it = begin();
+        iterator last = end();
 
         while(it != last)
         {
@@ -649,7 +671,7 @@ public:
             {
                 iterator next = it;
                 ++next;
-                list._erase(it);
+                _erase(it);
                 it = next;
                 ++erased_count;
             }
@@ -664,16 +686,15 @@ public:
 
     /**
      * @brief Erases all elements that satisfy the specified predicate.
-     * @param list ilist from which to erase.
      * @param pred Unary predicate which returns `true` if the element should be erased.
      * @return Number of erased elements.
      */
     template<class Pred>
-    friend size_type erase_if(ilist& list, const Pred& pred)
+    size_type remove_if(const Pred& pred)
     {
         size_type erased_count = 0;
-        iterator it = list.begin();
-        iterator last = list.end();
+        iterator it = begin();
+        iterator last = end();
 
         while(it != last)
         {
@@ -681,7 +702,7 @@ public:
             {
                 iterator next = it;
                 ++next;
-                list._erase(it);
+                _erase(it);
                 it = next;
                 ++erased_count;
             }

@@ -1,3 +1,4 @@
 {
-    "type": "regular_bg"
+    "type": "regular_bg",
+	"flipped_tiles_reduction": false
 }

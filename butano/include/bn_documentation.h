@@ -2010,6 +2010,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_1_0 13.1.0 (next release)
+ *
+ * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
+ *
+ *
  * @section changelog_13_0_0 13.0.0
  *
  * * <b>(Breaking change)</b> bn::best_fit_allocator (used by the heap manager) supports unlimited allocations.

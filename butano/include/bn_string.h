@@ -961,6 +961,45 @@ template<int MaxSize, typename Type>
     return result;
 }
 
+
+/**
+ * @brief Hash support for istring.
+ *
+ * @ingroup string
+ * @ingroup functional
+ */
+template<>
+struct hash<istring>
+{
+    /**
+     * @brief Returns the hash of the given istring.
+     */
+    [[nodiscard]] constexpr unsigned operator()(const istring& value) const
+    {
+        return hash<istring_base>()(value);
+    }
+};
+
+
+/**
+ * @brief Hash support for string.
+ * @tparam MaxSize Maximum number of characters that can be stored in the string.
+ *
+ * @ingroup string
+ * @ingroup functional
+ */
+template<int MaxSize>
+struct hash<string<MaxSize>>
+{
+    /**
+     * @brief Returns the hash of the given string.
+     */
+    [[nodiscard]] constexpr unsigned operator()(const string<MaxSize>& value) const
+    {
+        return hash<istring_base>()(value);
+    }
+};
+
 }
 
 #endif

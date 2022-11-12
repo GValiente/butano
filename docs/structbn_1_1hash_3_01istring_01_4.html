@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn_string.h file | Butano Docs</title>
+  <title>bn::hash&lt;istring&gt; struct | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,50 +47,29 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          bn_string.h <span class="m-thin">file</span>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__string_8h.html">&lt;bn_string.h&gt;</a></div>
+          <div class="m-doc-template">template&lt;&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>hash&lt;istring&gt; <span class="m-thin">struct</span>
         </h1>
+        <p>Hash support for istring.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p><a href="classbn_1_1istring.html" class="m-doc">bn::<wbr />istring</a> and <a href="classbn_1_1string.html" class="m-doc">bn::<wbr />string</a> implementation header file.</p>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main Butano namespace.</dd>
-          </dl>
-        </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1istring.html" class="m-doc">bn::istring</a>
+            <dt id="ab0419344a3f75d6f87324e050b48c263">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab0419344a3f75d6f87324e050b48c263" class="m-doc-self">operator()</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; value) const -&gt; unsigned <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Base class of <a href="classbn_1_1string.html" class="m-doc">bn::<wbr />string</a>.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
-              class <a href="classbn_1_1string.html" class="m-doc">bn::string</a>
-            </dt>
-            <dd><code>std::string</code> like container with a fixed size buffer.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;&gt;</div>
-              struct <a href="structbn_1_1hash_3_01istring_01_4.html" class="m-doc">bn::hash&lt;istring&gt;</a>
-            </dt>
-            <dd>Hash support for istring.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
-              struct <a href="structbn_1_1hash_3_01string_3_01_max_size_01_4_01_4.html" class="m-doc">bn::hash&lt;string&lt;MaxSize&gt;&gt;</a>
-            </dt>
-            <dd>Hash support for string.</dd>
+            <dd>Returns the hash of the given istring.</dd>
           </dl>
         </section>
       </div>

@@ -329,8 +329,7 @@ typedef struct TTC
 // --------------------------------------------------------------------
 
 
-//extern TTC __tte_main_context;
-extern TTC *gp_tte_context;
+extern TTC __tte_main_context;
 
 //! \name Internal fonts
 //\{
@@ -591,7 +590,7 @@ void obj_drawg(uint gid);
 
 //! Get the master text-system
 INLINE TTC *tte_get_context(void)
-{	return gp_tte_context;							}
+{	return &__tte_main_context;							}
 
 
 // --- Font-specific functions ---

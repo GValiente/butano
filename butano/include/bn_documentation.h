@@ -2016,6 +2016,8 @@
  *   bn::intrusive_list::remove, bn::intrusive_list::remove_if, bn::intrusive_forward_list::remove and
  *   bn::intrusive_forward_list::remove_if added.
  * * Hash support for bn::istring and bn::string added.
+ * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> unused components removed
+ *   (EWRAM and ROM usage reduced).
  * * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
  *
  *

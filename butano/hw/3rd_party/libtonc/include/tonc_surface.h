@@ -184,8 +184,8 @@ typedef struct TSurfaceProcTab
 // --------------------------------------------------------------------
 
 extern const TSurface m3_surface;
-extern EWRAM_DATA TSurface m4_surface;
-extern EWRAM_DATA TSurface m5_surface;
+extern const TSurface m4_surface;
+extern const TSurface m5_surface;
 
 extern const TSurfaceProcTab bmp16_tab;
 extern const TSurfaceProcTab bmp8_tab;

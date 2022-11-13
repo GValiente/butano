@@ -33,7 +33,7 @@ const TSurface m3_surface=
 	0, NULL
 };
 
-EWRAM_DATA TSurface m5_surface= 
+const TSurface m5_surface= 
 {
 	(u8*)m5_mem , M5_WIDTH*2, M5_WIDTH, M5_HEIGHT, SRF_BMP16, 16, 
 	0, NULL

@@ -54,7 +54,6 @@ void dummy_erase(int left, int top, int right, int bottom);
 // --------------------------------------------------------------------
 
 EWRAM_DATA TTC	__tte_main_context;
-EWRAM_DATA TTC	*gp_tte_context= &__tte_main_context;
 
 
 // --------------------------------------------------------------------
@@ -82,13 +81,6 @@ void dummy_erase(int left, int top, int right, int bottom)
 {
 	//# TODO: assert?
 }
-
-//! Set the master context pointer.
-void tte_set_context(TTC *tc)
-{	
-	gp_tte_context= tc ? tc : &__tte_main_context;
-}
-
 
 //! Set color attribute of \a type to \a cattr.
 void tte_set_color_attr(eint type, u16 cattr)
@@ -142,7 +134,7 @@ void tte_init_base(const TFont *font, fnDrawg drawProc, fnErase eraseProc)
 	TTC *tc= tte_get_context();
 	memset(tc, 0, sizeof(TTC));
 		
-	tc->font= (TFont*)(font ? font : &fwf_default);
+    tc->font= (TFont*)(font);
 	tc->drawgProc= drawProc ? drawProc : dummy_drawg;
 	tc->eraseProc= eraseProc ? eraseProc : dummy_erase;
 

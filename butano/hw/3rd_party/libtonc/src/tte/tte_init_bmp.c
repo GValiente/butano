@@ -38,8 +38,8 @@ void tte_init_bmp(int vmode, const TFont *font, fnDrawg proc)
 	//# PONDER: page flip ?
 	switch(vmode)
 	{
-	case 4:
-		tc->dst = m4_surface;
+    /*case 4:
+        tc->dst = m4_surface;
 
 		tc->cattr[TTE_INK]= 0xF1;
 		tc->cattr[TTE_SHADOW]= 0xF2;
@@ -54,7 +54,7 @@ void tte_init_bmp(int vmode, const TFont *font, fnDrawg proc)
 
 		pal_bg_mem[0xF1]= CLR_YELLOW;
 		pal_bg_mem[0xF2]= CLR_ORANGE;
-		pal_bg_mem[0]= CLR_BLACK;
+        pal_bg_mem[0]= CLR_BLACK;
 		break;
 
 	case 5:
@@ -70,7 +70,7 @@ void tte_init_bmp(int vmode, const TFont *font, fnDrawg proc)
 		if(proc == NULL)
 			proc= bmp16_drawg_default;
 		tc->eraseProc= bmp16_erase;
-		break;
+        break;*/
 
 	// Default mode is 3. This covers for not having set 
 	// The video mode yet.

@@ -15,6 +15,16 @@ namespace bn::hw::sprites
 {
     using handle_type = OBJ_ATTR;
 
+    namespace
+    {
+        constexpr uint8_t _obj_sizes[3][4][2]=
+        {
+            { { 8, 8}, {16,16}, {32,32}, {64,64} },
+            { {16, 8}, {32, 8}, {32,16}, {64,32} },
+            { { 8,16}, { 8,32}, {16,32}, {32,64} },
+        };
+    }
+
     inline void copy_handle(const handle_type& from, handle_type& to)
     {
         to.attr0 = from.attr0;
@@ -155,7 +165,7 @@ namespace bn::hw::sprites
 
     [[nodiscard]] inline pair<int, int> base_dimensions(const handle_type& sprite)
     {
-        const uint8_t* obj_size = obj_get_size(&sprite);
+        const uint8_t* obj_size = _obj_sizes[sprite.attr0 >> 14][sprite.attr1 >> 14];
         return pair<int, int>(obj_size[0], obj_size[1]);
     }
 

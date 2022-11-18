@@ -85,7 +85,7 @@ public:
      */
     [[nodiscard]] bool full() const
     {
-        return available_bytes() == 0;
+        return available_bytes() <= _sizeof_item;
     }
 
     /**
@@ -183,6 +183,8 @@ private:
 
     public:
         item_type* previous = nullptr;
+        item_type* previous_free = nullptr;
+        item_type* next_free = nullptr;
         size_type size: 30 = 0;
         bool used: 1 = false;
 
@@ -202,6 +204,7 @@ private:
     static constexpr size_type _sizeof_item = sizeof(item_type);
 
     uint8_t* _start_ptr = nullptr;
+    item_type* _first_free_item = nullptr;
     size_type _total_bytes_count = 0;
     size_type _free_bytes_count = 0;
 
@@ -226,6 +229,8 @@ private:
     }
 
     [[nodiscard]] item_type* _best_free_item(size_type bytes);
+
+    void _sanity_check() const;
 };
 
 }

@@ -54,6 +54,8 @@ void* best_fit_allocator::alloc(size_type bytes)
         return nullptr;
     }
 
+    // BN_LOG("- ALLOC -");
+
     size_type new_item_size = item->size - bytes;
 
     if(new_item_size > _sizeof_item)
@@ -62,6 +64,8 @@ void* best_fit_allocator::alloc(size_type bytes)
 
         item_type* new_item = item->next();
         new_item->previous = item;
+        new_item->previous_free = item->previous_free;
+        new_item->next_free = item->next_free;
         new_item->size = new_item_size;
         new_item->used = false;
 
@@ -71,10 +75,47 @@ void* best_fit_allocator::alloc(size_type bytes)
         {
             new_next_item->previous = new_item;
         }
+
+        if(item_type* previous_free_item = item->previous_free)
+        {
+            previous_free_item->next_free = new_item;
+        }
+        else
+        {
+            _first_free_item = new_item;
+        }
+
+        if(item_type* next_free_item = item->next_free)
+        {
+            next_free_item->previous_free = new_item;
+        }
+    }
+    else
+    {
+        item_type* next_free_item = item->next_free;
+
+        if(item_type* previous_free_item = item->previous_free)
+        {
+            previous_free_item->next_free = item->next_free;
+        }
+        else
+        {
+            _first_free_item = next_free_item;
+        }
+
+        if(next_free_item)
+        {
+            next_free_item->previous_free = item->previous_free;
+        }
     }
 
+    item->previous_free = nullptr;
+    item->next_free = nullptr;
     item->used = true;
     _free_bytes_count -= item->size;
+
+    _sanity_check();
+
     return reinterpret_cast<uint8_t*>(item) + _sizeof_item;
 }
 
@@ -136,7 +177,11 @@ void best_fit_allocator::free(void* ptr)
     }
 
     uint8_t* item_ptr = static_cast<uint8_t*>(ptr) - _sizeof_item;
+
+    // BN_LOG("- FREE: ", item_ptr, " -");
+
     auto item = reinterpret_cast<item_type*>(item_ptr);
+    bool item_linked = false;
     item->used = false;
     _free_bytes_count += item->size;
 
@@ -146,6 +191,7 @@ void best_fit_allocator::free(void* ptr)
         {
             previous_item->size += item->size;
             item = previous_item;
+            item_linked = true;
         }
     }
 
@@ -156,6 +202,32 @@ void best_fit_allocator::free(void* ptr)
     {
         if(! next_item->used)
         {
+            item_linked = true;
+
+            if(item_type* previous_free_item = next_item->previous_free)
+            {
+                if(previous_free_item == item)
+                {
+                    item->next_free = next_item->next_free;
+                }
+                else
+                {
+                    previous_free_item->next_free = item;
+                    item->previous_free = previous_free_item;
+                }
+            }
+
+            if(item_type* next_free_item = next_item->next_free)
+            {
+                next_free_item->previous_free = item;
+                item->next_free = next_free_item;
+            }
+
+            if(next_item == _first_free_item)
+            {
+                _first_free_item = nullptr;
+            }
+
             item->size += next_item->size;
             next_item = item->next();
         }
@@ -165,6 +237,48 @@ void best_fit_allocator::free(void* ptr)
             next_item->previous = item;
         }
     }
+
+    if(item_type* first_free_item = _first_free_item)
+    {
+        if(! item_linked)
+        {
+            item_type* free_item = first_free_item;
+            item_type* previous_free_item = nullptr;
+
+            while(free_item)
+            {
+                if(free_item < item)
+                {
+                    previous_free_item = free_item;
+                }
+                else
+                {
+                    free_item->previous_free = item;
+                    item->next_free = free_item;
+                    break;
+                }
+
+                free_item = free_item->next_free;
+            }
+
+            if(previous_free_item)
+            {
+                previous_free_item->next_free = item;
+                item->previous_free = previous_free_item;
+            }
+        }
+
+        if(first_free_item > item)
+        {
+            _first_free_item = item;
+        }
+    }
+    else
+    {
+        _first_free_item = item;
+    }
+
+    _sanity_check();
 }
 
 void best_fit_allocator::reset(void* start, size_type bytes)
@@ -177,21 +291,27 @@ void best_fit_allocator::reset(void* start, size_type bytes)
         BN_ASSERT(start, "Start is null");
         BN_ASSERT(aligned<alignment_bytes>(start), "Start is not aligned");
 
-        _start_ptr = static_cast<uint8_t*>(start);
-        _total_bytes_count = bytes;
-        _free_bytes_count = bytes;
-
         auto first_item = reinterpret_cast<item_type*>(start);
         first_item->previous = nullptr;
+        first_item->previous_free = nullptr;
+        first_item->next_free = nullptr;
         first_item->size = bytes;
         first_item->used = false;
+
+        _start_ptr = static_cast<uint8_t*>(start);
+        _first_free_item = first_item;
+        _total_bytes_count = bytes;
+        _free_bytes_count = bytes;
     }
     else
     {
         _start_ptr = nullptr;
+        _first_free_item = nullptr;
         _total_bytes_count = 0;
         _free_bytes_count = 0;
     }
+
+    // log_status();
 }
 
 #if BN_CFG_LOG_ENABLED
@@ -207,7 +327,9 @@ void best_fit_allocator::reset(void* start, size_type bytes)
         {
             BN_LOG("    ",
                    item->used ? "used" : "free",
-                   " - size: ", item->size);
+                   " - size: ", item->size,
+                   " - previous_free: ", item->previous_free,
+                   " - next_free: ", item->next_free);
 
             item = item->next();
         }
@@ -215,38 +337,120 @@ void best_fit_allocator::reset(void* start, size_type bytes)
         BN_LOG(']');
         BN_LOG("free_bytes_count: ", _free_bytes_count);
         BN_LOG("total_bytes_count: ", _total_bytes_count);
+
+        BN_LOG("first_free_item: ", _first_free_item);
+        BN_LOG("free_items: ");
+        BN_LOG('[');
+
+        item = _first_free_item;
+
+        while(item)
+        {
+            BN_LOG("    ", item,
+                   " - size: ", item->size);
+
+            item = item->next_free;
+        }
+
+        BN_LOG(']');
     }
 #endif
 
 best_fit_allocator::item_type* best_fit_allocator::_best_free_item(size_type bytes)
 {
-    item_type* item = _begin_item();
-    item_type* end_item = _end_item();
+    item_type* free_item = _first_free_item;
     item_type* best_free_item = nullptr;
     size_type best_free_item_bytes = numeric_limits<size_type>::max();
 
-    while(item != end_item)
+    while(free_item)
     {
-        if(! item->used)
+        size_type free_item_bytes = free_item->size;
+
+        if(free_item_bytes == bytes)
         {
-            size_type item_bytes = item->size;
-
-            if(item_bytes == bytes)
-            {
-                return item;
-            }
-
-            if(item_bytes > bytes && item_bytes < best_free_item_bytes)
-            {
-                best_free_item = item;
-                best_free_item_bytes = item_bytes;
-            }
+            return free_item;
         }
 
-        item = item->next();
+        if(free_item_bytes > bytes && free_item_bytes < best_free_item_bytes)
+        {
+            best_free_item = free_item;
+            best_free_item_bytes = free_item_bytes;
+        }
+
+        free_item = free_item->next_free;
     }
 
     return best_free_item;
+}
+
+void best_fit_allocator::_sanity_check() const
+{
+    // log_status();
+
+    const item_type* item = _begin_item();
+    const item_type* end_item = _end_item();
+    const item_type* first_free_item = nullptr;
+    size_type real_used_bytes = 0;
+    size_type num_free_items = 0;
+
+    while(item != end_item)
+    {
+        if(item->previous)
+        {
+            BN_ASSERT(item->previous->next() == item, item);
+
+            if(! item->used)
+            {
+                BN_ASSERT(item->previous->used, item);
+            }
+        }
+
+        const item_type* next_item = item->next();
+
+        if(next_item != end_item)
+        {
+            BN_ASSERT(next_item->previous == item, item);
+        }
+
+        if(item->used)
+        {
+            real_used_bytes += item->size;
+
+            BN_ASSERT(! item->previous_free);
+            BN_ASSERT(! item->next_free);
+        }
+        else
+        {
+            ++num_free_items;
+
+            if(! first_free_item)
+            {
+                first_free_item = item;
+            }
+        }
+
+        item = next_item;
+    }
+
+    BN_ASSERT(first_free_item == _first_free_item);
+    BN_ASSERT(real_used_bytes == used_bytes(), real_used_bytes, " - ", used_bytes());
+
+    item_type* free_item = _first_free_item;
+    size_type num_list_free_items = 0;
+
+    while(free_item)
+    {
+        ++num_list_free_items;
+
+        BN_ASSERT(! free_item->used);
+
+        item_type* next_free_item = free_item->next_free;
+        BN_ASSERT(! next_free_item || next_free_item->previous_free == free_item);
+
+        free_item = next_free_item;
+    }
+
+    BN_ASSERT(num_free_items == num_list_free_items);
 }
 
 }

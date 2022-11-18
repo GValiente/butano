@@ -69,13 +69,24 @@
             <li>
               Reference
               <ul>
+                <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
 <p>This action differs from <a href="classbn_1_1sprite__animate__action.html" class="m-doc">sprite_<wbr />animate_<wbr />action</a> in that in this action all sprite tile sets to use are cached, so it is faster but takes way more VRAM.</p>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-doc">
+            <dt>
+              class <a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_cached_animate_action</a>
+            </dt>
+            <dd>Base class of <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">bn::<wbr />sprite_cached_animate_action</a>.</dd>
+          </dl>
+        </section>
         <section id="pub-static-methods">
           <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
@@ -133,45 +144,42 @@
             <dd>Generates a <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given sprite tile sets forever.</dd>
           </dl>
         </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#aebabd30501cf314d457120782cfdaf6b" class="m-doc">sprite_cached_animate_action</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ae1bf2a44bd63d7d0d0ff966ea1c94222" class="m-doc">sprite_cached_animate_action</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a8dccfcd9e3dc7cb57b16ab46e1519cdf" class="m-doc">sprite_cached_animate_action</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+          </dl>
+        </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="ae57e71f2e7aac3b3d882cf5f148da4ac">
-              <span class="m-doc-wrap-bumper">void <a href="#ae57e71f2e7aac3b3d882cf5f148da4ac" class="m-doc-self">update</a>(</span><span class="m-doc-wrap">)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4202e573aedd571ea083b4fde3a43f24" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; other) -&gt; <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp;</span>
             </dt>
-            <dd>Changes the tile set of the given <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> when the given amount of update calls are done.</dd>
-            <dt id="a566e1f887e88aa5d95aceffe9bd80655">
-              <span class="m-doc-wrap-bumper">auto <a href="#a566e1f887e88aa5d95aceffe9bd80655" class="m-doc-self">done</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9909862f48cec4a5e28fe47f41518cce" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp;&amp; other) -&gt; <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
-            <dd>Indicates if the action must not be updated anymore.</dd>
-            <dt id="a1ff7b5046a78a5cef6038fa4c4528d2d">
-              <span class="m-doc-wrap-bumper">void <a href="#a1ff7b5046a78a5cef6038fa4c4528d2d" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap">)</span>
+            <dd>Move assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a63412d6c5c4fb7b6974c24ae4385596c" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; other) -&gt; <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp;</span>
             </dt>
-            <dd>Resets the action to its initial state.</dd>
-            <dt id="ad4ad2a8e0dff62a27d09983750d26561">
-              <span class="m-doc-wrap-bumper">auto <a href="#ad4ad2a8e0dff62a27d09983750d26561" class="m-doc-self">sprite</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&amp;</span>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aef2f1672017f500d579331992c4b4c5c" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp;&amp; other) -&gt; <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
-            <dd>Returns the <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> to modify.</dd>
-            <dt id="afc2d76aec1cd04c6b43d8ed19f64eec4">
-              <span class="m-doc-wrap-bumper">auto <a href="#afc2d76aec1cd04c6b43d8ed19f64eec4" class="m-doc-self">wait_updates</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
-            </dt>
-            <dd>Returns the number of times the action must be updated before changing the tiles of the given <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
-            <dt id="a31593c025cfc827e9384b32201cd2262">
-              <span class="m-doc-wrap-bumper">void <a href="#a31593c025cfc827e9384b32201cd2262" class="m-doc-self">set_wait_updates</a>(</span><span class="m-doc-wrap">int wait_updates)</span>
-            </dt>
-            <dd>Sets the number of times the action must be updated before changing the tiles of the given <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
-            <dt id="a6f00fc90ad63309d5b1ea1e133674549">
-              <span class="m-doc-wrap-bumper">auto <a href="#a6f00fc90ad63309d5b1ea1e133674549" class="m-doc-self">tiles_list</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt;&amp;</span>
-            </dt>
-            <dd>Returns the tile sets to use by the given <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</dd>
-            <dt id="a370ba0cc47245b0357c7dfa83fc7099e">
-              <span class="m-doc-wrap-bumper">auto <a href="#a370ba0cc47245b0357c7dfa83fc7099e" class="m-doc-self">update_forever</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
-            </dt>
-            <dd>Indicates if the action can be updated forever or not.</dd>
-            <dt id="af14cfefe5f31100b0086d0c243c7ba6a">
-              <span class="m-doc-wrap-bumper">auto <a href="#af14cfefe5f31100b0086d0c243c7ba6a" class="m-doc-self">current_index</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
-            </dt>
-            <dd>Returns the current index of the given tile sets.</dd>
+            <dd>Move assignment operator.</dd>
           </dl>
         </section>
         <section>
@@ -480,6 +488,170 @@
                 <tr>
                   <th>Returns</th>
                   <td>The requested <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aebabd30501cf314d457120782cfdaf6b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aebabd30501cf314d457120782cfdaf6b" class="m-doc-self">sprite_cached_animate_action</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae1bf2a44bd63d7d0d0ff966ea1c94222"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae1bf2a44bd63d7d0d0ff966ea1c94222" class="m-doc-self">sprite_cached_animate_action</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8dccfcd9e3dc7cb57b16ab46e1519cdf"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8dccfcd9e3dc7cb57b16ab46e1519cdf" class="m-doc-self">sprite_cached_animate_action</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_<wbr />cached_<wbr />animate_<wbr />action</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4202e573aedd571ea083b4fde3a43f24"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; bn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4202e573aedd571ea083b4fde3a43f24" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9909862f48cec4a5e28fe47f41518cce"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; bn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9909862f48cec4a5e28fe47f41518cce" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a63412d6c5c4fb7b6974c24ae4385596c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; bn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a63412d6c5c4fb7b6974c24ae4385596c" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_<wbr />cached_<wbr />animate_<wbr />action</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aef2f1672017f500d579331992c4b4c5c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__cached__animate__action.html" class="m-doc">sprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp; bn::<wbr />sprite_cached_animate_action&lt;MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aef2f1672017f500d579331992c4b4c5c" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1isprite__cached__animate__action.html" class="m-doc">isprite_<wbr />cached_<wbr />animate_<wbr />action</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>ivector to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
                 </tr>
               </tfoot>
             </table>

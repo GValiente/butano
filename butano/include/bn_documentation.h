@@ -2012,6 +2012,7 @@
  *
  * @section changelog_13_1_0 13.1.0 (next release)
  *
+ * * bn::isprite_animate_action and bn::isprite_cached_animate_action added.
  * * bn::list::remove, bn::list::remove_if, bn::forward_list::remove, bn::forward_list::remove_if,
  *   bn::intrusive_list::remove, bn::intrusive_list::remove_if, bn::intrusive_forward_list::remove and
  *   bn::intrusive_forward_list::remove_if added.

@@ -229,8 +229,6 @@ private:
     }
 
     [[nodiscard]] item_type* _best_free_item(size_type bytes);
-
-    void _sanity_check() const;
 };
 
 }

@@ -85,7 +85,7 @@ public:
      */
     [[nodiscard]] bool full() const
     {
-        return available_bytes() <= _sizeof_item;
+        return available_bytes() <= _sizeof_free_item;
     }
 
     /**
@@ -178,15 +178,22 @@ public:
     #endif
 
 private:
+    class item_type;
+
+    struct free_items_pair
+    {
+        item_type* previous = nullptr;
+        item_type* next = nullptr;
+    };
+
     class item_type
     {
 
     public:
         item_type* previous = nullptr;
-        item_type* previous_free = nullptr;
-        item_type* next_free = nullptr;
         size_type size: 30 = 0;
         bool used: 1 = false;
+        free_items_pair free_items;
 
         [[nodiscard]] const item_type* next() const
         {
@@ -201,7 +208,8 @@ private:
         }
     };
 
-    static constexpr size_type _sizeof_item = sizeof(item_type);
+    static constexpr size_type _sizeof_free_item = sizeof(item_type);
+    static constexpr size_type _sizeof_used_item = sizeof(item_type) - sizeof(free_items_pair);
 
     uint8_t* _start_ptr = nullptr;
     item_type* _first_free_item = nullptr;
@@ -229,6 +237,8 @@ private:
     }
 
     [[nodiscard]] item_type* _best_free_item(size_type bytes);
+
+    void _sanity_check() const;
 };
 
 }

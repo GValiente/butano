@@ -114,7 +114,9 @@ void* best_fit_allocator::alloc(size_type bytes)
     item->used = true;
     _free_bytes_count -= item->size;
 
-    _sanity_check();
+    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+        _sanity_check();
+    #endif
 
     return reinterpret_cast<uint8_t*>(item) + _sizeof_used_item;
 }
@@ -277,7 +279,9 @@ void best_fit_allocator::free(void* ptr)
         _first_free_item = item;
     }
 
-    _sanity_check();
+    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+        _sanity_check();
+    #endif
 }
 
 void best_fit_allocator::reset(void* start, size_type bytes)
@@ -310,7 +314,9 @@ void best_fit_allocator::reset(void* start, size_type bytes)
         _free_bytes_count = 0;
     }
 
-    _sanity_check();
+    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+        _sanity_check();
+    #endif
 }
 
 #if BN_CFG_LOG_ENABLED
@@ -364,71 +370,71 @@ best_fit_allocator::item_type* best_fit_allocator::_best_free_item(size_type byt
     return best_free_item;
 }
 
-void best_fit_allocator::_sanity_check() const
-{
-    // log_status();
-
-    const item_type* item = _begin_item();
-    const item_type* end_item = _end_item();
-    const item_type* first_free_item = nullptr;
-    size_type real_used_bytes = 0;
-    size_type num_free_items = 0;
-
-    while(item != end_item)
+#if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+    void best_fit_allocator::_sanity_check() const
     {
-        if(item->previous)
-        {
-            BN_ASSERT(item->previous->next() == item, item);
+        const item_type* item = _begin_item();
+        const item_type* end_item = _end_item();
+        const item_type* first_free_item = nullptr;
+        size_type real_used_bytes = 0;
+        size_type num_free_items = 0;
 
-            if(! item->used)
+        while(item != end_item)
+        {
+            if(item->previous)
             {
-                BN_ASSERT(item->previous->used, item);
+                BN_ASSERT(item->previous->next() == item, item);
+
+                if(! item->used)
+                {
+                    BN_ASSERT(item->previous->used, item);
+                }
             }
-        }
 
-        const item_type* next_item = item->next();
+            const item_type* next_item = item->next();
 
-        if(next_item != end_item)
-        {
-            BN_ASSERT(next_item->previous == item, item);
-        }
-
-        if(item->used)
-        {
-            real_used_bytes += item->size;
-        }
-        else
-        {
-            ++num_free_items;
-
-            if(! first_free_item)
+            if(next_item != end_item)
             {
-                first_free_item = item;
+                BN_ASSERT(next_item->previous == item, item);
             }
+
+            if(item->used)
+            {
+                real_used_bytes += item->size;
+            }
+            else
+            {
+                ++num_free_items;
+
+                if(! first_free_item)
+                {
+                    first_free_item = item;
+                }
+            }
+
+            item = next_item;
         }
 
-        item = next_item;
+        BN_ASSERT(first_free_item == _first_free_item);
+        BN_ASSERT(real_used_bytes == used_bytes(), real_used_bytes, " - ", used_bytes());
+
+        item_type* free_item = _first_free_item;
+        size_type num_list_free_items = 0;
+
+        while(free_item)
+        {
+            ++num_list_free_items;
+
+            BN_ASSERT(! free_item->used);
+
+            item_type* next_free_item = free_item->free_items.next;
+            BN_ASSERT(! next_free_item || next_free_item->free_items.previous == free_item);
+
+            free_item = next_free_item;
+        }
+
+        BN_ASSERT(num_free_items == num_list_free_items);
     }
-
-    BN_ASSERT(first_free_item == _first_free_item);
-    BN_ASSERT(real_used_bytes == used_bytes(), real_used_bytes, " - ", used_bytes());
-
-    item_type* free_item = _first_free_item;
-    size_type num_list_free_items = 0;
-
-    while(free_item)
-    {
-        ++num_list_free_items;
-
-        BN_ASSERT(! free_item->used);
-
-        item_type* next_free_item = free_item->free_items.next;
-        BN_ASSERT(! next_free_item || next_free_item->free_items.previous == free_item);
-
-        free_item = next_free_item;
-    }
-
-    BN_ASSERT(num_free_items == num_list_free_items);
-}
+#endif
 
 }

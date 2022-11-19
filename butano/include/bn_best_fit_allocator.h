@@ -15,6 +15,7 @@
 
 #include "bn_config_log.h"
 #include "bn_config_doxygen.h"
+#include "bn_config_best_fit_allocator.h"
 
 namespace bn
 {
@@ -238,7 +239,9 @@ private:
 
     [[nodiscard]] item_type* _best_free_item(size_type bytes);
 
-    void _sanity_check() const;
+    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+        void _sanity_check() const;
+    #endif
 };
 
 }

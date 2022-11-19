@@ -536,7 +536,7 @@
 /**
  * @defgroup allocator Allocator
  *
- * A generic allocator where allocation and release are not O(1) operations.
+ * Generic allocators where allocation and release are not O(1) operations.
  *
  * An allocator doesn't destroy its elements in its destructor, they must be destroyed manually.
  *
@@ -2018,6 +2018,7 @@
  *   bn::intrusive_forward_list::remove_if added.
  * * Hash support for bn::istring and bn::string added.
  * * bn::best_fit_allocator (used by the heap manager) CPU usage reduced.
+ * * bn::best_fit_allocator sanity check can be enabled with @ref BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK.
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> unused components removed
  *   (EWRAM and ROM usage reduced).
  * * Flipped tiles reduction disabled in `dynamic_regular_bg` example.

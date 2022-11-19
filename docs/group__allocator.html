@@ -58,15 +58,18 @@
               <ul>
                 <li><a href="#files">Files</a></li>
                 <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#define-members">Defines</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>A generic allocator where allocation and release are not O(1) operations.</p><p>An allocator doesn&#x27;t destroy its elements in its destructor, they must be destroyed manually.</p><p>It doesn&#x27;t throw exceptions. Instead, asserts are used to ensure valid usage.</p>
+<p>Generic allocators where allocation and release are not O(1) operations.</p><p>An allocator doesn&#x27;t destroy its elements in its destructor, they must be destroyed manually.</p><p>It doesn&#x27;t throw exceptions. Instead, asserts are used to ensure valid usage.</p>
         <section id="files">
           <h2><a href="#files">Files</a></h2>
           <dl class="m-doc">
             <dt>file <a href="bn__best__fit__allocator_8h.html" class="m-doc">bn_best_fit_allocator.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="bn__config__best__fit__allocator_8h.html" class="m-doc">bn_config_best_fit_allocator.h</a></dt>
             <dd></dd>
           </dl>
         </section>
@@ -78,6 +81,25 @@
             </dt>
             <dd>Manages a chunk of memory with a best fit allocation strategy.</dd>
           </dl>
+        </section>
+        <section id="define-members">
+          <h2><a href="#define-members">Defines</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0c6d609b45f3ce3837bedb9ad97e0d0c" class="m-doc">BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK</a></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Define documentation</h2>
+          <section class="m-doc-details" id="ga0c6d609b45f3ce3837bedb9ad97e0d0c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga0c6d609b45f3ce3837bedb9ad97e0d0c" class="m-doc-self">BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__config__best__fit__allocator_8h.html">&lt;bn_config_best_fit_allocator.h&gt;</a></div>
+            </h3>
+<p>Specifies if <a href="classbn_1_1best__fit__allocator.html" class="m-doc">bn::<wbr />best_fit_allocator</a> sanity check is enabled or not.</p>
+          </div></section>
         </section>
       </div>
     </div>

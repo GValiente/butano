@@ -7,6 +7,7 @@
 
 #include "bn_memory.h"
 #include "bn_limits.h"
+#include "bn_algorithm.h"
 #include "bn_alignment.h"
 
 #if BN_CFG_LOG_ENABLED
@@ -152,7 +153,7 @@ void* best_fit_allocator::realloc(void* ptr, size_type new_bytes)
     auto item = reinterpret_cast<item_type*>(item_ptr);
     size_type old_bytes = item->size - _sizeof_used_item;
 
-    if(new_bytes <= old_bytes)
+    if(new_bytes == old_bytes)
     {
         return ptr;
     }
@@ -166,7 +167,8 @@ void* best_fit_allocator::realloc(void* ptr, size_type new_bytes)
 
     auto old_ptr_data = reinterpret_cast<const int*>(ptr);
     auto new_ptr_data = reinterpret_cast<int*>(new_ptr);
-    memory::copy(*old_ptr_data, old_bytes / 4, *new_ptr_data);
+    size_type bytes_to_copy = min(old_bytes, new_bytes);
+    memory::copy(*old_ptr_data, bytes_to_copy / 4, *new_ptr_data);
     free(ptr);
     return new_ptr;
 }

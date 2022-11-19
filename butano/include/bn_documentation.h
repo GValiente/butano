@@ -2021,6 +2021,7 @@
  * * bn::best_fit_allocator sanity check can be enabled with @ref BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK.
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> unused components removed
  *   (EWRAM and ROM usage reduced).
+ * * bn::best_fit_allocator::realloc can shrink allocations.
  * * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
  *
  *

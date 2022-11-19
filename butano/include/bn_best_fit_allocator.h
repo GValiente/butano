@@ -207,6 +207,16 @@ private:
             uint8_t* next_ptr = reinterpret_cast<uint8_t*>(this) + size;
             return reinterpret_cast<item_type*>(next_ptr);
         }
+
+        [[nodiscard]] const void* data() const
+        {
+            return reinterpret_cast<const uint8_t*>(this) + _sizeof_used_item;
+        }
+
+        [[nodiscard]] void* data()
+        {
+            return reinterpret_cast<uint8_t*>(this) + _sizeof_used_item;
+        }
     };
 
     static constexpr size_type _sizeof_free_item = sizeof(item_type);
@@ -241,6 +251,10 @@ private:
 
     #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
         void _sanity_check() const;
+    #endif
+
+    #if BN_CFG_BEST_FIT_ALLOCATOR_FREE_CHECK_ENABLED
+        void _free_check(const item_type* item) const;
     #endif
 };
 

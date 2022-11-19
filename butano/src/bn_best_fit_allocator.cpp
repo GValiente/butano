@@ -13,7 +13,7 @@
     #include "bn_log.h"
 #endif
 
-#if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
+#if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED || BN_CFG_BEST_FIT_ALLOCATOR_FREE_CHECK_ENABLED
     static_assert(BN_CFG_ASSERT_ENABLED);
 #endif
 
@@ -122,7 +122,7 @@ void* best_fit_allocator::alloc(size_type bytes)
         _sanity_check();
     #endif
 
-    return reinterpret_cast<uint8_t*>(item) + _sizeof_used_item;
+    return item->data();
 }
 
 void* best_fit_allocator::calloc(size_type num, size_type bytes)
@@ -185,6 +185,11 @@ void best_fit_allocator::free(void* ptr)
 
     uint8_t* item_ptr = static_cast<uint8_t*>(ptr) - _sizeof_used_item;
     auto item = reinterpret_cast<item_type*>(item_ptr);
+
+    #if BN_CFG_BEST_FIT_ALLOCATOR_FREE_CHECK_ENABLED
+        _free_check(item);
+    #endif
+
     bool item_linked = false;
     item->used = false;
     item->free_items.previous = nullptr;
@@ -442,4 +447,24 @@ best_fit_allocator::item_type* best_fit_allocator::_best_free_item(size_type byt
     }
 #endif
 
+#if BN_CFG_BEST_FIT_ALLOCATOR_FREE_CHECK_ENABLED
+    void best_fit_allocator::_free_check(const item_type* item) const
+    {
+        const item_type* current_item = _begin_item();
+        const item_type* end_item = _end_item();
+
+        while(current_item != end_item)
+        {
+            if(current_item == item)
+            {
+                BN_ASSERT(current_item->used, "Item is free: ", item->data());
+                return;
+            }
+
+            current_item = current_item->next();
+        }
+
+        BN_ASSERT(current_item->used, "Item not found: ", item->data());
+    }
+#endif
 }

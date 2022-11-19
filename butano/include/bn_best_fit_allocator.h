@@ -239,7 +239,7 @@ private:
 
     [[nodiscard]] item_type* _best_free_item(size_type bytes);
 
-    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
         void _sanity_check() const;
     #endif
 };

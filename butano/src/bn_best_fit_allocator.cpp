@@ -8,10 +8,13 @@
 #include "bn_memory.h"
 #include "bn_limits.h"
 #include "bn_algorithm.h"
-#include "bn_alignment.h"
 
 #if BN_CFG_LOG_ENABLED
     #include "bn_log.h"
+#endif
+
+#if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
+    static_assert(BN_CFG_ASSERT_ENABLED);
 #endif
 
 namespace bn
@@ -115,7 +118,7 @@ void* best_fit_allocator::alloc(size_type bytes)
     item->used = true;
     _free_bytes_count -= item->size;
 
-    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
         _sanity_check();
     #endif
 
@@ -281,7 +284,7 @@ void best_fit_allocator::free(void* ptr)
         _first_free_item = item;
     }
 
-    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
         _sanity_check();
     #endif
 }
@@ -316,7 +319,7 @@ void best_fit_allocator::reset(void* start, size_type bytes)
         _free_bytes_count = 0;
     }
 
-    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+    #if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
         _sanity_check();
     #endif
 }
@@ -372,7 +375,7 @@ best_fit_allocator::item_type* best_fit_allocator::_best_free_item(size_type byt
     return best_free_item;
 }
 
-#if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+#if BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
     void best_fit_allocator::_sanity_check() const
     {
         const item_type* item = _begin_item();

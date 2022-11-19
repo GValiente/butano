@@ -16,14 +16,16 @@
 #include "bn_common.h"
 
 /**
- * @def BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
+ * @def BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
  *
  * Specifies if bn::best_fit_allocator sanity check is enabled or not.
  *
+ * Sanity check asserts if the internal state of the allocator is valid.
+ *
  * @ingroup allocator
  */
-#ifndef BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK
-    #define BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK false
+#ifndef BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED
+    #define BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED false
 #endif
 
 #endif

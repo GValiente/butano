@@ -2018,7 +2018,7 @@
  *   bn::intrusive_forward_list::remove_if added.
  * * Hash support for bn::istring and bn::string added.
  * * bn::best_fit_allocator (used by the heap manager) CPU usage reduced.
- * * bn::best_fit_allocator sanity check can be enabled with @ref BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK.
+ * * bn::best_fit_allocator sanity check can be enabled with @ref BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED.
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> unused components removed
  *   (EWRAM and ROM usage reduced).
  * * bn::best_fit_allocator::realloc can shrink allocations.

@@ -128,6 +128,18 @@ class SpriteItem:
         self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
 
         try:
+            bpp_mode = str(info['bpp_mode'])
+
+            if bpp_mode == 'bpp_8':
+                self.__bpp_8 = True
+            elif bpp_mode == 'bpp_4':
+                self.__bpp_8 = False
+            else:
+                raise ValueError('Invalid BPP mode: ' + bpp_mode)
+        except KeyError:
+            self.__bpp_8 = bmp.colors_count > 16
+
+        try:
             self.__tiles_compression = info['tiles_compression']
             validate_compression(self.__tiles_compression)
         except KeyError:
@@ -213,11 +225,11 @@ class SpriteItem:
 
         remove_file(grit_file_path)
 
-        if self.__colors_count == 16:
-            bpp_mode_label = 'bpp_mode::BPP_4'
-        else:
+        if self.__bpp_8:
             bpp_mode_label = 'bpp_mode::BPP_8'
             tiles_count *= 2
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_4'
 
         grit_data = re.sub(r'Tiles\[([0-9]+)]', 'Tiles[' + str(tiles_count) + ']', grit_data)
         grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__colors_count) + ']', grit_data)
@@ -251,10 +263,10 @@ class SpriteItem:
     def __execute_command(self, tiles_compression, palette_compression):
         command = ['grit', self.__file_path, '-gt', '-pe' + str(self.__colors_count)]
 
-        if self.__colors_count == 16:
-            command.append('-gB4')
-        else:
+        if self.__bpp_8:
             command.append('-gB8')
+        else:
+            command.append('-gB4')
 
         append_compression_command('g', tiles_compression, command)
         append_compression_command('p', palette_compression, command)

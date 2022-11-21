@@ -1038,6 +1038,9 @@
  * * `"type"`: must be `"sprite"` for sprites.
  * * `"height"`: height of each sprite image in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite images.
+ * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite:
+ *   * `"bpp_8"`: up to 256 colors.
+ *   * `"bpp_4"`: up to 16 colors.
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1096,8 +1099,8 @@
  * * `"height"`: height of each sprite tiles set in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite tiles sets.
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite tiles:
- *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
- *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
+ *   * `"bpp_8"`: up to 256 colors.
+ *   * `"bpp_4"`: up to 16 colors.
  * * `"compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1175,7 +1178,7 @@
  * * `"palette_item"`: optional field which specifies the name of the bn::bg_palette_item to use for this background.
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the regular background.
  * This field is required if an external bn::bg_palette_item is referenced with `"palette_item"`:
- *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
+ *   * `"bpp_8"`: up to 256 colors.
  *   * `"bpp_4_auto"`: up to 16 colors per @ref tile "tile".
  * Butano tries to quantize the image to fit the color palette into the required one.
  * It is not supported if an external bn::bg_palette_item is referenced with `"palette_item"`.
@@ -1244,7 +1247,7 @@
  * The fields for regular background tiles are the following:
  * * `"type"`: must be `"regular_bg_tiles"` for regular background tiles.
  * * `"bpp_mode"`: specifies the bits per pixel of the regular background tiles:
- *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
+ *   * `"bpp_8"`: up to 256 colors.
  *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
  * Butano expects that the image color palette is already valid for this mode.
  * * `"compression"`: optional field which specifies the compression of the tiles data:
@@ -1379,7 +1382,7 @@
  * The fields for background palettes are the following:
  * * `"type"`: must be `"bg_palette"` for background palettes.
  * * `"bpp_mode"`: specifies the bits per pixel of the background palette:
- *   * `"bpp_8"`: up to 256 colors per @ref tile "tile".
+ *   * `"bpp_8"`: up to 256 colors.
  *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
  * * `"colors_count"`: optional field which specifies the palette size [1..256].
  * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
@@ -2023,6 +2026,8 @@
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> unused components removed
  *   (EWRAM and ROM usage reduced).
  * * bn::best_fit_allocator::realloc can shrink allocations.
+ * * BPP mode can be specified when importing sprites.
+ *   See the @ref import_sprite import guide to learn how to specify it.
  * * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
  *
  *
@@ -2136,9 +2141,9 @@
  *
  * * bn::bg_tiles::allow_offset and bn::bg_tiles::set_allow_offset added.
  * * Import tool now can generate regular and affine background tiles without maps nor palettes.
- * See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides to learn how to import them.
+ *   See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides to learn how to import them.
  * * BPP mode can be specified when importing sprite tiles.
- * See the @ref import_sprite_tiles import guide to learn how to specify it.
+ *   See the @ref import_sprite_tiles import guide to learn how to specify it.
  * * Audio updates can be interrupted.
  * * SRAM reads and writes optimized.
  * * BG blocks manager ROM usage reduced.
@@ -2152,7 +2157,7 @@
  * * bn::core_lock added.
  * * bn::reciprocal_16_lut added.
  * * Memory operations like `memcpy` and `memset` optimized thanks to
- * <a href="https://github.com/felixjones/agbabi">agbabi</a>.
+ *   <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  * * bn::affine_mat_attributes scale setup optimized (CPU and ROM usage reduced).
  * * bn::atan2 and bn::degrees_atan2 optimized thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  * * Unused interrupts removed from the interrupt manager.
@@ -2182,7 +2187,7 @@
  * @section changelog_9_5_0 9.5.0
  *
  * * bn::dmg_music::left_volume, bn::dmg_music::right_volume, bn::dmg_music::set_left_volume,
- * bn::dmg_music::set_right_volume and bn::dmg_music::set_volume added.
+ *   bn::dmg_music::set_right_volume and bn::dmg_music::set_volume added.
  * * bn::dmg_music::position and bn::dmg_music::set_position added.
  * * bn::dmg_music_volume_to_action, bn::dmg_music_volume_loop_action and bn::dmg_music_volume_toggle_action added.
  * * bn::link_state::player_count added.
@@ -2206,8 +2211,8 @@
  * @section changelog_9_4_0 9.4.0
  *
  * * bn::dmg_music and bn::dmg_music_item added (yes, music playback using DMG channels is now supported
- * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
- * See the @ref import_dmg_music import guide and the `dmg_audio` example to learn how to import and play it.
+ *   thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
+ *   See the @ref import_dmg_music import guide and the `dmg_audio` example to learn how to import and play it.
  * * BMP files colors count calculation fixed.
  * * C++ keywords are not valid asset names anymore.
  * * @ref getting_started Python setup improved.
@@ -2219,7 +2224,7 @@
  * * bn::sram::clear and bn::sram::set_bytes added.
  * * bn::music::playing_item added.
  * * SRAM code moved back from ROM to EWRAM again, since it doesn't seem to crash
- * <a href="https://problemkaputt.de/gba.htm">No$gba</a> anymore.
+ *   <a href="https://problemkaputt.de/gba.htm">No$gba</a> anymore.
  * * bn::power_of_two optimized.
  * * Keypad with frame skipping fixed.
  *
@@ -2279,7 +2284,7 @@
  * @section changelog_8_9_0 8.9.0
  *
  * * Hue shift palette effect added.
- * See the `palettes` example to learn how to use it.
+ *   See the `palettes` example to learn how to use it.
  * * Brightness effect ROM usage reduced.
  * * bn::sprite_item and bn::sprite_tiles_item size reduced.
  * * Automatic sprite double size detection fixed.
@@ -2410,7 +2415,7 @@
  * * bn::sprites::reserved_handles_count and bn::sprites::set_reserved_handles_count added.
  * * @ref BN_CFG_PROFILER_LOG_ENGINE_DETAILED added.
  * * Sprites and backgrounds decompression optimized thanks to
- * <a href="https://github.com/Cult-of-GBA/BIOS">Cult-of-GBA BIOS</a>.
+ *   <a href="https://github.com/Cult-of-GBA/BIOS">Cult-of-GBA BIOS</a>.
  * * Sprites and backgrounds hardware setup optimized.
  * * Sprites automatic double size mode optimized.
  * * Affine sprites hiding fixed.
@@ -2429,7 +2434,7 @@
  * * bn::sprite_text_generator IWRAM usage reduced.
  * * Third party libraries to link can be specified in the project's `Makefile`.
  * * Project's `Makefile` allows to build source files generated with an external tool.
- * See the `external_tool` example to learn how to do it.
+ *   See the `external_tool` example to learn how to do it.
  * * `butano-audio-tool.py` generates a list of all available music and sound items with their name.
  * * `audio_player` example added.
  * * <a href="https://gvaliente.itch.io/varooom-3d">Varooom 3D</a> improved
@@ -2506,7 +2511,7 @@
  * * bn::rect::top_right, bn::rect::bottom_left, bn::fixed_rect::top_right and bn::fixed_rect::bottom_left added.
  * * GPIO register is not setup unless needed (avoids <a href="https://mgba.io">mGBA</a> warning at startup).
  * * SRAM code moved from EWRAM to ROM in order to avoid a
- * <a href="https://problemkaputt.de/gba.htm">No$gba</a> error.
+ *   <a href="https://problemkaputt.de/gba.htm">No$gba</a> error.
  * * bn::abs for unsigned arguments improved.
  * * `*.elfbin` output files renamed to `*.elf` as it should.
  * * bn::unordered_map::erase and bn::unordered_set::erase fixed.
@@ -2545,7 +2550,7 @@
  * @section changelog_6_11_0 6.11.0
  *
  * * An external tool can be called from the project's `Makefile`.
- * See the `external_tool` example to learn how to call it.
+ *   See the `external_tool` example to learn how to call it.
  * * Affine background tiles offset optimized.
  * * Big numbers to string conversion optimized.
  * * 32bit integer division optimized.
@@ -2721,9 +2726,9 @@
  *
  * * H-Blank effects EWRAM usage reduced (more than 2KB by default).
  * * Optimization level changed to `-O2` to avoid another
- * <a href="https://problemkaputt.de/gba.htm">No$gba</a> crash.
+ *   <a href="https://problemkaputt.de/gba.htm">No$gba</a> crash.
  * * SRAM code moved back from ROM to EWRAM, since doing that doesn't make
- * <a href="https://problemkaputt.de/gba.htm">No$gba</a> crash anymore.
+ *   <a href="https://problemkaputt.de/gba.htm">No$gba</a> crash anymore.
  * * Redundant reset code removed.
  *
  *

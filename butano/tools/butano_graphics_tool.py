@@ -15,14 +15,57 @@ from bmp import BMP
 from file_info import FileInfo
 
 
+def parse_colors_count(info, bmp):
+    try:
+        colors_count = int(info['colors_count'])
+
+        if colors_count < 1 or colors_count > 256:
+            raise ValueError('Invalid colors count: ' + str(colors_count))
+
+        extra_colors = colors_count % 16
+
+        if extra_colors > 0:
+            colors_count += 16 - extra_colors
+
+        return colors_count
+    except KeyError:
+        return bmp.colors_count
+
+
+def parse_sprite_bpp_mode(info, colors_count):
+    try:
+        bpp_mode = str(info['bpp_mode'])
+
+        if bpp_mode == 'bpp_8':
+            return True
+        elif bpp_mode == 'bpp_4':
+            if colors_count > 16:
+                raise ValueError('Too much colors for BPP4 mode: ' + str(colors_count))
+
+            return False
+        else:
+            raise ValueError('Invalid BPP mode: ' + bpp_mode)
+    except KeyError:
+        return colors_count > 16
+
+
+def parse_bg_bpp_mode(info, file_name_no_ext):
+    try:
+        bpp_mode = str(info['bpp_mode'])
+    except KeyError:
+        raise ValueError('bpp_mode field not found in graphics json file: ' + file_name_no_ext + '.json')
+
+    if bpp_mode == 'bpp_8':
+        return True
+    elif bpp_mode == 'bpp_4':
+        return False
+    else:
+        raise ValueError('Invalid BPP mode: ' + bpp_mode)
+
+
 def validate_compression(compression):
     if compression not in ['none', 'lz77', 'run_length', 'huffman', 'auto']:
         raise ValueError('Unknown compression: ' + str(compression))
-
-
-def remove_file(file_path):
-    if os.path.exists(file_path):
-        os.remove(file_path)
 
 
 def compression_label(compression):
@@ -48,6 +91,11 @@ def append_compression_command(tag, compression, command):
         command.append('-' + tag + 'zr')
     elif compression == 'huffman':
         command.append('-' + tag + 'zh')
+
+
+def remove_file(file_path):
+    if os.path.exists(file_path):
+        os.remove(file_path)
 
 
 class SpriteItem:
@@ -114,7 +162,6 @@ class SpriteItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-        self.__colors_count = bmp.colors_count
 
         try:
             height = int(info['height'])
@@ -126,18 +173,8 @@ class SpriteItem:
 
         self.__graphics = int(bmp.height / height)
         self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
-
-        try:
-            bpp_mode = str(info['bpp_mode'])
-
-            if bpp_mode == 'bpp_8':
-                self.__bpp_8 = True
-            elif bpp_mode == 'bpp_4':
-                self.__bpp_8 = False
-            else:
-                raise ValueError('Invalid BPP mode: ' + bpp_mode)
-        except KeyError:
-            self.__bpp_8 = bmp.colors_count > 16
+        self.__colors_count = parse_colors_count(info, bmp)
+        self.__bpp_8 = parse_sprite_bpp_mode(info, self.__colors_count)
 
         try:
             self.__tiles_compression = info['tiles_compression']
@@ -301,18 +338,8 @@ class SpriteTilesItem:
 
         self.__graphics = int(bmp.height / height)
         self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
-
-        try:
-            bpp_mode = str(info['bpp_mode'])
-
-            if bpp_mode == 'bpp_8':
-                self.__bpp_8 = True
-            elif bpp_mode == 'bpp_4':
-                self.__bpp_8 = False
-            else:
-                raise ValueError('Invalid BPP mode: ' + bpp_mode)
-        except KeyError:
-            self.__bpp_8 = bmp.colors_count > 16
+        self.__colors_count = parse_colors_count(info, bmp)
+        self.__bpp_8 = parse_sprite_bpp_mode(info, self.__colors_count)
 
         try:
             self.__compression = info['compression']
@@ -428,21 +455,8 @@ class SpritePaletteItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-
-        try:
-            colors_count = int(info['colors_count'])
-
-            if colors_count < 1 or colors_count > 256:
-                raise ValueError('Invalid colors count: ' + str(colors_count))
-
-            extra_colors = colors_count % 16
-
-            if extra_colors > 0:
-                colors_count += 16 - extra_colors
-
-            self.__colors_count = colors_count
-        except KeyError:
-            self.__colors_count = bmp.colors_count
+        self.__colors_count = parse_colors_count(info, bmp)
+        self.__bpp_8 = parse_sprite_bpp_mode(info, self.__colors_count)
 
         try:
             self.__compression = info['compression']
@@ -490,10 +504,10 @@ class SpritePaletteItem:
 
         remove_file(grit_file_path)
 
-        if self.__colors_count == 16:
-            bpp_mode_label = 'bpp_mode::BPP_4'
-        else:
+        if self.__bpp_8:
             bpp_mode_label = 'bpp_mode::BPP_8'
+        else:
+            bpp_mode_label = 'bpp_mode::BPP_4'
 
         grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__colors_count) + ']', grit_data)
 
@@ -584,16 +598,10 @@ class RegularBgItem:
             self.__colors_count = 0
         except KeyError:
             self.__palette_item = None
-            self.__colors_count = bmp.colors_count
+            self.__colors_count = parse_colors_count(info, bmp)
 
-        if self.__palette_item is not None or self.__colors_count > 16:
-            try:
-                bpp_mode = str(info['bpp_mode'])
-            except KeyError:
-                if self.__palette_item is not None:
-                    raise ValueError('bpp_mode field not found in graphics json file: ' + file_name_no_ext + '.json')
-
-                bpp_mode = 'bpp_8'
+        try:
+            bpp_mode = str(info['bpp_mode'])
 
             if bpp_mode == 'bpp_8':
                 self.__bpp_8 = True
@@ -605,6 +613,12 @@ class RegularBgItem:
                 self.__colors_count = bmp.quantize(self.__file_path)
             elif bpp_mode != 'bpp_4' and bpp_mode != 'bpp_4_manual':
                 raise ValueError('Invalid BPP mode: ' + bpp_mode)
+        except KeyError:
+            if self.__palette_item is not None:
+                raise ValueError('bpp_mode field not found in graphics json file: ' + file_name_no_ext + '.json')
+
+            if self.__colors_count > 16:
+                self.__bpp_8 = True
 
         try:
             self.__tiles_compression = info['tiles_compression']
@@ -827,18 +841,7 @@ class RegularBgTilesItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-
-        try:
-            bpp_mode = str(info['bpp_mode'])
-        except KeyError:
-            raise ValueError('bpp_mode field not found in graphics json file: ' + file_name_no_ext + '.json')
-
-        if bpp_mode == 'bpp_8':
-            self.__bpp_8 = True
-        elif bpp_mode == 'bpp_4':
-            self.__bpp_8 = False
-        else:
-            raise ValueError('Invalid BPP mode: ' + bpp_mode)
+        self.__bpp_8 = parse_bg_bpp_mode(info, file_name_no_ext)
 
         try:
             self.__compression = info['compression']
@@ -992,7 +995,7 @@ class AffineBgItem:
             self.__colors_count = 0
         except KeyError:
             self.__palette_item = None
-            self.__colors_count = bmp.colors_count
+            self.__colors_count = parse_colors_count(info, bmp)
 
         try:
             self.__tiles_compression = info['tiles_compression']
@@ -1290,33 +1293,8 @@ class BgPaletteItem:
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
-
-        try:
-            bpp_mode = str(info['bpp_mode'])
-        except KeyError:
-            raise ValueError('bpp_mode field not found in graphics json file: ' + file_name_no_ext + '.json')
-
-        if bpp_mode == 'bpp_8':
-            self.__bpp_8 = True
-        elif bpp_mode == 'bpp_4':
-            self.__bpp_8 = False
-        else:
-            raise ValueError('Invalid BPP mode: ' + bpp_mode)
-
-        try:
-            colors_count = int(info['colors_count'])
-
-            if colors_count < 1 or colors_count > 256:
-                raise ValueError('Invalid colors count: ' + str(colors_count))
-
-            extra_colors = colors_count % 16
-
-            if extra_colors > 0:
-                colors_count += 16 - extra_colors
-
-            self.__colors_count = colors_count
-        except KeyError:
-            self.__colors_count = bmp.colors_count
+        self.__colors_count = parse_colors_count(info, bmp)
+        self.__bpp_8 = parse_bg_bpp_mode(info, file_name_no_ext)
 
         try:
             self.__compression = info['compression']

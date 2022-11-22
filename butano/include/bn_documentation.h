@@ -1041,6 +1041,7 @@
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite:
  *   * `"bpp_8"`: up to 256 colors.
  *   * `"bpp_4"`: up to 16 colors.
+ * * `"colors_count"`: optional field which specifies the sprite palette size [1..256].
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1101,6 +1102,7 @@
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite tiles:
  *   * `"bpp_8"`: up to 256 colors.
  *   * `"bpp_4"`: up to 16 colors.
+ * * `"colors_count"`: optional field which specifies the sprite palette size [1..256].
  * * `"compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1134,8 +1136,11 @@
  * @endcode
  *
  * The fields for sprite palettes are the following:
- * * `"type"`: must be `"sprite_palette"` for sprites.
- * * `"colors_count"`: optional field which specifies the palette size [1..256].
+ * * `"type"`: must be `"sprite_palette"` for sprite palettes.
+ * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite palette:
+ *   * `"bpp_8"`: up to 256 colors.
+ *   * `"bpp_4"`: up to 16 colors.
+ * * `"colors_count"`: optional field which specifies the sprite palette size [1..256].
  * * `"compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1187,6 +1192,7 @@
  *   * `"bpp_4"`: `"bpp_4_manual"` alias.
  *
  * The default is `"bpp_4_manual"` for 16 color images and `"bpp_8"` for 256 color images.
+ * * `"colors_count"`: optional field which specifies the background palette size [1..256].
  * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
  * (`true` by default).
  * * `"flipped_tiles_reduction"`: optional field which specifies if flipped tiles must be reduced or not
@@ -1290,6 +1296,7 @@
  * The fields for affine backgrounds are the following:
  * * `"type"`: must be `"affine_bg"` for affine backgrounds.
  * * `"palette_item"`: optional field which specifies the name of the bn::bg_palette_item to use for this background.
+ * * `"colors_count"`: optional field which specifies the background palette size [1..256].
  * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
  * (`true` by default).
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
@@ -1384,7 +1391,7 @@
  * * `"bpp_mode"`: specifies the bits per pixel of the background palette:
  *   * `"bpp_8"`: up to 256 colors.
  *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
- * * `"colors_count"`: optional field which specifies the palette size [1..256].
+ * * `"colors_count"`: optional field which specifies the background palette size [1..256].
  * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -2026,8 +2033,10 @@
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> unused components removed
  *   (EWRAM and ROM usage reduced).
  * * bn::best_fit_allocator::realloc can shrink allocations.
- * * BPP mode can be specified when importing sprites.
- *   See the @ref import_sprite import guide to learn how to specify it.
+ * * BPP mode can be specified when importing sprites and sprite palettes.
+ *   See the @ref import_image import guide to learn how to specify it.
+ * * Colors count can be specified when importing sprites, sprite tiles, sprite palettes, regular backgrounds and
+ *   affine backgrounds. See the @ref import_image import guide to learn how to specify them.
  * * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
  *
  *

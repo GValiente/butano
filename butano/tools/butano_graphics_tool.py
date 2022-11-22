@@ -838,6 +838,7 @@ class RegularBgItem:
 class RegularBgTilesItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
+        BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
@@ -1187,6 +1188,7 @@ class AffineBgItem:
 class AffineBgTilesItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
+        BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path

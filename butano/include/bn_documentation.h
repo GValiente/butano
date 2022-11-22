@@ -2037,6 +2037,7 @@
  *   See the @ref import_image import guide to learn how to specify it.
  * * Colors count can be specified when importing sprites, sprite tiles, sprite palettes, regular backgrounds and
  *   affine backgrounds. See the @ref import_image import guide to learn how to specify them.
+ * * BMP files are validated when importing background tiles.
  * * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
  *
  *

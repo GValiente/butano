@@ -2039,6 +2039,7 @@
  *   affine backgrounds. See the @ref import_image import guide to learn how to specify them.
  * * BMP files are validated when importing background tiles.
  * * Flipped tiles reduction disabled in `dynamic_regular_bg` example.
+ * * <a href="https://forum.gbadev.net">gbadev forums</a> added to `README.md`.
  *
  *
  * @section changelog_13_0_0 13.0.0

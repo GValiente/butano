@@ -2020,7 +2020,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_1_0 13.1.0 (next release)
+ * @section changelog_13_1_0 13.1.0
  *
  * * bn::isprite_animate_action and bn::isprite_cached_animate_action added.
  * * bn::list::remove, bn::list::remove_if, bn::forward_list::remove, bn::forward_list::remove_if,

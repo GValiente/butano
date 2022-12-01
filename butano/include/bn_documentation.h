@@ -2020,7 +2020,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_1_1 13.1.1 (next release)
+ * @section changelog_13_1_1 13.1.1
  *
  * Recovery of deleted background maps fixed.
  *

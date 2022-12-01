@@ -2020,6 +2020,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_1_1 13.1.1 (next release)
+ *
+ * Recovery of deleted background maps fixed.
+ *
+ *
  * @section changelog_13_1_0 13.1.0
  *
  * * bn::isprite_animate_action and bn::isprite_cached_animate_action added.

@@ -611,13 +611,13 @@ namespace
                 break;
             }
 
-            BN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
+            BN_BG_BLOCKS_LOG("TILES FOUND. start_block: ", data.items.item(id).start_block);
             BN_BG_BLOCKS_LOG_STATUS();
 
             return id;
         }
 
-        BN_BG_BLOCKS_LOG("NOT FOUND");
+        BN_BG_BLOCKS_LOG("TILES NOT FOUND");
         return -1;
     }
 
@@ -656,15 +656,26 @@ namespace
                 break;
 
             case status_type::TO_REMOVE:
-                item.usages = 1;
-                item.set_status(status_type::USED);
-                data.to_remove_blocks_count -= item.blocks_count;
+                {
+                    bool different_tiles = tiles != item.regular_tiles;
+                    bool different_palette = palette != item.palette;
+                    item.usages = 1;
+                    item.set_status(status_type::USED);
+                    data.to_remove_blocks_count -= item.blocks_count;
 
-                BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
-                          "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
-
-                item.regular_tiles = tiles;
-                item.palette = palette;
+                    if(different_tiles && different_palette)
+                    {
+                        set_regular_map_tiles_and_palette(id, regular_bg_tiles_ptr(tiles), bg_palette_ptr(palette));
+                    }
+                    else if(different_tiles)
+                    {
+                        set_regular_map_tiles(id, regular_bg_tiles_ptr(tiles));
+                    }
+                    else if(different_palette)
+                    {
+                        set_regular_map_palette(id, bg_palette_ptr(palette));
+                    }
+                }
                 break;
 
             default:
@@ -672,13 +683,13 @@ namespace
                 break;
             }
 
-            BN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
+            BN_BG_BLOCKS_LOG("REGULAR MAP FOUND. start_block: ", data.items.item(id).start_block);
             BN_BG_BLOCKS_LOG_STATUS();
 
             return id;
         }
 
-        BN_BG_BLOCKS_LOG("NOT FOUND");
+        BN_BG_BLOCKS_LOG("REGULAR MAP NOT FOUND");
         return -1;
     }
 
@@ -721,10 +732,15 @@ namespace
                 item.set_status(status_type::USED);
                 data.to_remove_blocks_count -= item.blocks_count;
 
-                BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+                if(tiles != item.affine_tiles)
+                {
+                    set_affine_map_tiles(id, affine_bg_tiles_ptr(tiles));
+                }
 
-                item.affine_tiles = tiles;
-                item.palette = palette;
+                if(palette != item.palette)
+                {
+                    set_affine_map_palette(id, bg_palette_ptr(palette));
+                }
                 break;
 
             default:
@@ -732,13 +748,13 @@ namespace
                 break;
             }
 
-            BN_BG_BLOCKS_LOG("FOUND. start_block: ", data.items.item(id).start_block);
+            BN_BG_BLOCKS_LOG("AFFINE MAP FOUND. start_block: ", data.items.item(id).start_block);
             BN_BG_BLOCKS_LOG_STATUS();
 
             return id;
         }
 
-        BN_BG_BLOCKS_LOG("NOT FOUND");
+        BN_BG_BLOCKS_LOG("AFFINE MAP NOT FOUND");
         return -1;
     }
 

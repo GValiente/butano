@@ -474,6 +474,11 @@ fixed last_vblank_usage()
     return fixed(data.last_ticks.vblank_usage_ticks) / (timers::ticks_per_vblank() * data.last_update_frames);
 }
 
+int last_missed_frames()
+{
+    return data.last_ticks.missed_frames;
+}
+
 vblank_callback_type vblank_callback()
 {
     return data.vblank_callback;

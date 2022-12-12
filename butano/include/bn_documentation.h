@@ -2022,6 +2022,7 @@
  *
  * @section changelog_13_2_0 13.2.0 (next release)
  *
+ * * bn::core::last_missed_frames added.
  * * bn::core::set_skip_frames accuracy improved.
  * * Wait for V-Blank improved.
  *

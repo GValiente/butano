@@ -87,14 +87,17 @@ namespace bn::core
     /**
      * @brief Returns the current CPU usage.
      *
-     * A CPU usage greater than 1 means that at least one screen refresh has been missed.
+     * A CPU usage greater than 1 means that at least one screen refresh should have been missed.
      */
     [[nodiscard]] fixed current_cpu_usage();
 
     /**
      * @brief Returns the CPU usage of the last elapsed frame.
      *
-     * A CPU usage greater than 1 means that at least one screen refresh has been missed.
+     * A CPU usage greater than 1 means that at least one screen refresh should have been missed.
+     *
+     * If you only want to retrieve the number of missed screen refreshes,
+     * core::last_missed_frames is more accurate.
      */
     [[nodiscard]] fixed last_cpu_usage();
 
@@ -105,6 +108,11 @@ namespace bn::core
      * before all of GBA display components being updated.
      */
     [[nodiscard]] fixed last_vblank_usage();
+
+    /**
+     * @brief Returns the number of screen refreshes that were missed in the last core::update call.
+     */
+    [[nodiscard]] int last_missed_frames();
 
     /**
      * @brief Returns the user function called in V-Blank.

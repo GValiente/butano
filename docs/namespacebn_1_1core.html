@@ -109,6 +109,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc">last_vblank_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the V-Blank usage of the last elapsed frame.</dd>
+            <dt id="a98c2b2065c2694d96b695a6076df8506">
+              <span class="m-doc-wrap-bumper">auto <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc-self">last_missed_frames</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the number of screen refreshes that were missed in the last <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</dd>
             <dt id="a3e81181a01b2ef99485eeee4d0ad8112">
               <span class="m-doc-wrap-bumper">auto <a href="#a3e81181a01b2ef99485eeee4d0ad8112" class="m-doc-self">vblank_callback</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a29e80db4f1e61dce3b63743adca49979" class="m-doc">vblank_<wbr />callback_<wbr />type</a></span>
             </dt>
@@ -185,14 +189,14 @@
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc-self">current_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Returns the current CPU usage.</p>
-<p>A CPU usage greater than 1 means that at least one screen refresh has been missed.</p>
+<p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p>
           </div></section>
           <section class="m-doc-details" id="a5c36ceb40cf617f8ffa442bbf15126c1"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc-self">last_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Returns the CPU usage of the last elapsed frame.</p>
-<p>A CPU usage greater than 1 means that at least one screen refresh has been missed.</p>
+<p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="namespacebn_1_1core.html#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
           </div></section>
           <section class="m-doc-details" id="aace6487154c238af8d207e0e400f6fcf"><div>
             <h3>

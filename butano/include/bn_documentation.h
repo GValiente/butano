@@ -2020,6 +2020,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_2_0 13.2.0 (next release)
+ *
+ * Wait for V-Blank improved.
+ *
+ *
  * @section changelog_13_1_1 13.1.1
  *
  * Recovery of deleted background maps fixed.

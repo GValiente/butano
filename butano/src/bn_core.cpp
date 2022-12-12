@@ -215,10 +215,6 @@ namespace
 
         hw::core::wait_for_vblank();
 
-        data.cpu_usage_timer.restart();
-
-        BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
-
         BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commands");
         audio_manager::execute_commands();
         BN_PROFILER_ENGINE_DETAILED_STOP();
@@ -384,6 +380,10 @@ void on_vblank()
 {
     if(data.waiting_for_vblank)
     {
+        data.cpu_usage_timer.restart();
+
+        BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
+
         BN_PROFILER_ENGINE_DETAILED_START("eng_audio_update");
         audio_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();

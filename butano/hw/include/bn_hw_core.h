@@ -17,7 +17,16 @@ namespace bn::hw::core
 {
     inline void wait_for_vblank()
     {
-        VBlankIntrWait();
+        if(REG_VCOUNT == 159)
+        {
+            while(REG_VCOUNT == 159)
+            {
+            }
+        }
+        else
+        {
+            VBlankIntrWait();
+        }
     }
 
     inline void sleep()

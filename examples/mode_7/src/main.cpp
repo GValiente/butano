@@ -8,13 +8,17 @@
 #include "bn_keypad.h"
 #include "bn_display.h"
 #include "bn_affine_bg_ptr.h"
+#include "bn_regular_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_affine_bg_pa_register_hbe_ptr.h"
 #include "bn_affine_bg_pc_register_hbe_ptr.h"
 #include "bn_affine_bg_dx_register_hbe_ptr.h"
 #include "bn_affine_bg_dy_register_hbe_ptr.h"
+#include "bn_window.h"
+#include "bn_rect_window.h"
 
 #include "bn_affine_bg_items_land.h"
+#include "bn_regular_bg_items_background.h"
 
 #include "common_info.h"
 #include "common_variable_8x16_sprite_font.h"
@@ -229,7 +233,7 @@ namespace
             dy_values[index] = (camera_z - lxr - lyr) >> 4;
         }
     }
-    void update_hbe_values_with_pitch(const camera& camera, int16_t* pa_values, int16_t* pc_values, int* dx_values,
+    int update_hbe_values_with_pitch(const camera& camera, int16_t* pa_values, int16_t* pc_values, int* dx_values,
                            int* dy_values)
     {
         int xc = camera.x.data()>>4;
@@ -277,6 +281,7 @@ namespace
             dx_values[index]= xc + (lcf>>4)*M7_LEFT - (lsf*zb>>12); // .8f
             dy_values[index]= zc + (lsf>>4)*M7_LEFT + (lcf*zb>>12); // .8f
         }
+        return horiz;
     }
 }
 
@@ -336,7 +341,9 @@ void advanced_mode7_scene(bn::sprite_text_generator text_generator)
     common::info info("Mode 7 Advanced", info_text_lines, text_generator);
 
     bn::affine_bg_ptr bg = bn::affine_bg_items::land.create_bg(-376, -336);
-    bg.set_wrapping_enabled(false);
+    bg.set_wrapping_enabled(true);
+
+    bn::regular_bg_ptr backdrop = bn::regular_bg_items::background.create_bg(0, 0);
 
     int16_t pa_values[bn::display::height()];
     bn::affine_bg_pa_register_hbe_ptr pa_hbe = bn::affine_bg_pa_register_hbe_ptr::create(bg, pa_values);
@@ -349,6 +356,14 @@ void advanced_mode7_scene(bn::sprite_text_generator text_generator)
 
     int dy_values[bn::display::height()];
     bn::affine_bg_dy_register_hbe_ptr dy_hbe = bn::affine_bg_dy_register_hbe_ptr::create(bg, dy_values);
+	
+	bn::window outside_window = bn::window::outside();
+    outside_window.set_show_bg(backdrop, false);
+	bn::rect_window internal_window = bn::rect_window::internal();
+	internal_window.set_boundaries(-80, -120, 80, 120);
+	internal_window.set_show_bg(backdrop, true);
+
+
 
     camera camera;
     camera.y=10;
@@ -356,7 +371,14 @@ void advanced_mode7_scene(bn::sprite_text_generator text_generator)
     while(! bn::keypad::start_pressed())
     {
         update_camera_with_pitch(camera);
-        update_hbe_values_with_pitch(camera, pa_values, pc_values, dx_values, dy_values);
+        int horiz = update_hbe_values_with_pitch(camera, pa_values, pc_values, dx_values, dy_values);
+        backdrop.set_y(horiz-80-backdrop.dimensions().height()/2);
+        backdrop.set_x(-camera.phi);
+		if(horiz >= 0 && horiz < 160)
+			internal_window.set_bottom(-80+horiz);
+		else
+			internal_window.set_bottom(0);
+
         pa_hbe.reload_values_ref();
         pc_hbe.reload_values_ref();
         dx_hbe.reload_values_ref();

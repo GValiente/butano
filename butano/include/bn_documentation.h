@@ -2025,6 +2025,7 @@
  * * bn::core::last_missed_frames added.
  * * bn::core::set_skip_frames accuracy improved.
  * * Wait for V-Blank improved.
+ * * bn::blending_transparency_attributes missing header inclusions fixed.
  *
  *
  * @section changelog_13_1_1 13.1.1

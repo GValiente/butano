@@ -2025,6 +2025,7 @@
  * * bn::core::last_missed_frames added.
  * * bn::core::set_skip_frames accuracy improved.
  * * Wait for V-Blank improved.
+ * * Disabled asserts indicate the compiler that if the condition is false the code is unreachable.
  * * bn::blending_transparency_attributes missing header inclusions fixed.
  *
  *

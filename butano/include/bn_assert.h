@@ -222,6 +222,13 @@
                 { \
                     assert(condition); \
                 } \
+                else \
+                { \
+                    if(! (condition)) [[unlikely]] \
+                    { \
+                        __builtin_unreachable(); \
+                    } \
+                } \
             } while(false)
     #endif
 
@@ -232,6 +239,10 @@
                 if(bn::is_constant_evaluated()) \
                 { \
                     assert(false); \
+                } \
+                else \
+                { \
+                    __builtin_unreachable(); \
                 } \
             } while(false)
     #endif

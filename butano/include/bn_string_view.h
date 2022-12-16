@@ -299,7 +299,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param value Single character.
-     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     * @return `true` if the referenced string begins with the given prefix; `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(value_type value) const
     {
@@ -309,7 +309,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param other Another string_view.
-     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     * @return `true` if the referenced string begins with the given prefix; `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(const string_view& other) const
     {
@@ -334,7 +334,7 @@ public:
     /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param char_array_ptr Pointer to null-terminated characters array.
-     * @return `true` if the referenced string begins with the given prefix, `false` otherwise.
+     * @return `true` if the referenced string begins with the given prefix; `false` otherwise.
      */
     [[nodiscard]] constexpr bool starts_with(const_pointer char_array_ptr) const
     {
@@ -374,7 +374,7 @@ public:
     /**
      * @brief Checks if the referenced string ends with the given prefix.
      * @param value Single character.
-     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
+     * @return `true` if the referenced string ends with the given prefix; `false` otherwise.
      */
     [[nodiscard]] constexpr bool ends_with(value_type value) const
     {
@@ -384,7 +384,7 @@ public:
     /**
      * @brief Checks if the referenced string ends with the given prefix.
      * @param other Another string_view.
-     * @return `true` if the referenced string ends with the given prefix, `false` otherwise.
+     * @return `true` if the referenced string ends with the given prefix; `false` otherwise.
      */
     [[nodiscard]] constexpr bool ends_with(const string_view& other) const
     {

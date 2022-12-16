@@ -14,6 +14,7 @@
  */
 
 #include "bn_assert.h"
+#include "bn_span_fwd.h"
 #include "../hw/include/bn_hw_sram_constants.h"
 
 /// @cond DO_NOT_DOCUMENT
@@ -50,8 +51,8 @@ namespace bn::sram
     template<typename Type>
     void read(Type& destination)
     {
-        static_assert(is_trivially_copyable<Type>(), "Source is not trivially copyable");
-        static_assert(int(sizeof(Type)) <= size(), "Source size is too high");
+        static_assert(is_trivially_copyable<Type>(), "Destination is not trivially copyable");
+        static_assert(int(sizeof(Type)) <= size(), "Destination size is too high");
 
         _bn::sram::unsafe_read(&destination, int(sizeof(Type)), 0);
     }
@@ -64,14 +65,27 @@ namespace bn::sram
     template<typename Type>
     void read_offset(Type& destination, int offset)
     {
-        static_assert(is_trivially_copyable<Type>(), "Source is not trivially copyable");
-        static_assert(int(sizeof(Type)) <= size(), "Source size is too high");
+        static_assert(is_trivially_copyable<Type>(), "Destination is not trivially copyable");
+        static_assert(int(sizeof(Type)) <= size(), "Destination size is too high");
         BN_ASSERT(offset >= 0, "Invalid offset: ", offset);
         BN_ASSERT(int(sizeof(Type)) + offset <= size(),
-                  "Source size and offset are too high: ", sizeof(Type), " - ", offset);
+                  "Destination size and offset are too high: ", sizeof(Type), " - ", offset);
 
         _bn::sram::unsafe_read(&destination, int(sizeof(Type)), offset);
     }
+
+    /**
+     * @brief Copies SRAM data into the given span.
+     * @param destination SRAM data is copied into this span.
+     */
+    void read_span(span<uint8_t>& destination);
+
+    /**
+     * @brief Copies SRAM data into the given span.
+     * @param destination SRAM data is copied into this span.
+     * @param offset Copying starts from SRAM start address + this offset.
+     */
+    void read_span_offset(span<uint8_t>& destination, int offset);
 
     /**
      * @brief Copies the given value into SRAM.
@@ -102,6 +116,19 @@ namespace bn::sram
 
         _bn::sram::unsafe_write(&source, int(sizeof(Type)), offset);
     }
+
+    /**
+     * @brief Copies the given span into SRAM.
+     * @param source Span to copy.
+     */
+    void write_span(const span<const uint8_t>& source);
+
+    /**
+     * @brief Copies the given span into SRAM.
+     * @param source Span to copy.
+     * @param offset The given span is copied into SRAM start address + this offset.
+     */
+    void write_span_offset(const span<const uint8_t>& source, int offset);
 
     /**
      * @brief Clears (fills with zero) SRAM.

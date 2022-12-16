@@ -60,6 +60,8 @@ int main()
         info_text_lines[1] = "";
         info_text_lines[2] = "If you see this message again,";
         info_text_lines[3] = "SRAM is not working";
+
+        bn::sram::clear(bn::sram::size());
     }
 
     bn::sram::write(cart_sram_data);

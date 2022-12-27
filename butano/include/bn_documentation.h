@@ -2020,7 +2020,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_2_0 13.2.0 (next release)
+ * @section changelog_13_2_0 13.2.0
  *
  * * bn::sram::read_span, bn::sram::read_span_offset, bn::sram::write_span and bn::sram::write_span_offset added.
  * * bn::core::last_missed_frames added.

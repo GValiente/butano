@@ -133,7 +133,14 @@ int main()
 
     BN_PROFILER_STOP();
 
-    [[maybe_unused]] int dummy = bn::sqrt(bn::abs(integer));
-
-    bn::profiler::show();
+    if(integer)
+    {
+        bn::profiler::show();
+    }
+    else
+    {
+        while(true)
+        {
+        }
+    }
 }

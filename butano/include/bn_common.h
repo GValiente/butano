@@ -18,6 +18,15 @@
 #include "../hw/include/bn_hw_common.h"
 
 /**
+ * @def BN_CONST
+ *
+ * The return value of a function with this attribute is solely a function of the arguments.
+ *
+ * @ingroup other
+ */
+#define BN_CONST __attribute__((const))
+
+/**
  * @def BN_UNREACHABLE
  *
  * If control flow reaches the point of this macro, the program is undefined.

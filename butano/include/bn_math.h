@@ -23,7 +23,7 @@
 
 namespace _bn
 {
-    [[nodiscard]] int sqrt_impl(int value);
+    [[nodiscard]] BN_CONST int sqrt_impl(int value);
 }
 
 /// @endcond
@@ -59,7 +59,7 @@ namespace bn
      *
      * @ingroup math
      */
-    [[nodiscard]] constexpr int sqrt(int value)
+    [[nodiscard]] BN_CONST constexpr int sqrt(int value)
     {
         BN_ASSERT(value >= 0, "Invalid value: ", value);
 
@@ -96,7 +96,7 @@ namespace bn
      * @ingroup math
      */
     template<int Precision>
-    [[nodiscard]] constexpr fixed_t<(Precision + 1) / 2> sqrt(fixed_t<Precision> value)
+    [[nodiscard]] BN_CONST constexpr fixed_t<(Precision + 1) / 2> sqrt(fixed_t<Precision> value)
     {
         if constexpr(Precision % 2)
         {
@@ -365,7 +365,7 @@ namespace bn
      *
      * @ingroup math
      */
-    [[nodiscard]] fixed_t<16> atan2(int y, int x);
+    [[nodiscard]] BN_CONST fixed_t<16> atan2(int y, int x);
 
     /**
      * @brief Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.
@@ -375,7 +375,7 @@ namespace bn
      *
      * @ingroup math
      */
-    [[nodiscard]] inline fixed degrees_atan2(int y, int x)
+    [[nodiscard]] BN_CONST inline fixed degrees_atan2(int y, int x)
     {
         return fixed::from_data((atan2(y, x).data() * 360) / (1 << 4));
     }

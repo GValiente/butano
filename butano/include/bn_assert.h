@@ -226,7 +226,7 @@
                 { \
                     if(! (condition)) [[unlikely]] \
                     { \
-                        __builtin_unreachable(); \
+                        BN_UNREACHABLE(); \
                     } \
                 } \
             } while(false)
@@ -242,7 +242,7 @@
                 } \
                 else \
                 { \
-                    __builtin_unreachable(); \
+                    BN_UNREACHABLE(); \
                 } \
             } while(false)
     #endif

@@ -2024,6 +2024,7 @@
  *
  * * @ref BN_CONST added.
  * * bn::sqrt, bn::atan2 and bn::degrees_atan2 marked as @ref BN_CONST.
+ * * Object files to link can be overwritten in the project's `Makefile`.
  *
  *
  * @section changelog_13_2_0 13.2.0

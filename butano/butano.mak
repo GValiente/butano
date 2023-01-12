@@ -42,6 +42,15 @@ include $(DEVKITARM)/gba_rules
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.bn_noflto.d $(CFLAGS) -fno-lto -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------------------------------------------
+# Link rule when user object files variable is not empty:
+#---------------------------------------------------------------------------------------------------------------------
+ifneq ($(USEROFILES),)
+%.elf:
+	$(SILENTMSG) linking cartridge with custom object files
+	$(SILENTCMD)$(LD) $(LFLAGS) -specs=gba.specs $(USEROFILES) $(LIBPATHS) $(LIBS) -o $@
+endif
+
+#---------------------------------------------------------------------------------------------------------------------
 # Options for code generation:
 #---------------------------------------------------------------------------------------------------------------------
 ARCH        :=	-mthumb -mthumb-interwork

@@ -21,6 +21,8 @@
 #     Each libraries directory must contains include and lib subdirectories.
 # USERLIBS is a list of additional libraries to link with the project.
 # USERBUILD is a list of additional directories to remove when cleaning the project.
+# USEROFILES is the list of object files to link when it is not empty:
+#     Pass *.o to link all files in the build folder.
 # EXTTOOL is an optional command executed before processing audio, graphics and code files.
 #
 # All directories are specified relative to the project directory where the makefile is found.
@@ -43,6 +45,7 @@ USERLDFLAGS :=
 USERLIBDIRS :=  
 USERLIBS    :=  
 USERBUILD   :=  external
+USEROFILES  :=  
 EXTTOOL     :=  @$(PYTHON) -B python-script.py --build=$(USERBUILD)
 
 #---------------------------------------------------------------------------------------------------------------------

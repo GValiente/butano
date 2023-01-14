@@ -45,7 +45,7 @@ include $(DEVKITARM)/gba_rules
 # Butano custom link rule for avoiding issues when linking too much object files:
 #---------------------------------------------------------------------------------------------------------------------
 %.elf:
-	$(SILENTMSG) linking cartridge...
+	$(SILENTMSG) linking rom...
 	@echo $(OFILES) > bn_ofiles.txt
 	$(SILENTCMD)$(LD) $(LFLAGS) -specs=gba.specs @bn_ofiles.txt $(LIBPATHS) $(LIBS) -o $@
 

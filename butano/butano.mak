@@ -47,7 +47,7 @@ include $(DEVKITARM)/gba_rules
 %.elf:
 	$(SILENTMSG) linking rom...
 	@echo $(OFILES) > bn_ofiles.txt
-	$(SILENTCMD)$(LD) $(LFLAGS) -specs=gba.specs @bn_ofiles.txt $(LIBPATHS) $(LIBS) -o $@
+	$(SILENTCMD)$(LD) $(LDFLAGS) -specs=gba.specs @bn_ofiles.txt $(LIBPATHS) $(LIBS) -o $@
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation:

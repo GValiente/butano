@@ -2020,7 +2020,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_3_0 13.3.0 (next release)
+ * @section changelog_13_3_0 13.3.0
  *
  * * @ref BN_CONST added.
  * * bn::sqrt, bn::atan2 and bn::degrees_atan2 marked as @ref BN_CONST.

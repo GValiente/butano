@@ -2020,6 +2020,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_3_1 13.3.1 (next release)
+ *
+ * bn::erase and bn::erase_if fixed.
+ *
+ *
  * @section changelog_13_3_0 13.3.0
  *
  * * @ref BN_CONST added.

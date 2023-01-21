@@ -308,6 +308,11 @@
             </dt>
             <dd>Erases an element.</dd>
             <dt>
+              <div class="m-doc-template">template&lt;class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a58a00fa35d447d154fd3bdcd2e59093b" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred) -&gt; <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that satisfy the specified predicate.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a4173d03e770ad6f24714616c66df464b" class="m-doc">merge</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp;&amp; other)</span>
             </dt>
             <dd>Moves all elements of the given <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> into this one, leaving the first one empty.</dd>
@@ -328,12 +333,6 @@
         <section id="friends">
           <h2><a href="#friends">Friends</a></h2>
           <dl class="m-doc">
-            <dt>
-              <div class="m-doc-template">template&lt;class Pred&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#addd7b1b6aea954630ce05ba90cca88dc" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; set,
-              const Pred&amp; pred) -&gt; <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
-            </dt>
-            <dd>Erases all elements that satisfy the specified predicate.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ae035b3086ee9d9ce51a798ca430fd82e" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; a,
               <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; b)</span>
@@ -854,6 +853,34 @@
             </table>
 <p>Unlike <code>std::unordered_set</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
+          <section class="m-doc-details" id="a58a00fa35d447d154fd3bdcd2e59093b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
+                template&lt;class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a58a00fa35d447d154fd3bdcd2e59093b" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pred</td>
+                  <td>Unary predicate which returns ​true if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Unlike <code>std::unordered_set</code>, it doesn&#x27;t offer pointer stability.</p>
+          </div></section>
           <section class="m-doc-details" id="a4173d03e770ad6f24714616c66df464b"><div>
             <h3>
               <div class="m-doc-template">
@@ -882,39 +909,6 @@
                   <td><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> to exchange the contents with.</td>
                 </tr>
               </tbody>
-            </table>
-<p>Unlike <code>std::unordered_set</code>, it doesn&#x27;t offer pointer stability.</p>
-          </div></section>
-          <section class="m-doc-details" id="addd7b1b6aea954630ce05ba90cca88dc"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
-                template&lt;class Pred&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#addd7b1b6aea954630ce05ba90cca88dc" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; set,
-              const Pred&amp; pred)</span></span>
-            </h3>
-            <p>Erases all elements that satisfy the specified predicate.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">set</td>
-                  <td><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> from which to erase.</td>
-                </tr>
-                <tr>
-                  <td>pred</td>
-                  <td>Unary predicate which returns ​true if the element should be erased.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Number of erased elements.</td>
-                </tr>
-              </tfoot>
             </table>
 <p>Unlike <code>std::unordered_set</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>

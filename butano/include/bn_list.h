@@ -633,29 +633,6 @@ public:
 
     /**
      * @brief Erases all elements that are equal to the specified value.
-     * @param list ilist from which to erase.
-     * @param value Element to erase.
-     * @return Number of erased elements.
-     */
-    friend size_type erase(ilist& list, const_reference value)
-    {
-        return list.remove(value);
-    }
-
-    /**
-     * @brief Erases all elements that satisfy the specified predicate.
-     * @param list ilist from which to erase.
-     * @param pred Unary predicate which returns `true` if the element should be erased.
-     * @return Number of erased elements.
-     */
-    template<class Pred>
-    friend size_type erase_if(ilist& list, const Pred& pred)
-    {
-        return list.remove_if(pred);
-    }
-
-    /**
-     * @brief Erases all elements that are equal to the specified value.
      * @param value Element to erase.
      * @return Number of erased elements.
      */
@@ -1145,6 +1122,31 @@ public:
 private:
     pool<typename ilist<Type>::value_node_type, MaxSize> _pool;
 };
+
+
+/**
+ * @brief Erases all elements from a ilist that are equal to the specified value.
+ * @param list ilist from which to erase.
+ * @param value Element to erase.
+ * @return Number of erased elements.
+ */
+template<typename Type>
+typename ilist<Type>::size_type erase(ilist<Type>& list, const Type& value)
+{
+    return list.remove(value);
+}
+
+/**
+ * @brief Erases all elements from a ilist that satisfy the specified predicate.
+ * @param list ilist from which to erase.
+ * @param pred Unary predicate which returns `true` if the element should be erased.
+ * @return Number of erased elements.
+ */
+template<typename Type, class Pred>
+typename ilist<Type>::size_type erase_if(ilist<Type>& list, const Pred& pred)
+{
+    return list.remove_if(pred);
+}
 
 }
 

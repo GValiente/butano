@@ -349,17 +349,6 @@
           <h2><a href="#friends">Friends</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aca2a0ff501cfb103b67d459bd9bd19cd" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; deque,
-              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a></span>
-            </dt>
-            <dd>Erases all elements that are equal to the specified value.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;class Pred&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ab545b3c2969064f96d8affee242dd191" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; deque,
-              const Pred&amp; pred) -&gt; <a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a></span>
-            </dt>
-            <dd>Erases all elements that satisfy the specified predicate.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ac130694550b6cfdc5dd950668b1cd172" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; a,
               <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; b)</span>
             </dt>
@@ -870,69 +859,6 @@
                   <td>ideque to exchange the contents with.</td>
                 </tr>
               </tbody>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="aca2a0ff501cfb103b67d459bd9bd19cd"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename Type&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aca2a0ff501cfb103b67d459bd9bd19cd" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; deque,
-              <a href="classbn_1_1ideque.html#a62f3f37d9f5f3d19003643ebee683b58" class="m-doc">const_<wbr />reference</a> value)</span></span>
-            </h3>
-            <p>Erases all elements that are equal to the specified value.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">deque</td>
-                  <td>ideque from which to erase.</td>
-                </tr>
-                <tr>
-                  <td>value</td>
-                  <td>Element to erase.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Number of erased elements.</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
-          <section class="m-doc-details" id="ab545b3c2969064f96d8affee242dd191"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename Type&gt;
-                template&lt;class Pred&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html#a6aff122102879c5fe425e29743052e34" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab545b3c2969064f96d8affee242dd191" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&amp; deque,
-              const Pred&amp; pred)</span></span>
-            </h3>
-            <p>Erases all elements that satisfy the specified predicate.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">deque</td>
-                  <td>ideque from which to erase.</td>
-                </tr>
-                <tr>
-                  <td>pred</td>
-                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Number of erased elements.</td>
-                </tr>
-              </tfoot>
             </table>
           </div></section>
           <section class="m-doc-details" id="ac130694550b6cfdc5dd950668b1cd172"><div>

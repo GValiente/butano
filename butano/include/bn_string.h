@@ -529,33 +529,6 @@ public:
     }
 
     /**
-     * @brief Erases all characters that are equal to the specified one.
-     * @param string istring from which to erase.
-     * @param value Character to erase.
-     * @return Number of erased characters.
-     */
-    constexpr friend size_type erase(istring& string, value_type value)
-    {
-        size_type old_size = string.size();
-        string.erase(remove(string.begin(), string.end(), value), string.end());
-        return old_size - string.size();
-    }
-
-    /**
-     * @brief Erases all characters that satisfy the specified predicate.
-     * @param string istring from which to erase.
-     * @param pred Unary predicate which returns `true` if the character should be erased.
-     * @return Number of erased characters.
-     */
-    template<class Pred>
-    constexpr friend size_type erase_if(istring& string, const Pred& pred)
-    {
-        size_type old_size = string.size();
-        string.erase(remove_if(string.begin(), string.end(), pred), string.end());
-        return old_size - string.size();
-    }
-
-    /**
      * @brief Resizes the istring.
      * @param count New size.
      */
@@ -999,6 +972,33 @@ struct hash<string<MaxSize>>
         return hash<istring_base>()(value);
     }
 };
+
+/**
+ * @brief Erases all characters from a istring that are equal to the specified one.
+ * @param string istring from which to erase.
+ * @param value Character to erase.
+ * @return Number of erased characters.
+ */
+constexpr istring::size_type erase(istring& string, char value)
+{
+    auto old_size = string.size();
+    string.erase(remove(string.begin(), string.end(), value), string.end());
+    return old_size - string.size();
+}
+
+/**
+ * @brief Erases all characters from a istring that satisfy the specified predicate.
+ * @param string istring from which to erase.
+ * @param pred Unary predicate which returns `true` if the character should be erased.
+ * @return Number of erased characters.
+ */
+template<class Pred>
+constexpr istring::size_type erase_if(istring& string, const Pred& pred)
+{
+    auto old_size = string.size();
+    string.erase(remove_if(string.begin(), string.end(), pred), string.end());
+    return old_size - string.size();
+}
 
 }
 

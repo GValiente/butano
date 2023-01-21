@@ -2499,6 +2499,18 @@
             </dt>
             <dd>Copies the value <code>0</code> into each of the first given bytes of the object pointed to by destination.</dd>
             <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac6b866455171d66f0ca91cc1c358cc93" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&lt;Type&gt;&amp; deque,
+              const Type&amp; value) -&gt; <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a ideque that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae83bc271dc3895c42ab4565573c7af54" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&lt;Type&gt;&amp; deque,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a ideque that satisfy the specified predicate.</dd>
+            <dt>
               <div class="m-doc-template">template&lt;int MaxSize, class... Args&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__string.html#gaf140ba6af6aed89c747d1527b634ff06" class="m-doc">format</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; format,
               const Args&amp;... args) -&gt; <a href="classbn_1_1string.html" class="m-doc">string</a>&lt;MaxSize&gt;</span>
@@ -2511,6 +2523,18 @@
               const Args&amp;... args)</span>
             </dt>
             <dd>Format the given arguments according to the given format string, storing the result in the given string.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab4c4cf6dfd2b8d6af52ca656f38458b0" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Type&amp; value) -&gt; <a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a <a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a75905ecd9b11e962353b848f2fb5522a" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a <a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> that satisfy the specified predicate.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
               <span class="m-doc-wrap-bumper">void <a href="group__functional.html#ga2af0ea22d63824a172c95cfdd4b6cefb" class="m-doc">hash_combine</a>(</span><span class="m-doc-wrap">const Type&amp; value,
@@ -2527,6 +2551,42 @@
               <span class="m-doc-wrap-bumper">auto <a href="group__functional.html#ga7701dbae76c80c1f43f155b74f83a06a" class="m-doc">make_hash</a>(</span><span class="m-doc-wrap">const Type&amp; value) -&gt; unsigned <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the hash of the given value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#adfd43b87769d091ab179cc4d5ed1e168" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Type&amp; value) -&gt; <a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a <a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a> that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6623b9110d50e9d88f200cfb35b4bddd" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a <a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a> that satisfy the specified predicate.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#af3473ad29f37e81ca67a979a606ceff5" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Type&amp; value) -&gt; <a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a <a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a> that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8d53c9a25c4595bc72064fee9a3864d3" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a <a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a> that satisfy the specified predicate.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a91a4801285809c10547a93748f3ffe46" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp; list,
+              const Type&amp; value) -&gt; <a href="classbn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a ilist that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8fd8f1ab3c3fd00c320cb4cd2a9b1c18" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp; list,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a ilist that satisfy the specified predicate.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="group__log.html#ga4ad167aa65958b66b5b26d413c500fe3" class="m-doc">log</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; message)</span>
             </dt>
@@ -2788,6 +2848,17 @@
             </dt>
             <dd>Converts the given value to a string.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac36520bb6077bea82055727c7986544e" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; string,
+              char value) -&gt; <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">istring::<wbr />size_type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Erases all characters from a istring that are equal to the specified one.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0e44ef3a06811c737555b3802158d2d8" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; string,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">istring::<wbr />size_type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Erases all characters from a istring that satisfy the specified predicate.</dd>
+            <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ad53e30290510c19fbc9c40abffc95408" class="m-doc">type_id</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1type__id__t.html" class="m-doc">type_<wbr />id_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -2798,11 +2869,35 @@
             </dt>
             <dd>Constructs an object and wraps it in a <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>.</dd>
             <dt>
+              <div class="m-doc-template">template&lt;typename Type, typename Value, typename KeyHash, typename KeyEqual, class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#af6e6afe5dc2dbabba679cc6a46977f8b" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Type, Value, KeyHash, KeyEqual&gt;&amp; map,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Type, Value, KeyHash, KeyEqual&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> that satisfy the specified predicate.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Key, typename KeyHash, typename KeyEqual, class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3a28a58c747f45e8f10baef0d8b6b270" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp; set,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> that satisfy the specified predicate.</dd>
+            <dt>
               <div class="m-doc-template">template&lt;typename Type1, typename Type2&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="group__utility.html#gaf21f14ffe1032f10bde040e0afe71f86" class="m-doc">make_pair</a>(</span><span class="m-doc-wrap">Type1&amp;&amp; x,
               Type2&amp;&amp; y) -&gt; <a href="classbn_1_1pair.html" class="m-doc">pair</a>&lt;typename decay&lt;Type1&gt;::type, typename decay&lt;Type2&gt;::type&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Creates a pair deducing its types from the types of the arguments.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a16b21a7573dd9561bca26a2603619ded" class="m-doc">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp; vector,
+              const Type&amp; value) -&gt; <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a ivector that are equal to the specified value.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa6e793826ad6efad81b175d715a8b60c" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp; vector,
+              const Pred&amp; pred) -&gt; <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;::size_type</span>
+            </dt>
+            <dd>Erases all elements from a ivector that satisfy the specified predicate.</dd>
           </dl>
         </section>
         <section id="var-members">
@@ -2878,6 +2973,387 @@
         </section>
         <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ac6b866455171d66f0ca91cc1c358cc93"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__deque_8h.html">&lt;bn_deque.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac6b866455171d66f0ca91cc1c358cc93" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&lt;Type&gt;&amp; deque,
+              const Type&amp; value)</span></span>
+            </h3>
+            <p>Erases all elements from a ideque that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">deque</td>
+                  <td>ideque from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae83bc271dc3895c42ab4565573c7af54"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__deque_8h.html">&lt;bn_deque.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type, class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae83bc271dc3895c42ab4565573c7af54" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ideque.html" class="m-doc">ideque</a>&lt;Type&gt;&amp; deque,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements from a ideque that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">deque</td>
+                  <td>ideque from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab4c4cf6dfd2b8d6af52ca656f38458b0"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__forward__list_8h.html">&lt;bn_forward_list.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab4c4cf6dfd2b8d6af52ca656f38458b0" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Type&amp; value)</span></span>
+            </h3>
+            <p>Erases all elements from a <a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td><a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a75905ecd9b11e962353b848f2fb5522a"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__forward__list_8h.html">&lt;bn_forward_list.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type, class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a75905ecd9b11e962353b848f2fb5522a" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements from a <a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td><a href="classbn_1_1iforward__list.html" class="m-doc">iforward_<wbr />list</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="adfd43b87769d091ab179cc4d5ed1e168"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__intrusive__forward__list_8h.html">&lt;bn_intrusive_forward_list.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adfd43b87769d091ab179cc4d5ed1e168" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Type&amp; value)</span></span>
+            </h3>
+            <p>Erases all elements from a <a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a> that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td><a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a6623b9110d50e9d88f200cfb35b4bddd"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__intrusive__forward__list_8h.html">&lt;bn_intrusive_forward_list.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type, class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6623b9110d50e9d88f200cfb35b4bddd" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements from a <a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a> that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td><a href="classbn_1_1intrusive__forward__list.html" class="m-doc">intrusive_<wbr />forward_<wbr />list</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af3473ad29f37e81ca67a979a606ceff5"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__intrusive__list_8h.html">&lt;bn_intrusive_list.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af3473ad29f37e81ca67a979a606ceff5" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Type&amp; value)</span></span>
+            </h3>
+            <p>Erases all elements from a <a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a> that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td><a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8d53c9a25c4595bc72064fee9a3864d3"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__intrusive__list_8h.html">&lt;bn_intrusive_list.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type, class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8d53c9a25c4595bc72064fee9a3864d3" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a>&lt;Type&gt;&amp; list,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements from a <a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a> that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td><a href="classbn_1_1intrusive__list.html" class="m-doc">intrusive_<wbr />list</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a91a4801285809c10547a93748f3ffe46"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__list_8h.html">&lt;bn_list.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a91a4801285809c10547a93748f3ffe46" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp; list,
+              const Type&amp; value)</span></span>
+            </h3>
+            <p>Erases all elements from a ilist that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td>ilist from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8fd8f1ab3c3fd00c320cb4cd2a9b1c18"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__list_8h.html">&lt;bn_list.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type, class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8fd8f1ab3c3fd00c320cb4cd2a9b1c18" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ilist.html" class="m-doc">ilist</a>&lt;Type&gt;&amp; list,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements from a ilist that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">list</td>
+                  <td>ilist from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac36520bb6077bea82055727c7986544e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">istring::<wbr />size_type</a> bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac36520bb6077bea82055727c7986544e" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; string,
+              char value) <span class="m-label m-primary">constexpr</span></span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__string_8h.html">&lt;bn_string.h&gt;</a></div>
+            </h3>
+            <p>Erases all characters from a istring that are equal to the specified one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>istring from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Character to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased characters.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0e44ef3a06811c737555b3802158d2d8"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__string_8h.html">&lt;bn_string.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">istring::<wbr />size_type</a> bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0e44ef3a06811c737555b3802158d2d8" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; string,
+              const Pred&amp; pred) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Erases all characters from a istring that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">string</td>
+                  <td>istring from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the character should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased characters.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ad53e30290510c19fbc9c40abffc95408"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__type__id_8h.html">&lt;bn_type_id.h&gt;</a></div>
@@ -2887,6 +3363,136 @@
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1type__id__t.html" class="m-doc">type_<wbr />id_<wbr />t</a> bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad53e30290510c19fbc9c40abffc95408" class="m-doc-self">type_id</a>(</span><span class="m-doc-wrap">) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Returns the <a href="classbn_1_1type__id__t.html" class="m-doc">type_<wbr />id_<wbr />t</a> of the specified type.</p>
+          </div></section>
+          <section class="m-doc-details" id="af6e6afe5dc2dbabba679cc6a46977f8b"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unordered__map_8h.html">&lt;bn_unordered_map.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type, typename Value, typename KeyHash, typename KeyEqual, class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Type, Value, KeyHash, KeyEqual&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af6e6afe5dc2dbabba679cc6a46977f8b" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&lt;Type, Value, KeyHash, KeyEqual&gt;&amp; map,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements from a <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns ​true if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3a28a58c747f45e8f10baef0d8b6b270"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unordered__set_8h.html">&lt;bn_unordered_set.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename KeyHash, typename KeyEqual, class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3a28a58c747f45e8f10baef0d8b6b270" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp; set,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements from a <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">set</td>
+                  <td><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns ​true if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Unlike <code>std::unordered_set</code>, it doesn&#x27;t offer pointer stability.</p>
+          </div></section>
+          <section class="m-doc-details" id="a16b21a7573dd9561bca26a2603619ded"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__vector_8h.html">&lt;bn_vector.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a16b21a7573dd9561bca26a2603619ded" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp; vector,
+              const Type&amp; value)</span></span>
+            </h3>
+            <p>Erases all elements from a ivector that are equal to the specified value.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">vector</td>
+                  <td>ivector from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Element to erase.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa6e793826ad6efad81b175d715a8b60c"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__vector_8h.html">&lt;bn_vector.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type, class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;::size_type bn::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa6e793826ad6efad81b175d715a8b60c" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;Type&gt;&amp; vector,
+              const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements from a ivector that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">vector</td>
+                  <td>ivector from which to erase.</td>
+                </tr>
+                <tr>
+                  <td>pred</td>
+                  <td>Unary predicate which returns <code>true</code> if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
           </div></section>
         </section>
         <section>

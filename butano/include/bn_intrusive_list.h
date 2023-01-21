@@ -548,29 +548,6 @@ public:
 
     /**
      * @brief Erases all elements that are equal to the specified value.
-     * @param list intrusive_list from which to erase.
-     * @param value Element to erase.
-     * @return Number of erased elements.
-     */
-    friend size_type erase(intrusive_list& list, const_reference value)
-    {
-        return list.remove(value);
-    }
-
-    /**
-     * @brief Erases all elements that satisfy the specified predicate.
-     * @param list intrusive_list from which to erase.
-     * @param pred Unary predicate which returns `true` if the element should be erased.
-     * @return Number of erased elements.
-     */
-    template<class Pred>
-    friend size_type erase_if(intrusive_list& list, const Pred& pred)
-    {
-        return list.remove_if(pred);
-    }
-
-    /**
-     * @brief Erases all elements that are equal to the specified value.
      * @param value Element to erase.
      * @return Number of erased elements.
      */
@@ -854,6 +831,31 @@ private:
         --_size;
     }
 };
+
+
+/**
+ * @brief Erases all elements from a intrusive_list that are equal to the specified value.
+ * @param list intrusive_list from which to erase.
+ * @param value Element to erase.
+ * @return Number of erased elements.
+ */
+template<typename Type>
+typename intrusive_list<Type>::size_type erase(intrusive_list<Type>& list, const Type& value)
+{
+    return list.remove(value);
+}
+
+/**
+ * @brief Erases all elements from a intrusive_list that satisfy the specified predicate.
+ * @param list intrusive_list from which to erase.
+ * @param pred Unary predicate which returns `true` if the element should be erased.
+ * @return Number of erased elements.
+ */
+template<typename Type, class Pred>
+typename intrusive_list<Type>::size_type erase_if(intrusive_list<Type>& list, const Pred& pred)
+{
+    return list.remove_if(pred);
+}
 
 }
 

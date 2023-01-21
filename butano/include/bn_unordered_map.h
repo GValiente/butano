@@ -1037,20 +1037,19 @@ public:
      *
      * Unlike `std::unordered_map`, it doesn't offer pointer stability.
      *
-     * @param map iunordered_map from which to erase.
      * @param pred Unary predicate which returns ​true if the element should be erased.
      * @return Number of erased elements.
      */
     template<class Pred>
-    friend size_type erase_if(iunordered_map& map, const Pred& pred)
+    size_type erase_if(const Pred& pred)
     {
         size_type erased_count = 0;
-        pointer storage = map._storage;
-        bool* allocated = map._allocated;
-        size_type first_valid_index = map.max_size();
+        pointer storage = _storage;
+        bool* allocated = _allocated;
+        size_type first_valid_index = max_size();
         size_type last_valid_index = 0;
 
-        for(size_type index = map._first_valid_index, last = map._last_valid_index; index <= last; ++index)
+        for(size_type index = _first_valid_index, last = _last_valid_index; index <= last; ++index)
         {
             if(allocated[index])
             {
@@ -1068,9 +1067,9 @@ public:
             }
         }
 
-        map._size -= erased_count;
-        map._first_valid_index = first_valid_index;
-        map._last_valid_index = last_valid_index;
+        _size -= erased_count;
+        _first_valid_index = first_valid_index;
+        _last_valid_index = last_valid_index;
         return erased_count;
     }
 
@@ -1613,6 +1612,23 @@ private:
     alignas(_alignment) char _storage_buffer[sizeof(value_type) * MaxSize];
     bool _allocated_buffer[MaxSize] = {};
 };
+
+
+/**
+ * @brief Erases all elements from a iunordered_map that satisfy the specified predicate.
+ *
+ * Unlike `std::unordered_map`, it doesn't offer pointer stability.
+ *
+ * @param map iunordered_map from which to erase.
+ * @param pred Unary predicate which returns ​true if the element should be erased.
+ * @return Number of erased elements.
+ */
+template<typename Type, typename Value, typename KeyHash, typename KeyEqual, class Pred>
+typename iunordered_map<Type, Value, KeyHash, KeyEqual>::size_type erase_if(
+        iunordered_map<Type, Value, KeyHash, KeyEqual>& map, const Pred& pred)
+{
+    return map.erase_if(pred);
+}
 
 }
 

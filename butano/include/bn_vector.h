@@ -511,33 +511,6 @@ public:
     }
 
     /**
-     * @brief Erases all elements that are equal to the specified value.
-     * @param vector ivector from which to erase.
-     * @param value Element to erase.
-     * @return Number of erased elements.
-     */
-    friend size_type erase(ivector& vector, const_reference value)
-    {
-        size_type old_size = vector.size();
-        vector.erase(remove(vector.begin(), vector.end(), value), vector.end());
-        return old_size - vector.size();
-    }
-
-    /**
-     * @brief Erases all elements that satisfy the specified predicate.
-     * @param vector ivector from which to erase.
-     * @param pred Unary predicate which returns `true` if the element should be erased.
-     * @return Number of erased elements.
-     */
-    template<class Pred>
-    friend size_type erase_if(ivector& vector, const Pred& pred)
-    {
-        size_type old_size = vector.size();
-        vector.erase(remove_if(vector.begin(), vector.end(), pred), vector.end());
-        return old_size - vector.size();
-    }
-
-    /**
      * @brief Resizes the ivector.
      * @param count New size.
      */
@@ -1068,6 +1041,35 @@ private:
 
     alignas(_alignment) char _storage_buffer[sizeof(value_type) * MaxSize];
 };
+
+
+/**
+ * @brief Erases all elements from a ivector that are equal to the specified value.
+ * @param vector ivector from which to erase.
+ * @param value Element to erase.
+ * @return Number of erased elements.
+ */
+template<typename Type>
+typename ivector<Type>::size_type erase(ivector<Type>& vector, const Type& value)
+{
+    auto old_size = vector.size();
+    vector.erase(remove(vector.begin(), vector.end(), value), vector.end());
+    return old_size - vector.size();
+}
+
+/**
+ * @brief Erases all elements from a ivector that satisfy the specified predicate.
+ * @param vector ivector from which to erase.
+ * @param pred Unary predicate which returns `true` if the element should be erased.
+ * @return Number of erased elements.
+ */
+template<typename Type, class Pred>
+typename ivector<Type>::size_type erase_if(ivector<Type>& vector, const Pred& pred)
+{
+    auto old_size = vector.size();
+    vector.erase(remove_if(vector.begin(), vector.end(), pred), vector.end());
+    return old_size - vector.size();
+}
 
 }
 

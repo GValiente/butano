@@ -1012,33 +1012,6 @@ public:
     }
 
     /**
-     * @brief Erases all elements that are equal to the specified value.
-     * @param deque ideque from which to erase.
-     * @param value Element to erase.
-     * @return Number of erased elements.
-     */
-    friend size_type erase(ideque& deque, const_reference value)
-    {
-        size_type old_size = deque.size();
-        deque.erase(remove(deque.begin(), deque.end(), value), deque.end());
-        return old_size - deque.size();
-    }
-
-    /**
-     * @brief Erases all elements that satisfy the specified predicate.
-     * @param deque ideque from which to erase.
-     * @param pred Unary predicate which returns `true` if the element should be erased.
-     * @return Number of erased elements.
-     */
-    template<class Pred>
-    friend size_type erase_if(ideque& deque, const Pred& pred)
-    {
-        size_type old_size = deque.size();
-        deque.erase(remove_if(deque.begin(), deque.end(), pred), deque.end());
-        return old_size - deque.size();
-    }
-
-    /**
      * @brief Resizes the ideque.
      * @param count New size.
      */
@@ -1603,6 +1576,35 @@ private:
 
     alignas(_alignment) char _storage_buffer[sizeof(value_type) * MaxSize];
 };
+
+
+/**
+ * @brief Erases all elements from a ideque that are equal to the specified value.
+ * @param deque ideque from which to erase.
+ * @param value Element to erase.
+ * @return Number of erased elements.
+ */
+template<typename Type>
+typename ideque<Type>::size_type erase(ideque<Type>& deque, const Type& value)
+{
+    auto old_size = deque.size();
+    deque.erase(remove(deque.begin(), deque.end(), value), deque.end());
+    return old_size - deque.size();
+}
+
+/**
+ * @brief Erases all elements from a ideque that satisfy the specified predicate.
+ * @param deque ideque from which to erase.
+ * @param pred Unary predicate which returns `true` if the element should be erased.
+ * @return Number of erased elements.
+ */
+template<typename Type, class Pred>
+typename ideque<Type>::size_type erase_if(ideque<Type>& deque, const Pred& pred)
+{
+    auto old_size = deque.size();
+    deque.erase(remove_if(deque.begin(), deque.end(), pred), deque.end());
+    return old_size - deque.size();
+}
 
 }
 

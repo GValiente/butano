@@ -790,20 +790,19 @@ public:
      *
      * Unlike `std::unordered_set`, it doesn't offer pointer stability.
      *
-     * @param set iunordered_set from which to erase.
      * @param pred Unary predicate which returns ​true if the element should be erased.
      * @return Number of erased elements.
      */
     template<class Pred>
-    friend size_type erase_if(iunordered_set& set, const Pred& pred)
+    size_type erase_if(const Pred& pred)
     {
         size_type erased_count = 0;
-        pointer storage = set._storage;
-        bool* allocated = set._allocated;
-        size_type first_valid_index = set.max_size();
+        pointer storage = _storage;
+        bool* allocated = _allocated;
+        size_type first_valid_index = max_size();
         size_type last_valid_index = 0;
 
-        for(size_type index = set._first_valid_index, last = set._last_valid_index; index <= last; ++index)
+        for(size_type index = _first_valid_index, last = _last_valid_index; index <= last; ++index)
         {
             if(allocated[index])
             {
@@ -821,9 +820,9 @@ public:
             }
         }
 
-        set._size -= erased_count;
-        set._first_valid_index = first_valid_index;
-        set._last_valid_index = last_valid_index;
+        _size -= erased_count;
+        _first_valid_index = first_valid_index;
+        _last_valid_index = last_valid_index;
         return erased_count;
     }
 
@@ -1323,6 +1322,23 @@ private:
     alignas(_alignment) char _storage_buffer[sizeof(value_type) * MaxSize];
     bool _allocated_buffer[MaxSize] = {};
 };
+
+
+/**
+ * @brief Erases all elements from a iunordered_set that satisfy the specified predicate.
+ *
+ * Unlike `std::unordered_set`, it doesn't offer pointer stability.
+ *
+ * @param set iunordered_set from which to erase.
+ * @param pred Unary predicate which returns ​true if the element should be erased.
+ * @return Number of erased elements.
+ */
+template<typename Key, typename KeyHash, typename KeyEqual, class Pred>
+typename iunordered_set<Key, KeyHash, KeyEqual>::size_type erase_if(
+        iunordered_set<Key, KeyHash, KeyEqual>& set, const Pred& pred)
+{
+    return set.erase_if(pred);
+}
 
 }
 

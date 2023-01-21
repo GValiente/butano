@@ -409,6 +409,11 @@
             </dt>
             <dd>Erases an element.</dd>
             <dt>
+              <div class="m-doc-template">template&lt;class Pred&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab141e013bb10136c43744d421e7f914e" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred) -&gt; <a href="classbn_1_1iunordered__map.html#abc2f837a2ace664f7ea256e216f1ace8" class="m-doc">size_<wbr />type</a></span>
+            </dt>
+            <dd>Erases all elements that satisfy the specified predicate.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ad744964f2afe8400b241c08bd25cb7a5" class="m-doc">merge</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Moves all elements of the given <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> into this one, leaving the first one empty.</dd>
@@ -447,12 +452,6 @@
         <section id="friends">
           <h2><a href="#friends">Friends</a></h2>
           <dl class="m-doc">
-            <dt>
-              <div class="m-doc-template">template&lt;class Pred&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ad44a1150032657a5be33df1209aa0f24" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&amp; map,
-              const Pred&amp; pred) -&gt; <a href="classbn_1_1iunordered__map.html#abc2f837a2ace664f7ea256e216f1ace8" class="m-doc">size_<wbr />type</a></span>
-            </dt>
-            <dd>Erases all elements that satisfy the specified predicate.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a17788611859d606bf1481103272f16cc" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&amp; a,
               <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&amp; b)</span>
@@ -1533,6 +1532,34 @@
             </table>
 <p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
+          <section class="m-doc-details" id="ab141e013bb10136c43744d421e7f914e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Key, typename Value, typename KeyHash, typename KeyEqual&gt;
+                template&lt;class Pred&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__map.html#abc2f837a2ace664f7ea256e216f1ace8" class="m-doc">size_<wbr />type</a> bn::<wbr />iunordered_map&lt;Key, Value, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab141e013bb10136c43744d421e7f914e" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred)</span></span>
+            </h3>
+            <p>Erases all elements that satisfy the specified predicate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pred</td>
+                  <td>Unary predicate which returns ​true if the element should be erased.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Number of erased elements.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
+          </div></section>
           <section class="m-doc-details" id="ad744964f2afe8400b241c08bd25cb7a5"><div>
             <h3>
               <div class="m-doc-template">
@@ -1677,39 +1704,6 @@
                 </tr>
               </tfoot>
             </table>
-          </div></section>
-          <section class="m-doc-details" id="ad44a1150032657a5be33df1209aa0f24"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;typename Key, typename Value, typename KeyHash, typename KeyEqual&gt;
-                template&lt;class Pred&gt;
-              </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__map.html#abc2f837a2ace664f7ea256e216f1ace8" class="m-doc">size_<wbr />type</a> </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad44a1150032657a5be33df1209aa0f24" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a>&amp; map,
-              const Pred&amp; pred)</span></span>
-            </h3>
-            <p>Erases all elements that satisfy the specified predicate.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">map</td>
-                  <td><a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_<wbr />map</a> from which to erase.</td>
-                </tr>
-                <tr>
-                  <td>pred</td>
-                  <td>Unary predicate which returns ​true if the element should be erased.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Number of erased elements.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>Unlike <code>std::unordered_map</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
           <section class="m-doc-details" id="a17788611859d606bf1481103272f16cc"><div>
             <h3>

@@ -1948,6 +1948,11 @@
  * The only workaround that I know of is reducing detail in your input image until the tiles count of
  * the generated background is valid.
  *
+ * However, if you are working with unique tiles to generate a dynamic background,
+ * importing background tiles only instead of a background with map should work.
+ * Check @ref import_regular_bg_tiles, @ref import_affine_bg_tiles, the `dynamic_regular_bg` example and
+ * the `dynamic_affine_bg` example for that.
+ *
  *
  * @section faq_audio Audio
  *
@@ -2022,7 +2027,8 @@
  *
  * @section changelog_13_4_0 13.4.0 (next release)
  *
- * Input tiles in `dynamic_regular_bg` and `dynamic_affine_bg` examples are imported without using a map.
+ * * Input tiles in `dynamic_regular_bg` and `dynamic_affine_bg` examples are imported without using a map.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_13_3_1 13.3.1

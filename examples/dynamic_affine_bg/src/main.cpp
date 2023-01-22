@@ -7,6 +7,7 @@
 #include "bn_keypad.h"
 #include "bn_memory.h"
 #include "bn_affine_bg_ptr.h"
+#include "bn_affine_bg_item.h"
 #include "bn_affine_bg_map_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_affine_bg_map_cell_info.h"
@@ -15,7 +16,8 @@
 #include "common_variable_8x16_sprite_font.h"
 
 #include "bn_sprite_items_cursor.h"
-#include "bn_affine_bg_items_tiles.h"
+#include "bn_bg_palette_items_palette.h"
+#include "bn_affine_bg_tiles_items_tiles.h"
 
 namespace
 {
@@ -92,8 +94,7 @@ int main()
 
     bn::unique_ptr<bg_map> bg_map_ptr(new bg_map());
     bn::affine_bg_item bg_item(
-                bn::affine_bg_items::tiles.tiles_item(), bn::affine_bg_items::tiles.palette_item(),
-                bg_map_ptr->map_item);
+                bn::affine_bg_tiles_items::tiles, bn::bg_palette_items::palette, bg_map_ptr->map_item);
     bn::affine_bg_ptr bg = bg_item.create_bg(0, 0);
     bn::affine_bg_map_ptr bg_map = bg.map();
 

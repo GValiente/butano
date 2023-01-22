@@ -2020,6 +2020,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_4_0 13.4.0 (next release)
+ *
+ * Input tiles in `dynamic_regular_bg` and `dynamic_affine_bg` examples are imported without using a map.
+ *
+ *
  * @section changelog_13_3_1 13.3.1
  *
  * bn::erase and bn::erase_if fixed.

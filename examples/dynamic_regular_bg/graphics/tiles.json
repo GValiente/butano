@@ -1,4 +1,4 @@
 {
-    "type": "regular_bg",
-	"flipped_tiles_reduction": false
+    "type": "regular_bg_tiles",
+	"bpp_mode": "bpp_4"
 }

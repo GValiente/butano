@@ -1197,6 +1197,8 @@
  * (`true` by default).
  * * `"flipped_tiles_reduction"`: optional field which specifies if flipped tiles must be reduced or not
  * (`true` by default).
+ * * `"palette_reduction"`: optional field which specifies if repeated 16 color palettes must be reduced or not
+ * (`true` by default).
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -2027,6 +2029,8 @@
  *
  * @section changelog_13_4_0 13.4.0 (next release)
  *
+ * * Repeated color palettes reduction can be disabled when importing a regular background.
+ *   See the @ref import_regular_bg import guide to learn how to disable it.
  * * Input tiles in `dynamic_regular_bg` and `dynamic_affine_bg` examples are imported without using a map.
  * * @ref faq page improved.
  *

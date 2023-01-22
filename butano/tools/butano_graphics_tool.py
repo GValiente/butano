@@ -578,6 +578,11 @@ class RegularBgItem:
             self.__flipped_tiles_reduction = True
 
         try:
+            self.__palette_reduction = bool(info['palette_reduction'])
+        except KeyError:
+            self.__palette_reduction = True
+
+        try:
             palette_item = str(info['palette_item'])
 
             if len(palette_item) == 0:
@@ -795,28 +800,26 @@ class RegularBgItem:
         else:
             command.append('-p!')
 
+        map_argument = '-mR'
+
+        if self.__repeated_tiles_reduction:
+            map_argument += 't'
+
+        if self.__flipped_tiles_reduction:
+            map_argument += 'f'
+
         if self.__bpp_8:
             command.append('-gB8')
-
-            if self.__repeated_tiles_reduction and self.__flipped_tiles_reduction:
-                command.append('-mRtf')
-            elif self.__repeated_tiles_reduction:
-                command.append('-mRt')
-            elif self.__flipped_tiles_reduction:
-                command.append('-mRf')
-            else:
-                command.append('-mR!')
         else:
             command.append('-gB4')
 
-            if self.__repeated_tiles_reduction and self.__flipped_tiles_reduction:
-                command.append('-mRtpf')
-            elif self.__repeated_tiles_reduction:
-                command.append('-mRtp')
-            elif self.__flipped_tiles_reduction:
-                command.append('-mRpf')
-            else:
-                command.append('-mRp')
+            if self.__palette_reduction:
+                map_argument += 'p'
+
+        if map_argument == '-mR':
+            map_argument += '!'
+
+        command.append(map_argument)
 
         if self.__sbb:
             command.append('-mLs')

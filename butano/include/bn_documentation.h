@@ -1622,7 +1622,7 @@
  * Sure!
  *
  * If you comply with <a href="https://github.com/GValiente/butano/blob/master/LICENSE">Butano license</a>
- * and <a href="https://github.com/GValiente/butano/tree/master/3rd_party_licenses">third party libraries licenses</a>
+ * and <a href="https://github.com/GValiente/butano/blob/master/licenses">third party libraries licenses</a>
  * used by Butano you can sell your game without issues.
  *
  *

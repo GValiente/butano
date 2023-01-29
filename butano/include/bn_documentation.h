@@ -1667,7 +1667,10 @@
  * It is not part of Butano (the library), so it is not included by default in new projects.
  *
  * As the content of the `common` folder could change in future Butano versions,
- * you should copy its content to your project if you want to use it.
+ * you should copy its content to your project if you want to use it:
+ * * Copy `common` `*.cpp` files to the `src` folder of your project.
+ * * Copy `common` `*.h` files to the `include` folder of your project.
+ * * Do the same with the rest of the files in the `common` folder (`*.bmp`, `*.json`, etc).
  *
  *
  * @subsection faq_error_after_update Why I get undefined reference errors after updating Butano?

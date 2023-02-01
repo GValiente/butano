@@ -15,9 +15,9 @@ namespace bn
 
 blending_fade_alpha_hbe_ptr blending_fade_alpha_hbe_ptr::create(const span<const blending_fade_alpha>& alphas_ref)
 {
-    BN_ASSERT(display_manager::blending_transparency_top_weight() == 1 &&
-              display_manager::blending_transparency_bottom_weight() == 0,
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(display_manager::blending_transparency_top_weight() == 1 &&
+                    display_manager::blending_transparency_bottom_weight() == 0,
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     int id = hblank_effects_manager::create(alphas_ref.data(), alphas_ref.size(), 0,
                                             hblank_effects_manager::handler_type::BLENDING_FADE_ALPHA);
@@ -27,9 +27,9 @@ blending_fade_alpha_hbe_ptr blending_fade_alpha_hbe_ptr::create(const span<const
 optional<blending_fade_alpha_hbe_ptr> blending_fade_alpha_hbe_ptr::create_optional(
         const span<const blending_fade_alpha>& alphas_ref)
 {
-    BN_ASSERT(display_manager::blending_transparency_top_weight() == 1 &&
-              display_manager::blending_transparency_bottom_weight() == 0,
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(display_manager::blending_transparency_top_weight() == 1 &&
+                    display_manager::blending_transparency_bottom_weight() == 0,
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     int id = hblank_effects_manager::create_optional(alphas_ref.data(), alphas_ref.size(), 0,
                                                      hblank_effects_manager::handler_type::BLENDING_FADE_ALPHA);

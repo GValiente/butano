@@ -117,11 +117,11 @@ public:
                    utf8_characters_ref.size(), " - ", minimum_graphics + utf8_characters_ref.size());
         BN_ASSERT(item.palette_item().bpp() == bpp_mode::BPP_4, "8BPP fonts not supported");
         BN_ASSERT(character_widths_ref.empty() ||
-                   character_widths_ref.size() == 1 + minimum_graphics + utf8_characters_ref.size(),
-                   "Invalid character widths count: ", character_widths_ref.size(), " - ",
-                   utf8_characters_ref.size(), " - ", minimum_graphics + utf8_characters_ref.size());
-        BN_ASSERT(_validate_character_widths(), "Character widths validation failed");
-        BN_ASSERT(_validate_space_between_characters(), "Space between characters validation failed");
+                  character_widths_ref.size() == 1 + minimum_graphics + utf8_characters_ref.size(),
+                  "Invalid character widths count: ", character_widths_ref.size(), " - ",
+                  utf8_characters_ref.size(), " - ", minimum_graphics + utf8_characters_ref.size());
+        BN_BASIC_ASSERT(_validate_character_widths(), "Character widths validation failed");
+        BN_BASIC_ASSERT(_validate_space_between_characters(), "Space between characters validation failed");
     }
 
     /**

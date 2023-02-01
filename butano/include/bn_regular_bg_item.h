@@ -80,7 +80,7 @@ public:
         _palette_item(palette_item),
         _map_item(map_item)
     {
-        BN_ASSERT(tiles_item.bpp() == palette_item.bpp(), "Tiles and palette BPP are different");
+        BN_BASIC_ASSERT(tiles_item.bpp() == palette_item.bpp(), "Tiles and palette BPP are different");
     }
 
     /**

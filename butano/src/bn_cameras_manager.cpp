@@ -66,7 +66,7 @@ int available_items_count()
 
 int create(const fixed_point& position)
 {
-    BN_ASSERT(data.free_item_indexes_size, "No more cameras available");
+    BN_BASIC_ASSERT(data.free_item_indexes_size, "No more cameras available");
 
     --data.free_item_indexes_size;
 

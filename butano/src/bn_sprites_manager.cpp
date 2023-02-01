@@ -176,7 +176,7 @@ namespace
             }
 
             int visible_items_count = _rebuild_handles_impl(reserved_count, handles, data.sorter.layers());
-            BN_ASSERT(visible_items_count >= 0, "Too much on screen sprites");
+            BN_BASIC_ASSERT(visible_items_count >= 0, "Too much on screen sprites");
 
             int last_visible_items_count = data.last_visible_items_count;
             data.rebuild_handles = false;
@@ -257,7 +257,7 @@ int available_items_count()
 id_type create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
                sprite_palette_ptr&& palette)
 {
-    BN_ASSERT(! data.items_pool.full(), "No more sprite items available");
+    BN_BASIC_ASSERT(! data.items_pool.full(), "No more sprite items available");
 
     item_type& new_item = data.items_pool.create(position, shape_size, move(tiles), move(palette));
     data.sorter.insert(new_item);
@@ -283,7 +283,7 @@ id_type create_optional(const fixed_point& position, const sprite_shape_size& sh
 
 id_type create(sprite_builder&& builder)
 {
-    BN_ASSERT(! data.items_pool.full(), "No more sprite items available");
+    BN_BASIC_ASSERT(! data.items_pool.full(), "No more sprite items available");
 
     item_type& new_item = data.items_pool.create(move(builder));
     data.sorter.insert(new_item);
@@ -500,7 +500,8 @@ void set_palette(id_type id, [[maybe_unused]] bpp_mode old_bpp, const sprite_pal
 
     if(palette != item->palette)
     {
-        BN_ASSERT(old_bpp == palette.bpp(), "Palette BPP mode mismatch: ", int(old_bpp), " - ", int(palette.bpp()));
+        BN_BASIC_ASSERT(old_bpp == palette.bpp(),
+                        "Palette BPP mode mismatch: ", int(old_bpp), " - ", int(palette.bpp()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = palette;
@@ -514,7 +515,8 @@ void set_palette(id_type id, [[maybe_unused]] bpp_mode old_bpp, sprite_palette_p
 
     if(palette != item->palette)
     {
-        BN_ASSERT(old_bpp == palette.bpp(), "Palette BPP mode mismatch: ", int(old_bpp), " - ", int(palette.bpp()));
+        BN_BASIC_ASSERT(old_bpp == palette.bpp(),
+                        "Palette BPP mode mismatch: ", int(old_bpp), " - ", int(palette.bpp()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = move(palette);
@@ -814,8 +816,8 @@ void set_blending_enabled(id_type id, bool blending_enabled)
     if(blending_enabled != item->blending_enabled)
     {
         hw::sprites::handle_type& handle = item->handle;
-        BN_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
-                  "Blending and window can't be enabled at the same time");
+        BN_BASIC_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
+                        "Blending and window can't be enabled at the same time");
 
         hw::sprites::set_blending_enabled(blending_enabled, display_manager::blending_fade_enabled(), handle);
         item->blending_enabled = blending_enabled;
@@ -836,8 +838,8 @@ void set_window_enabled(id_type id, bool window_enabled)
 
     if(window_enabled != hw::sprites::window_enabled(handle))
     {
-        BN_ASSERT(! window_enabled || ! item->blending_enabled,
-                  "Blending and window can't be enabled at the same time");
+        BN_BASIC_ASSERT(! window_enabled || ! item->blending_enabled,
+                        "Blending and window can't be enabled at the same time");
 
         hw::sprites::set_window_enabled(window_enabled, handle);
         _update_indexes_to_commit(*item);
@@ -1036,7 +1038,7 @@ void set_first_attributes(id_type id, const sprite_first_attributes& first_attri
 sprite_regular_second_attributes regular_second_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    BN_ASSERT(! item->affine_mat, "Item is not regular");
+    BN_BASIC_ASSERT(! item->affine_mat, "Item is not regular");
 
     const hw::sprites::handle_type& handle = item->handle;
     return sprite_regular_second_attributes(item->position.x(), hw::sprites::horizontal_flip(handle),
@@ -1046,7 +1048,7 @@ sprite_regular_second_attributes regular_second_attributes(id_type id)
 void set_regular_second_attributes(id_type id, const sprite_regular_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    BN_ASSERT(! item->affine_mat, "Item is not regular");
+    BN_BASIC_ASSERT(! item->affine_mat, "Item is not regular");
 
     set_x(id, second_attributes.x());
     set_horizontal_flip(id, second_attributes.horizontal_flip());
@@ -1056,7 +1058,7 @@ void set_regular_second_attributes(id_type id, const sprite_regular_second_attri
 sprite_affine_second_attributes affine_second_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    BN_ASSERT(item->affine_mat, "Item is not affine");
+    BN_BASIC_ASSERT(item->affine_mat, "Item is not affine");
 
     return sprite_affine_second_attributes(item->position.x(), *item->affine_mat);
 }
@@ -1064,7 +1066,7 @@ sprite_affine_second_attributes affine_second_attributes(id_type id)
 void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes)
 {
     auto item = static_cast<item_type*>(id);
-    BN_ASSERT(item->affine_mat, "Item is not affine");
+    BN_BASIC_ASSERT(item->affine_mat, "Item is not affine");
 
     set_x(id, second_attributes.x());
     set_affine_mat(id, second_attributes.affine_mat());

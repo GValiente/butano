@@ -22,8 +22,8 @@ void set_transparency_alpha(fixed transparency_alpha)
 {
     BN_ASSERT(transparency_alpha >= 0 && transparency_alpha <= 1,
               "Invalid transparency alpha: ", transparency_alpha);
-    BN_ASSERT(transparency_alpha == 1 || ! display_manager::blending_fade_enabled(),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(transparency_alpha == 1 || ! display_manager::blending_fade_enabled(),
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     display_manager::set_blending_transparency_alpha(transparency_alpha);
 }
@@ -37,8 +37,8 @@ void set_intensity_alpha(fixed intensity_alpha)
 {
     BN_ASSERT(intensity_alpha >= 0 && intensity_alpha <= 1,
               "Invalid intensity alpha: ", intensity_alpha);
-    BN_ASSERT(intensity_alpha == 0 || ! display_manager::blending_fade_enabled(),
-              "Intensity and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(intensity_alpha == 0 || ! display_manager::blending_fade_enabled(),
+                    "Intensity and fade blendings can't be enabled at the same time");
 
     display_manager::set_blending_intensity_alpha(intensity_alpha);
 }
@@ -52,8 +52,8 @@ void set_transparency_top_weight(fixed transparency_top_weight)
 {
     BN_ASSERT(transparency_top_weight >= 0 && transparency_top_weight <= 1,
               "Invalid transparency top weight: ", transparency_top_weight);
-    BN_ASSERT(transparency_top_weight == 1 || ! display_manager::blending_fade_enabled(),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(transparency_top_weight == 1 || ! display_manager::blending_fade_enabled(),
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     display_manager::set_blending_transparency_top_weight(transparency_top_weight);
 }
@@ -67,8 +67,8 @@ void set_transparency_bottom_weight(fixed transparency_bottom_weight)
 {
     BN_ASSERT(transparency_bottom_weight >= 0 && transparency_bottom_weight <= 1,
               "Invalid transparency bottom weight: ", transparency_bottom_weight);
-    BN_ASSERT(transparency_bottom_weight == 0 || ! display_manager::blending_fade_enabled(),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(transparency_bottom_weight == 0 || ! display_manager::blending_fade_enabled(),
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     display_manager::set_blending_transparency_bottom_weight(transparency_bottom_weight);
 }
@@ -79,9 +79,9 @@ void set_transparency_weights(fixed transparency_top_weight, fixed transparency_
               "Invalid transparency top weight: ", transparency_top_weight);
     BN_ASSERT(transparency_bottom_weight >= 0 && transparency_bottom_weight <= 1,
               "Invalid transparency bottom weight: ", transparency_bottom_weight);
-    BN_ASSERT(! display_manager::blending_fade_enabled() ||
-              (transparency_top_weight == 1 && transparency_bottom_weight == 0),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(! display_manager::blending_fade_enabled() ||
+                    (transparency_top_weight == 1 && transparency_bottom_weight == 0),
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     display_manager::set_blending_transparency_weights(transparency_top_weight, transparency_bottom_weight);
 }
@@ -96,8 +96,8 @@ void set_transparency_attributes(const blending_transparency_attributes& transpa
 {
     fixed top_weight = transparency_attributes.transparency_top_weight();
     fixed bottom_weight = transparency_attributes.transparency_bottom_weight();
-    BN_ASSERT((top_weight == 1 && bottom_weight == 0) || ! display_manager::blending_fade_enabled(),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT((top_weight == 1 && bottom_weight == 0) || ! display_manager::blending_fade_enabled(),
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     display_manager::set_blending_transparency_weights(top_weight, bottom_weight);
 }
@@ -123,20 +123,20 @@ void set_fade_alpha(fixed fade_alpha)
 
     display_manager::set_blending_fade_alpha(fade_alpha);
 
-    BN_ASSERT(! display_manager::blending_fade_enabled() ||
-              (display_manager::blending_transparency_top_weight() == 1 &&
-               display_manager::blending_transparency_bottom_weight() == 0),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(! display_manager::blending_fade_enabled() ||
+                    (display_manager::blending_transparency_top_weight() == 1 &&
+                    display_manager::blending_transparency_bottom_weight() == 0),
+                    "Transparency and fade blendings can't be enabled at the same time");
 }
 
 void set_fade_alpha(blending_fade_alpha fade_alpha)
 {
     display_manager::set_blending_fade_alpha(fade_alpha.value());
 
-    BN_ASSERT(! display_manager::blending_fade_enabled() ||
-              (display_manager::blending_transparency_top_weight() == 1 &&
-               display_manager::blending_transparency_bottom_weight() == 0),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(! display_manager::blending_fade_enabled() ||
+                    (display_manager::blending_transparency_top_weight() == 1 &&
+                    display_manager::blending_transparency_bottom_weight() == 0),
+                    "Transparency and fade blendings can't be enabled at the same time");
 }
 
 }

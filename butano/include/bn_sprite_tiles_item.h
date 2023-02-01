@@ -178,8 +178,8 @@ public:
      */
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref() const
     {
-        BN_ASSERT(compression() == compression_type::NONE || _graphics_count == 1,
-                  "Compressed tiles with multiple graphics not supported");
+        BN_BASIC_ASSERT(compression() == compression_type::NONE || _graphics_count == 1,
+                        "Compressed tiles with multiple graphics not supported");
 
         return span<const tile>(_tiles_ref.data(), _tiles_count_per_graphic);
     }
@@ -189,8 +189,8 @@ public:
      */
     [[nodiscard]] constexpr span<const tile> graphics_tiles_ref(int graphics_index) const
     {
-        BN_ASSERT(compression() == compression_type::NONE || _graphics_count == 1,
-                  "Compressed tiles with multiple graphics not supported");
+        BN_BASIC_ASSERT(compression() == compression_type::NONE || _graphics_count == 1,
+                        "Compressed tiles with multiple graphics not supported");
         BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
         BN_ASSERT(graphics_index < _graphics_count,
                   "Invalid graphics index: ", graphics_index, " - ", _graphics_count);

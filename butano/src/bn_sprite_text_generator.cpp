@@ -63,7 +63,7 @@ namespace
         constexpr sprite_shape_size shape_size(sprite_shape::WIDE, size);
         constexpr int tiles_count = (shape_size.width() / 8) * (shape_size.height() / 8);
 
-        BN_ASSERT(! output_sprites.full(), "output_sprites vector is full,\ncan't hold more sprites");
+        BN_BASIC_ASSERT(! output_sprites.full(), "output_sprites vector is full,\ncan't hold more sprites");
 
         sprite_tiles_ptr tiles_ptr = sprite_tiles_ptr::allocate(tiles_count, bpp_mode::BPP_4);
         optional<span<tile>> tiles_vram = tiles_ptr.vram();
@@ -285,7 +285,7 @@ namespace
             }
             else
             {
-                BN_ASSERT(! _output_sprites.full(), "output_sprites vector is full,\ncan't hold more sprites");
+                BN_BASIC_ASSERT(! _output_sprites.full(), "output_sprites vector is full,\ncan't hold more sprites");
             }
 
             const sprite_item& item = _generator.font().item();
@@ -384,7 +384,7 @@ namespace
                 }
                 else
                 {
-                    BN_ASSERT(! _output_sprites.full(), "output_sprites vector is full,\ncan't hold more sprites");
+                    BN_BASIC_ASSERT(! _output_sprites.full(), "output_sprites vector is full,\ncan't hold more sprites");
                 }
 
                 const sprite_item& item = _generator.font().item();

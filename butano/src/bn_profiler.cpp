@@ -32,8 +32,8 @@
 
         void start(const char* id, unsigned id_hash)
         {
-            BN_ASSERT(id, "Id is null");
-            BN_ASSERT(! data.current_id, "There's already an active id: ", data.current_id);
+            BN_BASIC_ASSERT(id, "Id is null");
+            BN_BASIC_ASSERT(! data.current_id, "There's already an active id: ", data.current_id);
 
             data.current_id = id;
             data.current_id_hash = id_hash;
@@ -42,7 +42,7 @@
 
         void stop()
         {
-            BN_ASSERT(data.current_id, "There's no active id");
+            BN_BASIC_ASSERT(data.current_id, "There's no active id");
 
             int timer_ticks = data.current_timer->elapsed_ticks();
             auto timer_ticks_64 = int64_t(timer_ticks);
@@ -54,14 +54,14 @@
 
         const ticks_map& ticks_per_entry()
         {
-            BN_ASSERT(! data.current_id, "There's an active id: ", data.current_id);
+            BN_BASIC_ASSERT(! data.current_id, "There's an active id: ", data.current_id);
 
             return data.ticks_per_entry;
         }
 
         void reset()
         {
-            BN_ASSERT(! data.current_id, "There's an active id: ", data.current_id);
+            BN_BASIC_ASSERT(! data.current_id, "There's an active id: ", data.current_id);
 
             data.ticks_per_entry.clear();
         }

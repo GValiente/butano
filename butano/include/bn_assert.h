@@ -8,7 +8,7 @@
 
 /**
  * @file
- * BN_ASSERT and BN_ERROR header file.
+ * BN_ASSERT, BN_BASIC_ASSERT and BN_ERROR header file.
  *
  * @ingroup assert
  */
@@ -31,6 +31,39 @@
  *
  * @code{.cpp}
  * BN_ASSERT(integer > 0, "Invalid integer: ", integer);
+ * @endcode
+ *
+ * Custom parameter types are supported by overloading bn::ostringstream::operator<<.
+ *
+ * Example:
+ *
+ * @code{.cpp}
+ * bn::ostringstream& operator<<(bn::ostringstream& stream, const custom_type& custom_value)
+ * {
+ *     stream.append("custom_type: ");
+ *     stream.append(custom_value.data);
+ *     return stream;
+ * }
+ * @endcode
+ *
+ * Note that it can be used in constexpr contexts (is_constant_evaluated() returns `true`).
+ *
+ * @ingroup assert
+ */
+
+/**
+ * @def BN_BASIC_ASSERT(condition, ...)
+ *
+ * Checks if the specified \a condition is true.
+ *
+ * If it doesn't, the execution is stopped and basic diagnostic information is shown on the screen.
+ *
+ * More information can be shown by passing it by argument.
+ *
+ * Example:
+ *
+ * @code{.cpp}
+ * BN_BASIC_ASSERT(integer > 0, "Invalid integer: ", integer);
  * @endcode
  *
  * Custom parameter types are supported by overloading bn::ostringstream::operator<<.
@@ -123,6 +156,28 @@
                         } \
                     } \
                 } while(false)
+        #endif
+    #endif
+
+    #ifndef BN_BASIC_ASSERT
+        #if BN_CFG_ASSERT_SHOW_DIAGNOSTIC
+            #define BN_BASIC_ASSERT(condition, ...) \
+                do \
+                { \
+                    if(bn::is_constant_evaluated()) \
+                    { \
+                        assert(condition); \
+                    } \
+                    else \
+                    { \
+                        if(! (condition)) [[unlikely]] \
+                        { \
+                            _bn::assert::show_args("", __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                        } \
+                    } \
+                } while(false)
+        #else
+            #define BN_BASIC_ASSERT BN_ASSERT
         #endif
     #endif
 
@@ -230,6 +285,10 @@
                     } \
                 } \
             } while(false)
+    #endif
+
+    #ifndef BN_BASIC_ASSERT
+        #define BN_BASIC_ASSERT BN_ASSERT
     #endif
 
     #ifndef BN_ERROR

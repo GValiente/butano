@@ -526,11 +526,11 @@ int available_count()
 
 id_type create(regular_bg_builder&& builder)
 {
-    BN_ASSERT(! data.items_vector.full(), "No more BG items available");
+    BN_BASIC_ASSERT(! data.items_vector.full(), "No more BG items available");
 
     regular_bg_map_ptr map = builder.release_map();
     item_type& item = data.items_pool.create(move(builder), move(map));
-    BN_ASSERT(_check_unique_regular_big_map(item), "Two or more regular BGs have the same big map");
+    BN_BASIC_ASSERT(_check_unique_regular_big_map(item), "Two or more regular BGs have the same big map");
 
     _insert_item(item);
     return &item;
@@ -538,11 +538,11 @@ id_type create(regular_bg_builder&& builder)
 
 id_type create(affine_bg_builder&& builder)
 {
-    BN_ASSERT(! data.items_vector.full(), "No more BG items available");
+    BN_BASIC_ASSERT(! data.items_vector.full(), "No more BG items available");
 
     affine_bg_map_ptr map = builder.release_map();
     item_type& item = data.items_pool.create(move(builder), move(map));
-    BN_ASSERT(_check_unique_affine_big_map(item), "Two or more affine BGs have the same big map");
+    BN_BASIC_ASSERT(_check_unique_affine_big_map(item), "Two or more affine BGs have the same big map");
 
     _insert_item(item);
     return &item;
@@ -564,7 +564,7 @@ id_type create_optional(regular_bg_builder&& builder)
     }
 
     item_type& item = data.items_pool.create(move(builder), move(*map_ptr));
-    BN_ASSERT(_check_unique_regular_big_map(item), "Two or more regular BGs have the same big map");
+    BN_BASIC_ASSERT(_check_unique_regular_big_map(item), "Two or more regular BGs have the same big map");
 
     _insert_item(item);
     return &item;
@@ -586,7 +586,7 @@ id_type create_optional(affine_bg_builder&& builder)
     }
 
     item_type& item = data.items_pool.create(move(builder), move(*map_ptr));
-    BN_ASSERT(_check_unique_affine_big_map(item), "Two or more affine BGs have the same big map");
+    BN_BASIC_ASSERT(_check_unique_affine_big_map(item), "Two or more affine BGs have the same big map");
 
     _insert_item(item);
     return &item;
@@ -653,7 +653,7 @@ void set_regular_map(id_type id, const regular_bg_map_ptr& map)
     {
         item->regular_map = map;
         item->update_regular_map();
-        BN_ASSERT(_check_unique_regular_big_map(*item), "Two or more regular BGs have the same big map");
+        BN_BASIC_ASSERT(_check_unique_regular_big_map(*item), "Two or more regular BGs have the same big map");
 
         _update_item_hw_cnt(*item);
         _update_item_hw_regular_offset(*item);
@@ -669,7 +669,7 @@ void set_affine_map(id_type id, const affine_bg_map_ptr& map)
         item->affine_map = map;
 
         bool affine_mat_attributes_updated = item->update_affine_map(false);
-        BN_ASSERT(_check_unique_affine_big_map(*item), "Two or more affine BGs have the same big map");
+        BN_BASIC_ASSERT(_check_unique_affine_big_map(*item), "Two or more affine BGs have the same big map");
 
         _update_item_hw_cnt(*item);
 
@@ -688,7 +688,7 @@ void set_regular_map(id_type id, regular_bg_map_ptr&& map)
     {
         item->regular_map = move(map);
         item->update_regular_map();
-        BN_ASSERT(_check_unique_regular_big_map(*item), "Two or more regular BGs have the same big map");
+        BN_BASIC_ASSERT(_check_unique_regular_big_map(*item), "Two or more regular BGs have the same big map");
 
         _update_item_hw_cnt(*item);
         _update_item_hw_regular_offset(*item);
@@ -704,7 +704,7 @@ void set_affine_map(id_type id, affine_bg_map_ptr&& map)
         item->affine_map = move(map);
 
         bool affine_mat_attributes_updated = item->update_affine_map(false);
-        BN_ASSERT(_check_unique_affine_big_map(*item), "Two or more affine BGs have the same big map");
+        BN_BASIC_ASSERT(_check_unique_affine_big_map(*item), "Two or more affine BGs have the same big map");
 
         _update_item_hw_cnt(*item);
 
@@ -1594,7 +1594,7 @@ void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attribut
     {
         const regular_bg_attributes& attributes = attributes_ptr[index];
         const regular_bg_map_ptr& attributes_map = attributes.map();
-        BN_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
+        BN_BASIC_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
 
         uint16_t dest_hw_cnt = hw_cnt;
         hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_hw_cnt);
@@ -1616,7 +1616,7 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
     {
         const affine_bg_attributes& attributes = attributes_ptr[index];
         const affine_bg_map_ptr& attributes_map = attributes.map();
-        BN_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
+        BN_BASIC_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
 
         uint16_t dest_hw_cnt = hw_cnt;
         hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_hw_cnt);
@@ -1644,7 +1644,7 @@ void rebuild_handles()
             }
         }
 
-        BN_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
+        BN_BASIC_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
 
         int regular_id;
         int affine_id;
@@ -1685,7 +1685,7 @@ void rebuild_handles()
                 }
                 else
                 {
-                    BN_ASSERT(regular_id >= 0, "Too much regular BGs on screen");
+                    BN_BASIC_ASSERT(regular_id >= 0, "Too much regular BGs on screen");
 
                     id = regular_id;
                     --regular_id;

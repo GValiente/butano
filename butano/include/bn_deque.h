@@ -664,7 +664,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BN_ASSERT(_size, "Deque is empty");
+        BN_BASIC_ASSERT(_size, "Deque is empty");
 
         return _data[_begin];
     }
@@ -674,7 +674,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BN_ASSERT(_size, "Deque is empty");
+        BN_BASIC_ASSERT(_size, "Deque is empty");
 
         return _data[_begin];
     }
@@ -684,7 +684,7 @@ public:
      */
     [[nodiscard]] const_reference back() const
     {
-        BN_ASSERT(_size, "Deque is empty");
+        BN_BASIC_ASSERT(_size, "Deque is empty");
 
         return _value(_size - 1);
     }
@@ -694,7 +694,7 @@ public:
      */
     [[nodiscard]] reference back()
     {
-        BN_ASSERT(_size, "Deque is empty");
+        BN_BASIC_ASSERT(_size, "Deque is empty");
 
         return _value(_size - 1);
     }
@@ -705,7 +705,7 @@ public:
      */
     void push_front(const_reference value)
     {
-        BN_ASSERT(! full(), "Deque is full");
+        BN_BASIC_ASSERT(! full(), "Deque is full");
 
         _push_front();
         ::new(_data + _begin) value_type(value);
@@ -717,7 +717,7 @@ public:
      */
     void push_front(value_type&& value)
     {
-        BN_ASSERT(! full(), "Deque is full");
+        BN_BASIC_ASSERT(! full(), "Deque is full");
 
         _push_front();
         ::new(_data + _begin) value_type(move(value));
@@ -731,7 +731,7 @@ public:
     template<typename... Args>
     reference emplace_front(Args&&... args)
     {
-        BN_ASSERT(! full(), "Deque is full");
+        BN_BASIC_ASSERT(! full(), "Deque is full");
 
         _push_front();
 
@@ -746,7 +746,7 @@ public:
      */
     void push_back(const_reference value)
     {
-        BN_ASSERT(! full(), "Deque is full");
+        BN_BASIC_ASSERT(! full(), "Deque is full");
 
         ::new(_data + _real_index(_size)) value_type(value);
         ++_size;
@@ -758,7 +758,7 @@ public:
      */
     void push_back(value_type&& value)
     {
-        BN_ASSERT(! full(), "Deque is full");
+        BN_BASIC_ASSERT(! full(), "Deque is full");
 
         ::new(_data + _real_index(_size)) value_type(move(value));
         ++_size;
@@ -772,7 +772,7 @@ public:
     template<typename... Args>
     reference emplace_back(Args&&... args)
     {
-        BN_ASSERT(! full(), "Deque is full");
+        BN_BASIC_ASSERT(! full(), "Deque is full");
 
         Type* result = _data + _real_index(_size);
         ::new(result) value_type(forward<Args>(args)...);
@@ -785,7 +785,7 @@ public:
      */
     void pop_front()
     {
-        BN_ASSERT(_size, "Deque is empty");
+        BN_BASIC_ASSERT(_size, "Deque is empty");
 
         _pop_front();
     }
@@ -795,7 +795,7 @@ public:
      */
     void pop_back()
     {
-        BN_ASSERT(_size, "Deque is empty");
+        BN_BASIC_ASSERT(_size, "Deque is empty");
 
         --_size;
         _value(_size).~value_type();
@@ -819,7 +819,7 @@ public:
         else
         {
             BN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-            BN_ASSERT(! full(), "Deque is full");
+            BN_BASIC_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
             size_type last = _size;
@@ -856,7 +856,7 @@ public:
         else
         {
             BN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-            BN_ASSERT(! full(), "Deque is full");
+            BN_BASIC_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
             size_type last = _size;
@@ -894,7 +894,7 @@ public:
         else
         {
             BN_ASSERT(index > 0 && index <= _size, "Invalid position: ", index, " - ", _size);
-            BN_ASSERT(! full(), "Deque is full");
+            BN_BASIC_ASSERT(! full(), "Deque is full");
 
             pointer data = _data;
             size_type last = _size;

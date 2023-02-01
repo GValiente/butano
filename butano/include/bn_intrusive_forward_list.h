@@ -338,7 +338,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<const_reference>(*_first_node.next);
     }
@@ -348,7 +348,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<reference>(_first_node.next)->value;
     }
@@ -367,7 +367,7 @@ public:
      */
     void pop_front()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         _erase_after(before_begin());
     }
@@ -404,7 +404,7 @@ public:
      */
     iterator erase_after(const_iterator position)
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         iterator non_const_position = _mutable_iterator(position);
         _erase_after(non_const_position);
@@ -419,7 +419,7 @@ public:
      */
     iterator erase_after(reference value)
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         iterator position(&value);
         _erase_after(position);
@@ -445,7 +445,7 @@ public:
 
         while(erase_it != erase_last)
         {
-            BN_ASSERT(! empty(), "List is empty");
+            BN_BASIC_ASSERT(! empty(), "List is empty");
 
             _erase_after(erase_it);
             ++erase_it;

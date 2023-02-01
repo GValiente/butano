@@ -95,7 +95,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference front() const
     {
-        BN_ASSERT(! empty(), "String view is empty");
+        BN_BASIC_ASSERT(! empty(), "String view is empty");
 
         return *_begin;
     }
@@ -105,7 +105,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference back() const
     {
-        BN_ASSERT(! empty(), "String view is empty");
+        BN_BASIC_ASSERT(! empty(), "String view is empty");
 
         return *(_end - 1);
     }

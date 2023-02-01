@@ -148,7 +148,7 @@ public:
     [[nodiscard]] Type& create(Args&&... args)
     {
         auto result = reinterpret_cast<Type*>(alloc(sizeof(Type)));
-        BN_ASSERT(result, "Allocation failed");
+        BN_BASIC_ASSERT(result, "Allocation failed");
 
         ::new(result) Type(forward<Args>(args)...);
         return *result;

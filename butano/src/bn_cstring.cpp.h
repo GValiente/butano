@@ -14,7 +14,7 @@ namespace bn
 void memcpy(void* destination, const void* source, int bytes)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
-    BN_ASSERT(destination, "Destination is null");
+    BN_BASIC_ASSERT(destination, "Destination is null");
     BN_ASSERT(source, "Source is null");
 
     hw::memory::copy_bytes(source, bytes, destination);
@@ -23,7 +23,7 @@ void memcpy(void* destination, const void* source, int bytes)
 void memset(void* destination, uint8_t value, int bytes)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
-    BN_ASSERT(destination, "Destination is null");
+    BN_BASIC_ASSERT(destination, "Destination is null");
 
     hw::memory::set_bytes(value, bytes, destination);
 }
@@ -31,7 +31,7 @@ void memset(void* destination, uint8_t value, int bytes)
 void memclear(void* destination, int bytes)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
-    BN_ASSERT(destination, "Destination is null");
+    BN_BASIC_ASSERT(destination, "Destination is null");
 
     hw::memory::set_bytes(0, bytes, destination);
 }

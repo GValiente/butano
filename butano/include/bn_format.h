@@ -31,7 +31,7 @@ namespace _bn
 
             if(character == '{') [[unlikely]]
             {
-                BN_ASSERT(format_begin != format_end, "Format contains a single '{' character");
+                BN_BASIC_ASSERT(format_begin != format_end, "Format contains a single '{' character");
 
                 char next_character = *format_begin;
                 ++format_begin;
@@ -42,7 +42,7 @@ namespace _bn
                 }
                 else
                 {
-                    BN_ASSERT(next_character == '}', "Format contains a single '{' character");
+                    BN_BASIC_ASSERT(next_character == '}', "Format contains a single '{' character");
 
                     stream << value;
                     format(stream, format_begin, format_end);
@@ -51,8 +51,8 @@ namespace _bn
             }
             else if(character == '}') [[unlikely]]
             {
-                BN_ASSERT(format_begin != format_end, "Format contains a single '}' character");
-                BN_ASSERT(*format_begin == '}', "Format contains a single '}' character");
+                BN_BASIC_ASSERT(format_begin != format_end, "Format contains a single '}' character");
+                BN_BASIC_ASSERT(*format_begin == '}', "Format contains a single '}' character");
 
                 ++format_begin;
                 stream.append('}');
@@ -75,7 +75,7 @@ namespace _bn
 
             if(character == '{') [[unlikely]]
             {
-                BN_ASSERT(format_begin != format_end, "Format contains a single '{' character");
+                BN_BASIC_ASSERT(format_begin != format_end, "Format contains a single '{' character");
 
                 char next_character = *format_begin;
                 ++format_begin;
@@ -86,7 +86,7 @@ namespace _bn
                 }
                 else
                 {
-                    BN_ASSERT(next_character == '}', "Format contains a single '{' character");
+                    BN_BASIC_ASSERT(next_character == '}', "Format contains a single '{' character");
 
                     stream << value;
                     format(stream, format_begin, format_end, args...);
@@ -95,8 +95,8 @@ namespace _bn
             }
             else if(character == '}') [[unlikely]]
             {
-                BN_ASSERT(format_begin != format_end, "Format contains a single '}' character");
-                BN_ASSERT(*format_begin == '}', "Format contains a single '}' character");
+                BN_BASIC_ASSERT(format_begin != format_end, "Format contains a single '}' character");
+                BN_BASIC_ASSERT(*format_begin == '}', "Format contains a single '}' character");
 
                 ++format_begin;
                 stream.append('}');

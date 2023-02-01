@@ -20,7 +20,7 @@ ostringstream::ostringstream(istring_base& string) :
 
 istring* ostringstream::rdbuf(istring_base* sb)
 {
-    BN_ASSERT(sb, "Sb is null");
+    BN_BASIC_ASSERT(sb, "Sb is null");
 
     _string = static_cast<istring*>(sb);
     return _string;
@@ -33,7 +33,7 @@ void ostringstream::set_rdbuf(istring_base& sb)
 
 int ostringstream::precision(int new_precision)
 {
-    BN_ASSERT(new_precision >= 0, "Invalid precision: ", new_precision);
+    BN_ASSERT(new_precision >= 0, "Invalid new precision: ", new_precision);
 
     _precision = new_precision;
     return new_precision;

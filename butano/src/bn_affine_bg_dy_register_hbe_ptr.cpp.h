@@ -68,7 +68,7 @@ optional<affine_bg_dy_register_hbe_ptr> affine_bg_dy_register_hbe_ptr::create_op
 
 span<const affine_bg_mat_attributes> affine_bg_dy_register_hbe_ptr::attributes_ref() const
 {
-    BN_ASSERT(_from_attributes, "Built from values");
+    BN_BASIC_ASSERT(_from_attributes, "Built from values");
 
     auto attributes_ptr = reinterpret_cast<const affine_bg_mat_attributes*>(hblank_effects_manager::values_ref(id()));
     return span<const affine_bg_mat_attributes>(attributes_ptr, display::height());
@@ -76,7 +76,7 @@ span<const affine_bg_mat_attributes> affine_bg_dy_register_hbe_ptr::attributes_r
 
 span<const int> affine_bg_dy_register_hbe_ptr::values_ref() const
 {
-    BN_ASSERT(! _from_attributes, "Built from attributes");
+    BN_BASIC_ASSERT(! _from_attributes, "Built from attributes");
 
     auto values_ptr = reinterpret_cast<const int*>(hblank_effects_manager::values_ref(id()));
     return span<const int>(values_ptr, display::height());
@@ -84,14 +84,14 @@ span<const int> affine_bg_dy_register_hbe_ptr::values_ref() const
 
 void affine_bg_dy_register_hbe_ptr::set_attributes_ref(const span<const affine_bg_mat_attributes>& attributes_ref)
 {
-    BN_ASSERT(_from_attributes, "Built from values");
+    BN_BASIC_ASSERT(_from_attributes, "Built from values");
 
     hblank_effects_manager::set_values_ref(id(), attributes_ref.data(), attributes_ref.size());
 }
 
 void affine_bg_dy_register_hbe_ptr::set_values_ref(const span<const int>& values_ref)
 {
-    BN_ASSERT(! _from_attributes, "Built from attributes");
+    BN_BASIC_ASSERT(! _from_attributes, "Built from attributes");
 
     hblank_effects_manager::set_values_ref(id(), values_ref.data(), values_ref.size());
 }

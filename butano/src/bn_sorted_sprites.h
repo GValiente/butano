@@ -66,14 +66,14 @@ namespace bn::sorted_sprites
 
             if(layers_it == layers_end)
             {
-                BN_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
+                BN_BASIC_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
 
                 layer& pool_layer = _layer_pool.create(item_sort_key);
                 layers_it = layer_ptrs.insert(layers_end, pool_layer);
             }
             else if(item_sort_key != layers_it->layer_sort_key())
             {
-                BN_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
+                BN_BASIC_ASSERT(! _layer_pool.full(), "No more sprite sort layers available");
 
                 layer& pool_layer = _layer_pool.create(item_sort_key);
                 layers_it = layer_ptrs.insert(layers_it, pool_layer);

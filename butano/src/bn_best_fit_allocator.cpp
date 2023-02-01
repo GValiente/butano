@@ -37,7 +37,7 @@ namespace
 
 best_fit_allocator::~best_fit_allocator() noexcept
 {
-    BN_ASSERT(empty(), "Allocator is not empty");
+    BN_BASIC_ASSERT(empty(), "Allocator is not empty");
 }
 
 void* best_fit_allocator::alloc(size_type bytes)
@@ -297,11 +297,11 @@ void best_fit_allocator::free(void* ptr)
 void best_fit_allocator::reset(void* start, size_type bytes)
 {
     BN_ASSERT(bytes >= 0 && bytes % size_type(sizeof(int)) == 0, "Invalid bytes: ", bytes);
-    BN_ASSERT(empty(), "Allocator is not empty");
+    BN_BASIC_ASSERT(empty(), "Allocator is not empty");
 
     if(bytes >= _sizeof_free_item)
     {
-        BN_ASSERT(start, "Start is null");
+        BN_BASIC_ASSERT(start, "Start is null");
         BN_ASSERT(aligned<alignment_bytes>(start), "Start is not aligned");
 
         auto first_item = reinterpret_cast<item_type*>(start);

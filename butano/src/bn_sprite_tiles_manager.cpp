@@ -465,12 +465,13 @@ namespace
             int id = items_map_iterator->second;
             item_type& item = data.items.item(id);
 
-            BN_ASSERT(tiles_data == item.data, "Tiles data does not match item tiles data: ",
-                      tiles_data, " - ", item.data);
-            BN_ASSERT(compression == item.compression(), "Tiles compression does not match item tiles compression: ",
-                      int(compression), " - ", int(item.compression()));
-            BN_ASSERT(tiles_count == item.tiles_count, "Tiles count does not match item tiles count: ",
-                      tiles_count, " - ", item.tiles_count);
+            BN_BASIC_ASSERT(tiles_data == item.data,
+                            "Tiles data does not match item tiles data: ", tiles_data, " - ", item.data);
+            BN_BASIC_ASSERT(compression == item.compression(),
+                            "Tiles compression does not match item tiles compression: ",
+                            int(compression), " - ", int(item.compression()));
+            BN_BASIC_ASSERT(tiles_count == item.tiles_count,
+                            "Tiles count does not match item tiles count: ", tiles_count, " - ", item.tiles_count);
 
             switch(item.status())
             {
@@ -562,7 +563,7 @@ namespace
 
         if(new_item_tiles_count)
         {
-            BN_ASSERT(! data.items.full(), "No more sprite tiles items available");
+            BN_BASIC_ASSERT(! data.items.full(), "No more sprite tiles items available");
 
             item_type new_item;
             new_item.start_tile = item.start_tile + item.tiles_count;
@@ -798,8 +799,8 @@ int create_new(const span<const tile>& tiles_ref, compression_type compression)
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW: ", tiles_data, " - ", tiles_count, " - ",
                         int(compression));
 
-    BN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
-              "Multiple copies of the same tiles data not supported");
+    BN_BASIC_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
+                    "Multiple copies of the same tiles data not supported");
 
     int result = _create_impl(tiles_data, compression, tiles_count);
 
@@ -898,8 +899,8 @@ int create_new_optional(const span<const tile>& tiles_ref, compression_type comp
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW OPTIONAL: ", tiles_data, " - ", tiles_count, " - ",
                         int(compression));
 
-    BN_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
-              "Multiple copies of the same tiles data not supported");
+    BN_BASIC_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
+                    "Multiple copies of the same tiles data not supported");
 
     int result = _create_impl(tiles_data, compression, tiles_count);
 
@@ -1008,16 +1009,16 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - SET_TILES_REF: ", item.start_tile, " - ", new_tiles_data,
                         " - ", tiles_ref.size(), " - ", int(compression));
 
-    BN_ASSERT(int(item.tiles_count) == tiles_ref.size(), "Tiles count does not match item tiles count: ",
-              int(item.tiles_count), " - ", tiles_ref.size());
+    BN_BASIC_ASSERT(int(item.tiles_count) == tiles_ref.size(),
+                    "Tiles count does not match item tiles count: ", int(item.tiles_count), " - ", tiles_ref.size());
 
     compression_type item_compression = item.compression();
 
     if(old_tiles_data != new_tiles_data)
     {
-        BN_ASSERT(old_tiles_data, "Item has no data");
-        BN_ASSERT(data.items_map.find(new_tiles_data) == data.items_map.end(),
-                  "Multiple copies of the same tiles data not supported");
+        BN_BASIC_ASSERT(old_tiles_data, "Item has no data");
+        BN_BASIC_ASSERT(data.items_map.find(new_tiles_data) == data.items_map.end(),
+                        "Multiple copies of the same tiles data not supported");
 
         data.items_map.erase(old_tiles_data);
         data.items_map.insert(new_tiles_data, id);
@@ -1057,7 +1058,7 @@ void reload_tiles_ref(int id)
 
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - RELOAD_TILES_REF: ", item.start_tile);
 
-    BN_ASSERT(item.data, "Item has no data");
+    BN_BASIC_ASSERT(item.data, "Item has no data");
 
     _insert_to_commit_item(id, item);
 

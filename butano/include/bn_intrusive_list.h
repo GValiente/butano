@@ -386,7 +386,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<const_reference>(*_first_node.next);
     }
@@ -396,7 +396,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<reference>(*_first_node.next);
     }
@@ -406,7 +406,7 @@ public:
      */
     [[nodiscard]] const_reference back() const
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<const_reference>(*_last_node.prev);
     }
@@ -416,7 +416,7 @@ public:
      */
     [[nodiscard]] reference back()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<reference>(*_last_node.prev);
     }
@@ -444,7 +444,7 @@ public:
      */
     void pop_front()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         _erase(begin());
     }
@@ -454,7 +454,7 @@ public:
      */
     void pop_back()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         iterator it = end();
         --it;
@@ -492,7 +492,7 @@ public:
      */
     iterator erase(const_iterator position)
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         iterator non_const_position = _mutable_iterator(position);
         iterator next = non_const_position;
@@ -508,7 +508,7 @@ public:
      */
     iterator erase(reference value)
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         iterator position(&value);
         iterator next = position;
@@ -535,7 +535,7 @@ public:
 
         while(erase_it != erase_last)
         {
-            BN_ASSERT(! empty(), "List is empty");
+            BN_BASIC_ASSERT(! empty(), "List is empty");
 
             iterator next = erase_it;
             ++next;

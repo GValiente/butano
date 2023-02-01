@@ -77,7 +77,7 @@ public:
     template<typename... Args>
     [[nodiscard]] Type& create(Args&&... args)
     {
-        BN_ASSERT(! base_type::full(), "Pool is full");
+        BN_BASIC_ASSERT(! base_type::full(), "Pool is full");
 
         auto result = reinterpret_cast<Type*>(base_type::_allocate());
         ::new(result) Type(forward<Args>(args)...);
@@ -89,7 +89,7 @@ public:
      */
     void destroy(Type& value)
     {
-        BN_ASSERT(contains(value), "Pool does not contain this value");
+        BN_BASIC_ASSERT(contains(value), "Pool does not contain this value");
 
         value.~Type();
         base_type::_free(reinterpret_cast<char*>(&value));

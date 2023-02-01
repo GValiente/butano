@@ -116,10 +116,10 @@ public:
      */
     [[nodiscard]] constexpr fixed get_fixed(fixed minimum, fixed limit)
     {
-        int range_data = limit.data() - minimum.data();
-        BN_ASSERT(range_data > 0, "Invalid range: ", minimum, " - ", limit);
+        fixed range = limit - minimum;
+        BN_ASSERT(range > 0, "Invalid range: ", minimum, " - ", limit);
 
-        unsigned result = get() % unsigned(range_data);
+        unsigned result = get() % unsigned(range.data());
         return minimum + fixed::from_data(int(result));
     }
 

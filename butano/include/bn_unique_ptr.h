@@ -145,7 +145,7 @@ public:
      */
     [[nodiscard]] const Type& operator*() const
     {
-        BN_ASSERT(_ptr, "Managed pointer is null");
+        BN_BASIC_ASSERT(_ptr, "Managed pointer is null");
 
         return *_ptr;
     }
@@ -155,7 +155,7 @@ public:
      */
     [[nodiscard]] reference operator*()
     {
-        BN_ASSERT(_ptr, "Managed pointer is null");
+        BN_BASIC_ASSERT(_ptr, "Managed pointer is null");
 
         return *_ptr;
     }
@@ -165,7 +165,7 @@ public:
      */
     [[nodiscard]] const Type* operator->() const
     {
-        BN_ASSERT(_ptr, "Managed pointer is null");
+        BN_BASIC_ASSERT(_ptr, "Managed pointer is null");
 
         return _ptr;
     }
@@ -175,7 +175,7 @@ public:
      */
     [[nodiscard]] pointer operator->()
     {
-        BN_ASSERT(_ptr, "Managed pointer is null");
+        BN_BASIC_ASSERT(_ptr, "Managed pointer is null");
 
         return _ptr;
     }

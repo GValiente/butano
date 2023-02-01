@@ -31,7 +31,7 @@ namespace bn
 template<int Precision = 20>
 [[nodiscard]] constexpr fixed_t<Precision> calculate_reciprocal_lut_value(int lut_value)
 {
-    BN_ASSERT(lut_value > 0, "Value must be greater than 0: ", lut_value);
+    BN_ASSERT(lut_value > 0, "Invalid lut value: ", lut_value);
 
     return fixed_t<Precision>::from_data(fixed_t<Precision>(1).data() / lut_value);
 }

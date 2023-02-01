@@ -17,7 +17,7 @@ void format(bn::ostringstream& stream, const char* format_begin, const char* for
 
         if(character == '{') [[unlikely]]
         {
-            BN_ASSERT(format_begin != format_end, "Format contains a single '{' character");
+            BN_BASIC_ASSERT(format_begin != format_end, "Format contains a single '{' character");
 
             char next_character = *format_begin;
             ++format_begin;
@@ -28,14 +28,14 @@ void format(bn::ostringstream& stream, const char* format_begin, const char* for
             }
             else
             {
-                BN_ASSERT(next_character == '}', "Format contains a single '{' character");
+                BN_BASIC_ASSERT(next_character == '}', "Format contains a single '{' character");
                 BN_ERROR("Not enough arguments");
             }
         }
         else if(character == '}') [[unlikely]]
         {
-            BN_ASSERT(format_begin != format_end, "Format contains a single '}' character");
-            BN_ASSERT(*format_begin == '}', "Format contains a single '}' character");
+            BN_BASIC_ASSERT(format_begin != format_end, "Format contains a single '}' character");
+            BN_BASIC_ASSERT(*format_begin == '}', "Format contains a single '}' character");
 
             ++format_begin;
             stream.append('}');

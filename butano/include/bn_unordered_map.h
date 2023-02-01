@@ -643,7 +643,7 @@ public:
     [[nodiscard]] mapped_type& at_hash(hash_type key_hash, const key_type& key)
     {
         iterator it = find_hash(key_hash, key);
-        BN_ASSERT(it != end(), "Key not found");
+        BN_BASIC_ASSERT(it != end(), "Key not found");
 
         return it->second;
     }
@@ -723,7 +723,7 @@ public:
             }
 
             current_index = _index(current_index + 1);
-            BN_ASSERT(current_index != index, "All indices are allocated");
+            BN_BASIC_ASSERT(current_index != index, "All indices are allocated");
         }
 
         ::new(storage + current_index) value_type(move(value));
@@ -830,7 +830,7 @@ public:
         if(it == end())
         {
             it = insert_hash(key_hash, move(value));
-            BN_ASSERT(it != end(), "Insertion failed");
+            BN_BASIC_ASSERT(it != end(), "Insertion failed");
         }
         else
         {
@@ -884,7 +884,7 @@ public:
         if(it == end())
         {
             it = insert_hash(key_hash, key, mapped_type(forward<Args>(args)...));
-            BN_ASSERT(it != end(), "Insertion failed");
+            BN_BASIC_ASSERT(it != end(), "Insertion failed");
         }
 
         return it;
@@ -905,7 +905,7 @@ public:
         if(it == end())
         {
             it = insert_hash(key_hash, key, mapped_type(forward<Args>(args)...));
-            BN_ASSERT(it != end(), "Insertion failed");
+            BN_BASIC_ASSERT(it != end(), "Insertion failed");
         }
 
         return it;
@@ -923,7 +923,7 @@ public:
     {
         bool* allocated = _allocated;
         size_type index = position._index;
-        BN_ASSERT(allocated[index], "Index is not allocated: ", index);
+        BN_BASIC_ASSERT(allocated[index], "Index is not allocated: ", index);
 
         pointer storage = _storage;
         storage[index].~value_type();
@@ -1083,7 +1083,7 @@ public:
         if(this != &other)
         {
             BN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
-                       "Invalid max size: ", max_size(), " - ", other.max_size());
+                      "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
             pointer other_storage = other._storage;
@@ -1196,7 +1196,7 @@ public:
         if(it == end())
         {
             it = insert_hash(key_hash, key, mapped_type());
-            BN_ASSERT(it != end(), "Insertion failed");
+            BN_BASIC_ASSERT(it != end(), "Insertion failed");
         }
 
         return it->second;
@@ -1214,7 +1214,7 @@ public:
         if(this != &other)
         {
             BN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
-                       "Invalid max size: ", max_size(), " - ", other.max_size());
+                      "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
             pointer other_storage = other._storage;

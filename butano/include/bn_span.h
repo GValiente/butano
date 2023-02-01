@@ -247,7 +247,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference front() const
     {
-        BN_ASSERT(! empty(), "Is empty");
+        BN_BASIC_ASSERT(! empty(), "Is empty");
 
         return *_begin;
     }
@@ -257,7 +257,7 @@ public:
      */
     [[nodiscard]] constexpr reference front()
     {
-        BN_ASSERT(! empty(), "Is empty");
+        BN_BASIC_ASSERT(! empty(), "Is empty");
 
         return *_begin;
     }
@@ -267,7 +267,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference back() const
     {
-        BN_ASSERT(! empty(), "Is empty");
+        BN_BASIC_ASSERT(! empty(), "Is empty");
 
         return *(_end - 1);
     }
@@ -277,7 +277,7 @@ public:
      */
     [[nodiscard]] constexpr reference back()
     {
-        BN_ASSERT(! empty(), "Is empty");
+        BN_BASIC_ASSERT(! empty(), "Is empty");
 
         return *(_end - 1);
     }
@@ -477,7 +477,7 @@ private:
     [[nodiscard]] static constexpr pointer _build_end(pointer ptr, size_type size)
     {
         BN_ASSERT(size >= 0, "Invalid size: ", size);
-        BN_ASSERT(ptr || ! size, "Pointer is null and size is not zero: ", ptr, " - ", size);
+        BN_BASIC_ASSERT(ptr || ! size, "Pointer is null and size is not zero: ", size);
 
         return ptr + size;
     }

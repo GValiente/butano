@@ -25,8 +25,8 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
     _shape_size(item.shape_size())
 {
     BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
-    BN_ASSERT(graphics_index < item.tiles_item().graphics_count(), "Invalid graphics index: ", graphics_index, " - ",
-              item.tiles_item().graphics_count());
+    BN_ASSERT(graphics_index < item.tiles_item().graphics_count(),
+              "Invalid graphics index: ", graphics_index, " - ", item.tiles_item().graphics_count());
 }
 
 sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
@@ -286,7 +286,8 @@ sprite_builder& sprite_builder::set_vertical_flip(bool vertical_flip)
 
 sprite_builder& sprite_builder::set_blending_enabled(bool blending_enabled)
 {
-    BN_ASSERT(! blending_enabled || ! _window_enabled, "Blending and window can't be enabled at the same time");
+    BN_BASIC_ASSERT(! blending_enabled || ! _window_enabled,
+                    "Blending and window can't be enabled at the same time");
 
     _blending_enabled = blending_enabled;
     return *this;
@@ -294,7 +295,8 @@ sprite_builder& sprite_builder::set_blending_enabled(bool blending_enabled)
 
 sprite_builder& sprite_builder::set_window_enabled(bool window_enabled)
 {
-    BN_ASSERT(! window_enabled || ! _blending_enabled, "Blending and window can't be enabled at the same time");
+    BN_BASIC_ASSERT(! window_enabled || ! _blending_enabled,
+                    "Blending and window can't be enabled at the same time");
 
     _window_enabled = window_enabled;
     return *this;

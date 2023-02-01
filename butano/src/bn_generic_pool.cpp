@@ -34,7 +34,7 @@ namespace bn
 
 igeneric_pool_base::~igeneric_pool_base() noexcept
 {
-    BN_ASSERT(empty(), "Pool is not empty");
+    BN_BASIC_ASSERT(empty(), "Pool is not empty");
 }
 
 igeneric_pool_base::igeneric_pool_base(char* buffer, size_type max_size) :
@@ -48,7 +48,7 @@ char* igeneric_pool_base::_allocate()
 {
     size_type size = _allocated_items_count;
     size_type max_size = _max_size;
-    BN_ASSERT(size != max_size, "Pool is full");
+    BN_BASIC_ASSERT(size != max_size, "Pool is full");
 
     char* result = _next_ptr;
     ++size;

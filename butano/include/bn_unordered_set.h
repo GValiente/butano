@@ -653,7 +653,7 @@ public:
             }
 
             current_index = _index(current_index + 1);
-            BN_ASSERT(current_index != index, "All indices are allocated");
+            BN_BASIC_ASSERT(current_index != index, "All indices are allocated");
         }
 
         ::new(storage + current_index) value_type(move(value));
@@ -676,7 +676,7 @@ public:
     {
         bool* allocated = _allocated;
         size_type index = position._index;
-        BN_ASSERT(allocated[index], "Index is not allocated: ", index);
+        BN_BASIC_ASSERT(allocated[index], "Index is not allocated: ", index);
 
         pointer storage = _storage;
         storage[index].~value_type();
@@ -836,7 +836,7 @@ public:
         if(this != &other)
         {
             BN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
-                       "Invalid max size: ", max_size(), " - ", other.max_size());
+                      "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
             pointer other_storage = other._storage;
@@ -925,7 +925,7 @@ public:
         if(this != &other)
         {
             BN_ASSERT(_max_size_minus_one == other._max_size_minus_one,
-                       "Invalid max size: ", max_size(), " - ", other.max_size());
+                      "Invalid max size: ", max_size(), " - ", other.max_size());
 
             pointer storage = _storage;
             pointer other_storage = other._storage;

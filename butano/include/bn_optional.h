@@ -382,7 +382,7 @@ public:
      */
     [[nodiscard]] constexpr const Type& value() const
     {
-        BN_ASSERT(_valid, "Optional is not valid");
+        BN_BASIC_ASSERT(_valid, "Optional is not valid");
 
         return _value;
     }
@@ -392,7 +392,7 @@ public:
      */
     [[nodiscard]] constexpr Type& value()
     {
-        BN_ASSERT(_valid, "Optional is not valid");
+        BN_BASIC_ASSERT(_valid, "Optional is not valid");
 
         return _value;
     }
@@ -420,7 +420,7 @@ public:
      */
     [[nodiscard]] constexpr const Type* operator->() const
     {
-        BN_ASSERT(_valid, "Optional is not valid");
+        BN_BASIC_ASSERT(_valid, "Optional is not valid");
 
         return &_value;
     }
@@ -430,7 +430,7 @@ public:
      */
     [[nodiscard]] constexpr Type* operator->()
     {
-        BN_ASSERT(_valid, "Optional is not valid");
+        BN_BASIC_ASSERT(_valid, "Optional is not valid");
 
         return &_value;
     }
@@ -440,7 +440,7 @@ public:
      */
     [[nodiscard]] constexpr const Type& operator*() const
     {
-        BN_ASSERT(_valid, "Optional is not valid");
+        BN_BASIC_ASSERT(_valid, "Optional is not valid");
 
         return _value;
     }
@@ -450,7 +450,7 @@ public:
      */
     [[nodiscard]] constexpr Type& operator*()
     {
-        BN_ASSERT(_valid, "Optional is not valid");
+        BN_BASIC_ASSERT(_valid, "Optional is not valid");
 
         return _value;
     }

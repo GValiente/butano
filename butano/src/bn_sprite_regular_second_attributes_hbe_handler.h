@@ -32,7 +32,7 @@ public:
 
     [[nodiscard]] static bool target_updated(intptr_t target_id, iany& target_last_value)
     {
-        BN_ASSERT(! sprites_manager::affine_mat(reinterpret_cast<void*>(target_id)), "Sprite is not regular");
+        BN_BASIC_ASSERT(! sprites_manager::affine_mat(reinterpret_cast<void*>(target_id)), "Sprite is not regular");
 
         sprite_second_attributes_last_value& last_value = target_last_value.value<sprite_second_attributes_last_value>();
         sprite_second_attributes_last_value new_value(target_id);

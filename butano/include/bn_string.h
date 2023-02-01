@@ -156,7 +156,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference front() const
     {
-        BN_ASSERT(! empty(), "String is empty");
+        BN_BASIC_ASSERT(! empty(), "String is empty");
 
         return _data[0];
     }
@@ -166,7 +166,7 @@ public:
      */
     [[nodiscard]] constexpr reference front()
     {
-        BN_ASSERT(! empty(), "String is empty");
+        BN_BASIC_ASSERT(! empty(), "String is empty");
 
         return _data[0];
     }
@@ -176,7 +176,7 @@ public:
      */
     [[nodiscard]] constexpr const_reference back() const
     {
-        BN_ASSERT(! empty(), "String is empty");
+        BN_BASIC_ASSERT(! empty(), "String is empty");
 
         return _data[_size - 1];
     }
@@ -186,7 +186,7 @@ public:
      */
     [[nodiscard]] constexpr reference back()
     {
-        BN_ASSERT(! empty(), "String is empty");
+        BN_BASIC_ASSERT(! empty(), "String is empty");
 
         return _data[_size - 1];
     }
@@ -381,7 +381,7 @@ public:
      */
     constexpr void push_back(value_type value)
     {
-        BN_ASSERT(! full(), "String is full");
+        BN_BASIC_ASSERT(! full(), "String is full");
 
         size_type size = _size;
         pointer data = _data + size;
@@ -396,7 +396,7 @@ public:
     constexpr void pop_back()
     {
         size_type size = _size;
-        BN_ASSERT(size, "String is empty");
+        BN_BASIC_ASSERT(size, "String is empty");
 
         --size;
         _data[size] = 0;
@@ -495,7 +495,7 @@ public:
      */
     constexpr iterator erase(const_iterator position)
     {
-        BN_ASSERT(! empty(), "String is empty");
+        BN_BASIC_ASSERT(! empty(), "String is empty");
 
         auto erase_position = const_cast<iterator>(position);
         bn::copy(erase_position + 1, end(), erase_position);

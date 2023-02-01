@@ -405,7 +405,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<const value_node_type*>(_first_node.next)->value;
     }
@@ -415,7 +415,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<value_node_type*>(_first_node.next)->value;
     }
@@ -425,7 +425,7 @@ public:
      */
     [[nodiscard]] const_reference back() const
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<const value_node_type*>(_last_node.prev)->value;
     }
@@ -435,7 +435,7 @@ public:
      */
     [[nodiscard]] reference back()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         return static_cast<value_node_type*>(_last_node.prev)->value;
     }
@@ -446,7 +446,7 @@ public:
      */
     void push_front(const_reference value)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(value);
         _insert(begin(), new_node);
@@ -458,7 +458,7 @@ public:
      */
     void push_front(value_type&& value)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(move(value));
         _insert(begin(), new_node);
@@ -472,7 +472,7 @@ public:
     template<typename... Args>
     reference emplace_front(Args&&... args)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert(begin(), new_node);
@@ -485,7 +485,7 @@ public:
      */
     void push_back(const_reference value)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(value);
         _insert(end(), new_node);
@@ -497,7 +497,7 @@ public:
      */
     void push_back(value_type&& value)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(move(value));
         _insert(end(), new_node);
@@ -511,7 +511,7 @@ public:
     template<typename... Args>
     reference emplace_back(Args&&... args)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert(end(), new_node);
@@ -523,7 +523,7 @@ public:
      */
     void pop_front()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         _erase(begin());
     }
@@ -533,7 +533,7 @@ public:
      */
     void pop_back()
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         iterator it = end();
         --it;
@@ -548,7 +548,7 @@ public:
      */
     iterator insert(const_iterator position, const_reference value)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(value);
         _insert(_mutable_iterator(position), new_node);
@@ -563,7 +563,7 @@ public:
      */
     iterator insert(const_iterator position, value_type&& value)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(move(value));
         _insert(_mutable_iterator(position), new_node);
@@ -579,7 +579,7 @@ public:
     template<typename... Args>
     iterator emplace(const_iterator position, Args&&... args)
     {
-        BN_ASSERT(! full(), "List is full");
+        BN_BASIC_ASSERT(! full(), "List is full");
 
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert(_mutable_iterator(position), new_node);
@@ -593,7 +593,7 @@ public:
      */
     iterator erase(const_iterator position)
     {
-        BN_ASSERT(! empty(), "List is empty");
+        BN_BASIC_ASSERT(! empty(), "List is empty");
 
         iterator non_const_position = _mutable_iterator(position);
         iterator next = non_const_position;
@@ -620,7 +620,7 @@ public:
 
         while(erase_it != erase_last)
         {
-            BN_ASSERT(! empty(), "List is empty");
+            BN_BASIC_ASSERT(! empty(), "List is empty");
 
             iterator next = erase_it;
             ++next;
@@ -724,7 +724,7 @@ public:
 
         for(Iterator it = first; it != last; ++it)
         {
-            BN_ASSERT(! full(), "List is full");
+            BN_BASIC_ASSERT(! full(), "List is full");
 
             node_type& new_node = _ipool->create(*it);
             _insert(input_last, new_node);

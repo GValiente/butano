@@ -13,7 +13,7 @@
 void* operator new(unsigned bytes)
 {
     void* ptr = bn::memory_manager::ewram_alloc(int(bytes));
-    BN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+    BN_BASIC_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
 
     return ptr;
 }
@@ -31,7 +31,7 @@ void operator delete(void* ptr, [[maybe_unused]] unsigned bytes) noexcept
 void* operator new[](unsigned bytes)
 {
     void* ptr = bn::memory_manager::ewram_alloc(int(bytes));
-    BN_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+    BN_BASIC_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
 
     return ptr;
 }
@@ -140,7 +140,7 @@ int used_static_ewram()
 void set_bytes(uint8_t value, int bytes, void* destination_ptr)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
-    BN_ASSERT(destination_ptr, "Destination is null");
+    BN_BASIC_ASSERT(destination_ptr, "Destination is null");
 
     hw::memory::set_bytes(value, bytes, destination_ptr);
 }
@@ -148,7 +148,7 @@ void set_bytes(uint8_t value, int bytes, void* destination_ptr)
 void set_half_words(uint16_t value, int half_words, void* destination_ptr)
 {
     BN_ASSERT(half_words >= 0, "Invalid half words: ", half_words);
-    BN_ASSERT(destination_ptr, "Destination is null");
+    BN_BASIC_ASSERT(destination_ptr, "Destination is null");
     BN_ASSERT(aligned<2>(destination_ptr), "Destination is not aligned");
 
     hw::memory::set_half_words(value, half_words, destination_ptr);
@@ -157,7 +157,7 @@ void set_half_words(uint16_t value, int half_words, void* destination_ptr)
 void set_words(unsigned value, int words, void* destination_ptr)
 {
     BN_ASSERT(words >= 0, "Invalid words: ", words);
-    BN_ASSERT(destination_ptr, "Destination is null");
+    BN_BASIC_ASSERT(destination_ptr, "Destination is null");
     BN_ASSERT(aligned<4>(destination_ptr), "Destination is not aligned");
 
     hw::memory::set_words(value, words, destination_ptr);
@@ -165,8 +165,8 @@ void set_words(unsigned value, int words, void* destination_ptr)
 
 void decompress(compression_type compression, const void* source_ptr, int bytes, void* destination_ptr)
 {
-    BN_ASSERT(source_ptr, "Source is null");
-    BN_ASSERT(destination_ptr, "Destination is null");
+    BN_BASIC_ASSERT(source_ptr, "Source is null");
+    BN_BASIC_ASSERT(destination_ptr, "Destination is null");
 
     switch(compression)
     {

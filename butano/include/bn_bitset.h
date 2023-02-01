@@ -778,7 +778,7 @@ public:
     constexpr bitset_ref(span<element_t> elements_ref) :
         ibitset(elements_ref.size(), elements_ref.data())
     {
-        BN_ASSERT(elements_size(), "No elements");
+        BN_BASIC_ASSERT(elements_size(), "No elements");
     }
 
     /**

@@ -142,7 +142,7 @@ public:
         int width = _dimensions.width();
         BN_ASSERT(map_x >= 0 && map_x < width, "Invalid map x: ", map_x, " - ", width);
         BN_ASSERT(map_y >= 0 && map_y < _dimensions.height(), "Invalid map y: ", map_y, " - ", _dimensions.height());
-        BN_ASSERT(_compression == compression_type::NONE, "Compressed maps not supported");
+        BN_BASIC_ASSERT(_compression == compression_type::NONE, "Compressed maps not supported");
 
         return (map_y * width) + map_x;
     }

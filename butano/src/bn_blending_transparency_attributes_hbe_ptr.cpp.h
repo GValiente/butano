@@ -16,8 +16,8 @@ namespace bn
 blending_transparency_attributes_hbe_ptr blending_transparency_attributes_hbe_ptr::create(
         const span<const blending_transparency_attributes>& attributes_ref)
 {
-    BN_ASSERT(! display_manager::blending_fade_enabled(),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(! display_manager::blending_fade_enabled(),
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     int id = hblank_effects_manager::create(attributes_ref.data(), attributes_ref.size(), 0,
                                             hblank_effects_manager::handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES);
@@ -27,8 +27,8 @@ blending_transparency_attributes_hbe_ptr blending_transparency_attributes_hbe_pt
 optional<blending_transparency_attributes_hbe_ptr> blending_transparency_attributes_hbe_ptr::create_optional(
         const span<const blending_transparency_attributes>& attributes_ref)
 {
-    BN_ASSERT(! display_manager::blending_fade_enabled(),
-              "Transparency and fade blendings can't be enabled at the same time");
+    BN_BASIC_ASSERT(! display_manager::blending_fade_enabled(),
+                    "Transparency and fade blendings can't be enabled at the same time");
 
     int id = hblank_effects_manager::create_optional(attributes_ref.data(), attributes_ref.size(), 0,
                                                      hblank_effects_manager::handler_type::BLENDING_TRANSPARENCY_ATTRIBUTES);

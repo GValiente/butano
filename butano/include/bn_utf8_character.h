@@ -56,7 +56,7 @@ public:
      */
     constexpr utf8_character(const char* text_ptr)
     {
-        BN_ASSERT(text_ptr, "Text is null");
+        BN_BASIC_ASSERT(text_ptr, "Text is null");
 
         *this = utf8_character(*text_ptr);
     }
@@ -79,7 +79,7 @@ public:
         {
             // 11bit
             _data = (*src++ & 0x1F) << 6;
-            BN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
+            BN_BASIC_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) << 0;
         }
@@ -87,10 +87,10 @@ public:
         {
             // 16bit
             _data  = (*src++ & 0x0F) << 12;
-            BN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
+            BN_BASIC_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) <<  6;
-            BN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
+            BN_BASIC_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) <<  0;
         }
@@ -98,13 +98,13 @@ public:
         {
             // 21bit
             _data  = (*src++ & 0x0F) << 18;
-            BN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
+            BN_BASIC_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) << 12;
-            BN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
+            BN_BASIC_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) <<  6;
-            BN_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
+            BN_BASIC_ASSERT((*src >> 6) == 2, "Invalid UTF-8 character");
 
             _data |= (*src++ & 0x3F) <<  0;
         }

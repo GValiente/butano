@@ -275,7 +275,7 @@ public:
      */
     [[nodiscard]] const_reference front() const
     {
-        BN_ASSERT(_size, "Vector is empty");
+        BN_BASIC_ASSERT(_size, "Vector is empty");
 
         return _data[0];
     }
@@ -285,7 +285,7 @@ public:
      */
     [[nodiscard]] reference front()
     {
-        BN_ASSERT(_size, "Vector is empty");
+        BN_BASIC_ASSERT(_size, "Vector is empty");
 
         return _data[0];
     }
@@ -295,7 +295,7 @@ public:
      */
     [[nodiscard]] const_reference back() const
     {
-        BN_ASSERT(_size, "Vector is empty");
+        BN_BASIC_ASSERT(_size, "Vector is empty");
 
         return _data[_size - 1];
     }
@@ -305,7 +305,7 @@ public:
      */
     [[nodiscard]] reference back()
     {
-        BN_ASSERT(_size, "Vector is empty");
+        BN_BASIC_ASSERT(_size, "Vector is empty");
 
         return _data[_size - 1];
     }
@@ -316,7 +316,7 @@ public:
      */
     void push_back(const_reference value)
     {
-        BN_ASSERT(! full(), "Vector is full");
+        BN_BASIC_ASSERT(! full(), "Vector is full");
 
         ::new(_data + _size) value_type(value);
         ++_size;
@@ -328,7 +328,7 @@ public:
      */
     void push_back(value_type&& value)
     {
-        BN_ASSERT(! full(), "Vector is full");
+        BN_BASIC_ASSERT(! full(), "Vector is full");
 
         ::new(_data + _size) value_type(move(value));
         ++_size;
@@ -342,7 +342,7 @@ public:
     template<typename... Args>
     reference emplace_back(Args&&... args)
     {
-        BN_ASSERT(! full(), "Vector is full");
+        BN_BASIC_ASSERT(! full(), "Vector is full");
 
         Type* result = _data + _size;
         ::new(result) value_type(forward<Args>(args)...);
@@ -355,7 +355,7 @@ public:
      */
     void pop_back()
     {
-        BN_ASSERT(_size, "Vector is empty");
+        BN_BASIC_ASSERT(_size, "Vector is empty");
 
         --_size;
         _data[_size].~value_type();
@@ -370,7 +370,7 @@ public:
     iterator insert(const_iterator position, const_reference value)
     {
         BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
-        BN_ASSERT(! full(), "Vector is full");
+        BN_BASIC_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
@@ -394,7 +394,7 @@ public:
     iterator insert(const_iterator position, value_type&& value)
     {
         BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
-        BN_ASSERT(! full(), "Vector is full");
+        BN_BASIC_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
@@ -419,7 +419,7 @@ public:
     iterator emplace(const_iterator position, Args&&... args)
     {
         BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
-        BN_ASSERT(! full(), "Vector is full");
+        BN_BASIC_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
@@ -441,7 +441,7 @@ public:
      */
     iterator erase(const_iterator position)
     {
-        BN_ASSERT(_size, "Vector is empty");
+        BN_BASIC_ASSERT(_size, "Vector is empty");
         BN_ASSERT(position >= begin() && position < end(), "Invalid position");
 
         auto non_const_position = const_cast<iterator>(position);

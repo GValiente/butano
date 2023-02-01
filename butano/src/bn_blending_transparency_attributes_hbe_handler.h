@@ -29,8 +29,8 @@ public:
 
     [[nodiscard]] static bool target_updated(intptr_t, iany&)
     {
-        BN_ASSERT(! display_manager::blending_fade_enabled(),
-                  "Transparency and fade blendings can't be enabled at the same time");
+        BN_BASIC_ASSERT(! display_manager::blending_fade_enabled(),
+                        "Transparency and fade blendings can't be enabled at the same time");
 
         return false;
     }

@@ -581,13 +581,16 @@ namespace
         {
             int id = items_map_iterator->second;
             item_type& item = data.items.item(id);
-            BN_ASSERT(tiles_data == item.data, "Tiles data does not match item tiles data: ",
-                      tiles_data, " - ", item.data);
-            BN_ASSERT(compression == item.compression(), "Tiles compression does not match item tiles compression: ",
-                      int(compression), " - ", int(item.compression()));
-            BN_ASSERT(half_words == item.width, "Tiles count does not match item tiles count: ",
-                      _half_words_to_tiles(half_words), " - ", item.tiles_count());
-            BN_ASSERT(affine == item.is_affine, "Item regular/affine tiles mismatch: ", affine, " - ", item.is_affine);
+            BN_BASIC_ASSERT(tiles_data == item.data,
+                            "Tiles data does not match item tiles data: ", tiles_data, " - ", item.data);
+            BN_BASIC_ASSERT(compression == item.compression(),
+                            "Tiles compression does not match item tiles compression: ",
+                            int(compression), " - ", int(item.compression()));
+            BN_BASIC_ASSERT(half_words == item.width,
+                            "Tiles count does not match item tiles count: ",
+                            _half_words_to_tiles(half_words), " - ", item.tiles_count());
+            BN_BASIC_ASSERT(affine == item.is_affine,
+                            "Item regular/affine tiles mismatch: ", affine, " - ", item.is_affine);
 
             switch(item.status())
             {
@@ -631,18 +634,18 @@ namespace
         {
             int id = items_map_iterator->second;
             item_type& item = data.items.item(id);
-            BN_ASSERT(map_item.dimensions().width() == item.width, "Width does not match item width: ",
-                      map_item.dimensions().width(), " - ", item.width);
-            BN_ASSERT(map_item.dimensions().height() == item.height, "Height does not match item height: ",
-                      map_item.dimensions().height(), " - ", item.height);
-            BN_ASSERT(map_item.compression() == item.compression(),
-                      "Map compression does not match item map compression: ",
-                      int(map_item.compression()), " - ", int(item.compression()));
-            BN_ASSERT(! item.is_affine, "Item is an affine map");
-            BN_ASSERT(! item.regular_tiles || tiles == *item.regular_tiles,
-                      "Tiles does not match item tiles: ", tiles.id(), " - ", item.regular_tiles->id());
-            BN_ASSERT(! item.palette || palette == *item.palette,
-                      "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
+            BN_BASIC_ASSERT(map_item.dimensions().width() == item.width,
+                            "Width does not match item width: ", map_item.dimensions().width(), " - ", item.width);
+            BN_BASIC_ASSERT(map_item.dimensions().height() == item.height,
+                            "Height does not match item height: ", map_item.dimensions().height(), " - ", item.height);
+            BN_BASIC_ASSERT(map_item.compression() == item.compression(),
+                            "Map compression does not match item map compression: ",
+                            int(map_item.compression()), " - ", int(item.compression()));
+            BN_BASIC_ASSERT(! item.is_affine, "Item is an affine map");
+            BN_BASIC_ASSERT(! item.regular_tiles || tiles == *item.regular_tiles,
+                            "Tiles does not match item tiles: ", tiles.id(), " - ", item.regular_tiles->id());
+            BN_BASIC_ASSERT(! item.palette || palette == *item.palette,
+                            "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
 
             switch(item.status())
             {
@@ -703,18 +706,18 @@ namespace
         {
             int id = items_map_iterator->second;
             item_type& item = data.items.item(id);
-            BN_ASSERT(map_item.dimensions().width() == item.width, "Width does not match item width: ",
-                      map_item.dimensions().width(), " - ", item.width);
-            BN_ASSERT(map_item.dimensions().height() == item.height, "Height does not match item height: ",
-                      map_item.dimensions().height(), " - ", item.height);
-            BN_ASSERT(map_item.compression() == item.compression(),
-                      "Map compression does not match item map compression: ",
-                      int(map_item.compression()), " - ", int(item.compression()));
-            BN_ASSERT(item.is_affine, "Item is a regular map");
-            BN_ASSERT(! item.affine_tiles || tiles == *item.affine_tiles,
-                      "Tiles does not match item tiles: ", tiles.id(), " - ", item.affine_tiles->id());
-            BN_ASSERT(! item.palette || palette == *item.palette,
-                      "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
+            BN_BASIC_ASSERT(map_item.dimensions().width() == item.width,
+                            "Width does not match item width: ", map_item.dimensions().width(), " - ", item.width);
+            BN_BASIC_ASSERT(map_item.dimensions().height() == item.height,
+                            "Height does not match item height: ", map_item.dimensions().height(), " - ", item.height);
+            BN_BASIC_ASSERT(map_item.compression() == item.compression(),
+                            "Map compression does not match item map compression: ",
+                            int(map_item.compression()), " - ", int(item.compression()));
+            BN_BASIC_ASSERT(item.is_affine, "Item is a regular map");
+            BN_BASIC_ASSERT(! item.affine_tiles || tiles == *item.affine_tiles,
+                            "Tiles does not match item tiles: ", tiles.id(), " - ", item.affine_tiles->id());
+            BN_BASIC_ASSERT(! item.palette || palette == *item.palette,
+                            "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
 
             switch(item.status())
             {
@@ -842,7 +845,7 @@ namespace
 
         if(padding_blocks_count)
         {
-            BN_ASSERT(! data.items.full(), "No more BG block items available");
+            BN_BASIC_ASSERT(! data.items.full(), "No more BG block items available");
 
             int new_item_blocks_count = item->blocks_count - padding_blocks_count;
             item->blocks_count = uint8_t(padding_blocks_count);
@@ -860,7 +863,7 @@ namespace
 
         if(int new_item_blocks_count = item->blocks_count - blocks_count)
         {
-            BN_ASSERT(! data.items.full(), "No more BG block items available");
+            BN_BASIC_ASSERT(! data.items.full(), "No more BG block items available");
 
             int start_block = item->start_block;
             int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
@@ -1395,8 +1398,9 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
-    BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(dimensions.width(), dimensions.height()),
-              "Compressed big regular maps are not supported");
+    BN_BASIC_ASSERT(compression == compression_type::NONE ||
+                    ! _big_regular_map(dimensions.width(), dimensions.height()),
+                    "Compressed big regular maps are not supported");
 
     result = _create_impl(
                 create_data::from_regular_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
@@ -1448,9 +1452,10 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
     }
 
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
-    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
-    BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(dimensions.width(), dimensions.height()),
-              "Compressed big affine maps are not supported");
+    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
+    BN_BASIC_ASSERT(compression == compression_type::NONE ||
+                    ! _big_affine_map(dimensions.width(), dimensions.height()),
+                    "Compressed big affine maps are not supported");
 
     result = _create_impl(
                 create_data::from_affine_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
@@ -1496,8 +1501,8 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optio
                      data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
                      int(bpp), " - ", int(compression));
 
-    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-              "Multiple copies of the same data not supported");
+    BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                    "Multiple copies of the same data not supported");
 
     int result = _create_impl(create_data::from_regular_tiles(data_ptr, half_words, bpp, compression));
 
@@ -1540,8 +1545,8 @@ int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optiona
                      data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
                      int(compression));
 
-    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-              "Multiple copies of the same data not supported");
+    BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                    "Multiple copies of the same data not supported");
 
     int result = _create_impl(create_data::from_affine_tiles(data_ptr, half_words, compression));
 
@@ -1586,10 +1591,11 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
-    BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(dimensions.width(), dimensions.height()),
-              "Compressed big regular maps are not supported");
-    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-              "Multiple copies of the same data not supported");
+    BN_BASIC_ASSERT(compression == compression_type::NONE ||
+                    ! _big_regular_map(dimensions.width(), dimensions.height()),
+                    "Compressed big regular maps are not supported");
+    BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                    "Multiple copies of the same data not supported");
 
     int result = _create_impl(
                 create_data::from_regular_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
@@ -1634,11 +1640,12 @@ int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_pt
                      int(compression));
 
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
-    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
-    BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(dimensions.width(), dimensions.height()),
-              "Compressed big affine maps are not supported");
-    BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-              "Multiple copies of the same data not supported");
+    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
+    BN_BASIC_ASSERT(compression == compression_type::NONE ||
+                    ! _big_affine_map(dimensions.width(), dimensions.height()),
+                    "Compressed big affine maps are not supported");
+    BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                    "Multiple copies of the same data not supported");
 
     int result = _create_impl(
                 create_data::from_affine_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
@@ -1801,7 +1808,7 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
               "Invalid map width: ", map_dimensions.width());
     BN_ASSERT(map_dimensions.height() == map_dimensions.width(),
               "Map height is different from map width: ", map_dimensions.height(), " - ", map_dimensions.width());
-    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
 
     int result = _allocate_impl(
                 create_data::from_affine_map(nullptr, map_dimensions, compression_type::NONE,
@@ -1970,14 +1977,14 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
 
     item_type& item = data.items.item(id);
     const uint16_t* item_data = item.data;
-    BN_ASSERT(tiles_ref.size() == item.tiles_count(), "Tiles count does not match item tiles count: ",
-              tiles_ref.size(), " - ", item.tiles_count());
+    BN_BASIC_ASSERT(tiles_ref.size() == item.tiles_count(),
+                    "Tiles count does not match item tiles count: ", tiles_ref.size(), " - ", item.tiles_count());
 
     if(item_data != data_ptr)
     {
-        BN_ASSERT(item_data, "Item has no data");
-        BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                  "Multiple copies of the same data not supported");
+        BN_BASIC_ASSERT(item_data, "Item has no data");
+        BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                        "Multiple copies of the same data not supported");
 
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
@@ -2011,14 +2018,14 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
 
     item_type& item = data.items.item(id);
     const uint16_t* item_data = item.data;
-    BN_ASSERT(tiles_ref.size() == item.tiles_count(), "Tiles count does not match item tiles count: ",
-              tiles_ref.size(), " - ", item.tiles_count());
+    BN_BASIC_ASSERT(tiles_ref.size() == item.tiles_count(),
+                    "Tiles count does not match item tiles count: ", tiles_ref.size(), " - ", item.tiles_count());
 
     if(item_data != data_ptr)
     {
-        BN_ASSERT(item_data, "Item has no data");
-        BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                  "Multiple copies of the same data not supported");
+        BN_BASIC_ASSERT(item_data, "Item has no data");
+        BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                        "Multiple copies of the same data not supported");
 
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
@@ -2051,19 +2058,19 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
 
     item_type& item = data.items.item(id);
     const uint16_t* item_data = item.data;
-    BN_ASSERT(map_item.dimensions().width() == item.width, "Map width does not match item map width: ",
-              map_item.dimensions().width(), " - ", item.width);
-    BN_ASSERT(map_item.dimensions().height() == item.height, "Map height does not match item map height: ",
-              map_item.dimensions().height(), " - ", item.height);
-    BN_ASSERT(compression == compression_type::NONE || ! _big_regular_map(item.width, item.height),
-              "Compressed big regular maps are not supported");
+    BN_BASIC_ASSERT(map_item.dimensions().width() == item.width,
+                    "Map width does not match item map width: ", map_item.dimensions().width(), " - ", item.width);
+    BN_BASIC_ASSERT(map_item.dimensions().height() == item.height,
+                    "Map height does not match item map height: ", map_item.dimensions().height(), " - ", item.height);
+    BN_BASIC_ASSERT(compression == compression_type::NONE || ! _big_regular_map(item.width, item.height),
+                    "Compressed big regular maps are not supported");
 
     if(item_data != data_ptr)
     {
-        BN_ASSERT(item_data, "Item has no data");
+        BN_BASIC_ASSERT(item_data, "Item has no data");
         BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
-        BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                  "Multiple copies of the same data not supported");
+        BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                        "Multiple copies of the same data not supported");
 
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
@@ -2096,19 +2103,19 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
 
     item_type& item = data.items.item(id);
     const uint16_t* item_data = item.data;
-    BN_ASSERT(map_item.dimensions().width() == item.width, "Map width does not match item map width: ",
-              map_item.dimensions().width(), " - ", item.width);
-    BN_ASSERT(map_item.dimensions().height() == item.height, "Map height does not match item map height: ",
-              map_item.dimensions().height(), " - ", item.height);
-    BN_ASSERT(compression == compression_type::NONE || ! _big_affine_map(item.width, item.height),
-              "Compressed big affine maps are not supported");
+    BN_BASIC_ASSERT(map_item.dimensions().width() == item.width,
+                    "Map width does not match item map width: ", map_item.dimensions().width(), " - ", item.width);
+    BN_BASIC_ASSERT(map_item.dimensions().height() == item.height,
+                    "Map height does not match item map height: ", map_item.dimensions().height(), " - ", item.height);
+    BN_BASIC_ASSERT(compression == compression_type::NONE || ! _big_affine_map(item.width, item.height),
+                    "Compressed big affine maps are not supported");
 
     if(item_data != data_ptr)
     {
-        BN_ASSERT(item_data, "Item has no data");
+        BN_BASIC_ASSERT(item_data, "Item has no data");
         BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
-        BN_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                  "Multiple copies of the same data not supported");
+        BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
+                        "Multiple copies of the same data not supported");
 
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
@@ -2135,7 +2142,7 @@ void reload(int id)
     BN_BG_BLOCKS_LOG("bg_blocks_manager - RELOAD: ", id, " - ", data.items.item(id).start_block);
 
     item_type& item = data.items.item(id);
-    BN_ASSERT(item.data, "Item has no data");
+    BN_BASIC_ASSERT(item.data, "Item has no data");
 
     item.commit = true;
     data.check_commit = true;
@@ -2298,7 +2305,7 @@ void set_affine_map_palette(int id, bg_palette_ptr&& palette)
 
     if(palette != item.palette)
     {
-        BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "BPP_4 affine maps not supported");
+        BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
 
         item.palette = move(palette);
     }

@@ -47,11 +47,10 @@ public:
 
             while(_items[item_index].valid)
             {
-                BN_ASSERT(data != _items[item_index].data,
-                          "There's duplicated UTF-8 characters: ", character_index);
+                BN_BASIC_ASSERT(data != _items[item_index].data, "Duplicated UTF-8 characters: ", character_index);
 
                 item_index = _item_index(unsigned(item_index + 1));
-                BN_ASSERT(item_index != initial_item_index, "All items are allocated");
+                BN_BASIC_ASSERT(item_index != initial_item_index, "All items are allocated");
             }
 
             item_type& item = _items[item_index];

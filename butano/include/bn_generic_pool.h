@@ -183,7 +183,7 @@ public:
         static_assert(sizeof(Type) <= MaxElementSize);
 
         auto ptr = reinterpret_cast<char*>(&value);
-        BN_ASSERT(_contains_ptr(ptr), "Pool does not contain this value");
+        BN_BASIC_ASSERT(_contains_ptr(ptr), "Pool does not contain this value");
 
         value.~Type();
         _free(ptr);
@@ -284,7 +284,7 @@ public:
     template<typename Type>
     void destroy(Type& value)
     {
-        BN_ASSERT(contains(value), "Pool does not contain this value");
+        BN_BASIC_ASSERT(contains(value), "Pool does not contain this value");
 
         value.~Type();
         base_type::_free(reinterpret_cast<char*>(&value));

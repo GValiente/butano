@@ -2032,6 +2032,7 @@
  *
  * @section changelog_13_4_0 13.4.0 (next release)
  *
+ * * @ref BN_BASIC_ASSERT added.
  * * Repeated color palettes reduction can be disabled when importing a regular background.
  *   See the @ref import_regular_bg import guide to learn how to disable it.
  * * Input tiles in `dynamic_regular_bg` and `dynamic_affine_bg` examples are imported without using a map.

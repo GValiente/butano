@@ -222,7 +222,7 @@ int available_count()
 int create()
 {
     int id = create_optional();
-    BN_ASSERT(id >= 0, "No more sprite affine mats available");
+    BN_BASIC_ASSERT(id >= 0, "No more sprite affine mats available");
 
     return id;
 }
@@ -230,7 +230,7 @@ int create()
 int create(const affine_mat_attributes& attributes)
 {
     int id = create_optional(attributes);
-    BN_ASSERT(id >= 0, "No more sprite affine mats available");
+    BN_BASIC_ASSERT(id >= 0, "No more sprite affine mats available");
 
     return id;
 }
@@ -624,8 +624,9 @@ void reserve_sprite_handles([[maybe_unused]] int sprite_handles_count)
             }
         }
 
-        BN_ASSERT(sprite_handles_count <= first_active_index * affine_mat_id_multiplier,
-                  "Reserved sprite handles used by affine mats: ", sprite_handles_count, " - ", first_active_index);
+        BN_BASIC_ASSERT(sprite_handles_count <= first_active_index * affine_mat_id_multiplier,
+                        "Reserved sprite handles used by affine mats: ",
+                        sprite_handles_count, " - ", first_active_index);
 
         if(data.first_index_to_commit < first_active_index)
         {

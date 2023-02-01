@@ -79,6 +79,10 @@
             </dt>
             <dd></dd>
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabb95f8ef0ef2b1a7293b19613678f332" class="m-doc">BN_BASIC_ASSERT</a></span>
+            </dt>
+            <dd></dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#ga8cf94cdc062cbd6f5c8c6a6cb9c71e07" class="m-doc">BN_ERROR</a>(</span><span class="m-doc-wrap">...)</span>
             </dt>
             <dd></dd>
@@ -105,6 +109,18 @@
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__assert_8h.html">&lt;bn_assert.h&gt;</a></div>
             </h3>
 <p>Checks if the specified <em>condition</em> is true.</p><p>If it doesn&#x27;t, the execution is stopped and diagnostic information is shown on the screen.</p><p>More information can be shown by passing it by argument.</p><p>Example:</p><pre class="m-code"><span class="n">BN_ASSERT</span><span class="p">(</span><span class="n">integer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span> <span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading bn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="n">stream</span><span class="p">,</span> <span class="k">const</span> <span class="n">custom_type</span><span class="o">&amp;</span> <span class="n">custom_value</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;custom_type: &quot;</span><span class="p">);</span>
+    <span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">custom_value</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">stream</span><span class="p">;</span>
+<span class="p">}</span></pre><p>Note that it can be used in constexpr contexts (is_constant_evaluated() returns <code>true</code>).</p>
+          </div></section>
+          <section class="m-doc-details" id="gabb95f8ef0ef2b1a7293b19613678f332"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gabb95f8ef0ef2b1a7293b19613678f332" class="m-doc-self">BN_BASIC_ASSERT</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__assert_8h.html">&lt;bn_assert.h&gt;</a></div>
+            </h3>
+<p>Checks if the specified <em>condition</em> is true.</p><p>If it doesn&#x27;t, the execution is stopped and basic diagnostic information is shown on the screen.</p><p>More information can be shown by passing it by argument.</p><p>Example:</p><pre class="m-code"><span class="n">BN_BASIC_ASSERT</span><span class="p">(</span><span class="n">integer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span> <span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading bn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="n">stream</span><span class="p">,</span> <span class="k">const</span> <span class="n">custom_type</span><span class="o">&amp;</span> <span class="n">custom_value</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;custom_type: &quot;</span><span class="p">);</span>
     <span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">custom_value</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>

@@ -557,9 +557,9 @@ core_lock::~core_lock()
 #if BN_CFG_ASSERT_ENABLED
     namespace _bn::assert
     {
-        void show(const char* file_name, const char* function, int line)
+        void show(const char* file_name, int line)
         {
-            show("", file_name, function, line, "");
+            show("", file_name, "", line, "");
         }
 
         void show(const char* condition, const char* file_name, const char* function, int line)

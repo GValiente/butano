@@ -119,7 +119,7 @@
                     { \
                         if(! (condition)) [[unlikely]] \
                         { \
-                            _bn::assert::show(#condition, __FILE_NAME__, __func__, __LINE__); \
+                            _bn::assert::show(__FILE_NAME__, __LINE__); \
                         } \
                     } \
                 } while(false)
@@ -150,7 +150,7 @@
                     } \
                     else \
                     { \
-                        _bn::assert::show(__FILE_NAME__, __func__, __LINE__); \
+                        _bn::assert::show(__FILE_NAME__, __LINE__); \
                     } \
                 } while(false)
         #endif
@@ -162,7 +162,7 @@
     {
         static_assert(BN_CFG_ASSERT_BUFFER_SIZE >= 64);
 
-        [[noreturn]] void show(const char* file_name, const char* function, int line);
+        [[noreturn]] void show(const char* file_name, int line);
 
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line);
 

@@ -2035,8 +2035,9 @@
  * * @ref BN_BASIC_ASSERT added.
  * * Repeated color palettes reduction can be disabled when importing a regular background.
  *   See the @ref import_regular_bg import guide to learn how to disable it.
- * * Input tiles in `dynamic_regular_bg` and `dynamic_affine_bg` examples are imported without using a map.
+ * * Unaligned byte memset fixed.
  * * Asserts without diagnostic information ROM usage reduced.
+ * * Input tiles in `dynamic_regular_bg` and `dynamic_affine_bg` examples are imported without using a map.
  * * @ref faq page improved.
  *
  *

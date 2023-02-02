@@ -2030,7 +2030,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_4_0 13.4.0 (next release)
+ * @section changelog_13_4_0 13.4.0
  *
  * * @ref BN_BASIC_ASSERT added.
  * * Repeated color palettes reduction can be disabled when importing a regular background.

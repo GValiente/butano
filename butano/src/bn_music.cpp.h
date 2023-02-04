@@ -28,14 +28,14 @@ void play(music_item item)
 
 void play(music_item item, fixed volume)
 {
-    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
 
     audio_manager::play_music(item, volume, true);
 }
 
 void play(music_item item, fixed volume, bool loop)
 {
-    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
 
     audio_manager::play_music(item, volume, loop);
 }
@@ -79,9 +79,33 @@ fixed volume()
 
 void set_volume(fixed volume)
 {
-    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
 
     audio_manager::set_music_volume(volume);
+}
+
+fixed tempo()
+{
+    return audio_manager::music_tempo();
+}
+
+void set_tempo(fixed tempo)
+{
+    BN_BASIC_ASSERT(tempo >= 0.5 && tempo <= 2, "Tempo range is [0.5..2]: ", tempo);
+
+    audio_manager::set_music_tempo(tempo);
+}
+
+fixed pitch()
+{
+    return audio_manager::music_pitch();
+}
+
+void set_pitch(fixed pitch)
+{
+    BN_BASIC_ASSERT(pitch >= 0.5 && pitch <= 2, "Pitch range is [0.5..2]: ", pitch);
+
+    audio_manager::set_music_pitch(pitch);
 }
 
 }

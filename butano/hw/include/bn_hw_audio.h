@@ -23,7 +23,7 @@ namespace bn::hw::audio
 
     [[nodiscard]] bool music_playing();
 
-    void play_music(int id, int volume, bool loop);
+    void play_music(int id, bool loop);
 
     void stop_music();
 
@@ -36,6 +36,10 @@ namespace bn::hw::audio
     void set_music_position(int position);
 
     void set_music_volume(int volume);
+
+    void set_music_tempo(int tempo);
+
+    void set_music_pitch(int pitch);
 
     inline void play_dmg_music(const void* song, int speed, bool loop)
     {

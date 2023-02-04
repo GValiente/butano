@@ -25,6 +25,7 @@ namespace bn::audio_manager
 
     void disable();
 
+
     // music
 
     [[nodiscard]] bool music_playing();
@@ -48,6 +49,15 @@ namespace bn::audio_manager
     [[nodiscard]] fixed music_volume();
 
     void set_music_volume(fixed volume);
+
+    [[nodiscard]] fixed music_tempo();
+
+    void set_music_tempo(fixed tempo);
+
+    [[nodiscard]] fixed music_pitch();
+
+    void set_music_pitch(fixed pitch);
+
 
     // dmg_music
 
@@ -82,6 +92,7 @@ namespace bn::audio_manager
     [[nodiscard]] bool dmg_sync_enabled();
 
     void set_dmg_sync_enabled(bool enabled);
+
 
     // sound
 

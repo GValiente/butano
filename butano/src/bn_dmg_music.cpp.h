@@ -29,14 +29,14 @@ void play(dmg_music_item item)
 
 void play(dmg_music_item item, int speed)
 {
-    BN_ASSERT(speed >= 1 && speed <= 256, "Speed range is [1..256]: ", speed);
+    BN_BASIC_ASSERT(speed >= 1 && speed <= 256, "Speed range is [1..256]: ", speed);
 
     audio_manager::play_dmg_music(item, speed, true);
 }
 
 void play(dmg_music_item item, int speed, bool loop)
 {
-    BN_ASSERT(speed >= 1 && speed <= 256, "Speed range is [1..256]: ", speed);
+    BN_BASIC_ASSERT(speed >= 1 && speed <= 256, "Speed range is [1..256]: ", speed);
 
     audio_manager::play_dmg_music(item, speed, loop);
 }
@@ -88,29 +88,29 @@ fixed right_volume()
 
 void set_left_volume(fixed left_volume)
 {
-    BN_ASSERT(left_volume >= 0 && left_volume <= 1, "Left volume range is [0..1]: ", left_volume);
+    BN_BASIC_ASSERT(left_volume >= 0 && left_volume <= 1, "Left volume range is [0..1]: ", left_volume);
 
     audio_manager::set_dmg_music_left_volume(left_volume);
 }
 
 void set_right_volume(fixed right_volume)
 {
-    BN_ASSERT(right_volume >= 0 && right_volume <= 1, "Right volume range is [0..1]: ", right_volume);
+    BN_BASIC_ASSERT(right_volume >= 0 && right_volume <= 1, "Right volume range is [0..1]: ", right_volume);
 
     audio_manager::set_dmg_music_right_volume(right_volume);
 }
 
 void set_volume(fixed volume)
 {
-    BN_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
 
     audio_manager::set_dmg_music_volume(volume, volume);
 }
 
 void set_volume(fixed left_volume, fixed right_volume)
 {
-    BN_ASSERT(left_volume >= 0 && left_volume <= 1, "Left volume range is [0..1]: ", left_volume);
-    BN_ASSERT(right_volume >= 0 && right_volume <= 1, "Right volume range is [0..1]: ", right_volume);
+    BN_BASIC_ASSERT(left_volume >= 0 && left_volume <= 1, "Left volume range is [0..1]: ", left_volume);
+    BN_BASIC_ASSERT(right_volume >= 0 && right_volume <= 1, "Right volume range is [0..1]: ", right_volume);
 
     audio_manager::set_dmg_music_volume(left_volume, right_volume);
 }

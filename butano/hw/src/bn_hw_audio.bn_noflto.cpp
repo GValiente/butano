@@ -224,7 +224,7 @@ bool music_playing()
     return mmActive();
 }
 
-void play_music(int id, int volume, bool loop)
+void play_music(int id, bool loop)
 {
     if(mmActive())
     {
@@ -232,7 +232,6 @@ void play_music(int id, int volume, bool loop)
     }
 
     mmStart(mm_word(id), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
-    mmSetModuleVolume(mm_word(volume));
 }
 
 void stop_music()
@@ -263,6 +262,16 @@ void set_music_position(int position)
 void set_music_volume(int volume)
 {
     mmSetModuleVolume(mm_word(volume));
+}
+
+void set_music_tempo(int tempo)
+{
+    mmSetModuleTempo(mm_word(tempo));
+}
+
+void set_music_pitch(int pitch)
+{
+    mmSetModulePitch(mm_word(pitch));
 }
 
 void play_sound(int priority, int id)

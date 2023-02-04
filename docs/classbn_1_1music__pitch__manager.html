@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn_music_actions.h file | Butano Docs</title>
+  <title>bn::music_pitch_manager class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,80 +47,53 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          bn_music_actions.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>music_pitch_manager <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__music__actions_8h.html">&lt;bn_music_actions.h&gt;</a></div>
         </h1>
+        <p>Manages the pitch of the active Direct Sound music.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p><a href="namespacebn_1_1music.html" class="m-doc">bn::<wbr />music</a> actions header file.</p>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main Butano namespace.</dd>
+            <dt id="a804bcf5cba69f33bdd59fc74460d5d07">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a804bcf5cba69f33bdd59fc74460d5d07" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the pitch of the active Direct Sound music.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static void <a href="#ab293d566087d86aa46e649b2950652c6" class="m-doc">set</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> pitch)</span>
+            </dt>
+            <dd>Sets the pitch of the active Direct Sound music.</dd>
           </dl>
         </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1music__volume__manager.html" class="m-doc">bn::music_volume_manager</a>
-            </dt>
-            <dd>Manages the volume of the active Direct Sound music.</dd>
-            <dt>
-              class <a href="classbn_1_1music__volume__to__action.html" class="m-doc">bn::music_volume_to_action</a>
-            </dt>
-            <dd>Modifies the volume of the active Direct Sound music until it has a given state.</dd>
-            <dt>
-              class <a href="classbn_1_1music__volume__loop__action.html" class="m-doc">bn::music_volume_loop_action</a>
-            </dt>
-            <dd>Modifies the volume of the active Direct Sound music from a minimum to a maximum. When the volume is equal to the given final state, it goes back to its initial state and vice versa.</dd>
-            <dt>
-              class <a href="classbn_1_1music__volume__toggle__action.html" class="m-doc">bn::music_volume_toggle_action</a>
-            </dt>
-            <dd>Changes the volume of the active Direct Sound music when the action is updated a given number of times.</dd>
-            <dt>
-              class <a href="classbn_1_1music__tempo__manager.html" class="m-doc">bn::music_tempo_manager</a>
-            </dt>
-            <dd>Manages the tempo of the active Direct Sound music.</dd>
-            <dt>
-              class <a href="classbn_1_1music__tempo__to__action.html" class="m-doc">bn::music_tempo_to_action</a>
-            </dt>
-            <dd>Modifies the tempo of the active Direct Sound music until it has a given state.</dd>
-            <dt>
-              class <a href="classbn_1_1music__tempo__loop__action.html" class="m-doc">bn::music_tempo_loop_action</a>
-            </dt>
-            <dd>Modifies the tempo of the active Direct Sound music from a minimum to a maximum. When the tempo is equal to the given final state, it goes back to its initial state and vice versa.</dd>
-            <dt>
-              class <a href="classbn_1_1music__tempo__toggle__action.html" class="m-doc">bn::music_tempo_toggle_action</a>
-            </dt>
-            <dd>Changes the tempo of the active Direct Sound music when the action is updated a given number of times.</dd>
-            <dt>
-              class <a href="classbn_1_1music__pitch__manager.html" class="m-doc">bn::music_pitch_manager</a>
-            </dt>
-            <dd>Manages the pitch of the active Direct Sound music.</dd>
-            <dt>
-              class <a href="classbn_1_1music__pitch__to__action.html" class="m-doc">bn::music_pitch_to_action</a>
-            </dt>
-            <dd>Modifies the pitch of the active Direct Sound music until it has a given state.</dd>
-            <dt>
-              class <a href="classbn_1_1music__pitch__loop__action.html" class="m-doc">bn::music_pitch_loop_action</a>
-            </dt>
-            <dd>Modifies the pitch of the active Direct Sound music from a minimum to a maximum. When the pitch is equal to the given final state, it goes back to its initial state and vice versa.</dd>
-            <dt>
-              class <a href="classbn_1_1music__pitch__toggle__action.html" class="m-doc">bn::music_pitch_toggle_action</a>
-            </dt>
-            <dd>Changes the pitch of the active Direct Sound music when the action is updated a given number of times.</dd>
-          </dl>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ab293d566087d86aa46e649b2950652c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static void bn::<wbr />music_pitch_manager::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab293d566087d86aa46e649b2950652c6" class="m-doc-self">set</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> pitch)</span></span>
+            </h3>
+            <p>Sets the pitch of the active Direct Sound music.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pitch</td>
+                  <td>New pitch in the range [0.5..2].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

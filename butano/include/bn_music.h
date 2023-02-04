@@ -100,6 +100,28 @@ namespace bn::music
      * @param volume Volume level, in the range [0..1].
      */
     void set_volume(fixed volume);
+
+    /**
+     * @brief Returns the tempo of the active Direct Sound music.
+     */
+    [[nodiscard]] fixed tempo();
+
+    /**
+     * @brief Sets the tempo of the active Direct Sound music.
+     * @param tempo Tempo level, in the range [0.5..2].
+     */
+    void set_tempo(fixed tempo);
+
+    /**
+     * @brief Returns the pitch of the active Direct Sound music.
+     */
+    [[nodiscard]] fixed pitch();
+
+    /**
+     * @brief Sets the pitch of the active Direct Sound music.
+     * @param pitch Pitch level, in the range [0.5..2].
+     */
+    void set_pitch(fixed pitch);
 }
 
 #endif

@@ -2030,6 +2030,14 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_5_0 13.5.0 (next release)
+ *
+ * * bn::music::tempo and bn::music::set_tempo added.
+ * * bn::music::pitch and bn::music::set_pitch added.
+ * * bn::music_tempo_to_action, bn::music_tempo_loop_action and bn::music_tempo_toggle_action added.
+ * * bn::music_pitch_to_action, bn::music_pitch_loop_action and bn::music_pitch_toggle_action added.
+ *
+ *
  * @section changelog_13_4_0 13.4.0
  *
  * * @ref BN_BASIC_ASSERT added.

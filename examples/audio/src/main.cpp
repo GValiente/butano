@@ -69,6 +69,82 @@ namespace
         bn::music::stop();
     }
 
+    void music_tempo_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "LEFT: decrease tempo",
+            "RIGHT: increase tempo",
+            "",
+            "",
+            "",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Music tempo", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::music_items::cyberrid.play(0.5);
+        bn::music::set_tempo(0.75);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed tempo = bn::music::tempo();
+
+            if(bn::keypad::left_held())
+            {
+                bn::music::set_tempo(bn::max(tempo - 0.01, bn::fixed(0.5)));
+            }
+            else if(bn::keypad::right_held())
+            {
+                bn::music::set_tempo(bn::min(tempo + 0.01, bn::fixed(2)));
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::music::stop();
+    }
+
+    void music_pitch_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "LEFT: decrease pitch",
+            "RIGHT: increase pitch",
+            "",
+            "",
+            "",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Music pitch", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::music_items::cyberrid.play(0.5);
+        bn::music::set_pitch(0.75);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed pitch = bn::music::pitch();
+
+            if(bn::keypad::left_held())
+            {
+                bn::music::set_pitch(bn::max(pitch - 0.01, bn::fixed(0.5)));
+            }
+            else if(bn::keypad::right_held())
+            {
+                bn::music::set_pitch(bn::min(pitch + 0.01, bn::fixed(2)));
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::music::stop();
+    }
+
     void music_actions_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
@@ -162,6 +238,12 @@ int main()
     while(true)
     {
         music_scene(text_generator);
+        bn::core::update();
+
+        music_tempo_scene(text_generator);
+        bn::core::update();
+
+        music_pitch_scene(text_generator);
         bn::core::update();
 
         music_actions_scene(text_generator);

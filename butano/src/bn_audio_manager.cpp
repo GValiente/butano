@@ -27,6 +27,42 @@ namespace
     static_assert(max_commands > 2, "Invalid max audio commands");
 
 
+    int _hw_music_volume(fixed volume)
+    {
+        return fixed_t<10>(volume).data();
+    }
+
+    int _hw_music_tempo(fixed tempo)
+    {
+        return fixed_t<10>(tempo).data();
+    }
+
+    int _hw_music_pitch(fixed pitch)
+    {
+        return fixed_t<10>(pitch).data();
+    }
+
+    int _hw_sound_volume(fixed volume)
+    {
+        return min(fixed_t<8>(volume).data(), 255);
+    }
+
+    int _hw_dmg_music_volume(fixed volume)
+    {
+        return fixed_t<3>(volume).data();
+    }
+
+    int _hw_sound_speed(fixed speed)
+    {
+        return min(fixed_t<10>(speed).data(), 65535);
+    }
+
+    int _hw_sound_panning(fixed panning)
+    {
+        return min(fixed_t<7>(panning + 1).data(), 255);
+    }
+
+
     class play_music_command
     {
 
@@ -40,7 +76,10 @@ namespace
 
         void execute() const
         {
-            hw::audio::play_music(_id, _volume, _loop);
+            hw::audio::play_music(_id, _loop);
+            hw::audio::set_music_volume(_volume);
+            hw::audio::set_music_tempo(_hw_music_tempo(1));
+            hw::audio::set_music_pitch(_hw_music_pitch(1));
         }
 
     private:
@@ -85,6 +124,44 @@ namespace
 
     private:
         int _volume;
+    };
+
+
+    class set_music_tempo_command
+    {
+
+    public:
+        explicit set_music_tempo_command(int tempo) :
+            _tempo(tempo)
+        {
+        }
+
+        void execute() const
+        {
+            hw::audio::set_music_tempo(_tempo);
+        }
+
+    private:
+        int _tempo;
+    };
+
+
+    class set_music_pitch_command
+    {
+
+    public:
+        explicit set_music_pitch_command(int pitch) :
+            _pitch(pitch)
+        {
+        }
+
+        void execute() const
+        {
+            hw::audio::set_music_pitch(_pitch);
+        }
+
+    private:
+        int _pitch;
     };
 
 
@@ -209,6 +286,8 @@ namespace
         MUSIC_RESUME,
         MUSIC_SET_POSITION,
         MUSIC_SET_VOLUME,
+        MUSIC_SET_TEMPO,
+        MUSIC_SET_PITCH,
         DMG_MUSIC_PLAY,
         DMG_MUSIC_STOP,
         DMG_MUSIC_PAUSE,
@@ -237,6 +316,8 @@ namespace
     public:
         command_data command_datas[max_commands];
         fixed music_volume;
+        fixed music_tempo;
+        fixed music_pitch;
         bn::dmg_music_position dmg_music_position;
         fixed dmg_music_left_volume;
         fixed dmg_music_right_volume;
@@ -252,32 +333,6 @@ namespace
     };
 
     BN_DATA_EWRAM static_data data;
-
-
-    int _hw_music_volume(fixed volume)
-    {
-        return fixed_t<10>(volume).data();
-    }
-
-    int _hw_sound_volume(fixed volume)
-    {
-        return min(fixed_t<8>(volume).data(), 255);
-    }
-
-    int _hw_dmg_music_volume(fixed volume)
-    {
-        return fixed_t<3>(volume).data();
-    }
-
-    int _hw_sound_speed(fixed speed)
-    {
-        return min(fixed_t<10>(speed).data(), 65535);
-    }
-
-    int _hw_sound_panning(fixed panning)
-    {
-        return min(fixed_t<7>(panning + 1).data(), 255);
-    }
 }
 
 void init()
@@ -324,6 +379,8 @@ void play_music(music_item item, fixed volume, bool loop)
     data.music_item_id = item.id();
     data.music_position = 0;
     data.music_volume = volume;
+    data.music_tempo = 1;
+    data.music_pitch = 1;
     data.music_playing = true;
     data.music_paused = false;
 }
@@ -416,6 +473,54 @@ void set_music_volume(fixed volume)
         data.commands_count = commands + 1;
 
         data.music_volume = volume;
+    }
+}
+
+fixed music_tempo()
+{
+    BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
+
+    return data.music_tempo;
+}
+
+void set_music_tempo(fixed tempo)
+{
+    if(tempo != data.music_tempo)
+    {
+        BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
+
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = MUSIC_SET_TEMPO;
+        new(data.command_datas + commands) set_music_tempo_command(_hw_music_tempo(tempo));
+        data.commands_count = commands + 1;
+
+        data.music_tempo = tempo;
+    }
+}
+
+fixed music_pitch()
+{
+    BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
+
+    return data.music_pitch;
+}
+
+void set_music_pitch(fixed pitch)
+{
+    if(pitch != data.music_pitch)
+    {
+        BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
+
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = MUSIC_SET_PITCH;
+        new(data.command_datas + commands) set_music_pitch_command(_hw_music_pitch(pitch));
+        data.commands_count = commands + 1;
+
+        data.music_pitch = pitch;
     }
 }
 
@@ -653,6 +758,14 @@ void execute_commands()
 
         case MUSIC_SET_VOLUME:
             reinterpret_cast<const set_music_volume_command&>(data.command_datas[index].data).execute();
+            break;
+
+        case MUSIC_SET_TEMPO:
+            reinterpret_cast<const set_music_tempo_command&>(data.command_datas[index].data).execute();
+            break;
+
+        case MUSIC_SET_PITCH:
+            reinterpret_cast<const set_music_pitch_command&>(data.command_datas[index].data).execute();
             break;
 
         case DMG_MUSIC_PLAY:

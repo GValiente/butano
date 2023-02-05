@@ -1675,7 +1675,7 @@
  *
  * @subsection faq_error_after_update Why I get undefined reference errors after updating Butano?
  *
- * If after updating Butano you get error messages like this:
+ * If after updating Butano you get error messages like this one:
  *
  * @code{.cpp}
  * error: undefined reference to 'bn::reciprocal_lut_16'
@@ -1829,7 +1829,7 @@
  * }
  * @endcode
  *
- * And then you can access global Butano objects from anywhere in your code with something like this:
+ * With that, you can access global Butano objects from anywhere in your project with this code:
  *
  * @code{.cpp}
  * global_ptr->sprite.set_position(50, 50);
@@ -1838,7 +1838,8 @@
  *
  * @subsection faq_wait_updates Is there a way to stop running my code for a certain amount of time?
  *
- * Since you can usually assume than your game is running at 60FPS, you can wait a second for example with this:
+ * Since you can usually assume than your game is running at 60FPS,
+ * for example you can wait one second with this code:
  *
  * @code{.cpp}
  * for(int index = 0; index < 60; ++index)

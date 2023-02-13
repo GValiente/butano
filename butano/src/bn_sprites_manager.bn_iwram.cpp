@@ -21,29 +21,23 @@ bool _check_items_on_screen_impl(void* hw_handles, intrusive_list<sorted_sprites
     {
         for(sprites_manager_item& item : layer.items())
         {
-            if(item.check_on_screen)
+            if(item.check_on_screen) [[likely]]
             {
                 int x = item.hw_position.x();
                 bool on_screen = false;
                 item.check_on_screen = false;
 
-                if(x < display::width())
+                if(x < display::width() && x + (item.half_width * 2) > 0)
                 {
                     int y = item.hw_position.y();
 
-                    if(y < display::height())
+                    if(y < display::height() && y + (item.half_height * 2) > 0)
                     {
-                        if(x + (item.half_width * 2) > 0)
-                        {
-                            if(y + (item.half_height * 2) > 0)
-                            {
-                                on_screen = true;
-                            }
-                        }
+                        on_screen = true;
                     }
                 }
 
-                if(item.on_screen != on_screen)
+                if(item.on_screen != on_screen) [[unlikely]]
                 {
                     item.on_screen = on_screen;
 

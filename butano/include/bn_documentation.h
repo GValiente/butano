@@ -2037,6 +2037,7 @@
  * * bn::music::pitch and bn::music::set_pitch added.
  * * bn::music_tempo_to_action, bn::music_tempo_loop_action and bn::music_tempo_toggle_action added.
  * * bn::music_pitch_to_action, bn::music_pitch_loop_action and bn::music_pitch_toggle_action added.
+ * * Empty bn::array allowed.
  * * Sprites management IWRAM usage reduced.
  *
  *

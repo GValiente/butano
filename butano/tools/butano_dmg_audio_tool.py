@@ -66,7 +66,7 @@ class DmgAudioFileInfo:
         sys.stdout = io.StringIO()
 
         try:
-            s3m2gbt.convert_file(self.__file_path, output_tag, output_file_path, False)
+            s3m2gbt.convert_file(self.__file_path, output_tag, output_file_path, True)
             sys.stdout = sys.__stdout__
         except Exception:
             sys.stdout = sys.__stdout__

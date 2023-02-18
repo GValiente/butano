@@ -4,6 +4,7 @@ zlib License, see LICENSE file.
 """
 
 import os
+import json
 import sys
 from multiprocessing import Pool
 
@@ -12,12 +13,15 @@ from file_info import FileInfo
 
 class DmgAudioFileInfo:
 
-    def __init__(self, file_path, file_name, file_name_no_ext, file_info_path, is_mod):
+    def __init__(self, json_file_path, file_path, file_name, file_name_no_ext, file_info_path, is_mod):
+        self.__json_file_path = json_file_path
         self.__file_path = file_path
         self.__file_name = file_name
         self.__file_name_no_ext = file_name_no_ext
         self.__file_info_path = file_info_path
         self.__is_mod = is_mod
+        self.__import_instruments = False
+        self.__mod_speed_conversion = True
 
     def print_file_name(self):
         print(self.__file_name)
@@ -28,6 +32,23 @@ class DmgAudioFileInfo:
         output_file_path = build_folder_path + '/' + output_file_name
 
         try:
+            if self.__json_file_path is not None:
+                try:
+                    with open(self.__json_file_path) as json_file:
+                        info = json.load(json_file)
+                except Exception as exception:
+                    raise ValueError(self.__json_file_path + ' DMG audio json file parse failed: ' + str(exception))
+
+                try:
+                    self.__import_instruments = bool(info['import_instruments'])
+                except KeyError:
+                    pass
+
+                try:
+                    self.__mod_speed_conversion = bool(info['mod_speed_conversion'])
+                except KeyError:
+                    pass
+
             if self.__is_mod:
                 self.__execute_mod2gbt_command(output_tag)
                 self.__move_output_file(output_file_name, output_file_path)
@@ -53,7 +74,7 @@ class DmgAudioFileInfo:
         sys.stdout = io.StringIO()
 
         try:
-            mod2gbt.convert_file(self.__file_path, output_tag, True)
+            mod2gbt.convert_file(self.__file_path, output_tag, self.__mod_speed_conversion)
             sys.stdout = sys.__stdout__
         except Exception:
             sys.stdout = sys.__stdout__
@@ -66,7 +87,7 @@ class DmgAudioFileInfo:
         sys.stdout = io.StringIO()
 
         try:
-            s3m2gbt.convert_file(self.__file_path, output_tag, output_file_path, False)
+            s3m2gbt.convert_file(self.__file_path, output_tag, output_file_path, self.__import_instruments)
             sys.stdout = sys.__stdout__
         except Exception:
             sys.stdout = sys.__stdout__
@@ -136,7 +157,17 @@ def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
                                          audio_file_name_no_ext)
 
                     file_names_set.add(audio_file_name_no_ext)
-                    file_info_path = build_folder_path + '/_bn_' + audio_file_name_no_ext + '_dmg_audio_file_info.txt'
+                    json_file_path = audio_folder_path + '/' + audio_file_name_no_ext + '.json'
+
+                    if not os.path.isfile(json_file_path):
+                        json_file_path = None
+
+                    file_info_path = build_folder_path + '/_bn_' + audio_file_name_no_ext
+
+                    if json_file_path is not None:
+                        file_info_path += '_dmg_audio_with_json_file_info.txt'
+                    else:
+                        file_info_path += '_dmg_audio_without_json_file_info.txt'
 
                     if not os.path.exists(file_info_path):
                         build = True
@@ -145,9 +176,14 @@ def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
                         audio_file_mtime = os.path.getmtime(audio_file_path)
                         build = file_info_mtime < audio_file_mtime
 
+                        if not build and json_file_path is not None:
+                            json_file_mtime = os.path.getmtime(json_file_path)
+                            build = file_info_mtime < json_file_mtime
+
                     if build:
                         audio_file_infos.append(DmgAudioFileInfo(
-                            audio_file_path, audio_file_name, audio_file_name_no_ext, file_info_path, mod_extension))
+                            json_file_path, audio_file_path, audio_file_name, audio_file_name_no_ext, file_info_path,
+                            mod_extension))
 
     return audio_file_infos
 

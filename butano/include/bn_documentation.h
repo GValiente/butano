@@ -1470,6 +1470,24 @@
  * bn::dmg_music_items::module.play();
  * @endcode
  *
+ * You can accompany DMG music module files with a `*.json` file with the same name to specify import options.
+ *
+ * An example of the `*.json` files for DMG music module files is the following:
+ *
+ * @code{.json}
+ * {
+ *     "import_instruments": false,
+ *     "mod_speed_conversion": true
+ * }
+ * @endcode
+ *
+ * Available fields are the following:
+ * * `"import_instruments"`: optional field which specifies if channel 3 instruments must be imported,
+ * replacing the default instruments of GBT Player (`false` by default).
+ * Keep in mind that this option is ignored when importing module files with `*.mod` extension.
+ * * `"mod_speed_conversion"`: optional field which specifies if module files with `*.mod` extension speed
+ * must be converted from 50Hz to 60Hz (`true` by default).
+ *
  *
  * @subsection import_sound Sound effects
  *
@@ -2037,6 +2055,8 @@
  * * bn::music::pitch and bn::music::set_pitch added.
  * * bn::music_tempo_to_action, bn::music_tempo_loop_action and bn::music_tempo_toggle_action added.
  * * bn::music_pitch_to_action, bn::music_pitch_loop_action and bn::music_pitch_toggle_action added.
+ * * DMG music import options added.
+ *   See the @ref import_dmg_music import guide to learn how to specify them.
  * * Empty bn::array allowed.
  * * Sprites management IWRAM usage reduced.
  *
@@ -2789,7 +2809,7 @@
  * * bn::sprite_font allows to specify space between characters.
  * * Background palettes bits per pixel mode can be specified by the user.
  * * Palettes change optimized.
- * * Unused palette colors are not exported anymore.
+ * * Unused palette colors are not imported anymore.
  * * bn::sprite_ptr::set_tiles() validation fixed.
  *
  *

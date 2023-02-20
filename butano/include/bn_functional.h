@@ -13,6 +13,7 @@
  * @ingroup functional
  */
 
+#include "bn_alignment.h"
 #include "bn_type_traits.h"
 
 namespace bn
@@ -273,19 +274,36 @@ constexpr void hash_combine(const Type& value, unsigned& result)
 
     if(ptr && size > 0)
     {
-        auto u32_ptr = static_cast<const uint32_t*>(ptr);
         int index = 0;
 
-        for(int limit = size / 4; index < limit; ++index)
+        if(aligned<4>(ptr))
         {
-            result *= prime;
-            result ^= u32_ptr[index];
+            auto u32_ptr = static_cast<const uint32_t*>(ptr);
+
+            for(int limit = size / 4; index < limit; index += 4)
+            {
+                result *= prime;
+                result ^= u32_ptr[index / 4];
+            }
+        }
+        else
+        {
+            auto u8_ptr = static_cast<const uint8_t*>(ptr);
+
+            for(int limit = size / 4; index < limit; index += 4)
+            {
+                unsigned value = unsigned(u8_ptr[index]) |
+                        unsigned(u8_ptr[index + 1]) << 8 |
+                        unsigned(u8_ptr[index + 2]) << 16 |
+                        unsigned(u8_ptr[index + 3]) << 24;
+
+                result *= prime;
+                result ^= value;
+            }
         }
 
         if(size % 4)
         {
-            index *= 4;
-
             auto u8_ptr = static_cast<const uint8_t*>(ptr);
             unsigned value = u8_ptr[index];
             ++index;

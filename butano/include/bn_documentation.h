@@ -2060,6 +2060,7 @@
  * * Empty bn::array allowed.
  * * bn::hash enums support.
  * * Sprites management IWRAM usage reduced.
+ * * bn::array_hash optimized.
  *
  *
  * @section changelog_13_4_0 13.4.0

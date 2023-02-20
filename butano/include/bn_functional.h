@@ -78,12 +78,11 @@ struct hash<unsigned>
     [[nodiscard]] constexpr unsigned operator()(unsigned value) const
     {
         // FNV-1a:
-        unsigned basis = 0x811C9DC5;
-        unsigned prime = 0x01000193;
-        unsigned result = basis;
-        result *= prime;
-        result ^= value;
-        return result;
+        constexpr unsigned basis = 0x811C9DC5;
+        constexpr unsigned prime = 0x01000193;
+        constexpr unsigned result = basis * prime;
+
+        return result ^ value;
     }
 };
 
@@ -267,29 +266,37 @@ constexpr void hash_combine(const Type& value, unsigned& result)
 [[nodiscard]] constexpr unsigned array_hash(const void* ptr, int size)
 {
     // FNV-1a:
-    unsigned basis = 0x811C9DC5;
-    unsigned prime = 0x01000193;
+    constexpr unsigned basis = 0x811C9DC5;
+    constexpr unsigned prime = 0x01000193;
+
     unsigned result = basis;
 
     if(ptr && size > 0)
     {
-        auto u8_ptr = static_cast<const uint8_t*>(ptr);
+        auto u32_ptr = static_cast<const uint32_t*>(ptr);
         int index = 0;
 
-        for(int limit = size / 4; index < limit; index += 4)
+        for(int limit = size / 4; index < limit; ++index)
         {
-            unsigned value = unsigned(u8_ptr[index]) |
-                    unsigned(u8_ptr[index + 1]) << 8 |
-                    unsigned(u8_ptr[index + 2]) << 16 |
-                    unsigned(u8_ptr[index + 3]) << 24;
             result *= prime;
-            result ^= value;
+            result ^= u32_ptr[index];
         }
 
-        for(; index < size; ++index)
+        if(size % 4)
         {
+            index *= 4;
+
+            auto u8_ptr = static_cast<const uint8_t*>(ptr);
+            unsigned value = u8_ptr[index];
+            ++index;
+
+            for(; index < size; ++index)
+            {
+                value = (value << 8) + u8_ptr[index];
+            }
+
             result *= prime;
-            result ^= u8_ptr[index];
+            result ^= value;
         }
     }
 

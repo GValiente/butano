@@ -69,6 +69,9 @@ namespace bn
     using std::is_base_of;
     using std::is_base_of_v;
 
+    using std::is_enum;
+    using std::is_enum_v;
+
     using std::decay;
     using std::decay_t;
 

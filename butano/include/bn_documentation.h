@@ -2058,6 +2058,7 @@
  * * DMG music import options added.
  *   See the @ref import_dmg_music import guide to learn how to specify them.
  * * Empty bn::array allowed.
+ * * bn::hash enums support.
  * * Sprites management IWRAM usage reduced.
  *
  *

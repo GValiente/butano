@@ -13,7 +13,7 @@
  * @ingroup functional
  */
 
-#include "bn_common.h"
+#include "bn_type_traits.h"
 
 namespace bn
 {
@@ -220,6 +220,24 @@ struct hash<Type*>
     [[nodiscard]] constexpr unsigned operator()(const Type* ptr) const
     {
         return hash<unsigned>()(unsigned(ptr));
+    }
+};
+
+/**
+ * @brief Hash support for enums.
+ *
+ * @ingroup functional
+ */
+template<typename EnumType>
+requires(is_enum_v<EnumType>)
+struct hash<EnumType>
+{
+    /**
+     * @brief Returns the hash of the given enum.
+     */
+    [[nodiscard]] constexpr unsigned operator()(EnumType value) const
+    {
+        return hash<unsigned>()(unsigned(value));
     }
 };
 

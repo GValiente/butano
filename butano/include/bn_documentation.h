@@ -2049,7 +2049,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_5_0 13.5.0 (next release)
+ * @section changelog_13_5_0 13.5.0
  *
  * * bn::music::tempo and bn::music::set_tempo added.
  * * bn::music::pitch and bn::music::set_pitch added.

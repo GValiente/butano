@@ -274,43 +274,57 @@ constexpr void hash_combine(const Type& value, unsigned& result)
 
     if(ptr && size > 0)
     {
-        int index = 0;
+        int word_size = size / 4;
+        int words = word_size;
 
         if(aligned<4>(ptr))
         {
             auto u32_ptr = static_cast<const uint32_t*>(ptr);
 
-            for(int limit = size / 4; index < limit; index += 4)
+            while(words)
             {
                 result *= prime;
-                result ^= u32_ptr[index / 4];
+                result ^= *u32_ptr;
+                ++u32_ptr;
+                --words;
             }
+
+            ptr = u32_ptr;
         }
         else
         {
             auto u8_ptr = static_cast<const uint8_t*>(ptr);
 
-            for(int limit = size / 4; index < limit; index += 4)
+            while(words)
             {
-                unsigned value = unsigned(u8_ptr[index]) |
-                        unsigned(u8_ptr[index + 1]) << 8 |
-                        unsigned(u8_ptr[index + 2]) << 16 |
-                        unsigned(u8_ptr[index + 3]) << 24;
+                unsigned value = unsigned(u8_ptr[0]) |
+                        unsigned(u8_ptr[1]) << 8 |
+                        unsigned(u8_ptr[2]) << 16 |
+                        unsigned(u8_ptr[3]) << 24;
 
                 result *= prime;
                 result ^= value;
+                u8_ptr += 4;
+                --words;
             }
+
+            ptr = u8_ptr;
         }
 
-        if(size % 4)
+        size -= word_size * 4;
+
+        if(size)
         {
             auto u8_ptr = static_cast<const uint8_t*>(ptr);
-            unsigned value = u8_ptr[index];
-            ++index;
+            unsigned value = *u8_ptr;
+            ++u8_ptr;
+            --size;
 
-            for(; index < size; ++index)
+            while(size)
             {
-                value = (value << 8) + u8_ptr[index];
+                value = (value << 8) + *u8_ptr;
+                ++u8_ptr;
+                --size;
             }
 
             result *= prime;

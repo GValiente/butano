@@ -2051,7 +2051,8 @@
  *
  * @section changelog_13_6_0 13.6.0 (next release)
  *
- * bn::memory::copy and bn::memory::clear optimized.
+ * * bn::memory::copy and bn::memory::clear optimized.
+ * * bn::array_hash fixed.
  *
  *
  * @section changelog_13_5_0 13.5.0

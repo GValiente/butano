@@ -2049,6 +2049,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_6_0 13.6.0 (next release)
+ *
+ * bn::memory::copy and bn::memory::clear optimized.
+ *
+ *
  * @section changelog_13_5_0 13.5.0
  *
  * * bn::music::tempo and bn::music::set_tempo added.

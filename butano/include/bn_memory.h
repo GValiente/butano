@@ -161,7 +161,15 @@ namespace bn::memory
 
         unsigned bytes = unsigned(elements) * sizeof(Type);
 
-        if(aligned<4>(&source_ref) && aligned<4>(&destination_ref) && bytes % 4 == 0)
+        if constexpr(sizeof(Type) % 4 == 0)
+        {
+            _bn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
+        }
+        else if constexpr(sizeof(Type) % 2 == 0)
+        {
+            _bn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
+        }
+        else if(aligned<4>(&source_ref) && aligned<4>(&destination_ref) && bytes % 4 == 0)
         {
             _bn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
         }
@@ -189,7 +197,15 @@ namespace bn::memory
 
         unsigned bytes = unsigned(elements) * sizeof(Type);
 
-        if(aligned<4>(&destination_ref) && bytes % 4 == 0)
+        if constexpr(sizeof(Type) % 4 == 0)
+        {
+            _bn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
+        }
+        else if constexpr(sizeof(Type) % 2 == 0)
+        {
+            _bn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
+        }
+        else if(aligned<4>(&destination_ref) && bytes % 4 == 0)
         {
             _bn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
         }

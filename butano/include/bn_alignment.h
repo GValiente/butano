@@ -40,7 +40,12 @@ namespace bn
     {
         static_assert(Bytes > 0);
 
-        return alignof(Type) % unsigned(Bytes) == 0 || uintptr_t(pointer) % unsigned(Bytes) == 0;
+        if constexpr(alignof(Type) % unsigned(Bytes) == 0)
+        {
+            return true;
+        }
+
+        return uintptr_t(pointer) % unsigned(Bytes) == 0;
     }
 }
 

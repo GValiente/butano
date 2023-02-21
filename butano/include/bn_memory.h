@@ -159,27 +159,38 @@ namespace bn::memory
         static_assert(is_trivially_copyable<Type>(), "Type is not trivially copyable");
         BN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
-        unsigned bytes = unsigned(elements) * sizeof(Type);
-
-        if constexpr(sizeof(Type) % 4 == 0)
+        if constexpr(sizeof(Type) == 4)
         {
-            _bn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
+            _bn::memory::unsafe_copy_words(&source_ref, elements, &destination_ref);
         }
-        else if constexpr(sizeof(Type) % 2 == 0)
+        else if constexpr(sizeof(Type) == 2)
         {
-            _bn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
-        }
-        else if(aligned<4>(&source_ref) && aligned<4>(&destination_ref) && bytes % 4 == 0)
-        {
-            _bn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
-        }
-        else if(aligned<2>(&source_ref) && aligned<2>(&destination_ref) && bytes % 2 == 0)
-        {
-            _bn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
+            _bn::memory::unsafe_copy_half_words(&source_ref, elements, &destination_ref);
         }
         else
         {
-            _bn::memory::unsafe_copy_bytes(&source_ref, int(bytes), &destination_ref);
+            unsigned bytes = unsigned(elements) * sizeof(Type);
+
+            if constexpr(sizeof(Type) % 4 == 0)
+            {
+                _bn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
+            }
+            else if constexpr(sizeof(Type) % 2 == 0)
+            {
+                _bn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
+            }
+            else if(aligned<4>(&source_ref) && aligned<4>(&destination_ref) && bytes % 4 == 0)
+            {
+                _bn::memory::unsafe_copy_words(&source_ref, int(bytes / 4), &destination_ref);
+            }
+            else if(aligned<2>(&source_ref) && aligned<2>(&destination_ref) && bytes % 2 == 0)
+            {
+                _bn::memory::unsafe_copy_half_words(&source_ref, int(bytes / 2), &destination_ref);
+            }
+            else
+            {
+                _bn::memory::unsafe_copy_bytes(&source_ref, int(bytes), &destination_ref);
+            }
         }
     }
 
@@ -195,27 +206,38 @@ namespace bn::memory
         static_assert(is_trivial<Type>(), "Type is not trivial");
         BN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
-        unsigned bytes = unsigned(elements) * sizeof(Type);
-
-        if constexpr(sizeof(Type) % 4 == 0)
+        if constexpr(sizeof(Type) == 4)
         {
-            _bn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
+            _bn::memory::unsafe_clear_words(elements, &destination_ref);
         }
-        else if constexpr(sizeof(Type) % 2 == 0)
+        else if constexpr(sizeof(Type) == 2)
         {
-            _bn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
-        }
-        else if(aligned<4>(&destination_ref) && bytes % 4 == 0)
-        {
-            _bn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
-        }
-        else if(aligned<2>(&destination_ref) && bytes % 2 == 0)
-        {
-            _bn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
+            _bn::memory::unsafe_clear_half_words(elements, &destination_ref);
         }
         else
         {
-            _bn::memory::unsafe_clear_bytes(int(bytes), &destination_ref);
+            unsigned bytes = unsigned(elements) * sizeof(Type);
+
+            if constexpr(sizeof(Type) % 4 == 0)
+            {
+                _bn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
+            }
+            else if constexpr(sizeof(Type) % 2 == 0)
+            {
+                _bn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
+            }
+            else if(aligned<4>(&destination_ref) && bytes % 4 == 0)
+            {
+                _bn::memory::unsafe_clear_words(int(bytes / 4), &destination_ref);
+            }
+            else if(aligned<2>(&destination_ref) && bytes % 2 == 0)
+            {
+                _bn::memory::unsafe_clear_half_words(int(bytes / 2), &destination_ref);
+            }
+            else
+            {
+                _bn::memory::unsafe_clear_bytes(int(bytes), &destination_ref);
+            }
         }
     }
 

@@ -2049,7 +2049,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_6_0 13.6.0 (next release)
+ * @section changelog_13_6_0 13.6.0
  *
  * * bn::memory::copy and bn::memory::clear optimized.
  * * bn::array_hash fixed.

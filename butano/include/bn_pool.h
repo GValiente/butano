@@ -119,12 +119,12 @@ public:
      * @brief Default constructor.
      */
     pool() :
-        base_type(reinterpret_cast<char*>(&_buffer[0]), MaxSize)
+        base_type(reinterpret_cast<char*>(&_data_buffer[0]), MaxSize)
     {
     }
 
 private:
-    alignas(typename base_type::element) char _buffer[sizeof(typename base_type::element) * MaxSize];
+    alignas(typename base_type::element) char _data_buffer[sizeof(typename base_type::element) * MaxSize];
 };
 
 }

@@ -2049,6 +2049,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_7_0 13.7.0 (next release)
+ *
+ * * bn::igeneric_pool::contains added.
+ * * bn::generic_pool::create invalid element size fixed.
+ *
+ *
  * @section changelog_13_6_0 13.6.0
  *
  * * bn::memory::copy and bn::memory::clear optimized.

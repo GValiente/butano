@@ -76,7 +76,6 @@
                 <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#pub-types">Public types</a></li>
                 <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
-                <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
@@ -108,69 +107,6 @@
             </dt>
             <dd>Default constructor.</dd>
           </dl>
-        </section>
-        <section id="pub-methods">
-          <h2><a href="#pub-methods">Public functions</a></h2>
-          <dl class="m-doc">
-            <dt id="ae09bc5cf0135602af33b63c0faba915c">
-              <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ae09bc5cf0135602af33b63c0faba915c" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const Type&amp; value) const -&gt; bool</span>
-            </dt>
-            <dd>Indicates if the given value belongs to the <a href="classbn_1_1generic__pool.html" class="m-doc">generic_<wbr />pool</a> or not.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;typename Type, typename... Args&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa907c028bed4835ed500bc085eb11305" class="m-doc">create</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; Type&amp;</span>
-            </dt>
-            <dd>Constructs a value inside of the <a href="classbn_1_1generic__pool.html" class="m-doc">generic_<wbr />pool</a>.</dd>
-            <dt id="a9dffe782a3b3d180bb542cfbe85577e6">
-              <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">void <a href="#a9dffe782a3b3d180bb542cfbe85577e6" class="m-doc-self">destroy</a>(</span><span class="m-doc-wrap">Type&amp; value)</span>
-            </dt>
-            <dd>Destroys the given value, previously allocated with the create method.</dd>
-          </dl>
-        </section>
-        <section>
-          <h2>Function documentation</h2>
-          <section class="m-doc-details" id="aa907c028bed4835ed500bc085eb11305"><div>
-            <h3>
-              <div class="m-doc-template">
-                template&lt;int MaxElementSize, int MaxSize&gt;
-                template&lt;typename Type, typename... Args&gt;
-              </div>
-              <span class="m-doc-wrap-bumper">Type&amp; bn::<wbr />generic_pool&lt;MaxElementSize, MaxSize&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa907c028bed4835ed500bc085eb11305" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
-            </h3>
-            <p>Constructs a value inside of the <a href="classbn_1_1generic__pool.html" class="m-doc">generic_<wbr />pool</a>.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Template parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">Type</td>
-                  <td>Type of the value to construct.</td>
-                </tr>
-                <tr>
-                  <td>Args</td>
-                  <td>Type of the arguments of the value to construct.</td>
-                </tr>
-              </tbody>
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>args</td>
-                  <td>Parameters of the value to construct.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td>Reference to the new value.</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div></section>
         </section>
       </div>
     </div>

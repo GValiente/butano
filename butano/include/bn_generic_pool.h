@@ -158,6 +158,17 @@ public:
     }
 
     /**
+     * @brief Indicates if the given value belongs to the igeneric_pool or not.
+     */
+    template<typename Type>
+    [[nodiscard]] bool contains(const Type& value) const
+    {
+        static_assert(sizeof(Type) <= MaxElementSize);
+
+        return _contains_ptr(reinterpret_cast<const char*>(&value));
+    }
+
+    /**
      * @brief Constructs a value inside of the igeneric_pool.
      * @tparam Type Type of the value to construct.
      * @tparam Args Type of the arguments of the value to construct.
@@ -182,11 +193,10 @@ public:
     {
         static_assert(sizeof(Type) <= MaxElementSize);
 
-        auto ptr = reinterpret_cast<char*>(&value);
-        BN_BASIC_ASSERT(_contains_ptr(ptr), "Pool does not contain this value");
+        BN_BASIC_ASSERT(contains(value), "Pool does not contain this value");
 
         value.~Type();
-        _free(ptr);
+        _free(reinterpret_cast<char*>(&value));
     }
 
 protected:
@@ -249,49 +259,12 @@ public:
      * @brief Default constructor.
      */
     generic_pool() :
-        base_type(reinterpret_cast<char*>(&_buffer[0]), MaxSize)
+        base_type(reinterpret_cast<char*>(&_data_buffer[0]), MaxSize)
     {
-    }
-
-    /**
-     * @brief Indicates if the given value belongs to the generic_pool or not.
-     */
-    template<typename Type>
-    [[nodiscard]] bool contains(const Type& value) const
-    {
-        auto ptr = reinterpret_cast<const char*>(&value);
-        return base_type::_contains_ptr(ptr);
-    }
-
-    /**
-     * @brief Constructs a value inside of the generic_pool.
-     * @tparam Type Type of the value to construct.
-     * @tparam Args Type of the arguments of the value to construct.
-     * @param args Parameters of the value to construct.
-     * @return Reference to the new value.
-     */
-    template<typename Type, typename... Args>
-    [[nodiscard]] Type& create(Args&&... args)
-    {
-        auto result = reinterpret_cast<Type*>(base_type::_allocate());
-        ::new(result) Type(forward<Args>(args)...);
-        return *result;
-    }
-
-    /**
-     * @brief Destroys the given value, previously allocated with the create method.
-     */
-    template<typename Type>
-    void destroy(Type& value)
-    {
-        BN_BASIC_ASSERT(contains(value), "Pool does not contain this value");
-
-        value.~Type();
-        base_type::_free(reinterpret_cast<char*>(&value));
     }
 
 private:
-    alignas(element) char _buffer[sizeof(element) * MaxSize];
+    alignas(element) char _data_buffer[sizeof(element) * MaxSize];
 };
 
 }

@@ -691,6 +691,8 @@
  *
  * @image html devkitpro_ubuntu.png
  *
+ * @image html devkitpro_maxmod.png
+ *
  *
  * @section getting_started_python Python
  *
@@ -2047,6 +2049,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_13_8_0 13.8.0 (next release)
+ *
+ * @ref faq page improved.
  *
  *
  * @section changelog_13_7_0 13.7.0

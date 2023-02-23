@@ -2049,7 +2049,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_7_0 13.7.0 (next release)
+ * @section changelog_13_7_0 13.7.0
  *
  * * bn::igeneric_pool::contains added.
  * * bn::generic_pool::create invalid element size fixed.

@@ -273,6 +273,8 @@ public:
     template<typename Type, typename... Args>
     [[nodiscard]] Type& create(Args&&... args)
     {
+        static_assert(sizeof(Type) <= MaxElementSize);
+
         auto result = reinterpret_cast<Type*>(base_type::_allocate());
         ::new(result) Type(forward<Args>(args)...);
         return *result;
@@ -284,6 +286,7 @@ public:
     template<typename Type>
     void destroy(Type& value)
     {
+        static_assert(sizeof(Type) <= MaxElementSize);
         BN_BASIC_ASSERT(contains(value), "Pool does not contain this value");
 
         value.~Type();

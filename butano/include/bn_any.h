@@ -321,7 +321,7 @@ protected:
             BN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
                        alignof(Type), " - ", other_any.max_alignment());
 
-            if(is_copy_constructible_v<Type>)
+            if constexpr(is_copy_constructible_v<Type>)
             {
                 other_any.reset();
                 ::new(other_any._value_ptr<Type>()) Type(*this_any._value_ptr<Type>());
@@ -340,7 +340,7 @@ protected:
             BN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
                        alignof(Type), " - ", other_any.max_alignment());
 
-            if(is_move_constructible_v<Type>)
+            if constexpr(is_move_constructible_v<Type>)
             {
                 other_any.reset();
                 ::new(other_any._value_ptr<Type>()) Type(move(*this_any._value_ptr<Type>()));
@@ -355,7 +355,7 @@ protected:
 
         void swap(iany& this_any, iany& other_any) const final
         {
-            if(is_swappable_v<Type>)
+            if constexpr(is_swappable_v<Type>)
             {
                 bn::swap(*this_any._value_ptr<Type>(), *other_any._value_ptr<Type>());
             }

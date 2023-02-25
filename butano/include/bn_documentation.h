@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_8_1 13.8.1 (next release)
+ *
+ * bn::any management with types that can't be copied, moved or swapped fixed.
+ *
+ *
  * @section changelog_13_8_0 13.8.0
  *
  * * bn::any construction and assignment from references to non constant values fixed.

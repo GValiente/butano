@@ -2051,7 +2051,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_8_1 13.8.1 (next release)
+ * @section changelog_13_8_1 13.8.1
  *
  * bn::any management with types that can't be copied, moved or swapped fixed.
  *

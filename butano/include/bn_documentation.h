@@ -2053,7 +2053,8 @@
  *
  * @section changelog_13_8_0 13.8.0 (next release)
  *
- * @ref faq page improved.
+ * * bn::any construction and assignment from references to non constant values fixed.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_13_7_0 13.7.0

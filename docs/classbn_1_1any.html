@@ -120,6 +120,11 @@
             <dd>Constructor.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#a8e06d5aed3bd8b743125c2bd58be7bc8" class="m-doc">any</a>(</span><span class="m-doc-wrap">Type&amp; value) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
               <span class="m-doc-wrap-bumper"><a href="#a1d8648d0d14f224a234747d8cf79f725" class="m-doc">any</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value) <span class="m-label m-flat m-info">explicit</span> </span>
             </dt>
             <dd>Constructor.</dd>
@@ -147,6 +152,11 @@
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ad525468ba8015ab319ea32b966bbdf6d" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const Type&amp; value) -&gt; <a href="classbn_1_1any.html" class="m-doc">any</a>&amp;</span>
+            </dt>
+            <dd>Assignment operator.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a64d5ed4a86880445aeceef913508f4d3" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">Type&amp; value) -&gt; <a href="classbn_1_1any.html" class="m-doc">any</a>&amp;</span>
             </dt>
             <dd>Assignment operator.</dd>
             <dt>
@@ -259,7 +269,28 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">value</td>
-                  <td>Value to copy.</td>
+                  <td>Constant value to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8e06d5aed3bd8b743125c2bd58be7bc8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize, int MaxAlignment&gt;
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />any&lt;MaxSize, MaxAlignment&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8e06d5aed3bd8b743125c2bd58be7bc8" class="m-doc-self">any</a>(</span><span class="m-doc-wrap">Type&amp; value) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Non constant value to copy.</td>
                 </tr>
               </tbody>
             </table>
@@ -405,7 +436,34 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">value</td>
-                  <td>Value to copy.</td>
+                  <td>Constant value to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a64d5ed4a86880445aeceef913508f4d3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSize, int MaxAlignment&gt;
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1any.html" class="m-doc">any</a>&amp; bn::<wbr />any&lt;MaxSize, MaxAlignment&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a64d5ed4a86880445aeceef913508f4d3" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">Type&amp; value)</span></span>
+            </h3>
+            <p>Assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Non constant value to copy.</td>
                 </tr>
               </tbody>
               <tfoot>

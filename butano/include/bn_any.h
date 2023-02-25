@@ -78,10 +78,27 @@ public:
 
     /**
      * @brief Constructor.
-     * @param value Value to copy.
+     * @param value Constant value to copy.
      */
     template<typename Type>
     iany& operator=(const Type& value)
+    {
+        BN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
+        BN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
+                   alignof(Type), " - ", _max_alignment);
+
+        reset();
+        ::new(_value_ptr<Type>()) Type(value);
+        _create_manager<Type>();
+        return *this;
+    }
+
+    /**
+     * @brief Constructor.
+     * @param value Non constant value to copy.
+     */
+    template<typename Type>
+    iany& operator=(Type& value)
     {
         BN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
         BN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
@@ -478,10 +495,25 @@ public:
 
     /**
      * @brief Constructor.
-     * @param value Value to copy.
+     * @param value Constant value to copy.
      */
     template<typename Type>
     explicit any(const Type& value) :
+        any()
+    {
+        static_assert(int(sizeof(Type)) <= MaxSize);
+        static_assert(int(alignof(Type)) <= MaxAlignment);
+
+        ::new(_value_ptr<Type>()) Type(value);
+        _create_manager<Type>();
+    }
+
+    /**
+     * @brief Constructor.
+     * @param value Non constant value to copy.
+     */
+    template<typename Type>
+    explicit any(Type& value) :
         any()
     {
         static_assert(int(sizeof(Type)) <= MaxSize);
@@ -572,11 +604,28 @@ public:
 
     /**
      * @brief Assignment operator.
-     * @param value Value to copy.
+     * @param value Constant value to copy.
      * @return Reference to this.
      */
     template<typename Type>
     any& operator=(const Type& value)
+    {
+        static_assert(int(sizeof(Type)) <= MaxSize);
+        static_assert(int(alignof(Type)) <= MaxAlignment);
+
+        reset();
+        ::new(_value_ptr<Type>()) Type(value);
+        _create_manager<Type>();
+        return *this;
+    }
+
+    /**
+     * @brief Assignment operator.
+     * @param value Non constant value to copy.
+     * @return Reference to this.
+     */
+    template<typename Type>
+    any& operator=(Type& value)
     {
         static_assert(int(sizeof(Type)) <= MaxSize);
         static_assert(int(alignof(Type)) <= MaxAlignment);

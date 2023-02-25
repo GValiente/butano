@@ -2051,7 +2051,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_8_0 13.8.0 (next release)
+ * @section changelog_13_8_0 13.8.0
  *
  * * bn::any construction and assignment from references to non constant values fixed.
  * * @ref faq page improved.

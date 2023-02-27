@@ -109,6 +109,22 @@ namespace bn
     }
 
     /**
+     * @brief Returns the fixed point square root of the given value
+     * without trying to avoid overflow.
+     *
+     * See https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/fixedmath.hpp
+     *
+     * @ingroup math
+     */
+    template<int Precision>
+    [[nodiscard]] BN_CONST constexpr fixed_t<Precision> unsafe_sqrt(fixed_t<Precision> value)
+    {
+        int double_precision_data = fixed_t<Precision * 2>(value).data();
+
+        return fixed_t<Precision>::from_data(sqrt(double_precision_data));
+    }
+
+    /**
      * @brief Calculates the sine value of an angle.
      * @param angle Angle (2π = 1).
      * @return Sine value in the range [-1, 1].

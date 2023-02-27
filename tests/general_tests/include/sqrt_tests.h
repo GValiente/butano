@@ -34,6 +34,10 @@ public:
             bn::fixed std_sqrt = std::sqrt(i.to_float());
             BN_ASSERT(bn::abs(bn_sqrt - std_sqrt) < bn::fixed(0.0175),
                       "Invalid bn::sqrt(bn::fixed): ", i, " - ", bn_sqrt, " - ", std_sqrt);
+
+            bn::fixed bn_unsafe_sqrt = bn::unsafe_sqrt(i);
+            BN_ASSERT(bn::abs(bn_unsafe_sqrt - std_sqrt) < bn::fixed(0.0005),
+                      "Invalid bn::unsafe_sqrt(bn::fixed): ", i, " - ", bn_unsafe_sqrt, " - ", std_sqrt);
         }
 
         constexpr bn::fixed a = 0.25;

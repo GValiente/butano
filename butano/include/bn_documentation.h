@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_9_0 13.9.0 (next release)
+ *
+ * bn::unsafe_sqrt added.
+ *
+ *
  * @section changelog_13_8_1 13.8.1
  *
  * bn::any management with types that can't be copied, moved or swapped fixed.

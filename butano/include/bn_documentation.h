@@ -1782,10 +1782,10 @@
  *
  * @subsection faq_float_double Can I use float or double when coding for the GBA?
  *
- * Normally CPUs have dedicated hardware for processing `float`s and `double`s, called an FPU.
- * The GBA doesn't have one, so you're left with 2 choices:
+ * Modern CPUs have dedicated hardware for processing `float`s and `double`s.
+ * The GBA doesn't have it, so you're left with two choices:
  *
- * * Using soft float, which is floating point emulated in software (*very* slow).
+ * * Using `float`s and `double`s emulated in software (*very* slow).
  * * Using fixed point arithmetic, which is just integer arithmetic with a few extra steps.
  *
  * Butano provides bn::fixed, which tries to be as close as possible to a `float` with fixed point arithmetic.
@@ -2055,6 +2055,7 @@
  *
  * * bn::unsafe_sqrt added.
  * * <a href="https://foopod.itch.io/sips">Sips</a> added to `README.md`.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_13_8_1 13.8.1

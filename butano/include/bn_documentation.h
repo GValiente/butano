@@ -2053,7 +2053,8 @@
  *
  * @section changelog_13_9_0 13.9.0 (next release)
  *
- * bn::unsafe_sqrt added.
+ * * bn::unsafe_sqrt added.
+ * * <a href="https://foopod.itch.io/sips">Sips</a> added to `README.md`.
  *
  *
  * @section changelog_13_8_1 13.8.1

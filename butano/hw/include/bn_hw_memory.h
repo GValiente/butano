@@ -53,7 +53,7 @@ namespace bn::hw::memory
 
     inline void set_bytes(uint8_t value, int bytes, void* destination)
     {
-        toncset(destination, value, bytes);
+        toncset(destination, value, unsigned(bytes));
     }
 
     inline void set_half_words(uint16_t value, int half_words, void* destination)

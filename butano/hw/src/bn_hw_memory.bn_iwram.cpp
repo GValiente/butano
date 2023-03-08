@@ -40,6 +40,11 @@ void _iwram_toncset(void *dst, u32 fill, uint size)
 	// Unaligned head.
 	if(left != 0)
 	{
+        if(size==0)
+        {
+            return;
+        }
+
 		// Adjust for very small stint.
 		if(left+size<4)
 		{

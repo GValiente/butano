@@ -33,13 +33,6 @@ __aeabi_memclr4:
     mov     r2, #0
     b       __agbabi_wordset4
 
-    .section .iwram.__aeabi_memset, "ax", %progbits
-    .global __aeabi_memset
-__aeabi_memset:
-    mov     r2, r2, lsl #24
-    orr     r2, r2, r2, lsr #8
-    orr     r2, r2, r2, lsr #16
-
 .Lwordset:
     // Handle < 4 bytes in byte-by-byte tail
     cmp     r1, #4
@@ -96,15 +89,4 @@ __agbabi_lwordset4:
     subs    r1, r1, #1
     strgeb  r2, [r0], #1
     bgt     .Lset_tail3
-    bx      lr
-
-    .section .iwram.memset, "ax", %progbits
-    .global memset
-memset:
-    mov     r3, r1
-    mov     r1, r2
-    mov     r2, r3
-    push    {r0, lr}
-    bl      __aeabi_memset
-    pop     {r0, lr}
     bx      lr

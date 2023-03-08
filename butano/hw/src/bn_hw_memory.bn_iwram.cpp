@@ -32,7 +32,7 @@ void _iwram_toncset(void *dst, u32 fill, uint size)
 {
 	uint left= (u32)dst&3;
 	u32 *dst32= (u32*)(dst-left);
-    u32 count, mask;
+    u32 mask;
 
     // Fix fill.
     fill = quad8(fill);
@@ -54,18 +54,9 @@ void _iwram_toncset(void *dst, u32 fill, uint size)
 		size -= 4-left;
 	}
 
-	// Main stint.
-	count= size/4;
-	uint tmp= count&3;
-	count /= 4;
-
-	switch(tmp) {
-		do {	*dst32++ = fill;
-	case 3:		*dst32++ = fill;
-	case 2:		*dst32++ = fill;
-	case 1:		*dst32++ = fill;
-	case 0:		; }	while(count--);
-	}
+    // Main stint.
+    set_words(fill, size / 4, dst32);
+    dst32 += size / 4;
 
 	// Tail
 	size &= 3;

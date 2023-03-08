@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_10_0 13.10.0 (next release)
+ *
+ * `memset` moved to IWRAM.
+ *
+ *
  * @section changelog_13_9_0 13.9.0
  *
  * * bn::unsafe_sqrt added.

@@ -14,6 +14,8 @@ namespace bn::hw::memory
 {
     void init();
 
+    BN_CODE_IWRAM void _iwram_toncset(void *dst, u32 fill, uint size);
+
     [[nodiscard]] inline int stack_address()
     {
         unsigned result = 0;
@@ -53,7 +55,7 @@ namespace bn::hw::memory
 
     inline void set_bytes(uint8_t value, int bytes, void* destination)
     {
-        toncset(destination, value, unsigned(bytes));
+        _iwram_toncset(destination, value, unsigned(bytes));
     }
 
     inline void set_half_words(uint16_t value, int half_words, void* destination)

@@ -30,6 +30,11 @@ namespace bn::hw::memory
 */
 void _iwram_toncset(void *dst, u32 fill, uint size)
 {
+    if(dst==nullptr || size==0)
+    {
+        return;
+    }
+
 	uint left= (u32)dst&3;
 	u32 *dst32= (u32*)(dst-left);
     u32 mask;
@@ -40,11 +45,6 @@ void _iwram_toncset(void *dst, u32 fill, uint size)
 	// Unaligned head.
 	if(left != 0)
 	{
-        if(size==0)
-        {
-            return;
-        }
-
 		// Adjust for very small stint.
 		if(left+size<4)
 		{

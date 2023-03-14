@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_10_1 13.10.1 (next release)
+ *
+ * `memset` undefined references fixed when link-time optimization is enabled.
+ *
+ *
  * @section changelog_13_10_0 13.10.0
  *
  * * `memset` moved to IWRAM.

@@ -97,7 +97,7 @@ namespace bn::hw::display
 
     [[nodiscard]] inline int blending_layers(const bool* bgs_ptr, int count, bool fade)
     {
-        unsigned result = fade ? BLD_OBJ : 0;
+        unsigned result = fade ? BLD_OBJ | BLD_BACKDROP : 0;
 
         for(int index = 0; index < count; ++index)
         {

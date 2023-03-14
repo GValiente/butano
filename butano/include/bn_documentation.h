@@ -2051,9 +2051,9 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_10_1 13.10.1 (next release)
+ * @section changelog_13_10_1 13.10.1
  *
- * `memset` undefined references fixed when link-time optimization is enabled.
+ * `-flto` `memset` undefined references fixed.
  *
  *
  * @section changelog_13_10_0 13.10.0

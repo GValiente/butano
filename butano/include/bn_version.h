@@ -34,7 +34,7 @@
  * @ingroup other
  */
 #ifndef BN_VERSION_MINOR
-    #define BN_VERSION_MINOR 9
+    #define BN_VERSION_MINOR 10
 #endif
 
 /**
@@ -56,7 +56,7 @@
  * @ingroup other
  */
 #ifndef BN_VERSION_STRING
-    #define BN_VERSION_STRING "13.9.0"
+    #define BN_VERSION_STRING "13.10.0"
 #endif
 
 /**

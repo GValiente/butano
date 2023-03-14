@@ -2051,7 +2051,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_10_0 13.10.0 (next release)
+ * @section changelog_13_10_0 13.10.0
  *
  * * `memset` moved to IWRAM.
  * * Backdrop fade blending fixed.

@@ -1794,11 +1794,11 @@
  *
  * @subsection faq_sprintf How do I print a number in a string?
  *
- * *Don't* use `sprintf`, `std::ostring_stream` nor anything that comes with the standard library, because:
+ * *Don't* use `sprintf`, `std::ostringstream` or anything else from the standard library, because:
  *
  * * Butano functions for printing numbers in strings can be more than 5 times faster than the standard functions.
  * * Standard functions can take more than 4KB of IWRAM.
- * * Standard functions sometimes can't be used because they give link errors.
+ * * Standard functions sometimes can't be used because they throw link errors.
  *
  * If you want to print a number in a string with Butano, bn::to_string provides the easiest way to do it:
  *
@@ -2049,6 +2049,12 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_13_11_0 13.11.0 (next release)
+ *
+ * * <a href="https://github.com/felixjones/agbabi">agbabi</a> updated to 2.1.3.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_13_10_1 13.10.1

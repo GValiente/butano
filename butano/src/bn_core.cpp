@@ -212,11 +212,20 @@ namespace
 
         BN_PROFILER_ENGINE_GENERAL_STOP();
 
+        BN_BARRIER;
         result.cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
+
+        BN_BARRIER;
         data.waiting_for_vblank = true;
 
         hw::core::wait_for_vblank();
 
+        BN_BARRIER;
+        data.cpu_usage_timer.restart();
+
+        BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
+
+        BN_BARRIER;
         result.missed_frames = data.missed_frames;
         data.missed_frames = 0;
 
@@ -387,10 +396,6 @@ void on_vblank()
 {
     if(data.waiting_for_vblank)
     {
-        data.cpu_usage_timer.restart();
-
-        BN_PROFILER_ENGINE_GENERAL_START("eng_commit");
-
         BN_PROFILER_ENGINE_DETAILED_START("eng_audio_update");
         audio_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();

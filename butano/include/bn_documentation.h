@@ -2051,7 +2051,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_11_0 13.11.0 (next release)
+ * @section changelog_13_11_0 13.11.0
  *
  * * <a href="https://github.com/felixjones/agbabi">agbabi</a> updated to 2.1.3.
  * * bn::core::current_cpu_usage, bn::core::last_cpu_usage and bn::core::last_vblank_usage accuracy improved.

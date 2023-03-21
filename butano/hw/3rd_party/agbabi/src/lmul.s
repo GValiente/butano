@@ -1,20 +1,19 @@
-/*
-===============================================================================
-
- ABI:
-    __aeabi_lmul, __aeabi_llsl, __aeabi_llsr, __aeabi_lasr
-
- Copyright (C) 2021-2022 agbabi contributors
- For conditions of distribution and use, see copyright notice in LICENSE.md
-
-===============================================================================
-*/
+@===============================================================================
+@
+@ ABI:
+@    __aeabi_lmul, __aeabi_llsl, __aeabi_llsr, __aeabi_lasr
+@
+@ Copyright (C) 2021-2023 agbabi contributors
+@ For conditions of distribution and use, see copyright notice in LICENSE.md
+@
+@===============================================================================
 
     .arm
     .align 2
 
     .section .iwram.__aeabi_lmul, "ax", %progbits
     .global __aeabi_lmul
+    .type __aeabi_lmul, %function
 __aeabi_lmul:
     mul     r3, r0, r3
     mla     r1, r2, r1, r3
@@ -24,6 +23,7 @@ __aeabi_lmul:
 
     .section .iwram.__aeabi_llsl, "ax", %progbits
     .global __aeabi_llsl
+    .type __aeabi_llsl, %function
 __aeabi_llsl:
     subs    r3, r2, #32
     rsb     r12, r2, #32
@@ -35,6 +35,7 @@ __aeabi_llsl:
 
     .section .iwram.__aeabi_llsr, "ax", %progbits
     .global __aeabi_llsr
+    .type __aeabi_llsr, %function
 __aeabi_llsr:
     subs    r3, r2, #32
     rsb     r12, r2, #32
@@ -46,6 +47,7 @@ __aeabi_llsr:
 
     .section .iwram.__aeabi_lasr, "ax", %progbits
     .global __aeabi_lasr
+    .type __aeabi_lasr, %function
 __aeabi_lasr:
     subs    r3, r2, #32
     rsb     r12, r2, #32

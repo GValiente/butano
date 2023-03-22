@@ -818,47 +818,35 @@ const optional<sprite_affine_mat_ptr>& sprite_ptr::affine_mat() const
 
 void sprite_ptr::set_affine_mat(const sprite_affine_mat_ptr& affine_mat)
 {
-    if(affine_mat != this->affine_mat())
-    {
-        sprites_manager::set_affine_mat(_handle, sprite_affine_mat_ptr(affine_mat));
-    }
+    sprites_manager::set_affine_mat(_handle, affine_mat);
 }
 
 void sprite_ptr::set_affine_mat(sprite_affine_mat_ptr&& affine_mat)
 {
-    if(affine_mat != this->affine_mat())
-    {
-        sprites_manager::set_affine_mat(_handle, move(affine_mat));
-    }
+    sprites_manager::set_affine_mat(_handle, move(affine_mat));
 }
 
 void sprite_ptr::set_affine_mat(const optional<sprite_affine_mat_ptr>& affine_mat)
 {
-    if(affine_mat != this->affine_mat())
+    if(const sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        if(const sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
-        {
-            sprites_manager::set_affine_mat(_handle, sprite_affine_mat_ptr(*affine_mat_ptr));
-        }
-        else
-        {
-            sprites_manager::remove_affine_mat(_handle);
-        }
+        sprites_manager::set_affine_mat(_handle, *affine_mat_ptr);
+    }
+    else
+    {
+        sprites_manager::remove_affine_mat(_handle);
     }
 }
 
 void sprite_ptr::set_affine_mat(optional<sprite_affine_mat_ptr>&& affine_mat)
 {
-    if(affine_mat != this->affine_mat())
+    if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
     {
-        if(sprite_affine_mat_ptr* affine_mat_ptr = affine_mat.get())
-        {
-            sprites_manager::set_affine_mat(_handle, move(*affine_mat_ptr));
-        }
-        else
-        {
-            sprites_manager::remove_affine_mat(_handle);
-        }
+        sprites_manager::set_affine_mat(_handle, move(*affine_mat_ptr));
+    }
+    else
+    {
+        sprites_manager::remove_affine_mat(_handle);
     }
 }
 

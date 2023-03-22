@@ -102,6 +102,38 @@ namespace
         _update_item_dimensions(item);
     }
 
+    void _assign_affine_mat(bool remove_when_not_needed, item_type& item, sprite_affine_mat_ptr&& affine_mat)
+    {
+        item.remove_affine_mat_when_not_needed = remove_when_not_needed;
+
+        if(const sprite_affine_mat_ptr* item_affine_mat = item.affine_mat.get())
+        {
+            sprite_affine_mats_manager::dettach_sprite(item_affine_mat->id(), item.affine_mat_attach_node);
+        }
+
+        int affine_mat_id = affine_mat.id();
+        item.affine_mat = move(affine_mat);
+        sprite_affine_mats_manager::attach_sprite(affine_mat_id, item.affine_mat_attach_node);
+
+        bool new_double_size = item.new_double_size(affine_mat_id);
+        hw::sprites::set_affine_mat(affine_mat_id, item.handle);
+
+        if(item.visible)
+        {
+            hw::sprites::show_affine(new_double_size, item.handle);
+        }
+
+        if(item.double_size != new_double_size)
+        {
+            item.double_size = new_double_size;
+            _update_item_dimensions(item);
+        }
+        else
+        {
+            _update_indexes_to_commit(item);
+        }
+    }
+
     void _remove_affine_mat(item_type& item)
     {
         sprite_affine_mat_ptr& item_affine_mat = *item.affine_mat;
@@ -936,36 +968,23 @@ optional<sprite_affine_mat_ptr>& affine_mat(id_type id)
     return item->affine_mat;
 }
 
+void set_affine_mat(id_type id, const sprite_affine_mat_ptr& affine_mat)
+{
+    auto item = static_cast<item_type*>(id);
+
+    if(item->affine_mat != affine_mat)
+    {
+        _assign_affine_mat(false, *item, sprite_affine_mat_ptr(affine_mat));
+    }
+}
+
 void set_affine_mat(id_type id, sprite_affine_mat_ptr&& affine_mat)
 {
     auto item = static_cast<item_type*>(id);
-    item->remove_affine_mat_when_not_needed = false;
 
-    if(const sprite_affine_mat_ptr* item_affine_mat = item->affine_mat.get())
+    if(item->affine_mat != affine_mat)
     {
-        sprite_affine_mats_manager::dettach_sprite(item_affine_mat->id(), item->affine_mat_attach_node);
-    }
-
-    int affine_mat_id = affine_mat.id();
-    item->affine_mat = move(affine_mat);
-    sprite_affine_mats_manager::attach_sprite(affine_mat_id, item->affine_mat_attach_node);
-
-    bool new_double_size = item->new_double_size(affine_mat_id);
-    hw::sprites::set_affine_mat(affine_mat_id, item->handle);
-
-    if(item->visible)
-    {
-        hw::sprites::show_affine(new_double_size, item->handle);
-    }
-
-    if(item->double_size != new_double_size)
-    {
-        item->double_size = new_double_size;
-        _update_item_dimensions(*item);
-    }
-    else
-    {
-        _update_indexes_to_commit(*item);
+        _assign_affine_mat(false, *item, move(affine_mat));
     }
 }
 
@@ -975,8 +994,7 @@ void set_new_affine_mat(id_type id, affine_mat_attributes& mat_attributes)
     const hw::sprites::handle_type& handle = item->handle;
     mat_attributes.set_horizontal_flip(hw::sprites::horizontal_flip(handle));
     mat_attributes.set_vertical_flip(hw::sprites::vertical_flip(handle));
-    set_affine_mat(id, sprite_affine_mat_ptr::create(mat_attributes));
-    item->remove_affine_mat_when_not_needed = true;
+    _assign_affine_mat(true, *item, sprite_affine_mat_ptr::create(mat_attributes));
 }
 
 void remove_affine_mat(id_type id)
@@ -1051,13 +1069,8 @@ void set_affine_second_attributes(id_type id, const sprite_affine_second_attribu
     auto item = static_cast<item_type*>(id);
     BN_BASIC_ASSERT(item->affine_mat, "Item is not affine");
 
-    const sprite_affine_mat_ptr& affine_mat = second_attributes.affine_mat();
     set_x(id, second_attributes.x());
-
-    if(affine_mat != item->affine_mat)
-    {
-        set_affine_mat(id, sprite_affine_mat_ptr(affine_mat));
-    }
+    set_affine_mat(id, second_attributes.affine_mat());
 }
 
 sprite_third_attributes third_attributes(id_type id)

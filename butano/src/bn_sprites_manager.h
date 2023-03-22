@@ -156,6 +156,8 @@ namespace sprites_manager
 
     [[nodiscard]] optional<sprite_affine_mat_ptr>& affine_mat(id_type id);
 
+    void set_affine_mat(id_type id, const sprite_affine_mat_ptr& affine_mat);
+
     void set_affine_mat(id_type id, sprite_affine_mat_ptr&& affine_mat);
 
     void set_new_affine_mat(id_type id, affine_mat_attributes& mat_attributes);

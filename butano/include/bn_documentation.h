@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_12_0 13.12.0 (next release)
+ *
+ * bn::sprite_ptr::set_affine_mat optimized.
+ *
+ *
  * @section changelog_13_11_0 13.11.0
  *
  * * <a href="https://github.com/felixjones/agbabi">agbabi</a> updated to 2.1.3.

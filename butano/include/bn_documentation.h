@@ -2053,7 +2053,8 @@
  *
  * @section changelog_13_12_0 13.12.0 (next release)
  *
- * bn::sprite_ptr::set_affine_mat optimized.
+ * * bn::sprite_ptr::set_affine_mat optimized.
+ * * Flickering in `world_map` example fixed.
  *
  *
  * @section changelog_13_11_0 13.11.0

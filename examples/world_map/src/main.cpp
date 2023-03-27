@@ -8,6 +8,7 @@
 #include "bn_display.h"
 #include "bn_blending.h"
 #include "bn_fixed_point.h"
+#include "bn_rect_window.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
@@ -49,6 +50,16 @@ int main()
     clouds_bg.set_priority(2);
     clouds_bg.set_blending_enabled(true);
     bn::blending::set_transparency_alpha(0.5);
+
+    bn::rect_window rect_window = bn::rect_window::external();
+    rect_window.set_boundaries(attributes_window_height - (bn::display::height() / 2),
+                               -bn::display::width() / 2,
+                               (bn::display::height() / 2) - attributes_window_height,
+                               bn::display::width() / 2);
+
+    bn::window outside_window = bn::window::outside();
+    outside_window.set_show_bg(land_bg, false);
+    outside_window.set_show_bg(clouds_bg, false);
 
     bn::unique_ptr<bn::array<bn::affine_bg_mat_attributes, bn::display::height()>> land_attributes_ptr(
             new bn::array<bn::affine_bg_mat_attributes, bn::display::height()>());

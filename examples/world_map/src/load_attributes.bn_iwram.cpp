@@ -7,12 +7,14 @@
 
 void load_attributes(bn::affine_bg_mat_attributes base_attributes, bn::affine_bg_mat_attributes* attributes)
 {
-    bn::fixed scale = base_attributes.horizontal_scale();
+    constexpr bn::fixed scale_inc = 0.003;
 
-    for(int index = 0; index < bn::display::height(); ++index)
+    bn::fixed scale = base_attributes.horizontal_scale() + (scale_inc * attributes_window_height);
+
+    for(int index = attributes_window_height; index < bn::display::height() - attributes_window_height; ++index)
     {
         base_attributes.set_scale(scale);
-        scale += 0.003;
+        scale += scale_inc;
         attributes[index] = base_attributes;
     }
 }

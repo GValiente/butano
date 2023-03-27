@@ -8,6 +8,8 @@
 
 #include "bn_affine_bg_mat_attributes.h"
 
+constexpr int attributes_window_height = 24;
+
 BN_CODE_IWRAM void load_attributes(bn::affine_bg_mat_attributes base_attributes,
                                    bn::affine_bg_mat_attributes* attributes);
 

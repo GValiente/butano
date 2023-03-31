@@ -123,6 +123,14 @@ public:
         return minimum + fixed::from_data(int(result));
     }
 
+    constexpr void set_seed(const unsigned s) {
+        _x = 123456789 + s;
+        _y = 362436069;
+        _z = 521288629;
+
+        update();
+    }
+
     /**
      * @brief Updates the value of the internal seed.
      */

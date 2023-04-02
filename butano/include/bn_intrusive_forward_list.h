@@ -350,7 +350,7 @@ public:
     {
         BN_BASIC_ASSERT(! empty(), "List is empty");
 
-        return static_cast<reference>(_first_node.next)->value;
+        return static_cast<reference>(*_first_node.next);
     }
 
     /**

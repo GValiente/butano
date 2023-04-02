@@ -2054,6 +2054,7 @@
  * @section changelog_13_12_0 13.12.0 (next release)
  *
  * * bn::sprite_ptr::set_affine_mat optimized.
+ * * bn::intrusive_forward_list::front fixed.
  * * Flickering in `world_map` example fixed.
  *
  *

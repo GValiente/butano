@@ -2051,7 +2051,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_12_1 13.12.1 (next release)
+ * @section changelog_13_12_1 13.12.1
  *
  * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> linking error fixed.
  *

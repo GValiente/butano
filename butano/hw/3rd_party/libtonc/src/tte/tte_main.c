@@ -82,6 +82,12 @@ void dummy_erase(int left, int top, int right, int bottom)
 	//# TODO: assert?
 }
 
+//! Set the master context pointer.
+void tte_set_context(TTC *tc)
+{
+    // gp_tte_context= tc ? tc : &__tte_main_context;
+}
+
 //! Set color attribute of \a type to \a cattr.
 void tte_set_color_attr(eint type, u16 cattr)
 {

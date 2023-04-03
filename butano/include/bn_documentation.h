@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_12_1 13.12.1 (next release)
+ *
+ * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> linking error fixed.
+ *
+ *
  * @section changelog_13_12_0 13.12.0
  *
  * * bn::sprite_ptr::set_affine_mat optimized.

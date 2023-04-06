@@ -42,6 +42,8 @@ class optional
 {
 
 public:
+    using value_type = Type; //!< Value type alias.
+
     /**
      * @brief Default constructor.
      */

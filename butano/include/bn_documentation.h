@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_13_0 13.13.0 (next release)
+ *
+ * bn::optional::value_type added.
+ *
+ *
  * @section changelog_13_12_1 13.12.1
  *
  * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> linking error fixed.

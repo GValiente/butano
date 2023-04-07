@@ -6,7 +6,6 @@
 #ifndef BN_SPRITE_FIRST_ATTRIBUTES_HBE_HANDLER_H
 #define BN_SPRITE_FIRST_ATTRIBUTES_HBE_HANDLER_H
 
-#include "bn_any.h"
 #include "bn_sprite_first_attributes.h"
 #include "bn_sprites_manager.h"
 #include "bn_display_manager.h"
@@ -19,9 +18,9 @@ class sprite_first_attributes_hbe_handler
 {
 
 public:
-    static void setup_target(intptr_t, iany& target_last_value)
+    static void setup_target(intptr_t, void* target_last_value)
     {
-        target_last_value = last_value_type();
+        new(target_last_value) last_value_type();
     }
 
     [[nodiscard]] static bool target_visible(intptr_t target_id)
@@ -30,12 +29,12 @@ public:
         return sprites_manager::hw_id(handle) >= 0;
     }
 
-    [[nodiscard]] static bool target_updated(intptr_t target_id, iany& target_last_value)
+    [[nodiscard]] static bool target_updated(intptr_t target_id, void* target_last_value)
     {
-        last_value_type& last_value = target_last_value.value<last_value_type>();
+        auto last_value = reinterpret_cast<last_value_type*>(target_last_value);
         last_value_type new_value(target_id);
-        bool updated = last_value != new_value;
-        last_value = new_value;
+        bool updated = *last_value != new_value;
+        *last_value = new_value;
         return updated;
     }
 
@@ -45,14 +44,14 @@ public:
         return hw::sprites::first_attributes_register(sprites_manager::hw_id(handle));
     }
 
-    static void write_output_values(intptr_t, const iany& target_last_value, const void* input_values_ptr,
+    static void write_output_values(intptr_t, const void* target_last_value, const void* input_values_ptr,
                                     uint16_t* output_values_ptr)
     {
-        const last_value_type& last_value = target_last_value.value<last_value_type>();
+        auto last_value = reinterpret_cast<const last_value_type*>(target_last_value);
         auto sprite_first_attributes_ptr = reinterpret_cast<const sprite_first_attributes*>(input_values_ptr);
         sprites_manager::fill_hblank_effect_first_attributes(
-                    last_value.hw_y, bn::sprite_shape(last_value.shape), bpp_mode(last_value.bpp),
-                    last_value.view_mode, sprite_first_attributes_ptr, output_values_ptr);
+                    last_value->hw_y, bn::sprite_shape(last_value->shape), bpp_mode(last_value->bpp),
+                    last_value->view_mode, sprite_first_attributes_ptr, output_values_ptr);
     }
 
     static void show(intptr_t)

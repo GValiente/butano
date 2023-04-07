@@ -6,7 +6,6 @@
 #ifndef BN_RECT_WINDOW_VERTICAL_BOUNDARIES_HBE_HANDLER_H
 #define BN_RECT_WINDOW_VERTICAL_BOUNDARIES_HBE_HANDLER_H
 
-#include "bn_any.h"
 #include "bn_display_manager.h"
 #include "../hw/include/bn_hw_display.h"
 
@@ -22,17 +21,17 @@ public:
         return true;
     }
 
-    static void setup_target(intptr_t, iany& target_last_value)
+    static void setup_target(intptr_t, void* target_last_value)
     {
-        target_last_value = pair<int, int>();
+        new(target_last_value) pair<int, int>();
     }
 
-    [[nodiscard]] static bool target_updated(intptr_t target_id, iany& target_last_value)
+    [[nodiscard]] static bool target_updated(intptr_t target_id, void* target_last_value)
     {
-        pair<int, int>& last_value = target_last_value.value<pair<int, int>>();
+        auto last_value = reinterpret_cast<pair<int, int>*>(target_last_value);
         pair<int, int> new_value = display_manager::rect_window_hw_vertical_boundaries(target_id);
-        bool updated = last_value != new_value;
-        last_value = new_value;
+        bool updated = *last_value != new_value;
+        *last_value = new_value;
         return updated;
     }
 
@@ -41,13 +40,13 @@ public:
         return hw::display::window_vertical_boundaries_register(target_id);
     }
 
-    static void write_output_values(intptr_t, const iany& target_last_value, const void* input_values_ptr,
+    static void write_output_values(intptr_t, const void* target_last_value, const void* input_values_ptr,
                                     uint16_t* output_values_ptr)
     {
-        const pair<int, int>& last_value = target_last_value.value<pair<int, int>>();
+        auto last_value = reinterpret_cast<const pair<int, int>*>(target_last_value);
         auto fixed_pairs_ptr = reinterpret_cast<const pair<fixed, fixed>*>(input_values_ptr);
         display_manager::fill_rect_window_hblank_effect_vertical_boundaries(
-                    last_value, fixed_pairs_ptr, output_values_ptr);
+                    *last_value, fixed_pairs_ptr, output_values_ptr);
     }
 
     static void show(intptr_t)

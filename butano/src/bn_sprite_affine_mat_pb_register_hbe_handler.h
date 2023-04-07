@@ -7,7 +7,6 @@
 #define BN_SPRITE_AFFINE_MAT_PB_REGISTER_HBE_HANDLER_H
 
 #include "bn_display.h"
-#include "bn_any_fwd.h"
 #include "bn_sprite_affine_mats_manager.h"
 #include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_sprite_affine_mats.h"
@@ -19,7 +18,7 @@ class sprite_affine_mat_pb_register_attributes_hbe_handler
 {
 
 public:
-    static void setup_target(intptr_t, iany&)
+    static void setup_target(intptr_t, void*)
     {
     }
 
@@ -28,7 +27,7 @@ public:
         return true;
     }
 
-    [[nodiscard]] static bool target_updated(intptr_t, iany&)
+    [[nodiscard]] static bool target_updated(intptr_t, void*)
     {
         return false;
     }
@@ -39,7 +38,7 @@ public:
         return reinterpret_cast<uint16_t*>(result);
     }
 
-    static void write_output_values(intptr_t, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
+    static void write_output_values(intptr_t, const void*, const void* input_values_ptr, uint16_t* output_values_ptr)
     {
         auto attributes_ptr = reinterpret_cast<const affine_mat_attributes*>(input_values_ptr);
 
@@ -64,7 +63,7 @@ class sprite_affine_mat_pb_register_values_hbe_handler
 {
 
 public:
-    static void setup_target(intptr_t, iany&)
+    static void setup_target(intptr_t, void*)
     {
     }
 
@@ -73,7 +72,7 @@ public:
         return true;
     }
 
-    [[nodiscard]] static bool target_updated(intptr_t, iany&)
+    [[nodiscard]] static bool target_updated(intptr_t, void*)
     {
         return false;
     }
@@ -84,7 +83,7 @@ public:
         return reinterpret_cast<uint16_t*>(result);
     }
 
-    static void write_output_values(intptr_t, const iany&, const void* input_values_ptr, uint16_t* output_values_ptr)
+    static void write_output_values(intptr_t, const void*, const void* input_values_ptr, uint16_t* output_values_ptr)
     {
         auto int_source = static_cast<const unsigned*>(input_values_ptr);
         auto int_destination = reinterpret_cast<unsigned*>(output_values_ptr);

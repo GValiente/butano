@@ -84,7 +84,6 @@ namespace
     constexpr int max_uint32_output_values = hw::hblank_effects::max_uint32_entries();
     constexpr int max_uint16_output_values = max(max_items - max_uint32_output_values, 1);
 
-    using last_value_type = any<4 * sizeof(int)>;
     using hw_entries = hw::hblank_effects::entries;
 
     [[nodiscard]] bool _is_uint32(handler_type handler)
@@ -243,7 +242,7 @@ namespace
     {
 
     public:
-        last_value_type target_last_value;
+        int target_last_value[3];
         const void* values_ptr = nullptr;
         intptr_t target_id = 0;
         unsigned usages = 0;
@@ -1237,7 +1236,6 @@ void decrease_usages(int id)
         }
 
         external_data.free_item_indexes.push_back(int8_t(id));
-        item.target_last_value.reset();
         item.update = false;
     }
 }

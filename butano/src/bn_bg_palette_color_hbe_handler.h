@@ -6,7 +6,6 @@
 #ifndef BN_BG_PALETTE_COLOR_HBE_HANDLER_H
 #define BN_BG_PALETTE_COLOR_HBE_HANDLER_H
 
-#include "bn_any_fwd.h"
 #include "bn_palettes_bank.h"
 #include "bn_palettes_manager.h"
 #include "bn_palette_target_id.h"
@@ -19,7 +18,7 @@ class bg_palette_color_hbe_handler
 {
 
 public:
-    static void setup_target(intptr_t, iany&)
+    static void setup_target(intptr_t, void*)
     {
     }
 
@@ -28,7 +27,7 @@ public:
         return true;
     }
 
-    [[nodiscard]] static bool target_updated(intptr_t target_id, iany&)
+    [[nodiscard]] static bool target_updated(intptr_t target_id, void*)
     {
         palettes_bank::commit_data commit_data = palettes_manager::bg_palettes_bank().retrieve_commit_data();
 
@@ -50,7 +49,7 @@ public:
         return hw::palettes::bg_color_register(palette_target_id.params.final_color_index);
     }
 
-    static void write_output_values(intptr_t target_id, const iany&, const void* input_values_ptr,
+    static void write_output_values(intptr_t target_id, const void*, const void* input_values_ptr,
                                     uint16_t* output_values_ptr)
     {
         palette_target_id palette_target_id(target_id);

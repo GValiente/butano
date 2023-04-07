@@ -6,7 +6,6 @@
 #ifndef BN_AFFINE_BG_PIVOT_VERTICAL_POSITION_HBE_HANDLER_H
 #define BN_AFFINE_BG_PIVOT_VERTICAL_POSITION_HBE_HANDLER_H
 
-#include "bn_any.h"
 #include "bn_bgs_manager.h"
 #include "bn_affine_bg_mat_attributes.h"
 #include "../hw/include/bn_hw_bgs.h"
@@ -18,9 +17,9 @@ class affine_bg_pivot_vertical_position_hbe_handler
 {
 
 public:
-    static void setup_target(intptr_t target_id, iany& target_last_value)
+    static void setup_target(intptr_t target_id, void* target_last_value)
     {
-        target_last_value = last_value_type(target_id);
+        new(target_last_value) last_value_type(target_id);
     }
 
     [[nodiscard]] static bool target_visible(intptr_t target_id)
@@ -29,12 +28,12 @@ public:
         return bgs_manager::hw_id(handle) >= 0;
     }
 
-    [[nodiscard]] static bool target_updated(intptr_t target_id, iany& target_last_value)
+    [[nodiscard]] static bool target_updated(intptr_t target_id, void* target_last_value)
     {
-        last_value_type& last_value = target_last_value.value<last_value_type>();
+        auto last_value = reinterpret_cast<last_value_type*>(target_last_value);
         last_value_type new_value = last_value_type(target_id);
-        bool updated = last_value != new_value;
-        last_value = new_value;
+        bool updated = *last_value != new_value;
+        *last_value = new_value;
         return updated;
     }
 
@@ -46,7 +45,7 @@ public:
         return reinterpret_cast<uint16_t*>(result);
     }
 
-    static void write_output_values(intptr_t target_id, const iany&, const void* input_values_ptr,
+    static void write_output_values(intptr_t target_id, const void*, const void* input_values_ptr,
                                     uint16_t* output_values_ptr)
     {
         auto handle = reinterpret_cast<void*>(target_id);

@@ -550,7 +550,7 @@ public:
  * @ingroup action
  */
 class affine_bg_rotate_to_action :
-        to_value_template_action<affine_bg_ptr, fixed, affine_bg_rotation_manager>
+        public to_value_template_action<affine_bg_ptr, fixed, affine_bg_rotation_manager>
 {
 
 public:

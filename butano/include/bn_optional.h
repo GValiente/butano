@@ -13,7 +13,11 @@
  * @ingroup optional
  */
 
-#include "bn_memory.h"
+#include "bn_assert.h"
+#include "bn_utility.h"
+#include "bn_algorithm.h"
+#include "bn_functional.h"
+#include "bn_memory_alias.h"
 
 namespace bn
 {

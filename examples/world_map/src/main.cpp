@@ -7,6 +7,7 @@
 #include "bn_keypad.h"
 #include "bn_display.h"
 #include "bn_blending.h"
+#include "bn_unique_ptr.h"
 #include "bn_fixed_point.h"
 #include "bn_rect_window.h"
 #include "bn_affine_bg_ptr.h"

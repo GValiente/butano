@@ -8,6 +8,7 @@
 #include "bn_color.h"
 #include "bn_keypad.h"
 #include "bn_random.h"
+#include "bn_unique_ptr.h"
 #include "bn_bg_palettes.h"
 #include "bn_sprite_text_generator.h"
 #include "demo_polygon.h"

@@ -7,6 +7,7 @@
 
 #include "bn_hdma.h"
 #include "bn_colors.h"
+#include "bn_memory.h"
 #include "bn_sprites.h"
 #include "../../butano/hw/include/bn_hw_sprites.h"
 

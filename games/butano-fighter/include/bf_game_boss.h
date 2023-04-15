@@ -8,6 +8,7 @@
 
 #include "bn_color.h"
 #include "bn_vector.h"
+#include "bn_unique_ptr_fwd.h"
 #include "bn_sprite_palette_ptr.h"
 
 namespace bn

@@ -8,24 +8,20 @@
 
 /**
  * @file
- * bn::unique_ptr and memory functions header file.
+ * Memory functions header file.
  *
- * @ingroup unique_ptr
  * @ingroup memory
  */
 
-#include <memory>
 #include "bn_alignment.h"
 #include "bn_unique_ptr.h"
 #include "bn_config_log.h"
+#include "bn_memory_alias.h"
 #include "bn_config_doxygen.h"
 
 namespace bn
 {
     enum class compression_type : uint8_t;
-
-    using std::construct_at;
-    using std::destroy_at;
 }
 
 

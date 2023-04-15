@@ -11,6 +11,7 @@
  * bn::unique_ptr implementation header file.
  *
  * @ingroup unique_ptr
+ * @ingroup memory
  */
 
 #include "bn_assert.h"

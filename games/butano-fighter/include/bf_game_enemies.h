@@ -6,6 +6,7 @@
 #ifndef BF_GAME_ENEMIES_H
 #define BF_GAME_ENEMIES_H
 
+#include "bn_unique_ptr.h"
 #include "bn_forward_list.h"
 #include "bn_sprite_palette_ptr.h"
 #include "bf_game_boss.h"

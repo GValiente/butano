@@ -6,6 +6,7 @@
 #include "bn_core.h"
 
 #include "bn_hdma.h"
+#include "bn_unique_ptr.h"
 #include "polygon.h"
 #include "polygon_sprite.h"
 

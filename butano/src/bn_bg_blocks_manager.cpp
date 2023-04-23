@@ -149,8 +149,8 @@ namespace
         uint8_t next_index = max_list_items;
 
     private:
-        unsigned _status: 2 = unsigned(status_type::FREE);
-        unsigned _compression: 2 = unsigned(compression_type::NONE);
+        uint8_t _status: 2 = uint8_t(status_type::FREE);
+        uint8_t _compression: 2 = uint8_t(compression_type::NONE);
 
     public:
         bool is_tiles: 1 = false;
@@ -164,7 +164,7 @@ namespace
 
         void set_status(status_type status)
         {
-            _status = unsigned(status);
+            _status = uint8_t(status);
         }
 
         [[nodiscard]] compression_type compression() const
@@ -174,7 +174,7 @@ namespace
 
         void set_compression(compression_type compression)
         {
-            _compression = unsigned(compression);
+            _compression = uint8_t(compression);
         }
 
         [[nodiscard]] int tiles_count() const

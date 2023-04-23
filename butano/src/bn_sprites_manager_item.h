@@ -53,7 +53,7 @@ public:
     int8_t handles_index = -1;
     int8_t half_width;
     int8_t half_height;
-    unsigned double_size_mode: 2;
+    uint8_t double_size_mode: 2;
     bool double_size: 1;
     bool blending_enabled: 1;
     bool visible: 1;
@@ -77,7 +77,7 @@ public:
         sprite_sort_key(3, 0),
         tiles(move(_tiles)),
         palette(move(_palette)),
-        double_size_mode(unsigned(sprite_double_size_mode::AUTO)),
+        double_size_mode(uint8_t(sprite_double_size_mode::AUTO)),
         double_size(false),
         blending_enabled(false),
         visible(true),
@@ -98,7 +98,7 @@ public:
         palette(builder.release_palette()),
         affine_mat(builder.release_affine_mat()),
         camera(builder.release_camera()),
-        double_size_mode(unsigned(builder.double_size_mode())),
+        double_size_mode(uint8_t(builder.double_size_mode())),
         double_size(false),
         blending_enabled(builder.blending_enabled()),
         visible(builder.visible()),
@@ -116,7 +116,7 @@ public:
         palette(move(_palette)),
         affine_mat(builder.release_affine_mat()),
         camera(builder.release_camera()),
-        double_size_mode(unsigned(builder.double_size_mode())),
+        double_size_mode(uint8_t(builder.double_size_mode())),
         double_size(false),
         blending_enabled(builder.blending_enabled()),
         visible(builder.visible()),
@@ -142,7 +142,7 @@ public:
             return false;
 
         default:
-            BN_ERROR("Invalid double size mode: ", int(double_size_mode));
+            BN_ERROR("Invalid double size mode: ", double_size_mode);
             return false;
         }
     }
@@ -162,7 +162,7 @@ public:
             return false;
 
         default:
-            BN_ERROR("Invalid double size mode: ", int(double_size_mode));
+            BN_ERROR("Invalid double size mode: ", double_size_mode);
             return false;
         }
     }

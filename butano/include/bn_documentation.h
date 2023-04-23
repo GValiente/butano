@@ -2056,6 +2056,7 @@
  * * bn::optional::value_type added.
  * * H-Blank effects management optimized (ROM and EWRAM usage reduced).
  * * bn::affine_bg_blending_toggle_action base class inheritance fixed.
+ * * bn::regular_bg_map_cell_info size reduced.
  * * bn::optional build time reduced.
  *
  *

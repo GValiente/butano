@@ -152,10 +152,10 @@ private:
     {
        struct
        {
-           unsigned tile_index:      10;
-           unsigned horizontal_flip: 1;
-           unsigned vertical_flip:   1;
-           unsigned palette_id:      4;
+           uint16_t tile_index:     10;
+           uint8_t horizontal_flip: 1;
+           uint8_t vertical_flip:   1;
+           uint8_t palette_id:      4;
        } _fields;
        regular_bg_map_cell _data = 0;
     };

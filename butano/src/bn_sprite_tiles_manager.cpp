@@ -73,8 +73,8 @@ namespace
         unsigned tiles_count: 12 = 0;
 
     private:
-        unsigned _status: 2 = unsigned(status_type::FREE);
-        unsigned _compression: 2 = unsigned(compression_type::NONE);
+        uint8_t _status: 2 = uint8_t(status_type::FREE);
+        uint8_t _compression: 2 = uint8_t(compression_type::NONE);
 
     public:
         bool commit: 1 = false;
@@ -87,7 +87,7 @@ namespace
 
         void set_status(status_type status)
         {
-            _status = unsigned(status);
+            _status = uint8_t(status);
         }
 
         [[nodiscard]] compression_type compression() const
@@ -97,7 +97,7 @@ namespace
 
         void set_compression(compression_type compression)
         {
-            _compression = unsigned(compression);
+            _compression = uint8_t(compression);
         }
     };
 

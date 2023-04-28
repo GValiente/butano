@@ -2051,7 +2051,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_13_0 13.13.0 (next release)
+ * @section changelog_13_13_0 13.13.0
  *
  * * bn::optional::value_type added.
  * * H-Blank effects management optimized (ROM and EWRAM usage reduced).

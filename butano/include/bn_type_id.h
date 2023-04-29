@@ -33,7 +33,7 @@
  * @ingroup other
  */
 
-#include "bn_common.h"
+#include "bn_functional.h"
 
 namespace bn
 {
@@ -90,6 +90,25 @@ template<typename Type>
 {
     return type_id_t(&type_id<Type>);
 }
+
+
+/**
+ * @brief Hash support for type_id_t.
+ *
+ * @ingroup other
+ * @ingroup functional
+ */
+template<>
+struct hash<type_id_t>
+{
+    /**
+     * @brief Returns the hash of the given type_id_t.
+     */
+    [[nodiscard]] constexpr unsigned operator()(type_id_t value) const
+    {
+        return make_hash(value.internal_id());
+    }
+};
 
 }
 

@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_14_0 13.14.0 (next release)
+ *
+ * Hash support for bn::type_id_t added.
+ *
+ *
  * @section changelog_13_13_0 13.13.0
  *
  * * bn::optional::value_type added.

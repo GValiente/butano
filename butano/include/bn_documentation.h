@@ -2053,7 +2053,8 @@
  *
  * @section changelog_13_14_0 13.14.0 (next release)
  *
- * Hash support for bn::type_id_t added.
+ * * Hash support for bn::type_id_t added.
+ * * Custom build base rules updated.
  *
  *
  * @section changelog_13_13_0 13.13.0

@@ -91,6 +91,11 @@ namespace
         bn::array<bn::affine_mat_attributes, bn::display::height()> result;
         int start = 90;
 
+        for(int index = 0; index < start; ++index)
+        {
+            result[index] = bn::affine_mat_attributes();
+        }
+
         for(int index = start; index < bn::display::height(); ++index)
         {
             result[index].set_scale(1 + (bn::fixed(index - start) / 112));

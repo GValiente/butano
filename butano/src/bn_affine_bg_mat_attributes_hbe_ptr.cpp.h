@@ -35,7 +35,7 @@ optional<affine_bg_mat_attributes_hbe_ptr> affine_bg_mat_attributes_hbe_ptr::cre
                 {
                     if(auto dx = affine_bg_dx_register_hbe_ptr::create_optional(bg, attributes_ref))
                     {
-                        if(auto dy = affine_bg_dy_register_hbe_ptr::create_optional(move(bg), attributes_ref))
+                        if(auto dy = affine_bg_dy_register_hbe_ptr::create_optional(bg, attributes_ref))
                         {
                             result = affine_bg_mat_attributes_hbe_ptr(
                                         move(*pa), move(*pb), move(*pc), move(*pd), move(*dx), move(*dy));

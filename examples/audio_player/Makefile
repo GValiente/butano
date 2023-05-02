@@ -16,7 +16,7 @@
 #     Pass -O0 to improve debugging.
 # USERASFLAGS is a list of additional assembler flags.
 # USERLDFLAGS is a list of additional linker flags:
-#     Pass -flto=auto -save-temps to enable parallel link-time optimization.
+#     Pass -flto=<number_of_cpu_cores> to enable parallel link-time optimization.
 # USERLIBDIRS is a list of additional directories containing libraries.
 #     Each libraries directory must contains include and lib subdirectories.
 # USERLIBS is a list of additional libraries to link with the project.

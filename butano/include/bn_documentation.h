@@ -2056,6 +2056,7 @@
  * * Hash support for bn::type_id_t added.
  * * Custom build base rules updated.
  * * Redundant move in bn::affine_bg_mat_attributes_hbe_ptr::create_optional removed.
+ * * Parallel link-time optimization documentation updated.
  *
  *
  * @section changelog_13_13_0 13.13.0

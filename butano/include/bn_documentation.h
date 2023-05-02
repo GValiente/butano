@@ -2051,7 +2051,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_14_0 13.14.0 (next release)
+ * @section changelog_13_14_0 13.14.0
  *
  * * Hash support for bn::type_id_t added.
  * * Custom build base rules updated.

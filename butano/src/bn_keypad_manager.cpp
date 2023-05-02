@@ -27,11 +27,6 @@ namespace
         {
 
         public:
-            keypad_logger()
-            {
-                BN_LOG("-- KEYPAD LOGGER INIT ---");
-            }
-
             void log(unsigned keys)
             {
                 uint8_t low_part = keys & 0b11111;
@@ -83,6 +78,10 @@ void init(const string_view& commands)
 
     data.commands = commands;
     data.read_commands = ! commands.empty();
+
+    #if BN_CFG_KEYPAD_LOG_ENABLED
+        BN_LOG("- KEYPAD LOGGER INIT -");
+    #endif
 }
 
 bool held(key_type key)

@@ -2055,6 +2055,7 @@
  *
  * * Hash support for bn::type_id_t added.
  * * Custom build base rules updated.
+ * * Keypad logger startup fixed.
  * * Redundant move in bn::affine_bg_mat_attributes_hbe_ptr::create_optional removed.
  * * Parallel link-time optimization documentation updated.
  *

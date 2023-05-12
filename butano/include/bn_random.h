@@ -123,6 +123,13 @@ public:
         return minimum + fixed::from_data(int(result));
     }
 
+    /// @brief Sets the current seed position.
+    /// @param seed non-zero value to set the current seed position.
+    constexpr void set_seed(unsigned seed){
+        BN_ASSERT(seed != 0, "Invalid seed (must be grater than zero): ", seed);
+        _x = seed;
+    }
+
     /**
      * @brief Updates the value of the internal seed.
      */

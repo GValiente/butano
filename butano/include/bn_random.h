@@ -31,8 +31,16 @@ namespace bn
  */
 class random
 {
-
 public:
+
+    /// @brief stores the internal state of the random number generator.
+    struct state
+    {
+        unsigned x;
+        unsigned y;
+        unsigned z;
+    };
+
     /**
      * @brief Returns a random unsigned integer greater or equal than 0,
      * modifying its internal seed in the process.
@@ -128,6 +136,26 @@ public:
     constexpr void set_seed(unsigned seed){
         BN_ASSERT(seed != 0, "Invalid seed (must be grater than zero): ", seed);
         _x = seed;
+    }
+
+    /** @brief Returns the current state of the random number generator.
+     * @note In combination with set_state(), this can be used to save and restore the state of the random number.
+     * @return Current state of the random number generator.
+     */
+    [[nodiscard]] constexpr state get_state() const
+    {
+        return { _x, _y, _z };
+    }
+
+    /** @brief Sets the current state of the random number generator.
+     * @note In combination with get_state(), this can be used to save and restore the state of the random number.
+     * @param state State to set.
+     */
+    constexpr void set_state(const state& state)
+    {
+        _x = state.x;
+        _y = state.y;
+        _z = state.z;
     }
 
     /**

@@ -131,13 +131,6 @@ public:
         return minimum + fixed::from_data(int(result));
     }
 
-    /// @brief Sets the current seed position.
-    /// @param seed non-zero value to set the current seed position.
-    constexpr void set_seed(unsigned seed){
-        BN_ASSERT(seed != 0, "Invalid seed (must be grater than zero): ", seed);
-        _x = seed;
-    }
-
     /** @brief Returns the current state of the random number generator.
      * @note In combination with set_state(), this can be used to save and restore the state of the random number.
      * @return Current state of the random number generator.

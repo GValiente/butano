@@ -149,13 +149,13 @@ public:
 
     /** @brief Sets the current state of the random number generator.
      * @note In combination with get_state(), this can be used to save and restore the state of the random number.
-     * @param state State to set.
+     * @param newstate State to set.
      */
-    constexpr void set_state(const state& state)
+    constexpr void set_state(const state& newstate)
     {
-        _x = state.x;
-        _y = state.y;
-        _z = state.z;
+        _x = newstate.x;
+        _y = newstate.y;
+        _z = newstate.z;
     }
 
     /**

@@ -138,10 +138,14 @@ public:
         _z = t ^ _x ^ _y;
     }
 
-private:
+protected:
+    /// @cond DO_NOT_DOCUMENT
+
     unsigned _x = 123456789;
     unsigned _y = 362436069;
     unsigned _z = 521288629;
+
+    /// @endcond
 };
 
 }

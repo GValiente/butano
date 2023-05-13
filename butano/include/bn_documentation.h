@@ -2051,6 +2051,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_15_0 13.15.0 (next release)
+ *
+ * bn::random internal variables are `protected` to allow child classes to access them.
+ *
+ *
  * @section changelog_13_14_0 13.14.0
  *
  * * Hash support for bn::type_id_t added.

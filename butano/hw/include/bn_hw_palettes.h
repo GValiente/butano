@@ -50,7 +50,8 @@ namespace bn::hw::palettes
         }
     }
 
-    void brightness(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr);
+    BN_CODE_IWRAM void brightness(
+            const color* source_colors_ptr, int value, int count, color* destination_colors_ptr);
 
     void contrast(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr);
 
@@ -142,6 +143,9 @@ namespace bn::hw::palettes
     {
         return reinterpret_cast<uint16_t*>(MEM_PAL_BG);
     }
+
+    BN_CODE_IWRAM void _lut_effect(
+            const color* source_colors_ptr, const uint8_t* lut, int count, color* destination_colors_ptr);
 }
 
 #endif

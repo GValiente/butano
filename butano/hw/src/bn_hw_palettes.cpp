@@ -55,20 +55,6 @@ namespace
         return lut;
     }();
 
-    void lut_effect(const color* source_colors_ptr, const uint8_t* lut, int count, color* destination_colors_ptr)
-    {
-        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
-
-        for(int index = 0; index < count; ++index)
-        {
-            color color = source_colors_ptr[index];
-            int red = lut[color.red()];
-            int green = lut[color.green()];
-            int blue = lut[color.blue()];
-            tonc_dst_ptr[index] = RGB15(red, green, blue);
-        }
-    }
-
     constexpr int hue_shift_lut_size = 33 * 9;
 
     constexpr array<fixed, hue_shift_lut_size> hue_shift_lut = []{
@@ -116,30 +102,16 @@ namespace
     }();
 }
 
-void brightness(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
-{
-    auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
-
-    for(int index = 0; index < count; ++index)
-    {
-        color color = source_colors_ptr[index];
-        int red = bn::min(color.red() + value, 31);
-        int green = bn::min(color.green() + value, 31);
-        int blue = bn::min(color.blue() + value, 31);
-        tonc_dst_ptr[index] = RGB15(red, green, blue);
-    }
-}
-
 void contrast(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
 {
     const uint8_t* lut = contrast_lut.data() + (value * 32);
-    lut_effect(source_colors_ptr, lut, count, destination_colors_ptr);
+    _lut_effect(source_colors_ptr, lut, count, destination_colors_ptr);
 }
 
 void intensity(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
 {
     const uint8_t* lut = intensity_lut.data() + (value * 32);
-    lut_effect(source_colors_ptr, lut, count, destination_colors_ptr);
+    _lut_effect(source_colors_ptr, lut, count, destination_colors_ptr);
 }
 
 void hue_shift(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)

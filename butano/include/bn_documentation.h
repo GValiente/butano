@@ -2055,6 +2055,7 @@
  *
  * * Brightness, contrast and intensity color effects optimized.
  * * bn::random internal variables are `protected` to allow child classes to access them.
+ * * `compile_commands.json` generation support.
  *
  *
  * @section changelog_13_14_0 13.14.0

@@ -2051,7 +2051,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_15_0 13.15.0 (next release)
+ * @section changelog_13_15_0 13.15.0
  *
  * * Brightness, contrast and intensity color effects optimized.
  * * bn::random internal variables are `protected` to allow child classes to access them.

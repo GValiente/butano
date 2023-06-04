@@ -655,7 +655,7 @@
 /**
  * @page getting_started Getting started
  *
- * Downloading, building and making your own games with Butano is easy and doesn't take too much time, pinky promise.
+ * Downloading Butano and building their games and examples is easy and doesn't take too much time, pinky promise.
  *
  * @tableofcontents
  *
@@ -669,8 +669,9 @@
  * Before anything, it is convenient to have a GBA emulator at hand,
  * so you don't have to test in real hardware each change you make in your project.
  *
- * For developing GBA games, <a href="https://mgba.io">mGBA</a>
- * and the debug version of <a href="https://problemkaputt.de/gba.htm">No$gba</a> are recommended.
+ * For developing GBA games, <a href="https://mgba.io">mGBA</a>,
+ * <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a> and the debug version of
+ * <a href="https://problemkaputt.de/gba.htm">No$gba</a> are recommended.
  *
  *
  * @section getting_started_devkitARM devkitARM
@@ -2049,6 +2050,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_13_16_0 13.16.0 (next release)
+ *
+ * @ref getting_started page improved.
  *
  *
  * @section changelog_13_15_0 13.15.0

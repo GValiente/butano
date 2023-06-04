@@ -2054,7 +2054,8 @@
  *
  * @section changelog_13_16_0 13.16.0 (next release)
  *
- * @ref getting_started page improved.
+ * * @ref BN_LOG_BACKEND_MGBA also works with <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>.
+ * * @ref getting_started page improved.
  *
  *
  * @section changelog_13_15_0 13.15.0

@@ -20,6 +20,8 @@
  *
  * mGBA emulator (https://mgba.io) log backend.
  *
+ * It also works with NanoBoyAdvance (https://github.com/nba-emu/NanoBoyAdvance).
+ *
  * @ingroup log
  */
 #define BN_LOG_BACKEND_MGBA        0

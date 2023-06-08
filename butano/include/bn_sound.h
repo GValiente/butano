@@ -93,6 +93,17 @@ namespace bn::sound
      * @brief Stops all sound effects that are being played currently.
      */
     void stop_all();
+
+    /**
+     * @brief Returns the master volume of all sound effects.
+     */
+    [[nodiscard]] fixed master_volume();
+
+    /**
+     * @brief Sets the master volume of all sound effects.
+     * @param volume Master volume level, in the range [0..1].
+     */
+    void set_master_volume(fixed volume);
 }
 
 #endif

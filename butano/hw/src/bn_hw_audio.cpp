@@ -5,7 +5,6 @@
 
 #include "../include/bn_hw_audio.h"
 
-#include "maxmod.h"
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
 #include "../include/bn_hw_irq.h"
@@ -217,61 +216,6 @@ void disable()
 
     REG_SNDDSCNT = 0;
     REG_SNDDMGCNT = 0;
-}
-
-bool music_playing()
-{
-    return mmActive();
-}
-
-void play_music(int id, bool loop)
-{
-    if(mmActive())
-    {
-        mmStop();
-    }
-
-    mmStart(mm_word(id), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
-}
-
-void stop_music()
-{
-    mmStop();
-}
-
-void pause_music()
-{
-    mmPause();
-}
-
-void resume_music()
-{
-    mmResume();
-}
-
-int music_position()
-{
-    return int(mmGetPosition());
-}
-
-void set_music_position(int position)
-{
-    mmSetPosition(mm_word(position));
-}
-
-void set_music_volume(int volume)
-{
-    mmSetModuleVolume(mm_word(volume));
-}
-
-void set_music_tempo(int tempo)
-{
-    mmSetModuleTempo(mm_word(tempo));
-}
-
-void set_music_pitch(int pitch)
-{
-    mmSetModulePitch(mm_word(pitch));
 }
 
 void play_sound(int priority, int id)

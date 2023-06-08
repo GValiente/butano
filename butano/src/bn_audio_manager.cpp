@@ -47,6 +47,11 @@ namespace
         return min(fixed_t<8>(volume).data(), 255);
     }
 
+    int _hw_sound_master_volume(fixed volume)
+    {
+        return fixed_t<10>(volume).data();
+    }
+
     int _hw_dmg_music_volume(fixed volume)
     {
         return fixed_t<3>(volume).data();
@@ -278,6 +283,25 @@ namespace
     };
 
 
+    class set_sound_master_volume_command
+    {
+
+    public:
+        explicit set_sound_master_volume_command(int volume) :
+            _volume(volume)
+        {
+        }
+
+        void execute() const
+        {
+            hw::audio::set_sound_master_volume(_volume);
+        }
+
+    private:
+        int _volume;
+    };
+
+
     enum command_code : uint8_t
     {
         MUSIC_PLAY,
@@ -296,7 +320,8 @@ namespace
         DMG_MUSIC_SET_VOLUME,
         SOUND_PLAY,
         SOUND_PLAY_EX,
-        SOUND_STOP_ALL
+        SOUND_STOP_ALL,
+        SOUND_SET_MASTER_VOLUME
     };
 
 
@@ -321,6 +346,7 @@ namespace
         bn::dmg_music_position dmg_music_position;
         fixed dmg_music_left_volume;
         fixed dmg_music_right_volume;
+        fixed sound_master_volume = 1;
         int commands_count = 0;
         int music_item_id = 0;
         int music_position = 0;
@@ -707,6 +733,26 @@ void stop_all_sounds()
     data.commands_count = commands + 1;
 }
 
+fixed sound_master_volume()
+{
+    return data.sound_master_volume;
+}
+
+void set_sound_master_volume(fixed volume)
+{
+    if(volume != data.sound_master_volume)
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = SOUND_SET_MASTER_VOLUME;
+        new(data.command_datas + commands) set_sound_master_volume_command(_hw_sound_master_volume(volume));
+        data.commands_count = commands + 1;
+
+        data.sound_master_volume = volume;
+    }
+}
+
 bool update_on_vblank()
 {
     return hw::audio::update_on_vblank();
@@ -802,6 +848,10 @@ void execute_commands()
 
         case SOUND_STOP_ALL:
             hw::audio::stop_all_sounds();
+            break;
+
+        case SOUND_SET_MASTER_VOLUME:
+            reinterpret_cast<const set_sound_master_volume_command&>(data.command_datas[index].data).execute();
             break;
 
         default:

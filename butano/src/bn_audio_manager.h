@@ -102,6 +102,13 @@ namespace bn::audio_manager
 
     void stop_all_sounds();
 
+    [[nodiscard]] fixed sound_master_volume();
+
+    void set_sound_master_volume(fixed volume);
+
+
+    // other
+
     [[nodiscard]] bool update_on_vblank();
 
     void set_update_on_vblank(bool update_on_vblank);

@@ -7,6 +7,7 @@
 #include "bn_keypad.h"
 #include "bn_bg_palettes.h"
 #include "bn_music_actions.h"
+#include "bn_sound_actions.h"
 #include "bn_sprite_actions.h"
 #include "bn_sprite_text_generator.h"
 
@@ -226,6 +227,79 @@ namespace
             bn::core::update();
         }
     }
+
+    void sound_master_volume_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "LEFT: decrease volume",
+            "RIGHT: increase volume",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Sound master volume", info_text_lines, text_generator);
+        unsigned counter = 0;
+        info.set_show_always(true);
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::fixed volume = bn::sound::master_volume();
+
+            if(bn::keypad::left_held())
+            {
+                bn::sound::set_master_volume(bn::max(volume - 0.01, bn::fixed(0)));
+            }
+            else if(bn::keypad::right_held())
+            {
+                bn::sound::set_master_volume(bn::min(volume + 0.01, bn::fixed(1)));
+            }
+
+            ++counter;
+
+            if(counter % 64 == 0)
+            {
+                bn::sound_items::alert.play(0.5);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::sound::set_master_volume(1);
+    }
+
+    void sound_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Sound actions", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::sound_master_volume_loop_action action(120, 0.25);
+        unsigned counter = 0;
+
+        while(! bn::keypad::start_pressed())
+        {
+            ++counter;
+
+            if(counter % 64 == 0)
+            {
+                bn::sound_items::alert.play(0.5);
+            }
+
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+
+        bn::sound::set_master_volume(1);
+    }
 }
 
 int main()
@@ -253,6 +327,12 @@ int main()
         bn::core::update();
 
         sound_panning_scene(text_generator);
+        bn::core::update();
+
+        sound_master_volume_scene(text_generator);
+        bn::core::update();
+
+        sound_actions_scene(text_generator);
         bn::core::update();
     }
 }

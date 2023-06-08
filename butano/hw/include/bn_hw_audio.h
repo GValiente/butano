@@ -6,6 +6,7 @@
 #ifndef BN_HW_AUDIO_H
 #define BN_HW_AUDIO_H
 
+#include "maxmod.h"
 #include "bn_common.h"
 
 extern "C"
@@ -21,25 +22,60 @@ namespace bn::hw::audio
 
     void disable();
 
-    [[nodiscard]] bool music_playing();
+    [[nodiscard]] inline bool music_playing()
+    {
+        return mmActive();
+    }
 
-    void play_music(int id, bool loop);
+    inline void play_music(int id, bool loop)
+    {
+        if(mmActive())
+        {
+            mmStop();
+        }
 
-    void stop_music();
+        mmStart(mm_word(id), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
+    }
 
-    void pause_music();
+    inline void stop_music()
+    {
+        mmStop();
+    }
 
-    void resume_music();
+    inline void pause_music()
+    {
+        mmPause();
+    }
 
-    [[nodiscard]] int music_position();
+    inline void resume_music()
+    {
+        mmResume();
+    }
 
-    void set_music_position(int position);
+    [[nodiscard]] inline int music_position()
+    {
+        return int(mmGetPosition());
+    }
 
-    void set_music_volume(int volume);
+    inline void set_music_position(int position)
+    {
+        mmSetPosition(mm_word(position));
+    }
 
-    void set_music_tempo(int tempo);
+    inline void set_music_volume(int volume)
+    {
+        mmSetModuleVolume(mm_word(volume));
+    }
 
-    void set_music_pitch(int pitch);
+    inline void set_music_tempo(int tempo)
+    {
+        mmSetModuleTempo(mm_word(tempo));
+    }
+
+    inline void set_music_pitch(int pitch)
+    {
+        mmSetModulePitch(mm_word(pitch));
+    }
 
     inline void play_dmg_music(const void* song, int speed, bool loop)
     {
@@ -82,6 +118,11 @@ namespace bn::hw::audio
     void play_sound(int priority, int id, int volume, int speed, int panning);
 
     void stop_all_sounds();
+
+    inline void set_sound_master_volume(int volume)
+    {
+        mmSetEffectsVolume(volume);
+    }
 
     [[nodiscard]] bool update_on_vblank();
 

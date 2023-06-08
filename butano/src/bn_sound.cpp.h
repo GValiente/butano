@@ -63,4 +63,16 @@ void stop_all()
     audio_manager::stop_all_sounds();
 }
 
+fixed master_volume()
+{
+    return audio_manager::sound_master_volume();
+}
+
+void set_master_volume(fixed volume)
+{
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+
+    audio_manager::set_sound_master_volume(volume);
+}
+
 }

@@ -2054,6 +2054,8 @@
  *
  * @section changelog_13_16_0 13.16.0 (next release)
  *
+ * * bn::sound::master_volume and bn::sound::set_master_volume added.
+ * * Sound master volume actions added.
  * * @ref BN_LOG_BACKEND_MGBA also works with <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>.
  * * @ref getting_started page improved.
  *

@@ -2068,6 +2068,7 @@
  *
  * * bn::sound::master_volume and bn::sound::set_master_volume added.
  * * Sound master volume actions added.
+ * * bn::sprite_shape_size constructor from width and height added.
  * * @ref BN_LOG_BACKEND_MGBA also works with <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>.
  * * @ref getting_started page improved.
  * * More questions added to @ref faq page.

@@ -75,6 +75,122 @@ public:
     }
 
     /**
+     * @brief Constructor.
+     * @param width Width of the sprite in pixels.
+     * @param height Height of the sprite in pixels.
+     */
+    constexpr sprite_shape_size(int width, int height)
+    {
+        switch(width)
+        {
+
+        case 8:
+            switch(height)
+            {
+
+            case 8:
+                _shape = sprite_shape::SQUARE;
+                _size = sprite_size::SMALL;
+                break;
+
+            case 16:
+                _shape = sprite_shape::TALL;
+                _size = sprite_size::SMALL;
+                break;
+
+            case 32:
+                _shape = sprite_shape::TALL;
+                _size = sprite_size::NORMAL;
+                break;
+
+            default:
+                BN_ERROR("Invalid width or height: ", width, " - ", height);
+                break;
+            }
+            break;
+
+        case 16:
+            switch(height)
+            {
+
+            case 8:
+                _shape = sprite_shape::WIDE;
+                _size = sprite_size::SMALL;
+                break;
+
+            case 16:
+                _shape = sprite_shape::SQUARE;
+                _size = sprite_size::NORMAL;
+                break;
+
+            case 32:
+                _shape = sprite_shape::TALL;
+                _size = sprite_size::BIG;
+                break;
+
+            default:
+                BN_ERROR("Invalid width or height: ", width, " - ", height);
+                break;
+            }
+            break;
+
+        case 32:
+            switch(height)
+            {
+
+            case 8:
+                _shape = sprite_shape::WIDE;
+                _size = sprite_size::NORMAL;
+                break;
+
+            case 16:
+                _shape = sprite_shape::WIDE;
+                _size = sprite_size::BIG;
+                break;
+
+            case 32:
+                _shape = sprite_shape::SQUARE;
+                _size = sprite_size::BIG;
+                break;
+
+            case 64:
+                _shape = sprite_shape::TALL;
+                _size = sprite_size::HUGE;
+                break;
+
+            default:
+                BN_ERROR("Invalid width or height: ", width, " - ", height);
+                break;
+            }
+            break;
+
+        case 64:
+            _size = sprite_size::HUGE;
+
+            switch(height)
+            {
+
+            case 32:
+                _shape = sprite_shape::WIDE;
+                break;
+
+            case 64:
+                _shape = sprite_shape::SQUARE;
+                break;
+
+            default:
+                BN_ERROR("Invalid width or height: ", width, " - ", height);
+                break;
+            }
+            break;
+
+        default:
+            BN_ERROR("Invalid width: ", width);
+            break;
+        }
+    }
+
+    /**
      * @brief Returns the sprite_shape enum.
      */
     [[nodiscard]] constexpr sprite_shape shape() const

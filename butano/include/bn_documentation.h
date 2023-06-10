@@ -1647,6 +1647,18 @@
  * used by Butano you can sell your game without issues.
  *
  *
+ * @subsection faq_multiboot Is it possible to use Butano to create multiboot games?
+ *
+ * It is possible, but not recommended as Butano footprint is too big for multiboot stuff,
+ * unless you want to make something *very* simple.
+ *
+ * Multiboot ROMs *should be* generated when they have the suffix `_mb`:
+ *
+ * @code{.cpp}
+ * TARGET := $(notdir $(CURDIR))_mb
+ * @endcode
+ *
+ *
  * @section faq_programming Programming
  *
  *
@@ -2058,6 +2070,7 @@
  * * Sound master volume actions added.
  * * @ref BN_LOG_BACKEND_MGBA also works with <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>.
  * * @ref getting_started page improved.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_13_15_0 13.15.0

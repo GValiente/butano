@@ -25,9 +25,17 @@ namespace bn::hw::timer
 
     [[nodiscard]] inline unsigned ticks()
     {
-        BN_BARRIER;
+        uint16_t high;
+        uint16_t low;
 
-        return (unsigned(REG_TM3D) << 16) | REG_TM2D;
+        do
+        {
+            high = REG_TM3D;
+            low = REG_TM2D;
+        }
+        while(high != REG_TM3D); [[unlikely]]
+
+        return (unsigned(high) << 16) | unsigned(low);
     }
 }
 

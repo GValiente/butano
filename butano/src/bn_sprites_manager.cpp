@@ -46,7 +46,7 @@ namespace
 
     BN_DATA_EWRAM static_data data;
 
-    void _update_indexes_to_commit(const item_type& item)
+    void _always_update_indexes_to_commit(const item_type& item)
     {
         int handles_index = item.handles_index;
 
@@ -66,6 +66,14 @@ namespace
         }
     }
 
+    inline void _update_indexes_to_commit(const item_type& item)
+    {
+        if(! data.rebuild_handles)
+        {
+            _always_update_indexes_to_commit(item);
+        }
+    }
+
     void _update_item_dimensions(item_type& item)
     {
         item.update_half_dimensions();
@@ -74,6 +82,7 @@ namespace
         {
             item.check_on_screen = true;
             data.check_items_on_screen = true;
+            data.rebuild_handles = true;
         }
     }
 
@@ -220,20 +229,6 @@ namespace
             }
         }
     }
-
-    void _check_items_on_screen()
-    {
-        if(data.check_items_on_screen)
-        {
-            data.check_items_on_screen = false;
-
-            if(_check_items_on_screen_impl(data.handles, data.sorter.layers(), data.rebuild_handles,
-                                           data.first_index_to_commit, data.last_index_to_commit))
-            {
-                data.rebuild_handles = true;
-            }
-        }
-    }
 }
 
 void init()
@@ -357,7 +352,7 @@ void decrease_usages(id_type id)
         if(item->visible)
         {
             hw::sprites::hide_and_destroy(item->handle);
-            _update_indexes_to_commit(*item);
+            data.rebuild_handles = true;
         }
 
         data.items_pool.destroy(*item);
@@ -459,12 +454,6 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, const sprite_til
     }
 }
 
-void remove_tiles(id_type id)
-{
-    auto item = static_cast<item_type*>(id);
-    item->tiles.reset();
-}
-
 void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles)
 {
     auto item = static_cast<item_type*>(id);
@@ -488,6 +477,12 @@ void set_tiles(id_type id, const sprite_shape_size& shape_size, sprite_tiles_ptr
             _update_indexes_to_commit(*item);
         }
     }
+}
+
+void remove_tiles(id_type id)
+{
+    auto item = static_cast<item_type*>(id);
+    item->tiles.reset();
 }
 
 const sprite_palette_ptr& palette(id_type id)
@@ -603,6 +598,7 @@ void set_x(id_type id, fixed x)
         {
             item->check_on_screen = true;
             data.check_items_on_screen = true;
+            data.rebuild_handles = true;
         }
     }
 }
@@ -627,6 +623,7 @@ void set_y(id_type id, fixed y)
         {
             item->check_on_screen = true;
             data.check_items_on_screen = true;
+            data.rebuild_handles = true;
         }
     }
 }
@@ -654,6 +651,7 @@ void set_position(id_type id, const fixed_point& position)
         {
             item->check_on_screen = true;
             data.check_items_on_screen = true;
+            data.rebuild_handles = true;
         }
     }
 }
@@ -906,6 +904,7 @@ void set_visible(id_type id, bool visible)
     if(visible != item->visible)
     {
         item->visible = visible;
+        data.rebuild_handles = true;
 
         if(visible)
         {
@@ -917,7 +916,6 @@ void set_visible(id_type id, bool visible)
             hw::sprites::hide(item->handle);
             item->on_screen = false;
             item->check_on_screen = false;
-            _update_indexes_to_commit(*item);
         }
     }
 }
@@ -941,6 +939,7 @@ void set_camera(id_type id, camera_ptr&& camera)
         {
             item->check_on_screen = true;
             data.check_items_on_screen = true;
+            data.rebuild_handles = true;
         }
     }
 }
@@ -958,6 +957,7 @@ void remove_camera(id_type id)
         {
             item->check_on_screen = true;
             data.check_items_on_screen = true;
+            data.rebuild_handles = true;
         }
     }
 }
@@ -1128,12 +1128,25 @@ void reload_blending()
 {
     bool fade_enabled = display_manager::blending_fade_enabled();
 
-    for(sorted_sprites::layer& layer : data.sorter.layers())
+    if(data.rebuild_handles)
     {
-        for(item_type& item : layer.items())
+        for(sorted_sprites::layer& layer : data.sorter.layers())
         {
-            hw::sprites::set_blending_enabled(item.blending_enabled, fade_enabled, item.handle);
-            _update_indexes_to_commit(item);
+            for(item_type& item : layer.items())
+            {
+                hw::sprites::set_blending_enabled(item.blending_enabled, fade_enabled, item.handle);
+            }
+        }
+    }
+    else
+    {
+        for(sorted_sprites::layer& layer : data.sorter.layers())
+        {
+            for(item_type& item : layer.items())
+            {
+                hw::sprites::set_blending_enabled(item.blending_enabled, fade_enabled, item.handle);
+                _always_update_indexes_to_commit(item);
+            }
         }
     }
 }
@@ -1309,7 +1322,11 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
 
 void update_cameras()
 {
-    data.check_items_on_screen |= _update_cameras_impl(data.sorter.layers());
+    if(_update_cameras_impl(data.sorter.layers()))
+    {
+        data.check_items_on_screen = true;
+        data.rebuild_handles = true;
+    }
 }
 
 void remove_identity_affine_mat_if_not_needed(id_type id)
@@ -1348,7 +1365,13 @@ void update_affine_mat_double_size(id_type id, int affine_mat_id)
 void update()
 {
     sprite_affine_mats_manager::update();
-    _check_items_on_screen();
+
+    if(data.check_items_on_screen)
+    {
+        data.check_items_on_screen = false;
+        _check_items_on_screen(data.sorter.layers());
+    }
+
     _rebuild_handles();
 }
 

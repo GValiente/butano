@@ -10,13 +10,8 @@
 namespace bn::sprites_manager
 {
 
-bool _check_items_on_screen_impl(void* hw_handles, intrusive_list<sorted_sprites::layer>& layers,
-                                 bool rebuild_handles, int& first_index_to_commit, int& last_index_to_commit)
+void _check_items_on_screen(intrusive_list<sorted_sprites::layer>& layers)
 {
-    auto handles = reinterpret_cast<hw::sprites::handle_type*>(hw_handles);
-    int first_index = first_index_to_commit;
-    int last_index = last_index_to_commit;
-
     for(sorted_sprites::layer& layer : layers)
     {
         for(sprites_manager_item& item : layer.items())
@@ -57,37 +52,9 @@ bool _check_items_on_screen_impl(void* hw_handles, intrusive_list<sorted_sprites
                         hw::sprites::hide(item.handle);
                     }
                 }
-
-                if(! rebuild_handles)
-                {
-                    int handles_index = item.handles_index;
-
-                    if(handles_index >= 0)
-                    {
-                        hw::sprites::copy_handle(item.handle, handles[handles_index]);
-
-                        if(handles_index < first_index)
-                        {
-                            first_index = handles_index;
-                        }
-
-                        if(handles_index > last_index)
-                        {
-                            last_index = handles_index;
-                        }
-                    }
-                    else
-                    {
-                        rebuild_handles = true;
-                    }
-                }
             }
         }
     }
-
-    first_index_to_commit = first_index;
-    last_index_to_commit = last_index;
-    return rebuild_handles;
 }
 
 int _rebuild_handles_impl(int reserved_handles_count, void* hw_handles, intrusive_list<sorted_sprites::layer>& layers)

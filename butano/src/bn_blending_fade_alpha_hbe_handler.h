@@ -48,12 +48,11 @@ public:
 
     static void show(intptr_t)
     {
-        display_manager::blending_enable_fade();
+        display_manager::set_blending_fade_enabled(true);
     }
 
     static void cleanup(intptr_t)
     {
-        display_manager::blending_disable_fade();
         display_manager::reload_blending_fade();
     }
 };

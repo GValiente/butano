@@ -2071,6 +2071,7 @@
  * * bn::sprite_shape_size constructor from width and height added.
  * * Maximum number of sprites per scanline increased.
  * * bn::timer::elapsed_ticks accuracy improved.
+ * * Display management optimized.
  * * @ref BN_LOG_BACKEND_MGBA also works with <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>.
  * * @ref getting_started page improved.
  * * More questions added to @ref faq page.

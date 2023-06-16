@@ -41,7 +41,6 @@ namespace
         fixed blending_transparency_top_weight = -1;
         fixed blending_transparency_bottom_weight = -1;
         fixed blending_fade_alpha = 0;
-        int blending_fade_usages = 0;
         int blending_layers = 0;
         hw::display::blending_mode blending_mode;
         unsigned windows_flags[hw::display::windows_count()];
@@ -57,6 +56,7 @@ namespace
         bool commit_display = true;
         bool green_swap_enabled = false;
         bool commit_mosaic = true;
+        bool blending_fade_enabled = false;
         bool blending_fade_to_black = true;
         bool update_blending_layers = true;
         bool update_blending_mode = true;
@@ -166,9 +166,14 @@ fixed sprites_mosaic_horizontal_stretch()
 
 void set_sprites_mosaic_horizontal_stretch(fixed stretch)
 {
+    fixed old_stretch = data.sprites_mosaic_horizontal_stretch;
     data.sprites_mosaic_horizontal_stretch = stretch;
-    data.commit_mosaic = true;
-    data.commit = true;
+
+    if(fixed_t<4>(old_stretch) != fixed_t<4>(stretch))
+    {
+        data.commit_mosaic = true;
+        data.commit = true;
+    }
 }
 
 fixed sprites_mosaic_vertical_stretch()
@@ -178,25 +183,44 @@ fixed sprites_mosaic_vertical_stretch()
 
 void set_sprites_mosaic_vertical_stretch(fixed stretch)
 {
+    fixed old_stretch = data.sprites_mosaic_vertical_stretch;
     data.sprites_mosaic_vertical_stretch = stretch;
-    data.commit_mosaic = true;
-    data.commit = true;
+
+    if(fixed_t<4>(old_stretch) != fixed_t<4>(stretch))
+    {
+        data.commit_mosaic = true;
+        data.commit = true;
+    }
 }
 
 void set_sprites_mosaic_stretch(fixed stretch)
 {
+    fixed old_horizontal_stretch = data.sprites_mosaic_horizontal_stretch;
+    fixed old_vertical_stretch = data.sprites_mosaic_vertical_stretch;
     data.sprites_mosaic_horizontal_stretch = stretch;
     data.sprites_mosaic_vertical_stretch = stretch;
-    data.commit_mosaic = true;
-    data.commit = true;
+
+    if(fixed_t<4>(old_horizontal_stretch) != fixed_t<4>(stretch) ||
+            fixed_t<4>(old_vertical_stretch) != fixed_t<4>(stretch))
+    {
+        data.commit_mosaic = true;
+        data.commit = true;
+    }
 }
 
 void set_sprites_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch)
 {
+    fixed old_horizontal_stretch = data.sprites_mosaic_horizontal_stretch;
+    fixed old_vertical_stretch = data.sprites_mosaic_vertical_stretch;
     data.sprites_mosaic_horizontal_stretch = horizontal_stretch;
     data.sprites_mosaic_vertical_stretch = vertical_stretch;
-    data.commit_mosaic = true;
-    data.commit = true;
+
+    if(fixed_t<4>(old_horizontal_stretch) != fixed_t<4>(horizontal_stretch) ||
+            fixed_t<4>(old_vertical_stretch) != fixed_t<4>(vertical_stretch))
+    {
+        data.commit_mosaic = true;
+        data.commit = true;
+    }
 }
 
 fixed bgs_mosaic_horizontal_stretch()
@@ -206,9 +230,14 @@ fixed bgs_mosaic_horizontal_stretch()
 
 void set_bgs_mosaic_horizontal_stretch(fixed stretch)
 {
+    fixed old_stretch = data.bgs_mosaic_horizontal_stretch;
     data.bgs_mosaic_horizontal_stretch = stretch;
-    data.commit_mosaic = true;
-    data.commit = true;
+
+    if(fixed_t<4>(old_stretch) != fixed_t<4>(stretch))
+    {
+        data.commit_mosaic = true;
+        data.commit = true;
+    }
 }
 
 fixed bgs_mosaic_vertical_stretch()
@@ -218,25 +247,44 @@ fixed bgs_mosaic_vertical_stretch()
 
 void set_bgs_mosaic_vertical_stretch(fixed stretch)
 {
+    fixed old_stretch = data.bgs_mosaic_vertical_stretch;
     data.bgs_mosaic_vertical_stretch = stretch;
-    data.commit_mosaic = true;
-    data.commit = true;
+
+    if(fixed_t<4>(old_stretch) != fixed_t<4>(stretch))
+    {
+        data.commit_mosaic = true;
+        data.commit = true;
+    }
 }
 
 void set_bgs_mosaic_stretch(fixed stretch)
 {
+    fixed old_horizontal_stretch = data.bgs_mosaic_horizontal_stretch;
+    fixed old_vertical_stretch = data.bgs_mosaic_vertical_stretch;
     data.bgs_mosaic_horizontal_stretch = stretch;
     data.bgs_mosaic_vertical_stretch = stretch;
-    data.commit_mosaic = true;
-    data.commit = true;
+
+    if(fixed_t<4>(old_horizontal_stretch) != fixed_t<4>(stretch) ||
+            fixed_t<4>(old_vertical_stretch) != fixed_t<4>(stretch))
+    {
+        data.commit_mosaic = true;
+        data.commit = true;
+    }
 }
 
 void set_bgs_mosaic_stretch(fixed horizontal_stretch, fixed vertical_stretch)
 {
+    fixed old_horizontal_stretch = data.bgs_mosaic_horizontal_stretch;
+    fixed old_vertical_stretch = data.bgs_mosaic_vertical_stretch;
     data.bgs_mosaic_horizontal_stretch = horizontal_stretch;
     data.bgs_mosaic_vertical_stretch = vertical_stretch;
-    data.commit_mosaic = true;
-    data.commit = true;
+
+    if(fixed_t<4>(old_horizontal_stretch) != fixed_t<4>(horizontal_stretch) ||
+            fixed_t<4>(old_vertical_stretch) != fixed_t<4>(vertical_stretch))
+    {
+        data.commit_mosaic = true;
+        data.commit = true;
+    }
 }
 
 void reload_mosaic()
@@ -264,8 +312,12 @@ bool blending_bg_enabled(int bg)
 
 void set_blending_bg_enabled(int bg, bool enabled)
 {
-    data.blending_bgs[bg] = enabled;
-    data.update_blending_layers = true;
+    if(data.blending_bgs[bg] != enabled)
+    {
+        data.blending_bgs[bg] = enabled;
+        data.update_blending_layers = true;
+        data.commit = true;
+    }
 }
 
 fixed blending_transparency_alpha()
@@ -282,11 +334,14 @@ fixed blending_transparency_alpha()
 
 void set_blending_transparency_alpha(fixed transparency_alpha)
 {
-    data.blending_transparency_alpha = transparency_alpha;
-    data.blending_transparency_top_weight = -1;
-    data.blending_transparency_bottom_weight = -1;
-    data.commit_blending_transparency = true;
-    data.commit = true;
+    if(data.blending_transparency_alpha != transparency_alpha)
+    {
+        data.blending_transparency_alpha = transparency_alpha;
+        data.blending_transparency_top_weight = -1;
+        data.blending_transparency_bottom_weight = -1;
+        data.commit_blending_transparency = true;
+        data.commit = true;
+    }
 }
 
 fixed blending_intensity_alpha()
@@ -303,11 +358,14 @@ fixed blending_intensity_alpha()
 
 void set_blending_intensity_alpha(fixed intensity_alpha)
 {
-    data.blending_intensity_alpha = intensity_alpha;
-    data.blending_transparency_top_weight = -1;
-    data.blending_transparency_bottom_weight = -1;
-    data.commit_blending_transparency = true;
-    data.commit = true;
+    if(data.blending_intensity_alpha != intensity_alpha)
+    {
+        data.blending_intensity_alpha = intensity_alpha;
+        data.blending_transparency_top_weight = -1;
+        data.blending_transparency_bottom_weight = -1;
+        data.commit_blending_transparency = true;
+        data.commit = true;
+    }
 }
 
 fixed blending_transparency_top_weight()
@@ -324,9 +382,14 @@ fixed blending_transparency_top_weight()
 
 void set_blending_transparency_top_weight(fixed top_weight)
 {
+    fixed old_top_weight = data.blending_transparency_top_weight;
     data.blending_transparency_top_weight = top_weight;
-    data.commit_blending_transparency = true;
-    data.commit = true;
+
+    if(old_top_weight.data() >> 8 != top_weight.data() >> 8)
+    {
+        data.commit_blending_transparency = true;
+        data.commit = true;
+    }
 }
 
 fixed blending_transparency_bottom_weight()
@@ -343,17 +406,29 @@ fixed blending_transparency_bottom_weight()
 
 void set_blending_transparency_bottom_weight(fixed bottom_weight)
 {
+    fixed old_bottom_weight = data.blending_transparency_bottom_weight;
     data.blending_transparency_bottom_weight = bottom_weight;
-    data.commit_blending_transparency = true;
-    data.commit = true;
+
+    if(old_bottom_weight.data() >> 8 != bottom_weight.data() >> 8)
+    {
+        data.commit_blending_transparency = true;
+        data.commit = true;
+    }
 }
 
 void set_blending_transparency_weights(fixed top_weight, fixed bottom_weight)
 {
+    fixed old_top_weight = data.blending_transparency_top_weight;
+    fixed old_bottom_weight = data.blending_transparency_bottom_weight;
     data.blending_transparency_top_weight = top_weight;
     data.blending_transparency_bottom_weight = bottom_weight;
-    data.commit_blending_transparency = true;
-    data.commit = true;
+
+    if(old_top_weight.data() >> 8 != top_weight.data() >> 8 ||
+            old_bottom_weight.data() >> 8 != bottom_weight.data() >> 8)
+    {
+        data.commit_blending_transparency = true;
+        data.commit = true;
+    }
 }
 
 void reload_blending_transparency()
@@ -376,29 +451,17 @@ void fill_blending_transparency_hblank_effect_attributes(
 
 bool blending_fade_enabled()
 {
-    return data.blending_fade_usages > 0;
+    return data.blending_fade_enabled;
 }
 
-void blending_enable_fade()
+void set_blending_fade_enabled(bool enabled)
 {
-    ++data.blending_fade_usages;
-
-    if(data.blending_fade_usages == 1)
+    if(data.blending_fade_enabled != enabled)
     {
+        data.blending_fade_enabled = enabled;
         data.update_blending_mode = true;
         data.update_blending_layers = true;
-        sprites_manager::reload_blending();
-    }
-}
-
-void blending_disable_fade()
-{
-    --data.blending_fade_usages;
-
-    if(! data.blending_fade_usages)
-    {
-        data.update_blending_mode = true;
-        data.update_blending_layers = true;
+        data.commit = true;
         sprites_manager::reload_blending();
     }
 }
@@ -410,11 +473,15 @@ bool blending_fade_to_black()
 
 void set_blending_fade_to_black(bool fade_to_black)
 {
-    data.blending_fade_to_black = fade_to_black;
-
-    if(blending_fade_enabled())
+    if(data.blending_fade_to_black != fade_to_black)
     {
-        data.update_blending_mode = true;
+        data.blending_fade_to_black = fade_to_black;
+
+        if(data.blending_fade_enabled)
+        {
+            data.update_blending_mode = true;
+            data.commit = true;
+        }
     }
 }
 
@@ -425,30 +492,18 @@ fixed blending_fade_alpha()
 
 void set_blending_fade_alpha(fixed fade_alpha)
 {
-    bool old_blending_fade_enabled = fixed_t<4>(data.blending_fade_alpha).data() > 0;
-    bool new_blending_fade_enabled = fixed_t<4>(fade_alpha).data() > 0;
+    int old_fade_alpha = fixed_t<4>(data.blending_fade_alpha).data();
     data.blending_fade_alpha = fade_alpha;
-    data.commit_blending_fade = true;
-    data.commit = true;
 
-    if(old_blending_fade_enabled)
+    if(old_fade_alpha != fixed_t<4>(fade_alpha).data())
     {
-        if(! new_blending_fade_enabled)
-        {
-            blending_disable_fade();
-        }
-    }
-    else
-    {
-        if(new_blending_fade_enabled)
-        {
-            blending_enable_fade();
-        }
+        reload_blending_fade();
     }
 }
 
 void reload_blending_fade()
 {
+    set_blending_fade_enabled(fixed_t<4>(data.blending_fade_alpha).data());
     data.commit_blending_fade = true;
     data.commit = true;
 }
@@ -466,6 +521,7 @@ void fill_blending_fade_hblank_effect_alphas(const class blending_fade_alpha* bl
 void update_windows_visible_bgs()
 {
     data.update_windows_visible_bgs = true;
+    data.commit = true;
 }
 
 bool show_sprites_in_window(int window)
@@ -752,9 +808,12 @@ bool green_swap_enabled()
 
 void set_green_swap_enabled(bool enabled)
 {
-    data.green_swap_enabled = enabled;
-    data.commit_green_swap = true;
-    data.commit = true;
+    if(data.green_swap_enabled != enabled)
+    {
+        data.green_swap_enabled = enabled;
+        data.commit_green_swap = true;
+        data.commit = true;
+    }
 }
 
 void reload_green_swap()
@@ -786,48 +845,45 @@ void update_cameras()
 
 void update()
 {
-    if(data.update_blending_mode)
+    if(data.commit)
     {
-        if(data.blending_fade_usages)
+        if(data.update_blending_mode)
         {
-            if(data.blending_fade_to_black)
+            if(data.blending_fade_enabled)
             {
-                data.blending_mode = hw::display::blending_mode::FADE_TO_BLACK;
+                if(data.blending_fade_to_black)
+                {
+                    data.blending_mode = hw::display::blending_mode::FADE_TO_BLACK;
+                }
+                else
+                {
+                    data.blending_mode = hw::display::blending_mode::FADE_TO_WHITE;
+                }
             }
             else
             {
-                data.blending_mode = hw::display::blending_mode::FADE_TO_WHITE;
+                data.blending_mode = hw::display::blending_mode::TRANSPARENCY;
             }
+
+            data.update_blending_mode = false;
+            data.commit_blending_cnt = true;
         }
-        else
+
+        if(data.update_blending_layers)
         {
-            data.blending_mode = hw::display::blending_mode::TRANSPARENCY;
+            bool fade = data.blending_mode != hw::display::blending_mode::TRANSPARENCY;
+            data.blending_layers = hw::display::blending_layers(data.blending_bgs, hw::bgs::count(), fade);
+            data.update_blending_layers = false;
+            data.commit_blending_cnt = true;
         }
 
-        data.update_blending_mode = false;
-        data.commit_blending_cnt = true;
-        data.commit = true;
-    }
+        if(data.update_windows_visible_bgs)
+        {
+            bgs_manager::update_windows_flags(data.windows_flags);
+            data.update_windows_visible_bgs = false;
+            data.commit_windows_flags = true;
+        }
 
-    if(data.update_blending_layers)
-    {
-        bool fade = data.blending_mode != hw::display::blending_mode::TRANSPARENCY;
-        data.blending_layers = hw::display::blending_layers(data.blending_bgs, hw::bgs::count(), fade);
-        data.update_blending_layers = false;
-        data.commit_blending_cnt = true;
-        data.commit = true;
-    }
-
-    if(data.update_windows_visible_bgs)
-    {
-        bgs_manager::update_windows_flags(data.windows_flags);
-        data.update_windows_visible_bgs = false;
-        data.commit_windows_flags = true;
-        data.commit = true;
-    }
-
-    if(data.commit)
-    {
         if(data.commit_display)
         {
             hw::display::set_display(data.mode, data.enabled_bgs, data.inside_windows_enabled, data.display_cnt);

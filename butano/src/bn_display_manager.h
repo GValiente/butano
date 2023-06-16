@@ -87,7 +87,7 @@ namespace bn::display_manager
 
     [[nodiscard]] bool blending_fade_enabled();
 
-    void blending_enable_fade();
+    void set_blending_fade_enabled(bool enabled);
 
     void blending_disable_fade();
 

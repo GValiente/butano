@@ -137,9 +137,10 @@ public:
     {
         if(this != &other)
         {
-            BN_ASSERT(size() == other.size(), "Different size: ", size(), " - ", other.size());
+            int num_elements = _num_elements;
+            BN_BASIC_ASSERT(num_elements == other._num_elements, "Different size: ", size(), " - ", other.size());
 
-            copy_n(other._data, _num_elements, _data);
+            copy_n(other._data, num_elements, _data);
         }
 
         return *this;
@@ -381,9 +382,10 @@ public:
      */
     constexpr ibitset& operator&=(const ibitset& other)
     {
-        BN_ASSERT(size() == other.size(), "Different size: ", size(), " - ", other.size());
+        int num_elements = _num_elements;
+        BN_BASIC_ASSERT(num_elements == other._num_elements, "Different size: ", size(), " - ", other.size());
 
-        int last_element_index = _num_elements - 1;
+        int last_element_index = num_elements - 1;
 
         for(int index = last_element_index; index >= 0; --index)
         {
@@ -400,9 +402,10 @@ public:
      */
     constexpr ibitset& operator|=(const ibitset& other)
     {
-        BN_ASSERT(size() == other.size(), "Different size: ", size(), " - ", other.size());
+        int num_elements = _num_elements;
+        BN_BASIC_ASSERT(num_elements == other._num_elements, "Different size: ", size(), " - ", other.size());
 
-        int last_element_index = _num_elements - 1;
+        int last_element_index = num_elements - 1;
 
         for(int index = last_element_index; index >= 0; --index)
         {
@@ -419,9 +422,10 @@ public:
      */
     constexpr ibitset& operator^=(const ibitset& other)
     {
-        BN_ASSERT(size() == other.size(), "Different size: ", size(), " - ", other.size());
+        int num_elements = _num_elements;
+        BN_BASIC_ASSERT(num_elements == other._num_elements, "Different size: ", size(), " - ", other.size());
 
-        int last_element_index = _num_elements - 1;
+        int last_element_index = num_elements - 1;
 
         for(int index = last_element_index; index >= 0; --index)
         {
@@ -437,10 +441,11 @@ public:
      */
     constexpr void swap(ibitset& other)
     {
-        BN_ASSERT(size() == other.size(), "Different size: ", other.size(), " - ", other.size());
+        int num_elements = _num_elements;
+        BN_BASIC_ASSERT(num_elements == other._num_elements, "Different size: ", size(), " - ", other.size());
 
         element_t* data = _data;
-        swap_ranges(data, data + _num_elements, other._data);
+        swap_ranges(data, data + num_elements, other._data);
     }
 
     /**
@@ -461,9 +466,9 @@ public:
      */
     [[nodiscard]] constexpr friend bool operator==(const ibitset& a, const ibitset& b)
     {
-        int a_size = a.elements_size();
+        int num_elements = a._num_elements;
 
-        if(a_size != b.size())
+        if(num_elements != b._num_elements)
         {
             return false;
         }
@@ -476,7 +481,7 @@ public:
             return true;
         }
 
-        return equal(a_data, a_data + a_size, b_data);
+        return equal(a_data, a_data + num_elements, b_data);
     }
 
     /**

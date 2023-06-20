@@ -2064,7 +2064,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_16_0 13.16.0 (next release)
+ * @section changelog_13_16_0 13.16.0
  *
  * * bn::sound::master_volume and bn::sound::set_master_volume added.
  * * Sound master volume actions added.

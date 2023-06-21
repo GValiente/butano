@@ -2064,7 +2064,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_16_1 13.16.1 (next release)
+ * @section changelog_13_16_1 13.16.1
  *
  * bn::ibitset AND operator fixed.
  *

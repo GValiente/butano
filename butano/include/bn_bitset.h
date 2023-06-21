@@ -389,7 +389,7 @@ public:
 
         for(int index = last_element_index; index >= 0; --index)
         {
-            _data[last_element_index] &= other._data[last_element_index];
+            _data[index] &= other._data[index];
         }
 
         return *this;

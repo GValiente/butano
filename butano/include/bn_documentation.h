@@ -2064,6 +2064,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_16_1 13.16.1 (next release)
+ *
+ * bn::ibitset AND operator fixed.
+ *
+ *
  * @section changelog_13_16_0 13.16.0
  *
  * * bn::sound::master_volume and bn::sound::set_master_volume added.
@@ -2072,7 +2077,7 @@
  * * Maximum number of sprites per scanline increased.
  * * bn::timer::elapsed_ticks accuracy improved.
  * * Display management optimized.
- * * bn::bitset equality operators fixed.
+ * * bn::ibitset equality operators fixed.
  * * @ref BN_LOG_BACKEND_MGBA also works with <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>.
  * * @ref getting_started page improved.
  * * More questions added to @ref faq page.

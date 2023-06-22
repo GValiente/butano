@@ -181,7 +181,7 @@ public:
         static_assert(sizeof(Type) <= MaxElementSize);
 
         auto result = reinterpret_cast<Type*>(_allocate());
-        ::new(result) Type(forward<Args>(args)...);
+        new(result) Type(forward<Args>(args)...);
         return *result;
     }
 

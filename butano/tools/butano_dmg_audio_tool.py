@@ -200,10 +200,8 @@ def process_dmg_audio(audio_folder_paths, build_folder_path):
 
         sys.stdout.flush()
 
-        pool = Pool()
-        processor = DmgAudioFileInfoProcessor(build_folder_path)
-        process_results = pool.map(processor, audio_file_infos)
-        pool.close()
+        with Pool() as pool:
+            process_results = pool.map(DmgAudioFileInfoProcessor(build_folder_path), audio_file_infos)
 
         process_excs = []
 

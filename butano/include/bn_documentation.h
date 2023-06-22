@@ -2064,6 +2064,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_17_0 13.17.0 (next release)
+ *
+ * Tools multiprocessing pools are now closed properly.
+ *
+ *
  * @section changelog_13_16_1 13.16.1
  *
  * bn::ibitset AND operator fixed.

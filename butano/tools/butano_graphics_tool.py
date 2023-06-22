@@ -1510,9 +1510,8 @@ def process_graphics(graphics_folder_paths, build_folder_path):
 
         sys.stdout.flush()
 
-        pool = Pool()
-        process_results = pool.map(GraphicsFileInfoProcessor(build_folder_path), graphics_file_infos)
-        pool.close()
+        with Pool() as pool:
+            process_results = pool.map(GraphicsFileInfoProcessor(build_folder_path), graphics_file_infos)
 
         total_size = 0
         process_excs = []

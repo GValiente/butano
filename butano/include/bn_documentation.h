@@ -2012,6 +2012,20 @@
  * but since it seems the library was abandoned long time ago, don't hold your hopes up too much.
  *
  *
+ * @subsection faq_music_wav Why can't I use a long *.wav file as music?
+ *
+ * <a href="https://maxmod.devkitpro.org/">Maxmod</a> doesn't allow to play long `*.wav` files as music,
+ * unfortunately.
+ *
+ * The maximum length of sound samples is also small, so if you try to play a long `*.wav` file as a sound effect,
+ * it should stop after a few seconds.
+ *
+ * What you can do is to split your long `*.wav` file in small pieces and put them in a module file
+ * (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions).
+ * You can use <a href="https://sox.sourceforge.net/">SoX</a> to split the long `*.wav` file and
+ * <a href="https://openmpt.org/">OpenMPT</a> to create the final module file.
+ *
+ *
  * @subsection faq_music_missing_notes Why there are missing notes when playing some Direct Sound songs?
  *
  * If a song doesn't have more channels than the maximum number of active Direct Sound music channels
@@ -2066,7 +2080,8 @@
  *
  * @section changelog_13_17_0 13.17.0 (next release)
  *
- * Tools multiprocessing pools are now closed properly.
+ * * Tools multiprocessing pools are now closed properly.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_13_16_1 13.16.1

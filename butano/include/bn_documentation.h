@@ -2080,6 +2080,7 @@
  *
  * @section changelog_13_17_0 13.17.0 (next release)
  *
+ * * bn::blending::set_transparency_alpha and bn::blending::set_intensity_alpha fixed.
  * * Tools multiprocessing pools are now closed properly.
  * * More questions added to @ref faq page.
  *

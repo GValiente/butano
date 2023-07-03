@@ -29,7 +29,7 @@
 /**
  * @def BN_CFG_LOG_BACKEND
  *
- * Specifies if emulator logging is enabled or not.
+ * Specifies the log backend to use.
  *
  * Values not specified in BN_LOG_BACKEND_* macros are not allowed.
  *

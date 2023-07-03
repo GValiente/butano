@@ -2080,7 +2080,8 @@
  *
  * @section changelog_13_17_1 13.17.1 (next release)
  *
- * bn::best_fit_allocator missing header files included.
+ * * bn::best_fit_allocator missing header files included.
+ * * @ref BN_CFG_LOG_BACKEND documentation fixed.
  *
  *
  * @section changelog_13_17_0 13.17.0

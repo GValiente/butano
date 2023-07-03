@@ -2078,6 +2078,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_13_17_1 13.17.1 (next release)
+ *
+ * bn::best_fit_allocator missing header files included.
+ *
+ *
  * @section changelog_13_17_0 13.17.0
  *
  * * bn::blending::set_transparency_alpha and bn::blending::set_intensity_alpha fixed.

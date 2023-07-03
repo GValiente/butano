@@ -13,8 +13,9 @@
  * @ingroup allocator
  */
 
+#include "bn_assert.h"
+#include "bn_utility.h"
 #include "bn_config_log.h"
-#include "bn_config_doxygen.h"
 #include "bn_config_best_fit_allocator.h"
 
 namespace bn

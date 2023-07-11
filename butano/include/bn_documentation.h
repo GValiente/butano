@@ -2078,9 +2078,10 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_17_1 13.17.1 (next release)
+ * @section changelog_13_18_0 13.18.0 (next release)
  *
  * * bn::best_fit_allocator missing header files included.
+ * * bn::unordered_map::clear and bn::unordered_set::clear optimized.
  * * @ref BN_CFG_LOG_BACKEND documentation fixed.
  *
  *

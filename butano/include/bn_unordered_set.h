@@ -874,11 +874,10 @@ public:
      */
     void clear()
     {
-        if(_size)
+        if(size_type size = _size)
         {
-            size_type max_size = _max_size_minus_one + 1;
-            memory::clear(max_size, *_allocated);
-            _first_valid_index = max_size;
+            memory::clear(size, _allocated[_first_valid_index]);
+            _first_valid_index = _max_size_minus_one + 1;
             _last_valid_index = 0;
             _size = 0;
         }
@@ -901,13 +900,12 @@ public:
             {
                 if(allocated[index])
                 {
+                    allocated[index] = false;
                     storage[index].~value_type();
                 }
             }
 
-            size_type max_size = _max_size_minus_one + 1;
-            memory::clear(max_size, *allocated);
-            _first_valid_index = max_size;
+            _first_valid_index = _max_size_minus_one + 1;
             _last_valid_index = 0;
             _size = 0;
         }

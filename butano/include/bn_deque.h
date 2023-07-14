@@ -448,6 +448,20 @@ public:
     ideque(const ideque& other) = delete;
 
     /**
+     * @brief Destructor.
+     */
+    ~ideque() noexcept = default;
+
+    /**
+     * @brief Destructor.
+     */
+    ~ideque() noexcept
+    requires(! is_trivially_destructible_v<Type>)
+    {
+        clear();
+    }
+
+    /**
      * @brief Copy assignment operator.
      * @param other ideque to copy.
      * @return Reference to this.
@@ -1555,20 +1569,6 @@ public:
         }
 
         return *this;
-    }
-
-    /**
-     * @brief Destructor.
-     */
-    ~deque() noexcept = default;
-
-    /**
-     * @brief Destructor.
-     */
-    ~deque() noexcept
-    requires(! is_trivially_destructible_v<Type>)
-    {
-        this->clear();
     }
 
 private:

@@ -43,6 +43,20 @@ public:
     ivector(const ivector& other) = delete;
 
     /**
+     * @brief Destructor.
+     */
+    ~ivector() noexcept = default;
+
+    /**
+     * @brief Destructor.
+     */
+    ~ivector() noexcept
+    requires(! is_trivially_destructible_v<Type>)
+    {
+        clear();
+    }
+
+    /**
      * @brief Copy assignment operator.
      * @param other ivector to copy.
      * @return Reference to this.
@@ -1020,20 +1034,6 @@ public:
         }
 
         return *this;
-    }
-
-    /**
-     * @brief Destructor.
-     */
-    ~vector() noexcept = default;
-
-    /**
-     * @brief Destructor.
-     */
-    ~vector() noexcept
-    requires(! is_trivially_destructible_v<Type>)
-    {
-        this->clear();
     }
 
 private:

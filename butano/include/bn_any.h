@@ -85,7 +85,7 @@ public:
     {
         BN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
         BN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
-                   alignof(Type), " - ", _max_alignment);
+                  alignof(Type), " - ", _max_alignment);
 
         reset();
         new(_value_ptr<Type>()) Type(value);
@@ -102,7 +102,7 @@ public:
     {
         BN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
         BN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
-                   alignof(Type), " - ", _max_alignment);
+                  alignof(Type), " - ", _max_alignment);
 
         reset();
         new(_value_ptr<Type>()) Type(value);
@@ -224,7 +224,7 @@ public:
     {
         BN_ASSERT(int(sizeof(Type)) <= _max_size, "Invalid value size: ", sizeof(Type), " - ", _max_size);
         BN_ASSERT(int(alignof(Type)) <= _max_alignment, "Invalid value alignment: ",
-                   alignof(Type), " - ", _max_alignment);
+                  alignof(Type), " - ", _max_alignment);
 
         reset();
 
@@ -317,9 +317,9 @@ protected:
         void copy_to(const iany& this_any, iany& other_any) const final
         {
             BN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
-                       sizeof(Type), " - ", other_any.max_size());
+                      sizeof(Type), " - ", other_any.max_size());
             BN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
-                       alignof(Type), " - ", other_any.max_alignment());
+                      alignof(Type), " - ", other_any.max_alignment());
 
             if constexpr(is_copy_constructible_v<Type>)
             {
@@ -336,9 +336,9 @@ protected:
         void move_to(iany& this_any, iany& other_any) const final
         {
             BN_ASSERT(int(sizeof(Type)) <= other_any.max_size(), "Invalid value size: ",
-                       sizeof(Type), " - ", other_any.max_size());
+                      sizeof(Type), " - ", other_any.max_size());
             BN_ASSERT(int(alignof(Type)) <= other_any.max_alignment(), "Invalid value alignment: ",
-                       alignof(Type), " - ", other_any.max_alignment());
+                      alignof(Type), " - ", other_any.max_alignment());
 
             if constexpr(is_move_constructible_v<Type>)
             {

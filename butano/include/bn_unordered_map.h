@@ -312,6 +312,34 @@ public:
     iunordered_map(const iunordered_map& other) = delete;
 
     /**
+     * @brief Destructor.
+     */
+    ~iunordered_map() noexcept = default;
+
+    /**
+     * @brief Destructor.
+     */
+    ~iunordered_map() noexcept
+    requires(! is_trivially_destructible_v<value_type>)
+    {
+        if(_size)
+        {
+            pointer storage = _storage;
+            bool* allocated = _allocated;
+            size_type first_valid_index = _first_valid_index;
+            size_type last_valid_index = _last_valid_index;
+
+            for(size_type index = first_valid_index; index <= last_valid_index; ++index)
+            {
+                if(allocated[index])
+                {
+                    storage[index].~value_type();
+                }
+            }
+        }
+    }
+
+    /**
      * @brief Copy assignment operator.
      * @param other iunordered_map to copy.
      * @return Reference to this.
@@ -1588,20 +1616,6 @@ public:
         }
 
         return *this;
-    }
-
-    /**
-     * @brief Destructor.
-     */
-    ~unordered_map() noexcept = default;
-
-    /**
-     * @brief Destructor.
-     */
-    ~unordered_map() noexcept
-    requires(! is_trivially_destructible_v<value_type>)
-    {
-        this->clear();
     }
 
 private:

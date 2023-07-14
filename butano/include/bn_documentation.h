@@ -2080,8 +2080,9 @@
  *
  * @section changelog_13_18_0 13.18.0 (next release)
  *
- * * bn::best_fit_allocator missing header files included.
+ * * Standard containers ROM usage reduced.
  * * bn::unordered_map::clear and bn::unordered_set::clear optimized.
+ * * bn::best_fit_allocator missing header files included.
  * * @ref BN_CFG_LOG_BACKEND documentation fixed.
  *
  *

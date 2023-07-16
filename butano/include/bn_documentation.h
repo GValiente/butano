@@ -1032,14 +1032,13 @@
  *
  * @code{.json}
  * {
- *     "type": "sprite",
- *     "height": 64
+ *     "type": "sprite"
  * }
  * @endcode
  *
  * The fields for sprites are the following:
  * * `"type"`: must be `"sprite"` for sprites.
- * * `"height"`: height of each sprite image in pixels.
+ * * `"height"`: optional field which specifies the height of each sprite image in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite images.
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite:
  *   * `"bpp_8"`: up to 256 colors.
@@ -1093,14 +1092,13 @@
  *
  * @code{.json}
  * {
- *     "type": "sprite_tiles",
- *     "height": 64
+ *     "type": "sprite_tiles"
  * }
  * @endcode
  *
  * The fields for sprite tiles are the following:
  * * `"type"`: must be `"sprite_tiles"` for sprite tiles.
- * * `"height"`: height of each sprite tiles set in pixels.
+ * * `"height"`: optional field which specifies the height of each sprite tiles set in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite tiles sets.
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite tiles:
  *   * `"bpp_8"`: up to 256 colors.
@@ -2080,6 +2078,7 @@
  *
  * @section changelog_13_18_0 13.18.0 (next release)
  *
+ * * Sprites and sprite tiles height field is now optional.
  * * Standard containers ROM usage reduced.
  * * bn::unordered_map::clear and bn::unordered_set::clear optimized.
  * * bn::best_fit_allocator missing header files included.

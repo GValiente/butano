@@ -63,6 +63,22 @@ def parse_bg_bpp_mode(info, file_name_no_ext):
         raise ValueError('Invalid BPP mode: ' + bpp_mode)
 
 
+def validate_palette_item(palette_item):
+    if len(palette_item) == 0:
+        raise ValueError('Empty palette item')
+
+    if palette_item[0] not in string.ascii_lowercase:
+        raise ValueError('Invalid palette item: ' + palette_item +
+                         ' (invalid character: \'' + palette_item[0] + '\')')
+
+    valid_characters = '_%s%s' % (string.ascii_lowercase, string.digits)
+
+    for palette_item_character in palette_item:
+        if palette_item_character not in valid_characters:
+            raise ValueError('Invalid palette item: ' + palette_item +
+                             ' (invalid character: \'' + palette_item_character + '\')')
+
+
 def validate_compression(compression):
     if compression not in ['none', 'lz77', 'run_length', 'huffman', 'auto']:
         raise ValueError('Unknown compression: ' + str(compression))
@@ -165,13 +181,16 @@ class SpriteItem:
 
         try:
             height = int(info['height'])
+
+            if bmp.height % height:
+                raise ValueError('File height is not divisible by item height: ' +
+                                 str(bmp.height) + ' - ' + str(height))
+
+            self.__graphics = int(bmp.height / height)
         except KeyError:
-            raise ValueError('height field not found in graphics json file: ' + file_name_no_ext + '.json')
+            height = bmp.height
+            self.__graphics = 1
 
-        if bmp.height % height:
-            raise ValueError('File height is not divisible by item height: ' + str(bmp.height) + ' - ' + str(height))
-
-        self.__graphics = int(bmp.height / height)
         self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
         self.__colors_count = parse_colors_count(info, bmp)
         self.__bpp_8 = parse_sprite_bpp_mode(info, self.__colors_count)
@@ -330,13 +349,16 @@ class SpriteTilesItem:
 
         try:
             height = int(info['height'])
+
+            if bmp.height % height:
+                raise ValueError('File height is not divisible by item height: ' +
+                                 str(bmp.height) + ' - ' + str(height))
+
+            self.__graphics = int(bmp.height / height)
         except KeyError:
-            raise ValueError('height field not found in graphics json file: ' + file_name_no_ext + '.json')
+            height = bmp.height
+            self.__graphics = 1
 
-        if bmp.height % height:
-            raise ValueError('File height is not divisible by item height: ' + str(bmp.height) + ' - ' + str(height))
-
-        self.__graphics = int(bmp.height / height)
         self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
         self.__colors_count = parse_colors_count(info, bmp)
         self.__bpp_8 = parse_sprite_bpp_mode(info, self.__colors_count)
@@ -583,23 +605,8 @@ class RegularBgItem:
             self.__palette_reduction = True
 
         try:
-            palette_item = str(info['palette_item'])
-
-            if len(palette_item) == 0:
-                raise ValueError('Empty palette item')
-
-            if palette_item[0] not in string.ascii_lowercase:
-                raise ValueError('Invalid palette item: ' + palette_item +
-                                 ' (invalid character: \'' + palette_item[0] + '\')')
-
-            valid_characters = '_%s%s' % (string.ascii_lowercase, string.digits)
-
-            for palette_item_character in palette_item:
-                if palette_item_character not in valid_characters:
-                    raise ValueError('Invalid palette item: ' + palette_item +
-                                     ' (invalid character: \'' + palette_item_character + '\')')
-
-            self.__palette_item = palette_item
+            self.__palette_item = str(info['palette_item'])
+            validate_palette_item(self.__palette_item)
             self.__colors_count = 0
         except KeyError:
             self.__palette_item = None
@@ -979,23 +986,8 @@ class AffineBgItem:
             self.__repeated_tiles_reduction = True
 
         try:
-            palette_item = str(info['palette_item'])
-
-            if len(palette_item) == 0:
-                raise ValueError('Empty palette item')
-
-            if palette_item[0] not in string.ascii_lowercase:
-                raise ValueError('Invalid palette item: ' + palette_item +
-                                 ' (invalid character: \'' + palette_item[0] + '\')')
-
-            valid_characters = '_%s%s' % (string.ascii_lowercase, string.digits)
-
-            for palette_item_character in palette_item:
-                if palette_item_character not in valid_characters:
-                    raise ValueError('Invalid palette item: ' + palette_item +
-                                     ' (invalid character: \'' + palette_item_character + '\')')
-
-            self.__palette_item = palette_item
+            self.__palette_item = str(info['palette_item'])
+            validate_palette_item(self.__palette_item)
             self.__colors_count = 0
         except KeyError:
             self.__palette_item = None

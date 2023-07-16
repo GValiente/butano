@@ -2076,7 +2076,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_13_18_0 13.18.0 (next release)
+ * @section changelog_13_18_0 13.18.0
  *
  * * Sprites and sprite tiles height field is now optional.
  * * Standard containers ROM usage reduced.

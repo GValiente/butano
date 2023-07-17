@@ -724,7 +724,7 @@ template<typename Type>
 }
 
 /**
- * @brief Creates a any deducing its size and alignment from the given Type.
+ * @brief Creates an any deducing its size and alignment from the given Type.
  * @tparam Type Type of the value to construct.
  * @tparam Args Types of the parameters of the value to construct.
  * @param args Parameters of the value to construct.

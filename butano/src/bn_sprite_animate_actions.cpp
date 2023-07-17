@@ -1,5 +1,7 @@
 #include "bn_sprite_animate_actions.h"
 
+#include "bn_limits.h"
+
 namespace bn
 {
 
@@ -181,7 +183,7 @@ void isprite_cached_animate_action::set_wait_updates(int wait_updates)
 
     if(wait_updates < _current_wait_updates)
     {
-        _current_wait_updates = wait_updates;
+        _current_wait_updates = uint16_t(wait_updates);
     }
 }
 

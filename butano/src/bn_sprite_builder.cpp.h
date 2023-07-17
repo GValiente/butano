@@ -24,8 +24,7 @@ sprite_builder::sprite_builder(const sprite_item& item, int graphics_index) :
     _graphics_index(graphics_index),
     _shape_size(item.shape_size())
 {
-    BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
-    BN_ASSERT(graphics_index < item.tiles_item().graphics_count(),
+    BN_ASSERT(graphics_index >= 0 && graphics_index < item.tiles_item().graphics_count(),
               "Invalid graphics index: ", graphics_index, " - ", item.tiles_item().graphics_count());
 }
 

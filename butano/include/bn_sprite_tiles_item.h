@@ -191,8 +191,7 @@ public:
     {
         BN_BASIC_ASSERT(compression() == compression_type::NONE || _graphics_count == 1,
                         "Compressed tiles with multiple graphics not supported");
-        BN_ASSERT(graphics_index >= 0, "Invalid graphics index: ", graphics_index);
-        BN_ASSERT(graphics_index < _graphics_count,
+        BN_ASSERT(graphics_index >= 0 && graphics_index < _graphics_count,
                   "Invalid graphics index: ", graphics_index, " - ", _graphics_count);
 
         int tiles_count = _tiles_count_per_graphic;

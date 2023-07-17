@@ -17,7 +17,6 @@
 
 #include "bn_array.h"
 #include "bn_vector.h"
-#include "bn_limits.h"
 #include "bn_sprite_ptr.h"
 #include "bn_sprite_tiles_ptr.h"
 #include "bn_sprite_tiles_item.h"
@@ -683,7 +682,7 @@ public:
      * @brief Generates a sprite_cached_animate_action which loops over the given sprite tile sets forever.
      * @param sprite sprite_ptr to move.
      * @param wait_updates Number of times the action must be updated before changing the tiles of the given sprite_ptr.
-     * @param tiles_list Tile sets to use by the given sprite_ptr.
+     * @param tiles_list List of tile sets to use by the given sprite_ptr.
      * @return The requested sprite_cached_animate_action.
      */
     [[nodiscard]] static sprite_cached_animate_action forever(

@@ -624,10 +624,10 @@ namespace
         return -1;
     }
 
-    [[nodiscard]] int _find_regular_map_impl(const regular_bg_map_item& map_item, const regular_bg_tiles_ptr& tiles,
-                                             const bg_palette_ptr& palette)
+    [[nodiscard]] int _find_regular_map_impl(
+            const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
+            const regular_bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
     {
-        const regular_bg_map_cell* data_ptr = map_item.cells_ptr();
         auto items_map_iterator = data.items_map.find(data_ptr);
 
         if(items_map_iterator != data.items_map.end())
@@ -696,10 +696,10 @@ namespace
         return -1;
     }
 
-    [[nodiscard]] int _find_affine_map_impl(const affine_bg_map_item& map_item, const affine_bg_tiles_ptr& tiles,
-                                            const bg_palette_ptr& palette)
+    [[nodiscard]] int _find_affine_map_impl(
+            const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
+            const affine_bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
     {
-        const affine_bg_map_cell* data_ptr = map_item.cells_ptr();
         auto items_map_iterator = data.items_map.find(data_ptr);
 
         if(items_map_iterator != data.items_map.end())
@@ -1260,24 +1260,24 @@ int find_affine_tiles(const affine_bg_tiles_item& tiles_item)
     return _find_tiles_impl(tiles_data, compression, _tiles_to_half_words(tiles_count), true);
 }
 
-int find_regular_map(const regular_bg_map_item& map_item, const regular_bg_tiles_ptr& tiles,
-                     const bg_palette_ptr& palette)
+int find_regular_map(const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
+                     const regular_bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", map_item.cells_ptr(), " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", data_ptr, " - ",
                      map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
                      palette.id(), " - ", int(map_item.compression()));
 
-    return _find_regular_map_impl(map_item, tiles, palette);
+    return _find_regular_map_impl(map_item, data_ptr, tiles, palette);
 }
 
-int find_affine_map(const affine_bg_map_item& map_item, const affine_bg_tiles_ptr& tiles,
-                    const bg_palette_ptr& palette)
+int find_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
+                    const affine_bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE MAP: ", map_item.cells_ptr(), " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE MAP: ", data_ptr, " - ",
                      map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
                      palette.id(), " - ", int(map_item.compression()));
 
-    return _find_affine_map_impl(map_item, tiles, palette);
+    return _find_affine_map_impl(map_item, data_ptr, tiles, palette);
 }
 
 int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
@@ -1377,10 +1377,9 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
     return result;
 }
 
-int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette,
-                       bool optional)
+int create_regular_map(const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
+                       regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional)
 {
-    const uint16_t* data_ptr = map_item.cells_ptr();
     const size& dimensions = map_item.dimensions();
     compression_type compression = map_item.compression();
 
@@ -1388,7 +1387,7 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
                      int(compression));
 
-    int result = _find_regular_map_impl(map_item, tiles, palette);
+    int result = _find_regular_map_impl(map_item, data_ptr, tiles, palette);
 
     if(result >= 0)
     {
@@ -1433,10 +1432,9 @@ int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr
     return result;
 }
 
-int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette,
-                      bool optional)
+int create_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
+                      affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional)
 {
-    auto data_ptr = reinterpret_cast<const uint16_t*>(map_item.cells_ptr());
     const size& dimensions = map_item.dimensions();
     compression_type compression = map_item.compression();
 
@@ -1444,7 +1442,7 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
                      int(compression));
 
-    int result = _find_affine_map_impl(map_item, tiles, palette);
+    int result = _find_affine_map_impl(map_item, data_ptr, tiles, palette);
 
     if(result >= 0)
     {
@@ -1457,8 +1455,9 @@ int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& 
                     ! _big_affine_map(dimensions.width(), dimensions.height()),
                     "Compressed big affine maps are not supported");
 
+    auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
     result = _create_impl(
-                create_data::from_affine_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
+                create_data::from_affine_map(u16_data_ptr, dimensions, compression, move(tiles), move(palette)));
 
     if(result >= 0)
     {
@@ -1577,10 +1576,9 @@ int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optiona
     return result;
 }
 
-int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles,
-                           bg_palette_ptr&& palette, bool optional)
+int create_new_regular_map(const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
+                           regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional)
 {
-    const uint16_t* data_ptr = map_item.cells_ptr();
     const size& dimensions = map_item.dimensions();
     compression_type compression = map_item.compression();
 
@@ -1628,10 +1626,9 @@ int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles
     return result;
 }
 
-int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& tiles,
-                          bg_palette_ptr&& palette, bool optional)
+int create_new_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
+                          affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional)
 {
-    auto data_ptr = reinterpret_cast<const uint16_t*>(map_item.cells_ptr());
     const size& dimensions = map_item.dimensions();
     compression_type compression = map_item.compression();
 
@@ -1647,8 +1644,9 @@ int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_pt
     BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                     "Multiple copies of the same data not supported");
 
+    auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
     int result = _create_impl(
-                create_data::from_affine_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
+                create_data::from_affine_map(u16_data_ptr, dimensions, compression, move(tiles), move(palette)));
 
     if(result >= 0)
     {
@@ -2047,9 +2045,8 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
     }
 }
 
-void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
+void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr)
 {
-    const uint16_t* data_ptr = map_item.cells_ptr();
     compression_type compression = map_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ",
@@ -2092,9 +2089,8 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item)
     }
 }
 
-void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
+void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr)
 {
-    auto data_ptr = reinterpret_cast<const uint16_t*>(map_item.cells_ptr());
     compression_type compression = map_item.compression();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE MAP CELLS REF: ", id, " - ",
@@ -2110,7 +2106,9 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
     BN_BASIC_ASSERT(compression == compression_type::NONE || ! _big_affine_map(item.width, item.height),
                     "Compressed big affine maps are not supported");
 
-    if(item_data != data_ptr)
+    auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
+
+    if(item_data != u16_data_ptr)
     {
         BN_BASIC_ASSERT(item_data, "Item has no data");
         BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
@@ -2120,7 +2118,7 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item)
         data.items_map.erase(item_data);
         data.items_map.insert(data_ptr, id);
 
-        item.data = data_ptr;
+        item.data = u16_data_ptr;
         item.set_compression(compression);
         item.commit = true;
         data.check_commit = true;

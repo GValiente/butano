@@ -59,11 +59,31 @@ public:
 
     /**
      * @brief Creates an affine_bg_ptr from the given affine_bg_item.
+     * @param x Horizontal position of the affine background.
+     * @param y Vertical position of the affine background.
+     * @param item affine_bg_item containing the required information to generate the affine background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested affine_bg_ptr.
+     */
+    [[nodiscard]] static affine_bg_ptr create(fixed x, fixed y, const affine_bg_item& item, int map_index);
+
+    /**
+     * @brief Creates an affine_bg_ptr from the given affine_bg_item.
      * @param position Position of the affine background.
      * @param item affine_bg_item containing the required information to generate the affine background.
      * @return The requested affine_bg_ptr.
      */
     [[nodiscard]] static affine_bg_ptr create(const fixed_point& position, const affine_bg_item& item);
+
+    /**
+     * @brief Creates an affine_bg_ptr from the given affine_bg_item.
+     * @param position Position of the affine background.
+     * @param item affine_bg_item containing the required information to generate the affine background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested affine_bg_ptr.
+     */
+    [[nodiscard]] static affine_bg_ptr create(
+            const fixed_point& position, const affine_bg_item& item, int map_index);
 
     /**
      * @brief Creates an affine_bg_ptr from the given affine_bg_map_ptr.
@@ -107,12 +127,33 @@ public:
 
     /**
      * @brief Creates an affine_bg_ptr from the given affine_bg_item.
+     * @param x Horizontal position of the affine background.
+     * @param y Vertical position of the affine background.
+     * @param item affine_bg_item containing the required information to generate the affine background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<affine_bg_ptr> create_optional(
+            fixed x, fixed y, const affine_bg_item& item, int map_index);
+
+    /**
+     * @brief Creates an affine_bg_ptr from the given affine_bg_item.
      * @param position Position of the affine background.
      * @param item affine_bg_item containing the required information to generate the affine background.
      * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<affine_bg_ptr> create_optional(
             const fixed_point& position, const affine_bg_item& item);
+
+    /**
+     * @brief Creates an affine_bg_ptr from the given affine_bg_item.
+     * @param position Position of the affine background.
+     * @param item affine_bg_item containing the required information to generate the affine background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<affine_bg_ptr> create_optional(
+            const fixed_point& position, const affine_bg_item& item, int map_index);
 
     /**
      * @brief Creates an affine_bg_ptr from the given affine_bg_map_ptr.
@@ -289,6 +330,18 @@ public:
     void set_map(const affine_bg_map_item& map_item);
 
     /**
+     * @brief Replaces the map used by this affine background
+     * with a new map created with the given affine_bg_map_item.
+     *
+     * Before creating a new map, the affine_bg_map_ptr used by this affine background is removed,
+     * so VRAM usage is reduced.
+     *
+     * @param map_item It creates the new map to use by this affine background.
+     * @param map_index Index of the map to reference in map_item.
+     */
+    void set_map(const affine_bg_map_item& map_item, int map_index);
+
+    /**
      * @brief Replaces the tiles, the color palette and the map used by this affine background
      * with the created with the given affine_bg_item.
      *
@@ -298,6 +351,18 @@ public:
      * @param item It creates the resources to use by this affine background.
      */
     void set_item(const affine_bg_item& item);
+
+    /**
+     * @brief Replaces the tiles, the color palette and the map used by this affine background
+     * with the created with the given affine_bg_item.
+     *
+     * Before creating new resources, the resources used by this affine background are removed,
+     * so VRAM usage is reduced.
+     *
+     * @param item It creates the resources to use by this affine background.
+     * @param map_index Index of the map to reference in item.map_item().
+     */
+    void set_item(const affine_bg_item& item, int map_index);
 
     /**
      * @brief Returns the horizontal position of the affine background (relative to its camera, if it has one).

@@ -11,6 +11,14 @@
 namespace bn
 {
 
+regular_bg_builder::regular_bg_builder(const regular_bg_item& item, int map_index) :
+    _item(item),
+    _map_index(map_index)
+{
+    BN_ASSERT(map_index >= 0 && map_index < item.map_item().maps_count(),
+              "Invalid map index: ", map_index, " - ", item.map_item().maps_count());
+}
+
 regular_bg_builder& regular_bg_builder::set_priority(int priority)
 {
     BN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);
@@ -51,7 +59,7 @@ regular_bg_map_ptr regular_bg_builder::map() const
 {
     if(const regular_bg_item* item = _item.get())
     {
-        return item->create_map();
+        return item->create_map(_map_index);
     }
 
     return *_map;
@@ -63,7 +71,7 @@ optional<regular_bg_map_ptr> regular_bg_builder::map_optional() const
 
     if(const regular_bg_item* item = _item.get())
     {
-        result = item->create_map_optional();
+        result = item->create_map_optional(_map_index);
     }
     else
     {
@@ -77,7 +85,7 @@ regular_bg_map_ptr regular_bg_builder::release_map()
 {
     if(const regular_bg_item* item = _item.get())
     {
-        return item->create_map();
+        return item->create_map(_map_index);
     }
 
     regular_bg_map_ptr result = move(*_map);
@@ -91,7 +99,7 @@ optional<regular_bg_map_ptr> regular_bg_builder::release_map_optional()
 
     if(const regular_bg_item* item = _item.get())
     {
-        result = item->create_map_optional();
+        result = item->create_map_optional(_map_index);
     }
     else
     {

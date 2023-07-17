@@ -46,7 +46,7 @@ namespace bn
     /**
      * @brief Changes the tile set of a sprite_ptr when the action is updated a given number of times.
      *
-     * This action differs from sprite_animate_action in that in this action all sprite tile sets to use are cached,
+     * This action differs from sprite_animate_action in that all sprite tile sets to use are cached,
      * so it is faster but takes way more VRAM.
      *
      * @tparam MaxSize Maximum number of sprite tile sets to store.

@@ -17,6 +17,7 @@
 #include "bn_affine_bg_attributes.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_affine_bg_mat_attributes.h"
+#include "bn_affine_bg_animate_actions.h"
 #include "bn_affine_bg_attributes_hbe_ptr.h"
 #include "bn_affine_bg_pivot_position_hbe_ptr.h"
 #include "bn_affine_bg_mat_attributes_hbe_ptr.h"
@@ -25,6 +26,7 @@
 #include "bn_sprite_items_turtle.h"
 #include "bn_affine_bg_items_red.h"
 #include "bn_affine_bg_items_blue.h"
+#include "bn_affine_bg_items_face.h"
 #include "bn_affine_bg_items_red_small.h"
 #include "bn_affine_bg_items_blue_small.h"
 
@@ -491,6 +493,68 @@ namespace
         }
     }
 
+    void affine_bgs_animation_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "PAD: change face's direction",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Affine BGs animation", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr face_bg = bn::affine_bg_items::face.create_bg(0, 0);
+        face_bg.set_rotation_angle(360 - 16);
+        face_bg.set_wrapping_enabled(false);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::left_held())
+            {
+                face_bg.set_map(bn::affine_bg_items::face.map_item(), 1);
+            }
+            else if(bn::keypad::right_held())
+            {
+                face_bg.set_map(bn::affine_bg_items::face.map_item(), 3);
+            }
+
+            if(bn::keypad::up_held())
+            {
+                face_bg.set_map(bn::affine_bg_items::face.map_item());
+            }
+            else if(bn::keypad::down_held())
+            {
+                face_bg.set_map(bn::affine_bg_items::face.map_item(), 2);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void affine_bgs_animation_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Affine BGs animation actions", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr face_bg = bn::affine_bg_items::face.create_bg(0, 0);
+        face_bg.set_rotation_angle(360 - 16);
+        face_bg.set_wrapping_enabled(false);
+
+        bn::affine_bg_cached_animate_action<4> action = bn::create_affine_bg_cached_animate_action_forever(
+                    face_bg, 16, bn::affine_bg_items::face.map_item(), 0, 3, 2, 1);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
+            info.update();
+            bn::core::update();
+        }
+    }
+
     void affine_bgs_mat_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
@@ -895,6 +959,12 @@ int main()
         bn::core::update();
 
         affine_bgs_pivot_position_hbe_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_animation_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_animation_actions_scene(text_generator);
         bn::core::update();
 
         affine_bgs_mat_attributes_hbe_scene(text_generator);

@@ -46,6 +46,13 @@ public:
 
     /**
      * @brief Constructor.
+     * @param item regular_bg_item containing the required information to generate regular backgrounds.
+     * @param map_index Index of the map to reference in item.map_item() to generate regular backgrounds.
+     */
+    regular_bg_builder(const regular_bg_item& item, int map_index);
+
+    /**
+     * @brief Constructor.
      * @param map regular_bg_map_ptr to copy for generating regular backgrounds.
      */
     explicit regular_bg_builder(const regular_bg_map_ptr& map) :
@@ -69,6 +76,14 @@ public:
     [[nodiscard]] const optional<regular_bg_item>& item() const
     {
         return _item;
+    }
+
+    /**
+     * @brief Index of the map to reference in item.map_item() to generate regular backgrounds.
+     */
+    [[nodiscard]] int map_index() const
+    {
+        return _map_index;
     }
 
     /**
@@ -373,6 +388,7 @@ public:
 private:
     optional<regular_bg_item> _item;
     fixed_point _position;
+    int _map_index = 0;
     int _priority = 3;
     int _z_order = 0;
     optional<regular_bg_map_ptr> _map;

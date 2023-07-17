@@ -58,6 +58,7 @@
               <ul>
                 <li><a href="#files">Files</a></li>
                 <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#func-members">Functions</a></li>
               </ul>
             </li>
           </ul>
@@ -67,6 +68,10 @@
           <h2><a href="#files">Files</a></h2>
           <dl class="m-doc">
             <dt>file <a href="bn__affine__bg__actions_8h.html" class="m-doc">bn_affine_bg_actions.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="bn__affine__bg__animate__actions_8h.html" class="m-doc">bn_affine_bg_animate_actions.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="bn__affine__bg__animate__actions__fwd_8h.html" class="m-doc">bn_affine_bg_animate_actions_fwd.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__affine__bg__attributes_8h.html" class="m-doc">bn_affine_bg_attributes.h</a></dt>
             <dd></dd>
@@ -318,6 +323,24 @@
             </dt>
             <dd>Toggles if blending must be applied to an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> or not when the action is updated a given number of times.</dd>
             <dt>
+              class <a href="classbn_1_1iaffine__bg__animate__action.html" class="m-doc">bn::iaffine_bg_animate_action</a>
+            </dt>
+            <dd>Base class of <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">bn::<wbr />affine_bg_animate_action</a>.</dd>
+            <dt>
+              class <a href="classbn_1_1iaffine__bg__cached__animate__action.html" class="m-doc">bn::iaffine_bg_cached_animate_action</a>
+            </dt>
+            <dd>Base class of <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">bn::<wbr />affine_bg_cached_animate_action</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
+              class <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">bn::affine_bg_animate_action</a>
+            </dt>
+            <dd>Changes the map of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> when the action is updated a given number of times.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSize&gt;</div>
+              class <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">bn::affine_bg_cached_animate_action</a>
+            </dt>
+            <dd>Changes the map of an <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> when the action is updated a given number of times.</dd>
+            <dt>
               class <a href="classbn_1_1affine__bg__attributes.html" class="m-doc">bn::affine_bg_attributes</a>
             </dt>
             <dd>Manages the attributes to commit to the GBA register of an affine background.</dd>
@@ -410,6 +433,414 @@
             </dt>
             <dd>Hash support for <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>.</dd>
           </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga82e3f14fef7f4a0c93ab7332f9528f73" class="m-doc">create_affine_bg_animate_action_once</a>(</span><span class="m-doc-wrap">const affine_bg_ptr&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes) -&gt; auto</span>
+            </dt>
+            <dd>Generates an <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps only once.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaabae5ade50607caca2e27ff4ecf4baa5" class="m-doc">create_affine_bg_animate_action_once</a>(</span><span class="m-doc-wrap">affine_bg_ptr&amp;&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes) -&gt; auto</span>
+            </dt>
+            <dd>Generates an <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps only once.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga84160903c96e4c104ff1f85ff4a2f2cf" class="m-doc">create_affine_bg_animate_action_forever</a>(</span><span class="m-doc-wrap">const affine_bg_ptr&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes) -&gt; auto</span>
+            </dt>
+            <dd>Generates an <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps forever.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga41001bb11fd920496e129c75d69b0c4c" class="m-doc">create_affine_bg_animate_action_forever</a>(</span><span class="m-doc-wrap">affine_bg_ptr&amp;&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes) -&gt; auto</span>
+            </dt>
+            <dd>Generates an <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps forever.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga3d7ec41c54cf905e639e8c1d1f0c0a52" class="m-doc">create_affine_bg_cached_animate_action_once</a>(</span><span class="m-doc-wrap">const affine_bg_ptr&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes) -&gt; auto</span>
+            </dt>
+            <dd>Generates an <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps only once.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga484f74ba03e0cc604e042783c65c6714" class="m-doc">create_affine_bg_cached_animate_action_once</a>(</span><span class="m-doc-wrap">affine_bg_ptr&amp;&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes) -&gt; auto</span>
+            </dt>
+            <dd>Generates an <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps only once.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaad86901c9732253aaea1ee196b9a84cb" class="m-doc">create_affine_bg_cached_animate_action_forever</a>(</span><span class="m-doc-wrap">const affine_bg_ptr&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes) -&gt; auto</span>
+            </dt>
+            <dd>Generates an <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps forever.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename ... Args&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaf56547e4e066def350175c9e43c8f523" class="m-doc">create_affine_bg_cached_animate_action_forever</a>(</span><span class="m-doc-wrap">affine_bg_ptr&amp;&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes) -&gt; auto</span>
+            </dt>
+            <dd>Generates an <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps forever.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga82e3f14fef7f4a0c93ab7332f9528f73"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__animate__actions_8h.html">&lt;bn_affine_bg_animate_actions.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename ... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga82e3f14fef7f4a0c93ab7332f9528f73" class="m-doc-self">create_affine_bg_animate_action_once</a>(</span><span class="m-doc-wrap">const affine_bg_ptr&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes)</span></span>
+            </h3>
+            <p>Generates an <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the map of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_item</td>
+                  <td>It creates the new map to use by the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_indexes</td>
+                  <td>Indexes of the maps to reference in map_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaabae5ade50607caca2e27ff4ecf4baa5"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__animate__actions_8h.html">&lt;bn_affine_bg_animate_actions.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename ... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaabae5ade50607caca2e27ff4ecf4baa5" class="m-doc-self">create_affine_bg_animate_action_once</a>(</span><span class="m-doc-wrap">affine_bg_ptr&amp;&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes)</span></span>
+            </h3>
+            <p>Generates an <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the map of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_item</td>
+                  <td>It creates the new map to use by the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_indexes</td>
+                  <td>Indexes of the maps to reference in map_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga84160903c96e4c104ff1f85ff4a2f2cf"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__animate__actions_8h.html">&lt;bn_affine_bg_animate_actions.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename ... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga84160903c96e4c104ff1f85ff4a2f2cf" class="m-doc-self">create_affine_bg_animate_action_forever</a>(</span><span class="m-doc-wrap">const affine_bg_ptr&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes)</span></span>
+            </h3>
+            <p>Generates an <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps forever.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the map of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_item</td>
+                  <td>It creates the new map to use by the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_indexes</td>
+                  <td>Indexes of the maps to reference in map_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga41001bb11fd920496e129c75d69b0c4c"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__animate__actions_8h.html">&lt;bn_affine_bg_animate_actions.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename ... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga41001bb11fd920496e129c75d69b0c4c" class="m-doc-self">create_affine_bg_animate_action_forever</a>(</span><span class="m-doc-wrap">affine_bg_ptr&amp;&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes)</span></span>
+            </h3>
+            <p>Generates an <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps forever.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the map of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_item</td>
+                  <td>It creates the new map to use by the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_indexes</td>
+                  <td>Indexes of the maps to reference in map_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga3d7ec41c54cf905e639e8c1d1f0c0a52"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__animate__actions_8h.html">&lt;bn_affine_bg_animate_actions.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename ... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3d7ec41c54cf905e639e8c1d1f0c0a52" class="m-doc-self">create_affine_bg_cached_animate_action_once</a>(</span><span class="m-doc-wrap">const affine_bg_ptr&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes)</span></span>
+            </h3>
+            <p>Generates an <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the map of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_item</td>
+                  <td>It creates the new map to use by the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_indexes</td>
+                  <td>Indexes of the maps to reference in map_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ga484f74ba03e0cc604e042783c65c6714"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__animate__actions_8h.html">&lt;bn_affine_bg_animate_actions.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename ... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga484f74ba03e0cc604e042783c65c6714" class="m-doc-self">create_affine_bg_cached_animate_action_once</a>(</span><span class="m-doc-wrap">affine_bg_ptr&amp;&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes)</span></span>
+            </h3>
+            <p>Generates an <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the map of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_item</td>
+                  <td>It creates the new map to use by the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_indexes</td>
+                  <td>Indexes of the maps to reference in map_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaad86901c9732253aaea1ee196b9a84cb"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__animate__actions_8h.html">&lt;bn_affine_bg_animate_actions.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename ... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaad86901c9732253aaea1ee196b9a84cb" class="m-doc-self">create_affine_bg_cached_animate_action_forever</a>(</span><span class="m-doc-wrap">const affine_bg_ptr&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes)</span></span>
+            </h3>
+            <p>Generates an <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps forever.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the map of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_item</td>
+                  <td>It creates the new map to use by the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_indexes</td>
+                  <td>Indexes of the maps to reference in map_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gaf56547e4e066def350175c9e43c8f523"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__affine__bg__animate__actions_8h.html">&lt;bn_affine_bg_animate_actions.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename ... Args&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">auto </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf56547e4e066def350175c9e43c8f523" class="m-doc-self">create_affine_bg_cached_animate_action_forever</a>(</span><span class="m-doc-wrap">affine_bg_ptr&amp;&amp; affine_bg,
+              int wait_updates,
+              const affine_bg_map_item&amp; map_item,
+              Args ... map_indexes)</span></span>
+            </h3>
+            <p>Generates an <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a> which loops over the given affine_bg maps forever.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">affine_bg</td>
+                  <td><a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>wait_updates</td>
+                  <td>Number of times the action must be updated before changing the map of the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_item</td>
+                  <td>It creates the new map to use by the given <a href="classbn_1_1affine__bg__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+                <tr>
+                  <td>map_indexes</td>
+                  <td>Indexes of the maps to reference in map_item.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1affine__bg__cached__animate__action.html" class="m-doc">affine_<wbr />bg_<wbr />cached_<wbr />animate_<wbr />action</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

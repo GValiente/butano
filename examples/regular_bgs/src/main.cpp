@@ -14,6 +14,7 @@
 #include "bn_regular_bg_builder.h"
 #include "bn_regular_bg_attributes.h"
 #include "bn_sprite_text_generator.h"
+#include "bn_regular_bg_animate_actions.h"
 #include "bn_regular_bg_position_hbe_ptr.h"
 #include "bn_regular_bg_attributes_hbe_ptr.h"
 
@@ -21,6 +22,7 @@
 #include "bn_regular_bg_items_red.h"
 #include "bn_regular_bg_items_blue.h"
 #include "bn_regular_bg_items_green.h"
+#include "bn_regular_bg_items_dragon.h"
 #include "bn_regular_bg_items_yellow.h"
 
 #include "common_info.h"
@@ -170,6 +172,62 @@ namespace
             }
 
             horizontal_deltas_hbe.reload_deltas_ref();
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void regular_bgs_animation_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "PAD: change dragon's pose",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Regular BGs animation", info_text_lines, text_generator);
+
+        bn::regular_bg_ptr dragon_bg = bn::regular_bg_items::dragon.create_bg(0, 0);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::left_held())
+            {
+                dragon_bg.set_map(bn::regular_bg_items::dragon.map_item());
+            }
+            else if(bn::keypad::right_held())
+            {
+                dragon_bg.set_map(bn::regular_bg_items::dragon.map_item(), 1);
+            }
+            else if(bn::keypad::up_held())
+            {
+                dragon_bg.set_map(bn::regular_bg_items::dragon.map_item(), 2);
+            }
+            else if(bn::keypad::down_held())
+            {
+                dragon_bg.set_map(bn::regular_bg_items::dragon.map_item(), 3);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void regular_bgs_animation_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Regular BGs animation actions", info_text_lines, text_generator);
+
+        bn::regular_bg_ptr dragon_bg = bn::regular_bg_items::dragon.create_bg(0, 0);
+        bn::regular_bg_cached_animate_action<5> action = bn::create_regular_bg_cached_animate_action_forever(
+                    dragon_bg, 32, bn::regular_bg_items::dragon.map_item(), 0, 1, 2, 0, 3);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
             info.update();
             bn::core::update();
         }
@@ -445,6 +503,12 @@ int main()
         bn::core::update();
 
         regular_bgs_position_hbe_scene(text_generator);
+        bn::core::update();
+
+        regular_bgs_animation_scene(text_generator);
+        bn::core::update();
+
+        regular_bgs_animation_actions_scene(text_generator);
         bn::core::update();
 
         regular_bgs_priority_scene(text_generator);

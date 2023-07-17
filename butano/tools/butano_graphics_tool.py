@@ -575,10 +575,21 @@ class RegularBgItem:
         self.__build_folder_path = build_folder_path
 
         width = bmp.width
-        height = bmp.height
 
         if width % 256 != 0:
             raise ValueError('Regular BGs width must be divisible by 256: ' + str(width))
+
+        try:
+            height = int(info['height'])
+
+            if bmp.height % height:
+                raise ValueError('File height is not divisible by item height: ' +
+                                 str(bmp.height) + ' - ' + str(height))
+
+            self.__maps = int(bmp.height / height)
+        except KeyError:
+            height = bmp.height
+            self.__maps = 1
 
         if height % 256 != 0:
             raise ValueError('Regular BGs height must be divisible by 256: ' + str(height))
@@ -791,7 +802,7 @@ class RegularBgItem:
 
             header_file.write('regular_bg_map_item(' + name + '_bn_gfxMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
-                              compression_label(map_compression) + '));' + '\n')
+                              compression_label(map_compression) + ', ' + str(self.__maps) + '));' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -969,10 +980,21 @@ class AffineBgItem:
         self.__build_folder_path = build_folder_path
 
         width = bmp.width
-        height = bmp.height
 
         if width != 128 and width % 256 != 0:
             raise ValueError('Affine BGs width must be 128 or divisible by 256: ' + str(width))
+
+        try:
+            height = int(info['height'])
+
+            if bmp.height % height:
+                raise ValueError('File height is not divisible by item height: ' +
+                                 str(bmp.height) + ' - ' + str(height))
+
+            self.__maps = int(bmp.height / height)
+        except KeyError:
+            height = bmp.height
+            self.__maps = 1
 
         if height != 128 and height % 256 != 0:
             raise ValueError('Affine BGs height must be 128 or divisible by 256: ' + str(height))
@@ -1147,7 +1169,7 @@ class AffineBgItem:
 
             header_file.write('affine_bg_map_item(' + name + '_bn_gfxMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
-                              compression_label(map_compression) + '));' + '\n')
+                              compression_label(map_compression) + ', ' + str(self.__maps) + '));' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')

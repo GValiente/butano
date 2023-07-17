@@ -57,11 +57,31 @@ public:
 
     /**
      * @brief Creates a regular_bg_ptr from the given regular_bg_item.
+     * @param x Horizontal position of the regular background.
+     * @param y Vertical position of the regular background.
+     * @param item regular_bg_item containing the required information to generate the regular background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] static regular_bg_ptr create(fixed x, fixed y, const regular_bg_item& item, int map_index);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_item.
      * @param position Position of the regular background.
      * @param item regular_bg_item containing the required information to generate the regular background.
      * @return The requested regular_bg_ptr.
      */
     [[nodiscard]] static regular_bg_ptr create(const fixed_point& position, const regular_bg_item& item);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_item.
+     * @param position Position of the regular background.
+     * @param item regular_bg_item containing the required information to generate the regular background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] static regular_bg_ptr create(
+            const fixed_point& position, const regular_bg_item& item, int map_index);
 
     /**
      * @brief Creates a regular_bg_ptr from the given regular_bg_map_ptr.
@@ -105,12 +125,33 @@ public:
 
     /**
      * @brief Creates a regular_bg_ptr from the given regular_bg_item.
+     * @param x Horizontal position of the regular background.
+     * @param y Vertical position of the regular background.
+     * @param item regular_bg_item containing the required information to generate the regular background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(
+            fixed x, fixed y, const regular_bg_item& item, int map_index);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_item.
      * @param position Position of the regular background.
      * @param item regular_bg_item containing the required information to generate the regular background.
      * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
-    [[nodiscard]] static optional<regular_bg_ptr> create_optional(const fixed_point& position,
-                                                                  const regular_bg_item& item);
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(
+            const fixed_point& position, const regular_bg_item& item);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_item.
+     * @param position Position of the regular background.
+     * @param item regular_bg_item containing the required information to generate the regular background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(
+            const fixed_point& position, const regular_bg_item& item, int map_index);
 
     /**
      * @brief Creates a regular_bg_ptr from the given regular_bg_map_ptr.
@@ -127,8 +168,8 @@ public:
      * @param map regular_bg_map_ptr used by the regular background.
      * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
-    [[nodiscard]] static optional<regular_bg_ptr> create_optional(const fixed_point& position,
-                                                                  regular_bg_map_ptr map);
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(
+            const fixed_point& position, regular_bg_map_ptr map);
 
     /**
      * @brief Creates a regular_bg_ptr from a regular_bg_builder reference.
@@ -315,6 +356,18 @@ public:
     void set_map(const regular_bg_map_item& map_item);
 
     /**
+     * @brief Replaces the map used by this regular background
+     * with a new map created with the given regular_bg_map_item.
+     *
+     * Before creating a new map, the regular_bg_map_ptr used by this regular background is removed,
+     * so VRAM usage is reduced.
+     *
+     * @param map_item It creates the new map to use by this regular background.
+     * @param map_index Index of the map to reference in map_item.
+     */
+    void set_map(const regular_bg_map_item& map_item, int map_index);
+
+    /**
      * @brief Replaces the tiles, the color palette and the map used by this regular background
      * with the created with the given regular_bg_item.
      *
@@ -324,6 +377,18 @@ public:
      * @param item It creates the resources to use by this regular background.
      */
     void set_item(const regular_bg_item& item);
+
+    /**
+     * @brief Replaces the tiles, the color palette and the map used by this regular background
+     * with the created with the given regular_bg_item.
+     *
+     * Before creating new resources, the resources used by this regular background are removed,
+     * so VRAM usage is reduced.
+     *
+     * @param item It creates the resources to use by this regular background.
+     * @param map_index Index of the map to reference in item.map_item().
+     */
+    void set_item(const regular_bg_item& item, int map_index);
 
     /**
      * @brief Returns the horizontal position of the regular background (relative to its camera, if it has one).

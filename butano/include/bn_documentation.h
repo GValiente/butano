@@ -1166,7 +1166,7 @@
  *
  * @subsection import_regular_bg Regular backgrounds
  *
- * An image file can contain only one regular background.
+ * An image file can contain multiple regular backgrounds.
  * The size of a small regular background (which are faster) must be 256x256, 256x512, 512x256 or 512x512 pixels.
  * Big regular backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
  * but can have any width or height multiple of 256 pixels.
@@ -1181,6 +1181,8 @@
  *
  * The fields for regular backgrounds are the following:
  * * `"type"`: must be `"regular_bg"` for regular backgrounds.
+ * * `"height"`: optional field which specifies the height of each regular background in pixels.
+ * For example, if the specified height is 256, an image with 1024 pixels of height contains 4 regular backgrounds.
  * * `"palette_item"`: optional field which specifies the name of the bn::bg_palette_item to use for this background.
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the regular background.
  * This field is required if an external bn::bg_palette_item is referenced with `"palette_item"`:
@@ -1283,7 +1285,7 @@
  *
  * @subsection import_affine_bg Affine backgrounds
  *
- * An image file can contain only one affine background.
+ * An image file can contain multiple affine backgrounds.
  * The size of a small affine background (which are faster) must be 128x128, 256x256, 512x512 or 1024x1024 pixels.
  * Big affine backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
  * but can have any width or height multiple of 256 pixels.
@@ -1298,6 +1300,8 @@
  *
  * The fields for affine backgrounds are the following:
  * * `"type"`: must be `"affine_bg"` for affine backgrounds.
+ * * `"height"`: optional field which specifies the height of each affine background in pixels.
+ * For example, if the specified height is 256, an image with 1024 pixels of height contains 4 affine backgrounds.
  * * `"palette_item"`: optional field which specifies the name of the bn::bg_palette_item to use for this background.
  * * `"colors_count"`: optional field which specifies the background palette size [1..256].
  * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
@@ -2076,9 +2080,17 @@
  * @tableofcontents
  *
  *
+ * @section changelog_14_0_0 14.0.0 (next release)
+ *
+ * * bn::regular_bg_map_item and bn::affine_bg_map_item can reference multiple maps per item.
+ * * Regular and affine backgrounds import support multiple maps per image thanks to the optional `height` field.
+ * * bn::regular_bg_animate_action and bn::regular_bg_cached_animate_action added.
+ * * bn::affine_bg_animate_action and bn::affine_bg_cached_animate_action added.
+ *
+ *
  * @section changelog_13_18_0 13.18.0
  *
- * * Sprites and sprite tiles height field is now optional.
+ * * Sprites and sprite tiles `height` field is now optional.
  * * Standard containers ROM usage reduced.
  * * bn::unordered_map::clear and bn::unordered_set::clear optimized.
  * * bn::best_fit_allocator missing header files included.

@@ -58,11 +58,33 @@ public:
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the given information.
+     * @param map_item regular_bg_map_item which references the map cells to search.
+     * @param tiles Referenced tiles of the map to search.
+     * @param palette Referenced color palette of the map to search.
+     * @param map_index Index of the referenced map to search.
+     * @return regular_bg_map_ptr which references the given information if it has been found;
+     * bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_map_ptr> find(
+            const regular_bg_map_item& map_item, const regular_bg_tiles_ptr& tiles, const bg_palette_ptr& palette,
+            int map_index);
+
+    /**
+     * @brief Searches for a regular_bg_map_ptr which references the given information.
      * @param item regular_bg_item which references the tiles, the color palette and the map cells to search.
      * @return regular_bg_map_ptr which references the given information if it has been found;
      * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> find(const regular_bg_item& item);
+
+    /**
+     * @brief Searches for a regular_bg_map_ptr which references the given information.
+     * @param item regular_bg_item which references the tiles, the color palette and the map cells to search.
+     * @param map_index Index of the referenced map to search.
+     * @return regular_bg_map_ptr which references the given information if it has been found;
+     * bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_map_ptr> find(const regular_bg_item& item, int map_index);
 
     /**
      * @brief Searches for a regular_bg_map_ptr which references the given information.
@@ -87,12 +109,44 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
+     * @param map_item regular_bg_map_item which references the map cells to search or handle.
+     * @param tiles Referenced tiles of the map to search or handle.
+     * @param palette Referenced color palette of the map to search or handle.
+     * @param map_index Index of the referenced map to search or handle.
+     * @return regular_bg_map_ptr which references the given information if it has been found;
+     * otherwise it returns a regular_bg_map_ptr which references it.
+     */
+    [[nodiscard]] static regular_bg_map_ptr create(
+            const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette, int map_index);
+
+    /**
+     * @brief Searches for a regular_bg_map_ptr which references the given information.
+     * If it is not found, it creates a regular_bg_map_ptr which references it.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
      * @param item regular_bg_item which references the tiles,
      * the color palette and the map cells to search or handle.
      * @return regular_bg_map_ptr which references the given information if it has been found;
      * otherwise it returns a regular_bg_map_ptr which references it.
      */
     [[nodiscard]] static regular_bg_map_ptr create(const regular_bg_item& item);
+
+    /**
+     * @brief Searches for a regular_bg_map_ptr which references the given information.
+     * If it is not found, it creates a regular_bg_map_ptr which references it.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
+     * @param item regular_bg_item which references the tiles,
+     * the color palette and the map cells to search or handle.
+     * @param map_index Index of the referenced map to search or handle.
+     * @return regular_bg_map_ptr which references the given information if it has been found;
+     * otherwise it returns a regular_bg_map_ptr which references it.
+     */
+    [[nodiscard]] static regular_bg_map_ptr create(const regular_bg_item& item, int map_index);
 
     /**
      * @brief Creates a regular_bg_map_ptr which references the given map cells.
@@ -122,10 +176,45 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
+     * @param map_item regular_bg_map_item which references the map cells to handle.
+     * @param tiles Referenced tiles of the map to handle.
+     * @param palette Referenced color palette of the map to handle.
+     * @param map_index Index of the referenced map to handle.
+     * @return regular_bg_map_ptr which references the given information.
+     */
+    [[nodiscard]] static regular_bg_map_ptr create_new(
+            const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette, int map_index);
+
+    /**
+     * @brief Creates a regular_bg_map_ptr which references the given map cells.
+     *
+     * The map system does not support multiple regular_bg_map_ptr items referencing to the same map cells.
+     * If you are not sure if the given map cells are already referenced or not,
+     * you should use the static create methods instead.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
      * @param item regular_bg_item which references the tiles, the color palette and the map cells to handle.
      * @return regular_bg_map_ptr which references the given information.
      */
     [[nodiscard]] static regular_bg_map_ptr create_new(const regular_bg_item& item);
+
+    /**
+     * @brief Creates a regular_bg_map_ptr which references the given map cells.
+     *
+     * The map system does not support multiple regular_bg_map_ptr items referencing to the same map cells.
+     * If you are not sure if the given map cells are already referenced or not,
+     * you should use the static create methods instead.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
+     * @param item regular_bg_item which references the tiles, the color palette and the map cells to handle.
+     * @param map_index Index of the referenced map to handle.
+     * @return regular_bg_map_ptr which references the given information.
+     */
+    [[nodiscard]] static regular_bg_map_ptr create_new(const regular_bg_item& item, int map_index);
 
     /**
      * @brief Creates a regular_bg_map_ptr which references a chunk of VRAM map cells not visible on the screen.
@@ -161,6 +250,24 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
+     * @param map_item regular_bg_map_item which references the map cells to search or handle.
+     * @param tiles Referenced tiles of the map to search or handle.
+     * @param palette Referenced color palette of the map to search or handle.
+     * @param map_index Index of the referenced map to search or handle.
+     * @return regular_bg_map_ptr which references the given information if it has been found;
+     * otherwise it returns a regular_bg_map_ptr which references it if the regular_bg_map_ptr can be allocated;
+     * bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(
+            const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette, int map_index);
+
+    /**
+     * @brief Searches for a regular_bg_map_ptr which references the given information.
+     * If it is not found, it creates a regular_bg_map_ptr which references it.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
      * @param item regular_bg_item which references the tiles,
      * the color palette and the map cells to search or handle.
      * @return regular_bg_map_ptr which references the given information if it has been found;
@@ -168,6 +275,22 @@ public:
      * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(const regular_bg_item& item);
+
+    /**
+     * @brief Searches for a regular_bg_map_ptr which references the given information.
+     * If it is not found, it creates a regular_bg_map_ptr which references it.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
+     * @param item regular_bg_item which references the tiles,
+     * the color palette and the map cells to search or handle.
+     * @param map_index Index of the referenced map to search or handle.
+     * @return regular_bg_map_ptr which references the given information if it has been found;
+     * otherwise it returns a regular_bg_map_ptr which references it if the regular_bg_map_ptr can be allocated;
+     * bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_map_ptr> create_optional(const regular_bg_item& item, int map_index);
 
     /**
      * @brief Creates a regular_bg_map_ptr which references the given map cells.
@@ -198,11 +321,49 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
+     * @param map_item regular_bg_map_item which references the map cells to handle.
+     * @param tiles Referenced tiles of the map to handle.
+     * @param palette Referenced color palette of the map to handle.
+     * @param map_index Index of the referenced map to search or handle.
+     * @return regular_bg_map_ptr which references the given information
+     * if the regular_bg_map_ptr can be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(
+            const regular_bg_map_item& map_item, regular_bg_tiles_ptr tiles, bg_palette_ptr palette, int map_index);
+
+    /**
+     * @brief Creates a regular_bg_map_ptr which references the given map cells.
+     *
+     * The map system does not support multiple regular_bg_map_ptr items referencing to the same map cells.
+     * If you are not sure if the given map cells are already referenced or not,
+     * you should use the static create methods instead.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
      * @param item regular_bg_item which references the tiles, the color palette and the map cells to handle.
      * @return regular_bg_map_ptr which references the given information
      * if the regular_bg_map_ptr can be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(const regular_bg_item& item);
+
+    /**
+     * @brief Creates a regular_bg_map_ptr which references the given map cells.
+     *
+     * The map system does not support multiple regular_bg_map_ptr items referencing to the same map cells.
+     * If you are not sure if the given map cells are already referenced or not,
+     * you should use the static create methods instead.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
+     * @param item regular_bg_item which references the tiles, the color palette and the map cells to handle.
+     * @param map_index Index of the referenced map to handle.
+     * @return regular_bg_map_ptr which references the given information
+     * if the regular_bg_map_ptr can be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_map_ptr> create_new_optional(
+            const regular_bg_item& item, int map_index);
 
     /**
      * @brief Creates a regular_bg_map_ptr which references a chunk of VRAM map cells not visible on the screen.
@@ -306,9 +467,22 @@ public:
      * The map cells are not copied but referenced,
      * so they should outlive the regular_bg_map_ptr to avoid dangling references.
      *
-     * @param map_item regular_bg_map_item which references the map cells to search.
+     * @param map_item regular_bg_map_item which references the map cells to set.
      */
     void set_cells_ref(const regular_bg_map_item& map_item);
+
+    /**
+     * @brief Sets the map cells to handle.
+     *
+     * The map system does not support multiple regular_bg_map_ptr items referencing to the same map cells.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the regular_bg_map_ptr to avoid dangling references.
+     *
+     * @param map_item regular_bg_map_item which references the map cells to set.
+     * @param map_index Index of the referenced map to set.
+     */
+    void set_cells_ref(const regular_bg_map_item& map_item, int map_index);
 
     /**
      * @brief Uploads the referenced map cells to VRAM again to make visible the possible changes in them.

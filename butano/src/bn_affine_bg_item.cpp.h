@@ -27,9 +27,19 @@ affine_bg_ptr affine_bg_item::create_bg(fixed x, fixed y) const
     return affine_bg_ptr::create(x, y, *this);
 }
 
+affine_bg_ptr affine_bg_item::create_bg(fixed x, fixed y, int map_index) const
+{
+    return affine_bg_ptr::create(x, y, *this, map_index);
+}
+
 affine_bg_ptr affine_bg_item::create_bg(const fixed_point& position) const
 {
     return affine_bg_ptr::create(position, *this);
+}
+
+affine_bg_ptr affine_bg_item::create_bg(const fixed_point& position, int map_index) const
+{
+    return affine_bg_ptr::create(position, *this, map_index);
 }
 
 optional<affine_bg_ptr> affine_bg_item::create_bg_optional(fixed x, fixed y) const
@@ -37,9 +47,19 @@ optional<affine_bg_ptr> affine_bg_item::create_bg_optional(fixed x, fixed y) con
     return affine_bg_ptr::create_optional(x, y, *this);
 }
 
+optional<affine_bg_ptr> affine_bg_item::create_bg_optional(fixed x, fixed y, int map_index) const
+{
+    return affine_bg_ptr::create_optional(x, y, *this, map_index);
+}
+
 optional<affine_bg_ptr> affine_bg_item::create_bg_optional(const fixed_point& position) const
 {
     return affine_bg_ptr::create_optional(position, *this);
+}
+
+optional<affine_bg_ptr> affine_bg_item::create_bg_optional(const fixed_point& position, int map_index) const
+{
+    return affine_bg_ptr::create_optional(position, *this, map_index);
 }
 
 optional<affine_bg_map_ptr> affine_bg_item::find_map() const
@@ -47,9 +67,19 @@ optional<affine_bg_map_ptr> affine_bg_item::find_map() const
     return affine_bg_map_ptr::find(*this);
 }
 
+optional<affine_bg_map_ptr> affine_bg_item::find_map(int map_index) const
+{
+    return affine_bg_map_ptr::find(*this, map_index);
+}
+
 affine_bg_map_ptr affine_bg_item::create_map() const
 {
     return affine_bg_map_ptr::create(*this);
+}
+
+affine_bg_map_ptr affine_bg_item::create_map(int map_index) const
+{
+    return affine_bg_map_ptr::create(*this, map_index);
 }
 
 affine_bg_map_ptr affine_bg_item::create_new_map() const
@@ -57,14 +87,29 @@ affine_bg_map_ptr affine_bg_item::create_new_map() const
     return affine_bg_map_ptr::create_new(*this);
 }
 
+affine_bg_map_ptr affine_bg_item::create_new_map(int map_index) const
+{
+    return affine_bg_map_ptr::create_new(*this, map_index);
+}
+
 optional<affine_bg_map_ptr> affine_bg_item::create_map_optional() const
 {
     return affine_bg_map_ptr::create_optional(*this);
 }
 
+optional<affine_bg_map_ptr> affine_bg_item::create_map_optional(int map_index) const
+{
+    return affine_bg_map_ptr::create_optional(*this, map_index);
+}
+
 optional<affine_bg_map_ptr> affine_bg_item::create_new_map_optional() const
 {
     return affine_bg_map_ptr::create_new_optional(*this);
+}
+
+optional<affine_bg_map_ptr> affine_bg_item::create_new_map_optional(int map_index) const
+{
+    return affine_bg_map_ptr::create_new_optional(*this, map_index);
 }
 
 }

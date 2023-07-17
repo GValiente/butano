@@ -157,10 +157,27 @@ public:
 
     /**
      * @brief Creates an affine_bg_ptr using the information contained in this item.
+     * @param x Horizontal position of the affine background.
+     * @param y Vertical position of the affine background.
+     * @param map_index Index of the map to reference in map_item().
+     * @return The requested affine_bg_ptr.
+     */
+    [[nodiscard]] affine_bg_ptr create_bg(fixed x, fixed y, int map_index) const;
+
+    /**
+     * @brief Creates an affine_bg_ptr using the information contained in this item.
      * @param position Position of the affine background.
      * @return The requested affine_bg_ptr.
      */
     [[nodiscard]] affine_bg_ptr create_bg(const fixed_point& position) const;
+
+    /**
+     * @brief Creates an affine_bg_ptr using the information contained in this item.
+     * @param position Position of the affine background.
+     * @param map_index Index of the map to reference in map_item().
+     * @return The requested affine_bg_ptr.
+     */
+    [[nodiscard]] affine_bg_ptr create_bg(const fixed_point& position, int map_index) const;
 
     /**
      * @brief Creates an affine_bg_ptr using the information contained in this item.
@@ -172,10 +189,27 @@ public:
 
     /**
      * @brief Creates an affine_bg_ptr using the information contained in this item.
+     * @param x Horizontal position of the affine background.
+     * @param y Vertical position of the affine background.
+     * @param map_index Index of the map to reference in map_item().
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<affine_bg_ptr> create_bg_optional(fixed x, fixed y, int map_index) const;
+
+    /**
+     * @brief Creates an affine_bg_ptr using the information contained in this item.
      * @param position Position of the affine background.
      * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_ptr> create_bg_optional(const fixed_point& position) const;
+
+    /**
+     * @brief Creates an affine_bg_ptr using the information contained in this item.
+     * @param position Position of the affine background.
+     * @param map_index Index of the map to reference in map_item().
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<affine_bg_ptr> create_bg_optional(const fixed_point& position, int map_index) const;
 
     /**
      * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.
@@ -183,6 +217,14 @@ public:
      * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> find_map() const;
+
+    /**
+     * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.
+     * @param map_index Index of the referenced map to search.
+     * @return affine_bg_map_ptr which references the information provided by this item if it has been found;
+     * bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<affine_bg_map_ptr> find_map(int map_index) const;
 
     /**
      * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.
@@ -195,6 +237,19 @@ public:
      * otherwise it returns an affine_bg_map_ptr which references it.
      */
     [[nodiscard]] affine_bg_map_ptr create_map() const;
+
+    /**
+     * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.
+     * If it is not found, it creates an affine_bg_map_ptr which references it.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
+     *
+     * @param map_index Index of the referenced map to search or handle.
+     * @return affine_bg_map_ptr which references the information provided by this item if it has been found;
+     * otherwise it returns an affine_bg_map_ptr which references it.
+     */
+    [[nodiscard]] affine_bg_map_ptr create_map(int map_index) const;
 
     /**
      * @brief Creates an affine_bg_map_ptr which references the information provided by this item.
@@ -211,6 +266,21 @@ public:
     [[nodiscard]] affine_bg_map_ptr create_new_map() const;
 
     /**
+     * @brief Creates an affine_bg_map_ptr which references the information provided by this item.
+     *
+     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
+     * If you are not sure if the information provided by this item is already referenced or not,
+     * you should use the create_map method instead.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
+     *
+     * @param map_index Index of the referenced map to handle.
+     * @return affine_bg_map_ptr which references the information provided by this item.
+     */
+    [[nodiscard]] affine_bg_map_ptr create_new_map(int map_index) const;
+
+    /**
      * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.
      * If it is not found, it creates an affine_bg_map_ptr which references it.
      *
@@ -222,6 +292,20 @@ public:
      * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> create_map_optional() const;
+
+    /**
+     * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.
+     * If it is not found, it creates an affine_bg_map_ptr which references it.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
+     *
+     * @param map_index Index of the referenced map to search or handle.
+     * @return affine_bg_map_ptr which references the information provided by this item if it has been found;
+     * otherwise it returns an affine_bg_map_ptr which references it if it could be allocated;
+     * bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<affine_bg_map_ptr> create_map_optional(int map_index) const;
 
     /**
      * @brief Creates an affine_bg_map_ptr which references the information provided by this item.
@@ -237,6 +321,22 @@ public:
      * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] optional<affine_bg_map_ptr> create_new_map_optional() const;
+
+    /**
+     * @brief Creates an affine_bg_map_ptr which references the information provided by this item.
+     *
+     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
+     * If you are not sure if the information provided by this item is already referenced or not,
+     * you should use the create_map_optional method instead.
+     *
+     * The map cells are not copied but referenced,
+     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
+     *
+     * @param map_index Index of the referenced map to handle.
+     * @return affine_bg_map_ptr which references the information provided by this item
+     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<affine_bg_map_ptr> create_new_map_optional(int map_index) const;
 
     /**
      * @brief Default equal operator.

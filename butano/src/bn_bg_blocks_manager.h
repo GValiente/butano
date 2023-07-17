@@ -59,31 +59,37 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] int find_affine_tiles(const affine_bg_tiles_item& tiles_item);
 
-    [[nodiscard]] int find_regular_map(const regular_bg_map_item& map_item, const regular_bg_tiles_ptr& tiles,
-                                       const bg_palette_ptr& palette);
+    [[nodiscard]] int find_regular_map(
+                const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
+                const regular_bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
 
-    [[nodiscard]] int find_affine_map(const affine_bg_map_item& map_item, const affine_bg_tiles_ptr& tiles,
-                                      const bg_palette_ptr& palette);
+    [[nodiscard]] int find_affine_map(
+                const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
+                const affine_bg_tiles_ptr& tiles, const bg_palette_ptr& palette);
 
     [[nodiscard]] int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional);
 
     [[nodiscard]] int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional);
 
-    [[nodiscard]] int create_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles,
-                                         bg_palette_ptr&& palette, bool optional);
+    [[nodiscard]] int create_regular_map(
+                const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
+                regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional);
 
-    [[nodiscard]] int create_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& tiles,
-                                        bg_palette_ptr&& palette, bool optional);
+    [[nodiscard]] int create_affine_map(
+                const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
+                affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional);
 
     [[nodiscard]] int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional);
 
     [[nodiscard]] int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional);
 
-    [[nodiscard]] int create_new_regular_map(const regular_bg_map_item& map_item, regular_bg_tiles_ptr&& tiles,
-                                             bg_palette_ptr&& palette, bool optional);
+    [[nodiscard]] int create_new_regular_map(
+                const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
+                regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional);
 
-    [[nodiscard]] int create_new_affine_map(const affine_bg_map_item& map_item, affine_bg_tiles_ptr&& tiles,
-                                            bg_palette_ptr&& palette, bool optional);
+    [[nodiscard]] int create_new_affine_map(
+                const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
+                affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional);
 
     [[nodiscard]] int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional);
 
@@ -129,9 +135,9 @@ namespace bn::bg_blocks_manager
 
     void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item);
 
-    void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item);
+    void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr);
 
-    void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item);
+    void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr);
 
     void reload(int id);
 

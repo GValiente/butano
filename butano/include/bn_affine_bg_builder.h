@@ -47,6 +47,13 @@ public:
 
     /**
      * @brief Constructor.
+     * @param item affine_bg_item containing the required information to generate affine backgrounds.
+     * @param map_index Index of the map to reference in item.map_item() to generate affine backgrounds.
+     */
+    affine_bg_builder(const affine_bg_item& item, int map_index);
+
+    /**
+     * @brief Constructor.
      * @param map affine_bg_map_ptr to copy for generating affine backgrounds.
      */
     explicit affine_bg_builder(const affine_bg_map_ptr& map) :
@@ -70,6 +77,14 @@ public:
     [[nodiscard]] const optional<affine_bg_item>& item() const
     {
         return _item;
+    }
+
+    /**
+     * @brief Index of the map to reference in item.map_item() to generate affine backgrounds.
+     */
+    [[nodiscard]] int map_index() const
+    {
+        return _map_index;
     }
 
     /**
@@ -662,6 +677,7 @@ private:
     optional<affine_bg_item> _item;
     fixed_point _position;
     fixed_point _pivot_position;
+    int _map_index = 0;
     int _priority = 3;
     int _z_order = 0;
     optional<affine_bg_map_ptr> _map;

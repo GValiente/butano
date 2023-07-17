@@ -74,9 +74,22 @@
             </dt>
             <dd>Constructor.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a21df9ba040e2dab904d68efedf7f663a" class="m-doc">affine_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              int maps_count) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="#a16f84904dcc65849e26162b9f5572e8a" class="m-doc">affine_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
               const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
               <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6c6787cc6e7f8e9e0ba8bd1e42cddf71" class="m-doc">affine_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression,
+              int maps_count) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
           </dl>
@@ -87,11 +100,19 @@
             <dt id="ae183609d54bbe483268d84b30b8fc14a">
               <span class="m-doc-wrap-bumper">auto <a href="#ae183609d54bbe483268d84b30b8fc14a" class="m-doc-self">cells_ptr</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>* <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Returns a pointer to the referenced map cells.</dd>
+            <dd>Returns a pointer to the referenced map cells of the first map.</dd>
+            <dt id="a7cf847644348d54c77532150bde6d812">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7cf847644348d54c77532150bde6d812" class="m-doc-self">cells_ptr</a>(</span><span class="m-doc-wrap">int map_index) const -&gt; const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>* <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a pointer to the referenced map cells of the map indicated by map_index.</dd>
             <dt id="aafff6adaa5292a69e1521580dfae8d72">
               <span class="m-doc-wrap-bumper">auto <a href="#aafff6adaa5292a69e1521580dfae8d72" class="m-doc-self">cells_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Returns the referenced map cells.</dd>
+            <dd>Returns the referenced map cells of the first map.</dd>
+            <dt id="ab6b3c0302ce4ac9c3d1d87b647bf01ee">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab6b3c0302ce4ac9c3d1d87b647bf01ee" class="m-doc-self">cells_ref</a>(</span><span class="m-doc-wrap">int map_index) const -&gt; const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the referenced map cells of the map indicated by map_index.</dd>
             <dt id="a5dbbbb8add83579ee6a6f145da92dc22">
               <span class="m-doc-wrap-bumper">auto <a href="#a5dbbbb8add83579ee6a6f145da92dc22" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -100,6 +121,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#afe1d2248ff3fe4acbe465a66c3647c88" class="m-doc">big</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Indicates if maps generated with this item are big or not.</dd>
+            <dt id="a00b239011f264e5fe2e8d95e52b4d934">
+              <span class="m-doc-wrap-bumper">auto <a href="#a00b239011f264e5fe2e8d95e52b4d934" class="m-doc-self">maps_count</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the number of referenced maps.</dd>
             <dt id="aa3c9a11c924f960bbc79db53804928de">
               <span class="m-doc-wrap-bumper">auto <a href="#aa3c9a11c924f960bbc79db53804928de" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -119,7 +144,18 @@
             </dt>
             <dd>Returns the referenced map cell in the specified map coordinates.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab1f3fda894b113432ffd043a0baeb09f" class="m-doc">cell</a>(</span><span class="m-doc-wrap">int map_index,
+              int map_x,
+              int map_y) const -&gt; <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the referenced map cell in the specified map coordinates.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ac5d6b4c35a6b452b7fded57a4274c2c4" class="m-doc">cell</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; map_position) const -&gt; <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the referenced map cell in the specified map coordinates.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a46976436838371ce2cf856af232aa178" class="m-doc">cell</a>(</span><span class="m-doc-wrap">int map_index,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; map_position) const -&gt; <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the referenced map cell in the specified map coordinates.</dd>
             <dt>
@@ -133,8 +169,20 @@
             </dt>
             <dd>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8ad65cdb4dffea17b30121efe6d77a36" class="m-doc">find_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&amp; tiles,
+              const <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; palette,
+              int map_index) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a10070485692a75a79db2f6edb7962b95" class="m-doc">create_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
               <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette) const -&gt; <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a></span>
+            </dt>
+            <dd>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item. If it is not found, it creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references it.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6d1485462634144bf08cd5eac112af84" class="m-doc">create_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette,
+              int map_index) const -&gt; <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a></span>
             </dt>
             <dd>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item. If it is not found, it creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references it.</dd>
             <dt>
@@ -143,13 +191,31 @@
             </dt>
             <dd>Creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#abfe6f27c2c5b941e40f043db03549018" class="m-doc">create_new_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette,
+              int map_index) const -&gt; <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a6ad5f078dbc27b0d9a384f7388c2a96a" class="m-doc">create_map_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
               <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item. If it is not found, it creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references it.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac273a9fd57b52ff4a2998633fcd7667d" class="m-doc">create_map_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette,
+              int map_index) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item. If it is not found, it creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references it.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a04621c12554ae0fc56caa8b92b17ec84" class="m-doc">create_new_map_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
               <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa2a14f91fd08be1cb85edcae201b3c98" class="m-doc">create_new_map_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette,
+              int map_index) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</dd>
           </dl>
@@ -189,6 +255,34 @@
             </table>
 <p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
           </div></section>
+          <section class="m-doc-details" id="a21df9ba040e2dab904d68efedf7f663a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a21df9ba040e2dab904d68efedf7f663a" class="m-doc-self">affine_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              int maps_count) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">cells_ref</td>
+                  <td>Reference to one or more affine background map cells.</td>
+                </tr>
+                <tr>
+                  <td>dimensions</td>
+                  <td>Size in map cells of each referenced map.</td>
+                </tr>
+                <tr>
+                  <td>maps_count</td>
+                  <td>Number of maps contained in cells_ref.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
           <section class="m-doc-details" id="a16f84904dcc65849e26162b9f5572e8a"><div>
             <h3>
               <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a16f84904dcc65849e26162b9f5572e8a" class="m-doc-self">affine_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
@@ -212,6 +306,39 @@
                 <tr>
                   <td>compression</td>
                   <td>Compression type.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6c6787cc6e7f8e9e0ba8bd1e42cddf71"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6c6787cc6e7f8e9e0ba8bd1e42cddf71" class="m-doc-self">affine_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression,
+              int maps_count) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">cells_ref</td>
+                  <td>Reference to one or more affine background map cells.</td>
+                </tr>
+                <tr>
+                  <td>dimensions</td>
+                  <td>Size in map cells of each referenced map.</td>
+                </tr>
+                <tr>
+                  <td>compression</td>
+                  <td>Compression type.</td>
+                </tr>
+                <tr>
+                  <td>maps_count</td>
+                  <td>Number of maps contained in cells_ref.</td>
                 </tr>
               </tbody>
             </table>
@@ -306,6 +433,40 @@
             </table>
 <p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
           </div></section>
+          <section class="m-doc-details" id="ab1f3fda894b113432ffd043a0baeb09f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab1f3fda894b113432ffd043a0baeb09f" class="m-doc-self">cell</a>(</span><span class="m-doc-wrap">int map_index,
+              int map_x,
+              int map_y) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the referenced map cell in the specified map coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_index</td>
+                  <td>Referenced map index.</td>
+                </tr>
+                <tr>
+                  <td>map_x</td>
+                  <td>Horizontal position of the map cell [0..<a href="classbn_1_1affine__bg__map__item.html#a5dbbbb8add83579ee6a6f145da92dc22" class="m-doc">dimensions()</a>.<a href="namespacebn_1_1display.html#a4ed2b0d634e500881b0ce160cfeada21" class="m-doc">width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>map_y</td>
+                  <td>Vertical position of the map cell [0..<a href="classbn_1_1affine__bg__map__item.html#a5dbbbb8add83579ee6a6f145da92dc22" class="m-doc">dimensions()</a>.<a href="namespacebn_1_1display.html#aae0fa31daf76adf1ce66583433965159" class="m-doc">height()</a>).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced map cell.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
           <section class="m-doc-details" id="ac5d6b4c35a6b452b7fded57a4274c2c4"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac5d6b4c35a6b452b7fded57a4274c2c4" class="m-doc-self">cell</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; map_position) const <span class="m-label m-primary">constexpr</span></span></span>
@@ -318,6 +479,35 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">map_position</td>
+                  <td>Position of the map cell.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced map cell.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__item.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a46976436838371ce2cf856af232aa178"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a840f0a4392c5ec4f3b82f1066f811066" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />cell</a> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a46976436838371ce2cf856af232aa178" class="m-doc-self">cell</a>(</span><span class="m-doc-wrap">int map_index,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; map_position) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the referenced map cell in the specified map coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_index</td>
+                  <td>Referenced map index.</td>
+                </tr>
+                <tr>
+                  <td>map_position</td>
                   <td>Position of the map cell.</td>
                 </tr>
               </tbody>
@@ -387,6 +577,39 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="a8ad65cdb4dffea17b30121efe6d77a36"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8ad65cdb4dffea17b30121efe6d77a36" class="m-doc-self">find_map</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&amp; tiles,
+              const <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; palette,
+              int map_index) const</span></span>
+            </h3>
+            <p>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td>Referenced tiles of the map to search.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Referenced color palette of the map to search.</td>
+                </tr>
+                <tr>
+                  <td>map_index</td>
+                  <td>Index of the referenced map to search.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item if it has been found; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="a10070485692a75a79db2f6edb7962b95"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a10070485692a75a79db2f6edb7962b95" class="m-doc-self">create_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
@@ -405,6 +628,40 @@
                 <tr>
                   <td>palette</td>
                   <td>Referenced color palette of the map to search or handle.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item if it has been found; otherwise it returns an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references it.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6d1485462634144bf08cd5eac112af84"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6d1485462634144bf08cd5eac112af84" class="m-doc-self">create_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette,
+              int map_index) const</span></span>
+            </h3>
+            <p>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item. If it is not found, it creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references it.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td>Referenced tiles of the map to search or handle.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Referenced color palette of the map to search or handle.</td>
+                </tr>
+                <tr>
+                  <td>map_index</td>
+                  <td>Index of the referenced map to search or handle.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -445,6 +702,40 @@
             </table>
 <p>The map system does not support multiple <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> items referencing to the same map cells. If you are not sure if the information provided by this item is already referenced or not, you should use the create_map method instead.</p><p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
+          <section class="m-doc-details" id="abfe6f27c2c5b941e40f043db03549018"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abfe6f27c2c5b941e40f043db03549018" class="m-doc-self">create_new_map</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette,
+              int map_index) const</span></span>
+            </h3>
+            <p>Creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td>Referenced tiles of the map to handle.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Referenced color palette of the map to handle.</td>
+                </tr>
+                <tr>
+                  <td>map_index</td>
+                  <td>Index of the referenced map to handle.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map system does not support multiple <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> items referencing to the same map cells. If you are not sure if the information provided by this item is already referenced or not, you should use the create_map method instead.</p><p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
           <section class="m-doc-details" id="a6ad5f078dbc27b0d9a384f7388c2a96a"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6ad5f078dbc27b0d9a384f7388c2a96a" class="m-doc-self">create_map_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
@@ -474,6 +765,40 @@
             </table>
 <p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
+          <section class="m-doc-details" id="ac273a9fd57b52ff4a2998633fcd7667d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac273a9fd57b52ff4a2998633fcd7667d" class="m-doc-self">create_map_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette,
+              int map_index) const</span></span>
+            </h3>
+            <p>Searches for an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item. If it is not found, it creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references it.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td>Referenced tiles of the map to search or handle.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Referenced color palette of the map to search or handle.</td>
+                </tr>
+                <tr>
+                  <td>map_index</td>
+                  <td>Index of the referenced map to search or handle.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item if it has been found; otherwise it returns an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references it if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
           <section class="m-doc-details" id="a04621c12554ae0fc56caa8b92b17ec84"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a04621c12554ae0fc56caa8b92b17ec84" class="m-doc-self">create_new_map_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
@@ -492,6 +817,40 @@
                 <tr>
                   <td>palette</td>
                   <td>Referenced color palette of the map to handle.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item if the <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> can be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The map system does not support multiple <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> items referencing to the same map cells. If you are not sure if the information provided by this item is already referenced or not, you should use the create_map_optional method instead.</p><p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa2a14f91fd08be1cb85edcae201b3c98"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa2a14f91fd08be1cb85edcae201b3c98" class="m-doc-self">create_new_map_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> tiles,
+              <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a> palette,
+              int map_index) const</span></span>
+            </h3>
+            <p>Creates an <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> which references the information provided by this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles</td>
+                  <td>Referenced tiles of the map to handle.</td>
+                </tr>
+                <tr>
+                  <td>palette</td>
+                  <td>Referenced color palette of the map to handle.</td>
+                </tr>
+                <tr>
+                  <td>map_index</td>
+                  <td>Index of the referenced map to handle.</td>
                 </tr>
               </tbody>
               <tfoot>

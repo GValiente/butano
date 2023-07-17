@@ -26,6 +26,8 @@ class enemies
 public:
     enemies(const stage& stage, const bn::sprite_palette_ptr& damage_palette);
 
+    ~enemies();
+
     [[nodiscard]] bool check_hero(const bn::fixed_rect& hero_rect) const;
 
     [[nodiscard]] bool check_hero_bullet(const check_hero_bullet_data& data);

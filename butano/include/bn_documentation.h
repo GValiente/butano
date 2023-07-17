@@ -2086,6 +2086,7 @@
  * * Regular and affine backgrounds import support multiple maps per image thanks to the optional `height` field.
  * * bn::regular_bg_animate_action and bn::regular_bg_cached_animate_action added.
  * * bn::affine_bg_animate_action and bn::affine_bg_cached_animate_action added.
+ * * Deprecated methods removed.
  *
  *
  * @section changelog_13_18_0 13.18.0

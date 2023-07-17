@@ -126,16 +126,6 @@ public:
      */
     [[nodiscard]] regular_bg_tiles_item decompress(span<tile> decompressed_tiles_ref) const;
 
-    /// @cond DO_NOT_DOCUMENT
-
-    [[deprecated("Call decompress() instead")]]
-    [[nodiscard]] regular_bg_tiles_item uncompress(span<tile> uncompressed_tiles_ref) const
-    {
-        return decompress(uncompressed_tiles_ref);
-    }
-
-    /// @endcond
-
     /**
      * @brief Searches for a regular_bg_tiles_ptr which reference the background tiles.
      * @return regular_bg_tiles_ptr which reference the background tiles if they have been found;

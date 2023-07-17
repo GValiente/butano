@@ -312,17 +312,6 @@ public:
     [[nodiscard]] regular_bg_map_item decompress(regular_bg_map_cell& decompressed_cells_ref,
                                                  const size& decompressed_dimensions) const;
 
-    /// @cond DO_NOT_DOCUMENT
-
-    [[deprecated("Call decompress() instead")]]
-    [[nodiscard]] regular_bg_map_item uncompress(regular_bg_map_cell& uncompressed_cells_ref,
-                                                 const size& uncompressed_dimensions) const
-    {
-        return decompress(uncompressed_cells_ref, uncompressed_dimensions);
-    }
-
-    /// @endcond
-
     /**
      * @brief Searches for a regular_bg_map_ptr which references the information provided by this item.
      * @param tiles Referenced tiles of the map to search.

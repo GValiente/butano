@@ -115,16 +115,6 @@ public:
      */
     [[nodiscard]] sprite_palette_item decompress(span<color> decompressed_colors_ref) const;
 
-    /// @cond DO_NOT_DOCUMENT
-
-    [[deprecated("Call decompress() instead")]]
-    [[nodiscard]] sprite_palette_item uncompress(span<color> uncompressed_colors_ref) const
-    {
-        return decompress(uncompressed_colors_ref);
-    }
-
-    /// @endcond
-
     /**
      * @brief Searches for a sprite_palette_ptr which contains the colors referenced by this item.
      * @return sprite_palette_ptr which contains the colors referenced by this item if it has been found;

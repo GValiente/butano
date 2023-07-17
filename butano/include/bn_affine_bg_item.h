@@ -134,19 +134,6 @@ public:
             span<tile> decompressed_tiles_ref, span<color> decompressed_colors_ref,
             affine_bg_map_cell& decompressed_cells_ref, const size& decompressed_dimensions) const;
 
-    /// @cond DO_NOT_DOCUMENT
-
-    [[deprecated("Call decompress() instead")]]
-    [[nodiscard]] affine_bg_item uncompress(
-            span<tile> uncompressed_tiles_ref, span<color> uncompressed_colors_ref,
-            affine_bg_map_cell& uncompressed_cells_ref, const size& uncompressed_dimensions) const
-    {
-        return decompress(uncompressed_tiles_ref, uncompressed_colors_ref, uncompressed_cells_ref,
-                          uncompressed_dimensions);
-    }
-
-    /// @endcond
-
     /**
      * @brief Creates an affine_bg_ptr using the information contained in this item.
      * @param x Horizontal position of the affine background.

@@ -216,16 +216,6 @@ public:
      */
     [[nodiscard]] sprite_tiles_item decompress(span<tile> decompressed_tiles_ref) const;
 
-    /// @cond DO_NOT_DOCUMENT
-
-    [[deprecated("Call decompress() instead")]]
-    [[nodiscard]] sprite_tiles_item uncompress(span<tile> uncompressed_tiles_ref) const
-    {
-        return decompress(uncompressed_tiles_ref);
-    }
-
-    /// @endcond
-
     /**
      * @brief Searches for a sprite_tiles_ptr which references the first sprite tile set.
      * @return sprite_tiles_ptr which references the first sprite tile set if it has been found;

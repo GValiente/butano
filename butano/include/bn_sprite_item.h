@@ -116,17 +116,6 @@ public:
     [[nodiscard]] sprite_item decompress(
             span<tile> decompressed_tiles_ref, span<color> decompressed_colors_ref) const;
 
-    /// @cond DO_NOT_DOCUMENT
-
-    [[deprecated("Call decompress() instead")]]
-    [[nodiscard]] sprite_item uncompress(
-            span<tile> uncompressed_tiles_ref, span<color> uncompressed_colors_ref) const
-    {
-        return decompress(uncompressed_tiles_ref, uncompressed_colors_ref);
-    }
-
-    /// @endcond
-
     /**
      * @brief Creates a sprite_ptr using the information contained in this item.
      * @param x Horizontal position of the sprite.

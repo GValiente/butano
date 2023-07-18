@@ -106,6 +106,11 @@ protected:
 
     void _free(char* ptr);
 
+    void _mark_as_empty()
+    {
+        _allocated_items_count = 0;
+    }
+
     /// @endcond
 };
 

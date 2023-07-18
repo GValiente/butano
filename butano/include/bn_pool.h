@@ -38,6 +38,7 @@
  */
 
 #include "bn_pool_fwd.h"
+#include "bn_type_traits.h"
 #include "bn_generic_pool.h"
 
 namespace bn
@@ -59,6 +60,20 @@ private:
 
 public:
     using size_type = typename base_type::size_type; //!< Size type alias.
+
+    /**
+     * @brief Destructor.
+     */
+    ~ipool() noexcept = default;
+
+    /**
+     * @brief Destructor.
+     */
+    ~ipool() noexcept
+    requires(is_trivially_destructible_v<Type>)
+    {
+        this->_mark_as_empty();
+    }
 
     /**
      * @brief Indicates if the given value belongs to the ipool or not.

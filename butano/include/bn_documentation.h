@@ -2086,7 +2086,8 @@
  * * Regular and affine backgrounds import support multiple maps per image thanks to the optional `height` field.
  * * bn::regular_bg_animate_action and bn::regular_bg_cached_animate_action added.
  * * bn::affine_bg_animate_action and bn::affine_bg_cached_animate_action added.
- * * bn::list and bn::forward_list destructor fixed.
+ * * bn::pool of trivially destructible types can be destroyed without being empty.
+ * * bn::list and bn::forward_list destructors fixed.
  * * Deprecated methods removed.
  *
  *

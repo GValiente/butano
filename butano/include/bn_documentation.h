@@ -2080,6 +2080,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_14_1_0 14.1.0 (next release)
+ *
+ * * bn::regular_bg_map_item::cells_count and bn::affine_bg_map_item::cells_count added.
+ * * bn::regular_bg_map_item::decompress and bn::affine_bg_map_item::decompress fixed.
+ *
+ *
  * @section changelog_14_0_0 14.0.0
  *
  * * bn::regular_bg_map_item and bn::affine_bg_map_item can reference multiple maps per item.

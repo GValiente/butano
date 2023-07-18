@@ -13,16 +13,14 @@
 namespace bn
 {
 
-affine_bg_map_item affine_bg_map_item::decompress(affine_bg_map_cell& decompressed_cells_ref,
-                                                  [[maybe_unused]] const size& decompressed_dimensions) const
+affine_bg_map_item affine_bg_map_item::decompress(span<affine_bg_map_cell> decompressed_cells_ref) const
 {
-    BN_ASSERT(decompressed_dimensions.width() >= _dimensions.width() &&
-              decompressed_dimensions.height() >= _dimensions.height(),
+    BN_ASSERT(decompressed_cells_ref.size() >= cells_count(),
               "There's not enough space to store the decompressed data: ",
-              decompressed_dimensions.width(), " - ", _dimensions.width(), " - ",
-              decompressed_dimensions.height(), " - ", _dimensions.height());
+              decompressed_cells_ref.size(), " - ", cells_count());
 
-    BN_ASSERT(aligned<4>(&decompressed_cells_ref), "Destination map cells are not aligned");
+    affine_bg_map_cell* decompressed_cells_ptr = decompressed_cells_ref.data();
+    BN_ASSERT(aligned<4>(decompressed_cells_ptr), "Destination map cells are not aligned");
 
     affine_bg_map_item result = *this;
 
@@ -33,20 +31,20 @@ affine_bg_map_item affine_bg_map_item::decompress(affine_bg_map_cell& decompress
         break;
 
     case compression_type::LZ77:
-        hw::decompress::lz77_wram(_cells_ptr, &decompressed_cells_ref);
-        result._cells_ptr = &decompressed_cells_ref;
+        hw::decompress::lz77_wram(_cells_ptr, decompressed_cells_ptr);
+        result._cells_ptr = decompressed_cells_ptr;
         result._compression = compression_type::NONE;
         break;
 
     case compression_type::RUN_LENGTH:
-        hw::decompress::rl_wram(_cells_ptr, &decompressed_cells_ref);
-        result._cells_ptr = &decompressed_cells_ref;
+        hw::decompress::rl_wram(_cells_ptr, decompressed_cells_ptr);
+        result._cells_ptr = decompressed_cells_ptr;
         result._compression = compression_type::NONE;
         break;
 
     case compression_type::HUFFMAN:
-        hw::decompress::huff(_cells_ptr, &decompressed_cells_ref);
-        result._cells_ptr = &decompressed_cells_ref;
+        hw::decompress::huff(_cells_ptr, decompressed_cells_ptr);
+        result._cells_ptr = decompressed_cells_ptr;
         result._compression = compression_type::NONE;
         break;
 
@@ -56,6 +54,14 @@ affine_bg_map_item affine_bg_map_item::decompress(affine_bg_map_cell& decompress
     }
 
     return result;
+}
+
+affine_bg_map_item affine_bg_map_item::decompress(
+        affine_bg_map_cell& decompressed_cells_ref, const size& decompressed_dimensions) const
+{
+    span<affine_bg_map_cell> decompressed_cells_span(
+                &decompressed_cells_ref, decompressed_dimensions.width() * decompressed_dimensions.height());
+    return decompress(decompressed_cells_span);
 }
 
 optional<affine_bg_map_ptr> affine_bg_map_item::find_map(

@@ -127,12 +127,20 @@ public:
      * @param decompressed_tiles_ref Destination of the decompressed tiles.
      * @param decompressed_colors_ref Destination of the decompressed colors.
      * @param decompressed_cells_ref Destination of the decompressed map cells.
-     * @param decompressed_dimensions Size in map cells of the destination data.
      * @return A regular_bg_item pointing to the decompressed tiles, colors and map cells.
      */
     [[nodiscard]] regular_bg_item decompress(
             span<tile> decompressed_tiles_ref, span<color> decompressed_colors_ref,
+            span<regular_bg_map_cell> decompressed_cells_ref) const;
+
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call the other decompress() method instead")]]
+    [[nodiscard]] regular_bg_item decompress(
+            span<tile> decompressed_tiles_ref, span<color> decompressed_colors_ref,
             regular_bg_map_cell& decompressed_cells_ref, const size& decompressed_dimensions) const;
+
+    /// @endcond
 
     /**
      * @brief Creates a regular_bg_ptr using the information contained in this item.

@@ -13,13 +13,22 @@ namespace bn
 
 regular_bg_item regular_bg_item::decompress(
             span<tile> decompressed_tiles_ref, span<color> decompressed_colors_ref,
-            regular_bg_map_cell& decompressed_cells_ref, const size& decompressed_dimensions) const
+            span<regular_bg_map_cell> decompressed_cells_ref) const
 {
     regular_bg_item result = *this;
     result._tiles_item = _tiles_item.decompress(decompressed_tiles_ref);
     result._palette_item = _palette_item.decompress(decompressed_colors_ref);
-    result._map_item = _map_item.decompress(decompressed_cells_ref, decompressed_dimensions);
+    result._map_item = _map_item.decompress(decompressed_cells_ref);
     return result;
+}
+
+regular_bg_item regular_bg_item::decompress(
+        span<tile> decompressed_tiles_ref, span<color> decompressed_colors_ref,
+        regular_bg_map_cell& decompressed_cells_ref, const size& decompressed_dimensions) const
+{
+    span<regular_bg_map_cell> decompressed_cells_span(
+                &decompressed_cells_ref, decompressed_dimensions.width() * decompressed_dimensions.height());
+    return decompress(decompressed_tiles_ref, decompressed_colors_ref, decompressed_cells_span);
 }
 
 regular_bg_ptr regular_bg_item::create_bg(fixed x, fixed y) const

@@ -18,6 +18,7 @@
 #include "bn_size.h"
 #include "bn_point.h"
 #include "bn_optional.h"
+#include "bn_span_fwd.h"
 #include "bn_compression_type.h"
 #include "bn_affine_bg_map_cell.h"
 
@@ -191,6 +192,14 @@ public:
     }
 
     /**
+     * @brief Returns the number of referenced map cells.
+     */
+    [[nodiscard]] constexpr int cells_count() const
+    {
+        return _dimensions.width() * _dimensions.height() * _maps_count;
+    }
+
+    /**
      * @brief Returns the compression type.
      */
     [[nodiscard]] constexpr compression_type compression() const
@@ -301,11 +310,17 @@ public:
      * If the source and destination map cells overlap, the behavior is undefined.
      *
      * @param decompressed_cells_ref Destination of the decompressed map cells.
-     * @param decompressed_dimensions Size in map cells of the destination data.
      * @return An affine_bg_map_item pointing to the decompressed map cells.
      */
-    [[nodiscard]] affine_bg_map_item decompress(affine_bg_map_cell& decompressed_cells_ref,
-                                                const size& decompressed_dimensions) const;
+    [[nodiscard]] affine_bg_map_item decompress(span<affine_bg_map_cell> decompressed_cells_ref) const;
+
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call the other decompress() method instead")]]
+    [[nodiscard]] affine_bg_map_item decompress(
+            affine_bg_map_cell& decompressed_cells_ref, const size& decompressed_dimensions) const;
+
+    /// @endcond
 
     /**
      * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.

@@ -229,14 +229,6 @@ public:
     ilist(const ilist& other) = delete;
 
     /**
-     * @brief Destructor.
-     */
-    ~ilist() noexcept
-    {
-        clear();
-    }
-
-    /**
      * @brief Copy assignment operator.
      * @param other ilist to copy.
      * @return Reference to this.
@@ -1117,6 +1109,14 @@ public:
         }
 
         return *this;
+    }
+
+    /**
+     * @brief Destructor.
+     */
+    ~list() noexcept
+    {
+        this->clear();
     }
 
 private:

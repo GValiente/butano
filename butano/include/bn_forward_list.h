@@ -208,14 +208,6 @@ public:
     iforward_list(const iforward_list& other) = delete;
 
     /**
-     * @brief Destructor.
-     */
-    ~iforward_list() noexcept
-    {
-        clear();
-    }
-
-    /**
      * @brief Copy assignment operator.
      * @param other iforward_list to copy.
      * @return Reference to this.
@@ -998,6 +990,14 @@ public:
         }
 
         return *this;
+    }
+
+    /**
+     * @brief Destructor.
+     */
+    ~forward_list() noexcept
+    {
+        this->clear();
     }
 
 private:

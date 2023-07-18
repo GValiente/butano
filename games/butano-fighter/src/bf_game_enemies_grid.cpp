@@ -18,6 +18,14 @@
 namespace bf::game
 {
 
+enemies_grid::~enemies_grid()
+{
+    for(cell_type& cell : _cells)
+    {
+        cell.clear(_pool);
+    }
+}
+
 void enemies_grid::add_enemy(enemy& enemy)
 {
     bn::fixed_point enemy_top_left = enemy.top_left();
@@ -43,14 +51,6 @@ void enemies_grid::remove_enemy(enemy& enemy)
     for(int r = row - 1; r <= row + enemy_rows; ++r)
     {
         _remove_enemy_row(r, column, enemy);
-    }
-}
-
-void enemies_grid::clear()
-{
-    for(cell_type& cell : _cells)
-    {
-        cell.clear(_pool);
     }
 }
 

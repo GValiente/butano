@@ -20,12 +20,6 @@ enemies::enemies(const stage& stage, const bn::sprite_palette_ptr& damage_palett
 {
 }
 
-enemies::~enemies()
-{
-    _grid.clear();
-    _enemies.clear();
-}
-
 bool enemies::check_hero(const bn::fixed_rect& hero_rect) const
 {
     if(_boss)

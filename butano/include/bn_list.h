@@ -1114,7 +1114,13 @@ public:
     /**
      * @brief Destructor.
      */
+    ~list() noexcept = default;
+
+    /**
+     * @brief Destructor.
+     */
     ~list() noexcept
+    requires(! is_trivially_destructible_v<Type>)
     {
         this->clear();
     }

@@ -26,8 +26,6 @@ class enemies_grid
 {
 
 public:
-    ~enemies_grid();
-
     void add_enemy(enemy& enemy);
 
     void remove_enemy(enemy& enemy);

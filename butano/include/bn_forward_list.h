@@ -995,7 +995,13 @@ public:
     /**
      * @brief Destructor.
      */
+    ~forward_list() noexcept = default;
+
+    /**
+     * @brief Destructor.
+     */
     ~forward_list() noexcept
+    requires(! is_trivially_destructible_v<Type>)
     {
         this->clear();
     }

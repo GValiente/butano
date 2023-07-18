@@ -2087,7 +2087,7 @@
  * * bn::regular_bg_animate_action and bn::regular_bg_cached_animate_action added.
  * * bn::affine_bg_animate_action and bn::affine_bg_cached_animate_action added.
  * * bn::pool of trivially destructible types can be destroyed without being empty.
- * * bn::list and bn::forward_list destructors fixed.
+ * * bn::list and bn::forward_list destructors fixed and optimized for trivially destructible types.
  * * Deprecated methods removed.
  *
  *

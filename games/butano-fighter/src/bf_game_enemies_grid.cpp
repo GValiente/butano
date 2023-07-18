@@ -18,14 +18,6 @@
 namespace bf::game
 {
 
-enemies_grid::~enemies_grid()
-{
-    for(cell_type& cell : _cells)
-    {
-        cell.clear(_pool);
-    }
-}
-
 void enemies_grid::add_enemy(enemy& enemy)
 {
     bn::fixed_point enemy_top_left = enemy.top_left();

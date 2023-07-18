@@ -2080,7 +2080,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_14_0_0 14.0.0 (next release)
+ * @section changelog_14_0_0 14.0.0
  *
  * * bn::regular_bg_map_item and bn::affine_bg_map_item can reference multiple maps per item.
  * * Regular and affine backgrounds import support multiple maps per image thanks to the optional `height` field.

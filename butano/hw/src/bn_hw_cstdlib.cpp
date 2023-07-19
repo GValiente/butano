@@ -7,6 +7,10 @@
 
 #include <cstdlib>
 
+// fake_heap_end should not be needed:
+// https://tbelaire.ca/posts/gba-rust-1.html
+__attribute__((weak)) void* fake_heap_end = 0;
+
 void* malloc(std::size_t bytes)
 {
     return bn::malloc(int(bytes));

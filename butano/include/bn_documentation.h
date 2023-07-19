@@ -2080,6 +2080,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_0_0 15.0.0 (next release)
+ *
+ * <a href="https://sourceware.org/newlib">newlib</a> dependency removed.
+ *
+ *
  * @section changelog_14_1_0 14.1.0
  *
  * * bn::regular_bg_map_item::cells_count and bn::affine_bg_map_item::cells_count added.

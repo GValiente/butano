@@ -9,6 +9,26 @@
 
 extern "C"
 {
+    // Call init routines:
+    // https://stackoverflow.com/a/30972459
+    extern void (*__preinit_array_start[])(void);
+    extern void (*__preinit_array_end[])(void);
+    extern void (*__init_array_start[])(void);
+    extern void (*__init_array_end[])(void);
+
+    void __libc_init_array(void)
+    {
+        for(size_t index = 0, limit = __preinit_array_end - __preinit_array_start; index < limit; ++index)
+        {
+            __preinit_array_start[index]();
+        }
+
+        for(size_t index = 0, limit = __init_array_end - __init_array_start; index < limit; ++index)
+        {
+            __init_array_start[index]();
+        }
+    }
+
     // Disable __aeabi_atexit to reduce IWRAM usage:
     // https://arobenko.gitbooks.io/bare_metal_cpp/content/compiler_output/static.html
     int __aeabi_atexit(void*, void (*)(void*), void*)

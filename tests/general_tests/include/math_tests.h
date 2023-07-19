@@ -108,15 +108,16 @@ public:
             for(int x = -64; x < 64; x += 2)
             {
                 int bn_atan2 = bn::atan2(y, x).data();
-                auto std_atan2 = int(std::atan2(float(y), float(x)) * float(32768 / 3.14159));
-                BN_ASSERT(bn::abs(bn_atan2 - std_atan2) < 3);
-
                 int diamond_angle = bn::diamond_angle(y, x).data();
                 BN_ASSERT(bn::abs(bn_atan2 - diamond_angle) < 745);
-                BN_ASSERT(bn::abs(std_atan2 - diamond_angle) < 744);
 
                 int diamond_angle_big = bn::diamond_angle(y * (1 << 11), x * (1 << 11)).data();
                 BN_ASSERT(diamond_angle == diamond_angle_big);
+
+                // Remove -nodefaultlibs in butano.mak to execute these tests:
+                /*auto std_atan2 = int(std::atan2(float(y), float(x)) * float(32768 / 3.14159));
+                BN_ASSERT(bn::abs(bn_atan2 - std_atan2) < 3);
+                BN_ASSERT(bn::abs(std_atan2 - diamond_angle) < 744);*/
             }
         }
     }

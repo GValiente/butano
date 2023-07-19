@@ -17,7 +17,8 @@ public:
     sqrt_tests() :
         tests("sqrt")
     {
-        for(int i = 0; i < 100; ++i)
+        // Remove -nodefaultlibs in butano.mak to execute these tests:
+        /*for(int i = 0; i < 100; ++i)
         {
             int bn_sqrt = bn::sqrt(i);
             bn::fixed bn_fixed_sqrt = bn::sqrt(bn::fixed(i));
@@ -38,7 +39,7 @@ public:
             bn::fixed bn_unsafe_sqrt = bn::unsafe_sqrt(i);
             BN_ASSERT(bn::abs(bn_unsafe_sqrt - std_sqrt) < bn::fixed(0.0005),
                       "Invalid bn::unsafe_sqrt(bn::fixed): ", i, " - ", bn_unsafe_sqrt, " - ", std_sqrt);
-        }
+        }*/
 
         constexpr bn::fixed a = 0.25;
         constexpr bn::fixed a_constexpr = bn::sqrt(a);

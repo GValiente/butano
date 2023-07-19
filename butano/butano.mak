@@ -87,12 +87,12 @@ CPPWARNINGS	:=	-Wuseless-cast -Wnon-virtual-dtor -Woverloaded-virtual
 CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++20 -fno-rtti -fno-exceptions
 
 ASFLAGS     :=	-gdwarf-4 $(ARCH) $(USERASFLAGS)
-LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
+LDFLAGS     =	-gdwarf-4 $(ARCH) -nodefaultlibs -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project:
 #---------------------------------------------------------------------------------------------------------------------
-LIBS        := -lmm $(USERLIBS)
+LIBS        := -lmm -lgcc $(USERLIBS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing libraries, this must be the top level containing include and lib directories:

@@ -2082,7 +2082,8 @@
  *
  * @section changelog_15_0_0 15.0.0 (next release)
  *
- * <a href="https://sourceware.org/newlib">newlib</a> dependency removed.
+ * * <a href="https://sourceware.org/newlib">newlib</a> dependency removed.
+ * * Standard system libraries linking can be specified in the project's `Makefile`.
  *
  *
  * @section changelog_14_1_0 14.1.0

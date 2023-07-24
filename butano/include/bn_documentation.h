@@ -1936,6 +1936,19 @@
  * different backgrounds shown in different scenes can have different color palettes).
  *
  *
+ * @section faq_sprites Sprites
+ *
+ *
+ * @subsection faq_sprites_scanline Why whenever I have too many sprites on screen, some of them get cut off?
+ *
+ * If you show too many sprites on screen (especially if they're rotated or scaled),
+ * they won't be rendered because the GBA has a
+ * <a href="https://problemkaputt.de/gbatek-lcd-obj-overview.htm">maximum number of sprite pixels per scanline</a>.
+ *
+ * You can try to get around this limitation by showing sprites without rotation or scaling, or even better,
+ * using backgrounds instead of sprites.
+ *
+ *
  * @section faq_backgrounds Backgrounds
  *
  *
@@ -2084,6 +2097,7 @@
  *
  * * <a href="https://sourceware.org/newlib">newlib</a> dependency removed.
  * * Standard system libraries linking can be specified in the project's `Makefile`.
+ * * More questions added to @ref faq page.
  *
  *
  * @section changelog_14_1_0 14.1.0

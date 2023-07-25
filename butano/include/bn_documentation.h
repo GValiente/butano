@@ -1982,6 +1982,7 @@
  * * Only two of them can be displayed at the same time, instead of four.
  * * They don't support 16 color tiles, only 256 color ones.
  * * They only support up to 256 different tiles, instead of 1024.
+ * * They don't support flipped tiles.
  *
  * Because of these limitations, you should avoid affine backgrounds whenever possible.
  *
@@ -2098,6 +2099,7 @@
  * * <a href="https://sourceware.org/newlib">newlib</a> dependency removed.
  * * Standard system libraries linking can be specified in the project's `Makefile`.
  * * More questions added to @ref faq page.
+ * * @ref faq page improved.
  *
  *
  * @section changelog_14_1_0 14.1.0

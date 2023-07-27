@@ -74,6 +74,7 @@ public:
         {
             // 7bit
             _data = int(ch8);
+            ++src;
         }
         else if(0xC0 <= ch8 && ch8 < 0xE0)
         {

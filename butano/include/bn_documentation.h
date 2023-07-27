@@ -2098,6 +2098,7 @@
  *
  * * <a href="https://sourceware.org/newlib">newlib</a> dependency removed.
  * * Standard system libraries linking can be specified in the project's `Makefile`.
+ * * bn::utf8_character::size for ASCII characters fixed.
  * * More questions added to @ref faq page.
  * * @ref faq page improved.
  *

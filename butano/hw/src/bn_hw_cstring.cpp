@@ -12,11 +12,18 @@ extern "C"
         auto a = static_cast<const char*>(lhs);
         auto b = static_cast<const char*>(rhs);
 
-        for(size_t index = 0; index < count; ++index)
+        if(a != b)
         {
-            if(int result = int(a[index]) - int(b[index]))
+            while(count)
             {
-                return result;
+                if(int result = int(*a) - int(*b))
+                {
+                    return result;
+                }
+
+                ++a;
+                ++b;
+                --count;
             }
         }
 

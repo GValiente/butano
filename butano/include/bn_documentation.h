@@ -2094,6 +2094,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_1_0 15.1.0 (next release)
+ *
+ * `memcmp` optimized.
+ *
+ *
  * @section changelog_15_0_0 15.0.0
  *
  * * <a href="https://sourceware.org/newlib">newlib</a> dependency removed.

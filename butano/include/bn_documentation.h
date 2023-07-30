@@ -2094,7 +2094,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_1_0 15.1.0 (next release)
+ * @section changelog_15_1_0 15.1.0
  *
  * * `memcmp` optimized.
  * * Link flags fixed.

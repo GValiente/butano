@@ -88,11 +88,11 @@ CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++20 -fno-rtti -fno-exceptions
 
 ASFLAGS     :=	-gdwarf-4 $(ARCH) $(USERASFLAGS)
 
-LDFLAGS     :=	-gdwarf-4 $(ARCH)
 ifndef DEFAULTLIBS
-	LDFLAGS     +=	-nodefaultlibs
+	LDFLAGS     =	-gdwarf-4 $(ARCH) -nodefaultlibs -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
+else
+	LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
 endif
-LDFLAGS     +=	-Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project:

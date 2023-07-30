@@ -2096,7 +2096,8 @@
  *
  * @section changelog_15_1_0 15.1.0 (next release)
  *
- * `memcmp` optimized.
+ * * `memcmp` optimized.
+ * * Link flags fixed.
  *
  *
  * @section changelog_15_0_0 15.0.0

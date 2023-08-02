@@ -31,6 +31,33 @@ bn_hw_bg_blocks_commit_half_words:
 
 
 /*
+    void bn_hw_bg_blocks_commit_words(
+            const unsigned* source_data_ptr, unsigned words, unsigned word_offset, unsigned* destination_vram_ptr)
+    {
+        for(unsigned index = 0; index < words; ++index)
+        {
+            destination_vram_ptr[index] = source_data_ptr[index] + word_offset;
+        }
+    }
+*/
+    .section .iwram, "ax", %progbits
+    .align 2
+    .arm
+    .global bn_hw_bg_blocks_commit_words
+    .type bn_hw_bg_blocks_commit_words, STT_FUNC
+bn_hw_bg_blocks_commit_words:
+
+.words_loop:
+    ldr     r12, [r0], #4
+    add     r12, r2, r12
+    str     r12, [r3], #4
+    subs    r1, #1
+    bne     .words_loop
+
+    bx      lr
+
+
+/*
     void bn_hw_bg_blocks_commit_blocks(
             const unsigned* source_data_ptr, unsigned blocks, unsigned word_offset, unsigned* destination_vram_ptr)
     {

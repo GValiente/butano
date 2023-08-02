@@ -18,6 +18,9 @@ extern "C"
     BN_CODE_IWRAM void bn_hw_bg_blocks_commit_half_words(
             const uint16_t* source_data_ptr, unsigned half_words, uint16_t offset, uint16_t* destination_vram_ptr);
 
+    BN_CODE_IWRAM void bn_hw_bg_blocks_commit_words(
+            const unsigned* source_data_ptr, unsigned words, unsigned word_offset, unsigned* destination_vram_ptr);
+
     BN_CODE_IWRAM void bn_hw_bg_blocks_commit_blocks(
             const unsigned* source_data_ptr, unsigned blocks, unsigned word_offset, unsigned* destination_vram_ptr);
 }
@@ -94,27 +97,6 @@ namespace bn::hw::bg_blocks
     [[nodiscard]] inline uint16_t affine_map_cells_offset(unsigned tiles_offset)
     {
         return uint16_t((tiles_offset << 8) + tiles_offset);
-    }
-
-    inline void commit_offset(const uint16_t* source_data_ptr, int half_words, uint16_t offset,
-                              uint16_t* destination_vram_ptr)
-    {
-        if(half_words)
-        {
-            if(half_words % 16 == 0 && aligned<4>(source_data_ptr) && aligned<4>(destination_vram_ptr))
-            {
-                auto source_ptr = reinterpret_cast<const unsigned*>(source_data_ptr);
-                auto destination_ptr = reinterpret_cast<unsigned*>(destination_vram_ptr);
-                unsigned blocks = unsigned(half_words) / 16;
-                unsigned word_offset = (unsigned(offset) << 16) + offset;
-                bn_hw_bg_blocks_commit_blocks(source_ptr, blocks, word_offset, destination_ptr);
-            }
-            else
-            {
-                bn_hw_bg_blocks_commit_half_words(
-                            source_data_ptr, unsigned(half_words), offset, destination_vram_ptr);
-            }
-        }
     }
 }
 

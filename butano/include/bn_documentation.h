@@ -2096,7 +2096,8 @@
  *
  * @section changelog_15_2_0 15.2.0 (next release)
  *
- * Maps commit optimized by more than 35% in some cases.
+ * * Maps commit optimized by more than 35% in some cases.
+ * * Big maps commit optimized.
  *
  *
  * @section changelog_15_1_0 15.1.0

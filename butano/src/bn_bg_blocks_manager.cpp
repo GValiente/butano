@@ -111,6 +111,48 @@ namespace
         return _ceil_half_words_to_blocks((width * height) / 2);
     }
 
+    void _hw_commit_offset(const uint16_t* source_data_ptr, unsigned half_words, uint16_t offset,
+                           uint16_t* destination_vram_ptr)
+    {
+        if(half_words % 2 == 1)
+        {
+            *destination_vram_ptr = *source_data_ptr + offset;
+            ++source_data_ptr;
+            ++destination_vram_ptr;
+            --half_words;
+        }
+
+        if(aligned<4>(source_data_ptr) && aligned<4>(destination_vram_ptr))
+        {
+            unsigned word_offset = (unsigned(offset) << 16) + offset;
+
+            if(unsigned blocks = half_words / 16)
+            {
+                bn_hw_bg_blocks_commit_blocks(
+                            reinterpret_cast<const unsigned*>(source_data_ptr), blocks, word_offset,
+                            reinterpret_cast<unsigned*>(destination_vram_ptr));
+                source_data_ptr += blocks * 16;
+                destination_vram_ptr += blocks * 16;
+                half_words -= blocks * 16;
+            }
+
+            if(unsigned words = half_words / 2)
+            {
+                bn_hw_bg_blocks_commit_words(
+                            reinterpret_cast<const unsigned*>(source_data_ptr), words, word_offset,
+                            reinterpret_cast<unsigned*>(destination_vram_ptr));
+                source_data_ptr += words * 2;
+                destination_vram_ptr += words * 2;
+                half_words -= words * 2;
+            }
+        }
+
+        if(half_words)
+        {
+            bn_hw_bg_blocks_commit_half_words(source_data_ptr, half_words, offset, destination_vram_ptr);
+        }
+    }
+
 
     constexpr int max_items = BN_CFG_BG_BLOCKS_MAX_ITEMS;
     constexpr int max_list_items = max_items + 1;
@@ -799,7 +841,7 @@ namespace
                 }
 
                 uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
-                hw::bg_blocks::commit_offset(source_data_ptr, half_words, offset, destination_vram_ptr);
+                _hw_commit_offset(source_data_ptr, half_words, offset, destination_vram_ptr);
             }
             else
             {
@@ -829,7 +871,7 @@ namespace
             if(tiles_offset || palette_offset)
             {
                 uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
-                hw::bg_blocks::commit_offset(source_data_ptr, half_words, offset, destination_vram_ptr);
+                _hw_commit_offset(source_data_ptr, half_words, offset, destination_vram_ptr);
             }
             else
             {
@@ -2610,10 +2652,10 @@ void update_regular_map_row(int id, int x, int y)
     if(tiles_offset || palette_offset)
     {
         uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
-        hw::bg_blocks::commit_offset(source_data, elements, offset, dest_data);
+        _hw_commit_offset(source_data, elements, offset, dest_data);
         source_data += elements;
         dest_data -= x_separator;
-        hw::bg_blocks::commit_offset(source_data, x_separator, offset, dest_data);
+        _hw_commit_offset(source_data, x_separator, offset, dest_data);
     }
     else
     {
@@ -2646,12 +2688,12 @@ void update_affine_map_row(int id, int x, int y)
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
         uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
-        hw::bg_blocks::commit_offset(reinterpret_cast<const uint16_t*>(source_data), elements / 2, offset,
-                                     reinterpret_cast<uint16_t*>(dest_data));
+        _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), elements / 2, offset,
+                          reinterpret_cast<uint16_t*>(dest_data));
         source_data += elements;
         dest_data -= x_separator;
-        hw::bg_blocks::commit_offset(reinterpret_cast<const uint16_t*>(source_data), x_separator / 2, offset,
-                                     reinterpret_cast<uint16_t*>(dest_data));
+        _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), x_separator / 2, offset,
+                          reinterpret_cast<uint16_t*>(dest_data));
     }
     else
     {
@@ -2687,10 +2729,10 @@ void set_regular_map_position(int id, int x, int y)
         {
             const uint16_t* source_data = item_data + ((row * map_width) + x);
             uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            hw::bg_blocks::commit_offset(source_data, elements, offset, dest_data);
+            _hw_commit_offset(source_data, elements, offset, dest_data);
             source_data += elements;
             dest_data -= x_separator;
-            hw::bg_blocks::commit_offset(source_data, x_separator, offset, dest_data);
+            _hw_commit_offset(source_data, x_separator, offset, dest_data);
         }
     }
     else
@@ -2732,12 +2774,12 @@ void set_affine_map_position(int id, int x, int y)
         {
             const uint8_t* source_data = item_data + ((row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            hw::bg_blocks::commit_offset(reinterpret_cast<const uint16_t*>(source_data), elements / 2, offset,
-                                         reinterpret_cast<uint16_t*>(dest_data));
+            _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), elements / 2, offset,
+                              reinterpret_cast<uint16_t*>(dest_data));
             source_data += elements;
             dest_data -= x_separator;
-            hw::bg_blocks::commit_offset(reinterpret_cast<const uint16_t*>(source_data), x_separator / 2, offset,
-                                         reinterpret_cast<uint16_t*>(dest_data));
+            _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), x_separator / 2, offset,
+                              reinterpret_cast<uint16_t*>(dest_data));
         }
     }
     else

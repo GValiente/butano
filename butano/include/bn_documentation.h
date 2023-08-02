@@ -2094,6 +2094,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_2_0 15.2.0 (next release)
+ *
+ * Maps commit optimized by more than 35% in some cases.
+ *
+ *
  * @section changelog_15_1_0 15.1.0
  *
  * * `memcmp` optimized.

@@ -13,6 +13,15 @@
 #include "bn_hw_decompress.h"
 #include "bn_hw_bg_blocks_constants.h"
 
+extern "C"
+{
+    BN_CODE_IWRAM void bn_hw_bg_blocks_commit_half_words(
+            const uint16_t* source_data_ptr, unsigned half_words, uint16_t offset, uint16_t* destination_vram_ptr);
+
+    BN_CODE_IWRAM void bn_hw_bg_blocks_commit_blocks(
+            const unsigned* source_data_ptr, unsigned blocks, unsigned word_offset, unsigned* destination_vram_ptr);
+}
+
 namespace bn::hw::bg_blocks
 {
     [[nodiscard]] constexpr int max_blocks()
@@ -87,26 +96,24 @@ namespace bn::hw::bg_blocks
         return uint16_t((tiles_offset << 8) + tiles_offset);
     }
 
-    BN_CODE_IWRAM void _commit_offset_half_words(
-            const uint16_t* source_data_ptr, unsigned half_words, uint16_t offset, uint16_t* destination_vram_ptr);
-
-    BN_CODE_IWRAM void _commit_offset_words(
-            const unsigned* source_data_ptr, unsigned words, unsigned word_offset, unsigned* destination_vram_ptr);
-
     inline void commit_offset(const uint16_t* source_data_ptr, int half_words, uint16_t offset,
                               uint16_t* destination_vram_ptr)
     {
-        if(half_words % 4 == 0 && aligned<4>(source_data_ptr) && aligned<4>(destination_vram_ptr))
+        if(half_words)
         {
-            auto unsigned_source_ptr = reinterpret_cast<const unsigned*>(source_data_ptr);
-            auto unsigned_destination_ptr = reinterpret_cast<unsigned*>(destination_vram_ptr);
-            unsigned words = unsigned(half_words) / 2;
-            unsigned word_offset = (unsigned(offset) << 16) + offset;
-            _commit_offset_words(unsigned_source_ptr, words, word_offset, unsigned_destination_ptr);
-        }
-        else
-        {
-            _commit_offset_half_words(source_data_ptr, unsigned(half_words), offset, destination_vram_ptr);
+            if(half_words % 16 == 0 && aligned<4>(source_data_ptr) && aligned<4>(destination_vram_ptr))
+            {
+                auto source_ptr = reinterpret_cast<const unsigned*>(source_data_ptr);
+                auto destination_ptr = reinterpret_cast<unsigned*>(destination_vram_ptr);
+                unsigned blocks = unsigned(half_words) / 16;
+                unsigned word_offset = (unsigned(offset) << 16) + offset;
+                bn_hw_bg_blocks_commit_blocks(source_ptr, blocks, word_offset, destination_ptr);
+            }
+            else
+            {
+                bn_hw_bg_blocks_commit_half_words(
+                            source_data_ptr, unsigned(half_words), offset, destination_vram_ptr);
+            }
         }
     }
 }

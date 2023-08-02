@@ -18,7 +18,7 @@ namespace bn::hw::math
 
     [[nodiscard]] inline int atan2(int y, int x)
     {
-        return __agbabi_atan2(x, y);
+        return int(__agbabi_atan2(x, y));
     }
 }
 

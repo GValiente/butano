@@ -111,6 +111,33 @@ namespace
         return _ceil_half_words_to_blocks((width * height) / 2);
     }
 
+    void _hw_commit(const uint16_t* source_ptr, compression_type compression, int count, uint16_t* destination_ptr)
+    {
+        switch(compression)
+        {
+
+        case compression_type::NONE:
+            hw::memory::copy_words(source_ptr, count / 2, destination_ptr);
+            break;
+
+        case compression_type::LZ77:
+            hw::decompress::lz77_vram(source_ptr, destination_ptr);
+            break;
+
+        case compression_type::RUN_LENGTH:
+            hw::decompress::rl_vram(source_ptr, destination_ptr);
+            break;
+
+        case compression_type::HUFFMAN:
+            hw::decompress::huff(source_ptr, destination_ptr);
+            break;
+
+        default:
+            BN_ERROR("Unknown compression type: ", int(compression));
+            break;
+        }
+    }
+
     void _hw_commit_offset(const uint16_t* source_data_ptr, unsigned half_words, uint16_t offset,
                            uint16_t* destination_vram_ptr)
     {
@@ -815,7 +842,7 @@ namespace
         if(item.is_tiles)
         {
             uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
-            hw::bg_blocks::commit(source_data_ptr, item.compression(), item.width, destination_vram_ptr);
+            _hw_commit(source_data_ptr, item.compression(), item.width, destination_vram_ptr);
             return;
         }
 
@@ -836,7 +863,7 @@ namespace
             {
                 if(compression != compression_type::NONE)
                 {
-                    hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                    _hw_commit(source_data_ptr, compression, half_words, destination_vram_ptr);
                     source_data_ptr = destination_vram_ptr;
                 }
 
@@ -845,7 +872,7 @@ namespace
             }
             else
             {
-                hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                _hw_commit(source_data_ptr, compression, half_words, destination_vram_ptr);
             }
         }
         else
@@ -864,7 +891,7 @@ namespace
 
             if(compression != compression_type::NONE && (tiles_offset || palette_offset))
             {
-                hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                _hw_commit(source_data_ptr, compression, half_words, destination_vram_ptr);
                 source_data_ptr = destination_vram_ptr;
             }
 
@@ -875,7 +902,7 @@ namespace
             }
             else
             {
-                hw::bg_blocks::commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                _hw_commit(source_data_ptr, compression, half_words, destination_vram_ptr);
             }
         }
     }

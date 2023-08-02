@@ -2098,6 +2098,7 @@
  *
  * * Maps commit optimized by more than 35% in some cases.
  * * Big maps commit optimized.
+ * * BG blocks and sprite tiles managers ROM usage reduced.
  *
  *
  * @section changelog_15_1_0 15.1.0

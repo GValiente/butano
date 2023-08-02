@@ -7,11 +7,9 @@
 #define BN_HW_SPRITE_TILES_H
 
 #include "bn_tile.h"
-#include "bn_assert.h"
 #include "bn_compression_type.h"
 #include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
-#include "bn_hw_decompress.h"
 
 namespace bn::hw::sprite_tiles
 {
@@ -51,32 +49,7 @@ namespace bn::hw::sprite_tiles
         hw::dma::copy_words(source_tiles_ptr, count * int(sizeof(tile) / 4), tile_vram(index));
     }
 
-    inline void commit(const tile* source_tiles_ptr, compression_type compression, int index, int count)
-    {
-        switch(compression)
-        {
-
-        case compression_type::NONE:
-            commit_with_cpu(source_tiles_ptr, index, count);
-            break;
-
-        case compression_type::LZ77:
-            hw::decompress::lz77_vram(source_tiles_ptr, tile_vram(index));
-            break;
-
-        case compression_type::RUN_LENGTH:
-            hw::decompress::rl_vram(source_tiles_ptr, tile_vram(index));
-            break;
-
-        case compression_type::HUFFMAN:
-            hw::decompress::huff(source_tiles_ptr, tile_vram(index));
-            break;
-
-        default:
-            BN_ERROR("Unknown compression type: ", int(compression));
-            break;
-        }
-    }
+    void commit(const tile* source_tiles_ptr, compression_type compression, int index, int count);
 
     void plot_tiles(int width, const tile* source_tiles_ptr, int source_y, int destination_y,
                     tile* destination_tiles_ptr);

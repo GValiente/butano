@@ -5,8 +5,38 @@
 
 #include "../include/bn_hw_sprite_tiles.h"
 
+#include "bn_assert.h"
+#include "../include/bn_hw_decompress.h"
+
 namespace bn::hw::sprite_tiles
 {
+
+void commit(const tile* source_tiles_ptr, compression_type compression, int index, int count)
+{
+    switch(compression)
+    {
+
+    case compression_type::NONE:
+        commit_with_cpu(source_tiles_ptr, index, count);
+        break;
+
+    case compression_type::LZ77:
+        hw::decompress::lz77_vram(source_tiles_ptr, tile_vram(index));
+        break;
+
+    case compression_type::RUN_LENGTH:
+        hw::decompress::rl_vram(source_tiles_ptr, tile_vram(index));
+        break;
+
+    case compression_type::HUFFMAN:
+        hw::decompress::huff(source_tiles_ptr, tile_vram(index));
+        break;
+
+    default:
+        BN_ERROR("Unknown compression type: ", int(compression));
+        break;
+    }
+}
 
 void plot_tiles(int width, const tile* source_tiles_ptr, int source_y, int destination_y,
                 tile* destination_tiles_ptr)

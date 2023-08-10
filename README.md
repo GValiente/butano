@@ -138,7 +138,7 @@ gather owls and upgrades while managing your health and money and defeat the fin
 
 ![](docs_tools/images/knight_owls_title.png) ![](docs_tools/images/knight_owls_gameplay.png)
 
-* [Collie Defence](https://xvayan.itch.io/collie-defence): you're a Border Collie and you need to protect 
+* [Collie Defense](https://xvayan.itch.io/collie-defense): you're a Border Collie and you need to protect 
 your flock of sheep!
 
 ![](docs_tools/images/collie_defence_title.png) ![](docs_tools/images/collie_defence_gameplay.png)

@@ -8,6 +8,7 @@
 #include "bn_random.h"
 #include "bn_profiler.h"
 #include "bn_algorithm.h"
+#include "bn_seed_random.h"
 
 #include "../../butano/hw/include/bn_hw_tonc.h"
 
@@ -16,6 +17,7 @@ int main()
     bn::core::init();
 
     bn::random random;
+    bn::seed_random seed_random;
     int integer = 123456789;
     int its_sqrt = 100;
     int its = its_sqrt * its_sqrt;
@@ -73,6 +75,15 @@ int main()
     for(int i = 0; i < its; ++i)
     {
         integer += random.get();
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("seed_random");
+
+    for(int i = 0; i < its; ++i)
+    {
+        integer += seed_random.get();
     }
 
     BN_PROFILER_STOP();

@@ -16,6 +16,7 @@
 #include "fixed_tests.h"
 #include "math_tests.h"
 #include "sqrt_tests.h"
+#include "random_tests.h"
 #include "optional_tests.h"
 #include "any_tests.h"
 #include "format_tests.h"
@@ -43,6 +44,7 @@ int main()
     fixed_tests();
     math_tests();
     sqrt_tests();
+    random_tests();
     optional_tests();
     any_tests();
     format_tests();

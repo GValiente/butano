@@ -596,6 +596,12 @@
  */
 
 /**
+ * @defgroup random Random
+ *
+ * Random number generators.
+ */
+
+/**
  * @defgroup other Other
  *
  * Stuff which doesn't fit anywhere else.
@@ -1871,6 +1877,11 @@
  * @endcode
  *
  *
+ * @subsection faq_random_seed How can I set the seed of a bn::random?
+ *
+ * If you want to do that, use bn::seed_random instead.
+ *
+ *
  * @subsection faq_wait_updates Is there a way to stop running my code for a certain amount of time?
  *
  * Since you can usually assume than your game is running at 60FPS,
@@ -2096,6 +2107,7 @@
  *
  * @section changelog_15_2_0 15.2.0 (next release)
  *
+ * * bn::seed_random added.
  * * Maps commit optimized by more than 35% in some cases.
  * * Big maps commit optimized.
  * * BG blocks and sprite tiles managers ROM usage reduced.

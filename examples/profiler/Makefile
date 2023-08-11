@@ -38,7 +38,7 @@ AUDIO       :=  audio ../../common/audio
 DMGAUDIO    :=  dmg_audio ../../common/dmg_audio
 ROMTITLE    :=  BUTANO PRFLR
 ROMCODE     :=  SBTP
-USERFLAGS   :=  -DBN_CFG_PROFILER_ENABLED=true -flto
+USERFLAGS   :=  -DBN_CFG_PROFILER_ENABLED=true
 USERASFLAGS :=  
 USERLDFLAGS :=  
 USERLIBDIRS :=  

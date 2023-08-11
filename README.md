@@ -53,6 +53,7 @@ and [GBT Player](https://github.com/AntonioND/gbt-player).
 * Multiplayer support provided by [gba-link-connection](https://github.com/rodri042/gba-link-connection).
 * Pool containers provided by [ETL](https://www.etlcpp.com/).
 * Unique type ID generation without RTTI provided by [CTTI](https://github.com/Manu343726/ctti).
+* Stateless random number generator provided by [whisky](https://github.com/velipso/whisky).
 
 
 ## Contact and support

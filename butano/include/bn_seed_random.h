@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_RANDOM_H
-#define BN_RANDOM_H
+#ifndef BN_SEED_RANDOM_H
+#define BN_SEED_RANDOM_H
 
 /**
  * @file
- * bn::random header file.
+ * bn::seed_random header file.
  *
  * @ingroup random
  */
@@ -21,31 +21,64 @@ namespace bn
 {
 
 /**
- * @brief Fast, deterministic random number generator.
+ * @brief Deterministic random number generator with a public, configurable seed.
  *
- * Its current implementation is a Marsaglia's xorshf generator.
- *
- * See https://github.com/raylee/xorshf96/blob/master/xorshf96.c
+ * See https://github.com/velipso/whisky
  *
  * @ingroup random
  */
-class random
+class seed_random
 {
 
 public:
     /**
+     * @brief Default constructor.
+     */
+    constexpr seed_random() = default;
+
+    /**
+     * @brief Constructor.
+     * @param seed Initial value of the seed used to generate random numbers.
+     */
+    constexpr explicit seed_random(unsigned seed) :
+        _seed(seed)
+    {
+    }
+
+    /**
+     * @brief Returns the value of the seed used to generate random numbers.
+     */
+    [[nodiscard]] constexpr unsigned seed() const
+    {
+        return _seed;
+    }
+
+    /**
+     * @brief Sets the value of the seed used to generate random numbers.
+     */
+    constexpr void set_seed(unsigned seed)
+    {
+       _seed = seed;
+    }
+
+    /**
      * @brief Returns a random unsigned integer greater or equal than 0,
-     * updating its internal seed in the process.
+     * updating its seed in the process.
      */
     [[nodiscard]] constexpr unsigned get()
     {
         update();
-        return _z;
+
+        unsigned seed = _seed;
+        unsigned z0 = (seed * 1831267127) ^ seed;
+        unsigned z1 = (z0 * 3915839201) ^ (z0 >> 20);
+        unsigned z2 = (z1 * 1561867961) ^ (z1 >> 24);
+        return z2;
     }
 
     /**
      * @brief Returns a random signed integer greater or equal than 0,
-     * updating its internal seed in the process.
+     * updating its seed in the process.
      */
     [[nodiscard]] constexpr int get_int()
     {
@@ -55,7 +88,7 @@ public:
 
     /**
      * @brief Returns a random bn::fixed greater or equal than 0,
-     * updating its internal seed in the process.
+     * updating its seed in the process.
      */
     [[nodiscard]] constexpr fixed get_fixed()
     {
@@ -64,7 +97,7 @@ public:
 
     /**
      * @brief Returns a random signed integer in the range [0..limit),
-     * updating its internal seed in the process.
+     * updating its seed in the process.
      * @param limit Returned value is lower than this value.
      * @return Random signed integer in the range [0..limit).
      */
@@ -78,7 +111,7 @@ public:
 
     /**
      * @brief Returns a random bn::fixed in the range [0..limit),
-     * updating its internal seed in the process.
+     * updating its seed in the process.
      * @param limit Returned value is lower than this value.
      * @return Random bn::fixed in the range [0..limit).
      */
@@ -93,7 +126,7 @@ public:
 
     /**
      * @brief Returns a random signed integer in the range [minimum..limit),
-     * updating its internal seed in the process.
+     * updating its seed in the process.
      * @param minimum Returned value is greater or equal than this value.
      * @param limit Returned value is lower than this value.
      * @return Random signed integer in the range [minimum..limit).
@@ -109,7 +142,7 @@ public:
 
     /**
      * @brief Returns a random bn::fixed in the range [minimum..limit),
-     * updating its internal seed in the process.
+     * updating its seed in the process.
      * @param minimum Returned value is greater or equal than this value.
      * @param limit Returned value is lower than this value.
      * @return Random bn::fixed in the range [minimum..limit).
@@ -124,28 +157,15 @@ public:
     }
 
     /**
-     * @brief Updates the value of the internal seed.
+     * @brief Updates the value of the seed.
      */
     constexpr void update()
     {
-        _x ^= _x << 16;
-        _x ^= _x >> 5;
-        _x ^= _x << 1;
-
-        unsigned t = _x;
-        _x = _y;
-        _y = _z;
-        _z = t ^ _x ^ _y;
+        ++_seed;
     }
 
-protected:
-    /// @cond DO_NOT_DOCUMENT
-
-    unsigned _x = 123456789;
-    unsigned _y = 362436069;
-    unsigned _z = 521288629;
-
-    /// @endcond
+private:
+    unsigned _seed = 0;
 };
 
 }

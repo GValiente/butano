@@ -2110,6 +2110,7 @@
  * * bn::seed_random added.
  * * Maps commit optimized by more than 35% in some cases.
  * * Big maps commit optimized.
+ * * Display setup commit optimized.
  * * BG blocks and sprite tiles managers ROM usage reduced.
  *
  *

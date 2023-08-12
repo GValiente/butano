@@ -10,6 +10,12 @@
 #include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
 
+extern "C"
+{
+    [[nodiscard]] BN_CODE_IWRAM unsigned bn_hw_palettes_different_words(
+            unsigned four_words_count, const unsigned* color_words, const unsigned* stored_color_words);
+}
+
 namespace bn::hw::palettes
 {
     [[nodiscard]] constexpr int count()

@@ -35,11 +35,11 @@ uint16_t palettes_bank::colors_hash(const span<const color>& colors)
     const color* colors_data = colors.data();
     BN_ASSERT(aligned<4>(colors_data), "Colors are not aligned");
 
-    auto int_colors = reinterpret_cast<const unsigned*>(colors.data());
+    auto u32_colors = reinterpret_cast<const unsigned*>(colors_data);
     auto result = unsigned(colors.size());
-    result += int_colors[0];
-    result += int_colors[1];
-    result += int_colors[2];
+    result += u32_colors[0];
+    result += u32_colors[1];
+    result += u32_colors[2];
 
     // Active palettes hash > 0:
     return max(uint16_t(result), uint16_t(1));
@@ -780,25 +780,17 @@ void palettes_bank::fill_hblank_effect_colors(const color* source_colors_ptr, ui
 [[nodiscard]] bool palettes_bank::_same_colors(const span<const color>& colors, int id) const
 {
     int colors_per_palette = hw::palettes::colors_per_palette();
-    int stored_colors_count = colors_per_palette * _palettes[id].slots_count;
+    int slots_count = _palettes[id].slots_count;
+    int stored_colors_count = colors_per_palette * slots_count;
 
     if(colors.size() != stored_colors_count)
     {
         return false;
     }
 
-    auto int_colors = reinterpret_cast<const unsigned*>(colors.data());
-    auto int_stored_colors = reinterpret_cast<const unsigned*>(_initial_colors + (id * colors_per_palette));
-
-    for(int index = 0, limit = stored_colors_count / 2; index < limit; ++index)
-    {
-        if(int_colors[index] != int_stored_colors[index])
-        {
-            return false;
-        }
-    }
-
-    return true;
+    auto u32_colors = reinterpret_cast<const unsigned*>(colors.data());
+    auto u32_stored_colors = reinterpret_cast<const unsigned*>(_initial_colors + (id * colors_per_palette));
+    return bn_hw_palettes_different_words(unsigned(slots_count) * 2, u32_colors, u32_stored_colors) == 0;
 }
 
 int palettes_bank::_bpp_8_slots_count() const

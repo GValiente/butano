@@ -788,9 +788,10 @@ void palettes_bank::fill_hblank_effect_colors(const color* source_colors_ptr, ui
         return false;
     }
 
+    unsigned four_words_count = unsigned(stored_colors_count) / 8;
     auto u32_colors = reinterpret_cast<const unsigned*>(colors.data());
     auto u32_stored_colors = reinterpret_cast<const unsigned*>(_initial_colors + (id * colors_per_palette));
-    return bn_hw_palettes_different_words(unsigned(slots_count) * 2, u32_colors, u32_stored_colors) == 0;
+    return bn_hw_palettes_different_words(four_words_count, u32_colors, u32_stored_colors) == 0;
 }
 
 int palettes_bank::_bpp_8_slots_count() const

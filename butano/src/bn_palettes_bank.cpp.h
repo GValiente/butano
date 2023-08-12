@@ -36,13 +36,12 @@ uint16_t palettes_bank::colors_hash(const span<const color>& colors)
     BN_ASSERT(aligned<4>(colors_data), "Colors are not aligned");
 
     auto u32_colors = reinterpret_cast<const unsigned*>(colors_data);
-    auto result = unsigned(colors.size());
-    result += u32_colors[0];
-    result += u32_colors[1];
-    result += u32_colors[2];
+    auto result = u32_colors[0] + u32_colors[1] + u32_colors[2];
 
     // Active palettes hash > 0:
-    return max(uint16_t(result), uint16_t(1));
+    result |= unsigned(colors.size());
+
+    return uint16_t(result);
 }
 
 int palettes_bank::used_colors_count() const

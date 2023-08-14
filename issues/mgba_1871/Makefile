@@ -13,7 +13,7 @@
 # ROMCODE is a uppercase ASCII, max 4 characters text string containing the output ROM code.
 # USERFLAGS is a list of additional compiler flags:
 #     Pass -flto to enable link-time optimization.
-#     Pass -O0 to improve debugging.
+#     Pass -O0 or -Og to try to make debugging work.
 # USERASFLAGS is a list of additional assembler flags.
 # USERLDFLAGS is a list of additional linker flags:
 #     Pass -flto=<number_of_cpu_cores> to enable parallel link-time optimization.

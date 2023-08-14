@@ -5,6 +5,8 @@
 
 #include "../include/bn_hw_palettes.h"
 
+#include "bn_algorithm.h"
+
 namespace bn::hw::palettes
 {
 

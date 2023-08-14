@@ -29,6 +29,21 @@ extern "C"
         }
     }
 
+    // Standard assert function:
+    #if BN_CFG_ASSERT_ENABLED
+        void __assert_func(const char* file, int line, const char* func, const char* failedexpr)
+        {
+            _bn::assert::show(failedexpr, file, func, line);
+        }
+    #else
+        void __assert_func(const char*, int, const char*, const char*)
+        {
+            while(true)
+            {
+            }
+        }
+    #endif
+
     // Disable __aeabi_atexit to reduce IWRAM usage:
     // https://arobenko.gitbooks.io/bare_metal_cpp/content/compiler_output/static.html
     int __aeabi_atexit(void*, void (*)(void*), void*)

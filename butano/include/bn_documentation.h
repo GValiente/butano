@@ -2108,6 +2108,7 @@
  * @section changelog_15_2_0 15.2.0 (next release)
  *
  * * bn::seed_random added.
+ * * Standard assert implemented.
  * * Maps commit optimized by more than 35% in some cases.
  * * Palette search optimized by more than 25% in some cases.
  * * Big maps commit optimized.

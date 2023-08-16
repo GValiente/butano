@@ -2110,6 +2110,7 @@
  * * bn::seed_random added.
  * * Standard assert implemented.
  * * Thread-safe initialization of local statics disabled.
+ * * Static destructors fixed.
  * * Maps commit optimized by more than 35% in some cases.
  * * Palette search optimized by more than 25% in some cases.
  * * Big maps commit optimized.

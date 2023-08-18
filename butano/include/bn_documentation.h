@@ -873,13 +873,19 @@
  *
  * Integration of emulator logging into Butano.
  *
- * <td> **Mode 7**
+ * <td> **Map collision**
+ *
+ * @image html examples_map_collision.png
+ *
+ * Sprite against map collision example.
+ *
+ * <tr><td> **Mode 7**
  *
  * @image html examples_mode_7.png
  *
  * Basic SNES mode 7 like background example.
  *
- * <tr><td> @ref mosaic
+ * <td> @ref mosaic
  *
  * @image html examples_mosaic.png
  *
@@ -891,13 +897,13 @@
  *
  * Showcases multiple color palette effects.
  *
- * <td> **Flat polygons**
+ * <tr><td> **Flat polygons**
  *
  * @image html examples_polygons.png
  *
  * Showcases flat polygons rendering with sprites.
  *
- * <tr><td> @ref profiler
+ * <td> @ref profiler
  *
  * @image html examples_profiler.png
  *
@@ -909,13 +915,13 @@
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <td> @ref rumble
+ * <tr><td> @ref rumble
  *
  * @image html examples_rumble.png
  *
  * Vibration showcase (if your cart supports it).
  *
- * <tr><td> @ref affine_mat "Sprite affine matrices"
+ * <td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
@@ -927,13 +933,13 @@
  *
  * Simple sprites examples.
  *
- * <td> @ref sram
+ * <tr><td> @ref sram
  *
  * @image html examples_sram.png
  *
  * SRAM reads and writes with Butano.
  *
- * <tr><td> @ref text
+ * <td> @ref text
  *
  * @image html examples_text.png
  *
@@ -945,13 +951,13 @@
  *
  * Showcases textured polygons rendering with sprites.
  *
- * <td> @ref window
+ * <tr><td> @ref window
  *
  * @image html examples_windows.png
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <tr><td> **World map**
+ * <td> **World map**
  *
  * @image html examples_world_map.png
  *
@@ -2116,6 +2122,7 @@
  * * Big maps commit optimized.
  * * Display setup commit optimized.
  * * BG blocks and sprite tiles managers ROM usage reduced.
+ * * `map_collision` example added.
  *
  *
  * @section changelog_15_1_0 15.1.0

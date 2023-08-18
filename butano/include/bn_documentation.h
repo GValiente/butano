@@ -2111,7 +2111,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_2_0 15.2.0 (next release)
+ * @section changelog_15_2_0 15.2.0
  *
  * * bn::seed_random added.
  * * Standard assert implemented.

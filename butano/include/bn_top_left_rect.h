@@ -3,12 +3,12 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_RECT_H
-#define BN_RECT_H
+#ifndef BN_TOP_LEFT_RECT_H
+#define BN_TOP_LEFT_RECT_H
 
 /**
  * @file
- * bn::rect header file.
+ * bn::top_left_rect header file.
  *
  * @ingroup math
  */
@@ -20,29 +20,25 @@ namespace bn
 {
 
 /**
- * @brief Defines a two-dimensional rectangle using integer precision and a center point as position.
- *
- * Since it takes a center point as position instead of a top-left point, it has problems with odd dimensions.
- *
- * If you need to handle odd dimensions, use bn::top_left_rect instead.
+ * @brief Defines a two-dimensional rectangle using integer precision and a top-left point as position.
  *
  * @ingroup math
  */
-class rect
+class top_left_rect
 {
 
 public:
     /**
      * @brief Default constructor.
      */
-    constexpr rect() = default;
+    constexpr top_left_rect() = default;
 
     /**
      * @brief Constructor.
-     * @param position Position of the center point of the rectangle.
+     * @param position Position of the top-left point of the rectangle.
      * @param dimensions Size of the rectangle.
      */
-    constexpr rect(const point& position, const size& dimensions) :
+    constexpr top_left_rect(const point& position, const size& dimensions) :
         _position(position),
         _dimensions(dimensions)
     {
@@ -50,19 +46,19 @@ public:
 
     /**
      * @brief Constructor.
-     * @param x Horizontal position of the center point of the rectangle.
-     * @param y Vertical position of the center point of the rectangle.
+     * @param x Horizontal position of the top-left point of the rectangle.
+     * @param y Vertical position of the top-left point of the rectangle.
      * @param width Valid width of the rectangle (>= 0).
      * @param height Valid height of the rectangle (>= 0).
      */
-    constexpr rect(int x, int y, int width, int height) :
+    constexpr top_left_rect(int x, int y, int width, int height) :
         _position(x, y),
         _dimensions(width, height)
     {
     }
 
     /**
-     * @brief Returns the position of the center point of the rectangle.
+     * @brief Returns the position of the top-left point of the rectangle.
      */
     [[nodiscard]] constexpr const point& position() const
     {
@@ -70,7 +66,7 @@ public:
     }
 
     /**
-     * @brief Sets the position of the center point of the rectangle.
+     * @brief Sets the position of the top-left point of the rectangle.
      */
     constexpr void set_position(const point& position)
     {
@@ -78,9 +74,9 @@ public:
     }
 
     /**
-     * @brief Sets the position of the center point of the rectangle.
-     * @param x Horizontal position of the center point of the rectangle.
-     * @param y Vertical position of the center point of the rectangle.
+     * @brief Sets the position of the top-left point of the rectangle.
+     * @param x Horizontal position of the top-left point of the rectangle.
+     * @param y Vertical position of the top-left point of the rectangle.
      */
     constexpr void set_position(int x, int y)
     {
@@ -114,7 +110,7 @@ public:
     }
 
     /**
-     * @brief Returns the horizontal position of the center point of the rectangle.
+     * @brief Returns the horizontal position of the top-left point of the rectangle.
      */
     [[nodiscard]] constexpr int x() const
     {
@@ -122,7 +118,7 @@ public:
     }
 
     /**
-     * @brief Sets the horizontal position of the center point of the rectangle.
+     * @brief Sets the horizontal position of the top-left point of the rectangle.
      */
     constexpr void set_x(int x)
     {
@@ -130,7 +126,7 @@ public:
     }
 
     /**
-     * @brief Returns the vertical position of the center point of the rectangle.
+     * @brief Returns the vertical position of the top-left point of the rectangle.
      */
     [[nodiscard]] constexpr int y() const
     {
@@ -138,7 +134,7 @@ public:
     }
 
     /**
-     * @brief Sets the vertical position of the center point of the rectangle.
+     * @brief Sets the vertical position of the top-left point of the rectangle.
      */
     constexpr void set_y(int y)
     {
@@ -184,7 +180,7 @@ public:
      */
     [[nodiscard]] constexpr int top() const
     {
-        return y() - (height() / 2);
+        return y();
     }
 
     /**
@@ -192,7 +188,7 @@ public:
      */
     [[nodiscard]] constexpr int left() const
     {
-        return x() - (width() / 2);
+        return x();
     }
 
     /**
@@ -200,7 +196,7 @@ public:
      */
     [[nodiscard]] constexpr int bottom() const
     {
-        return y() + (height() / 2);
+        return y() + height();
     }
 
     /**
@@ -208,7 +204,7 @@ public:
      */
     [[nodiscard]] constexpr int right() const
     {
-        return x() + (width() / 2);
+        return x() + width();
     }
 
     /**
@@ -248,7 +244,7 @@ public:
      */
     [[nodiscard]] constexpr int center_x() const
     {
-        return x();
+        return x() + (width() / 2);
     }
 
     /**
@@ -256,7 +252,7 @@ public:
      */
     [[nodiscard]] constexpr int center_y() const
     {
-        return y();
+        return y() + (height() / 2);
     }
 
     /**
@@ -290,7 +286,7 @@ public:
      *
      * Two rectangles intersect if there is at least one point that is within both rectangles.
      */
-    [[nodiscard]] constexpr bool intersects(const rect& other) const
+    [[nodiscard]] constexpr bool intersects(const top_left_rect& other) const
     {
         int this_left = left();
         int other_left = other.left();
@@ -306,47 +302,9 @@ public:
     }
 
     /**
-     * @brief Multiplies both width and height of the rectangle by the given factor.
-     * @param value Integer multiplication factor.
-     * @return Reference to this.
-     */
-    constexpr rect& operator*=(int value)
-    {
-        _dimensions *= value;
-        return *this;
-    }
-
-    /**
-     * @brief Divides both width and height of the rectangle by the given divisor.
-     * @param value Valid integer divisor (> 0).
-     * @return Reference to this.
-     */
-    constexpr rect& operator/=(int value)
-    {
-        _dimensions /= value;
-        return *this;
-    }
-
-    /**
-     * @brief Returns a multiplied by b.
-     */
-    [[nodiscard]] constexpr friend rect operator*(const rect& a, int b)
-    {
-        return rect(a._position, a._dimensions * b);
-    }
-
-    /**
-     * @brief Returns a divided by b.
-     */
-    [[nodiscard]] constexpr friend rect operator/(const rect& a, int b)
-    {
-        return rect(a._position, a._dimensions / b);
-    }
-
-    /**
      * @brief Default equal operator.
      */
-    [[nodiscard]] constexpr friend bool operator==(const rect& a, const rect& b) = default;
+    [[nodiscard]] constexpr friend bool operator==(const top_left_rect& a, const top_left_rect& b) = default;
 
 private:
     point _position;
@@ -355,18 +313,18 @@ private:
 
 
 /**
- * @brief Hash support for rect.
+ * @brief Hash support for top_left_rect.
  *
  * @ingroup math
  * @ingroup functional
  */
 template<>
-struct hash<rect>
+struct hash<top_left_rect>
 {
     /**
-     * @brief Returns the hash of the given rect.
+     * @brief Returns the hash of the given top_left_rect.
      */
-    [[nodiscard]] constexpr unsigned operator()(const rect& value) const
+    [[nodiscard]] constexpr unsigned operator()(const top_left_rect& value) const
     {
         unsigned result = make_hash(value.position());
         hash_combine(value.dimensions(), result);

@@ -1892,7 +1892,7 @@
  *
  * Since it takes a center point as position instead of a top-left point, bn::rect has problems with odd dimensions.
  *
- * If you need to handle odd dimensions, use bn::fixed_rect (or your own integer rect class) instead.
+ * If you need to handle odd dimensions, use bn::top_left_rect instead.
  *
  *
  * @subsection faq_wait_updates Is there a way to stop running my code for a certain amount of time?
@@ -2120,7 +2120,8 @@
  *
  * @section changelog_15_3_0 15.3.0 (next release)
  *
- * bn::rect issues with odd dimensions documented.
+ * * bn::top_left_rect and bn::top_left_fixed_rect added.
+ * * bn::rect issues with odd dimensions documented.
  *
  *
  * @section changelog_15_2_0 15.2.0

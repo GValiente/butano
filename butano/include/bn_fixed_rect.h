@@ -21,7 +21,7 @@ namespace bn
 {
 
 /**
- * @brief Defines a two-dimensional rectangle using fixed point precision.
+ * @brief Defines a two-dimensional rectangle using fixed point precision and a center point as position.
  *
  * @ingroup math
  */
@@ -251,6 +251,30 @@ public:
     }
 
     /**
+     * @brief Returns the horizontal position of the center point of the rectangle.
+     */
+    [[nodiscard]] constexpr fixed center_x() const
+    {
+        return x();
+    }
+
+    /**
+     * @brief Returns the vertical position of the center point of the rectangle.
+     */
+    [[nodiscard]] constexpr fixed center_y() const
+    {
+        return y();
+    }
+
+    /**
+     * @brief Returns the position of the center point of the rectangle.
+     */
+    [[nodiscard]] constexpr fixed_point center() const
+    {
+        return fixed_point(center_x(), center_y());
+    }
+
+    /**
      * @brief Indicates if the given point is inside the rectangle or not.
      *
      * If the point is in the edge of the rectangle, it returns `false`.
@@ -289,7 +313,7 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this rect by the given integer value.
+     * @brief Returns the multiplication of this rectangle by the given integer value.
      */
     [[nodiscard]] constexpr fixed_rect multiplication(int value) const
     {
@@ -297,7 +321,7 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this rect by the given fixed point value,
+     * @brief Returns the multiplication of this rectangle by the given fixed point value,
      * using half precision to try to avoid overflow.
      */
     [[nodiscard]] constexpr fixed_rect multiplication(fixed value) const
@@ -306,7 +330,7 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this rect by the given integer value.
+     * @brief Returns the multiplication of this rectangle by the given integer value.
      */
     [[nodiscard]] constexpr fixed_rect safe_multiplication(int value) const
     {
@@ -314,7 +338,7 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this rect by the given fixed point value,
+     * @brief Returns the multiplication of this rectangle by the given fixed point value,
      * casting them to int64_t to try to avoid overflow.
      */
     [[nodiscard]] constexpr fixed_rect safe_multiplication(fixed value) const
@@ -323,7 +347,7 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this rect by the given integer value.
+     * @brief Returns the multiplication of this rectangle by the given integer value.
      */
     [[nodiscard]] constexpr fixed_rect unsafe_multiplication(int value) const
     {
@@ -331,7 +355,7 @@ public:
     }
 
     /**
-     * @brief Returns the multiplication of this rect by the given fixed point value
+     * @brief Returns the multiplication of this rectangle by the given fixed point value
      * without trying to avoid overflow.
      */
     [[nodiscard]] constexpr fixed_rect unsafe_multiplication(fixed value) const
@@ -340,7 +364,7 @@ public:
     }
 
     /**
-     * @brief Returns the division of this rect by the given integer value.
+     * @brief Returns the division of this rectangle by the given integer value.
      */
     [[nodiscard]] constexpr fixed_rect division(int value) const
     {
@@ -348,7 +372,7 @@ public:
     }
 
     /**
-     * @brief Returns the division of this rect by the given fixed point value,
+     * @brief Returns the division of this rectangle by the given fixed point value,
      * using half precision to try to avoid overflow.
      */
     [[nodiscard]] constexpr fixed_rect division(fixed value) const
@@ -357,7 +381,7 @@ public:
     }
 
     /**
-     * @brief Returns the division of this value by the given integer value.
+     * @brief Returns the division of this rectangle by the given integer value.
      */
     [[nodiscard]] constexpr fixed_rect safe_division(int value) const
     {
@@ -365,7 +389,7 @@ public:
     }
 
     /**
-     * @brief Returns the division of this rect by the given fixed point value,
+     * @brief Returns the division of this rectangle by the given fixed point value,
      * casting them to int64_t to try to avoid overflow.
      */
     [[nodiscard]] constexpr fixed_rect safe_division(fixed value) const
@@ -374,7 +398,7 @@ public:
     }
 
     /**
-     * @brief Returns the division of this value by the given integer value.
+     * @brief Returns the division of this rectangle by the given integer value.
      */
     [[nodiscard]] constexpr fixed_rect unsafe_division(int value) const
     {
@@ -382,7 +406,7 @@ public:
     }
 
     /**
-     * @brief Returns the division of this rect by the given fixed point value
+     * @brief Returns the division of this rectangle by the given fixed point value
      * without trying to avoid overflow.
      */
     [[nodiscard]] constexpr fixed_rect unsafe_division(fixed value) const

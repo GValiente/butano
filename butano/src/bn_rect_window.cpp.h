@@ -8,6 +8,7 @@
 #include "bn_fixed_rect.h"
 #include "bn_camera_ptr.h"
 #include "bn_display_manager.h"
+#include "bn_top_left_fixed_rect.h"
 
 namespace bn
 {
@@ -112,6 +113,14 @@ fixed_rect rect_window::boundaries() const
     return fixed_rect(tl + fixed_point(dimensions.width() / 2, dimensions.height() / 2), dimensions);
 }
 
+top_left_fixed_rect rect_window::top_left_boundaries() const
+{
+    const fixed_point& tl = top_left();
+    const fixed_point& br = bottom_right();
+    fixed_size dimensions(br.x() - tl.x(), br.y() - tl.y());
+    return top_left_fixed_rect(tl, dimensions);
+}
+
 void rect_window::set_boundaries(fixed top, fixed left, fixed bottom, fixed right)
 {
     set_boundaries(fixed_point(left, top), fixed_point(right, bottom));
@@ -133,6 +142,13 @@ void rect_window::set_boundaries(const fixed_rect& boundaries)
     fixed_point half_dimensions(boundaries.width() / 2, boundaries.height() / 2);
     display_manager::set_rect_window_top_left(window_id, boundaries.position() - half_dimensions);
     display_manager::set_rect_window_bottom_right(window_id, boundaries.position() + half_dimensions);
+}
+
+void rect_window::set_boundaries(const top_left_fixed_rect& boundaries)
+{
+    int window_id = id();
+    display_manager::set_rect_window_top_left(window_id, boundaries.top_left());
+    display_manager::set_rect_window_bottom_right(window_id, boundaries.bottom_right());
 }
 
 void rect_window::restore_boundaries()

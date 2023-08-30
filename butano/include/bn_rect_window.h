@@ -23,6 +23,7 @@ namespace bn
 class fixed_rect;
 class camera_ptr;
 class fixed_point;
+class top_left_fixed_rect;
 
 /**
  * @brief Rectangular window.
@@ -124,9 +125,14 @@ public:
     void set_bottom_right(const fixed_point& bottom_right);
 
     /**
-     * @brief Returns the boundaries of this window (relative to its camera, if it has one).
+     * @brief Returns the boundaries of this window (relative to its camera, if it has one) as a fixed_rect.
      */
     [[nodiscard]] fixed_rect boundaries() const;
+
+    /**
+     * @brief Returns the boundaries of this window (relative to its camera, if it has one) as a top_left_fixed_rect.
+     */
+    [[nodiscard]] top_left_fixed_rect top_left_boundaries() const;
 
     /**
      * @brief Sets the boundaries of this window (relative to its camera, if it has one).
@@ -148,6 +154,11 @@ public:
      * @brief Sets the boundaries of this window (relative to its camera, if it has one).
      */
     void set_boundaries(const fixed_rect& boundaries);
+
+    /**
+     * @brief Sets the boundaries of this window (relative to its camera, if it has one).
+     */
+    void set_boundaries(const top_left_fixed_rect& boundaries);
 
     /**
      * @brief Restores the boundaries of this window to its initial values.

@@ -50,7 +50,7 @@
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>rect <span class="m-thin">class</span>
           <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__rect_8h.html">&lt;bn_rect.h&gt;</a></div>
         </h1>
-        <p>Defines a two-dimensional rectangle using integer precision.</p>
+        <p>Defines a two-dimensional rectangle using integer precision and a center point as position.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -64,7 +64,7 @@
             </li>
           </ul>
         </nav>
-<p>Since it takes a center point as position instead of a top-left point, it has problems with odd dimensions.</p><p>If you need to handle odd dimensions, use <a href="classbn_1_1fixed__rect.html" class="m-doc">bn::<wbr />fixed_rect</a> (or your own integer rect class) instead.</p>
+<p>Since it takes a center point as position instead of a top-left point, it has problems with odd dimensions.</p><p>If you need to handle odd dimensions, use <a href="classbn_1_1top__left__rect.html" class="m-doc">bn::<wbr />top_left_rect</a> instead.</p>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
@@ -179,6 +179,18 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a3f79985f354f01bc15ed35339f3f510f" class="m-doc-self">bottom_right</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1point.html" class="m-doc">point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the position of the bottom-right corner of the rectangle.</dd>
+            <dt id="a3e8d26df2848c382d71dd391ca63f9ae">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3e8d26df2848c382d71dd391ca63f9ae" class="m-doc-self">center_x</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the horizontal position of the center point of the rectangle.</dd>
+            <dt id="aacb67665559df255222207926b861028">
+              <span class="m-doc-wrap-bumper">auto <a href="#aacb67665559df255222207926b861028" class="m-doc-self">center_y</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the vertical position of the center point of the rectangle.</dd>
+            <dt id="a84578c691a403813c8826b4a3d6760f9">
+              <span class="m-doc-wrap-bumper">auto <a href="#a84578c691a403813c8826b4a3d6760f9" class="m-doc-self">center</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1point.html" class="m-doc">point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the center point of the rectangle.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a5d4d32802fc63a93b8c85c01800a52d1" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; point) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>

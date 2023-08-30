@@ -1888,6 +1888,13 @@
  * If you want to do that, use bn::seed_random instead.
  *
  *
+ * @subsection faq_rect_odd_dimensions Does bn::rect work with odd dimensions?
+ *
+ * Since it takes a center point as position instead of a top-left point, bn::rect has problems with odd dimensions.
+ *
+ * If you need to handle odd dimensions, use bn::fixed_rect (or your own integer rect class) instead.
+ *
+ *
  * @subsection faq_wait_updates Is there a way to stop running my code for a certain amount of time?
  *
  * Since you can usually assume than your game is running at 60FPS,
@@ -1899,13 +1906,6 @@
  *     bn::core::update();
  * }
  * @endcode
- *
- *
- * @subsection faq_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
- *
- * bn::sprite_text_generator already supports UTF-8 characters rendering,
- * but the bn::sprite_font instances used in the examples don't provide japanese nor chinese characters,
- * so you will have to make a new one with them.
  *
  *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
@@ -1964,6 +1964,13 @@
  *
  * You can try to get around this limitation by showing sprites without rotation or scaling, or even better,
  * using backgrounds instead of sprites.
+ *
+ *
+ * @subsection faq_sprites_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
+ *
+ * bn::sprite_text_generator already supports UTF-8 characters rendering,
+ * but the bn::sprite_font instances used in the examples don't provide japanese nor chinese characters,
+ * so you will have to make a new one with them.
  *
  *
  * @section faq_backgrounds Backgrounds
@@ -2109,6 +2116,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_15_3_0 15.3.0 (next release)
+ *
+ * bn::rect issues with odd dimensions documented.
  *
  *
  * @section changelog_15_2_0 15.2.0

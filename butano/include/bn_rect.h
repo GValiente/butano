@@ -22,6 +22,10 @@ namespace bn
 /**
  * @brief Defines a two-dimensional rectangle using integer precision.
  *
+ * Since it takes a center point as position instead of a top-left point, it has problems with odd dimensions.
+ *
+ * If you need to handle odd dimensions, use bn::fixed_rect (or your own integer rect class) instead.
+ *
  * @ingroup math
  */
 class rect

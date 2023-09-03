@@ -15,11 +15,19 @@ namespace
     const unsigned rom_data[] = { 0x12345678, 0x00042069, 0xdeadbeef };
 }
 
-bool _slow_game_pak()
+int _slow_game_pak()
 {
     unsigned a[3];
     unsigned b[3];
     unsigned c[3];
+
+    uint16_t old_waitcnt = REG_WAITCNT;
+    REG_WAITCNT = 0;
+
+    if(REG_WAITCNT != 0)
+    {
+        return 2;
+    }
 
     for(int index = 0; index < 3; ++index)
     {
@@ -28,6 +36,11 @@ bool _slow_game_pak()
 
     REG_WAITCNT = WS_STANDARD;
 
+    if(REG_WAITCNT != WS_STANDARD)
+    {
+        return 2;
+    }
+
     for(int index = 0; index < 3; ++index)
     {
         b[index] = *(volatile unsigned*)(&rom_data[index]);
@@ -35,14 +48,25 @@ bool _slow_game_pak()
 
     REG_WAITCNT = WS_STANDARD;
 
+    if(REG_WAITCNT != WS_STANDARD)
+    {
+        return 2;
+    }
+
     for (int index = 2; index >= 0; --index)
     {
         c[index] = *(volatile unsigned*)(&rom_data[index]);
     }
 
-    REG_WAITCNT = 0;
+    REG_WAITCNT = old_waitcnt;
 
-    return a[0] != b[0] || a[1] != b[1] || a[2] != b[2] || a[0] != c[0] || a[1] != c[1] || a[2] != c[2];
+    if(REG_WAITCNT != old_waitcnt)
+    {
+        return 2;
+    }
+
+    bool slow = a[0] != b[0] || a[1] != b[1] || a[2] != b[2] || a[0] != c[0] || a[1] != c[1] || a[2] != c[2];
+    return slow ? 1 : 0;
 }
 
 }

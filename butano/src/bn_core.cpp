@@ -305,6 +305,9 @@ void init()
 
 void init(const string_view& keypad_commands)
 {
+    // Initial wait:
+    hw::core::init();
+
     // Init irq system:
     hw::irq::init();
     hw::irq::set_isr(hw::irq::id::HBLANK, hw::hblank_effects::_intr);
@@ -335,15 +338,16 @@ void init(const string_view& keypad_commands)
     bg_blocks_manager::init();
     keypad_manager::init(keypad_commands);
 
-    // Init timer system:
-    hw::timer::init();
-    data.cpu_usage_timer.restart();
-
     // First update:
     update();
 
     // Keypad polling fix:
     keypad_manager::update();
+
+    // Init timer system:
+    hw::timer::init();
+    data.cpu_usage_timer.restart();
+    data.last_ticks = ticks();
 
     // Reset profiler:
     BN_PROFILER_RESET();

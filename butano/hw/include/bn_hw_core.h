@@ -15,6 +15,17 @@ extern "C"
 
 namespace bn::hw::core
 {
+    inline void init()
+    {
+        while(REG_VCOUNT != 160)
+        {
+        }
+
+        while(REG_VCOUNT != 161)
+        {
+        }
+    }
+
     inline void wait_for_vblank()
     {
         if(REG_VCOUNT == 159)

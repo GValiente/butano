@@ -2121,6 +2121,7 @@
  * @section changelog_15_3_0 15.3.0 (next release)
  *
  * * bn::top_left_rect and bn::top_left_fixed_rect added.
+ * * bn::core::init waits for V-Blank before initializing all Butano subsystems.
  * * Slow game pak detection fixed.
  * * bn::rect issues with odd dimensions documented.
  *

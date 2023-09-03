@@ -2118,7 +2118,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_3_1 15.3.1 (next release)
+ * @section changelog_15_3_1 15.3.1
  *
  * Slow game pak detection fixed (again).
  *

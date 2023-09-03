@@ -2118,7 +2118,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_3_0 15.3.0 (next release)
+ * @section changelog_15_3_0 15.3.0
  *
  * * bn::top_left_rect and bn::top_left_fixed_rect added.
  * * bn::core::init waits for V-Blank before initializing all Butano subsystems.

@@ -21,8 +21,6 @@ static_assert(BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND
         BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_1 ||
         BN_CFG_GAME_PAK_WAIT_STATE_SECOND == BN_GAME_PAK_WAIT_STATE_SECOND_AUTO);
 
-[[nodiscard]] extern BN_CODE_EWRAM int _slow_game_pak();
-
 bool init()
 {
     int slow_game_pak_result = _slow_game_pak();

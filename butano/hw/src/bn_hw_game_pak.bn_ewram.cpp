@@ -60,11 +60,6 @@ int _slow_game_pak()
 
     REG_WAITCNT = old_waitcnt;
 
-    if(REG_WAITCNT != old_waitcnt)
-    {
-        return 2;
-    }
-
     bool slow = a[0] != b[0] || a[1] != b[1] || a[2] != b[2] || a[0] != c[0] || a[1] != c[1] || a[2] != c[2];
     return slow ? 1 : 0;
 }

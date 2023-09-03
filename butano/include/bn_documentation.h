@@ -2118,6 +2118,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_3_1 15.3.1 (next release)
+ *
+ * Slow game pak detection fixed (again).
+ *
+ *
  * @section changelog_15_3_0 15.3.0
  *
  * * bn::top_left_rect and bn::top_left_fixed_rect added.

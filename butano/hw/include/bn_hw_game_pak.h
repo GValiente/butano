@@ -10,6 +10,8 @@
 
 namespace bn::hw::game_pak
 {
+    [[nodiscard]] BN_CODE_EWRAM int _slow_game_pak();
+
     [[nodiscard]] bool init();
 }
 

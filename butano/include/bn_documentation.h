@@ -2118,6 +2118,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_3_2 15.3.2 (next release)
+ *
+ * BG blocks commit fixed.
+ *
+ *
  * @section changelog_15_3_1 15.3.1
  *
  * Slow game pak detection fixed (again).

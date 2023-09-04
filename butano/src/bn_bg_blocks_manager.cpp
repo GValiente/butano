@@ -437,7 +437,7 @@ namespace
     public:
         items_list items;
         unordered_map<const void*, int, max_items * 2, identity_hasher> items_map;
-        alignas(int) uint16_t to_commit_items_array[max_items];
+        alignas(int) uint8_t to_commit_items_array[max_items];
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
         int to_commit_items_count = 0;
@@ -2885,7 +2885,6 @@ void update()
             }
             else if(item.commit)
             {
-                item.commit = false;
                 data.to_commit_items_array[commit_items_count] = iterator.id();
                 ++commit_items_count;
             }
@@ -2912,7 +2911,9 @@ void commit()
         for(int index = 0; index < commit_items_count; ++index)
         {
             int item_index = data.to_commit_items_array[index];
-            _commit_item(data.items.item(item_index));
+            item_type& item = data.items.item(item_index);
+            item.commit = false;
+            _commit_item(item);
         }
 
         data.to_commit_items_count = 0;

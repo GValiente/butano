@@ -2118,7 +2118,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_3_2 15.3.2 (next release)
+ * @section changelog_15_3_2 15.3.2
  *
  * BG blocks commit fixed.
  *

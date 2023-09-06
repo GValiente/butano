@@ -1942,18 +1942,16 @@
  * Keep in mind that unused colors are also taken into account when deciding if two color palettes are equal or not.
  *
  *
- * @subsection faq_multiple_8bpp_objects Why everything looks weird when I show two or more backgrounds or sprites with more than 16 colors?
+ * @section faq_sprites Sprites
  *
- * Since the GBA has only two 256 color palettes (one for sprites and the other for backgrounds),
- * if you use for example two backgrounds with more than 16 colors,
+ *
+ * @subsection faq_sprites_multiple_8bpp Why everything looks weird when I show two or more sprites with more than 16 colors?
+ *
+ * Since the GBA has only 256 colors for sprites, if you use two sprites with more than 16 colors at the same time,
  * Butano assumes that they have the same color palette (same colors in the same order).
  *
- * So if you are going to show at the same time multiple backgrounds with more than 16 colors,
- * use the same color palette with all of them (in the same scene of course,
- * different backgrounds shown in different scenes can have different color palettes).
- *
- *
- * @section faq_sprites Sprites
+ * So if you are going to show multiple sprites with more than 16 colors at the same time, use the same color palette
+ * with all of them (in the same scene of course, sprites shown in different scenes can have different color palettes).
  *
  *
  * @subsection faq_sprites_scanline Why whenever I have too many sprites on screen, some of them get cut off?
@@ -1974,6 +1972,17 @@
  *
  *
  * @section faq_backgrounds Backgrounds
+ *
+ *
+ * @subsection faq_bg_multiple_8bpp Why everything looks weird when I show two or more backgrounds with more than 16 colors?
+ *
+ * Since the GBA has only 256 colors for tiled backgrounds, if you use two 8BPP backgrounds with more than 16 colors
+ * at the same time, Butano assumes that they have the same color palette (same colors in the same order).
+ *
+ * So if you are going to show multiple backgrounds with more than 16 colors at the same time, you can:
+ * * Use the same color palette with all of them (in the same scene of course, backgrounds shown in different scenes
+ *   can have different color palettes).
+ * * Change their BPP mode to 4BPP, so each background can have its own color palette with more than 16 colors.
  *
  *
  * @subsection faq_bg_wrapping Why some backgrounds don't allow wrapping?
@@ -2116,6 +2125,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_15_4_0 15.4.0 (next release)
+ *
+ * @ref faq_sprites_multiple_8bpp and @ref faq_bg_multiple_8bpp questions added to the @ref faq page.
  *
  *
  * @section changelog_15_3_2 15.3.2

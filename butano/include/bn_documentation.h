@@ -999,6 +999,9 @@
  * * 16 or 256 colors only.
  * * The first color in the color palette is the transparent one, so in most cases it will not be shown on screen.
  *
+ * If you get an `invalid header size` error when importing a `*.bmp` file, it probably means that
+ * the image format is not supported.
+ *
  * If you are using <a href="https://www.gimp.org/">GIMP</a> for your images,
  * remember to disable color space information:
  *
@@ -2144,6 +2147,7 @@
  *
  * * @ref faq_sprites_multiple_8bpp and @ref faq_bg_multiple_8bpp questions added to the @ref faq page.
  * * @ref faq_images_invalid_header_size question added to the @ref faq page.
+ * * @ref import_image import guide improved.
  *
  *
  * @section changelog_15_3_2 15.3.2

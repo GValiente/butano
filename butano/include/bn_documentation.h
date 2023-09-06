@@ -1913,6 +1913,19 @@
  * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.
  *
  *
+ * @section faq_images Images
+ *
+ *
+ * @subsection faq_images_invalid_header_size Why I get an "invalid header size" error when I try to import a *.bmp file?
+ *
+ * If you get that error when importing a `*.bmp` file, it probably means that it contains unsupported features, such as:
+ * * Compression.
+ * * Color space information.
+ * * Non-indexed colors.
+ *
+ * Please check the @ref import_image import guide to learn more about how to generate supported `*.bmp` files.
+ *
+ *
  * @section faq_color Colors
  *
  *
@@ -2129,7 +2142,8 @@
  *
  * @section changelog_15_4_0 15.4.0 (next release)
  *
- * @ref faq_sprites_multiple_8bpp and @ref faq_bg_multiple_8bpp questions added to the @ref faq page.
+ * * @ref faq_sprites_multiple_8bpp and @ref faq_bg_multiple_8bpp questions added to the @ref faq page.
+ * * @ref faq_images_invalid_header_size question added to the @ref faq page.
  *
  *
  * @section changelog_15_3_2 15.3.2

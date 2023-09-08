@@ -10,4 +10,7 @@ bool VgmIntrVblank(void);
 
 unsigned VgmGetOffsetPlay(void);
 
+void VgmPause(void);
+void VgmResume(void);
+
 #endif

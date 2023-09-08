@@ -1,6 +1,7 @@
 #include "../include/vgm.h"
 
 #include <cstring>
+#include "../../gbt-player/include/gbt_hardware.h"
 
 //---------------------------------------------------------------------------
 typedef unsigned char u8;
@@ -15,9 +16,10 @@ typedef unsigned int u32;
 //---------------------------------------------------------------------------
 typedef struct {
 
-    const u8*  pCur;
-    const u8*  pFile;
-    u8   id;
+    const u8* pCur;
+    const u8* pFile;
+    uint16_t oldRegSoundcntL;
+    u8 id;
     bool isLoop;
 
 } ST_VGM;
@@ -142,4 +144,26 @@ bool VgmIntrVblank(void)
 u32 VgmGetOffsetPlay(void)
 {
 	return (u32)(Vgm.pCur - Vgm.pFile);
+}
+
+//---------------------------------------------------------------------------
+void VgmPause(void)
+{
+    Vgm.oldRegSoundcntL = REG_SOUNDCNT_L;
+    Vgm.id = VGM_ID_STOP;
+
+    uint16_t mask =
+        SOUNDCNT_L_PSG_1_ENABLE_RIGHT | SOUNDCNT_L_PSG_1_ENABLE_LEFT |
+        SOUNDCNT_L_PSG_2_ENABLE_RIGHT | SOUNDCNT_L_PSG_2_ENABLE_LEFT |
+        SOUNDCNT_L_PSG_3_ENABLE_RIGHT | SOUNDCNT_L_PSG_3_ENABLE_LEFT |
+        SOUNDCNT_L_PSG_4_ENABLE_RIGHT | SOUNDCNT_L_PSG_4_ENABLE_LEFT;
+
+    REG_SOUNDCNT_L &= ~mask;
+}
+
+void VgmResume(void)
+{
+    Vgm.id = VGM_ID_PLAY;
+
+    REG_SOUNDCNT_L = Vgm.oldRegSoundcntL;
 }

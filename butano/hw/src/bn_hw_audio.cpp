@@ -274,7 +274,7 @@ void pause_dmg_music()
     }
     else
     {
-        BN_ERROR("Pause not supported by the VGM player");
+        VgmPause();
     }
 }
 
@@ -286,7 +286,7 @@ void resume_dmg_music()
     }
     else
     {
-        BN_ERROR("Resume not supported by the VGM player");
+        VgmResume();
     }
 }
 

@@ -78,15 +78,11 @@ namespace bn::dmg_music
 
     /**
      * @brief Pauses playback of the active DMG music.
-     *
-     * Music pause is not supported by the VGM player.
      */
     void pause();
 
     /**
      * @brief Resumes playback of the paused DMG music.
-     *
-     * Music resume is not supported by the VGM player.
      */
     void resume();
 

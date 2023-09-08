@@ -9,7 +9,7 @@
 #ifdef GBT_USE_LIBUGBA
 # include <ugba/ugba.h>
 #else
-# include "gbt_hardware.h"
+# include "../include/gbt_hardware.h"
 #endif
 
 #include "../include/gbt_player.h"

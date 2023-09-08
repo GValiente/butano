@@ -58,11 +58,12 @@
                 <li><a href="#files">Files</a></li>
                 <li><a href="#namespaces">Namespaces</a></li>
                 <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#enum-members">Enums</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>Module files (files with <code>*.mod</code> and <code>*.s3m</code> extensions) played with DMG channels thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.</p>
+<p>Module files (files with <code>*.mod</code> and <code>*.s3m</code> extensions) played with DMG channels thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a> and VGM audio files (files with <code>*.vgm</code> extension) played with DMG channels thanks to <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>.</p>
         <section id="files">
           <h2><a href="#files">Files</a></h2>
           <dl class="m-doc">
@@ -73,6 +74,8 @@
             <dt>file <a href="bn__dmg__music__item_8h.html" class="m-doc">bn_dmg_music_item.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__dmg__music__position_8h.html" class="m-doc">bn_dmg_music_position.h</a></dt>
+            <dd></dd>
+            <dt>file <a href="bn__dmg__music__type_8h.html" class="m-doc">bn_dmg_music_type.h</a></dt>
             <dd></dd>
           </dl>
         </section>
@@ -123,6 +126,43 @@
             </dt>
             <dd>Hash support for <a href="classbn_1_1dmg__music__position.html" class="m-doc">dmg_<wbr />music_<wbr />position</a>.</dd>
           </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum class <a href="#ga290b521a60c48a42e67ef2241947a913" class="m-doc">dmg_music_type</a>: uint8_t { </span><span class="m-doc-wrap"><a href="#gga290b521a60c48a42e67ef2241947a913a304d2ca98023f386100270ed046649e9" class="m-doc">GBT_PLAYER</a>,
+              <a href="#gga290b521a60c48a42e67ef2241947a913a8caeb419438a4bfd3f5d3be97a63ebcf" class="m-doc">VGM</a> }</span>
+            </dt>
+            <dd>Specifies the available DMG music types.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Enum documentation</h2>
+          <section class="m-doc-details" id="ga290b521a60c48a42e67ef2241947a913"><div>
+            <h3>
+              enum class <a href="#ga290b521a60c48a42e67ef2241947a913" class="m-doc-self">dmg_music_type</a>: uint8_t
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__dmg__music__type_8h.html">&lt;bn_dmg_music_type.h&gt;</a></div>
+            </h3>
+            <p>Specifies the available DMG music types.</p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#gga290b521a60c48a42e67ef2241947a913a304d2ca98023f386100270ed046649e9" class="m-doc-self" id="gga290b521a60c48a42e67ef2241947a913a304d2ca98023f386100270ed046649e9">GBT_PLAYER</a></td>
+                  <td>
+                  <p>GBT Player module files with <code>*.mod</code> and <code>*.s3m</code> extensions.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#gga290b521a60c48a42e67ef2241947a913a8caeb419438a4bfd3f5d3be97a63ebcf" class="m-doc-self" id="gga290b521a60c48a42e67ef2241947a913a8caeb419438a4bfd3f5d3be97a63ebcf">VGM</a></td>
+                  <td>
+                  <p>VGM audio files with <code>*.vgm</code> extension.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

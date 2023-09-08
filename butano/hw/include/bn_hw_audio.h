@@ -7,12 +7,7 @@
 #define BN_HW_AUDIO_H
 
 #include "maxmod.h"
-#include "bn_common.h"
-
-extern "C"
-{
-    #include "../3rd_party/gbt-player/include/gbt_player.h"
-}
+#include "bn_dmg_music_type.h"
 
 namespace bn::hw::audio
 {
@@ -77,41 +72,19 @@ namespace bn::hw::audio
         mmSetModulePitch(mm_word(pitch));
     }
 
-    inline void play_dmg_music(const void* song, int speed, bool loop)
-    {
-        gbt_play(song, speed);
-        gbt_loop(loop);
-    }
+    void play_dmg_music(const void* song, dmg_music_type type, int speed, bool loop);
 
-    inline void stop_dmg_music()
-    {
-        gbt_stop();
-    }
+    void stop_dmg_music();
 
-    inline void pause_dmg_music()
-    {
-        gbt_pause(0);
-    }
+    void pause_dmg_music();
 
-    inline void resume_dmg_music()
-    {
-        gbt_pause(1);
-    }
+    void resume_dmg_music();
 
-    inline void dmg_music_position(int& pattern, int& row)
-    {
-        gbt_get_position(&pattern, &row, nullptr);
-    }
+    void dmg_music_position(int& pattern, int& row);
 
-    inline void set_dmg_music_position(int pattern, int row)
-    {
-        gbt_set_position(pattern, row);
-    }
+    void set_dmg_music_position(int pattern, int row);
 
-    inline void set_dmg_music_volume(int left_volume, int right_volume)
-    {
-        gbt_volume(unsigned(left_volume), unsigned(right_volume));
-    }
+    void set_dmg_music_volume(int left_volume, int right_volume);
 
     void play_sound(int priority, int id);
 

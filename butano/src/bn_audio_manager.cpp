@@ -174,21 +174,23 @@ namespace
     {
 
     public:
-        play_dmg_music_command(const void* song, bool loop, int speed) :
+        play_dmg_music_command(const void* song, dmg_music_type type, bool loop, int speed) :
             _song(song),
             _speed(speed),
+            _type(type),
             _loop(loop)
         {
         }
 
         void execute() const
         {
-            hw::audio::play_dmg_music(_song, _speed, _loop);
+            hw::audio::play_dmg_music(_song, _type, _speed, _loop);
         }
 
     private:
         const void* _song;
         int _speed;
+        dmg_music_type _type;
         bool _loop;
     };
 
@@ -352,6 +354,7 @@ namespace
         int music_position = 0;
         const uint8_t* dmg_music_data = nullptr;
         command_code command_codes[max_commands];
+        bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
         bool music_playing = false;
         bool music_paused = false;
         bool dmg_music_paused = false;
@@ -561,26 +564,32 @@ optional<dmg_music_item> playing_dmg_music_item()
 
     if(const uint8_t* dmg_music_data = data.dmg_music_data)
     {
-        result = dmg_music_item(*dmg_music_data);
+        result = dmg_music_item(*dmg_music_data, data.dmg_music_type);
     }
 
     return result;
 }
 
-void play_dmg_music(dmg_music_item item, int speed, bool loop)
+void play_dmg_music(const dmg_music_item& item, int speed, bool loop)
 {
     int commands = data.commands_count;
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
     data.command_codes[commands] = DMG_MUSIC_PLAY;
-    new(data.command_datas + commands) play_dmg_music_command(item.data_ptr(), loop, speed);
+    new(data.command_datas + commands) play_dmg_music_command(item.data_ptr(), item.type(), loop, speed);
     data.commands_count = commands + 1;
 
     data.dmg_music_position = bn::dmg_music_position();
     data.dmg_music_left_volume = 1;
     data.dmg_music_right_volume = 1;
     data.dmg_music_data = item.data_ptr();
+    data.dmg_music_type = item.type();
     data.dmg_music_paused = false;
+
+    if(data.dmg_music_type != dmg_music_type::GBT_PLAYER)
+    {
+        data.dmg_sync_enabled = false;
+    }
 }
 
 void stop_dmg_music()
@@ -632,6 +641,8 @@ void resume_dmg_music()
 const bn::dmg_music_position& dmg_music_position()
 {
     BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    BN_BASIC_ASSERT(data.dmg_music_type == dmg_music_type::GBT_PLAYER,
+                    "Position retrieval not supported by the VGM player");
 
     return data.dmg_music_position;
 }
@@ -653,6 +664,8 @@ void set_dmg_music_position(const bn::dmg_music_position& position)
 fixed dmg_music_left_volume()
 {
     BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    BN_BASIC_ASSERT(data.dmg_music_type == dmg_music_type::GBT_PLAYER,
+                    "Volume retrieval not supported by the VGM player");
 
     return data.dmg_music_left_volume;
 }
@@ -660,6 +673,8 @@ fixed dmg_music_left_volume()
 fixed dmg_music_right_volume()
 {
     BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    BN_BASIC_ASSERT(data.dmg_music_type == dmg_music_type::GBT_PLAYER,
+                    "Volume retrieval not supported by the VGM player");
 
     return data.dmg_music_right_volume;
 }
@@ -700,6 +715,9 @@ bool dmg_sync_enabled()
 
 void set_dmg_sync_enabled(bool enabled)
 {
+    BN_BASIC_ASSERT(! enabled || data.dmg_music_type == dmg_music_type::GBT_PLAYER,
+                    "Synchronization not supported by the VGM player");
+
     data.dmg_sync_enabled = enabled;
 }
 

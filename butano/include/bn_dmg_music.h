@@ -44,22 +44,27 @@ namespace bn::dmg_music
      *
      * Default settings are speed = 1 and loop enabled.
      */
-    void play(dmg_music_item item);
+    void play(const dmg_music_item& item);
 
     /**
      * @brief Plays the DMG music specified by the given dmg_music_item.
      * @param item Specifies the DMG music to play.
      * @param speed Playback speed, in the range [1..256].
+     *
+     * VGM player only supports the default playback speed (1).
      */
-    void play(dmg_music_item item, int speed);
+    void play(const dmg_music_item& item, int speed);
 
     /**
      * @brief Plays the DMG music specified by the given dmg_music_item.
      * @param item Specifies the DMG music to play.
      * @param speed Playback speed, in the range [1..256].
+     *
+     * VGM player only supports the default playback speed (1).
+     *
      * @param loop Indicates if it must be played until it is stopped manually or until end.
      */
-    void play(dmg_music_item item, int speed, bool loop);
+    void play(const dmg_music_item& item, int speed, bool loop);
 
     /**
      * @brief Stops playback of the active DMG music.
@@ -73,21 +78,30 @@ namespace bn::dmg_music
 
     /**
      * @brief Pauses playback of the active DMG music.
+     *
+     * Music pause is not supported by the VGM player.
      */
     void pause();
 
     /**
      * @brief Resumes playback of the paused DMG music.
+     *
+     * Music resume is not supported by the VGM player.
      */
     void resume();
 
     /**
      * @brief Returns the sequence position of the active DMG music.
+     *
+     * Position retrieval is not supported by the VGM player.
      */
     [[nodiscard]] const dmg_music_position& position();
 
     /**
      * @brief Sets the sequence position of the active DMG music.
+     *
+     * Position change is not supported by the VGM player.
+     *
      * @param pattern Pattern order.
      * @param row Row inside the pattern.
      */
@@ -95,39 +109,57 @@ namespace bn::dmg_music
 
     /**
      * @brief Sets the sequence position of the active DMG music.
+     *
+     * Position change is not supported by the VGM player.
      */
     void set_position(const dmg_music_position& position);
 
     /**
      * @brief Returns the volume of the active DMG music for the left speaker.
+     *
+     * Volume retrieval is not supported by the VGM player.
      */
     [[nodiscard]] fixed left_volume();
 
     /**
      * @brief Returns the volume of the active DMG music for the right speaker.
+     *
+     * Volume retrieval is not supported by the VGM player.
      */
     [[nodiscard]] fixed right_volume();
 
     /**
      * @brief Sets the volume of the active DMG music for the left speaker.
+     *
+     * Volume change is not supported by the VGM player.
+     *
      * @param left_volume Left speaker volume level, in the range [0..1].
      */
     void set_left_volume(fixed left_volume);
 
     /**
      * @brief Sets the volume of the active DMG music for the right speaker.
+     *
+     * Volume change is not supported by the VGM player.
+     *
      * @param right_volume Right speaker volume level, in the range [0..1].
      */
     void set_right_volume(fixed right_volume);
 
     /**
      * @brief Sets the volume of the active DMG music for both speakers.
+     *
+     * Volume change is not supported by the VGM player.
+     *
      * @param volume Volume level, in the range [0..1].
      */
     void set_volume(fixed volume);
 
     /**
      * @brief Sets the volume of the active DMG music for both speakers.
+     *
+     * Volume change is not supported by the VGM player.
+     *
      * @param left_volume Left speaker volume level, in the range [0..1].
      * @param right_volume Right speaker volume level, in the range [0..1].
      */

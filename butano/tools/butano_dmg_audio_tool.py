@@ -13,13 +13,13 @@ from file_info import FileInfo
 
 class DmgAudioFileInfo:
 
-    def __init__(self, json_file_path, file_path, file_name, file_name_no_ext, file_info_path, is_mod):
+    def __init__(self, json_file_path, file_path, file_name, file_name_no_ext, file_name_ext, file_info_path):
         self.__json_file_path = json_file_path
         self.__file_path = file_path
         self.__file_name = file_name
         self.__file_name_no_ext = file_name_no_ext
+        self.__file_name_ext = file_name_ext
         self.__file_info_path = file_info_path
-        self.__is_mod = is_mod
         self.__import_instruments = False
         self.__mod_speed_conversion = True
 
@@ -49,18 +49,24 @@ class DmgAudioFileInfo:
                 except KeyError:
                     pass
 
-            if self.__is_mod:
+            music_type = 'GBT_PLAYER'
+            file_size = -1
+
+            if self.__file_name_ext == '.mod':
                 self.__execute_mod2gbt_command(output_tag)
                 self.__move_output_file(output_file_name, output_file_path)
-            else:
+            elif self.__file_name_ext == '.s3m':
                 self.__execute_s3m2gbt_command(output_tag, output_file_path)
+            else:
+                file_size = self.__execute_vgm2gba_command(output_tag, output_file_path)
+                music_type = 'VGM'
 
-            header_file_path = self.__write_header(build_folder_path, output_tag)
+            header_file_path = self.__write_header(build_folder_path, output_tag, music_type)
 
             with open(self.__file_info_path, 'w') as file_info:
                 file_info.write('')
 
-            return [self.__file_name, header_file_path, None]
+            return [self.__file_name, header_file_path, file_size]
         except Exception as exc:
             if os.path.exists(output_file_name):
                 os.remove(output_file_name)
@@ -93,6 +99,32 @@ class DmgAudioFileInfo:
             sys.stdout = sys.__stdout__
             raise
 
+    def __execute_vgm2gba_command(self, output_tag, output_file_path):
+        import io
+        from vgm2gba import vgm2gba
+
+        sys.stdout = io.StringIO()
+
+        try:
+            vgm2gba.convert_file_c_array(self.__file_path, output_file_path, output_tag)
+            sys.stdout = sys.__stdout__
+
+            total_size = -1
+
+            with open(output_file_path, 'r') as output_file:
+                output_data = output_file.read()
+
+                for output_line in output_data.splitlines():
+                    if output_line.startswith('const unsigned int'):
+                        total_size = output_line.split()[-1]
+                        total_size = int(total_size[:-1])
+                        break
+
+            return total_size
+        except Exception:
+            sys.stdout = sys.__stdout__
+            raise
+
     @staticmethod
     def __move_output_file(output_file_name, output_file_path):
         if os.path.exists(output_file_path):
@@ -100,7 +132,7 @@ class DmgAudioFileInfo:
 
         os.rename(output_file_name, output_file_path)
 
-    def __write_header(self, build_folder_path, output_tag):
+    def __write_header(self, build_folder_path, output_tag, music_type):
         name = self.__file_name_no_ext
         header_file_path = build_folder_path + '/bn_dmg_music_items_' + name + '.h'
 
@@ -115,7 +147,8 @@ class DmgAudioFileInfo:
             header_file.write('\n')
             header_file.write('namespace bn::dmg_music_items' + '\n')
             header_file.write('{' + '\n')
-            header_file.write('    constexpr inline dmg_music_item ' + name + '(*' + output_tag + ');' + '\n')
+            header_file.write('    constexpr inline dmg_music_item ' + name + '(*' + output_tag +
+                              ', dmg_music_type::' + music_type + ');' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -147,9 +180,8 @@ def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
             if os.path.isfile(audio_file_path) and FileInfo.validate(audio_file_name):
                 audio_file_name_split = os.path.splitext(audio_file_name)
                 audio_file_name_ext = audio_file_name_split[1]
-                mod_extension = audio_file_name_ext == '.mod'
 
-                if mod_extension or audio_file_name_ext == '.s3m':
+                if audio_file_name_ext == '.mod' or audio_file_name_ext == '.s3m' or audio_file_name_ext == '.vgm':
                     audio_file_name_no_ext = audio_file_name_split[0]
 
                     if audio_file_name_no_ext in file_names_set:
@@ -182,8 +214,8 @@ def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
 
                     if build:
                         audio_file_infos.append(DmgAudioFileInfo(
-                            json_file_path, audio_file_path, audio_file_name, audio_file_name_no_ext, file_info_path,
-                            mod_extension))
+                            json_file_path, audio_file_path, audio_file_name, audio_file_name_no_ext,
+                            audio_file_name_ext, file_info_path))
 
     return audio_file_infos
 
@@ -207,7 +239,13 @@ def process_dmg_audio(audio_folder_paths, build_folder_path):
 
         for process_result in process_results:
             if len(process_result) == 3:
-                print('    ' + str(process_result[0]) + ' item header written in ' + str(process_result[1]))
+                result = '    ' + str(process_result[0]) + ' item header written in ' + str(process_result[1])
+                file_size = process_result[2]
+
+                if file_size >= 0:
+                    result += ' (music size: ' + str(file_size) + ' bytes)'
+
+                print(result)
             else:
                 process_excs.append(process_result)
 

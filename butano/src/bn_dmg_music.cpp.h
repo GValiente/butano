@@ -22,19 +22,19 @@ optional<dmg_music_item> playing_item()
     return audio_manager::playing_dmg_music_item();
 }
 
-void play(dmg_music_item item)
+void play(const dmg_music_item& item)
 {
     audio_manager::play_dmg_music(item, 1, true);
 }
 
-void play(dmg_music_item item, int speed)
+void play(const dmg_music_item& item, int speed)
 {
     BN_BASIC_ASSERT(speed >= 1 && speed <= 256, "Speed range is [1..256]: ", speed);
 
     audio_manager::play_dmg_music(item, speed, true);
 }
 
-void play(dmg_music_item item, int speed, bool loop)
+void play(const dmg_music_item& item, int speed, bool loop)
 {
     BN_BASIC_ASSERT(speed >= 1 && speed <= 256, "Speed range is [1..256]: ", speed);
 

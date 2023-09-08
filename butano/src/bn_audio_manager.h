@@ -65,7 +65,7 @@ namespace bn::audio_manager
 
     [[nodiscard]] optional<dmg_music_item> playing_dmg_music_item();
 
-    void play_dmg_music(dmg_music_item item, int speed, bool loop);
+    void play_dmg_music(const dmg_music_item& item, int speed, bool loop);
 
     void stop_dmg_music();
 

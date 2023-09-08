@@ -119,7 +119,8 @@ BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
 				$(LIBBUTANOABS)/hw/3rd_party/agbabi/src \
 				$(LIBBUTANOABS)/hw/3rd_party/gba-modern/src \
 				$(LIBBUTANOABS)/hw/3rd_party/cult-of-gba-bios/src \
-				$(LIBBUTANOABS)/hw/3rd_party/gbt-player/src
+				$(LIBBUTANOABS)/hw/3rd_party/gbt-player/src \
+				$(LIBBUTANOABS)/hw/3rd_party/vgm-player/src
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't remove intermediary files (avoid rebuilding graphics files more than once):
@@ -155,6 +156,8 @@ DMGMODFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.mod)))
 						
 DMGS3MFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.s3m)))
 						
+DMGVGMFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.vgm)))
+						
 GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp)))
 
 #---------------------------------------------------------------------------------------------------------------------
@@ -173,15 +176,13 @@ endif
 
 export OFILES_BIN       :=  $(addsuffix .o,$(BINFILES))
 
-export OFILES_DMGMOD	:=  $(DMGMODFILES:.mod=_bn_dmg.o)
-
-export OFILES_DMGS3M	:=  $(DMGS3MFILES:.s3m=_bn_dmg.o)
+export OFILES_DMG		:=  $(DMGMODFILES:.mod=_bn_dmg.o) $(DMGS3MFILES:.s3m=_bn_dmg.o) $(DMGVGMFILES:.vgm=_bn_dmg.o)
 
 export OFILES_GRAPHICS	:=  $(GRAPHICSFILES:.bmp=_bn_gfx.o)
 
 export OFILES_SOURCES   :=  $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
  
-export OFILES           :=  $(OFILES_BIN) $(OFILES_DMGMOD) $(OFILES_DMGS3M) $(OFILES_GRAPHICS) $(OFILES_SOURCES)
+export OFILES           :=  $(OFILES_BIN) $(OFILES_DMG) $(OFILES_GRAPHICS) $(OFILES_SOURCES)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't generate header files from audio soundbank (avoid rebuilding all sources when audio files are updated):

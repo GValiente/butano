@@ -15,6 +15,7 @@
  */
 
 #include "bn_functional.h"
+#include "bn_dmg_music_type.h"
 
 namespace bn
 {
@@ -41,7 +42,21 @@ public:
      * to avoid dangling references.
      */
     constexpr explicit dmg_music_item(const uint8_t& data_ref) :
-        _data_ptr(&data_ref)
+        dmg_music_item(data_ref, dmg_music_type::GBT_PLAYER)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param data_ref Reference to the song data.
+     * @param type Referenced song type.
+     *
+     * Song data is not copied but referenced, so it should outlive the dmg_music_item
+     * to avoid dangling references.
+     */
+    constexpr explicit dmg_music_item(const uint8_t& data_ref, dmg_music_type type) :
+        _data_ptr(&data_ref),
+        _type(type)
     {
     }
 
@@ -62,6 +77,14 @@ public:
     }
 
     /**
+     * @brief Returns the referenced song type.
+     */
+    [[nodiscard]] constexpr dmg_music_type type() const
+    {
+        return _type;
+    }
+
+    /**
      * @brief Plays the DMG music specified by this item with default settings.
      *
      * Default settings are speed = 1 and loop enabled.
@@ -71,12 +94,17 @@ public:
     /**
      * @brief Plays the DMG music specified by this item.
      * @param speed Playback speed, in the range [1..256].
+     *
+     * VGM player only supports the default playback speed (1).
      */
     void play(int speed) const;
 
     /**
      * @brief Plays the DMG music specified by this item.
      * @param speed Playback speed, in the range [1..256].
+     *
+     * VGM player only supports the default playback speed (1).
+     *
      * @param loop Indicates if it must be played until it is stopped manually or until end.
      */
     void play(int speed, bool loop) const;
@@ -84,10 +112,11 @@ public:
     /**
      * @brief Default equal operator.
      */
-    [[nodiscard]] constexpr friend bool operator==(dmg_music_item a, dmg_music_item b) = default;
+    [[nodiscard]] constexpr friend bool operator==(const dmg_music_item& a, const dmg_music_item& b) = default;
 
 private:
     const uint8_t* _data_ptr;
+    dmg_music_type _type;
 };
 
 
@@ -103,9 +132,11 @@ struct hash<dmg_music_item>
     /**
      * @brief Returns the hash of the given dmg_music_item.
      */
-    [[nodiscard]] constexpr unsigned operator()(dmg_music_item value) const
+    [[nodiscard]] constexpr unsigned operator()(const dmg_music_item& value) const
     {
-        return make_hash(value.data_ptr());
+        unsigned result = make_hash(value.data_ptr());
+        hash_combine(value.type(), result);
+        return result;
     }
 };
 

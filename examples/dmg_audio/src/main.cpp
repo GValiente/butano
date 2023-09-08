@@ -17,6 +17,7 @@
 #include "bn_music_items.h"
 #include "bn_dmg_music_items_sync.h"
 #include "bn_dmg_music_items_s3m_template.h"
+#include "bn_dmg_music_items_arachno_a_sad_touch.h"
 
 namespace
 {
@@ -153,6 +154,45 @@ namespace
         bn::dmg_music::stop();
         bn::audio::set_dmg_sync_enabled(false);
     }
+
+    void vgm_music_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "A: stop/play music",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("VGM music", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::dmg_music_items::arachno_a_sad_touch.play();
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::a_pressed())
+            {
+                if(bn::dmg_music::playing())
+                {
+                    bn::dmg_music::stop();
+                }
+                else
+                {
+                    bn::dmg_music_items::arachno_a_sad_touch.play();
+                }
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::dmg_music::stop();
+    }
 }
 
 int main()
@@ -171,6 +211,9 @@ int main()
         bn::core::update();
 
         dmg_sync_scene(text_generator);
+        bn::core::update();
+
+        vgm_music_scene(text_generator);
         bn::core::update();
     }
 }

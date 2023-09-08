@@ -33,6 +33,8 @@ class dmg_music_volume_manager
 public:
     /**
      * @brief Returns the volume of the active DMG music for both speakers.
+     *
+     * Volume retrieval is not supported by the VGM player.
      */
     [[nodiscard]] static fixed_point get()
     {
@@ -41,6 +43,9 @@ public:
 
     /**
      * @brief Sets the volume of the active DMG music for both speakers.
+     *
+     * Volume change is not supported by the VGM player.
+     *
      * @param volume New volume in the range [0..1].
      */
     static void set(const fixed_point& volume)
@@ -52,6 +57,8 @@ public:
 
 /**
  * @brief Modifies the volume of the active DMG music until it has a given state.
+ *
+ * Volume change is not supported by the VGM player.
  *
  * @ingroup dmg_music
  * @ingroup action
@@ -115,6 +122,8 @@ public:
 /**
  * @brief Modifies the volume of the active DMG music from a minimum to a maximum.
  * When the volume is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * Volume change is not supported by the VGM player.
  *
  * @ingroup dmg_music
  * @ingroup action
@@ -182,6 +191,8 @@ public:
 
 /**
  * @brief Changes the volume of the active DMG music when the action is updated a given number of times.
+ *
+ * Volume change is not supported by the VGM player.
  *
  * @ingroup dmg_music
  * @ingroup action

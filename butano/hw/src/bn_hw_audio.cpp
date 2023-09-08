@@ -10,6 +10,12 @@
 #include "../include/bn_hw_irq.h"
 #include "../include/bn_hw_link.h"
 #include "../include/bn_hw_tonc.h"
+#include "../3rd_party/vgm-player/include/vgm.h"
+
+extern "C"
+{
+    #include "../3rd_party/gbt-player/include/gbt_player.h"
+}
 
 extern const uint8_t _bn_audio_soundbank_bin[];
 
@@ -43,6 +49,7 @@ namespace
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
         uint16_t direct_sound_control_value = 0;
         uint16_t dmg_control_value = 0;
+        bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
         bool update_on_vblank = false;
         bool delay_commit = true;
         bool dmg_sync = false;
@@ -154,7 +161,15 @@ namespace
         }
         else
         {
-            gbt_update();
+            if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+            {
+                gbt_update();
+            }
+            else
+            {
+                [[maybe_unused]] bool success = VgmIntrVblank();
+                BN_BASIC_ASSERT(success, "VgmIntrVblank failed: ", VgmGetOffsetPlay());
+            }
         }
     }
 
@@ -216,6 +231,99 @@ void disable()
 
     REG_SNDDSCNT = 0;
     REG_SNDDMGCNT = 0;
+}
+
+void play_dmg_music(const void* song, dmg_music_type type, int speed, bool loop)
+{
+    if(type != data.dmg_music_type)
+    {
+        stop_dmg_music();
+        data.dmg_music_type = type;
+    }
+
+    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+    {
+        gbt_play(song, speed);
+        gbt_loop(loop);
+    }
+    else
+    {
+        BN_ASSERT(speed == 1, "Speed change not supported by the VGM player: ", speed);
+
+        VgmPlay(static_cast<const uint8_t*>(song), loop);
+    }
+}
+
+void stop_dmg_music()
+{
+    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+    {
+        gbt_stop();
+    }
+    else
+    {
+        VgmStop();
+    }
+}
+
+void pause_dmg_music()
+{
+    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+    {
+        gbt_pause(0);
+    }
+    else
+    {
+        BN_ERROR("Pause not supported by the VGM player");
+    }
+}
+
+void resume_dmg_music()
+{
+    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+    {
+        gbt_pause(1);
+    }
+    else
+    {
+        BN_ERROR("Resume not supported by the VGM player");
+    }
+}
+
+void dmg_music_position(int& pattern, int& row)
+{
+    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+    {
+        gbt_get_position(&pattern, &row, nullptr);
+    }
+    else
+    {
+        pattern = -1;
+    }
+}
+
+void set_dmg_music_position(int pattern, int row)
+{
+    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+    {
+        gbt_set_position(pattern, row);
+    }
+    else
+    {
+        BN_ERROR("Position change not supported by the VGM player");
+    }
+}
+
+void set_dmg_music_volume(int left_volume, int right_volume)
+{
+    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+    {
+        gbt_volume(unsigned(left_volume), unsigned(right_volume));
+    }
+    else
+    {
+        BN_ERROR("Volume change not supported by the VGM player");
+    }
 }
 
 void play_sound(int priority, int id)

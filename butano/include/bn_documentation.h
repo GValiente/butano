@@ -183,7 +183,9 @@
  * @defgroup dmg_music DMG music
  *
  * Module files (files with `*.mod` and `*.s3m` extensions) played with DMG channels
- * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
+ * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>
+ * and VGM audio files (files with `*.vgm` extension) played with DMG channels
+ * thanks to <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>.
  *
  * @ingroup audio
  */
@@ -1444,7 +1446,8 @@
  * Direct Sound stuff is managed by the awesome <a href="https://maxmod.devkitpro.org/">Maxmod</a>,
  * so if you have an issue with Direct Sound music or with sound effects, well, you know.
  *
- * DMG channels are handled by the also impressive <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>,
+ * DMG channels are handled by the also impressive <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>
+ * and <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>,
  * so if you have issues with DMG music, you know where to go.
  *
  * A really nice application for editing audio files
@@ -1474,7 +1477,12 @@
  *
  * @subsection import_dmg_music DMG music
  *
- * The required format for DMG music is module files with `*.mod` and `*.s3m` extensions.
+ * The required format for DMG music is module files with `*.mod`, `*.s3m` and `*.vgm` extensions.
+ *
+ * The recommended way to generate `*.vgm` compatible files is to use
+ * <a href="https://github.com/SuperDisk/hUGETracker">hUGETracker 1.01</a> with timer based tempo disabled:
+ *
+ * @image html import_hugetracker.png
  *
  * If the conversion process has finished successfully,
  * a bn::dmg_music_item should have been generated in the `build` folder.
@@ -2145,6 +2153,9 @@
  *
  * @section changelog_15_4_0 15.4.0 (next release)
  *
+ * * bn::dmg_music now supports VGM audio files with `*.vgm` extension
+ *   thanks to <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>.
+ *   See the @ref import_dmg_music import guide and the `dmg_audio` example to learn how to import and play it.
  * * @ref faq_sprites_multiple_8bpp and @ref faq_bg_multiple_8bpp questions added to the @ref faq page.
  * * @ref faq_images_invalid_header_size question added to the @ref faq page.
  * * @ref import_image import guide improved.
@@ -2590,7 +2601,7 @@
  * @section changelog_9_4_0 9.4.0
  *
  * * bn::dmg_music and bn::dmg_music_item added (yes, music playback using DMG channels is now supported
- *   thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>.
+ *   thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>).
  *   See the @ref import_dmg_music import guide and the `dmg_audio` example to learn how to import and play it.
  * * BMP files colors count calculation fixed.
  * * C++ keywords are not valid asset names anymore.

@@ -42,3 +42,8 @@
 	By AntonioND and KizulEmeraldfire
 	Licensed under the MIT license
 	https://github.com/AntonioND/gbt-player
+
+- arachno_a_sad_touch.vgm
+	hUGETracker sample song
+	Unknown license or unlicensed
+	https://github.com/SuperDisk/hUGETracker/blob/hUGETracker/sample-songs/Arachno%20-%20A%20Sad%20Touch.uge

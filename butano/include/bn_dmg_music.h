@@ -88,16 +88,11 @@ namespace bn::dmg_music
 
     /**
      * @brief Returns the sequence position of the active DMG music.
-     *
-     * Position retrieval is not supported by the VGM player.
      */
     [[nodiscard]] const dmg_music_position& position();
 
     /**
      * @brief Sets the sequence position of the active DMG music.
-     *
-     * Position change is not supported by the VGM player.
-     *
      * @param pattern Pattern order.
      * @param row Row inside the pattern.
      */
@@ -105,8 +100,6 @@ namespace bn::dmg_music
 
     /**
      * @brief Sets the sequence position of the active DMG music.
-     *
-     * Position change is not supported by the VGM player.
      */
     void set_position(const dmg_music_position& position);
 

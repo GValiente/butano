@@ -298,7 +298,8 @@ void dmg_music_position(int& pattern, int& row)
     }
     else
     {
-        pattern = -1;
+        pattern = int(VgmGetOffsetPlay());
+        row = 0;
     }
 }
 
@@ -310,7 +311,9 @@ void set_dmg_music_position(int pattern, int row)
     }
     else
     {
-        BN_ERROR("Position change not supported by the VGM player");
+        BN_ASSERT(! row, "Invalid row: ", row);
+
+        VgmSetOffsetPlay(pattern);
     }
 }
 

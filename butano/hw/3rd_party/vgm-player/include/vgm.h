@@ -9,6 +9,7 @@ void VgmStop(void);
 bool VgmIntrVblank(void);
 
 unsigned VgmGetOffsetPlay(void);
+void VgmSetOffsetPlay(unsigned offset);
 
 void VgmPause(void);
 void VgmResume(void);

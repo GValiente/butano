@@ -146,6 +146,11 @@ u32 VgmGetOffsetPlay(void)
 	return (u32)(Vgm.pCur - Vgm.pFile);
 }
 
+void VgmSetOffsetPlay(unsigned offset)
+{
+    Vgm.pCur = Vgm.pFile + offset;
+}
+
 //---------------------------------------------------------------------------
 void VgmPause(void)
 {

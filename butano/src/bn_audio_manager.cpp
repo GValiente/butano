@@ -641,8 +641,6 @@ void resume_dmg_music()
 const bn::dmg_music_position& dmg_music_position()
 {
     BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
-    BN_BASIC_ASSERT(data.dmg_music_type == dmg_music_type::GBT_PLAYER,
-                    "Position retrieval not supported by the VGM player");
 
     return data.dmg_music_position;
 }

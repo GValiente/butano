@@ -26,9 +26,17 @@ class VgmFile:
         # convert reg
         p = 0xC0
         while data[p] != 0x66:  # end of mark
+            # ignore 0x00
+            if data[p] == 0x00:
+                p += 1
+                continue
+
             # wait: 0x61 nn nn
             if data[p] == 0x61:
                 p += 3
+                continue
+            elif 0x62 <= data[p] <= 0x63:
+                p += 1
                 continue
 
             # write reg: 0xb3 aa dd
@@ -146,14 +154,21 @@ class VgmFile:
                 loop_bin = fputc_cnt
                 is_loop = True
 
-            # wait: 0x61 nn nn
-            if data[p] == 0x61:
-                # GBA side use vblank
-                converted += data[p].to_bytes(1, byteorder="little")
+            # ignore 0x00
+            if data[p] == 0x00:
                 p += 1
+                continue
+
+            # wait: 0x61 nn nn
+            if 0x61 <= data[p] <= 0x63:
+                # GBA side use vblank
+                converted += b"\x61"
                 fputc_cnt += 1
                 # ignore param
-                p += 2
+                if data[p] == 0x61:
+                    p += 3
+                else:
+                    p += 1
                 continue
 
             # write reg: 0xb3 aa dd
@@ -173,6 +188,8 @@ class VgmFile:
                     fputc_cnt += 3
 
                 continue
+
+            raise VgmFormatError(f"Conv-commands. offset 0x{p:02x} = 0x{data[p]:02x}")
 
         if not is_loop:
             print("Warning: loop offset not found")

@@ -664,8 +664,6 @@ void set_dmg_music_position(const bn::dmg_music_position& position)
 fixed dmg_music_left_volume()
 {
     BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
-    BN_BASIC_ASSERT(data.dmg_music_type == dmg_music_type::GBT_PLAYER,
-                    "Volume retrieval not supported by the VGM player");
 
     return data.dmg_music_left_volume;
 }
@@ -673,8 +671,6 @@ fixed dmg_music_left_volume()
 fixed dmg_music_right_volume()
 {
     BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
-    BN_BASIC_ASSERT(data.dmg_music_type == dmg_music_type::GBT_PLAYER,
-                    "Volume retrieval not supported by the VGM player");
 
     return data.dmg_music_right_volume;
 }

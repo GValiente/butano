@@ -116,15 +116,11 @@ namespace bn::dmg_music
 
     /**
      * @brief Returns the volume of the active DMG music for the left speaker.
-     *
-     * Volume retrieval is not supported by the VGM player.
      */
     [[nodiscard]] fixed left_volume();
 
     /**
      * @brief Returns the volume of the active DMG music for the right speaker.
-     *
-     * Volume retrieval is not supported by the VGM player.
      */
     [[nodiscard]] fixed right_volume();
 

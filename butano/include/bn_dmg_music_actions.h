@@ -33,8 +33,6 @@ class dmg_music_volume_manager
 public:
     /**
      * @brief Returns the volume of the active DMG music for both speakers.
-     *
-     * Volume retrieval is not supported by the VGM player.
      */
     [[nodiscard]] static fixed_point get()
     {

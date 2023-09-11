@@ -1510,11 +1510,12 @@
  * @endcode
  *
  * Available fields are the following:
- * * `"import_instruments"`: optional field which specifies if channel 3 instruments must be imported,
- * replacing the default instruments of GBT Player (`false` by default).
- * Keep in mind that this option is ignored when importing module files with `*.mod` extension.
+ * * `"import_instruments"`: optional field which specifies if channel 3 instruments must be imported
+ * when importing `*.s3m` module files, replacing the default instruments of GBT Player (`false` by default).
+ * This option is ignored when importing audio files with `*.mod` and `*.vgm` extensions.
  * * `"mod_speed_conversion"`: optional field which specifies if module files with `*.mod` extension speed
- * must be converted from 50Hz to 60Hz (`true` by default).
+ * must be converted from 50Hz to 60Hz (`true` by default). This option is ignored when importing audio files
+ * with `*.s3m` and `*.vgm` extensions.
  *
  *
  * @subsection import_sound Sound effects

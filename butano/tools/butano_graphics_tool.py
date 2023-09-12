@@ -594,11 +594,28 @@ class RegularBgItem:
         if height % 256 != 0:
             raise ValueError('Regular BGs height must be divisible by 256: ' + str(height))
 
+        big_dimensions = width > 512 or height > 512
+
+        try:
+            self.__big = bool(info['big'])
+
+            if self.__big:
+                if width == 256 and height == 256:
+                    raise ValueError('Too small size for a big regular BG: ' + str(width) + ' - ' + str(height))
+            else:
+                if big_dimensions:
+                    raise ValueError('Too big size for a not big regular BG: ' + str(width) + ' - ' + str(height))
+        except KeyError:
+            self.__big = big_dimensions
+
         self.__width = int(width / 8)
         self.__height = int(height / 8)
         self.__bpp_8 = False
-        self.__sbb = (width == 256 and height == 512) or (width == 512 and height == 256) or \
-                     (width == 512 and height == 512)
+
+        if self.__big:
+            self.__sbb = False
+        else:
+            self.__sbb = width == 512 or height == 512
 
         try:
             self.__repeated_tiles_reduction = bool(info['repeated_tiles_reduction'])
@@ -802,7 +819,8 @@ class RegularBgItem:
 
             header_file.write('regular_bg_map_item(' + name + '_bn_gfxMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
-                              compression_label(map_compression) + ', ' + str(self.__maps) + '));' + '\n')
+                              compression_label(map_compression) + ', ' + str(self.__maps) + ', ' +
+                              str(self.__big).lower() + '));' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -999,6 +1017,28 @@ class AffineBgItem:
         if height != 128 and height % 256 != 0:
             raise ValueError('Affine BGs height must be 128 or divisible by 256: ' + str(height))
 
+        if width == 128 and height != 128:
+            raise ValueError('If the width of an affine BG is 128, its height must be 128: ' +
+                             str(width) + ' - ' + str(height))
+
+        if height == 128 and width != 128:
+            raise ValueError('If the height of an affine BG is 128, its width must be 128: ' +
+                             str(width) + ' - ' + str(height))
+
+        big_dimensions = width != height or (width != 128 and width != 256 and width != 512 and width != 1024)
+
+        try:
+            self.__big = bool(info['big'])
+
+            if self.__big:
+                if width <= 256 and height <= 256:
+                    raise ValueError('Too small size for a big affine BG: ' + str(width) + ' - ' + str(height))
+            else:
+                if big_dimensions:
+                    raise ValueError('Too big size for a not big affine BG: ' + str(width) + ' - ' + str(height))
+        except KeyError:
+            self.__big = big_dimensions
+
         self.__width = int(width / 8)
         self.__height = int(height / 8)
 
@@ -1169,7 +1209,8 @@ class AffineBgItem:
 
             header_file.write('affine_bg_map_item(' + name + '_bn_gfxMap[0], ' +
                               'size(' + str(self.__width) + ', ' + str(self.__height) + '), ' +
-                              compression_label(map_compression) + ', ' + str(self.__maps) + '));' + '\n')
+                              compression_label(map_compression) + ', ' + str(self.__maps) + ', ' +
+                              str(self.__big).lower() + '));' + '\n')
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')

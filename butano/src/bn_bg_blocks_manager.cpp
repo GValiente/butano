@@ -81,19 +81,9 @@ namespace
         return result;
     }
 
-    [[nodiscard]] constexpr bool _big_regular_map(int width, int height)
+    [[nodiscard]] constexpr int _regular_map_blocks_count(int width, int height, bool big)
     {
-        return width > 64 || height > 64;
-    }
-
-    [[nodiscard]] constexpr bool _big_affine_map(int width, int height)
-    {
-        return width != height || (width != 16 && width != 32 && width != 64 && width != 128);
-    }
-
-    [[nodiscard]] constexpr int _regular_map_blocks_count(int width, int height)
-    {
-        if(_big_regular_map(width, height))
+        if(big)
         {
             return _ceil_half_words_to_blocks(32 * 32);
         }
@@ -101,9 +91,9 @@ namespace
         return _ceil_half_words_to_blocks(width * height);
     }
 
-    [[nodiscard]] constexpr int _affine_map_blocks_count(int width, int height)
+    [[nodiscard]] constexpr int _affine_map_blocks_count(int width, int height, bool big)
     {
-        if(_big_affine_map(width, height))
+        if(big)
         {
             return _ceil_half_words_to_blocks((32 * 32) / 2);
         }
@@ -223,6 +213,7 @@ namespace
 
     public:
         bool is_tiles: 1 = false;
+        bool is_big: 1 = false;
         bool is_affine: 1 = false;
         bool commit: 1 = false;
 
@@ -461,6 +452,7 @@ namespace
         create_type _create_type;
         bpp_mode bpp;
         compression_type compression;
+        bool is_big;
         bool is_affine;
 
         static create_data from_regular_tiles(const uint16_t* data_ptr, int half_words, bpp_mode bpp,
@@ -471,7 +463,7 @@ namespace
                         create_type::REGULAR_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
 
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
-                        create_type, bpp, compression, false };
+                        create_type, bpp, compression, false, false };
         }
 
         static create_data from_affine_tiles(const uint16_t* data_ptr, int half_words, compression_type compression)
@@ -481,33 +473,33 @@ namespace
                         create_type::AFFINE_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
 
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
-                        create_type, bpp_mode::BPP_8, compression, true };
+                        create_type, bpp_mode::BPP_8, compression, false, true };
         }
 
         static create_data from_regular_map(
-                const uint16_t* data_ptr, const size& dimensions, compression_type compression,
+                const uint16_t* data_ptr, const size& dimensions, compression_type compression, bool big,
                 regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
         {
             int width = dimensions.width();
             int height = dimensions.height();
-            int blocks_count = _regular_map_blocks_count(width, height);
+            int blocks_count = _regular_map_blocks_count(width, height, big);
             bpp_mode bpp = palette.bpp();
 
             return create_data{ data_ptr, blocks_count, width, height, move(tiles), nullopt, move(palette),
-                        create_type::MAP, bpp, compression, false };
+                        create_type::MAP, bpp, compression, big, false };
         }
 
         static create_data from_affine_map(
-                const uint16_t* data_ptr, const size& dimensions, compression_type compression,
+                const uint16_t* data_ptr, const size& dimensions, compression_type compression, bool big,
                 affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
         {
             int width = dimensions.width();
             int height = dimensions.height();
-            int blocks_count = _affine_map_blocks_count(width, height);
+            int blocks_count = _affine_map_blocks_count(width, height, big);
             bpp_mode bpp = palette.bpp();
 
             return create_data{ data_ptr, blocks_count, width, height, nullopt, move(tiles), move(palette),
-                        create_type::MAP, bpp, compression, true };
+                        create_type::MAP, bpp, compression, big, true };
         }
 
         [[nodiscard]] int padding_blocks_count(int start_block) const
@@ -594,6 +586,7 @@ namespace
                             " - width: ", item.width,
                             " - height: ", item.height,
                             " - compression: ", int(item.compression()),
+                            " - big: ", item.is_big,
                             " - tiles: ", (item.is_affine ? (item.affine_tiles ? item.affine_tiles->id() : -1) :
                                                             (item.regular_tiles ? item.regular_tiles->id() : -1)),
                             " - palette: ", (item.palette ? item.palette->id() : -1),
@@ -710,6 +703,8 @@ namespace
             BN_BASIC_ASSERT(map_item.compression() == item.compression(),
                             "Map compression does not match item map compression: ",
                             int(map_item.compression()), " - ", int(item.compression()));
+            BN_BASIC_ASSERT(map_item.big() == item.is_big, "Map big does not match item map big: ",
+                            map_item.big(), " - ", item.is_big);
             BN_BASIC_ASSERT(! item.is_affine, "Item is an affine map");
             BN_BASIC_ASSERT(! item.regular_tiles || tiles == *item.regular_tiles,
                             "Tiles does not match item tiles: ", tiles.id(), " - ", item.regular_tiles->id());
@@ -782,6 +777,8 @@ namespace
             BN_BASIC_ASSERT(map_item.compression() == item.compression(),
                             "Map compression does not match item map compression: ",
                             int(map_item.compression()), " - ", int(item.compression()));
+            BN_BASIC_ASSERT(map_item.big() == item.is_big, "Map big does not match item map big: ",
+                            map_item.big(), " - ", item.is_big);
             BN_BASIC_ASSERT(item.is_affine, "Item is a regular map");
             BN_BASIC_ASSERT(! item.affine_tiles || tiles == *item.affine_tiles,
                             "Tiles does not match item tiles: ", tiles.id(), " - ", item.affine_tiles->id());
@@ -849,7 +846,7 @@ namespace
         if(item.is_affine)
         {
             // Big maps are committed from bgs_manager:
-            if(_big_affine_map(item.width, item.height))
+            if(item.is_big)
             {
                 return;
             }
@@ -878,7 +875,7 @@ namespace
         else
         {
             // Big maps are committed from bgs_manager:
-            if(_big_regular_map(item.width, item.height))
+            if(item.is_big)
             {
                 return;
             }
@@ -993,6 +990,7 @@ namespace
         item->usages = 1;
         item->set_status(status_type::USED);
         item->is_tiles = is_tiles;
+        item->is_big = create_data.is_big;
         item->is_affine = create_data.is_affine;
 
         bool commit_item = false;
@@ -1289,6 +1287,7 @@ void set_allow_tiles_offset(bool allow_tiles_offset)
                             " - usages: ", item.usages,
                             " - width: ", item.width,
                             " - height: ", item.height,
+                            " - big: ", item.is_big,
                             " - tiles: ", (item.is_affine ? (item.affine_tiles ? item.affine_tiles->id() : -1) :
                                                             (item.regular_tiles ? item.regular_tiles->id() : -1)),
                             " - palette: ", (item.palette ? item.palette->id() : -1));
@@ -1334,7 +1333,7 @@ int find_regular_map(const regular_bg_map_item& map_item, const regular_bg_map_c
 {
     BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND REGULAR MAP: ", data_ptr, " - ",
                      map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
-                     palette.id(), " - ", int(map_item.compression()));
+                     palette.id(), " - ", int(map_item.compression()), " - ", map_item.big());
 
     return _find_regular_map_impl(map_item, data_ptr, tiles, palette);
 }
@@ -1344,7 +1343,7 @@ int find_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_cell
 {
     BN_BG_BLOCKS_LOG("bg_blocks_manager - FIND AFFINE MAP: ", data_ptr, " - ",
                      map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
-                     palette.id(), " - ", int(map_item.compression()));
+                     palette.id(), " - ", int(map_item.compression()), " - ", map_item.big());
 
     return _find_affine_map_impl(map_item, data_ptr, tiles, palette);
 }
@@ -1451,10 +1450,11 @@ int create_regular_map(const regular_bg_map_item& map_item, const regular_bg_map
 {
     const size& dimensions = map_item.dimensions();
     compression_type compression = map_item.compression();
+    bool big = map_item.big();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
-                     int(compression));
+                     int(compression), " - ", big);
 
     int result = _find_regular_map_impl(map_item, data_ptr, tiles, palette);
 
@@ -1466,12 +1466,10 @@ int create_regular_map(const regular_bg_map_item& map_item, const regular_bg_map
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
-    BN_BASIC_ASSERT(compression == compression_type::NONE ||
-                    ! _big_regular_map(dimensions.width(), dimensions.height()),
-                    "Compressed big regular maps are not supported");
+    BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
 
     result = _create_impl(
-                create_data::from_regular_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
+                create_data::from_regular_map(data_ptr, dimensions, compression, big, move(tiles), move(palette)));
 
     if(result >= 0)
     {
@@ -1492,7 +1490,7 @@ int create_regular_map(const regular_bg_map_item& map_item, const regular_bg_map
                      "\n\tMap data: ", data_ptr,
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
-                     "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height()),
+                     "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height(), big),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1506,10 +1504,11 @@ int create_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_ce
 {
     const size& dimensions = map_item.dimensions();
     compression_type compression = map_item.compression();
+    bool big = map_item.big();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
-                     int(compression));
+                     int(compression), " - ", big);
 
     int result = _find_affine_map_impl(map_item, data_ptr, tiles, palette);
 
@@ -1520,13 +1519,11 @@ int create_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_ce
 
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
-    BN_BASIC_ASSERT(compression == compression_type::NONE ||
-                    ! _big_affine_map(dimensions.width(), dimensions.height()),
-                    "Compressed big affine maps are not supported");
+    BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
 
     auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
     result = _create_impl(
-                create_data::from_affine_map(u16_data_ptr, dimensions, compression, move(tiles), move(palette)));
+                create_data::from_affine_map(u16_data_ptr, dimensions, compression, big, move(tiles), move(palette)));
 
     if(result >= 0)
     {
@@ -1547,7 +1544,7 @@ int create_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_ce
                      "\n\tMap data: ", data_ptr,
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
-                     "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height()),
+                     "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height(), big),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1650,22 +1647,21 @@ int create_new_regular_map(const regular_bg_map_item& map_item, const regular_bg
 {
     const size& dimensions = map_item.dimensions();
     compression_type compression = map_item.compression();
+    bool big = map_item.big();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW REGULAR MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
-                     int(compression));
+                     int(compression), " - ", big);
 
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
-    BN_BASIC_ASSERT(compression == compression_type::NONE ||
-                    ! _big_regular_map(dimensions.width(), dimensions.height()),
-                    "Compressed big regular maps are not supported");
+    BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
     BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                     "Multiple copies of the same data not supported");
 
     int result = _create_impl(
-                create_data::from_regular_map(data_ptr, dimensions, compression, move(tiles), move(palette)));
+                create_data::from_regular_map(data_ptr, dimensions, compression, big, move(tiles), move(palette)));
 
     if(result >= 0)
     {
@@ -1686,7 +1682,7 @@ int create_new_regular_map(const regular_bg_map_item& map_item, const regular_bg
                      "\n\tMap data: ", data_ptr,
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
-                     "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height()),
+                     "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height(), big),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1700,22 +1696,21 @@ int create_new_affine_map(const affine_bg_map_item& map_item, const affine_bg_ma
 {
     const size& dimensions = map_item.dimensions();
     compression_type compression = map_item.compression();
+    bool big = map_item.big();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE MAP", (optional ? " OPTIONAL: " : ": "), data_ptr, " - ",
                      dimensions.width(), " - ", dimensions.height(), " - ", tiles.id(), " - ", palette.id(), " - ",
-                     int(compression));
+                     int(compression), " - ", big);
 
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
-    BN_BASIC_ASSERT(compression == compression_type::NONE ||
-                    ! _big_affine_map(dimensions.width(), dimensions.height()),
-                    "Compressed big affine maps are not supported");
+    BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
     BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
                     "Multiple copies of the same data not supported");
 
     auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
     int result = _create_impl(
-                create_data::from_affine_map(u16_data_ptr, dimensions, compression, move(tiles), move(palette)));
+                create_data::from_affine_map(u16_data_ptr, dimensions, compression, big, move(tiles), move(palette)));
 
     if(result >= 0)
     {
@@ -1736,7 +1731,7 @@ int create_new_affine_map(const affine_bg_map_item& map_item, const affine_bg_ma
                      "\n\tMap data: ", data_ptr,
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
-                     "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height()),
+                     "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height(), big),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1834,7 +1829,7 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
 
     int result = _allocate_impl(
-                create_data::from_regular_map(nullptr, map_dimensions, compression_type::NONE,
+                create_data::from_regular_map(nullptr, map_dimensions, compression_type::NONE, false,
                                               move(tiles), move(palette)));
 
     if(result >= 0)
@@ -1855,7 +1850,8 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
             BN_ERROR("Regular BG map allocate failed:",
                      "\n\tMap width: ", map_dimensions.width(),
                      "\n\tMap height: ", map_dimensions.height(),
-                     "\n\tBlocks count: ", _regular_map_blocks_count(map_dimensions.width(), map_dimensions.height()),
+                     "\n\tBlocks count: ", _regular_map_blocks_count(
+                         map_dimensions.width(), map_dimensions.height(), false),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1878,7 +1874,7 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
 
     int result = _allocate_impl(
-                create_data::from_affine_map(nullptr, map_dimensions, compression_type::NONE,
+                create_data::from_affine_map(nullptr, map_dimensions, compression_type::NONE, false,
                                              move(tiles), move(palette)));
 
     if(result >= 0)
@@ -1899,7 +1895,8 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
             BN_ERROR("Affine BG map allocate failed:",
                      "\n\tMap width: ", map_dimensions.width(),
                      "\n\tMap height: ", map_dimensions.height(),
-                     "\n\tBlocks count: ", _affine_map_blocks_count(map_dimensions.width(), map_dimensions.height()),
+                     "\n\tBlocks count: ", _affine_map_blocks_count(
+                         map_dimensions.width(), map_dimensions.height(), false),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1963,13 +1960,13 @@ size map_dimensions(int id)
 bool regular_big_map(int id)
 {
     const item_type& item = data.items.item(id);
-    return _big_regular_map(item.width, item.height);
+    return item.is_big;
 }
 
 bool affine_big_map(int id)
 {
     const item_type& item = data.items.item(id);
-    return _big_affine_map(item.width, item.height);
+    return item.is_big;
 }
 
 int regular_tiles_offset(int id)
@@ -2120,7 +2117,8 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, cons
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ",
                      data.items.item(id).start_block, " - ", data_ptr, " - ",
-                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", int(compression));
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
+                     int(compression), " - ", map_item.big());
 
     item_type& item = data.items.item(id);
     const uint16_t* item_data = item.data;
@@ -2128,8 +2126,10 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, cons
                     "Map width does not match item map width: ", map_item.dimensions().width(), " - ", item.width);
     BN_BASIC_ASSERT(map_item.dimensions().height() == item.height,
                     "Map height does not match item map height: ", map_item.dimensions().height(), " - ", item.height);
-    BN_BASIC_ASSERT(compression == compression_type::NONE || ! _big_regular_map(item.width, item.height),
-                    "Compressed big regular maps are not supported");
+    BN_BASIC_ASSERT(map_item.big() == item.is_big, "Map big does not match item map big: ",
+                    map_item.big(), " - ", item.is_big);
+    BN_BASIC_ASSERT(compression == compression_type::NONE || ! map_item.big(),
+                    "Compressed big maps are not supported");
 
     if(item_data != data_ptr)
     {
@@ -2164,7 +2164,8 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const 
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE MAP CELLS REF: ", id, " - ",
                      data.items.item(id).start_block, " - ", data_ptr, " - ",
-                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ", int(compression));
+                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
+                     int(compression), " - ", map_item.big());
 
     item_type& item = data.items.item(id);
     const uint16_t* item_data = item.data;
@@ -2172,8 +2173,10 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const 
                     "Map width does not match item map width: ", map_item.dimensions().width(), " - ", item.width);
     BN_BASIC_ASSERT(map_item.dimensions().height() == item.height,
                     "Map height does not match item map height: ", map_item.dimensions().height(), " - ", item.height);
-    BN_BASIC_ASSERT(compression == compression_type::NONE || ! _big_affine_map(item.width, item.height),
-                    "Compressed big affine maps are not supported");
+    BN_BASIC_ASSERT(map_item.big() == item.is_big, "Map big does not match item map big: ",
+                    map_item.big(), " - ", item.is_big);
+    BN_BASIC_ASSERT(compression == compression_type::NONE || ! map_item.big(),
+                    "Compressed big maps are not supported");
 
     auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
 

@@ -1219,6 +1219,8 @@
  * (`true` by default).
  * * `"palette_reduction"`: optional field which specifies if repeated 16 color palettes must be reduced or not
  * (`true` by default).
+ * * `"big"`: optional boolean field which specifies if maps generated with this item are big or not.
+ *    If this field is omitted, big maps are generated only if needed.
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -1323,6 +1325,8 @@
  * * `"colors_count"`: optional field which specifies the background palette size [1..256].
  * * `"repeated_tiles_reduction"`: optional field which specifies if repeated tiles must be reduced or not
  * (`true` by default).
+ * * `"big"`: optional boolean field which specifies if maps generated with this item are big or not.
+ *    If this field is omitted, big maps are generated only if needed.
  * * `"tiles_compression"`: optional field which specifies the compression of the tiles data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
@@ -2157,6 +2161,9 @@
  * * bn::dmg_music now supports VGM audio files with `*.vgm` extension
  *   thanks to <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>.
  *   See the @ref import_dmg_music import guide and the `dmg_audio` example to learn how to import and play it.
+ * * Import tool now allows to specify whether regular and affine backgrounds are big or not.
+ *   See the @ref import_regular_bg and the @ref import_affine_bg import guides to learn how to specify it.
+ * * bn::regular_bg_map_item::flat_layout added.
  * * @ref faq_sprites_multiple_8bpp and @ref faq_bg_multiple_8bpp questions added to the @ref faq page.
  * * @ref faq_images_invalid_header_size question added to the @ref faq page.
  * * @ref import_image import guide improved.

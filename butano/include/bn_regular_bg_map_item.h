@@ -85,12 +85,13 @@ public:
      * @param dimensions Size in map cells of the referenced map cells.
      * @param compression Compression type.
      */
-    constexpr regular_bg_map_item(const regular_bg_map_cell& cells_ref, const size& dimensions,
-                                  compression_type compression) :
+    constexpr regular_bg_map_item(
+            const regular_bg_map_cell& cells_ref, const size& dimensions, compression_type compression) :
         _cells_ptr(&cells_ref),
         _dimensions(dimensions),
         _maps_count(1),
-        _compression(compression)
+        _compression(compression),
+        _big(_big_dimensions(dimensions))
     {
         BN_ASSERT(dimensions.width() >= 32 && dimensions.width() % 32 == 0,
                   "Invalid width: ", dimensions.width());
@@ -109,17 +110,52 @@ public:
      * @param compression Compression type.
      * @param maps_count Number of maps contained in cells_ref.
      */
-    constexpr regular_bg_map_item(const regular_bg_map_cell& cells_ref, const size& dimensions,
-                                  compression_type compression, int maps_count) :
+    constexpr regular_bg_map_item(
+            const regular_bg_map_cell& cells_ref, const size& dimensions, compression_type compression,
+            int maps_count) :
         _cells_ptr(&cells_ref),
         _dimensions(dimensions),
         _maps_count(uint16_t(maps_count)),
-        _compression(compression)
+        _compression(compression),
+        _big(_big_dimensions(dimensions))
     {
         BN_ASSERT(dimensions.width() >= 32 && dimensions.width() % 32 == 0,
                   "Invalid width: ", dimensions.width());
         BN_ASSERT(dimensions.height() >= 32 && dimensions.height() % 32 == 0,
                   "Invalid height: ", dimensions.height());
+        BN_ASSERT(maps_count > 0 && maps_count < 65536, "Invalid maps count: ", maps_count);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param cells_ref Reference to one or more regular background map cells.
+     *
+     * The map cells are not copied but referenced, so they should outlive the regular_bg_map_item
+     * to avoid dangling references.
+     *
+     * @param dimensions Size in map cells of each referenced map.
+     * @param compression Compression type.
+     * @param maps_count Number of maps contained in cells_ref.
+     * @param big Indicates if maps generated with this item are big or not.
+     *
+     * Big backgrounds are slower CPU wise and don't support wrapping
+     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     */
+    constexpr regular_bg_map_item(
+            const regular_bg_map_cell& cells_ref, const size& dimensions, compression_type compression,
+            int maps_count, bool big) :
+        _cells_ptr(&cells_ref),
+        _dimensions(dimensions),
+        _maps_count(uint16_t(maps_count)),
+        _compression(compression),
+        _big(big)
+    {
+        BN_ASSERT(dimensions.width() >= 32 && dimensions.width() % 32 == 0,
+                  "Invalid width: ", dimensions.width());
+        BN_ASSERT(dimensions.height() >= 32 && dimensions.height() % 32 == 0,
+                  "Invalid height: ", dimensions.height());
+        BN_ASSERT(! big || dimensions.width() > 32 || dimensions.height() > 32,
+                  "Too small for a big map: ", dimensions.width(), " - ", dimensions.height());
         BN_ASSERT(maps_count > 0 && maps_count < 65536, "Invalid maps count: ", maps_count);
     }
 
@@ -175,7 +211,7 @@ public:
      */
     [[nodiscard]] constexpr bool big() const
     {
-        return _dimensions.width() > 64 || _dimensions.height() > 64;
+        return _big;
     }
 
     /**
@@ -203,6 +239,14 @@ public:
     }
 
     /**
+     * @brief Indicates if the referenced map has a flat layout or not.
+     */
+    [[nodiscard]] constexpr bool flat_layout() const
+    {
+        return _big || (_dimensions.width() == 32 && _dimensions.height() == 32);
+    }
+
+    /**
      * @brief Returns the index of the referenced map cell in the specified map coordinates.
      *
      * The map cells are not copied but referenced, so they should outlive the regular_bg_map_item
@@ -215,21 +259,20 @@ public:
     [[nodiscard]] constexpr int cell_index(int map_x, int map_y) const
     {
         int width = _dimensions.width();
-        int height = _dimensions.height();
         BN_ASSERT(map_x >= 0 && map_x < width, "Invalid map x: ", map_x, " - ", width);
-        BN_ASSERT(map_y >= 0 && map_y < height, "Invalid map y: ", map_y, " - ", height);
+        BN_ASSERT(map_y >= 0 && map_y < _dimensions.height(), "Invalid map y: ", map_y, " - ", _dimensions.height());
         BN_BASIC_ASSERT(_compression == compression_type::NONE, "Compressed maps not supported");
 
-        if((width == 32 && height == 64) || (width == 64 && height == 32) || (width == 64 && height == 64))
+        if(flat_layout())
         {
-            auto tx = unsigned(map_x);
-            auto ty = unsigned(map_y);
-            auto pitch = unsigned(width);
-            unsigned sbb = ((ty / 32) * (pitch / 32)) + (tx / 32);
-            return int((sbb * 1024) + ((ty % 32) * 32) + (tx % 32));
+            return (map_y * width) + map_x;
         }
 
-        return (map_y * width) + map_x;
+        auto tx = unsigned(map_x);
+        auto ty = unsigned(map_y);
+        auto pitch = unsigned(width);
+        unsigned sbb = ((ty / 32) * (pitch / 32)) + (tx / 32);
+        return int((sbb * 1024) + ((ty % 32) * 32) + (tx % 32));
     }
 
     /**
@@ -493,6 +536,12 @@ private:
     size _dimensions;
     uint16_t _maps_count;
     compression_type _compression;
+    bool _big;
+
+    [[nodiscard]] constexpr static bool _big_dimensions(const size& dimensions)
+    {
+        return dimensions.width() > 64 || dimensions.height() > 64;
+    }
 };
 
 }

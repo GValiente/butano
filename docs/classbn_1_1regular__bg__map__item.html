@@ -92,6 +92,14 @@
               int maps_count) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a668e7086aa7834d152a5e48ad10f3f50" class="m-doc">regular_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#acd0754bd48d66207b051c974d22a7261" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression,
+              int maps_count,
+              bool big) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -133,6 +141,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ae5c50c9feefa99ace9cdfc691c0abdc1" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the compression type.</dd>
+            <dt id="a81a9f46dd598e94d334a198bce4bf833">
+              <span class="m-doc-wrap-bumper">auto <a href="#a81a9f46dd598e94d334a198bce4bf833" class="m-doc-self">flat_layout</a>(</span><span class="m-doc-wrap">) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if the referenced map has a flat layout or not.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a5593191f3ee570ca787be6eb5aabf618" class="m-doc">cell_index</a>(</span><span class="m-doc-wrap">int map_x,
               int map_y) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -346,6 +358,44 @@
               </tbody>
             </table>
 <p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a668e7086aa7834d152a5e48ad10f3f50"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />regular_bg_map_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a668e7086aa7834d152a5e48ad10f3f50" class="m-doc-self">regular_bg_map_item</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#acd0754bd48d66207b051c974d22a7261" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />cell</a>&amp; cells_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression,
+              int maps_count,
+              bool big) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">cells_ref</td>
+                  <td>Reference to one or more regular background map cells.</td>
+                </tr>
+                <tr>
+                  <td>dimensions</td>
+                  <td>Size in map cells of each referenced map.</td>
+                </tr>
+                <tr>
+                  <td>compression</td>
+                  <td>Compression type.</td>
+                </tr>
+                <tr>
+                  <td>maps_count</td>
+                  <td>Number of maps contained in cells_ref.</td>
+                </tr>
+                <tr>
+                  <td>big</td>
+                  <td>Indicates if maps generated with this item are big or not.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The map cells are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__map__item.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />item</a> to avoid dangling references.</p><p>Big backgrounds are slower CPU wise and don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.</p>
           </div></section>
           <section class="m-doc-details" id="a07d9ff38d876c5ae66717baf20717124"><div>
             <h3>

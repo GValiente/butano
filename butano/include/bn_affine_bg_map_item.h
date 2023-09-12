@@ -85,12 +85,13 @@ public:
      * @param dimensions Size in map cells of the referenced map cells.
      * @param compression Compression type.
      */
-    constexpr affine_bg_map_item(const affine_bg_map_cell& cells_ref, const size& dimensions,
-                                 compression_type compression) :
+    constexpr affine_bg_map_item(
+            const affine_bg_map_cell& cells_ref, const size& dimensions, compression_type compression) :
         _cells_ptr(&cells_ref),
         _dimensions(dimensions),
         _maps_count(1),
-        _compression(compression)
+        _compression(compression),
+        _big(_big_dimensions(dimensions))
     {
         BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
                   (dimensions.width() >= 32 && dimensions.width() % 32 == 0),
@@ -111,12 +112,14 @@ public:
      * @param compression Compression type.
      * @param maps_count Number of maps contained in cells_ref.
      */
-    constexpr affine_bg_map_item(const affine_bg_map_cell& cells_ref, const size& dimensions,
-                                 compression_type compression, int maps_count) :
+    constexpr affine_bg_map_item(
+            const affine_bg_map_cell& cells_ref, const size& dimensions, compression_type compression,
+            int maps_count) :
         _cells_ptr(&cells_ref),
         _dimensions(dimensions),
         _maps_count(uint16_t(maps_count)),
-        _compression(compression)
+        _compression(compression),
+        _big(_big_dimensions(dimensions))
     {
         BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
                   (dimensions.width() >= 32 && dimensions.width() % 32 == 0),
@@ -124,6 +127,41 @@ public:
         BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
                   (dimensions.height() >= 32 && dimensions.height() % 32 == 0),
                   "Invalid height: ", dimensions.height());
+        BN_ASSERT(maps_count > 0 && maps_count < 65536, "Invalid maps count: ", maps_count);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param cells_ref Reference to one or more affine background map cells.
+     *
+     * The map cells are not copied but referenced, so they should outlive the affine_bg_map_item
+     * to avoid dangling references.
+     *
+     * @param dimensions Size in map cells of each referenced map.
+     * @param compression Compression type.
+     * @param maps_count Number of maps contained in cells_ref.
+     * @param big Indicates if maps generated with this item are big or not.
+     *
+     * Big backgrounds are slower CPU wise and don't support wrapping
+     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     */
+    constexpr affine_bg_map_item(
+            const affine_bg_map_cell& cells_ref, const size& dimensions, compression_type compression,
+            int maps_count, bool big) :
+        _cells_ptr(&cells_ref),
+        _dimensions(dimensions),
+        _maps_count(uint16_t(maps_count)),
+        _compression(compression),
+        _big(big)
+    {
+        BN_ASSERT((! big && dimensions.width() == 16 && dimensions.height() == 16) ||
+                  (dimensions.width() >= 32 && dimensions.width() % 32 == 0),
+                  "Invalid width: ", dimensions.width());
+        BN_ASSERT((! big && dimensions.width() == 16 && dimensions.height() == 16) ||
+                  (dimensions.height() >= 32 && dimensions.height() % 32 == 0),
+                  "Invalid height: ", dimensions.height());
+        BN_ASSERT(! big || dimensions.width() > 32 || dimensions.height() > 32,
+                  "Too small for a big map: ", dimensions.width(), " - ", dimensions.height());
         BN_ASSERT(maps_count > 0 && maps_count < 65536, "Invalid maps count: ", maps_count);
     }
 
@@ -179,8 +217,7 @@ public:
      */
     [[nodiscard]] constexpr bool big() const
     {
-        int width = _dimensions.width();
-        return width != _dimensions.height() || (width != 16 && width != 32 && width != 64 && width != 128);
+        return _big;
     }
 
     /**
@@ -488,6 +525,13 @@ private:
     size _dimensions;
     uint16_t _maps_count;
     compression_type _compression;
+    bool _big;
+
+    [[nodiscard]] constexpr static bool _big_dimensions(const size& dimensions)
+    {
+        int width = dimensions.width();
+        return width != dimensions.height() || (width != 16 && width != 32 && width != 64 && width != 128);
+    }
 };
 
 }

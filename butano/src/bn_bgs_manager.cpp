@@ -110,26 +110,19 @@ namespace
             hw::bgs::set_bpp(map_ref.bpp(), new_hw_cnt);
 
             size map_dimensions = map_ref.dimensions();
-            int map_width = map_dimensions.width();
-            int map_height = map_dimensions.height();
             int map_size = 0;
-            big_map = true;
+            big_map = map_ref.big();
 
-            if(map_width == 32 || map_width == 64)
+            if(! big_map)
             {
-                if(map_height == 32 || map_height == 64)
+                if(map_dimensions.width() == 64)
                 {
-                    big_map = false;
+                    ++map_size;
+                }
 
-                    if(map_width == 64)
-                    {
-                        ++map_size;
-                    }
-
-                    if(map_height == 64)
-                    {
-                        map_size += 2;
-                    }
+                if(map_dimensions.height() == 64)
+                {
+                    map_size += 2;
                 }
             }
 
@@ -150,13 +143,16 @@ namespace
             hw::bgs::set_map_sbb(map_ref.id(), new_hw_cnt);
 
             size map_dimensions = map_ref.dimensions();
-            int map_width = map_dimensions.width();
             int map_size;
-            big_map = false;
+            big_map = map_ref.big();
 
-            if(map_width == map_dimensions.height())
+            if(big_map)
             {
-                switch(map_width)
+                map_size = 1;
+            }
+            else
+            {
+                switch(map_dimensions.width())
                 {
 
                 case 16:
@@ -172,18 +168,10 @@ namespace
                     break;
 
                 case 128:
+                default:
                     map_size = 3;
                     break;
-
-                default:
-                    map_size = 1;
-                    big_map = true;
                 }
-            }
-            else
-            {
-                map_size = 1;
-                big_map = true;
             }
 
             commit_big_map = big_map;

@@ -2156,7 +2156,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_4_0 15.4.0 (next release)
+ * @section changelog_15_4_0 15.4.0
  *
  * * bn::dmg_music now supports VGM audio files with `*.vgm` extension
  *   thanks to <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>.

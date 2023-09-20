@@ -2156,6 +2156,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_4_1 15.4.1 (next release)
+ *
+ * bn::core::reset race condition fixed.
+ *
+ *
  * @section changelog_15_4_0 15.4.0
  *
  * * bn::dmg_music now supports VGM audio files with `*.vgm` extension

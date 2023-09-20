@@ -150,13 +150,13 @@ namespace
     void stop(bool disable_audio)
     {
         audio_manager::stop();
+        hw::core::wait_for_vblank();
 
         if(disable_audio)
         {
             audio_manager::disable_vblank_handler();
         }
 
-        hw::core::wait_for_vblank();
         audio_manager::update();
 
         hdma_manager::force_stop();

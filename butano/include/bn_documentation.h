@@ -2156,7 +2156,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_4_1 15.4.1 (next release)
+ * @section changelog_15_4_1 15.4.1
  *
  * bn::core::reset race condition fixed.
  *

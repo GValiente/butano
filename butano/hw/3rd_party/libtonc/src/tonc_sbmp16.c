@@ -33,27 +33,6 @@ const TSurface m3_surface=
 	0, NULL
 };
 
-const TSurface m5_surface= 
-{
-	(u8*)m5_mem , M5_WIDTH*2, M5_WIDTH, M5_HEIGHT, SRF_BMP16, 16, 
-	0, NULL
-};
-
-
-const TSurfaceProcTab bmp16_tab= 
-{
-	"bmp16",
-	sbmp16_get_pixel,
-	sbmp16_plot, 
-	sbmp16_hline, 
-	sbmp16_vline, 
-	sbmp16_line, 
-	sbmp16_rect, 
-	sbmp16_frame, 
-	sbmp16_blit, 
-	sbmp16_floodfill, 
-};
-
 // --------------------------------------------------------------------
 // FUNCTIONS 
 // --------------------------------------------------------------------

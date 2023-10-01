@@ -2158,7 +2158,8 @@
  *
  * @section changelog_15_5_0 15.5.0 (next release)
  *
- * bn::assert::callback and bn::assert::set_callback added.
+ * * bn::assert::callback and bn::assert::set_callback added.
+ * * Unused <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> functions and data removed.
  *
  *
  * @section changelog_15_4_1 15.4.1

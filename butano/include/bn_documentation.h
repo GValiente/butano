@@ -2156,6 +2156,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_5_0 15.5.0 (next release)
+ *
+ * bn::assert::callback and bn::assert::set_callback added.
+ *
+ *
  * @section changelog_15_4_1 15.4.1
  *
  * bn::core::reset race condition fixed.

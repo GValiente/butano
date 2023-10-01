@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn_assert.h file | Butano Docs</title>
+  <title>bn::assert namespace | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,28 +47,69 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          bn_assert.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>assert <span class="m-thin">namespace</span>
         </h1>
+        <p>Assert related functions.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
+                <li><a href="#typedef-members">Typedefs</a></li>
+                <li><a href="#func-members">Functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>BN_ASSERT, BN_BASIC_ASSERT and BN_ERROR header file.</p>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main Butano namespace.</dd>
-            <dt>namespace <a href="namespacebn_1_1assert.html" class="m-doc">bn::assert</a></dt>
-            <dd>Assert related functions.</dd>
+            <dt>
+              using <a href="#ae0e0ac32cab091dd1f9cc80d5db889e1" class="m-doc">callback_type</a> = void(*)()
+            </dt>
+            <dd>Assert callback type alias.</dd>
           </dl>
+        </section>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5116cda8d3fb767efe1fca5a35fbe519" class="m-doc">callback</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn_1_1assert.html#ae0e0ac32cab091dd1f9cc80d5db889e1" class="m-doc">callback_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the user function called when an assert is triggered, before stopping execution.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad201a65520eeda64f357ae9510215a7b" class="m-doc">set_callback</a>(</span><span class="m-doc-wrap"><a href="namespacebn_1_1assert.html#ae0e0ac32cab091dd1f9cc80d5db889e1" class="m-doc">callback_<wbr />type</a> callback)</span>
+            </dt>
+            <dd>Sets the user function called when an assert is triggered, before stopping execution.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="ae0e0ac32cab091dd1f9cc80d5db889e1"><div>
+            <h3>
+              using bn::<wbr />assert::<wbr /><a href="#ae0e0ac32cab091dd1f9cc80d5db889e1" class="m-doc-self">callback_type</a> = void(*)()
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__assert__callback__type_8h.html">&lt;bn_assert_callback_type.h&gt;</a></div>
+            </h3>
+            <p>Assert callback type alias.</p>
+          </div></section>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a5116cda8d3fb767efe1fca5a35fbe519"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn_1_1assert.html#ae0e0ac32cab091dd1f9cc80d5db889e1" class="m-doc">callback_<wbr />type</a> bn::<wbr />assert::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5116cda8d3fb767efe1fca5a35fbe519" class="m-doc-self">callback</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__assert_8h.html">&lt;bn_assert.h&gt;</a></div>
+            </h3>
+            <p>Returns the user function called when an assert is triggered, before stopping execution.</p>
+          </div></section>
+          <section class="m-doc-details" id="ad201a65520eeda64f357ae9510215a7b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />assert::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad201a65520eeda64f357ae9510215a7b" class="m-doc-self">set_callback</a>(</span><span class="m-doc-wrap"><a href="namespacebn_1_1assert.html#ae0e0ac32cab091dd1f9cc80d5db889e1" class="m-doc">callback_<wbr />type</a> callback)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__assert_8h.html">&lt;bn_assert.h&gt;</a></div>
+            </h3>
+            <p>Sets the user function called when an assert is triggered, before stopping execution.</p>
+          </div></section>
         </section>
       </div>
     </div>

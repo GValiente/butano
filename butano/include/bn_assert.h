@@ -118,10 +118,29 @@
 #if BN_CFG_ASSERT_ENABLED || BN_DOXYGEN
     #include "bn_sstream.h"
     #include "bn_istring_base.h"
+    #include "bn_assert_callback_type.h"
 
     #ifndef __FILE_NAME__
         #error "__FILE_NAME__ is not defined. Please update devkitARM."
     #endif
+
+    /**
+     * @brief Assert related functions.
+     *
+     * @ingroup assert
+     */
+    namespace bn::assert
+    {
+        /**
+         * @brief Returns the user function called when an assert is triggered, before stopping execution.
+         */
+        [[nodiscard]] callback_type callback();
+
+        /**
+         * @brief Sets the user function called when an assert is triggered, before stopping execution.
+         */
+        void set_callback(callback_type callback);
+    }
 
     #ifndef BN_ASSERT
         #if BN_CFG_ASSERT_SHOW_DIAGNOSTIC

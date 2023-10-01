@@ -34,6 +34,10 @@
 #include "../hw/include/bn_hw_game_pak.h"
 #include "../hw/include/bn_hw_hblank_effects.h"
 
+#if BN_CFG_ASSERT_ENABLED
+    #include "bn_assert_callback_type.h"
+#endif
+
 #if BN_CFG_ASSERT_ENABLED || BN_CFG_PROFILER_ENABLED
     #include "../hw/include/bn_hw_show.h"
 #endif
@@ -113,6 +117,9 @@ namespace
 
     public:
         vblank_callback_type vblank_callback = nullptr;
+        #if BN_CFG_ASSERT_ENABLED
+            assert::callback_type assert_callback = nullptr;
+        #endif
         timer cpu_usage_timer;
         ticks last_ticks;
         bn::system_font system_font;
@@ -563,6 +570,19 @@ core_lock::~core_lock()
 }
 
 #if BN_CFG_ASSERT_ENABLED
+    namespace bn::assert
+    {
+        callback_type callback()
+        {
+            return core::data.assert_callback;
+        }
+
+        void set_callback(callback_type callback)
+        {
+            core::data.assert_callback = callback;
+        }
+    }
+
     namespace _bn::assert
     {
         void show(const char* file_name, int line)
@@ -577,6 +597,11 @@ core_lock::~core_lock()
 
         void show(const char* condition, const char* file_name, const char* function, int line, const char* message)
         {
+            if(bn::assert::callback_type assert_callback = bn::core::data.assert_callback)
+            {
+                assert_callback();
+            }
+
             bn::core::stop(true);
             bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message,
                                 bn::core::assert_tag());
@@ -590,6 +615,11 @@ core_lock::~core_lock()
         void show(const char* condition, const char* file_name, const char* function, int line,
                   const bn::istring_base& message)
         {
+            if(bn::assert::callback_type assert_callback = bn::core::data.assert_callback)
+            {
+                assert_callback();
+            }
+
             bn::core::stop(true);
             bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message,
                                 bn::core::assert_tag());

@@ -12,6 +12,11 @@
 #define BN_DATA_EWRAM __attribute__((section(".ewram")))
 
 /**
+ * @brief Store uninitialized data in EWRAM.
+ */
+#define BN_DATA_EWRAM_BSS __attribute__((section(".sbss")))
+
+/**
  * @brief Store code in IWRAM.
  */
 #define BN_CODE_IWRAM __attribute__((section(".iwram")))

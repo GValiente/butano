@@ -30,6 +30,8 @@ namespace bgs_manager
 {
     using id_type = void*;
 
+    void init();
+
     [[nodiscard]] int used_count();
 
     [[nodiscard]] int available_count();

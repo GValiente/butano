@@ -67,7 +67,7 @@ namespace
         bool commit_green_swap = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
     [[nodiscard]] pair<int, int> _blending_hw_weights(fixed top_weight, fixed bottom_weight)
     {
@@ -101,6 +101,8 @@ namespace
 
 void init()
 {
+    new(&data) static_data();
+
     unsigned initial_window_flags =
             unsigned(hw::display::window_flag::SPRITES) |
             unsigned(hw::display::window_flag::BLENDING);

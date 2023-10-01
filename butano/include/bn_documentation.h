@@ -2161,6 +2161,7 @@
  * * bn::assert::callback and bn::assert::set_callback added.
  * * `BN_DATA_EWRAM_BSS` added.
  * * bn::memory::used_static_ewram fixed.
+ * * Butano subsystems ROM usage reduced.
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> tiled surface functions added.
  * * Unused <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> functions and data removed.
  *

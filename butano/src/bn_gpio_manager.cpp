@@ -5,6 +5,7 @@
 
 #include "bn_gpio_manager.h"
 
+#include <new>
 #include "../hw/include/bn_hw_gpio.h"
 
 #include "bn_rumble.cpp.h"

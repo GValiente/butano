@@ -1043,7 +1043,7 @@ namespace
         hw_entries entries_b;
     };
 
-    BN_DATA_EWRAM static_external_data external_data;
+    BN_DATA_EWRAM_BSS static_external_data external_data;
     static_internal_data internal_data;
 
     void _update_visible_item_index(int item_index)
@@ -1144,6 +1144,8 @@ namespace
 
 void init()
 {
+    new(&external_data) static_external_data();
+
     hw::hblank_effects::commit_entries(internal_data.entries_b);
 
     for(int index = max_items - 1; index >= 0; --index)

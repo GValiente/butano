@@ -27,7 +27,7 @@ namespace
         bool active = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
     void _check_active()
     {
@@ -111,6 +111,8 @@ namespace
 
 void init()
 {
+    new(&data) static_data();
+
     data.connection.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
     irq::set_isr(irq::id::SERIAL, _serial_intr);
     irq::set_isr(irq::id::TIMER1, _timer_intr);

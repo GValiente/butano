@@ -44,7 +44,7 @@ namespace
         bool reload_all_handles = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
     void _always_update_indexes_to_commit(const item_type& item)
     {
@@ -233,6 +233,8 @@ namespace
 
 void init()
 {
+    new(&data) static_data();
+
     for(hw::sprites::handle_type& handle : data.handles)
     {
         hw::sprites::hide_and_destroy(handle);

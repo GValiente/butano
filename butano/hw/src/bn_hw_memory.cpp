@@ -24,7 +24,7 @@ static_assert(BN_CFG_EWRAM_WAIT_STATE == BN_EWRAM_WAIT_STATE_2 ||
 #if BN_CFG_EWRAM_WAIT_STATE == BN_EWRAM_WAIT_STATE_1
     namespace
     {
-        BN_DATA_EWRAM unsigned ewram_data;
+        BN_DATA_EWRAM_BSS unsigned ewram_data;
     }
 #endif
 

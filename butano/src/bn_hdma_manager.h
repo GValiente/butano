@@ -10,6 +10,8 @@
 
 namespace bn::hdma_manager
 {
+    void init();
+
     void enable();
 
     void disable();

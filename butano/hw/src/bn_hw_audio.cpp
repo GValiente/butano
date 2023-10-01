@@ -55,7 +55,7 @@ namespace
         bool dmg_sync = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
 
     constexpr int _mix_length()
@@ -94,7 +94,7 @@ namespace
 
     constexpr int _max_channels = BN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BN_CFG_AUDIO_MAX_SOUND_CHANNELS;
 
-    alignas(int) BN_DATA_EWRAM uint8_t maxmod_engine_buffer[
+    alignas(int) BN_DATA_EWRAM_BSS uint8_t maxmod_engine_buffer[
             _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length()];
 
     alignas(int) uint8_t maxmod_mixing_buffer[_mix_length()];
@@ -194,6 +194,8 @@ namespace
 
 void init()
 {
+    new(&data) static_data();
+
     irq::set_isr(irq::id::VBLANK, mmVBlank);
     irq::enable(irq::id::VBLANK);
 

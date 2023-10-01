@@ -162,7 +162,7 @@ namespace
             }
         };
 
-        void init()
+        items_list()
         {
             for(int index = 0; index < max_items; ++index)
             {
@@ -239,7 +239,7 @@ namespace
 
     private:
         item_type _items[max_list_items];
-        alignas(int) int16_t _free_indices_array[max_items] = {};
+        alignas(int) int16_t _free_indices_array[max_items];
         int _free_indices_size = max_items;
 
         void _insert_node(int position_index, int new_index)
@@ -282,7 +282,7 @@ namespace
         bool delay_commit = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
 
     #if BN_CFG_SPRITE_TILES_LOG_ENABLED
@@ -680,11 +680,12 @@ namespace
 
 void init()
 {
+    new(&data) static_data();
+
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - INIT");
 
     item_type new_item;
     new_item.tiles_count = hw::sprite_tiles::tiles_count();
-    data.items.init();
     data.items.push_front(new_item);
     data.free_items.push_back(data.items.begin().id());
     data.free_tiles_count = new_item.tiles_count;

@@ -69,11 +69,13 @@ namespace
         #endif
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 }
 
 void init(const string_view& commands)
 {
+    new(&data) static_data();
+
     BN_ASSERT(commands.size() % 2 == 0, "Invalid commands size: ", commands.size());
 
     data.commands = commands;

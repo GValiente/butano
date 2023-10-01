@@ -26,7 +26,12 @@ namespace
         palettes_bank bg_palettes_bank;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
+}
+
+void init()
+{
+    new(&data) static_data();
 }
 
 palettes_bank& sprite_palettes_bank()

@@ -24,11 +24,13 @@ namespace
         best_fit_allocator allocator;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 }
 
 void init()
 {
+    new(&data) static_data();
+
     char* start = hw::memory::ewram_heap_start();
     char* end = hw::memory::ewram_heap_end();
     data.allocator.reset(static_cast<void*>(start), end - start);

@@ -323,7 +323,7 @@ namespace
             }
         };
 
-        void init()
+        items_list()
         {
             for(int index = 0; index < max_items; ++index)
             {
@@ -384,7 +384,7 @@ namespace
 
     private:
         item_type _items[max_list_items];
-        alignas(int) int8_t _free_indices_array[max_items] = {};
+        alignas(int) int8_t _free_indices_array[max_items];
         int _free_indices_size = max_items;
 
         void _join(int index, int new_index)
@@ -437,7 +437,7 @@ namespace
         bool delay_commit = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
 
     struct create_data
@@ -1166,11 +1166,12 @@ namespace
 
 void init()
 {
+    new(&data) static_data();
+
     BN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
 
     item_type new_item;
     new_item.blocks_count = hw::bg_tiles::blocks_count();
-    data.items.init();
     data.items.push_front(new_item);
     data.free_blocks_count = new_item.blocks_count;
 

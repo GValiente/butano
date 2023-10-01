@@ -131,7 +131,7 @@ namespace
         volatile bool waiting_for_vblank = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
     void enable()
     {
@@ -311,12 +311,23 @@ void init()
 
 void init(const string_view& keypad_commands)
 {
+    new(&data) static_data();
+
     // Initial wait:
     hw::core::init();
+
+    // Init H-Blank effects system:
+    hblank_effects_manager::init();
 
     // Init irq system:
     hw::irq::init();
     hw::irq::set_isr(hw::irq::id::HBLANK, hw::hblank_effects::_intr);
+
+    // Init hdma system:
+    hdma_manager::init();
+
+    // Init link system:
+    link_manager::init();
 
     // Init audio system:
     audio_manager::init();
@@ -330,18 +341,14 @@ void init(const string_view& keypad_commands)
     // Init display:
     display_manager::init();
 
-    // Init H-Blank effects system:
-    hblank_effects_manager::init();
-
-    // Init link system:
-    link_manager::init();
-
     // Init high level systems:
     memory_manager::init();
     cameras_manager::init();
+    palettes_manager::init();
     sprite_tiles_manager::init();
     sprites_manager::init();
     bg_blocks_manager::init();
+    bgs_manager::init();
     keypad_manager::init(keypad_commands);
 
     // First update:

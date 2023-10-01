@@ -38,16 +38,18 @@ namespace
 
     public:
         item_type items[max_items];
-        alignas(int) uint8_t free_item_indexes_array[max_items] = {};
+        alignas(int) uint8_t free_item_indexes_array[max_items];
         int free_item_indexes_size = max_items;
         bool update = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 }
 
 void init()
 {
+    new(&data) static_data();
+
     for(int index = 0; index < max_items; ++index)
     {
         data.free_item_indexes_array[index] = uint8_t(index);

@@ -15,6 +15,8 @@ class palettes_bank;
 
 namespace palettes_manager
 {
+    void init();
+
     [[nodiscard]] palettes_bank& sprite_palettes_bank();
 
     [[nodiscard]] palettes_bank& bg_palettes_bank();

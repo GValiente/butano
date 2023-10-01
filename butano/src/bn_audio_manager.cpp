@@ -361,11 +361,13 @@ namespace
         bool dmg_sync_enabled = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 }
 
 void init()
 {
+    new(&data) static_data();
+
     hw::audio::init();
 }
 

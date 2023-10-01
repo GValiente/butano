@@ -362,7 +362,7 @@ namespace
         bool commit = false;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
 
     [[nodiscard]] bool _check_unique_regular_big_map(item_type& item)
@@ -500,6 +500,11 @@ namespace
             }
         }
     }
+}
+
+void init()
+{
+    new(&data) static_data();
 }
 
 int used_count()

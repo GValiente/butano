@@ -5,6 +5,7 @@
 
 #include "bn_hdma_manager.h"
 
+#include <new>
 #include "bn_display.h"
 #include "../hw/include/bn_hw_dma.h"
 #include "../hw/include/bn_hw_memory.h"
@@ -149,7 +150,12 @@ namespace
         entry high_priority_entry = entry(hw::dma::high_priority_channel());
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
+}
+
+void init()
+{
+    new(&data) static_data();
 }
 
 void enable()

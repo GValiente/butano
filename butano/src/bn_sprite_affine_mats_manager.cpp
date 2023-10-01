@@ -86,7 +86,7 @@ namespace
         int last_index_to_remove_if_not_needed = 0;
     };
 
-    BN_DATA_EWRAM static_data data;
+    BN_DATA_EWRAM_BSS static_data data;
 
 
     void _update_flipped_identity(int index)
@@ -201,6 +201,8 @@ namespace
 
 void init(void* handles)
 {
+    new(&data) static_data();
+
     data.handles_ptr = static_cast<hw::sprite_affine_mats::handle*>(handles);
 
     for(int index = max_items - 1; index >= 0; --index)

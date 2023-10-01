@@ -19,55 +19,6 @@
 // FUNCTIONS 
 // --------------------------------------------------------------------
 
-
-//! Rotate \a nclrs colors at \a clrs to the right by \a ror.
-/*!	\note I can't help but think there's a faster way ... I just can't 
-		see it atm.
-*/
-void clr_rotate(COLOR *clrs, uint nclrs, int ror)
-{
-	if(ror == 0)		// Nothing to do
-		return;
-
-	int ii, jj, rot;
-	u32 tmp;
-
-	// NOTE: 
-	// Yes, this is O(n^2)
-	// Two optimisations are possible for |ror|>1
-	// 1) Extra buffer (simply write at an offset) O(n)
-	// 2) Double loops (ror and nclrs/ror) steps), run recursively 
-	//	  with nclrs=nclrs-nclrs%ror, ror=nclrs-nclrs%ror. O(n)*log(n) ?
-
-	if(ror > 0)			// Rotate right
-	{
-		rot= ror;
-		if(rot > nclrs)
-			rot= Mod(rot, nclrs);
-		for(ii=0; ii<rot; ii++)
-		{
-			tmp= clrs[nclrs-1];
-			for(jj=nclrs-1; jj>0; jj--)
-				clrs[jj]= clrs[jj-1];
-			clrs[0]= tmp;
-		}	
-	}
-	else				// Rotate left
-	{
-		rot= nclrs-ror;
-		if(rot > nclrs)
-			rot= Mod(rot, nclrs);
-		for(ii=0; ii<rot; ii++)
-		{
-			tmp= clrs[0];
-			for(jj=0; jj<nclrs-1; jj++)
-				clrs[jj]= clrs[jj+1];
-			clrs[nclrs-1]= tmp;
-		}
-	}	
-}
-
-
 //!	Blends color arrays \a srca and \a srcb into \a dst.
 /*!	Specific transitional blending effects can be created by making 
 	a 'target' color array with other routines, then using \a alpha 
@@ -176,53 +127,6 @@ void clr_grayscale(COLOR *dst, const COLOR *src, uint nclrs)
 		*dst++= RGB15(gray, gray, gray);
 	}
 }
-
-//! Transform colors to an rgb-scale.
-/*!	\a clr indicates a color vector in RGB-space. Each source color is 
-	converted to a brightness value (i.e., grayscale) and then mapped 
-	onto that color vector. A grayscale is a special case of this, 
-	using a color with R=G=B.
-	\param dst	Destination color array
-	\param src	Source color array.
-	\param nclrs	Number of colors.
-	\param clr	Destination color vector.
-*/
-void clr_rgbscale(COLOR *dst, const COLOR *src, uint nclrs, COLOR clr)
-{
-	int ii;
-	u32 rr, gg, bb, scale, gray;
-
-	// Normalize target color
-	rr= (clr    )&31;
-	gg= (clr>> 5)&31;
-	bb= (clr>>10)&31;
-
-	scale= max(max(rr, gg), bb);
-	if(scale == 0)	// Can't scale to black : use gray instead
-	{
-		clr_grayscale(dst, src, nclrs);
-		return;
-	}
-
-	scale= lu_div(scale);
-	rr *= scale;		// rr, gg, bb -> 0.16f
-	gg *= scale;
-	bb *= scale;
-
-	for(ii=0; ii<nclrs; ii++)
-	{	
-		clr= *src++;
-
-		// Grayscaly in 5.8f
-		gray  = ((clr    )&31)*0x4C;	// 29.7%
-		gray += ((clr>> 5)&31)*0x96;	// 58.6%
-		gray += ((clr>>10)&31)*0x1E;	// 11.7%
-		
-		// Match onto color vector
-		dst[ii]= RGB15(rr*gray>>24, gg*gray>>24, bb*gray>>24);
-	}
-}
-
 
 //! Create a gradient between pal[first] and pal[last].
 /*!

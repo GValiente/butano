@@ -140,14 +140,12 @@ u16 *vid_flip(void);
 #define BLUE_SHIFT				10
 
 
-void clr_rotate(COLOR *clrs, uint nclrs, int ror);
 void clr_blend(const COLOR *srca, const COLOR *srcb, COLOR *dst, 
 		u32 nclrs, u32 alpha);
 void clr_fade(const COLOR *src, COLOR clr, COLOR *dst, 
 		u32 nclrs, u32 alpha);
 
 void clr_grayscale(COLOR *dst, const COLOR *src, uint nclrs);
-void clr_rgbscale(COLOR *dst, const COLOR *src, uint nclrs, COLOR clr);
 
 void clr_adj_brightness(COLOR *dst, const COLOR *src, uint nclrs, FIXED bright);
 void clr_adj_contrast(COLOR *dst, const COLOR *src, uint nclrs, FIXED contrast);

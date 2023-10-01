@@ -547,8 +547,6 @@ void tte_init_bmp(int vmode, const TFont *font, fnDrawg proc);
 
 //! \name 8bpp bitmaps
 //\(
-void bmp8_erase(int left, int top, int right, int bottom);
-
 void bmp8_drawg(uint gid);
 void bmp8_drawg_t(uint gid);
 

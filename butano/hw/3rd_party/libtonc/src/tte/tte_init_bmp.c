@@ -95,16 +95,6 @@ void tte_init_bmp(int vmode, const TFont *font, fnDrawg proc)
 }
 
 
-//! Erase part of the 8bpp text canvas.
-void bmp8_erase(int left, int top, int right, int bottom)
-{	
-	TTC *tc= tte_get_context();
-
-	//# Check for single sequence
-	sbmp8_rect(&tc->dst, left, top, right, bottom, tc->cattr[TTE_PAPER]);
-}
-
-
 //! Erase part of the 16bpp text canvas.
 void bmp16_erase(int left, int top, int right, int bottom)
 {	

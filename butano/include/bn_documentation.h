@@ -2156,7 +2156,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_5_0 15.5.0 (next release)
+ * @section changelog_15_5_0 15.5.0
  *
  * * bn::assert::callback and bn::assert::set_callback added.
  * * `BN_DATA_EWRAM_BSS` added.

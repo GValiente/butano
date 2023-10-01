@@ -209,8 +209,7 @@ extern const TSurface m3_surface;
 /*!	\{	*/
 
 void srf_init(TSurface *srf, enum ESurfaceType type, const void *data, 
-	uint width, uint height, uint bpp, u16 *pal);
-void srf_pal_copy(const TSurface *dst, const TSurface *src, uint count);
+    uint width, uint height, uint bpp, u16 *pal);
 
 void *srf_get_ptr(const TSurface *srf, uint x, uint y);
 
@@ -258,8 +257,6 @@ void sbmp8_hline(const TSurface *dst, int x1, int y, int x2, u32 clr);
 void sbmp8_vline(const TSurface *dst, int x, int y1, int y2, u32 clr);
 void sbmp8_line(const TSurface *dst, int x1, int y1, int x2, int y2, u32 clr);
 
-void sbmp8_rect(const TSurface *dst, 
-	int left, int top, int right, int bottom, u32 clr);
 void sbmp8_frame(const TSurface *dst, 
 	int left, int top, int right, int bottom, u32 clr);
 void sbmp8_blit(const TSurface *dst, int dstX, int dstY, 

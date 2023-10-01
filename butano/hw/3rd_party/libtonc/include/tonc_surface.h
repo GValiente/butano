@@ -238,9 +238,7 @@ void sbmp16_line(const TSurface *dst, int x1, int y1, int x2, int y2, u32 clr);
 void sbmp16_rect(const TSurface *dst, 
 	int left, int top, int right, int bottom, u32 clr);
 void sbmp16_frame(const TSurface *dst, 
-	int left, int top, int right, int bottom, u32 clr);
-void sbmp16_blit(const TSurface *dst, int dstX, int dstY, 
-	uint width, uint height, const TSurface *src, int srcX, int srcY);
+    int left, int top, int right, int bottom, u32 clr);
 void sbmp16_floodfill(const TSurface *dst, int x, int y, u32 clr);
 
 // Fast inlines .

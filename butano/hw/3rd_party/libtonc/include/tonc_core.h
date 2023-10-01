@@ -134,10 +134,6 @@ INLINE uint align(uint x, uint width);
 //! \name Copying and filling routines
 //\{
 
-//! Simplified copier for GRIT-exported data.
-#define GRIT_CPY(dst, name)	memcpy16(dst, name, name##Len/2)
-
-
 // Base memcpy/set replacements.
 void *tonccpy(void *dst, const void *src, uint size);
 
@@ -149,7 +145,6 @@ INLINE void *toncset32(void *dst, u32 src, uint count);
 
 // Fast memcpy/set
 void memset16(void *dst, u16 hw, uint hwcount);
-void memcpy16(void *dst, const void* src, uint hwcount);
 
 IWRAM_CODE void memset32(void *dst, u32 wd, uint wcount);
 IWRAM_CODE void memcpy32(void *dst, const void* src, uint wcount);
@@ -164,18 +159,6 @@ IWRAM_CODE void memcpy32(void *dst, const void* src, uint wcount);
 *	\note \a r0 returns as \a dst + \a hwcount*2.
 */
 void memset16(void *dst, u16 hw, uint hwcount);
-
-//!	\brief Copy for halfwords.
-/*!	Uses <code>memcpy32()</code> if \a hwn>6 and 
-	  \a src and \a dst are aligned equally.
-	\param dst	Destination address.
-	\param src	Source address.
-	\param hwcount	 Number of halfwords to fill.
-	\note \a dst and \a src <b>must</b> be halfword aligned.
-	\note \a r0 and \a r1 return as 
-	  \a dst + \a hwcount*2 and \a src + \a hwcount*2.
-*/
-void memcpy16(void *dst, const void* src, uint hwcount);
 
 
 //!	Fast-fill by words, analogous to memset()

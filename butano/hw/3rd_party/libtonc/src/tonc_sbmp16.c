@@ -244,63 +244,6 @@ void sbmp16_frame(const TSurface *dst,
 	memset16(dstL, clr, width);
 }
 
-//! 16bpp blitter. Copies a rectangle from one surface to another.
-/*!
-	\param dst		Destination surface.
-	\param dstX		Left coord of rectangle on \a dst.
-	\param dstY		Top coord of rectangle on \a dst.
-	\param width	Width of rectangle to blit.
-	\param height	Height of rectangle to blit.
-	\param src		Source surface.
-	\param srcX		Left coord of rectangle on \a src.
-	\param srcY		Top coord of rectangle on \a src.
-	\note			The rectangle will be clipped to both \a src and \a dst.
-*/
-void sbmp16_blit(const TSurface *dst, int dstX, int dstY, 
-	uint width, uint height, const TSurface *src, int srcX, int srcY)
-{
-	// Safety checks
-	if(src==NULL || dst==NULL || src->data==NULL || dst->data==NULL)
-		return;
-
-	// --- Clip ---
-	int w= width, h= height;
-
-/// Temporary bliter clipping macro
-#define BLIT_CLIP(_ax, _aw, _w, _bx)				\
-	do {											\
-		if( (_ax) >= (_aw) || (_ax)+(_w) <= 0 )		\
-			return;									\
-		if( (_ax)<0 )								\
-		{	_w += (_ax); _bx += (_ax); _ax= 0;	}	\
-		if( (_w) > (_aw)-(_ax) )					\
-			_w = (_aw)-(_ax);						\
-	} while(0)
-
-	// Clip horizontal
-	BLIT_CLIP(dstX, dst->width, w, srcX);
-	BLIT_CLIP(srcX, src->width, w, dstX);
-
-	// Clip vertical
-	BLIT_CLIP(dstY, dst->height, h, srcY);
-	BLIT_CLIP(srcY, src->height, h, dstY);
-
-	pixel_t *srcL= PXPTR(src, srcX, srcY);
-	pixel_t *dstL= PXPTR(dst, dstX, dstY);
-	uint srcP= src->pitch/PXSIZE, dstP= dst->pitch/PXSIZE;
-
-	// Copy clipped rectangle.
-	while(h--)
-	{
-		memcpy16(dstL, srcL, w);
-		srcL += srcP;
-		dstL += dstP;		
-	}
-
-#undef BLIT_CLIP
-}
-
-
 //! Floodfill an area of the same color with new color \a clr.
 /*!
 	\param dst	Destination surface.

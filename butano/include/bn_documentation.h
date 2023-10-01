@@ -2159,6 +2159,7 @@
  * @section changelog_15_5_0 15.5.0 (next release)
  *
  * * bn::assert::callback and bn::assert::set_callback added.
+ * * bn::memory::used_static_ewram fixed.
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> tiled surface functions added.
  * * Unused <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> functions and data removed.
  *

@@ -12,7 +12,7 @@ extern unsigned __iwram_start__;
 extern unsigned __iwram_top;
 extern unsigned __fini_array_end;
 extern unsigned __ewram_start;
-extern unsigned __ewram_end;
+extern unsigned __sbss_end__;
 extern char __eheap_start[], __eheap_end[];
 
 namespace bn::hw::memory
@@ -68,8 +68,8 @@ int used_static_iwram()
 int used_static_ewram()
 {
     auto ewram_start = reinterpret_cast<uint8_t*>(&__ewram_start);
-    auto ewram_end = reinterpret_cast<uint8_t*>(&__ewram_end);
-    return ewram_end - ewram_start;
+    auto sbss_end = reinterpret_cast<uint8_t*>(&__sbss_end__);
+    return sbss_end - ewram_start;
 }
 
 char* ewram_heap_start()

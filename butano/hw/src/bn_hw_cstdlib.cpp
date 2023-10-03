@@ -6,6 +6,7 @@
 #include "bn_cstdlib.h"
 
 #include <cstdlib>
+#include "bn_assert.h"
 
 // fake_heap_end should not be needed:
 // https://tbelaire.ca/posts/gba-rust-1.html
@@ -29,4 +30,13 @@ void* realloc(void* ptr, std::size_t new_bytes)
 void free(void* ptr)
 {
     bn::free(ptr);
+}
+
+void abort()
+{
+    BN_ERROR("Abort call");
+
+    while(true)
+    {
+    }
 }

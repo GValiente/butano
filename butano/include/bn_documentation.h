@@ -2156,6 +2156,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_6_0 15.6.0 (next release)
+ *
+ * Standard abort implemented.
+ *
+ *
  * @section changelog_15_5_0 15.5.0
  *
  * * bn::assert::callback and bn::assert::set_callback added.

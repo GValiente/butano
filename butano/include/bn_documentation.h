@@ -2156,7 +2156,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_6_0 15.6.0 (next release)
+ * @section changelog_15_6_0 15.6.0
  *
  * * bn::display::size added.
  * * Standard abort implemented.

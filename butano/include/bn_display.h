@@ -13,6 +13,7 @@
  * @ingroup display
  */
 
+#include "bn_size.h"
 #include "../hw/include/bn_hw_display_constants.h"
 
 /**
@@ -36,6 +37,14 @@ namespace bn::display
     [[nodiscard]] constexpr int height()
     {
         return hw::display::height();
+    }
+
+    /**
+     * @brief Returns the screen size in pixels (240x160).
+     */
+    [[nodiscard]] constexpr size size()
+    {
+        return bn::size(width(), height());
     }
 }
 

@@ -466,17 +466,7 @@ void palettes_bank::set_brightness(fixed brightness)
 
     if(update)
     {
-        _update = true;
-        _update_global_effects = true;
-
-        if(output_brightness.data())
-        {
-            _global_effects_enabled = true;
-        }
-        else
-        {
-            _check_global_effects_enabled();
-        }
+        _on_global_effect_updated(output_brightness.data());
     }
 }
 
@@ -490,17 +480,7 @@ void palettes_bank::set_contrast(fixed contrast)
 
     if(update)
     {
-        _update = true;
-        _update_global_effects = true;
-
-        if(output_contrast.data())
-        {
-            _global_effects_enabled = true;
-        }
-        else
-        {
-            _check_global_effects_enabled();
-        }
+        _on_global_effect_updated(output_contrast.data());
     }
 }
 
@@ -514,17 +494,7 @@ void palettes_bank::set_intensity(fixed intensity)
 
     if(update)
     {
-        _update = true;
-        _update_global_effects = true;
-
-        if(output_intensity.data())
-        {
-            _global_effects_enabled = true;
-        }
-        else
-        {
-            _check_global_effects_enabled();
-        }
+        _on_global_effect_updated(output_intensity.data());
     }
 }
 
@@ -535,17 +505,7 @@ void palettes_bank::set_inverted(bool inverted)
 
     if(update)
     {
-        _update = true;
-        _update_global_effects = true;
-
-        if(inverted)
-        {
-            _global_effects_enabled = true;
-        }
-        else
-        {
-            _check_global_effects_enabled();
-        }
+        _on_global_effect_updated(inverted);
     }
 }
 
@@ -559,17 +519,7 @@ void palettes_bank::set_grayscale_intensity(fixed intensity)
 
     if(update)
     {
-        _update = true;
-        _update_global_effects = true;
-
-        if(output_intensity.data())
-        {
-            _global_effects_enabled = true;
-        }
-        else
-        {
-            _check_global_effects_enabled();
-        }
+        _on_global_effect_updated(output_intensity.data());
     }
 }
 
@@ -583,17 +533,7 @@ void palettes_bank::set_hue_shift_intensity(fixed intensity)
 
     if(update)
     {
-        _update = true;
-        _update_global_effects = true;
-
-        if(output_intensity.data())
-        {
-            _global_effects_enabled = true;
-        }
-        else
-        {
-            _check_global_effects_enabled();
-        }
+        _on_global_effect_updated(output_intensity.data());
     }
 }
 
@@ -619,17 +559,7 @@ void palettes_bank::set_fade_intensity(fixed intensity)
 
     if(update)
     {
-        _update = true;
-        _update_global_effects = true;
-
-        if(output_intensity.data())
-        {
-            _global_effects_enabled = true;
-        }
-        else
-        {
-            _check_global_effects_enabled();
-        }
+        _on_global_effect_updated(output_intensity.data());
     }
 }
 
@@ -644,17 +574,7 @@ void palettes_bank::set_fade(color color, fixed intensity)
 
     if(update)
     {
-        _update = true;
-        _update_global_effects = true;
-
-        if(output_intensity.data())
-        {
-            _global_effects_enabled = true;
-        }
-        else
-        {
-            _check_global_effects_enabled();
-        }
+        _on_global_effect_updated(output_intensity.data());
     }
 }
 
@@ -667,6 +587,7 @@ void palettes_bank::update()
     {
         bool update_global_effects = _update_global_effects || _global_effects_enabled;
         _update = false;
+        _global_effects_updated = _update_global_effects;
         _update_global_effects = false;
 
         if(update_global_effects)
@@ -748,6 +669,7 @@ void palettes_bank::reset_commit_data()
 {
     _first_index_to_commit = numeric_limits<int>::max();
     _last_index_to_commit = 0;
+    _global_effects_updated = false;
 }
 
 void palettes_bank::fill_hblank_effect_colors(int id, const color* source_colors_ptr, uint16_t* dest_ptr) const
@@ -822,11 +744,15 @@ int palettes_bank::_first_bpp_4_palette_index() const
     return hw::palettes::count();
 }
 
-void palettes_bank::_check_global_effects_enabled()
+void palettes_bank::_on_global_effect_updated(bool active)
 {
-    _global_effects_enabled = _inverted || fixed_t<5>(_brightness).data() || fixed_t<5>(_contrast).data() ||
-            fixed_t<5>(_intensity).data() || fixed_t<5>(_grayscale_intensity).data() ||
-            fixed_t<5>(_hue_shift_intensity).data() || fixed_t<5>(_fade_intensity).data();
+    _update = true;
+    _update_global_effects = true;
+
+    _global_effects_enabled = active || _inverted || fixed_t<5>(_brightness).data() ||
+            fixed_t<5>(_contrast).data() || fixed_t<5>(_intensity).data() ||
+            fixed_t<5>(_grayscale_intensity).data() || fixed_t<5>(_hue_shift_intensity).data() ||
+            fixed_t<5>(_fade_intensity).data();
 }
 
 void palettes_bank::_set_colors_bpp_impl(int id, const span<const color>& colors)

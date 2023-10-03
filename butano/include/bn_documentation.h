@@ -2160,6 +2160,7 @@
  *
  * * bn::display::size added.
  * * Standard abort implemented.
+ * * Color-related H-Blank effects update fixed.
  *
  *
  * @section changelog_15_5_0 15.5.0

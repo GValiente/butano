@@ -29,7 +29,14 @@ public:
 
     [[nodiscard]] static bool target_updated(intptr_t target_id, void*)
     {
-        palettes_bank::commit_data commit_data = palettes_manager::sprite_palettes_bank().retrieve_commit_data();
+        const palettes_bank& sprite_palettes_bank = palettes_manager::sprite_palettes_bank();
+
+        if(sprite_palettes_bank.global_effects_updated())
+        {
+            return true;
+        }
+
+        palettes_bank::commit_data commit_data = sprite_palettes_bank.retrieve_commit_data();
 
         if(int count = commit_data.count)
         {

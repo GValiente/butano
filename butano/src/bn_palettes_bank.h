@@ -185,6 +185,11 @@ public:
 
     [[nodiscard]] commit_data retrieve_commit_data() const;
 
+    [[nodiscard]] bool global_effects_updated() const
+    {
+        return _global_effects_updated;
+    }
+
     void reset_commit_data();
 
     void fill_hblank_effect_colors(int id, const color* source_colors_ptr, uint16_t* dest_ptr) const;
@@ -245,6 +250,7 @@ private:
     bool _update = false;
     bool _update_global_effects = false;
     bool _global_effects_enabled = false;
+    bool _global_effects_updated = false;
 
     [[nodiscard]] bool _same_colors(const span<const color>& colors, int id) const;
 
@@ -252,7 +258,7 @@ private:
 
     [[nodiscard]] int _first_bpp_4_palette_index() const;
 
-    void _check_global_effects_enabled();
+    void _on_global_effect_updated(bool active);
 
     void _set_colors_bpp_impl(int id, const span<const color>& colors);
 

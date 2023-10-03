@@ -28,7 +28,14 @@ public:
 
     [[nodiscard]] static bool target_updated(intptr_t, void*)
     {
-        palettes_bank::commit_data commit_data = palettes_manager::bg_palettes_bank().retrieve_commit_data();
+        const palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
+
+        if(bg_palettes_bank.global_effects_updated())
+        {
+            return true;
+        }
+
+        palettes_bank::commit_data commit_data = bg_palettes_bank.retrieve_commit_data();
 
         if(commit_data.colors_ptr)
         {

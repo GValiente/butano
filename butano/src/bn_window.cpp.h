@@ -6,6 +6,7 @@
 #include "bn_window.h"
 
 #include "bn_bgs_manager.h"
+#include "bn_fixed_point.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_display_manager.h"
@@ -79,6 +80,31 @@ void window::set_show_nothing()
     int id = _id;
     bgs_manager::set_show_all_in_window(id, false);
     display_manager::set_show_nothing_in_window(id);
+}
+
+void window::restore()
+{
+    int id = _id;
+
+    switch(id)
+    {
+
+    case 0:
+    case 1:
+        display_manager::set_rect_window_top_left(id, fixed_point());
+        display_manager::set_rect_window_bottom_right(id, fixed_point());
+        display_manager::remove_rect_window_camera(id);
+        [[fallthrough]];
+
+    case 2:
+        display_manager::set_inside_window_enabled(id, true);
+        [[fallthrough]];
+
+    default:
+        bgs_manager::set_show_all_in_window(id, true);
+        display_manager::set_show_all_in_window(id);
+        break;
+    }
 }
 
 }

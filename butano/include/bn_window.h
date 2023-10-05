@@ -141,6 +141,11 @@ public:
     void set_show_nothing();
 
     /**
+     * @brief Restores this window to its initial state.
+     */
+    void restore();
+
+    /**
      * @brief Default equal operator.
      */
     [[nodiscard]] friend bool operator==(const window& a, const window& b) = default;

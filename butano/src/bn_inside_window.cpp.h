@@ -17,7 +17,7 @@ bool inside_window::visible() const
 
 void inside_window::set_visible(bool visible)
 {
-    return display_manager::set_inside_window_enabled(id(), visible);
+    display_manager::set_inside_window_enabled(id(), visible);
 }
 
 }

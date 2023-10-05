@@ -2158,7 +2158,8 @@
  *
  * @section changelog_15_7_0 15.7.0 (next release)
  *
- * bn::window::restore added.
+ * * bn::blending::restore added.
+ * * bn::window::restore added.
  *
  *
  * @section changelog_15_6_0 15.6.0

@@ -139,4 +139,12 @@ void set_fade_alpha(blending_fade_alpha fade_alpha)
                     "Transparency and fade blendings can't be enabled at the same time");
 }
 
+void restore()
+{
+    display_manager::set_blending_transparency_alpha(1);
+    display_manager::set_blending_intensity_alpha(0);
+    display_manager::set_blending_fade_to_black(true);
+    display_manager::set_blending_fade_alpha(0);
+}
+
 }

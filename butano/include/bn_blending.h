@@ -152,6 +152,11 @@ namespace bn::blending
      * @param fade_alpha blending_fade_alpha to set.
      */
     void set_fade_alpha(blending_fade_alpha fade_alpha);
+
+    /**
+     * @brief Restores blending to its initial state.
+     */
+    void restore();
 }
 
 #endif

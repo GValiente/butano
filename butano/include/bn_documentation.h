@@ -2156,6 +2156,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_7_1 15.7.1 (next release)
+ *
+ * Python 2 support restored.
+ *
+ *
  * @section changelog_15_7_0 15.7.0
  *
  * * bn::blending::restore added.

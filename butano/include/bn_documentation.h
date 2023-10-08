@@ -2156,7 +2156,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_7_1 15.7.1 (next release)
+ * @section changelog_15_7_1 15.7.1
  *
  * Python 2 support restored.
  *

@@ -688,10 +688,10 @@
  * from <a href="https://devkitpro.org/wiki/Getting_Started">devkitPro</a>:
  * * Install the `GBA Development` component.
  * * Install **all members** in the `gba-dev` group if the installer asks for which members to install.
- * * Make sure that **with the console** you are able to build and run some of the examples
- *   located in `/path/to/devkitpro/examples/gba`:
+ * * Make sure that **with the system console (not with the MSYS2 one)** you are able to build and run
+ *   some of the examples located in `/path/to/devkitpro/examples/gba`:
  *   * By default, devkitARM is installed in `C:\devkitPro\` on Windows and in `/opt/devkitpro/` on Ubuntu.
- *   * To build a devkitARM example open the console, `cd` to the folder of the example you want to build
+ *   * To build a devkitARM example open the system console, `cd` to the folder of the example you want to build
  *     and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
  *   * In particular, you should build and run the Maxmod example located in
  *     `/path/to/devkitpro/examples/gba/audio/maxmod` before going on.
@@ -709,12 +709,12 @@
  * you are going to need <a href="https://www.python.org/">Python</a>.
  *
  * If you are going to install Python on Windows,
- * remember to add it to the PATH and to close all command line windows before installing it:
+ * remember to add it to the PATH and to close all system console windows before installing it:
  *
  * @image html python_windows.png
  *
  * Both Python 2 and Python 3 are supported for now, but Python 2 is not going to be supported for too long.
- * Make sure you can execute Python from the command line:
+ * Make sure you can execute Python from the system console:
  *
  * @image html python.png
  *
@@ -737,13 +737,13 @@
  *
  * Make sure that you are able to build and run some of them:
  * * They are located in `/path/to/butano/examples/`.
- * * As with <a href="https://devkitpro.org/">devkitARM</a> examples, to build a Butano example open the console,
- *   `cd` to the folder of the example you want to build and type `make -j8` if your CPU has 8 cores,
- *   `make -j16` if it has 16 and so on.
+ * * As with <a href="https://devkitpro.org/">devkitARM</a> examples, to build a Butano example
+ *   open the system console (not the MSYS2 one), `cd` to the folder of the example you want to build
+ *   and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
  *
  * When trying to build the `sprites` example, if everything went as expected,
  * a `sprites.gba` file should have been generated in the `sprites` folder,
- * and the console should show something like this:
+ * and the system console should show something like this:
  *
  * @image html example_build.png
  *
@@ -1559,7 +1559,7 @@
  *
  * @section qt_creator_getting_started Getting started
  *
- * Before messing with Qt Creator, make sure that you are able to build and run Butano projects from the command line.
+ * Before messing with Qt Creator, make sure that you are able to build and run Butano projects from the system console.
  * The best way to achieve it is to read the
  * @ref getting_started "guide to download, install and start using Butano".
  *
@@ -2154,6 +2154,11 @@
  * @page changelog Changelog
  *
  * @tableofcontents
+ *
+ *
+ * @section changelog_15_8_0 15.8.0 (next release)
+ *
+ * @ref getting_started page improved.
  *
  *
  * @section changelog_15_7_1 15.7.1

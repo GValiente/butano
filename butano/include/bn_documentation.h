@@ -204,9 +204,9 @@
  *
  * GBA keys handling.
  *
- * Keypad logging can be enabled or disabled by overloading the definition of @a BN_CFG_KEYPAD_LOG_ENABLED @a .
+ * Keypad logging can be enabled or disabled by overloading the definition of @ref BN_CFG_KEYPAD_LOG_ENABLED.
  *
- * Recorded key presses can be replayed later by passing the log to @a bn::core::init() @a .
+ * Recorded key presses can be replayed later by passing the log to bn::core::init.
  */
 
 /**
@@ -322,9 +322,9 @@
  *
  * Butano assert system.
  *
- * It can be enabled or disabled by overloading the definition of @a BN_CFG_ASSERT_ENABLED @a .
+ * It can be enabled or disabled by overloading the definition of @ref BN_CFG_ASSERT_ENABLED.
  *
- * Note that these asserts can be used in constexpr contexts (is_constant_evaluated() returns `true`).
+ * Note that these asserts can be used in `constexpr` contexts (`is_constant_evaluated()` returns `true`).
  */
 
 /**
@@ -334,10 +334,10 @@
  *
  * It allows to print information on the console of multiple emulators.
  *
- * It can be enabled or disabled by overloading the definition of @a BN_CFG_LOG_ENABLED @a .
+ * It can be enabled or disabled by overloading the definition of @ref BN_CFG_LOG_ENABLED.
  *
  * It supports printing on only one emulator at once.
- * The supported emulator can be changed by overloading the definition of @a BN_CFG_LOG_BACKEND @a .
+ * The supported emulator can be changed by overloading the definition of @ref BN_CFG_LOG_BACKEND.
  */
 
 /**
@@ -347,7 +347,7 @@
  *
  * It allows to measure elapsed time between code blocks defined by the user.
  *
- * It can be enabled or disabled by overloading the definition of @a BN_CFG_PROFILER_ENABLED @a .
+ * It can be enabled or disabled by overloading the definition of @ref BN_CFG_PROFILER_ENABLED.
  */
 
 /**
@@ -404,7 +404,7 @@
  *
  * `std::list` like container that doesn't contain values, it just references them.
  *
- * To be part of an intrusive list, values must inherit @a bn::intrusive_list_node_type @a class.
+ * To be part of an intrusive list, values must inherit bn::intrusive_list_node_type class.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -426,7 +426,7 @@
  *
  * `std::forward_list` like container that doesn't contain values, it just references them.
  *
- * To be part of an intrusive forward list, values must inherit @a bn::intrusive_forward_list_node_type @a class.
+ * To be part of an intrusive forward list, values must inherit bn::intrusive_forward_list_node_type class.
  *
  * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
  *
@@ -1785,9 +1785,9 @@
  * BN_DATA_EWRAM static_data data;
  * @endcode
  *
- * However, if the data is read only, you can avoid wasting RAM by placing it in ROM with the `const` qualifier:
+ * However, if the data is read only, you can avoid wasting RAM by placing it in ROM with the `constexpr` qualifier:
  * @code{.cpp}
- * const const_data data;
+ * constexpr const_data data;
  * @endcode
  *
  *
@@ -2158,7 +2158,8 @@
  *
  * @section changelog_15_8_0 15.8.0 (next release)
  *
- * @ref getting_started page improved.
+ * * @ref getting_started page improved.
+ * * @ref faq_memory_types question improved.
  *
  *
  * @section changelog_15_7_1 15.7.1
@@ -3213,7 +3214,7 @@
  *
  * @section changelog_3_2_0 3.2.0
  *
- * bn::optional is now constexpr.
+ * bn::optional is now `constexpr`.
  *
  *
  * @section changelog_3_1_0 3.1.0

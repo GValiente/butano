@@ -62,7 +62,7 @@ public:
 
     static void cleanup(intptr_t)
     {
-        palettes_manager::bg_palettes_bank().reload(0);
+        palettes_manager::bg_palettes_bank().reload_transparent_color();
     }
 };
 

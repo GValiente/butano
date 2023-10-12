@@ -2158,6 +2158,7 @@
  *
  * @section changelog_15_8_0 15.8.0 (next release)
  *
+ * * Color-related H-Blank effects cleanup fixed.
  * * @ref getting_started page improved.
  * * @ref faq_memory_types question improved.
  *

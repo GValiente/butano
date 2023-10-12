@@ -123,6 +123,11 @@ public:
 
     void set_transparent_color(const optional<color>& transparent_color);
 
+    void reload_transparent_color()
+    {
+        _update = true;
+    }
+
     [[nodiscard]] fixed brightness() const
     {
         return _brightness;

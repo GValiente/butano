@@ -437,16 +437,9 @@ void palettes_bank::set_rotate_count(int id, int count)
 
 void palettes_bank::reload(int id)
 {
-    if(_first_index_to_commit != numeric_limits<int>::max())
-    {
-        _first_index_to_commit = min(_first_index_to_commit, id);
-        _last_index_to_commit = max(_last_index_to_commit, id);
-    }
-    else
-    {
-        _first_index_to_commit = id;
-        _last_index_to_commit = id;
-    }
+    palette& pal = _palettes[id];
+    pal.update = true;
+    _update = true;
 }
 
 void palettes_bank::set_transparent_color(const optional<color>& transparent_color)

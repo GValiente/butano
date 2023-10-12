@@ -2156,7 +2156,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_15_8_1 15.8.1 (next release)
+ * @section changelog_15_8_1 15.8.1
  *
  * bn::vector::assign fixed.
  *

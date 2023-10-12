@@ -606,7 +606,7 @@ public:
      */
     void assign(size_type count, const_reference value)
     {
-        BN_ASSERT(count >= 0 && count <= _size, "Invalid count: ", count, " - ", _max_size);
+        BN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
 
         pointer data = _data;
         clear();

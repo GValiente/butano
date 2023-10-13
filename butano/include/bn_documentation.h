@@ -2158,7 +2158,8 @@
  *
  * @section changelog_15_8_2 15.8.2 (next release)
  *
- * Backgrounds and color palettes modules documentation fixed.
+ * * bn::unordered_map::clear and bn::unordered_set::clear fixed.
+ * * Backgrounds and color palettes modules documentation fixed.
  *
  *
  * @section changelog_15_8_1 15.8.1

@@ -902,9 +902,10 @@ public:
      */
     void clear()
     {
-        if(size_type size = _size)
+        if(_size)
         {
-            memory::clear(size, _allocated[_first_valid_index]);
+            size_type first_valid_index = _first_valid_index;
+            memory::clear(_last_valid_index - first_valid_index + 1, _allocated[first_valid_index]);
             _first_valid_index = _max_size_minus_one + 1;
             _last_valid_index = 0;
             _size = 0;

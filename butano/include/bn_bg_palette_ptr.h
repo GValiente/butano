@@ -18,14 +18,6 @@
 #include "bn_fixed.h"
 #include "bn_optional.h"
 
-/**
- * @file
- * bn::bg_palette_ptr header file.
- *
- * @ingroup bg
- * @ingroup palette
- */
-
 namespace bn
 {
 

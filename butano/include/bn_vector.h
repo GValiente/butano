@@ -809,7 +809,6 @@ protected:
 
     ivector(reference data, size_type max_size) :
         _data(&data),
-        _size(0),
         _max_size(max_size)
     {
     }
@@ -868,7 +867,7 @@ protected:
 
 private:
     pointer _data;
-    size_type _size;
+    size_type _size = 0;
     size_type _max_size;
 };
 

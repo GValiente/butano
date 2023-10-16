@@ -1307,9 +1307,7 @@ protected:
 
     ideque(reference data, size_type max_size) :
         _data(&data),
-        _size(0),
-        _max_size_minus_one(max_size - 1),
-        _begin(0)
+        _max_size_minus_one(max_size - 1)
     {
     }
 
@@ -1369,9 +1367,9 @@ protected:
 
 private:
     pointer _data;
-    size_type _size;
+    size_type _size = 0;
     size_type _max_size_minus_one;
-    size_type _begin;
+    size_type _begin = 0;
 
     [[nodiscard]] static iterator _mutable_iterator(const const_iterator& const_iterator)
     {

@@ -374,8 +374,7 @@ protected:
     iany(char* storage, int max_size, int max_alignment) :
         _storage(storage),
         _max_size(max_size),
-        _max_alignment(int16_t(max_alignment)),
-        _manager_created(false)
+        _max_alignment(int16_t(max_alignment))
     {
     }
 
@@ -424,7 +423,7 @@ private:
     char* _storage;
     int _max_size;
     int16_t _max_alignment;
-    bool _manager_created;
+    bool _manager_created = false;
 
     [[nodiscard]] const base_manager* _manager_ptr() const
     {

@@ -40,7 +40,8 @@ public:
      */
     constexpr istring& operator=(const istring_base& other)
     {
-        return assign(other);
+        assign(other);
+        return *this;
     }
 
     /**
@@ -50,7 +51,8 @@ public:
      */
     constexpr istring& operator=(const string_view& view)
     {
-        return assign(view);
+        assign(view);
+        return *this;
     }
 
     /**
@@ -60,7 +62,8 @@ public:
      */
     constexpr istring& operator=(const_pointer char_array_ptr)
     {
-        return assign(char_array_ptr);
+        assign(char_array_ptr);
+        return *this;
     }
 
     /**

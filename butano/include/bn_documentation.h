@@ -2158,7 +2158,8 @@
  *
  * @section changelog_15_9_0 15.9.0 (next release)
  *
- * Same maps with different tiles or palettes supported.
+ * * Same maps with different tiles or palettes supported.
+ * * Some Clang-Tidy warnings fixed.
  *
  *
  * @section changelog_15_8_2 15.8.2

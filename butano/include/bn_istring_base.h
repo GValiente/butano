@@ -51,7 +51,6 @@ public:
     template<int MaxSize>
     constexpr istring_base(char (&char_array_ref)[MaxSize]) :
         _data(char_array_ref),
-        _size(0),
         _max_size(MaxSize - 1)
     {
         static_assert(MaxSize > 1);
@@ -277,7 +276,7 @@ protected:
     /// @cond DO_NOT_DOCUMENT
 
     pointer _data;
-    size_type _size;
+    size_type _size = 0;
     size_type _max_size;
 
     constexpr istring_base(pointer data, size_type size, size_type max_size) :

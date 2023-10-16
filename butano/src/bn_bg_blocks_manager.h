@@ -113,9 +113,7 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] size map_dimensions(int id);
 
-    [[nodiscard]] bool regular_big_map(int id);
-
-    [[nodiscard]] bool affine_big_map(int id);
+    [[nodiscard]] bool big_map(int id);
 
     [[nodiscard]] int regular_tiles_offset(int id);
 

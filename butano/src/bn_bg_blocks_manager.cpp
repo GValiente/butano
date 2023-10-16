@@ -8,7 +8,6 @@
 #include "bn_limits.h"
 #include "bn_string_view.h"
 #include "bn_bgs_manager.h"
-#include "bn_unordered_map.h"
 #include "bn_config_bg_blocks.h"
 #include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_bg_blocks.h"
@@ -38,7 +37,6 @@ namespace bn::bg_blocks_manager
 namespace
 {
     static_assert(BN_CFG_BG_BLOCKS_MAX_ITEMS > 0 && BN_CFG_BG_BLOCKS_MAX_ITEMS <= hw::bg_tiles::blocks_count());
-    static_assert(power_of_two(BN_CFG_BG_BLOCKS_MAX_ITEMS));
 
 
     #if BN_CFG_LOG_ENABLED
@@ -411,23 +409,11 @@ namespace
     };
 
 
-    class identity_hasher
-    {
-
-    public:
-        [[nodiscard]] unsigned operator()(const void* value) const
-        {
-            return unsigned(value);
-        }
-    };
-
-
     class static_data
     {
 
     public:
         items_list items;
-        unordered_map<const void*, int, max_items * 2, identity_hasher> items_map;
         alignas(int) uint8_t to_commit_items_array[max_items];
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
@@ -600,17 +586,6 @@ namespace
 
             BN_LOG(']');
 
-            BN_LOG("items_map: ", data.items_map.size());
-            BN_LOG('[');
-
-            for(const auto& items_map_item : data.items_map)
-            {
-                BN_LOG("    data: ", items_map_item.first,
-                        " - start_block: ", data.items.item(items_map_item.second).start_block);
-            }
-
-            BN_LOG(']');
-
             BN_LOG("free_blocks_count: ", data.free_blocks_count);
             BN_LOG("to_remove_blocks_count: ", data.to_remove_blocks_count);
             BN_LOG("allow_tiles_offset: ", (data.allow_tiles_offset ? "true" : "false"));
@@ -634,52 +609,43 @@ namespace
             } while(false)
     #endif
 
-    [[nodiscard]] int _find_tiles_impl(const uint16_t* tiles_data, [[maybe_unused]] compression_type compression,
-                                       [[maybe_unused]] int half_words, [[maybe_unused]] bool affine)
+    [[nodiscard]] int _find_tiles_impl(
+            const uint16_t* tiles_data, compression_type compression, int half_words, bool affine)
     {
-        auto items_map_iterator = data.items_map.find(tiles_data);
-
-        if(items_map_iterator != data.items_map.end())
+        for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
         {
-            int id = items_map_iterator->second;
-            item_type& item = data.items.item(id);
-            BN_BASIC_ASSERT(tiles_data == item.data,
-                            "Tiles data does not match item tiles data: ", tiles_data, " - ", item.data);
-            BN_BASIC_ASSERT(compression == item.compression(),
-                            "Tiles compression does not match item tiles compression: ",
-                            int(compression), " - ", int(item.compression()));
-            BN_BASIC_ASSERT(half_words == item.width,
-                            "Tiles count does not match item tiles count: ",
-                            _half_words_to_tiles(half_words), " - ", item.tiles_count());
-            BN_BASIC_ASSERT(affine == item.is_affine,
-                            "Item regular/affine tiles mismatch: ", affine, " - ", item.is_affine);
+            item_type& item = *iterator;
 
-            switch(item.status())
+            if(item.data == tiles_data && item.is_tiles && compression == item.compression() &&
+                    half_words == item.width && affine == item.is_affine)
             {
+                switch(item.status())
+                {
 
-            case status_type::FREE:
-                BN_ERROR("Invalid item state");
-                break;
+                case status_type::FREE:
+                    BN_ERROR("Invalid item state");
+                    break;
 
-            case status_type::USED:
-                ++item.usages;
-                break;
+                case status_type::USED:
+                    ++item.usages;
+                    break;
 
-            case status_type::TO_REMOVE:
-                item.usages = 1;
-                item.set_status(status_type::USED);
-                data.to_remove_blocks_count -= item.blocks_count;
-                break;
+                case status_type::TO_REMOVE:
+                    item.usages = 1;
+                    item.set_status(status_type::USED);
+                    data.to_remove_blocks_count -= item.blocks_count;
+                    break;
 
-            default:
-                BN_ERROR("Invalid item status: ", int(item.status()));
-                break;
+                default:
+                    BN_ERROR("Invalid item status: ", int(item.status()));
+                    break;
+                }
+
+                BN_BG_BLOCKS_LOG("TILES FOUND. start_block: ", item.start_block);
+                BN_BG_BLOCKS_LOG_STATUS();
+
+                return iterator.id();
             }
-
-            BN_BG_BLOCKS_LOG("TILES FOUND. start_block: ", data.items.item(id).start_block);
-            BN_BG_BLOCKS_LOG_STATUS();
-
-            return id;
         }
 
         BN_BG_BLOCKS_LOG("TILES NOT FOUND");
@@ -690,70 +656,66 @@ namespace
             const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
             const regular_bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
     {
-        auto items_map_iterator = data.items_map.find(data_ptr);
-
-        if(items_map_iterator != data.items_map.end())
+        for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
         {
-            int id = items_map_iterator->second;
-            item_type& item = data.items.item(id);
-            BN_BASIC_ASSERT(map_item.dimensions().width() == item.width,
-                            "Width does not match item width: ", map_item.dimensions().width(), " - ", item.width);
-            BN_BASIC_ASSERT(map_item.dimensions().height() == item.height,
-                            "Height does not match item height: ", map_item.dimensions().height(), " - ", item.height);
-            BN_BASIC_ASSERT(map_item.compression() == item.compression(),
-                            "Map compression does not match item map compression: ",
-                            int(map_item.compression()), " - ", int(item.compression()));
-            BN_BASIC_ASSERT(map_item.big() == item.is_big, "Map big does not match item map big: ",
-                            map_item.big(), " - ", item.is_big);
-            BN_BASIC_ASSERT(! item.is_affine, "Item is an affine map");
-            BN_BASIC_ASSERT(! item.regular_tiles || tiles == *item.regular_tiles,
-                            "Tiles does not match item tiles: ", tiles.id(), " - ", item.regular_tiles->id());
-            BN_BASIC_ASSERT(! item.palette || palette == *item.palette,
-                            "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
+            item_type& item = *iterator;
 
-            switch(item.status())
+            if(item.data == data_ptr && ! item.is_tiles && map_item.dimensions().width() == item.width &&
+                    map_item.dimensions().height() == item.height && map_item.compression() == item.compression() &&
+                    map_item.big() == item.is_big && ! item.is_affine)
             {
+                const regular_bg_tiles_ptr* item_tiles = item.regular_tiles.get();
+                const bg_palette_ptr* item_palette = item.palette.get();
 
-            case status_type::FREE:
-                BN_ERROR("Invalid item state");
-                break;
-
-            case status_type::USED:
-                ++item.usages;
-                break;
-
-            case status_type::TO_REMOVE:
+                if((! item_tiles || tiles == *item_tiles) && (! item_palette || palette == *item_palette))
                 {
-                    bool different_tiles = tiles != item.regular_tiles;
-                    bool different_palette = palette != item.palette;
-                    item.usages = 1;
-                    item.set_status(status_type::USED);
-                    data.to_remove_blocks_count -= item.blocks_count;
+                    int id = iterator.id();
 
-                    if(different_tiles && different_palette)
+                    switch(item.status())
                     {
-                        set_regular_map_tiles_and_palette(id, regular_bg_tiles_ptr(tiles), bg_palette_ptr(palette));
+
+                    case status_type::FREE:
+                        BN_ERROR("Invalid item state");
+                        break;
+
+                    case status_type::USED:
+                        ++item.usages;
+                        break;
+
+                    case status_type::TO_REMOVE:
+                        {
+                            bool different_tiles = tiles != item.regular_tiles;
+                            bool different_palette = palette != item.palette;
+                            item.usages = 1;
+                            item.set_status(status_type::USED);
+                            data.to_remove_blocks_count -= item.blocks_count;
+
+                            if(different_tiles && different_palette)
+                            {
+                                set_regular_map_tiles_and_palette(id, regular_bg_tiles_ptr(tiles), bg_palette_ptr(palette));
+                            }
+                            else if(different_tiles)
+                            {
+                                set_regular_map_tiles(id, regular_bg_tiles_ptr(tiles));
+                            }
+                            else if(different_palette)
+                            {
+                                set_regular_map_palette(id, bg_palette_ptr(palette));
+                            }
+                        }
+                        break;
+
+                    default:
+                        BN_ERROR("Invalid item status: ", int(item.status()));
+                        break;
                     }
-                    else if(different_tiles)
-                    {
-                        set_regular_map_tiles(id, regular_bg_tiles_ptr(tiles));
-                    }
-                    else if(different_palette)
-                    {
-                        set_regular_map_palette(id, bg_palette_ptr(palette));
-                    }
+
+                    BN_BG_BLOCKS_LOG("REGULAR MAP FOUND. start_block: ", item.start_block);
+                    BN_BG_BLOCKS_LOG_STATUS();
+
+                    return id;
                 }
-                break;
-
-            default:
-                BN_ERROR("Invalid item status: ", int(item.status()));
-                break;
             }
-
-            BN_BG_BLOCKS_LOG("REGULAR MAP FOUND. start_block: ", data.items.item(id).start_block);
-            BN_BG_BLOCKS_LOG_STATUS();
-
-            return id;
         }
 
         BN_BG_BLOCKS_LOG("REGULAR MAP NOT FOUND");
@@ -764,63 +726,59 @@ namespace
             const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
             const affine_bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
     {
-        auto items_map_iterator = data.items_map.find(data_ptr);
-
-        if(items_map_iterator != data.items_map.end())
+        for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
         {
-            int id = items_map_iterator->second;
-            item_type& item = data.items.item(id);
-            BN_BASIC_ASSERT(map_item.dimensions().width() == item.width,
-                            "Width does not match item width: ", map_item.dimensions().width(), " - ", item.width);
-            BN_BASIC_ASSERT(map_item.dimensions().height() == item.height,
-                            "Height does not match item height: ", map_item.dimensions().height(), " - ", item.height);
-            BN_BASIC_ASSERT(map_item.compression() == item.compression(),
-                            "Map compression does not match item map compression: ",
-                            int(map_item.compression()), " - ", int(item.compression()));
-            BN_BASIC_ASSERT(map_item.big() == item.is_big, "Map big does not match item map big: ",
-                            map_item.big(), " - ", item.is_big);
-            BN_BASIC_ASSERT(item.is_affine, "Item is a regular map");
-            BN_BASIC_ASSERT(! item.affine_tiles || tiles == *item.affine_tiles,
-                            "Tiles does not match item tiles: ", tiles.id(), " - ", item.affine_tiles->id());
-            BN_BASIC_ASSERT(! item.palette || palette == *item.palette,
-                            "Palette does not match item palette: ", palette.id(), " - ", item.palette->id());
+            item_type& item = *iterator;
 
-            switch(item.status())
+            if(reinterpret_cast<const affine_bg_map_cell*>(item.data) == data_ptr && ! item.is_tiles &&
+                    map_item.dimensions().width() == item.width && map_item.dimensions().height() == item.height &&
+                    map_item.compression() == item.compression() && map_item.big() == item.is_big && item.is_affine)
             {
+                const affine_bg_tiles_ptr* item_tiles = item.affine_tiles.get();
+                const bg_palette_ptr* item_palette = item.palette.get();
 
-            case status_type::FREE:
-                BN_ERROR("Invalid item state");
-                break;
-
-            case status_type::USED:
-                ++item.usages;
-                break;
-
-            case status_type::TO_REMOVE:
-                item.usages = 1;
-                item.set_status(status_type::USED);
-                data.to_remove_blocks_count -= item.blocks_count;
-
-                if(tiles != item.affine_tiles)
+                if((! item_tiles || tiles == *item_tiles) && (! item_palette || palette == *item_palette))
                 {
-                    set_affine_map_tiles(id, affine_bg_tiles_ptr(tiles));
-                }
+                    int id = iterator.id();
 
-                if(palette != item.palette)
-                {
-                    set_affine_map_palette(id, bg_palette_ptr(palette));
-                }
-                break;
+                    switch(item.status())
+                    {
 
-            default:
-                BN_ERROR("Invalid item status: ", int(item.status()));
-                break;
+                    case status_type::FREE:
+                        BN_ERROR("Invalid item state");
+                        break;
+
+                    case status_type::USED:
+                        ++item.usages;
+                        break;
+
+                    case status_type::TO_REMOVE:
+                        item.usages = 1;
+                        item.set_status(status_type::USED);
+                        data.to_remove_blocks_count -= item.blocks_count;
+
+                        if(tiles != item.affine_tiles)
+                        {
+                            set_affine_map_tiles(id, affine_bg_tiles_ptr(tiles));
+                        }
+
+                        if(palette != item.palette)
+                        {
+                            set_affine_map_palette(id, bg_palette_ptr(palette));
+                        }
+                        break;
+
+                    default:
+                        BN_ERROR("Invalid item status: ", int(item.status()));
+                        break;
+                    }
+
+                    BN_BG_BLOCKS_LOG("AFFINE MAP FOUND. start_block: ", item.start_block);
+                    BN_BG_BLOCKS_LOG_STATUS();
+
+                    return id;
+                }
             }
-
-            BN_BG_BLOCKS_LOG("AFFINE MAP FOUND. start_block: ", data.items.item(id).start_block);
-            BN_BG_BLOCKS_LOG_STATUS();
-
-            return id;
         }
 
         BN_BG_BLOCKS_LOG("AFFINE MAP NOT FOUND");
@@ -969,7 +927,6 @@ namespace
             break;
 
         case status_type::TO_REMOVE:
-            data.items_map.erase(item->data);
             data.to_remove_blocks_count -= blocks_count;
             break;
 
@@ -997,8 +954,6 @@ namespace
 
         if(data_ptr)
         {
-            data.items_map.insert(data_ptr, id);
-
             if(delay_commit)
             {
                 commit_item = true;
@@ -1151,11 +1106,6 @@ namespace
 
             if(adjacent_item_status == status_type::TO_REMOVE)
             {
-                if(adjacent_item.data)
-                {
-                    data.items_map.erase(adjacent_item.data);
-                }
-
                 data.free_blocks_count += adjacent_item.blocks_count;
             }
         }
@@ -1567,9 +1517,6 @@ int create_new_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optio
                      data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
                      int(bpp), " - ", int(compression));
 
-    BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                    "Multiple copies of the same data not supported");
-
     int result = _create_impl(create_data::from_regular_tiles(data_ptr, half_words, bpp, compression));
 
     if(result >= 0)
@@ -1610,9 +1557,6 @@ int create_new_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optiona
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE NEW AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
                      data_ptr, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
                      int(compression));
-
-    BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                    "Multiple copies of the same data not supported");
 
     int result = _create_impl(create_data::from_affine_tiles(data_ptr, half_words, compression));
 
@@ -1658,8 +1602,6 @@ int create_new_regular_map(const regular_bg_map_item& map_item, const regular_bg
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", int(palette.bpp()));
     BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
-    BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                    "Multiple copies of the same data not supported");
 
     int result = _create_impl(
                 create_data::from_regular_map(data_ptr, dimensions, compression, big, move(tiles), move(palette)));
@@ -1706,8 +1648,6 @@ int create_new_affine_map(const affine_bg_map_item& map_item, const affine_bg_ma
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
     BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
-    BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                    "Multiple copies of the same data not supported");
 
     auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
     int result = _create_impl(
@@ -1908,9 +1848,10 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
 
 void increase_usages(int id)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - INCREASE USAGES: ", id, " - ", data.items.item(id).start_block);
-
     item_type& item = data.items.item(id);
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - INCREASE USAGES: ", id, " - ", item.start_block);
+
     ++item.usages;
 
     BN_BG_BLOCKS_LOG_STATUS();
@@ -1918,9 +1859,10 @@ void increase_usages(int id)
 
 void decrease_usages(int id)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - DECREASE USAGES: ", id, " - ", data.items.item(id).start_block);
-
     item_type& item = data.items.item(id);
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - DECREASE USAGES: ", id, " - ", item.start_block);
+
     --item.usages;
 
     if(! item.usages)
@@ -1938,8 +1880,7 @@ void decrease_usages(int id)
 
 int hw_id(int id)
 {
-    const item_type& item = data.items.item(id);
-    return item.start_block;
+    return data.items.item(id).start_block;
 }
 
 int hw_tiles_cbb(int id)
@@ -1958,16 +1899,9 @@ size map_dimensions(int id)
     return size(item.width, item.height);
 }
 
-bool regular_big_map(int id)
+bool big_map(int id)
 {
-    const item_type& item = data.items.item(id);
-    return item.is_big;
-}
-
-bool affine_big_map(int id)
-{
-    const item_type& item = data.items.item(id);
-    return item.is_big;
+    return data.items.item(id).is_big;
 }
 
 int regular_tiles_offset(int id)
@@ -2035,12 +1969,11 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     compression_type compression = tiles_item.compression();
-
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR TILES REF: ", id, " - ",
-                     data.items.item(id).start_block, " - ", data_ptr, " - ", tiles_ref.size(), " - ",
-                     int(compression));
-
     item_type& item = data.items.item(id);
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR TILES REF: ", id, " - ", item.start_block, " - ",
+                     data_ptr, " - ", tiles_ref.size(), " - ", int(compression));
+
     const uint16_t* item_data = item.data;
     BN_BASIC_ASSERT(tiles_ref.size() == item.tiles_count(),
                     "Tiles count does not match item tiles count: ", tiles_ref.size(), " - ", item.tiles_count());
@@ -2048,11 +1981,6 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
     if(item_data != data_ptr)
     {
         BN_BASIC_ASSERT(item_data, "Item has no data");
-        BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                        "Multiple copies of the same data not supported");
-
-        data.items_map.erase(item_data);
-        data.items_map.insert(data_ptr, id);
 
         item.data = data_ptr;
         item.set_compression(compression);
@@ -2076,12 +2004,11 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     compression_type compression = tiles_item.compression();
-
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE TILES REF: ", id, " - ",
-                     data.items.item(id).start_block, " - ", data_ptr, " - ", tiles_ref.size(), " - ",
-                     int(compression));
-
     item_type& item = data.items.item(id);
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE TILES REF: ", id, " - ", item.start_block, " - ",
+                     data_ptr, " - ", tiles_ref.size(), " - ", int(compression));
+
     const uint16_t* item_data = item.data;
     BN_BASIC_ASSERT(tiles_ref.size() == item.tiles_count(),
                     "Tiles count does not match item tiles count: ", tiles_ref.size(), " - ", item.tiles_count());
@@ -2089,11 +2016,6 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
     if(item_data != data_ptr)
     {
         BN_BASIC_ASSERT(item_data, "Item has no data");
-        BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                        "Multiple copies of the same data not supported");
-
-        data.items_map.erase(item_data);
-        data.items_map.insert(data_ptr, id);
 
         item.data = data_ptr;
         item.set_compression(compression);
@@ -2115,13 +2037,12 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
 void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr)
 {
     compression_type compression = map_item.compression();
+    item_type& item = data.items.item(id);
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ",
-                     data.items.item(id).start_block, " - ", data_ptr, " - ",
-                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ", item.start_block, " - ",
+                     data_ptr, " - ", map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
                      int(compression), " - ", map_item.big());
 
-    item_type& item = data.items.item(id);
     const uint16_t* item_data = item.data;
     BN_BASIC_ASSERT(map_item.dimensions().width() == item.width,
                     "Map width does not match item map width: ", map_item.dimensions().width(), " - ", item.width);
@@ -2136,11 +2057,6 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, cons
     {
         BN_BASIC_ASSERT(item_data, "Item has no data");
         BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
-        BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                        "Multiple copies of the same data not supported");
-
-        data.items_map.erase(item_data);
-        data.items_map.insert(data_ptr, id);
 
         item.data = data_ptr;
         item.set_compression(compression);
@@ -2162,13 +2078,12 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, cons
 void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr)
 {
     compression_type compression = map_item.compression();
+    item_type& item = data.items.item(id);
 
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE MAP CELLS REF: ", id, " - ",
-                     data.items.item(id).start_block, " - ", data_ptr, " - ",
-                     map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE MAP CELLS REF: ", id, " - ", item.start_block, " - ",
+                     data_ptr, " - ", map_item.dimensions().width(), " - ", map_item.dimensions().height(), " - ",
                      int(compression), " - ", map_item.big());
 
-    item_type& item = data.items.item(id);
     const uint16_t* item_data = item.data;
     BN_BASIC_ASSERT(map_item.dimensions().width() == item.width,
                     "Map width does not match item map width: ", map_item.dimensions().width(), " - ", item.width);
@@ -2185,11 +2100,6 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const 
     {
         BN_BASIC_ASSERT(item_data, "Item has no data");
         BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
-        BN_BASIC_ASSERT(data.items_map.find(data_ptr) == data.items_map.end(),
-                        "Multiple copies of the same data not supported");
-
-        data.items_map.erase(item_data);
-        data.items_map.insert(data_ptr, id);
 
         item.data = u16_data_ptr;
         item.set_compression(compression);
@@ -2210,9 +2120,10 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const 
 
 void reload(int id)
 {
-    BN_BG_BLOCKS_LOG("bg_blocks_manager - RELOAD: ", id, " - ", data.items.item(id).start_block);
-
     item_type& item = data.items.item(id);
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - RELOAD: ", id, " - ", item.start_block);
+
     BN_BASIC_ASSERT(item.data, "Item has no data");
 
     item.commit = true;
@@ -2487,8 +2398,7 @@ optional<span<affine_bg_map_cell>> affine_map_vram(int id)
 
 bool must_commit(int id)
 {
-    const item_type& item = data.items.item(id);
-    return item.commit;
+    return data.items.item(id).commit;
 }
 
 void update_regular_map_col(int id, int x, int y)
@@ -2850,12 +2760,7 @@ void update()
 
             if(item_status == status_type::TO_REMOVE)
             {
-                if(const uint16_t* item_data = item.data)
-                {
-                    data.items_map.erase(item_data);
-                    item.data = nullptr;
-                }
-
+                item.data = nullptr;
                 item.width = 0;
                 item.height = 0;
                 item.set_status(status_type::FREE);

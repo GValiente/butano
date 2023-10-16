@@ -2156,6 +2156,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_15_9_0 15.9.0 (next release)
+ *
+ * Same maps with different tiles or palettes supported.
+ *
+ *
  * @section changelog_15_8_2 15.8.2
  *
  * * bn::unordered_map::clear and bn::unordered_set::clear fixed.

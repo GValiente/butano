@@ -24,6 +24,7 @@
 #include "bn_regular_bg_items_green.h"
 #include "bn_regular_bg_items_dragon.h"
 #include "bn_regular_bg_items_yellow.h"
+#include "bn_bg_palette_items_dragon_alt.h"
 
 #include "common_info.h"
 #include "common_variable_8x16_sprite_font.h"
@@ -479,6 +480,28 @@ namespace
         bn::bgs_mosaic::set_stretch(0);
         bn::blending::set_transparency_alpha(1);
     }
+
+    void regular_bg_different_palette(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Same BGs, different palette", info_text_lines, text_generator);
+
+        constexpr bn::regular_bg_item dragon_alt_item(
+                    bn::regular_bg_items::dragon.tiles_item(), bn::bg_palette_items::dragon_alt,
+                    bn::regular_bg_items::dragon.map_item());
+
+        bn::regular_bg_ptr dragon_bg = bn::regular_bg_items::dragon.create_bg(-48, 0);
+        bn::regular_bg_ptr dragon_alt_bg = dragon_alt_item.create_bg(48, 0);
+
+        while(! bn::keypad::start_pressed())
+        {
+            info.update();
+            bn::core::update();
+        }
+    }
 }
 
 int main()
@@ -527,6 +550,9 @@ int main()
         bn::core::update();
 
         regular_bg_builder_scene(text_generator);
+        bn::core::update();
+
+        regular_bg_different_palette(text_generator);
         bn::core::update();
     }
 }

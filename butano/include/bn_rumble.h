@@ -15,7 +15,6 @@
 
 #include "bn_common.h"
 
-
 /**
  * @brief Rumble related functions.
  *

@@ -136,11 +136,6 @@ namespace
                 return _list->_items[_index];
             }
 
-            item_type* operator->()
-            {
-                return _list->_items + _index;
-            }
-
             [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
             {
                 return a._index == b._index;
@@ -193,11 +188,6 @@ namespace
             return _items[index];
         }
 
-        [[nodiscard]] int index(const item_type& item) const
-        {
-            return &item - _items;
-        }
-
         [[nodiscard]] iterator it(int index)
         {
             return iterator(index, *this);
@@ -248,10 +238,10 @@ namespace
             node_type& new_node = _items[new_index];
             int prev_index = position_node.prev_index;
             node_type& prev_node = _items[prev_index];
-            prev_node.next_index = new_index;
-            new_node.prev_index = prev_index;
-            new_node.next_index = position_index;
-            position_node.prev_index = new_index;
+            prev_node.next_index = uint16_t(new_index);
+            new_node.prev_index = uint16_t(prev_index);
+            new_node.next_index = uint16_t(position_index);
+            position_node.prev_index = uint16_t(new_index);
         }
 
         void _remove_node(int position_index)
@@ -261,8 +251,8 @@ namespace
             node_type& prev_node = _items[prev_index];
             int next_index = position_node.next_index;
             node_type& next_node = _items[next_index];
-            prev_node.next_index = next_index;
-            next_node.prev_index = prev_index;
+            prev_node.next_index = uint16_t(next_index);
+            next_node.prev_index = uint16_t(prev_index);
         }
     };
 
@@ -385,7 +375,7 @@ namespace
         const item_type& item = data.items.item(id);
         auto free_items_it = upper_bound(data.free_items.begin(), free_items_last, item.tiles_count,
                                          tiles_count_upper_bound_comparator);
-        data.free_items.insert(free_items_it, id);
+        data.free_items.insert(free_items_it, uint16_t(id));
     }
 
     void _insert_free_item(int id)
@@ -412,7 +402,7 @@ namespace
         const item_type& item = data.items.item(id);
         auto to_remove_items_it = upper_bound(data.to_remove_items.begin(), data.to_remove_items.end(),
                                               item.tiles_count, tiles_count_upper_bound_comparator);
-        data.to_remove_items.insert(to_remove_items_it, id);
+        data.to_remove_items.insert(to_remove_items_it, uint16_t(id));
     }
 
     void _erase_to_remove_item(int id)
@@ -438,7 +428,7 @@ namespace
             vector<uint16_t, max_items>& to_commit_items =
                     item.compression() == compression_type::NONE ?
                         data.to_commit_uncompressed_items : data.to_commit_compressed_items;
-            to_commit_items.push_back(id);
+            to_commit_items.push_back(uint16_t(id));
         }
     }
 
@@ -687,7 +677,7 @@ void init()
     item_type new_item;
     new_item.tiles_count = hw::sprite_tiles::tiles_count();
     data.items.push_front(new_item);
-    data.free_items.push_back(data.items.begin().id());
+    data.free_items.push_back(uint16_t(data.items.begin().id()));
     data.free_tiles_count = new_item.tiles_count;
 
     BN_SPRITE_TILES_LOG_STATUS();

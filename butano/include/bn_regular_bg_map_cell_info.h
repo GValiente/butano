@@ -72,7 +72,7 @@ public:
     {
         BN_ASSERT(tile_index >= 0 && tile_index < 1024, "Invalid tile index: ", tile_index);
 
-        _fields.tile_index = tile_index;
+        _fields.tile_index = uint16_t(tile_index);
     }
 
     /**
@@ -90,7 +90,7 @@ public:
     {
         BN_ASSERT(palette_id >= 0 && palette_id < 16, "Invalid palette id: ", palette_id);
 
-        _fields.palette_id = palette_id;
+        _fields.palette_id = uint8_t(palette_id);
     }
 
     /**

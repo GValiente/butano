@@ -870,9 +870,9 @@ void set_double_size_mode(id_type id, sprite_double_size_mode double_size_mode)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->double_size_mode != unsigned(double_size_mode))
+    if(item->double_size_mode != uint8_t(double_size_mode))
     {
-        item->double_size_mode = unsigned(double_size_mode);
+        item->double_size_mode = uint8_t(double_size_mode);
 
         if(sprite_affine_mat_ptr* affine_mat = item->affine_mat.get())
         {

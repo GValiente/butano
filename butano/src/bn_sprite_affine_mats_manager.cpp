@@ -7,6 +7,7 @@
 
 #include "bn_vector.h"
 #include "bn_sprites_manager_item.h"
+#include "../hw/include/bn_hw_sprites_constants.h"
 #include "../hw/include/bn_hw_sprite_affine_mats.h"
 #include "../hw/include/bn_hw_sprite_affine_mats_constants.h"
 

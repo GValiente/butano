@@ -132,7 +132,7 @@ void update()
         {
             uint8_t low_part = data.commands[0] - '0';
             uint8_t high_part = data.commands[1] - '0';
-            current_keys = (high_part << 5) + low_part;
+            current_keys = (unsigned(high_part) << 5) + low_part;
             data.commands.remove_prefix(2);
         }
     }

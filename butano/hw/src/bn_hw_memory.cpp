@@ -5,8 +5,11 @@
 
 #include "../include/bn_hw_memory.h"
 
-#include "bn_random.h"
 #include "bn_config_ewram.h"
+
+#if BN_CFG_EWRAM_WAIT_STATE == BN_EWRAM_WAIT_STATE_1
+    #include "bn_random.h"
+#endif
 
 extern unsigned __iwram_start__;
 extern unsigned __iwram_top;

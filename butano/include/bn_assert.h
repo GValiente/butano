@@ -246,7 +246,8 @@
         [[noreturn]] void show(const char* condition, const char* file_name, const char* function, int line,
                                const bn::istring_base& message);
 
-        inline void show_args(const char* condition_msg, const char* file, const char* function, int line)
+        [[noreturn]] inline void show_args(
+            const char* condition_msg, const char* file, const char* function, int line)
         {
             _bn::assert::show(condition_msg, file, function, line);
         }

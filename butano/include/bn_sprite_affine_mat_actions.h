@@ -15,7 +15,6 @@
  * @ingroup action
  */
 
-#include "bn_fixed.h"
 #include "bn_sprite_affine_mat_ptr.h"
 #include "bn_value_template_actions.h"
 

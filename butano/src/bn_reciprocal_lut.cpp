@@ -23,7 +23,7 @@ namespace
 
         for(int index = 1; index < reciprocal_16_lut_size; ++index)
         {
-            result[index] = calculate_reciprocal_lut_value<16>(index).data();
+            result[index] = uint16_t(calculate_reciprocal_lut_value<16>(index).data());
         }
 
         return result;

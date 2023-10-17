@@ -94,7 +94,7 @@ namespace bn::hw::audio
 
     inline void set_sound_master_volume(int volume)
     {
-        mmSetEffectsVolume(volume);
+        mmSetEffectsVolume(mm_word(volume));
     }
 
     [[nodiscard]] bool update_on_vblank();

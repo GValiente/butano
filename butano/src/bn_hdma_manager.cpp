@@ -121,11 +121,6 @@ namespace
         int8_t _current_state_index = 0;
         bool _updated = false;
 
-        [[nodiscard]] const state& _current_state() const
-        {
-            return _states[_current_state_index];
-        }
-
         [[nodiscard]] state& _current_state()
         {
             return _states[_current_state_index];

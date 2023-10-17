@@ -6,6 +6,7 @@
 #include "bn_sprites_manager.h"
 
 #include "bn_sorted_sprites.h"
+#include "../hw/include/bn_hw_sprites_constants.h"
 
 namespace bn::sprites_manager
 {

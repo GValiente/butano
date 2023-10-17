@@ -7,7 +7,6 @@
 #define BN_SPRITES_MANAGER_ITEM_H
 
 #include "bn_display.h"
-#include "bn_sprites.h"
 #include "bn_sort_key.h"
 #include "bn_camera_ptr.h"
 #include "bn_fixed_point.h"

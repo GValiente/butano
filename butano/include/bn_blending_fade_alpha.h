@@ -65,7 +65,8 @@ public:
     /**
      * @brief Default equal operator.
      */
-    [[nodiscard]] constexpr friend bool operator==(const blending_fade_alpha& a, const blending_fade_alpha& b) = default;
+    [[nodiscard]] constexpr friend bool operator==(
+        const blending_fade_alpha& a, const blending_fade_alpha& b) = default;
 
 private:
     fixed _value;

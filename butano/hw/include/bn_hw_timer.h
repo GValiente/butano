@@ -7,7 +7,6 @@
 #define BN_HW_TIMER_H
 
 #include "bn_hw_tonc.h"
-#include "bn_hw_timer_constants.h"
 
 namespace bn::hw::timer
 {

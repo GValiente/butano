@@ -9,7 +9,6 @@
 #include "bn_config_audio.h"
 #include "../include/bn_hw_irq.h"
 #include "../include/bn_hw_link.h"
-#include "../include/bn_hw_tonc.h"
 #include "../3rd_party/vgm-player/include/vgm.h"
 
 extern "C"
@@ -313,9 +312,9 @@ void set_dmg_music_position(int pattern, int row)
     }
     else
     {
-        BN_ASSERT(! row, "Invalid row: ", row);
+        BN_BASIC_ASSERT(! row, "Invalid row: ", row);
 
-        VgmSetOffsetPlay(pattern);
+        VgmSetOffsetPlay(unsigned(pattern));
     }
 }
 

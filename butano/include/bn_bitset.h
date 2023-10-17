@@ -528,7 +528,7 @@ private:
 
     [[nodiscard]] constexpr static element_t _bit(int index)
     {
-        return element_t(1) << (index & (_bits_per_element - 1));
+        return element_t(1 << (index & (_bits_per_element - 1)));
     }
 };
 

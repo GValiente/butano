@@ -160,7 +160,7 @@ void send(int data_to_send)
         data.sendMessages.pop_front();
     }
 
-    data.sendMessages.push_back(data_to_send);
+    data.sendMessages.push_back(uint16_t(data_to_send));
 
     BN_BARRIER;
     data.blockSendMessages = false;

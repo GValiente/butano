@@ -823,7 +823,7 @@ namespace
                 }
 
                 uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
-                _hw_commit_offset(source_data_ptr, half_words, offset, destination_vram_ptr);
+                _hw_commit_offset(source_data_ptr, unsigned(half_words), offset, destination_vram_ptr);
             }
             else
             {
@@ -853,7 +853,7 @@ namespace
             if(tiles_offset || palette_offset)
             {
                 uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
-                _hw_commit_offset(source_data_ptr, half_words, offset, destination_vram_ptr);
+                _hw_commit_offset(source_data_ptr, unsigned(half_words), offset, destination_vram_ptr);
             }
             else
             {
@@ -2593,10 +2593,10 @@ void update_regular_map_row(int id, int x, int y)
     if(tiles_offset || palette_offset)
     {
         uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
-        _hw_commit_offset(source_data, elements, offset, dest_data);
+        _hw_commit_offset(source_data, unsigned(elements), offset, dest_data);
         source_data += elements;
         dest_data -= x_separator;
-        _hw_commit_offset(source_data, x_separator, offset, dest_data);
+        _hw_commit_offset(source_data, unsigned(x_separator), offset, dest_data);
     }
     else
     {
@@ -2629,11 +2629,11 @@ void update_affine_map_row(int id, int x, int y)
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
         uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
-        _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), elements / 2, offset,
+        _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), unsigned(elements) / 2, offset,
                           reinterpret_cast<uint16_t*>(dest_data));
         source_data += elements;
         dest_data -= x_separator;
-        _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), x_separator / 2, offset,
+        _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), unsigned(x_separator) / 2, offset,
                           reinterpret_cast<uint16_t*>(dest_data));
     }
     else
@@ -2670,10 +2670,10 @@ void set_regular_map_position(int id, int x, int y)
         {
             const uint16_t* source_data = item_data + ((row * map_width) + x);
             uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            _hw_commit_offset(source_data, elements, offset, dest_data);
+            _hw_commit_offset(source_data, unsigned(elements), offset, dest_data);
             source_data += elements;
             dest_data -= x_separator;
-            _hw_commit_offset(source_data, x_separator, offset, dest_data);
+            _hw_commit_offset(source_data, unsigned(x_separator), offset, dest_data);
         }
     }
     else
@@ -2715,11 +2715,11 @@ void set_affine_map_position(int id, int x, int y)
         {
             const uint8_t* source_data = item_data + ((row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), elements / 2, offset,
+            _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), unsigned(elements) / 2, offset,
                               reinterpret_cast<uint16_t*>(dest_data));
             source_data += elements;
             dest_data -= x_separator;
-            _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), x_separator / 2, offset,
+            _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), unsigned(x_separator) / 2, offset,
                               reinterpret_cast<uint16_t*>(dest_data));
         }
     }
@@ -2794,7 +2794,7 @@ void update()
             }
             else if(item.commit)
             {
-                data.to_commit_items_array[commit_items_count] = iterator.id();
+                data.to_commit_items_array[commit_items_count] = uint8_t(iterator.id());
                 ++commit_items_count;
             }
 

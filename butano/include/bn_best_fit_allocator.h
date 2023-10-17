@@ -193,7 +193,7 @@ private:
 
     public:
         item_type* previous = nullptr;
-        size_type size: 30 = 0;
+        size_type size: 31 = 0;
         bool used: 1 = false;
         free_items_pair free_items;
 

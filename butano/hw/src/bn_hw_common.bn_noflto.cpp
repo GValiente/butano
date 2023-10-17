@@ -18,12 +18,12 @@ extern "C"
 
     void __libc_init_array(void)
     {
-        for(size_t index = 0, limit = __preinit_array_end - __preinit_array_start; index < limit; ++index)
+        for(int index = 0, limit = __preinit_array_end - __preinit_array_start; index < limit; ++index)
         {
             __preinit_array_start[index]();
         }
 
-        for(size_t index = 0, limit = __init_array_end - __init_array_start; index < limit; ++index)
+        for(int index = 0, limit = __init_array_end - __init_array_start; index < limit; ++index)
         {
             __init_array_start[index]();
         }

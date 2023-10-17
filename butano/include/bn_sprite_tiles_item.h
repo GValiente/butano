@@ -84,7 +84,7 @@ public:
     constexpr sprite_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp, compression_type compression) :
         _tiles_ref(tiles_ref),
         _graphics_count(1),
-        _tiles_count_per_graphic(tiles_ref.size()),
+        _tiles_count_per_graphic(uint8_t(tiles_ref.size())),
         _compression(uint8_t(compression)),
         _bpp(uint8_t(bpp))
     {
@@ -121,7 +121,7 @@ public:
     constexpr sprite_tiles_item(const span<const tile>& tiles_ref, bpp_mode bpp, compression_type compression,
                                 int graphics_count) :
         _tiles_ref(tiles_ref),
-        _graphics_count(graphics_count),
+        _graphics_count(uint16_t(graphics_count)),
         _tiles_count_per_graphic(0),
         _compression(uint8_t(compression)),
         _bpp(uint8_t(bpp))
@@ -135,7 +135,7 @@ public:
         int tcpg = tiles_ref.size() / graphics_count;
         BN_ASSERT(valid_tiles_count(tcpg, bpp), "Invalid tiles count per graphic: ", tcpg, " - ", int(bpp));
 
-        _tiles_count_per_graphic = tcpg;
+        _tiles_count_per_graphic = uint8_t(tcpg);
     }
 
     /**

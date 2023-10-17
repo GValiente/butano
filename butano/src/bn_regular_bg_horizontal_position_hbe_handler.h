@@ -6,7 +6,6 @@
 #ifndef BN_REGULAR_BG_HORIZONTAL_POSITION_HBE_HANDLER_H
 #define BN_REGULAR_BG_HORIZONTAL_POSITION_HBE_HANDLER_H
 
-#include "bn_fixed_point.h"
 #include "bn_bgs_manager.h"
 #include "../hw/include/bn_hw_bgs.h"
 

@@ -6,7 +6,6 @@
 #ifndef BN_HW_HBLANK_EFFECTS_H
 #define BN_HW_HBLANK_EFFECTS_H
 
-#include "bn_algorithm.h"
 #include "bn_config_hbes.h"
 #include "bn_hw_irq.h"
 

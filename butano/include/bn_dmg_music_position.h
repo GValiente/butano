@@ -39,8 +39,8 @@ public:
      * @param row Row inside the pattern.
      */
     constexpr dmg_music_position(int pattern, int row) :
-        _pattern(pattern),
-        _row(row)
+        _pattern(unsigned(pattern)),
+        _row(unsigned(row))
     {
         BN_ASSERT(pattern >= 0 && pattern < (1 << 26), "Invalid pattern: ", pattern);
         BN_ASSERT(row >= 0 && row < 64, "Invalid row: ", row);
@@ -62,7 +62,7 @@ public:
     {
         BN_ASSERT(pattern >= 0 && pattern < (1 << 26), "Invalid pattern: ", pattern);
 
-        _pattern = pattern;
+        _pattern = unsigned(pattern);
     }
 
     /**
@@ -80,7 +80,7 @@ public:
     {
         BN_ASSERT(row >= 0 && row < 64, "Invalid row: ", row);
 
-        _row = row;
+        _row = unsigned(row);
     }
 
     /**

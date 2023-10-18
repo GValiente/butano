@@ -86,9 +86,22 @@ namespace bn::hw::audio
 
     void set_dmg_music_volume(int left_volume, int right_volume);
 
-    void play_sound(int priority, int id);
+    [[nodiscard]] inline bool sound_active(mm_sfxhand handle)
+    {
+        return mmEffectActive(handle);
+    }
 
-    void play_sound(int priority, int id, int volume, int speed, int panning);
+    [[nodiscard]] mm_sfxhand play_sound(int priority, int id);
+
+    [[nodiscard]] mm_sfxhand play_sound(int priority, int id, int volume, int speed, int panning);
+
+    void stop_sound(mm_sfxhand handle);
+
+    void release_sound(mm_sfxhand handle);
+
+    void set_sound_speed(mm_sfxhand handle, int speed_scale);
+
+    void set_sound_panning(mm_sfxhand handle, int panning);
 
     void stop_all_sounds();
 

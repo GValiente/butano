@@ -13,7 +13,7 @@
  * @ingroup sound
  */
 
-#include "bn_fixed.h"
+#include "bn_sound_handle.h"
 
 namespace bn
 {
@@ -31,15 +31,18 @@ namespace bn::sound
      * @brief Plays the sound effect specified by the given sound_item with default settings.
      *
      * Default settings are volume = 1, speed = 1 and panning = 0.
+     * @param item Specifies the sound effect to play.
+     * @return Sound effect handle.
      */
-    void play(sound_item item);
+    sound_handle play(sound_item item);
 
     /**
      * @brief Plays the sound effect specified by the given sound_item.
      * @param item Specifies the sound effect to play.
      * @param volume Volume level, in the range [0..1].
+     * @return Sound effect handle.
      */
-    void play(sound_item item, fixed volume);
+    sound_handle play(sound_item item, fixed volume);
 
     /**
      * @brief Plays the sound effect specified by the given sound_item.
@@ -47,8 +50,9 @@ namespace bn::sound
      * @param volume Volume level, in the range [0..1].
      * @param speed Playback rate, in the range [0..64].
      * @param panning Panning level, in the range [-1..1].
+     * @return Sound effect handle.
      */
-    void play(sound_item item, fixed volume, fixed speed, fixed panning);
+    sound_handle play(sound_item item, fixed volume, fixed speed, fixed panning);
 
     /**
      * @brief Plays the sound effect specified by the given sound_item with default settings and the given priority.
@@ -60,8 +64,9 @@ namespace bn::sound
      *
      * @param priority Priority relative to backgrounds in the range [-32767..32767].
      * @param item Specifies the sound effect to play.
+     * @return Sound effect handle.
      */
-    void play_with_priority(int priority, sound_item item);
+    sound_handle play_with_priority(int priority, sound_item item);
 
     /**
      * @brief Plays the sound effect specified by the given sound_item with the given priority.
@@ -72,8 +77,9 @@ namespace bn::sound
      * @param priority Priority relative to backgrounds in the range [-32767..32767].
      * @param item Specifies the sound effect to play.
      * @param volume Volume level, in the range [0..1].
+     * @return Sound effect handle.
      */
-    void play_with_priority(int priority, sound_item item, fixed volume);
+    sound_handle play_with_priority(int priority, sound_item item, fixed volume);
 
     /**
      * @brief Plays the sound effect specified by the given sound_item with the given priority.
@@ -86,8 +92,9 @@ namespace bn::sound
      * @param volume Volume level, in the range [0..1].
      * @param speed Playback rate, in the range [0..64].
      * @param panning Panning level, in the range [-1..1].
+     * @return Sound effect handle.
      */
-    void play_with_priority(int priority, sound_item item, fixed volume, fixed speed, fixed panning);
+    sound_handle play_with_priority(int priority, sound_item item, fixed volume, fixed speed, fixed panning);
 
     /**
      * @brief Stops all sound effects that are being played currently.

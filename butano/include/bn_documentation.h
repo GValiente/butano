@@ -2156,6 +2156,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_16_0_0 16.0.0 (next release)
+ *
+ * bn::sound_handle added.
+ * See the `audio` example to learn how to stop, release and setup sound effects with it.
+ *
+ *
  * @section changelog_15_9_0 15.9.0
  *
  * * Same maps with different tiles or palettes supported.

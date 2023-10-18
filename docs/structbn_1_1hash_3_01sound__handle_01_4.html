@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Audio &raquo; Sound effects module | Butano Docs</title>
+  <title>bn::hash&lt;sound_handle&gt; struct | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,102 +47,30 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__audio.html">Audio</a> &raquo;</span>
-          Sound effects <span class="m-thin">module</span></h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__sound__handle_8h.html">&lt;bn_sound_handle.h&gt;</a></div>
+          <div class="m-doc-template">template&lt;&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>hash&lt;sound_handle&gt; <span class="m-thin">struct</span>
+        </h1>
+        <p>Hash support for <a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a>.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
-                <li><a href="#define-members">Defines</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>Waveform audio files (files with <code>*.wav</code> extension) sound effects played with Direct Sound channels thanks to <a href="https://maxmod.devkitpro.org/">Maxmod</a>.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt>file <a href="bn__sound_8h.html" class="m-doc">bn_sound.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__sound__actions_8h.html" class="m-doc">bn_sound_actions.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__sound__handle_8h.html" class="m-doc">bn_sound_handle.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__sound__item_8h.html" class="m-doc">bn_sound_item.h</a></dt>
-            <dd></dd>
+            <dt id="a6ae9f98b396d0ff7d55a6fd974d6dfab">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6ae9f98b396d0ff7d55a6fd974d6dfab" class="m-doc-self">operator()</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a> value) const -&gt; unsigned</span>
+            </dt>
+            <dd>Returns the hash of the given <a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a>.</dd>
           </dl>
-        </section>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
-          <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main Butano namespace.</dd>
-            <dt>namespace <a href="namespacebn_1_1sound.html" class="m-doc">bn::sound</a></dt>
-            <dd>Sound effects related functions.</dd>
-          </dl>
-        </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1sound__master__volume__manager.html" class="m-doc">bn::sound_master_volume_manager</a>
-            </dt>
-            <dd>Manages the master volume of all sound effects.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__master__volume__to__action.html" class="m-doc">bn::sound_master_volume_to_action</a>
-            </dt>
-            <dd>Modifies the master volume of all sound effects until it has a given state.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__master__volume__loop__action.html" class="m-doc">bn::sound_master_volume_loop_action</a>
-            </dt>
-            <dd>Modifies the master volume of all sound effects from a minimum to a maximum. When the volume is equal to the given final state, it goes back to its initial state and vice versa.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__master__volume__toggle__action.html" class="m-doc">bn::sound_master_volume_toggle_action</a>
-            </dt>
-            <dd>Changes the master volume of all sound effects when the action is updated a given number of times.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__handle.html" class="m-doc">bn::sound_handle</a>
-            </dt>
-            <dd>Sound effect handle.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;&gt;</div>
-              struct <a href="structbn_1_1hash_3_01sound__handle_01_4.html" class="m-doc">bn::hash&lt;sound_handle&gt;</a>
-            </dt>
-            <dd>Hash support for <a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a>.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__item.html" class="m-doc">bn::sound_item</a>
-            </dt>
-            <dd>Contains the required information to play sound effects.</dd>
-            <dt>
-              <div class="m-doc-template">template&lt;&gt;</div>
-              struct <a href="structbn_1_1hash_3_01sound__item_01_4.html" class="m-doc">bn::hash&lt;sound_item&gt;</a>
-            </dt>
-            <dd>Hash support for <a href="classbn_1_1sound__item.html" class="m-doc">sound_<wbr />item</a>.</dd>
-          </dl>
-        </section>
-        <section id="define-members">
-          <h2><a href="#define-members">Defines</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga420c4bd186c2732a825c48f517bb51b6" class="m-doc">BN_CFG_AUDIO_MAX_SOUND_CHANNELS</a></span>
-            </dt>
-            <dd></dd>
-          </dl>
-        </section>
-        <section>
-          <h2>Define documentation</h2>
-          <section class="m-doc-details" id="ga420c4bd186c2732a825c48f517bb51b6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga420c4bd186c2732a825c48f517bb51b6" class="m-doc-self">BN_CFG_AUDIO_MAX_SOUND_CHANNELS</a></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__config__audio_8h.html">&lt;bn_config_audio.h&gt;</a></div>
-            </h3>
-<p>Specifies the maximum number of active sound effects.</p>
-          </div></section>
         </section>
       </div>
     </div>

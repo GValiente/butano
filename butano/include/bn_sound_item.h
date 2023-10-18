@@ -14,7 +14,7 @@
  * @ingroup tool
  */
 
-#include "bn_fixed.h"
+#include "bn_sound_handle.h"
 
 namespace bn
 {
@@ -52,22 +52,25 @@ public:
      * @brief Plays the sound effect specified by this item with default settings.
      *
      * Default settings are volume = 1, speed = 1 and panning = 0.
+     * @return Sound effect handle.
      */
-    void play() const;
+    sound_handle play() const;
 
     /**
      * @brief Plays the sound effect specified by this item.
      * @param volume Volume level, in the range [0..1].
+     * @return Sound effect handle.
      */
-    void play(fixed volume) const;
+    sound_handle play(fixed volume) const;
 
     /**
      * @brief Plays the sound effect specified by this item.
      * @param volume Volume level, in the range [0..1].
      * @param speed Playback rate, in the range [0..64].
      * @param panning Panning level, in the range [-1..1].
+     * @return Sound effect handle.
      */
-    void play(fixed volume, fixed speed, fixed panning) const;
+    sound_handle play(fixed volume, fixed speed, fixed panning) const;
 
     /**
      * @brief Plays the sound effect specified by this item with default settings and the given priority.
@@ -78,8 +81,9 @@ public:
      * Default settings are volume = 1, speed = 1 and panning = 0.
      *
      * @param priority Priority relative to backgrounds in the range [-32767..32767].
+     * @return Sound effect handle.
      */
-    void play_with_priority(int priority) const;
+    sound_handle play_with_priority(int priority) const;
 
     /**
      * @brief Plays the sound effect specified by this item with the given priority.
@@ -89,8 +93,9 @@ public:
      *
      * @param priority Priority relative to backgrounds in the range [-32767..32767].
      * @param volume Volume level, in the range [0..1].
+     * @return Sound effect handle.
      */
-    void play_with_priority(int priority, fixed volume) const;
+    sound_handle play_with_priority(int priority, fixed volume) const;
 
     /**
      * @brief Plays the sound effect specified by this item with the given priority.
@@ -102,8 +107,9 @@ public:
      * @param volume Volume level, in the range [0..1].
      * @param speed Playback rate, in the range [0..64].
      * @param panning Panning level, in the range [-1..1].
+     * @return Sound effect handle.
      */
-    void play_with_priority(int priority, fixed volume, fixed speed, fixed panning) const;
+    sound_handle play_with_priority(int priority, fixed volume, fixed speed, fixed panning) const;
 
     /**
      * @brief Default equal operator.

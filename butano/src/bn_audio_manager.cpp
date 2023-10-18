@@ -6,6 +6,7 @@
 #include "bn_audio_manager.h"
 
 #include "bn_config_audio.h"
+#include "bn_unordered_map.h"
 #include "bn_dmg_music_position.h"
 #include "../hw/include/bn_hw_audio.h"
 
@@ -15,15 +16,36 @@
 #include "bn_dmg_music.cpp.h"
 #include "bn_music_item.cpp.h"
 #include "bn_sound_item.cpp.h"
+#include "bn_sound_handle.cpp.h"
 #include "bn_dmg_music_item.cpp.h"
 
 namespace bn::audio_manager
 {
 
+struct sound_data_type
+{
+    bn::sound_item item = sound_item(0);
+    fixed speed;
+    fixed panning;
+    optional<mm_sfxhand> hw_handle;
+
+    void init(bn::sound_item _item, fixed _speed, fixed _panning)
+    {
+        item = _item;
+        speed = _speed;
+        panning = _panning;
+        hw_handle.reset();
+    }
+};
+
 namespace
 {
     constexpr int max_commands = BN_CFG_AUDIO_MAX_COMMANDS;
     static_assert(max_commands > 2, "Invalid max audio commands");
+
+    constexpr int max_sound_channels = BN_CFG_AUDIO_MAX_SOUND_CHANNELS;
+    static_assert(max_sound_channels > 0, "Invalid max sound channels");
+    static_assert(power_of_two(max_sound_channels), "Invalid max sound channels");
 
 
     int _hw_music_volume(fixed volume)
@@ -240,20 +262,25 @@ namespace
     {
 
     public:
-        play_sound_command(int priority, int id) :
-            _priority(priority),
-            _id(id)
+        play_sound_command(int priority, int id, uint16_t handle) :
+            _id(id),
+            _priority(int16_t(priority)),
+            _handle(handle)
         {
         }
 
         void execute() const
         {
-            hw::audio::play_sound(_priority, _id);
+            if(sound_data_type* data = sound_data(_handle))
+            {
+                data->hw_handle = hw::audio::play_sound(_priority, _id);
+            }
         }
 
     private:
-        int _priority;
         int _id;
+        int16_t _priority;
+        uint16_t _handle;
     };
 
 
@@ -261,9 +288,10 @@ namespace
     {
 
     public:
-        play_sound_ex_command(int priority, int id, int volume, int speed, int panning) :
-            _priority(priority),
+        play_sound_ex_command(int priority, int id, uint16_t handle, int volume, int speed, int panning) :
             _id(id),
+            _priority(int16_t(priority)),
+            _handle(handle),
             _speed(uint16_t(speed)),
             _volume(uint8_t(volume)),
             _panning(uint8_t(panning))
@@ -272,15 +300,123 @@ namespace
 
         void execute() const
         {
-            hw::audio::play_sound(_priority, _id, _volume, _speed, _panning);
+            if(sound_data_type* data = sound_data(_handle))
+            {
+                data->hw_handle = hw::audio::play_sound(_priority, _id, _volume, _speed, _panning);
+            }
         }
 
     private:
-        int _priority;
         int _id;
+        int16_t _priority;
+        uint16_t _handle;
         uint16_t _speed;
         uint8_t _volume;
         uint8_t _panning;
+    };
+
+
+    class stop_sound_command
+    {
+
+    public:
+        explicit stop_sound_command(uint16_t handle) :
+            _handle(handle)
+        {
+        }
+
+        void execute() const
+        {
+            if(sound_data_type* data = sound_data(uint16_t(_handle)))
+            {
+                if(const mm_sfxhand* hw_handle = data->hw_handle.get())
+                {
+                    hw::audio::stop_sound(*hw_handle);
+                }
+            }
+        }
+
+    private:
+        int _handle;
+    };
+
+
+    class release_sound_command
+    {
+
+    public:
+        explicit release_sound_command(uint16_t handle) :
+            _handle(handle)
+        {
+        }
+
+        void execute() const
+        {
+            if(sound_data_type* data = sound_data(uint16_t(_handle)))
+            {
+                if(const mm_sfxhand* hw_handle = data->hw_handle.get())
+                {
+                    hw::audio::release_sound(*hw_handle);
+                }
+            }
+        }
+
+    private:
+        int _handle;
+    };
+
+
+    class set_sound_speed_command
+    {
+
+    public:
+        set_sound_speed_command(uint16_t handle, int speed_scale) :
+            _speed_scale(speed_scale),
+            _handle(handle)
+        {
+        }
+
+        void execute() const
+        {
+            if(sound_data_type* data = sound_data(_handle))
+            {
+                if(const mm_sfxhand* hw_handle = data->hw_handle.get())
+                {
+                    hw::audio::set_sound_speed(*hw_handle, _speed_scale);
+                }
+            }
+        }
+
+    private:
+        int _speed_scale;
+        uint16_t _handle;
+    };
+
+
+    class set_sound_panning_command
+    {
+
+    public:
+        set_sound_panning_command(uint16_t handle, int panning) :
+            _panning(panning),
+            _handle(handle)
+        {
+        }
+
+        void execute() const
+        {
+            if(sound_data_type* data = sound_data(_handle))
+            {
+                if(const mm_sfxhand* hw_handle = data->hw_handle.get())
+                {
+                    hw::audio::set_sound_panning(*hw_handle, _panning);
+                }
+            }
+        }
+
+    private:
+        int _panning;
+        uint16_t _handle;
     };
 
 
@@ -321,6 +457,10 @@ namespace
         DMG_MUSIC_SET_VOLUME,
         SOUND_PLAY,
         SOUND_PLAY_EX,
+        SOUND_STOP,
+        SOUND_RELEASE,
+        SOUND_SET_SPEED,
+        SOUND_SET_PANNING,
         SOUND_STOP_ALL,
         SOUND_SET_MASTER_VOLUME
     };
@@ -341,6 +481,7 @@ namespace
 
     public:
         command_data command_datas[max_commands];
+        unordered_map<unsigned, sound_data_type, max_sound_channels * 2> sound_map;
         fixed music_volume;
         fixed music_tempo;
         fixed music_pitch;
@@ -352,6 +493,7 @@ namespace
         int music_item_id = 0;
         int music_position = 0;
         const uint8_t* dmg_music_data = nullptr;
+        uint16_t new_sound_handle = 0;
         command_code command_codes[max_commands];
         bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
         bool music_playing = false;
@@ -716,25 +858,143 @@ void set_dmg_sync_enabled(bool enabled)
     data.dmg_sync_enabled = enabled;
 }
 
-void play_sound(int priority, sound_item item)
+sound_data_type* sound_data(uint16_t handle)
 {
-    int commands = data.commands_count;
-    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+    auto it = data.sound_map.find(handle);
 
-    data.command_codes[commands] = SOUND_PLAY;
-    new(data.command_datas + commands) play_sound_command(priority, item.id());
-    data.commands_count = commands + 1;
+    if(it != data.sound_map.end())
+    {
+        return &it->second;
+    }
+
+    return nullptr;
 }
 
-void play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed panning)
+uint16_t play_sound(int priority, bn::sound_item item)
 {
     int commands = data.commands_count;
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+    BN_BASIC_ASSERT(! data.sound_map.full(), "No more sound handles available");
+
+    uint16_t handle = data.new_sound_handle;
+    data.sound_map[handle].init(item, 1, 0);
+    data.new_sound_handle = handle + 1;
+
+    data.command_codes[commands] = SOUND_PLAY;
+    new(data.command_datas + commands) play_sound_command(priority, item.id(), handle);
+    data.commands_count = commands + 1;
+
+    return handle;
+}
+
+uint16_t play_sound(int priority, bn::sound_item item, fixed volume, fixed speed, fixed panning)
+{
+    int commands = data.commands_count;
+    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+    BN_BASIC_ASSERT(! data.sound_map.full(), "No more sound handles available");
+
+    uint16_t handle = data.new_sound_handle;
+    data.sound_map[handle].init(item, speed, panning);
+    data.new_sound_handle = handle + 1;
 
     data.command_codes[commands] = SOUND_PLAY_EX;
     new(data.command_datas + commands) play_sound_ex_command(
-                priority, item.id(), _hw_sound_volume(volume), _hw_sound_speed(speed), _hw_sound_panning(panning));
+            priority, item.id(), handle, _hw_sound_volume(volume), _hw_sound_speed(speed),
+            _hw_sound_panning(panning));
     data.commands_count = commands + 1;
+
+    return handle;
+}
+
+void stop_sound(uint16_t handle)
+{
+    auto it = data.sound_map.find(handle);
+    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+
+    int commands = data.commands_count;
+    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+    data.command_codes[commands] = SOUND_STOP;
+    new(data.command_datas + commands) stop_sound_command(handle);
+    data.commands_count = commands + 1;
+}
+
+void release_sound(uint16_t handle)
+{
+    BN_BASIC_ASSERT(data.sound_map.find(handle) != data.sound_map.end(),
+                    "Sound is not active: ", handle);
+
+    int commands = data.commands_count;
+    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+    data.command_codes[commands] = SOUND_RELEASE;
+    new(data.command_datas + commands) release_sound_command(handle);
+    data.commands_count = commands + 1;
+}
+
+bn::sound_item sound_item(uint16_t handle)
+{
+    auto it = data.sound_map.find(handle);
+    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+
+    return it->second.item;
+}
+
+fixed sound_speed(uint16_t handle)
+{
+    auto it = data.sound_map.find(handle);
+    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+
+    return it->second.speed;
+}
+
+void set_sound_speed(uint16_t handle, fixed speed)
+{
+    auto it = data.sound_map.find(handle);
+    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+
+    sound_data_type& sound_data = it->second;
+
+    if(speed != sound_data.speed)
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        bn::fixed scale = speed.unsafe_division(sound_data.speed);
+        data.command_codes[commands] = SOUND_SET_SPEED;
+        new(data.command_datas + commands) set_sound_speed_command(handle, _hw_sound_speed(scale));
+        data.commands_count = commands + 1;
+
+        sound_data.speed = speed;
+    }
+}
+
+fixed sound_panning(uint16_t handle)
+{
+    auto it = data.sound_map.find(handle);
+    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+
+    return it->second.panning;
+}
+
+void set_sound_panning(uint16_t handle, fixed panning)
+{
+    auto it = data.sound_map.find(handle);
+    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+
+    sound_data_type& sound_data = it->second;
+
+    if(panning != sound_data.panning)
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = SOUND_SET_PANNING;
+        new(data.command_datas + commands) set_sound_panning_command(handle, _hw_sound_panning(panning));
+        data.commands_count = commands + 1;
+
+        sound_data.panning = panning;
+    }
 }
 
 void stop_all_sounds()
@@ -744,6 +1004,8 @@ void stop_all_sounds()
 
     data.command_codes[commands] = SOUND_STOP_ALL;
     data.commands_count = commands + 1;
+
+    data.sound_map.clear();
 }
 
 fixed sound_master_volume()
@@ -859,6 +1121,22 @@ void execute_commands()
             reinterpret_cast<const play_sound_ex_command&>(data.command_datas[index].data).execute();
             break;
 
+        case SOUND_STOP:
+            reinterpret_cast<const stop_sound_command&>(data.command_datas[index].data).execute();
+            break;
+
+        case SOUND_RELEASE:
+            reinterpret_cast<const release_sound_command&>(data.command_datas[index].data).execute();
+            break;
+
+        case SOUND_SET_SPEED:
+            reinterpret_cast<const set_sound_speed_command&>(data.command_datas[index].data).execute();
+            break;
+
+        case SOUND_SET_PANNING:
+            reinterpret_cast<const set_sound_panning_command&>(data.command_datas[index].data).execute();
+            break;
+
         case SOUND_STOP_ALL:
             hw::audio::stop_all_sounds();
             break;
@@ -888,6 +1166,20 @@ void execute_commands()
         if(pattern >= 0)
         {
             data.dmg_music_position = bn::dmg_music_position(pattern, row);
+        }
+    }
+
+    for(auto it = data.sound_map.begin(), end = data.sound_map.end(); it != end; )
+    {
+        const mm_sfxhand* hw_handle = it->second.hw_handle.get();
+
+        if(hw_handle && hw::audio::sound_active(*hw_handle))
+        {
+            ++it;
+        }
+        else
+        {
+            it = data.sound_map.erase(it);
         }
     }
 }

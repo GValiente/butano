@@ -10,34 +10,34 @@
 namespace bn
 {
 
-void sound_item::play() const
+sound_handle sound_item::play() const
 {
-    sound::play(*this);
+    return sound::play(*this);
 }
 
-void sound_item::play(fixed volume) const
+sound_handle sound_item::play(fixed volume) const
 {
-    sound::play(*this, volume);
+    return sound::play(*this, volume);
 }
 
-void sound_item::play(fixed volume, fixed speed, fixed panning) const
+sound_handle sound_item::play(fixed volume, fixed speed, fixed panning) const
 {
-    sound::play(*this, volume, speed, panning);
+    return sound::play(*this, volume, speed, panning);
 }
 
-void sound_item::play_with_priority(int priority) const
+sound_handle sound_item::play_with_priority(int priority) const
 {
-    sound::play_with_priority(priority, *this);
+    return sound::play_with_priority(priority, *this);
 }
 
-void sound_item::play_with_priority(int priority, fixed volume) const
+sound_handle sound_item::play_with_priority(int priority, fixed volume) const
 {
-    sound::play_with_priority(priority, *this, volume);
+    return sound::play_with_priority(priority, *this, volume);
 }
 
-void sound_item::play_with_priority(int priority, fixed volume, fixed speed, fixed panning) const
+sound_handle sound_item::play_with_priority(int priority, fixed volume, fixed speed, fixed panning) const
 {
-    sound::play_with_priority(priority, *this, volume, speed, panning);
+    return sound::play_with_priority(priority, *this, volume, speed, panning);
 }
 
 }

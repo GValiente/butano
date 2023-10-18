@@ -300,6 +300,59 @@ namespace
 
         bn::sound::set_master_volume(1);
     }
+
+    void sound_handle_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "A: restart sound",
+            "UP: increase speed",
+            "DOWN: decrease speed",
+            "LEFT: decrease panning",
+            "RIGHT: increase panning",
+            "",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Sound handle", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::sound_handle sound_handle = bn::sound_items::victory_3.play(0.5);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(sound_handle.active())
+            {
+                if(bn::keypad::a_pressed())
+                {
+                    sound_handle.stop();
+                }
+                else if(bn::keypad::up_held())
+                {
+                    sound_handle.set_speed(bn::min(sound_handle.speed() + 0.01, bn::fixed(64)));
+                }
+                else if(bn::keypad::down_held())
+                {
+                    sound_handle.set_speed(bn::max(sound_handle.speed() - 0.01, bn::fixed(0.25)));
+                }
+                else if(bn::keypad::left_held())
+                {
+                    sound_handle.set_panning(bn::max(sound_handle.panning() - 0.01, bn::fixed(-1)));
+                }
+                else if(bn::keypad::right_held())
+                {
+                    sound_handle.set_panning(bn::min(sound_handle.panning() + 0.01, bn::fixed(1)));
+                }
+            }
+            else
+            {
+                sound_handle = bn::sound_items::victory_3.play(0.5);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
 }
 
 int main()
@@ -333,6 +386,9 @@ int main()
         bn::core::update();
 
         sound_actions_scene(text_generator);
+        bn::core::update();
+
+        sound_handle_scene(text_generator);
         bn::core::update();
     }
 }

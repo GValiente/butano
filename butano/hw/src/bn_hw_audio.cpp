@@ -132,6 +132,27 @@ namespace
         data.sounds_queue.insert_after(before_it, sound_type{ handle, int16_t(priority) });
     }
 
+    void _erase_sound_from_queue(mm_sfxhand handle)
+    {
+        auto before_it = data.sounds_queue.before_begin();
+        auto it = data.sounds_queue.begin();
+        auto end = data.sounds_queue.end();
+
+        while(it != end)
+        {
+            if(it->handle == handle)
+            {
+                before_it = it;
+                ++it;
+            }
+            else
+            {
+                data.sounds_queue.erase_after(before_it);
+                return;
+            }
+        }
+    }
+
     void _commit()
     {
         mmFrame();
@@ -330,13 +351,16 @@ void set_dmg_music_volume(int left_volume, int right_volume)
     }
 }
 
-void play_sound(int priority, int id)
+mm_sfxhand play_sound(int priority, int id)
 {
     _check_sounds_queue();
-    _add_sound_to_queue(priority, mmEffect(mm_word(id)));
+
+    mm_sfxhand handle = mmEffect(mm_word(id));
+    _add_sound_to_queue(priority, handle);
+    return handle;
 }
 
-void play_sound(int priority, int id, int volume, int speed, int panning)
+mm_sfxhand play_sound(int priority, int id, int volume, int speed, int panning)
 {
     mm_sound_effect sound_effect;
     sound_effect.id = mm_word(id);
@@ -345,7 +369,44 @@ void play_sound(int priority, int id, int volume, int speed, int panning)
     sound_effect.volume = mm_byte(volume);
     sound_effect.panning = mm_byte(panning);
     _check_sounds_queue();
-    _add_sound_to_queue(priority, mmEffectEx(&sound_effect));
+
+    mm_sfxhand handle = mmEffectEx(&sound_effect);
+    _add_sound_to_queue(priority, handle);
+    return handle;
+}
+
+void stop_sound(mm_sfxhand handle)
+{
+    if(mmEffectActive(handle))
+    {
+        mmEffectCancel(handle);
+        _erase_sound_from_queue(handle);
+    }
+}
+
+void release_sound(mm_sfxhand handle)
+{
+    if(mmEffectActive(handle))
+    {
+        mmEffectRelease(handle);
+        _erase_sound_from_queue(handle);
+    }
+}
+
+void set_sound_speed(mm_sfxhand handle, int speed_scale)
+{
+    if(mmEffectActive(handle))
+    {
+        mmEffectScaleRate(handle, unsigned(speed_scale));
+    }
+}
+
+void set_sound_panning(mm_sfxhand handle, int panning)
+{
+    if(mmEffectActive(handle))
+    {
+        mmEffectPanning(handle, uint8_t(panning));
+    }
 }
 
 void stop_all_sounds()

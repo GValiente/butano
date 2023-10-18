@@ -96,9 +96,27 @@ namespace bn::audio_manager
 
     // sound
 
-    void play_sound(int priority, sound_item item);
+    struct sound_data_type;
 
-    void play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed panning);
+    [[nodiscard]] sound_data_type* sound_data(uint16_t handle);
+
+    [[nodiscard]] uint16_t play_sound(int priority, sound_item item);
+
+    [[nodiscard]] uint16_t play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed panning);
+
+    void stop_sound(uint16_t handle);
+
+    void release_sound(uint16_t handle);
+
+    [[nodiscard]] sound_item sound_item(uint16_t handle);
+
+    [[nodiscard]] fixed sound_speed(uint16_t handle);
+
+    void set_sound_speed(uint16_t handle, fixed speed);
+
+    [[nodiscard]] fixed sound_panning(uint16_t handle);
+
+    void set_sound_panning(uint16_t handle, fixed panning);
 
     void stop_all_sounds();
 

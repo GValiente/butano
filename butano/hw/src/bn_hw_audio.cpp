@@ -393,22 +393,6 @@ void release_sound(mm_sfxhand handle)
     }
 }
 
-void set_sound_speed(mm_sfxhand handle, int speed_scale)
-{
-    if(mmEffectActive(handle))
-    {
-        mmEffectScaleRate(handle, unsigned(speed_scale));
-    }
-}
-
-void set_sound_panning(mm_sfxhand handle, int panning)
-{
-    if(mmEffectActive(handle))
-    {
-        mmEffectPanning(handle, uint8_t(panning));
-    }
-}
-
 void stop_all_sounds()
 {
     mmEffectCancelAll();

@@ -71,6 +71,17 @@ public:
     void play(fixed volume, bool loop) const;
 
     /**
+     * @brief Plays the Direct Sound jingle specified by this item with volume = 1.
+     */
+    void play_jingle() const;
+
+    /**
+     * @brief Plays the Direct Sound jingle specified by this item.
+     * @param volume Volume level, in the range [0..1].
+     */
+    void play_jingle(fixed volume) const;
+
+    /**
      * @brief Default equal operator.
      */
     [[nodiscard]] constexpr friend bool operator==(music_item a, music_item b) = default;

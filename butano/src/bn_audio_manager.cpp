@@ -13,6 +13,7 @@
 #include "bn_audio.cpp.h"
 #include "bn_music.cpp.h"
 #include "bn_sound.cpp.h"
+#include "bn_jingle.cpp.h"
 #include "bn_dmg_music.cpp.h"
 #include "bn_music_item.cpp.h"
 #include "bn_sound_item.cpp.h"
@@ -188,6 +189,47 @@ namespace
 
     private:
         int _pitch;
+    };
+
+
+    class play_jingle_command
+    {
+
+    public:
+        play_jingle_command(int id, int volume) :
+            _id(id),
+            _volume(volume)
+        {
+        }
+
+        void execute() const
+        {
+            hw::audio::play_jingle(_id);
+            hw::audio::set_jingle_volume(_volume);
+        }
+
+    private:
+        int _id;
+        int _volume;
+    };
+
+
+    class set_jingle_volume_command
+    {
+
+    public:
+        explicit set_jingle_volume_command(int volume) :
+            _volume(volume)
+        {
+        }
+
+        void execute() const
+        {
+            hw::audio::set_jingle_volume(_volume);
+        }
+
+    private:
+        int _volume;
     };
 
 
@@ -449,6 +491,8 @@ namespace
         MUSIC_SET_VOLUME,
         MUSIC_SET_TEMPO,
         MUSIC_SET_PITCH,
+        JINGLE_PLAY,
+        JINGLE_SET_VOLUME,
         DMG_MUSIC_PLAY,
         DMG_MUSIC_STOP,
         DMG_MUSIC_PAUSE,
@@ -485,6 +529,7 @@ namespace
         fixed music_volume;
         fixed music_tempo;
         fixed music_pitch;
+        fixed jingle_volume;
         bn::dmg_music_position dmg_music_position;
         fixed dmg_music_left_volume;
         fixed dmg_music_right_volume;
@@ -492,12 +537,14 @@ namespace
         int commands_count = 0;
         int music_item_id = 0;
         int music_position = 0;
+        int jingle_item_id = 0;
         const uint8_t* dmg_music_data = nullptr;
         uint16_t new_sound_handle = 0;
         command_code command_codes[max_commands];
         bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
         bool music_playing = false;
         bool music_paused = false;
+        bool jingle_playing = false;
         bool dmg_music_paused = false;
         bool dmg_sync_enabled = false;
     };
@@ -693,6 +740,61 @@ void set_music_pitch(fixed pitch)
         data.commands_count = commands + 1;
 
         data.music_pitch = pitch;
+    }
+}
+
+bool jingle_playing()
+{
+    return data.jingle_playing;
+}
+
+optional<music_item> playing_jingle_item()
+{
+    optional<music_item> result;
+
+    if(data.jingle_playing)
+    {
+        result = music_item(data.jingle_item_id);
+    }
+
+    return result;
+}
+
+void play_jingle(music_item item, fixed volume)
+{
+    int commands = data.commands_count;
+    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+    data.command_codes[commands] = JINGLE_PLAY;
+    new(data.command_datas + commands) play_jingle_command(item.id(), _hw_music_volume(volume));
+    data.commands_count = commands + 1;
+
+    data.jingle_item_id = item.id();
+    data.jingle_volume = volume;
+    data.jingle_playing = true;
+}
+
+fixed jingle_volume()
+{
+    BN_BASIC_ASSERT(data.jingle_playing, "There's no jingle playing");
+
+    return data.jingle_volume;
+}
+
+void set_jingle_volume(fixed volume)
+{
+    if(volume != data.jingle_volume)
+    {
+        BN_BASIC_ASSERT(data.jingle_playing, "There's no jingle playing");
+
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = JINGLE_SET_VOLUME;
+        new(data.command_datas + commands) set_jingle_volume_command(_hw_music_volume(volume));
+        data.commands_count = commands + 1;
+
+        data.jingle_volume = volume;
     }
 }
 
@@ -1089,6 +1191,14 @@ void execute_commands()
             reinterpret_cast<const set_music_pitch_command&>(data.command_datas[index].data).execute();
             break;
 
+        case JINGLE_PLAY:
+            reinterpret_cast<const play_jingle_command&>(data.command_datas[index].data).execute();
+            break;
+
+        case JINGLE_SET_VOLUME:
+            reinterpret_cast<const set_jingle_volume_command&>(data.command_datas[index].data).execute();
+            break;
+
         case DMG_MUSIC_PLAY:
             reinterpret_cast<const play_dmg_music_command&>(data.command_datas[index].data).execute();
             break;
@@ -1152,9 +1262,21 @@ void execute_commands()
 
     data.commands_count = 0;
 
-    if(data.music_playing && hw::audio::music_playing())
+    if(data.music_playing)
     {
-        data.music_position = hw::audio::music_position();
+        if(hw::audio::music_playing())
+        {
+            data.music_position = hw::audio::music_position();
+        }
+        else
+        {
+            data.music_playing = false;
+        }
+    }
+
+    if(data.jingle_playing && ! hw::audio::jingle_playing())
+    {
+        data.jingle_playing = false;
     }
 
     if(data.dmg_music_data)

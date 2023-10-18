@@ -47,3 +47,8 @@
 	hUGETracker sample song
 	Unknown license or unlicensed
 	https://github.com/SuperDisk/hUGETracker/blob/hUGETracker/sample-songs/Arachno%20-%20A%20Sad%20Touch.uge
+
+- mj_totsnuk01.xm
+	By Totsnuk
+	Licensed under the Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+	totmusicbusiness@gmail.com

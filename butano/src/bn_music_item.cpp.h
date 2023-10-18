@@ -6,6 +6,7 @@
 #include "bn_music_item.h"
 
 #include "bn_music.h"
+#include "bn_jingle.h"
 
 namespace bn
 {
@@ -23,6 +24,16 @@ void music_item::play(fixed volume) const
 void music_item::play(fixed volume, bool loop) const
 {
     music::play(*this, volume, loop);
+}
+
+void music_item::play_jingle() const
+{
+    jingle::play(*this);
+}
+
+void music_item::play_jingle(fixed volume) const
+{
+    jingle::play(*this, volume);
 }
 
 }

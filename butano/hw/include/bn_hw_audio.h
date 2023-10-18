@@ -72,6 +72,21 @@ namespace bn::hw::audio
         mmSetModulePitch(mm_word(pitch));
     }
 
+    [[nodiscard]] inline bool jingle_playing()
+    {
+        return mmActiveSub();
+    }
+
+    inline void play_jingle(int id)
+    {
+        mmJingle(mm_word(id));
+    }
+
+    inline void set_jingle_volume(int volume)
+    {
+        mmSetJingleVolume(mm_word(volume));
+    }
+
     void play_dmg_music(const void* song, dmg_music_type type, int speed, bool loop);
 
     void stop_dmg_music();
@@ -99,9 +114,21 @@ namespace bn::hw::audio
 
     void release_sound(mm_sfxhand handle);
 
-    void set_sound_speed(mm_sfxhand handle, int speed_scale);
+    inline void set_sound_speed(mm_sfxhand handle, int speed_scale)
+    {
+        if(mmEffectActive(handle))
+        {
+            mmEffectScaleRate(handle, unsigned(speed_scale));
+        }
+    }
 
-    void set_sound_panning(mm_sfxhand handle, int panning);
+    inline void set_sound_panning(mm_sfxhand handle, int panning)
+    {
+        if(mmEffectActive(handle))
+        {
+            mmEffectPanning(handle, uint8_t(panning));
+        }
+    }
 
     void stop_all_sounds();
 

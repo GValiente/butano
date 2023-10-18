@@ -14,7 +14,6 @@
  * @ingroup action
  */
 
-#include "bn_fixed.h"
 #include "bn_music.h"
 #include "bn_template_actions.h"
 

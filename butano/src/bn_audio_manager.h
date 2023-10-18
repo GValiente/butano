@@ -59,6 +59,19 @@ namespace bn::audio_manager
     void set_music_pitch(fixed pitch);
 
 
+    // jingle
+
+    [[nodiscard]] bool jingle_playing();
+
+    [[nodiscard]] optional<music_item> playing_jingle_item();
+
+    void play_jingle(music_item item, fixed volume);
+
+    [[nodiscard]] fixed jingle_volume();
+
+    void set_jingle_volume(fixed volume);
+
+
     // dmg_music
 
     [[nodiscard]] bool dmg_music_playing();

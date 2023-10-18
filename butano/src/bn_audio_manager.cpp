@@ -24,14 +24,14 @@ namespace bn::audio_manager
 
 struct sound_data_type
 {
-    bn::sound_item item = sound_item(0);
+    int item_id;
     fixed speed;
     fixed panning;
     optional<mm_sfxhand> hw_handle;
 
     void init(bn::sound_item _item, fixed _speed, fixed _panning)
     {
-        item = _item;
+        item_id = _item.id();
         speed = _speed;
         panning = _panning;
         hw_handle.reset();
@@ -937,7 +937,7 @@ bn::sound_item sound_item(uint16_t handle)
     auto it = data.sound_map.find(handle);
     BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
 
-    return it->second.item;
+    return bn::sound_item(it->second.item_id);
 }
 
 fixed sound_speed(uint16_t handle)

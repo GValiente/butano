@@ -24,11 +24,6 @@ namespace bn::hw::audio
 
     inline void play_music(int id, bool loop)
     {
-        if(mmActive())
-        {
-            mmStop();
-        }
-
         mmStart(mm_word(id), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
     }
 

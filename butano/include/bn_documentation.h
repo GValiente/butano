@@ -2162,6 +2162,7 @@
  *   See the `audio` example to learn how to stop, release and setup sound effects with them.
  * * bn::jingle and jingle actions added.
  * * Audio commands generation optimized.
+ * * Music ending detection fixed.
  *
  *
  * @section changelog_15_9_0 15.9.0

@@ -1285,7 +1285,7 @@ void execute_commands()
 
     data.commands_count = 0;
 
-    if(data.music_playing)
+    if(data.music_playing && ! data.music_paused)
     {
         if(hw::audio::music_playing())
         {
@@ -1302,7 +1302,7 @@ void execute_commands()
         data.jingle_playing = false;
     }
 
-    if(data.dmg_music_data)
+    if(data.dmg_music_data && ! data.dmg_music_paused)
     {
         int pattern;
         int row;
@@ -1311,6 +1311,10 @@ void execute_commands()
         if(pattern >= 0)
         {
             data.dmg_music_position = bn::dmg_music_position(pattern, row);
+        }
+        else
+        {
+            data.dmg_music_data = nullptr;
         }
     }
 

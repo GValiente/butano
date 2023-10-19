@@ -170,6 +170,97 @@ namespace
         bn::music::stop();
     }
 
+    void jingle_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "A: play jingle",
+            "LEFT: decrease jingle volume",
+            "RIGHT: increase jingle volume",
+            "",
+            "",
+            "",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Jingle", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::music_items::cyberrid.play(0.125);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::jingle::playing())
+            {
+                bn::fixed volume = bn::jingle::volume();
+
+                if(bn::keypad::left_held())
+                {
+                    bn::jingle::set_volume(bn::max(volume - 0.01, bn::fixed(0)));
+                }
+                else if(bn::keypad::right_held())
+                {
+                    bn::jingle::set_volume(bn::min(volume + 0.01, bn::fixed(1)));
+                }
+            }
+            else
+            {
+                if(bn::keypad::a_pressed())
+                {
+                    bn::jingle::play(bn::music_items::mj_totsnuk01, 0.6);
+                }
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::music::stop();
+
+        if(bn::jingle::playing())
+        {
+            bn::jingle::set_volume(0);
+        }
+    }
+
+    void jingle_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Jingle actions", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::music_items::cyberrid.play(0.125);
+        bn::music_items::mj_totsnuk01.play_jingle(0);
+
+        bn::jingle_volume_loop_action action(120, 1);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::jingle::playing())
+            {
+                action.update();
+            }
+            else
+            {
+                bn::music_items::mj_totsnuk01.play_jingle(0);
+                action = bn::jingle_volume_loop_action(120, 1);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::music::stop();
+
+        if(bn::jingle::playing())
+        {
+            bn::jingle::set_volume(0);
+        }
+    }
+
     void sound_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
@@ -392,97 +483,6 @@ namespace
 
         bn::sound::stop_all();
     }
-
-    void jingle_scene(bn::sprite_text_generator& text_generator)
-    {
-        constexpr bn::string_view info_text_lines[] = {
-            "A: play jingle",
-            "LEFT: decrease jingle volume",
-            "RIGHT: increase jingle volume",
-            "",
-            "",
-            "",
-            "",
-            "START: go to next scene",
-        };
-
-        common::info info("Jingle", info_text_lines, text_generator);
-        info.set_show_always(true);
-
-        bn::music_items::cyberrid.play(0.125);
-
-        while(! bn::keypad::start_pressed())
-        {
-            if(bn::jingle::playing())
-            {
-                bn::fixed volume = bn::jingle::volume();
-
-                if(bn::keypad::left_held())
-                {
-                    bn::jingle::set_volume(bn::max(volume - 0.01, bn::fixed(0)));
-                }
-                else if(bn::keypad::right_held())
-                {
-                    bn::jingle::set_volume(bn::min(volume + 0.01, bn::fixed(1)));
-                }
-            }
-            else
-            {
-                if(bn::keypad::a_pressed())
-                {
-                    bn::jingle::play(bn::music_items::mj_totsnuk01, 0.6);
-                }
-            }
-
-            info.update();
-            bn::core::update();
-        }
-
-        bn::music::stop();
-
-        if(bn::jingle::playing())
-        {
-            bn::jingle::set_volume(0);
-        }
-    }
-
-    void jingle_actions_scene(bn::sprite_text_generator& text_generator)
-    {
-        constexpr bn::string_view info_text_lines[] = {
-            "START: go to next scene",
-        };
-
-        common::info info("Jingle actions", info_text_lines, text_generator);
-        info.set_show_always(true);
-
-        bn::music_items::cyberrid.play(0.125);
-        bn::music_items::mj_totsnuk01.play_jingle(0);
-
-        bn::jingle_volume_loop_action action(120, 1);
-
-        while(! bn::keypad::start_pressed())
-        {
-            if(bn::jingle::playing())
-            {
-                action.update();
-            }
-            else
-            {
-                bn::music_items::mj_totsnuk01.play_jingle(0);
-                action = bn::jingle_volume_loop_action(120, 1);
-            }
-
-            info.update();
-            bn::core::update();
-        }
-
-        bn::music::stop();
-
-        if(bn::jingle::playing())
-        {
-            bn::jingle::set_volume(0);
-        }
-    }
 }
 
 int main()
@@ -506,6 +506,12 @@ int main()
         music_actions_scene(text_generator);
         bn::core::update();
 
+        jingle_scene(text_generator);
+        bn::core::update();
+
+        jingle_actions_scene(text_generator);
+        bn::core::update();
+
         sound_scene(text_generator);
         bn::core::update();
 
@@ -522,12 +528,6 @@ int main()
         bn::core::update();
 
         sound_handle_actions_scene(text_generator);
-        bn::core::update();
-
-        jingle_scene(text_generator);
-        bn::core::update();
-
-        jingle_actions_scene(text_generator);
         bn::core::update();
     }
 }

@@ -661,14 +661,17 @@ void set_music_position(int position)
 {
     BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
 
-    int commands = data.commands_count;
-    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+    if(position != data.music_position)
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
-    data.command_codes[commands] = MUSIC_SET_POSITION;
-    new(data.command_datas + commands) set_music_position_command(position);
-    data.commands_count = commands + 1;
+        data.command_codes[commands] = MUSIC_SET_POSITION;
+        new(data.command_datas + commands) set_music_position_command(position);
+        data.commands_count = commands + 1;
 
-    data.music_position = position;
+        data.music_position = position;
+    }
 }
 
 fixed music_volume()
@@ -680,19 +683,20 @@ fixed music_volume()
 
 void set_music_volume(fixed volume)
 {
-    if(volume != data.music_volume)
-    {
-        BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
+    int hw_volume = _hw_music_volume(volume);
+    BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
 
+    if(hw_volume != _hw_music_volume(data.music_volume))
+    {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_VOLUME;
-        new(data.command_datas + commands) set_music_volume_command(_hw_music_volume(volume));
+        new(data.command_datas + commands) set_music_volume_command(hw_volume);
         data.commands_count = commands + 1;
-
-        data.music_volume = volume;
     }
+
+    data.music_volume = volume;
 }
 
 fixed music_tempo()
@@ -704,19 +708,20 @@ fixed music_tempo()
 
 void set_music_tempo(fixed tempo)
 {
-    if(tempo != data.music_tempo)
-    {
-        BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
+    int hw_tempo = _hw_music_tempo(tempo);
+    BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
 
+    if(hw_tempo != _hw_music_tempo(data.music_tempo))
+    {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_TEMPO;
-        new(data.command_datas + commands) set_music_tempo_command(_hw_music_tempo(tempo));
+        new(data.command_datas + commands) set_music_tempo_command(hw_tempo);
         data.commands_count = commands + 1;
-
-        data.music_tempo = tempo;
     }
+
+    data.music_tempo = tempo;
 }
 
 fixed music_pitch()
@@ -728,19 +733,20 @@ fixed music_pitch()
 
 void set_music_pitch(fixed pitch)
 {
-    if(pitch != data.music_pitch)
-    {
-        BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
+    int hw_pitch = _hw_music_pitch(pitch);
+    BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
 
+    if(hw_pitch != _hw_music_pitch(data.music_pitch))
+    {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_PITCH;
-        new(data.command_datas + commands) set_music_pitch_command(_hw_music_pitch(pitch));
+        new(data.command_datas + commands) set_music_pitch_command(hw_pitch);
         data.commands_count = commands + 1;
-
-        data.music_pitch = pitch;
     }
+
+    data.music_pitch = pitch;
 }
 
 bool jingle_playing()
@@ -783,19 +789,20 @@ fixed jingle_volume()
 
 void set_jingle_volume(fixed volume)
 {
-    if(volume != data.jingle_volume)
-    {
-        BN_BASIC_ASSERT(data.jingle_playing, "There's no jingle playing");
+    int hw_volume = _hw_music_volume(volume);
+    BN_BASIC_ASSERT(data.jingle_playing, "There's no jingle playing");
 
+    if(hw_volume != _hw_music_volume(data.jingle_volume))
+    {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = JINGLE_SET_VOLUME;
-        new(data.command_datas + commands) set_jingle_volume_command(_hw_music_volume(volume));
+        new(data.command_datas + commands) set_jingle_volume_command(hw_volume);
         data.commands_count = commands + 1;
-
-        data.jingle_volume = volume;
     }
+
+    data.jingle_volume = volume;
 }
 
 bool dmg_music_playing()
@@ -894,14 +901,17 @@ void set_dmg_music_position(const bn::dmg_music_position& position)
 {
     BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
 
-    int commands = data.commands_count;
-    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+    if(position != data.dmg_music_position)
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
-    data.command_codes[commands] = DMG_MUSIC_SET_POSITION;
-    new(data.command_datas + commands) set_dmg_music_position_command(position.pattern(), position.row());
-    data.commands_count = commands + 1;
+        data.command_codes[commands] = DMG_MUSIC_SET_POSITION;
+        new(data.command_datas + commands) set_dmg_music_position_command(position.pattern(), position.row());
+        data.commands_count = commands + 1;
 
-    data.dmg_music_position = position;
+        data.dmg_music_position = position;
+    }
 }
 
 fixed dmg_music_left_volume()
@@ -930,21 +940,23 @@ void set_dmg_music_right_volume(fixed right_volume)
 
 void set_dmg_music_volume(fixed left_volume, fixed right_volume)
 {
-    if(left_volume != data.dmg_music_left_volume || right_volume != data.dmg_music_right_volume)
-    {
-        BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    int hw_left_volume = _hw_dmg_music_volume(left_volume);
+    int hw_right_volume = _hw_dmg_music_volume(right_volume);
+    BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
 
+    if(hw_left_volume != _hw_dmg_music_volume(data.dmg_music_left_volume) ||
+            hw_right_volume != _hw_dmg_music_volume(data.dmg_music_right_volume))
+    {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = DMG_MUSIC_SET_VOLUME;
-        new(data.command_datas + commands) set_dmg_music_volume_command(
-                    _hw_dmg_music_volume(left_volume), _hw_dmg_music_volume(right_volume));
+        new(data.command_datas + commands) set_dmg_music_volume_command(hw_left_volume, hw_right_volume);
         data.commands_count = commands + 1;
-
-        data.dmg_music_left_volume = left_volume;
-        data.dmg_music_right_volume = right_volume;
     }
+
+    data.dmg_music_left_volume = left_volume;
+    data.dmg_music_right_volume = right_volume;
 }
 
 bool dmg_sync_enabled()
@@ -1059,13 +1071,21 @@ void set_sound_speed(uint16_t handle, fixed speed)
 
     if(speed != sound_data.speed)
     {
-        int commands = data.commands_count;
-        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+        fixed_t<10> current_speed = bn::max(fixed_t<10>(sound_data.speed), fixed_t<10>::from_data(1));
+        fixed_t<10> scale = fixed_t<10>(speed).unsafe_division(current_speed);
 
-        bn::fixed scale = speed.unsafe_division(sound_data.speed);
-        data.command_codes[commands] = SOUND_SET_SPEED;
-        new(data.command_datas + commands) set_sound_speed_command(handle, _hw_sound_speed(scale));
-        data.commands_count = commands + 1;
+        if(scale != 1)
+        {
+            int hw_scale = scale.data();
+            BN_BASIC_ASSERT(hw_scale < 65536, "Speed change is too high: ", sound_data.speed, " - ", speed);
+
+            int commands = data.commands_count;
+            BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+            data.command_codes[commands] = SOUND_SET_SPEED;
+            new(data.command_datas + commands) set_sound_speed_command(handle, hw_scale);
+            data.commands_count = commands + 1;
+        }
 
         sound_data.speed = speed;
     }
@@ -1085,18 +1105,19 @@ void set_sound_panning(uint16_t handle, fixed panning)
     BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
 
     sound_data_type& sound_data = it->second;
+    int hw_panning = _hw_sound_panning(panning);
 
-    if(panning != sound_data.panning)
+    if(hw_panning != _hw_sound_panning(sound_data.panning))
     {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = SOUND_SET_PANNING;
-        new(data.command_datas + commands) set_sound_panning_command(handle, _hw_sound_panning(panning));
+        new(data.command_datas + commands) set_sound_panning_command(handle, hw_panning);
         data.commands_count = commands + 1;
-
-        sound_data.panning = panning;
     }
+
+    sound_data.panning = panning;
 }
 
 void stop_all_sounds()
@@ -1117,17 +1138,19 @@ fixed sound_master_volume()
 
 void set_sound_master_volume(fixed volume)
 {
-    if(volume != data.sound_master_volume)
+    int hw_volume = _hw_sound_master_volume(volume);
+
+    if(hw_volume != _hw_sound_master_volume(data.sound_master_volume))
     {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = SOUND_SET_MASTER_VOLUME;
-        new(data.command_datas + commands) set_sound_master_volume_command(_hw_sound_master_volume(volume));
+        new(data.command_datas + commands) set_sound_master_volume_command(hw_volume);
         data.commands_count = commands + 1;
-
-        data.sound_master_volume = volume;
     }
+
+    data.sound_master_volume = volume;
 }
 
 bool update_on_vblank()

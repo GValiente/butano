@@ -318,41 +318,79 @@ namespace
         common::info info("Sound handle", info_text_lines, text_generator);
         info.set_show_always(true);
 
-        bn::sound_handle sound_handle = bn::sound_items::victory_3.play(0.5);
+        bn::optional<bn::sound_handle> sound_handle;
 
         while(! bn::keypad::start_pressed())
         {
-            if(sound_handle.active())
+            if(! sound_handle || ! sound_handle->active())
             {
-                if(bn::keypad::a_pressed())
-                {
-                    sound_handle.stop();
-                }
-                else if(bn::keypad::up_held())
-                {
-                    sound_handle.set_speed(bn::min(sound_handle.speed() + 0.01, bn::fixed(64)));
-                }
-                else if(bn::keypad::down_held())
-                {
-                    sound_handle.set_speed(bn::max(sound_handle.speed() - 0.01, bn::fixed(0.25)));
-                }
-                else if(bn::keypad::left_held())
-                {
-                    sound_handle.set_panning(bn::max(sound_handle.panning() - 0.01, bn::fixed(-1)));
-                }
-                else if(bn::keypad::right_held())
-                {
-                    sound_handle.set_panning(bn::min(sound_handle.panning() + 0.01, bn::fixed(1)));
-                }
+                sound_handle = bn::sound_items::victory_3.play(0.5);
             }
             else
             {
-                sound_handle = bn::sound_items::victory_3.play(0.5);
+                bn::fixed speed = sound_handle->speed();
+                bn::fixed panning = sound_handle->panning();
+
+                if(bn::keypad::a_pressed())
+                {
+                    sound_handle->stop();
+                }
+                else if(bn::keypad::up_held())
+                {
+                    sound_handle->set_speed(bn::min(speed + 0.01, bn::fixed(64)));
+                }
+                else if(bn::keypad::down_held())
+                {
+                    sound_handle->set_speed(bn::max(speed - 0.01, bn::fixed(0.25)));
+                }
+                else if(bn::keypad::left_held())
+                {
+                    sound_handle->set_panning(bn::max(panning - 0.01, bn::fixed(-1)));
+                }
+                else if(bn::keypad::right_held())
+                {
+                    sound_handle->set_panning(bn::min(panning + 0.01, bn::fixed(1)));
+                }
             }
 
             info.update();
             bn::core::update();
         }
+
+        bn::sound::stop_all();
+    }
+
+    void sound_handle_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Sound handle actions", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::optional<bn::sound_speed_to_action> action;
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(! action || ! action->handle().active())
+            {
+                bn::sound_handle sound_handle = bn::sound_items::victory_3.play(0.5, 0.25, 0);
+                action = bn::sound_speed_to_action(sound_handle, 120, 2);
+            }
+            else
+            {
+                if(! action->done())
+                {
+                    action->update();
+                }
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::sound::stop_all();
     }
 
     void jingle_scene(bn::sprite_text_generator& text_generator)
@@ -401,6 +439,11 @@ namespace
         }
 
         bn::music::stop();
+
+        if(bn::jingle::playing())
+        {
+            bn::jingle::set_volume(0);
+        }
     }
 
     void jingle_actions_scene(bn::sprite_text_generator& text_generator)
@@ -434,6 +477,11 @@ namespace
         }
 
         bn::music::stop();
+
+        if(bn::jingle::playing())
+        {
+            bn::jingle::set_volume(0);
+        }
     }
 }
 
@@ -471,6 +519,9 @@ int main()
         bn::core::update();
 
         sound_handle_scene(text_generator);
+        bn::core::update();
+
+        sound_handle_actions_scene(text_generator);
         bn::core::update();
 
         jingle_scene(text_generator);

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn_sound_actions.h file | Butano Docs</title>
+  <title>bn::sound_speed_loop_action class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,80 +47,86 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          bn_sound_actions.h <span class="m-thin">file</span>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>sound_speed_loop_action <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__sound__actions_8h.html">&lt;bn_sound_actions.h&gt;</a></div>
         </h1>
+        <p>Modifies the speed of a sound effect from a minimum to a maximum. When the speed is equal to the given final state, it goes back to its initial state and vice versa.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
+                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p><a href="namespacebn_1_1sound.html" class="m-doc">bn::<wbr />sound</a> actions header file.</p>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main Butano namespace.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Value, typename Property, class PropertyManager&gt;</div>
+              class <a href="classbn_1_1loop__value__template__action.html" class="m-doc">loop_value_template_action&lt;sound_handle, fixed, sound_speed_manager&gt;</a>
+            </dt>
+            <dd>Modifies the property of a value by delta from a minimum to a maximum. When the property is equal to the given final state, it goes back to its initial state and vice versa.</dd>
           </dl>
         </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              class <a href="classbn_1_1sound__speed__manager.html" class="m-doc">bn::sound_speed_manager</a>
+              <span class="m-doc-wrap-bumper"><a href="#acef072c3d5c55950fcfd722d6397fcec" class="m-doc">sound_speed_loop_action</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a> handle,
+              int duration_updates,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> final_speed)</span>
             </dt>
-            <dd>Manages the speed of a sound effect.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__speed__to__action.html" class="m-doc">bn::sound_speed_to_action</a>
-            </dt>
-            <dd>Modifies the speed of a sound effect until it has a given state.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__speed__loop__action.html" class="m-doc">bn::sound_speed_loop_action</a>
-            </dt>
-            <dd>Modifies the speed of a sound effect from a minimum to a maximum. When the speed is equal to the given final state, it goes back to its initial state and vice versa.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__speed__toggle__action.html" class="m-doc">bn::sound_speed_toggle_action</a>
-            </dt>
-            <dd>Changes the speed of a sound effect when the action is updated a given number of times.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__panning__manager.html" class="m-doc">bn::sound_panning_manager</a>
-            </dt>
-            <dd>Manages the panning of a sound effect.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__panning__to__action.html" class="m-doc">bn::sound_panning_to_action</a>
-            </dt>
-            <dd>Modifies the panning of a sound effect until it has a given state.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__panning__loop__action.html" class="m-doc">bn::sound_panning_loop_action</a>
-            </dt>
-            <dd>Modifies the panning of a sound effect from a minimum to a maximum. When the panning is equal to the given final state, it goes back to its initial state and vice versa.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__panning__toggle__action.html" class="m-doc">bn::sound_panning_toggle_action</a>
-            </dt>
-            <dd>Changes the panning of a sound effect when the action is updated a given number of times.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__master__volume__manager.html" class="m-doc">bn::sound_master_volume_manager</a>
-            </dt>
-            <dd>Manages the master volume of all sound effects.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__master__volume__to__action.html" class="m-doc">bn::sound_master_volume_to_action</a>
-            </dt>
-            <dd>Modifies the master volume of all sound effects until it has a given state.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__master__volume__loop__action.html" class="m-doc">bn::sound_master_volume_loop_action</a>
-            </dt>
-            <dd>Modifies the master volume of all sound effects from a minimum to a maximum. When the volume is equal to the given final state, it goes back to its initial state and vice versa.</dd>
-            <dt>
-              class <a href="classbn_1_1sound__master__volume__toggle__action.html" class="m-doc">bn::sound_master_volume_toggle_action</a>
-            </dt>
-            <dd>Changes the master volume of all sound effects when the action is updated a given number of times.</dd>
+            <dd>Constructor.</dd>
           </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="afebdbff3e7f4af58ca4630fb37c4e179">
+              <span class="m-doc-wrap-bumper">auto <a href="#afebdbff3e7f4af58ca4630fb37c4e179" class="m-doc-self">handle</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a></span>
+            </dt>
+            <dd>Returns the <a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a> to modify.</dd>
+            <dt id="ad4a97c35c33ddb96eaf62fd129028bda">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad4a97c35c33ddb96eaf62fd129028bda" class="m-doc-self">final_speed</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>When the speed of the given <a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a> is equal to this returned parameter, it goes back to its initial state and vice versa.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="acef072c3d5c55950fcfd722d6397fcec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sound_speed_loop_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acef072c3d5c55950fcfd722d6397fcec" class="m-doc-self">sound_speed_loop_action</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a> handle,
+              int duration_updates,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> final_speed)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">handle</td>
+                  <td><a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a> to modify.</td>
+                </tr>
+                <tr>
+                  <td>duration_updates</td>
+                  <td>How much times the action has to be updated before changing the direction of the speed delta.</td>
+                </tr>
+                <tr>
+                  <td>final_speed</td>
+                  <td>When the speed of the given <a href="classbn_1_1sound__handle.html" class="m-doc">sound_<wbr />handle</a> is equal to this parameter, it goes back to its initial state and vice versa.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
         </section>
       </div>
     </div>

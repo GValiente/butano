@@ -29,11 +29,6 @@ affine_bg_tiles_ptr affine_bg_tiles_ptr::create(const affine_bg_tiles_item& tile
     return affine_bg_tiles_ptr(bg_blocks_manager::create_affine_tiles(tiles_item, false));
 }
 
-affine_bg_tiles_ptr affine_bg_tiles_ptr::create_new(const affine_bg_tiles_item& tiles_item)
-{
-    return affine_bg_tiles_ptr(bg_blocks_manager::create_new_affine_tiles(tiles_item, false));
-}
-
 affine_bg_tiles_ptr affine_bg_tiles_ptr::allocate(int tiles_count)
 {
     return affine_bg_tiles_ptr(bg_blocks_manager::allocate_affine_tiles(tiles_count, false));
@@ -42,19 +37,6 @@ affine_bg_tiles_ptr affine_bg_tiles_ptr::allocate(int tiles_count)
 optional<affine_bg_tiles_ptr> affine_bg_tiles_ptr::create_optional(const affine_bg_tiles_item& tiles_item)
 {
     int handle = bg_blocks_manager::create_affine_tiles(tiles_item, true);
-    optional<affine_bg_tiles_ptr> result;
-
-    if(handle >= 0)
-    {
-        result = affine_bg_tiles_ptr(handle);
-    }
-
-    return result;
-}
-
-optional<affine_bg_tiles_ptr> affine_bg_tiles_ptr::create_new_optional(const affine_bg_tiles_item& tiles_item)
-{
-    int handle = bg_blocks_manager::create_new_affine_tiles(tiles_item, true);
     optional<affine_bg_tiles_ptr> result;
 
     if(handle >= 0)

@@ -65,7 +65,7 @@ affine_bg_tiles_ptr affine_bg_tiles_item::create_tiles() const
 
 affine_bg_tiles_ptr affine_bg_tiles_item::create_new_tiles() const
 {
-    return affine_bg_tiles_ptr::create_new(*this);
+    return affine_bg_tiles_ptr::create(*this);
 }
 
 optional<affine_bg_tiles_ptr> affine_bg_tiles_item::create_tiles_optional() const
@@ -75,7 +75,7 @@ optional<affine_bg_tiles_ptr> affine_bg_tiles_item::create_tiles_optional() cons
 
 optional<affine_bg_tiles_ptr> affine_bg_tiles_item::create_new_tiles_optional() const
 {
-    return affine_bg_tiles_ptr::create_new_optional(*this);
+    return affine_bg_tiles_ptr::create_optional(*this);
 }
 
 }

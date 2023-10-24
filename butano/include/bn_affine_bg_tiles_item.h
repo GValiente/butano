@@ -126,19 +126,12 @@ public:
      */
     [[nodiscard]] affine_bg_tiles_ptr create_tiles() const;
 
-    /**
-     * @brief Creates a new affine_bg_tiles_ptr which reference the background tiles.
-     *
-     * The background tiles system does not support multiple
-     * affine_bg_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
-     *
-     * The tiles are not copied but referenced, so they should outlive the affine_bg_tiles_ptr
-     * to avoid dangling references.
-     *
-     * @return affine_bg_tiles_ptr which reference the background tiles.
-     */
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create_tiles() method instead")]]
     [[nodiscard]] affine_bg_tiles_ptr create_new_tiles() const;
+
+    /// @endcond
 
     /**
      * @brief Searches for an affine_bg_tiles_ptr which reference the background tiles.
@@ -153,20 +146,12 @@ public:
      */
     [[nodiscard]] optional<affine_bg_tiles_ptr> create_tiles_optional() const;
 
-    /**
-     * @brief Creates a new affine_bg_tiles_ptr which reference the background tiles.
-     *
-     * The background tiles system does not support multiple
-     * affine_bg_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
-     *
-     * The tiles are not copied but referenced, so they should outlive the affine_bg_tiles_ptr
-     * to avoid dangling references.
-     *
-     * @return affine_bg_tiles_ptr which reference the background tiles if it could be allocated;
-     * bn::nullopt otherwise.
-     */
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create_tiles_optional() method instead")]]
     [[nodiscard]] optional<affine_bg_tiles_ptr> create_new_tiles_optional() const;
+
+    /// @endcond
 
     /**
      * @brief Equal operator.

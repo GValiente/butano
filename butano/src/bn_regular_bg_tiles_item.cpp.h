@@ -65,7 +65,7 @@ regular_bg_tiles_ptr regular_bg_tiles_item::create_tiles() const
 
 regular_bg_tiles_ptr regular_bg_tiles_item::create_new_tiles() const
 {
-    return regular_bg_tiles_ptr::create_new(*this);
+    return regular_bg_tiles_ptr::create(*this);
 }
 
 optional<regular_bg_tiles_ptr> regular_bg_tiles_item::create_tiles_optional() const
@@ -75,7 +75,7 @@ optional<regular_bg_tiles_ptr> regular_bg_tiles_item::create_tiles_optional() co
 
 optional<regular_bg_tiles_ptr> regular_bg_tiles_item::create_new_tiles_optional() const
 {
-    return regular_bg_tiles_ptr::create_new_optional(*this);
+    return regular_bg_tiles_ptr::create_optional(*this);
 }
 
 }

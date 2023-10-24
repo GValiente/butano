@@ -63,21 +63,15 @@ public:
      */
     [[nodiscard]] static regular_bg_tiles_ptr create(const regular_bg_tiles_item& tiles_item);
 
-    /**
-     * @brief Creates a regular_bg_tiles_ptr which references the given tiles.
-     *
-     * The background tiles system does not support multiple
-     * regular_bg_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The tiles are not copied but referenced,
-     * so they should outlive the regular_bg_tiles_ptr to avoid dangling references.
-     *
-     * @param tiles_item regular_bg_tiles_item which references the tiles to handle.
-     * @return regular_bg_tiles_ptr which references tiles_item.graphics_tiles_ref().
-     */
-    [[nodiscard]] static regular_bg_tiles_ptr create_new(const regular_bg_tiles_item& tiles_item);
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create() method instead")]]
+    [[nodiscard]] static regular_bg_tiles_ptr create_new(const regular_bg_tiles_item& tiles_item)
+    {
+        return create(tiles_item);
+    }
+
+    /// @endcond
 
     /**
      * @brief Creates a regular_bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
@@ -101,23 +95,15 @@ public:
      */
     [[nodiscard]] static optional<regular_bg_tiles_ptr> create_optional(const regular_bg_tiles_item& tiles_item);
 
-    /**
-     * @brief Creates a regular_bg_tiles_ptr which references the given tiles.
-     *
-     * The background tiles system does not support multiple
-     * regular_bg_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not,
-     * you should use the static create_optional methods instead.
-     *
-     * The tiles are not copied but referenced,
-     * so they should outlive the regular_bg_tiles_ptr to avoid dangling references.
-     *
-     * @param tiles_item regular_bg_tiles_item which references the tiles to handle.
-     * @return regular_bg_tiles_ptr which references tiles_item.graphics_tiles_ref() if it could be allocated;
-     * bn::nullopt otherwise.
-     */
-    [[nodiscard]] static optional<regular_bg_tiles_ptr> create_new_optional(
-            const regular_bg_tiles_item& tiles_item);
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create_optional() method instead")]]
+    [[nodiscard]] static optional<regular_bg_tiles_ptr> create_new_optional(const regular_bg_tiles_item& tiles_item)
+    {
+        return create_optional(tiles_item);
+    }
+
+    /// @endcond
 
     /**
      * @brief Creates a regular_bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.

@@ -428,7 +428,7 @@ void affine_bg_map_ptr::set_tiles(const affine_bg_tiles_item& tiles_item)
     else
     {
         bg_blocks_manager::remove_affine_map_tiles(_handle);
-        bg_blocks_manager::set_affine_map_tiles(_handle, tiles_item.create_new_tiles());
+        bg_blocks_manager::set_affine_map_tiles(_handle, tiles_item.create_tiles());
     }
 }
 

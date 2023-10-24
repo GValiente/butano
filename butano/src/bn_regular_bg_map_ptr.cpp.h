@@ -438,7 +438,7 @@ void regular_bg_map_ptr::set_tiles(const regular_bg_tiles_item& tiles_item)
     else
     {
         bg_blocks_manager::remove_regular_map_tiles(_handle);
-        bg_blocks_manager::set_regular_map_tiles(_handle, tiles_item.create_new_tiles());
+        bg_blocks_manager::set_regular_map_tiles(_handle, tiles_item.create_tiles());
     }
 }
 
@@ -493,7 +493,7 @@ void regular_bg_map_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tile
     if(! tiles_ptr)
     {
         bg_blocks_manager::remove_regular_map_tiles(_handle);
-        tiles = tiles_item.create_new_tiles();
+        tiles = tiles_item.create_tiles();
         tiles_ptr = tiles.get();
     }
 

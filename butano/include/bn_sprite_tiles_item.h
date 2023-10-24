@@ -256,32 +256,15 @@ public:
      */
     [[nodiscard]] sprite_tiles_ptr create_tiles(int graphics_index) const;
 
-    /**
-     * @brief Creates a new sprite_tiles_ptr which references the first sprite tile set.
-     *
-     * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
-     *
-     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr
-     * to avoid dangling references.
-     *
-     * @return sprite_tiles_ptr which references the first sprite tile set.
-     */
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create_tiles() method instead")]]
     [[nodiscard]] sprite_tiles_ptr create_new_tiles() const;
 
-    /**
-     * @brief Creates a new sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
-     *
-     * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
-     *
-     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr
-     * to avoid dangling references.
-     *
-     * @param graphics_index Index of the tile set to reference.
-     * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
-     */
+    [[deprecated("Call create_tiles() method instead")]]
     [[nodiscard]] sprite_tiles_ptr create_new_tiles(int graphics_index) const;
+
+    /// @endcond
 
     /**
      * @brief Searches for a sprite_tiles_ptr which references the first sprite tile set.
@@ -310,34 +293,15 @@ public:
      */
     [[nodiscard]] optional<sprite_tiles_ptr> create_tiles_optional(int graphics_index) const;
 
-    /**
-     * @brief Creates a new sprite_tiles_ptr which references the first sprite tile set.
-     *
-     * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
-     *
-     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr
-     * to avoid dangling references.
-     *
-     * @return sprite_tiles_ptr which references the first sprite tile set if it could be allocated;
-     * bn::nullopt otherwise.
-     */
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create_tiles_optional() method instead")]]
     [[nodiscard]] optional<sprite_tiles_ptr> create_new_tiles_optional() const;
 
-    /**
-     * @brief Creates a new sprite_tiles_ptr which references the sprite tile set indicated by graphics_index.
-     *
-     * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.
-     *
-     * The tiles are not copied but referenced, so they should outlive the sprite_tiles_ptr
-     * to avoid dangling references.
-     *
-     * @param graphics_index Index of the tile set to reference.
-     * @return sprite_tiles_ptr which references the sprite tile set indicated by graphics_index
-     * if it could be allocated; bn::nullopt otherwise.
-     */
+    [[deprecated("Call create_tiles_optional() method instead")]]
     [[nodiscard]] optional<sprite_tiles_ptr> create_new_tiles_optional(int graphics_index) const;
+
+    /// @endcond
 
     /**
      * @brief Equal operator.

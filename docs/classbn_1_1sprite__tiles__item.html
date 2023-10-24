@@ -157,14 +157,6 @@
             </dt>
             <dd>Searches for a <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the sprite tile set indicated by graphics_index. If it is not found, it creates a <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references it.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a2781ff40e670f0d1fd83b77cc720cd97" class="m-doc">create_new_tiles</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a></span>
-            </dt>
-            <dd>Creates a new <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the first sprite tile set.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ab382dcc4cb479238987a32e103712705" class="m-doc">create_new_tiles</a>(</span><span class="m-doc-wrap">int graphics_index) const -&gt; <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a></span>
-            </dt>
-            <dd>Creates a new <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the sprite tile set indicated by graphics_index.</dd>
-            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a83447f068effbde7410acc00da1460c2" class="m-doc">create_tiles_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Searches for a <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the first sprite tile set. If it is not found, it creates a <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references it.</dd>
@@ -172,14 +164,6 @@
               <span class="m-doc-wrap-bumper">auto <a href="#adfa2bc7fd5504c04c0f7e545f29f1c25" class="m-doc">create_tiles_optional</a>(</span><span class="m-doc-wrap">int graphics_index) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Searches for a <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the sprite tile set indicated by graphics_index. If it is not found, it creates a <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references it.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a708a1990e8293c0da823fde35d9090de" class="m-doc">create_new_tiles_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt;</span>
-            </dt>
-            <dd>Creates a new <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the first sprite tile set.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a6baa22af54bb28e211f34f5670e85582" class="m-doc">create_new_tiles_optional</a>(</span><span class="m-doc-wrap">int graphics_index) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt;</span>
-            </dt>
-            <dd>Creates a new <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the sprite tile set indicated by graphics_index.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -418,45 +402,6 @@
             </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
-          <section class="m-doc-details" id="a2781ff40e670f0d1fd83b77cc720cd97"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> bn::<wbr />sprite_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2781ff40e670f0d1fd83b77cc720cd97" class="m-doc-self">create_new_tiles</a>(</span><span class="m-doc-wrap">) const</span></span>
-            </h3>
-            <p>Creates a new <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the first sprite tile set.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the first sprite tile set.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The sprite tiles system does not support multiple <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles. If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
-          </div></section>
-          <section class="m-doc-details" id="ab382dcc4cb479238987a32e103712705"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> bn::<wbr />sprite_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab382dcc4cb479238987a32e103712705" class="m-doc-self">create_new_tiles</a>(</span><span class="m-doc-wrap">int graphics_index) const</span></span>
-            </h3>
-            <p>Creates a new <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the sprite tile set indicated by graphics_index.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">graphics_index</td>
-                  <td>Index of the tile set to reference.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the sprite tile set indicated by graphics_index.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The sprite tiles system does not support multiple <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles. If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
-          </div></section>
           <section class="m-doc-details" id="a83447f068effbde7410acc00da1460c2"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />sprite_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a83447f068effbde7410acc00da1460c2" class="m-doc-self">create_tiles_optional</a>(</span><span class="m-doc-wrap">) const</span></span>
@@ -495,45 +440,6 @@
               </tfoot>
             </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
-          </div></section>
-          <section class="m-doc-details" id="a708a1990e8293c0da823fde35d9090de"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />sprite_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a708a1990e8293c0da823fde35d9090de" class="m-doc-self">create_new_tiles_optional</a>(</span><span class="m-doc-wrap">) const</span></span>
-            </h3>
-            <p>Creates a new <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the first sprite tile set.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <tfoot>
-                <tr>
-                  <th style="width: 1%">Returns</th>
-                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the first sprite tile set if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The sprite tiles system does not support multiple <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles. If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
-          </div></section>
-          <section class="m-doc-details" id="a6baa22af54bb28e211f34f5670e85582"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />sprite_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6baa22af54bb28e211f34f5670e85582" class="m-doc-self">create_new_tiles_optional</a>(</span><span class="m-doc-wrap">int graphics_index) const</span></span>
-            </h3>
-            <p>Creates a new <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the sprite tile set indicated by graphics_index.</p>
-            <table class="m-table m-fullwidth m-flat">
-              <thead>
-                <tr><th colspan="2">Parameters</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%">graphics_index</td>
-                  <td>Index of the tile set to reference.</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Returns</th>
-                  <td><a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> which references the sprite tile set indicated by graphics_index if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
-                </tr>
-              </tfoot>
-            </table>
-<p>The sprite tiles system does not support multiple <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles. If you are not sure if the given tiles are already referenced or not, you should use create_tiles methods.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1sprite__tiles__ptr.html" class="m-doc">sprite_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="ade0eefe4c5b7e63ad266afeffe0b34e0"><div>
             <h3>

@@ -261,7 +261,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item)
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, tiles_item.create_new_tiles());
+        sprites_manager::set_tiles(_handle, tiles_item.create_tiles());
     }
 }
 
@@ -276,7 +276,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_ind
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, tiles_item.create_new_tiles(graphics_index));
+        sprites_manager::set_tiles(_handle, tiles_item.create_tiles(graphics_index));
     }
 }
 
@@ -291,7 +291,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_sha
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, shape_size, tiles_item.create_new_tiles());
+        sprites_manager::set_tiles(_handle, shape_size, tiles_item.create_tiles());
     }
 }
 
@@ -307,7 +307,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_sha
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, shape_size, tiles_item.create_new_tiles(graphics_index));
+        sprites_manager::set_tiles(_handle, shape_size, tiles_item.create_tiles(graphics_index));
     }
 }
 
@@ -370,7 +370,7 @@ void sprite_ptr::set_item(const sprite_item& item)
     if(! tiles_ptr)
     {
         sprites_manager::remove_tiles(_handle);
-        tiles = tiles_item.create_new_tiles();
+        tiles = tiles_item.create_tiles();
         tiles_ptr = tiles.get();
     }
 
@@ -401,7 +401,7 @@ void sprite_ptr::set_item(const sprite_item& item, int graphics_index)
     if(! tiles_ptr)
     {
         sprites_manager::remove_tiles(_handle);
-        tiles = tiles_item.create_new_tiles(graphics_index);
+        tiles = tiles_item.create_tiles(graphics_index);
         tiles_ptr = tiles.get();
     }
 

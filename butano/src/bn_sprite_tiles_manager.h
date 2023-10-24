@@ -37,13 +37,9 @@ namespace bn::sprite_tiles_manager
 
     [[nodiscard]] int create(const span<const tile>& tiles_ref, compression_type compression);
 
-    [[nodiscard]] int create_new(const span<const tile>& tiles_ref, compression_type compression);
-
     [[nodiscard]] int allocate(int tiles_count, bpp_mode bpp);
 
     [[nodiscard]] int create_optional(const span<const tile>& tiles_ref, compression_type compression);
-
-    [[nodiscard]] int create_new_optional(const span<const tile>& tiles_ref, compression_type compression);
 
     [[nodiscard]] int allocate_optional(int tiles_count, bpp_mode bpp);
 

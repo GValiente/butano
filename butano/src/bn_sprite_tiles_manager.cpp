@@ -782,44 +782,6 @@ int create(const span<const tile>& tiles_ref, compression_type compression)
     return result;
 }
 
-int create_new(const span<const tile>& tiles_ref, compression_type compression)
-{
-    const tile* tiles_data = tiles_ref.data();
-    int tiles_count = tiles_ref.size();
-
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW: ", tiles_data, " - ", tiles_count, " - ",
-                        int(compression));
-
-    BN_BASIC_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
-                    "Multiple copies of the same tiles data not supported");
-
-    int result = _create_impl(tiles_data, compression, tiles_count);
-
-    if(result >= 0)
-    {
-        data.items_map.insert(tiles_data, result);
-
-        BN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
-        BN_SPRITE_TILES_LOG_STATUS();
-    }
-    else
-    {
-        BN_SPRITE_TILES_LOG("NOT CREATED");
-
-        #if BN_CFG_LOG_ENABLED
-            log_status();
-        #endif
-
-        BN_ERROR("Sprite tiles create new failed:",
-                 "\n\tTiles data: ", tiles_data,
-                 "\n\tTiles count: ", tiles_count,
-                 "\n\nThere's no more available VRAM.",
-                 _status_log_message);
-    }
-
-    return result;
-}
-
 int allocate(int tiles_count, bpp_mode bpp)
 {
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE: ", tiles_count, " - ", int(bpp));
@@ -866,34 +828,6 @@ int create_optional(const span<const tile>& tiles_ref, compression_type compress
     }
 
     result = _create_impl(tiles_data, compression, tiles_count);
-
-    if(result >= 0)
-    {
-        data.items_map.insert(tiles_data, result);
-
-        BN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
-        BN_SPRITE_TILES_LOG_STATUS();
-    }
-    else
-    {
-        BN_SPRITE_TILES_LOG("NOT CREATED");
-    }
-
-    return result;
-}
-
-int create_new_optional(const span<const tile>& tiles_ref, compression_type compression)
-{
-    const tile* tiles_data = tiles_ref.data();
-    int tiles_count = tiles_ref.size();
-
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - CREATE NEW OPTIONAL: ", tiles_data, " - ", tiles_count, " - ",
-                        int(compression));
-
-    BN_BASIC_ASSERT(data.items_map.find(tiles_data) == data.items_map.end(),
-                    "Multiple copies of the same tiles data not supported");
-
-    int result = _create_impl(tiles_data, compression, tiles_count);
 
     if(result >= 0)
     {

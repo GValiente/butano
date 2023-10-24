@@ -85,36 +85,21 @@ public:
      */
     [[nodiscard]] static sprite_tiles_ptr create(const sprite_tiles_item& tiles_item, int graphics_index);
 
-    /**
-     * @brief Creates a sprite_tiles_ptr which references the given tiles.
-     *
-     * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The tiles are not copied but referenced,
-     * so they should outlive the sprite_tiles_ptr to avoid dangling references.
-     *
-     * @param tiles_item sprite_tiles_item which references the tiles to handle.
-     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref().
-     */
-    [[nodiscard]] static sprite_tiles_ptr create_new(const sprite_tiles_item& tiles_item);
+    /// @cond DO_NOT_DOCUMENT
 
-    /**
-     * @brief Creates a sprite_tiles_ptr which references the given tiles.
-     *
-     * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The tiles are not copied but referenced,
-     * so they should outlive the sprite_tiles_ptr to avoid dangling references.
-     *
-     * @param tiles_item sprite_tiles_item which references the tiles to handle.
-     * @param graphics_index Index of the tile set to reference in sprite_tiles_item.
-     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index).
-     */
-    [[nodiscard]] static sprite_tiles_ptr create_new(const sprite_tiles_item& tiles_item, int graphics_index);
+    [[deprecated("Call create() method instead")]]
+    [[nodiscard]] static sprite_tiles_ptr create_new(const sprite_tiles_item& tiles_item)
+    {
+        return create(tiles_item);
+    }
+
+    [[deprecated("Call create() method instead")]]
+    [[nodiscard]] static sprite_tiles_ptr create_new(const sprite_tiles_item& tiles_item, int graphics_index)
+    {
+        return create(tiles_item, graphics_index);
+    }
+
+    /// @endcond
 
     /**
      * @brief Creates a sprite_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
@@ -152,39 +137,22 @@ public:
     [[nodiscard]] static optional<sprite_tiles_ptr> create_optional(const sprite_tiles_item& tiles_item,
                                                                     int graphics_index);
 
-    /**
-     * @brief Creates a sprite_tiles_ptr which references the given tiles.
-     *
-     * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not,
-     * you should use the static create_optional methods instead.
-     *
-     * The tiles are not copied but referenced,
-     * so they should outlive the sprite_tiles_ptr to avoid dangling references.
-     *
-     * @param tiles_item sprite_tiles_item which references the tiles to handle.
-     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref() if it could be allocated;
-     * bn::nullopt otherwise.
-     */
-    [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const sprite_tiles_item& tiles_item);
+    /// @cond DO_NOT_DOCUMENT
 
-    /**
-     * @brief Creates a sprite_tiles_ptr which references the given tiles.
-     *
-     * The sprite tiles system does not support multiple sprite_tiles_ptr items referencing to the same tiles.
-     * If you are not sure if the given tiles are already referenced or not,
-     * you should use the static create_optional methods instead.
-     *
-     * The tiles are not copied but referenced,
-     * so they should outlive the sprite_tiles_ptr to avoid dangling references.
-     *
-     * @param tiles_item sprite_tiles_item which references the tiles to handle.
-     * @param graphics_index Index of the tile set to reference in sprite_tiles_item.
-     * @return sprite_tiles_ptr which references tiles_item.graphics_tiles_ref(graphics_index)
-     * if it could be allocated; bn::nullopt otherwise.
-     */
-    [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const sprite_tiles_item& tiles_item,
-                                                                        int graphics_index);
+    [[deprecated("Call create_optional() method instead")]]
+    [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(const sprite_tiles_item& tiles_item)
+    {
+        return create_optional(tiles_item);
+    }
+
+    [[deprecated("Call create_optional() method instead")]]
+    [[nodiscard]] static optional<sprite_tiles_ptr> create_new_optional(
+            const sprite_tiles_item& tiles_item, int graphics_index)
+    {
+        return create_optional(tiles_item, graphics_index);
+    }
+
+    /// @endcond
 
     /**
      * @brief Creates a sprite_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.

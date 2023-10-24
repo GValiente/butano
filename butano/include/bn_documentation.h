@@ -2163,6 +2163,7 @@
  * * bn::jingle and jingle actions added.
  * * Audio commands generation optimized.
  * * Music ending detection fixed.
+ * * Create new tiles methods deprecated.
  *
  *
  * @section changelog_15_9_0 15.9.0

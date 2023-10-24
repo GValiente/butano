@@ -6,7 +6,6 @@
 #include "fr_shape_groups.h"
 
 #include "bn_hdma.h"
-#include "bn_colors.h"
 #include "bn_memory.h"
 #include "bn_sprites.h"
 #include "../../butano/hw/include/bn_hw_sprites.h"
@@ -214,7 +213,7 @@ void shape_groups::load_colors(const bn::span<const bn::color>& colors)
             {
                 bn::sprite_palette_item palette_item(palettes_colors[palette_index], bn::bpp_mode::BPP_4);
                 bn::sprite_palette_ptr palette = palette_item.create_new_palette();
-                _palette_ids[palette_index] = palette.id();
+                _palette_ids[palette_index] = uint8_t(palette.id());
                 _palettes.push_back(bn::move(palette));
             }
         }
@@ -291,19 +290,19 @@ void shape_groups::_clear()
 shape_groups::color_tiles::color_tiles(
         const bn::sprite_tiles_item& small_item, const bn::sprite_tiles_item& normal_item,
         const bn::sprite_tiles_item& big_item, const bn::sprite_tiles_item& huge_item) :
-    small_tiles(small_item.create_new_tiles()),
-    normal_tiles(normal_item.create_new_tiles()),
-    big_tiles(big_item.create_new_tiles()),
-    huge_tiles(huge_item.create_new_tiles())
+    small_tiles(small_item.create_tiles()),
+    normal_tiles(normal_item.create_tiles()),
+    big_tiles(big_item.create_tiles()),
+    huge_tiles(huge_item.create_tiles())
 {
 }
 
 void shape_groups::color_tiles_ids::load(const color_tiles& color_tiles)
 {
-    small_tiles_id = color_tiles.small_tiles.id();
-    normal_tiles_id = color_tiles.normal_tiles.id();
-    big_tiles_id = color_tiles.big_tiles.id();
-    huge_tiles_id = color_tiles.huge_tiles.id();
+    small_tiles_id = uint16_t(color_tiles.small_tiles.id());
+    normal_tiles_id = uint16_t(color_tiles.normal_tiles.id());
+    big_tiles_id = uint16_t(color_tiles.big_tiles.id());
+    huge_tiles_id = uint16_t(color_tiles.huge_tiles.id());
 }
 
 }

@@ -75,12 +75,12 @@ sprite_tiles_ptr sprite_tiles_item::create_tiles(int graphics_index) const
 
 sprite_tiles_ptr sprite_tiles_item::create_new_tiles() const
 {
-    return sprite_tiles_ptr::create_new(*this);
+    return sprite_tiles_ptr::create(*this);
 }
 
 sprite_tiles_ptr sprite_tiles_item::create_new_tiles(int graphics_index) const
 {
-    return sprite_tiles_ptr::create_new(*this, graphics_index);
+    return sprite_tiles_ptr::create(*this, graphics_index);
 }
 
 optional<sprite_tiles_ptr> sprite_tiles_item::create_tiles_optional() const
@@ -95,12 +95,12 @@ optional<sprite_tiles_ptr> sprite_tiles_item::create_tiles_optional(int graphics
 
 optional<sprite_tiles_ptr> sprite_tiles_item::create_new_tiles_optional() const
 {
-    return sprite_tiles_ptr::create_new_optional(*this);
+    return sprite_tiles_ptr::create_optional(*this);
 }
 
 optional<sprite_tiles_ptr> sprite_tiles_item::create_new_tiles_optional(int graphics_index) const
 {
-    return sprite_tiles_ptr::create_new_optional(*this, graphics_index);
+    return sprite_tiles_ptr::create_optional(*this, graphics_index);
 }
 
 }

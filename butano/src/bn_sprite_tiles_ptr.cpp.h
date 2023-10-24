@@ -46,21 +46,8 @@ sprite_tiles_ptr sprite_tiles_ptr::create(const sprite_tiles_item& tiles_item)
 
 sprite_tiles_ptr sprite_tiles_ptr::create(const sprite_tiles_item& tiles_item, int graphics_index)
 {
-    int handle = sprite_tiles_manager::create(tiles_item.graphics_tiles_ref(graphics_index),
-                                              tiles_item.compression());
-    return sprite_tiles_ptr(handle);
-}
-
-sprite_tiles_ptr sprite_tiles_ptr::create_new(const sprite_tiles_item& tiles_item)
-{
-    int handle = sprite_tiles_manager::create_new(tiles_item.graphics_tiles_ref(), tiles_item.compression());
-    return sprite_tiles_ptr(handle);
-}
-
-sprite_tiles_ptr sprite_tiles_ptr::create_new(const sprite_tiles_item& tiles_item, int graphics_index)
-{
-    int handle = sprite_tiles_manager::create_new(tiles_item.graphics_tiles_ref(graphics_index),
-                                                  tiles_item.compression());
+    int handle = sprite_tiles_manager::create(
+            tiles_item.graphics_tiles_ref(graphics_index), tiles_item.compression());
     return sprite_tiles_ptr(handle);
 }
 
@@ -85,37 +72,8 @@ optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(const sprite_tiles_
 optional<sprite_tiles_ptr> sprite_tiles_ptr::create_optional(
         const sprite_tiles_item& tiles_item, int graphics_index)
 {
-    int handle = sprite_tiles_manager::create_optional(tiles_item.graphics_tiles_ref(graphics_index),
-                                                       tiles_item.compression());
-    optional<sprite_tiles_ptr> result;
-
-    if(handle >= 0)
-    {
-        result = sprite_tiles_ptr(handle);
-    }
-
-    return result;
-}
-
-optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(const sprite_tiles_item& tiles_item)
-{
-    int handle = sprite_tiles_manager::create_new_optional(tiles_item.graphics_tiles_ref(),
-                                                           tiles_item.compression());
-    optional<sprite_tiles_ptr> result;
-
-    if(handle >= 0)
-    {
-        result = sprite_tiles_ptr(handle);
-    }
-
-    return result;
-}
-
-optional<sprite_tiles_ptr> sprite_tiles_ptr::create_new_optional(
-        const sprite_tiles_item& tiles_item, int graphics_index)
-{
-    int handle = sprite_tiles_manager::create_new_optional(tiles_item.graphics_tiles_ref(graphics_index),
-                                                           tiles_item.compression());
+    int handle = sprite_tiles_manager::create_optional(
+            tiles_item.graphics_tiles_ref(graphics_index), tiles_item.compression());
     optional<sprite_tiles_ptr> result;
 
     if(handle >= 0)

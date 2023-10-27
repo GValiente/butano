@@ -2156,7 +2156,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_16_0_0 16.0.0 (next release)
+ * @section changelog_16_0_0 16.0.0
  *
  * * bn::sound_handle and sound handle actions added.
  *   See the `audio` example to learn how to stop, release and setup sound effects with them.

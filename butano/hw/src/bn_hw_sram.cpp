@@ -18,7 +18,7 @@ static_assert(BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_4 ||
 
 namespace
 {
-    // https://forum.gbadev.org/viewtopic.php?f=4&t=2825
+    // https://gbadev.net/forum-archive/thread/4/2825.html
     alignas(int) __attribute__((used)) const char save_type[] = "SRAM_V113";
 }
 

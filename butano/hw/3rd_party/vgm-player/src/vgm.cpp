@@ -27,7 +27,6 @@ typedef struct {
 enum {
     VGM_ID_STOP,
     VGM_ID_PLAY,
-    VGM_ID_PUASE,
 };
 
 //---------------------------------------------------------------------------
@@ -141,6 +140,11 @@ bool VgmIntrVblank(void)
 	}
 }
 //---------------------------------------------------------------------------
+bool VgmActive(void)
+{
+	return Vgm.id == VGM_ID_PLAY;
+}
+
 u32 VgmGetOffsetPlay(void)
 {
 	return (u32)(Vgm.pCur - Vgm.pFile);

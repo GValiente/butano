@@ -2158,7 +2158,8 @@
  *
  * @section changelog_16_1_0 16.1.0 (next release)
  *
- * Sprite affine mats management CPU usage reduced.
+ * * Sprite affine mats management CPU usage reduced.
+ * * VGM music ending detection fixed.
  *
  *
  * @section changelog_16_0_0 16.0.0

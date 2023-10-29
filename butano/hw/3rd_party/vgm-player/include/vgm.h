@@ -8,6 +8,7 @@ void VgmPlay(const uint8_t* pFile, bool isLoop);
 void VgmStop(void);
 bool VgmIntrVblank(void);
 
+bool VgmActive(void);
 unsigned VgmGetOffsetPlay(void);
 void VgmSetOffsetPlay(unsigned offset);
 

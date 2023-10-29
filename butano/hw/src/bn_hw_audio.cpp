@@ -320,8 +320,16 @@ void dmg_music_position(int& pattern, int& row)
     }
     else
     {
-        pattern = int(VgmGetOffsetPlay());
-        row = 0;
+        if(VgmActive())
+        {
+            pattern = int(VgmGetOffsetPlay());
+            row = 0;
+        }
+        else
+        {
+            pattern = -1;
+            row = -1;
+        }
     }
 }
 

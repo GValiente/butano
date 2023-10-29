@@ -370,6 +370,8 @@ private:
     constexpr static fixed _min_inv_scale = 128;
     constexpr static fixed _min_scale = 1 / _min_inv_scale;
 
+    friend class affine_mat_attributes_reader;
+
     fixed _rotation_angle = 0;
     fixed _horizontal_scale = 1;
     fixed _vertical_scale = 1;

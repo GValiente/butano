@@ -14,6 +14,42 @@
 #include "bn_sprite_affine_mats.cpp.h"
 #include "bn_sprite_affine_mat_ptr.cpp.h"
 
+namespace bn
+{
+    class affine_mat_attributes_reader
+    {
+
+    public:
+        affine_mat_attributes_reader(const affine_mat_attributes& attributes) :
+            _attributes(attributes)
+        {
+        }
+
+        [[nodiscard]] int sin() const
+        {
+            return _attributes._sin;
+        }
+
+        [[nodiscard]] int cos() const
+        {
+            return _attributes._cos;
+        }
+
+        [[nodiscard]] unsigned sx() const
+        {
+            return _attributes._sx;
+        }
+
+        [[nodiscard]] unsigned sy() const
+        {
+            return _attributes._sy;
+        }
+
+    private:
+        const affine_mat_attributes& _attributes;
+    };
+}
+
 namespace bn::sprite_affine_mats_manager
 {
 
@@ -49,28 +85,6 @@ namespace
             flipped_identity = attributes.flipped_identity();
             remove_if_not_needed = false;
         }
-    };
-
-
-    class registers
-    {
-
-    public:
-        explicit registers(const affine_mat_attributes& attributes) :
-            _pa(int16_t(attributes.pa_register_value())),
-            _pb(int16_t(attributes.pb_register_value())),
-            _pc(int16_t(attributes.pc_register_value())),
-            _pd(int16_t(attributes.pd_register_value()))
-        {
-        }
-
-        [[nodiscard]] friend bool operator==(const registers& a, const registers& b) = default;
-
-    private:
-        int16_t _pa;
-        int16_t _pb;
-        int16_t _pc;
-        int16_t _pd;
     };
 
 
@@ -309,11 +323,13 @@ void set_rotation_angle(int id, fixed rotation_angle)
 
     if(rotation_angle != item.attributes.rotation_angle())
     {
-        registers old_registers(item.attributes);
+        affine_mat_attributes_reader reader(item.attributes);
+        int sin = reader.sin();
+        int cos = reader.cos();
         item.attributes.set_rotation_angle(rotation_angle);
         _update_flipped_identity(id);
 
-        if(registers(item.attributes) != old_registers)
+        if(reader.sin() != sin || reader.cos() != cos)
         {
             _update(id);
         }
@@ -331,12 +347,12 @@ void set_horizontal_scale(int id, fixed horizontal_scale)
 
     if(horizontal_scale != item.attributes.horizontal_scale())
     {
-        int pa = item.attributes.pa_register_value();
-        int pb = item.attributes.pb_register_value();
+        affine_mat_attributes_reader reader(item.attributes);
+        unsigned sx = reader.sx();
         item.attributes.set_horizontal_scale(horizontal_scale);
         _update_flipped_identity(id);
 
-        if(item.attributes.pa_register_value() != pa || item.attributes.pb_register_value() != pb)
+        if(reader.sx() != sx)
         {
             _update(id);
         }
@@ -354,12 +370,12 @@ void set_vertical_scale(int id, fixed vertical_scale)
 
     if(vertical_scale != item.attributes.vertical_scale())
     {
-        int pc = item.attributes.pc_register_value();
-        int pd = item.attributes.pd_register_value();
+        affine_mat_attributes_reader reader(item.attributes);
+        unsigned sy = reader.sy();
         item.attributes.set_vertical_scale(vertical_scale);
         _update_flipped_identity(id);
 
-        if(item.attributes.pc_register_value() != pc || item.attributes.pd_register_value() != pd)
+        if(reader.sy() != sy)
         {
             _update(id);
         }
@@ -372,11 +388,13 @@ void set_scale(int id, fixed scale)
 
     if(scale != item.attributes.horizontal_scale() || scale != item.attributes.vertical_scale())
     {
-        registers old_registers(item.attributes);
+        affine_mat_attributes_reader reader(item.attributes);
+        unsigned sx = reader.sx();
+        unsigned sy = reader.sy();
         item.attributes.set_scale(scale);
         _update_flipped_identity(id);
 
-        if(registers(item.attributes) != old_registers)
+        if(reader.sx() != sx || reader.sy() != sy)
         {
             _update(id);
         }
@@ -389,11 +407,13 @@ void set_scale(int id, fixed horizontal_scale, fixed vertical_scale)
 
     if(horizontal_scale != item.attributes.horizontal_scale() || vertical_scale != item.attributes.vertical_scale())
     {
-        registers old_registers(item.attributes);
+        affine_mat_attributes_reader reader(item.attributes);
+        unsigned sx = reader.sx();
+        unsigned sy = reader.sy();
         item.attributes.set_scale(horizontal_scale, vertical_scale);
         _update_flipped_identity(id);
 
-        if(registers(item.attributes) != old_registers)
+        if(reader.sx() != sx || reader.sy() != sy)
         {
             _update(id);
         }
@@ -522,11 +542,15 @@ const affine_mat_attributes& attributes(int id)
 void set_attributes(int id, const affine_mat_attributes& attributes)
 {
     item_type& item = data.items[id];
-    registers old_registers(item.attributes);
+    int pa = item.attributes.pa_register_value();
+    int pb = item.attributes.pb_register_value();
+    int pc = item.attributes.pc_register_value();
+    int pd = item.attributes.pd_register_value();
     item.attributes = attributes;
     _update_flipped_identity(id);
 
-    if(registers(attributes) != old_registers)
+    if(item.attributes.pa_register_value() != pa || item.attributes.pb_register_value() != pb ||
+        item.attributes.pc_register_value() != pc || item.attributes.pd_register_value() != pd)
     {
         _update(id);
     }

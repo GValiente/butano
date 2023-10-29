@@ -2156,6 +2156,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_16_1_0 16.1.0 (next release)
+ *
+ * Sprite affine mats management CPU usage reduced.
+ *
+ *
  * @section changelog_16_0_0 16.0.0
  *
  * * bn::sound_handle and sound handle actions added.

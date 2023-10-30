@@ -49,6 +49,8 @@ namespace
         uint16_t direct_sound_control_value = 0;
         uint16_t dmg_control_value = 0;
         bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
+        bool music_paused = false;
+        bool dmg_music_paused = false;
         bool update_on_vblank = false;
         bool delay_commit = true;
         bool dmg_sync = false;
@@ -255,6 +257,52 @@ void disable()
     REG_SNDDMGCNT = 0;
 }
 
+bool music_playing()
+{
+    return data.music_paused || mmActive();
+}
+
+void play_music(int id, bool loop)
+{
+    mmStart(mm_word(id), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
+    data.music_paused = false;
+}
+
+void stop_music()
+{
+    mmStop();
+    data.music_paused = false;
+}
+
+void pause_music()
+{
+    mmPause();
+    data.music_paused = true;
+}
+
+void resume_music()
+{
+    mmResume();
+    data.music_paused = false;
+}
+
+bool dmg_music_playing()
+{
+    if(data.dmg_music_paused)
+    {
+        return true;
+    }
+
+    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
+    {
+        return gbt_is_playing();
+    }
+    else
+    {
+        return VgmActive();
+    }
+}
+
 void play_dmg_music(const void* song, dmg_music_type type, int speed, bool loop)
 {
     if(type != data.dmg_music_type)
@@ -274,6 +322,8 @@ void play_dmg_music(const void* song, dmg_music_type type, int speed, bool loop)
 
         VgmPlay(static_cast<const uint8_t*>(song), loop);
     }
+
+    data.dmg_music_paused = false;
 }
 
 void stop_dmg_music()
@@ -286,6 +336,8 @@ void stop_dmg_music()
     {
         VgmStop();
     }
+
+    data.dmg_music_paused = false;
 }
 
 void pause_dmg_music()
@@ -298,6 +350,8 @@ void pause_dmg_music()
     {
         VgmPause();
     }
+
+    data.dmg_music_paused = true;
 }
 
 void resume_dmg_music()
@@ -310,26 +364,20 @@ void resume_dmg_music()
     {
         VgmResume();
     }
+
+    data.dmg_music_paused = false;
 }
 
 void dmg_music_position(int& pattern, int& row)
 {
     if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
     {
-        gbt_get_position(&pattern, &row, nullptr);
+        gbt_get_position_unsafe(&pattern, &row, nullptr);
     }
     else
     {
-        if(VgmActive())
-        {
-            pattern = int(VgmGetOffsetPlay());
-            row = 0;
-        }
-        else
-        {
-            pattern = -1;
-            row = -1;
-        }
+        pattern = int(VgmGetOffsetPlay());
+        row = 0;
     }
 }
 

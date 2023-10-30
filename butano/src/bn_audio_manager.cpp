@@ -1175,6 +1175,30 @@ void update()
 
 void execute_commands()
 {
+    const uint8_t* old_dmg_music_data = data.dmg_music_data;
+    const uint8_t* dmg_music_data = old_dmg_music_data;
+    bool dmg_music_paused = data.dmg_music_paused;
+    bool music_playing = data.music_playing;
+    bool music_paused = data.music_paused;
+    bool jingle_playing = data.jingle_playing;
+
+    if(music_playing && ! hw::audio::music_playing())
+    {
+        music_playing = false;
+        music_paused = false;
+    }
+
+    if(jingle_playing && ! hw::audio::jingle_playing())
+    {
+        jingle_playing = false;
+    }
+
+    if(dmg_music_data && ! hw::audio::dmg_music_playing())
+    {
+        dmg_music_data = nullptr;
+        dmg_music_paused = false;
+    }
+
     hw::audio::update_sounds_queue();
 
     for(int index = 0, limit = data.commands_count; index < limit; ++index)
@@ -1184,66 +1208,112 @@ void execute_commands()
 
         case MUSIC_PLAY:
             reinterpret_cast<const play_music_command&>(data.command_datas[index].data).execute();
+            music_playing = true;
+            music_paused = false;
             break;
 
         case MUSIC_STOP:
             hw::audio::stop_music();
+            music_playing = false;
+            music_paused = false;
             break;
 
         case MUSIC_PAUSE:
-            hw::audio::pause_music();
+            if(music_playing)
+            {
+                hw::audio::pause_music();
+                music_paused = true;
+            }
             break;
 
         case MUSIC_RESUME:
-            hw::audio::resume_music();
+            if(music_playing)
+            {
+                hw::audio::resume_music();
+                music_paused = false;
+            }
             break;
 
         case MUSIC_SET_POSITION:
-            reinterpret_cast<const set_music_position_command&>(data.command_datas[index].data).execute();
+            if(music_playing)
+            {
+                reinterpret_cast<const set_music_position_command&>(data.command_datas[index].data).execute();
+            }
             break;
 
         case MUSIC_SET_VOLUME:
-            reinterpret_cast<const set_music_volume_command&>(data.command_datas[index].data).execute();
+            if(music_playing)
+            {
+                reinterpret_cast<const set_music_volume_command&>(data.command_datas[index].data).execute();
+            }
             break;
 
         case MUSIC_SET_TEMPO:
-            reinterpret_cast<const set_music_tempo_command&>(data.command_datas[index].data).execute();
+            if(music_playing)
+            {
+                reinterpret_cast<const set_music_tempo_command&>(data.command_datas[index].data).execute();
+            }
             break;
 
         case MUSIC_SET_PITCH:
-            reinterpret_cast<const set_music_pitch_command&>(data.command_datas[index].data).execute();
+            if(music_playing)
+            {
+                reinterpret_cast<const set_music_pitch_command&>(data.command_datas[index].data).execute();
+            }
             break;
 
         case JINGLE_PLAY:
             reinterpret_cast<const play_jingle_command&>(data.command_datas[index].data).execute();
+            jingle_playing = true;
             break;
 
         case JINGLE_SET_VOLUME:
-            reinterpret_cast<const set_jingle_volume_command&>(data.command_datas[index].data).execute();
+            if(jingle_playing)
+            {
+                reinterpret_cast<const set_jingle_volume_command&>(data.command_datas[index].data).execute();
+            }
             break;
 
         case DMG_MUSIC_PLAY:
             reinterpret_cast<const play_dmg_music_command&>(data.command_datas[index].data).execute();
+            dmg_music_data = old_dmg_music_data;
+            dmg_music_paused = false;
             break;
 
         case DMG_MUSIC_STOP:
             hw::audio::stop_dmg_music();
+            dmg_music_data = nullptr;
+            dmg_music_paused = false;
             break;
 
         case DMG_MUSIC_PAUSE:
-            hw::audio::pause_dmg_music();
+            if(dmg_music_data)
+            {
+                hw::audio::pause_dmg_music();
+                dmg_music_paused = true;
+            }
             break;
 
         case DMG_MUSIC_RESUME:
-            hw::audio::resume_dmg_music();
+            if(dmg_music_data)
+            {
+                hw::audio::resume_dmg_music();
+                dmg_music_paused = false;
+            }
             break;
 
         case DMG_MUSIC_SET_POSITION:
-            reinterpret_cast<const set_dmg_music_position_command&>(data.command_datas[index].data).execute();
+            if(dmg_music_data)
+            {
+                reinterpret_cast<const set_dmg_music_position_command&>(data.command_datas[index].data).execute();
+            }
             break;
 
         case DMG_MUSIC_SET_VOLUME:
-            reinterpret_cast<const set_dmg_music_volume_command&>(data.command_datas[index].data).execute();
+            if(dmg_music_data)
+            {
+                reinterpret_cast<const set_dmg_music_volume_command&>(data.command_datas[index].data).execute();
+            }
             break;
 
         case SOUND_PLAY:
@@ -1285,38 +1355,24 @@ void execute_commands()
 
     data.commands_count = 0;
 
-    if(data.music_playing && ! data.music_paused)
+    if(music_playing)
     {
-        if(hw::audio::music_playing())
-        {
-            data.music_position = hw::audio::music_position();
-        }
-        else
-        {
-            data.music_playing = false;
-        }
+        data.music_position = hw::audio::music_position();
     }
 
-    if(data.jingle_playing && ! hw::audio::jingle_playing())
-    {
-        data.jingle_playing = false;
-    }
-
-    if(data.dmg_music_data && ! data.dmg_music_paused)
+    if(dmg_music_data)
     {
         int pattern;
         int row;
         hw::audio::dmg_music_position(pattern, row);
-
-        if(pattern >= 0)
-        {
-            data.dmg_music_position = bn::dmg_music_position(pattern, row);
-        }
-        else
-        {
-            data.dmg_music_data = nullptr;
-        }
+        data.dmg_music_position = bn::dmg_music_position(pattern, row);
     }
+
+    data.music_playing = music_playing;
+    data.music_paused = music_paused;
+    data.jingle_playing = jingle_playing;
+    data.dmg_music_data = dmg_music_data;
+    data.dmg_music_paused = dmg_music_paused;
 
     for(auto it = data.sound_map.begin(), end = data.sound_map.end(); it != end; )
     {

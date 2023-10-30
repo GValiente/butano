@@ -65,6 +65,11 @@ void gbt_enable_channels(int flags);
 // need that value.
 void gbt_get_position(int *order, int *row, int *tick);
 
+// Returns the current pattern order and current row inside the pattern, as well
+// as the current tick, ignoring if the music is paused or not playing.
+// It is possible to pass NULL to any argument if you don't need that value.
+void gbt_get_position_unsafe(int *order, int *row, int *tick);
+
 // Sets the current position in the song. This isn't normally meant to happen,
 // so some effects (like arpeggio) may be broken right after the jump until they
 // are restarted.

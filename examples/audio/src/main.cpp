@@ -80,6 +80,7 @@ namespace
             "",
             "",
             "",
+            "",
             "START: go to next scene",
         };
 
@@ -114,6 +115,7 @@ namespace
         constexpr bn::string_view info_text_lines[] = {
             "LEFT: decrease pitch",
             "RIGHT: increase pitch",
+            "",
             "",
             "",
             "",

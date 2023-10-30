@@ -1587,13 +1587,18 @@ void gbt_get_position(int *order, int *row, int *tick)
     }
     else
     {
-        if (order)
-            *order = gbt.previous_order;
-        if (row)
-            *row = gbt.previous_row;
-        if (tick)
-            *tick = gbt.ticks_elapsed;
+        gbt_get_position_unsafe(order, row, tick);
     }
+}
+
+void gbt_get_position_unsafe(int *order, int *row, int *tick)
+{
+    if (order)
+        *order = gbt.previous_order;
+    if (row)
+        *row = gbt.previous_row;
+    if (tick)
+        *tick = gbt.ticks_elapsed;
 }
 
 void gbt_set_position(int order, int row)

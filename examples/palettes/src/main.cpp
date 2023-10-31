@@ -7,6 +7,7 @@
 #include "bn_keypad.h"
 #include "bn_colors.h"
 #include "bn_display.h"
+#include "bn_color_effect.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_bg_palette_actions.h"
 #include "bn_bg_palettes_actions.h"
@@ -544,6 +545,48 @@ namespace
             bn::core::update();
         }
     }
+
+    void palette_blend_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "LEFT: decrease blend weight",
+            "RIGHT: increase blend weight",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Palette blend", info_text_lines, text_generator);
+
+        bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl.create_sprite(0, 0);
+        bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
+
+        const bn::sprite_palette_item& first_source_palette_item = bn::sprite_items::cavegirl.palette_item();
+        const bn::sprite_palette_item& second_source_palette_item = bn::sprite_palette_items::cavegirl_alt;
+
+        alignas(int) bn::array<bn::color, 16> dest_palette_colors;
+        bn::sprite_palette_item dest_palette_item(dest_palette_colors, first_source_palette_item.bpp());
+
+        bn::fixed blend_weight = 0.5;
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::left_held())
+            {
+                blend_weight = bn::max(blend_weight - 0.01, bn::fixed(0));
+            }
+            else if(bn::keypad::right_held())
+            {
+                blend_weight = bn::min(blend_weight + 0.01, bn::fixed(1));
+            }
+
+            bn::color_effect::blend(first_source_palette_item.colors_ref(), second_source_palette_item.colors_ref(),
+                                    blend_weight, dest_palette_colors);
+            cavegirl_palette.set_colors(dest_palette_item);
+
+            info.update();
+            bn::core::update();
+        }
+    }
 }
 
 int main()
@@ -610,6 +653,9 @@ int main()
         bn::core::update();
 
         palette_color_hbe_scene(text_generator);
+        bn::core::update();
+
+        palette_blend_scene(text_generator);
         bn::core::update();
     }
 }

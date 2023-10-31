@@ -105,6 +105,15 @@ namespace bn::hw::palettes
 
     void hue_shift(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr);
 
+    inline void blend(const color* first_source_colors_ptr, const color* second_source_colors_ptr,
+                      int intensity, int count, color* destination_colors_ptr)
+    {
+        auto first_tonc_src_ptr = const_cast<COLOR*>(reinterpret_cast<const COLOR*>(first_source_colors_ptr));
+        auto second_tonc_src_ptr = const_cast<COLOR*>(reinterpret_cast<const COLOR*>(second_source_colors_ptr));
+        auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+        clr_blend_fast(first_tonc_src_ptr, second_tonc_src_ptr, tonc_dst_ptr, unsigned(count), unsigned(intensity));
+    }
+
     inline void fade(const color* source_colors_ptr, color fade_color, int intensity, int count,
                      color* destination_colors_ptr)
     {

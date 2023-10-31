@@ -2156,6 +2156,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_16_2_0 16.2.0 (next release)
+ *
+ * bn::color_effect::blend added.
+ *
+ *
  * @section changelog_16_1_0 16.1.0
  *
  * * Sprite affine mats management CPU usage reduced.

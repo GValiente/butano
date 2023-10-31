@@ -92,55 +92,64 @@ void invert(const span<const color>& source_colors_ref, span<color> destination_
 
 /**
  * @brief Applies a grayscale effect to all referenced colors.
- * @param grayscale_intensity Grayscale effect intensity in the range [0..1].
+ * @param intensity Grayscale effect intensity in the range [0..1].
  * @param colors_ref Colors reference.
  */
-void grayscale(fixed grayscale_intensity, span<color> colors_ref);
+void grayscale(fixed intensity, span<color> colors_ref);
 
 /**
  * @brief Applies a grayscale effect to all colors referenced by source_colors_ref,
  * storing the result in destination_colors_ref.
  * @param source_colors_ref Source colors reference.
- * @param grayscale_intensity Grayscale effect intensity in the range [0..1].
+ * @param intensity Grayscale effect intensity in the range [0..1].
  * @param destination_colors_ref Destination colors reference.
  */
-void grayscale(const span<const color>& source_colors_ref, fixed grayscale_intensity,
-               span<color> destination_colors_ref);
+void grayscale(const span<const color>& source_colors_ref, fixed intensity, span<color> destination_colors_ref);
 
 /**
  * @brief Applies a hue shift effect to all referenced colors.
- * @param hue_shift_intensity Hue shift effect intensity in the range [0..1].
+ * @param intensity Hue shift effect intensity in the range [0..1].
  * @param colors_ref Colors reference.
  */
-void hue_shift(fixed hue_shift_intensity, span<color> colors_ref);
+void hue_shift(fixed intensity, span<color> colors_ref);
 
 /**
  * @brief Applies a hue shift effect to all colors referenced by source_colors_ref,
  * storing the result in destination_colors_ref.
  * @param source_colors_ref Source colors reference.
- * @param hue_shift_intensity Hue shift effect intensity in the range [0..1].
+ * @param intensity Hue shift effect intensity in the range [0..1].
  * @param destination_colors_ref Destination colors reference.
  */
-void hue_shift(const span<const color>& source_colors_ref, fixed hue_shift_intensity,
-               span<color> destination_colors_ref);
+void hue_shift(const span<const color>& source_colors_ref, fixed intensity, span<color> destination_colors_ref);
+
+/**
+ * @brief Blends two color arrays referenced by first_source_colors_ref and second_source_colors_ref,
+ * storing the result in destination_colors_ref.
+ * @param first_source_colors_ref First source colors reference.
+ * @param second_source_colors_ref Second source colors reference.
+ * @param weight Blend weight in the range [0..1].
+ * @param destination_colors_ref Destination colors reference.
+ */
+void blend(const span<const color>& first_source_colors_ref, const span<const color>& second_source_colors_ref,
+           fixed weight, span<color> destination_colors_ref);
 
 /**
  * @brief Applies a fade effect to all referenced colors.
  * @param fade_color Fade effect color.
- * @param fade_intensity Fade effect intensity in the range [0..1].
+ * @param intensity Fade effect intensity in the range [0..1].
  * @param colors_ref Colors reference.
  */
-void fade(color fade_color, fixed fade_intensity, span<color> colors_ref);
+void fade(color fade_color, fixed intensity, span<color> colors_ref);
 
 /**
  * @brief Applies a fade effect to all colors referenced by source_colors_ref,
  * storing the result in destination_colors_ref.
  * @param source_colors_ref Source colors reference.
  * @param fade_color Fade effect color.
- * @param fade_intensity Fade effect intensity in the range [0..1].
+ * @param intensity Fade effect intensity in the range [0..1].
  * @param destination_colors_ref Destination colors reference.
  */
-void fade(const span<const color>& source_colors_ref, color fade_color, fixed fade_intensity,
+void fade(const span<const color>& source_colors_ref, color fade_color, fixed intensity,
           span<color> destination_colors_ref);
 
 /**

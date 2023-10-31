@@ -108,37 +108,44 @@
             </dt>
             <dd>Inverts all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a95c8ac93f830a6d740b1930b5785dea7" class="m-doc">grayscale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> grayscale_intensity,
+              <span class="m-doc-wrap-bumper">void <a href="#a6840bad203f09f032a80be0c9d06c44c" class="m-doc">grayscale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span>
             </dt>
             <dd>Applies a grayscale effect to all referenced colors.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a995b89486a68549ffe1d61ddaab85ef0" class="m-doc">grayscale</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> grayscale_intensity,
+              <span class="m-doc-wrap-bumper">void <a href="#a5c9cebd44f1ef882972c698e0b541253" class="m-doc">grayscale</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span>
             </dt>
             <dd>Applies a grayscale effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a27eb659607927241744dbbe11badc54b" class="m-doc">hue_shift</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> hue_shift_intensity,
+              <span class="m-doc-wrap-bumper">void <a href="#a0849ea23fa31c7457aa157859cdcb683" class="m-doc">hue_shift</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span>
             </dt>
             <dd>Applies a hue shift effect to all referenced colors.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a336ed018dc8dc3e1eb9b74eacdcce157" class="m-doc">hue_shift</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> hue_shift_intensity,
+              <span class="m-doc-wrap-bumper">void <a href="#ad994322a4638fdcdc6f0eeb334dd392c" class="m-doc">hue_shift</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span>
             </dt>
             <dd>Applies a hue shift effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a73af3a7c0426ed0ee4be14a81d34e014" class="m-doc">fade</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> fade_color,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> fade_intensity,
+              <span class="m-doc-wrap-bumper">void <a href="#accda48ec4faad48cba35663421facd5f" class="m-doc">blend</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; first_source_colors_ref,
+              const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; second_source_colors_ref,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> weight,
+              <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span>
+            </dt>
+            <dd>Blends two color arrays referenced by first_source_colors_ref and second_source_colors_ref, storing the result in destination_colors_ref.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8d43575a9b0f173520b82005863f6038" class="m-doc">fade</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> fade_color,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span>
             </dt>
             <dd>Applies a fade effect to all referenced colors.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a5ba1fad7869793b5c1c680eeb0892c0f" class="m-doc">fade</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
+              <span class="m-doc-wrap-bumper">void <a href="#a448a4ec08fc65c6e4793be451526ea49" class="m-doc">fade</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
               <a href="classbn_1_1color.html" class="m-doc">color</a> fade_color,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> fade_intensity,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span>
             </dt>
             <dd>Applies a fade effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</dd>
@@ -343,9 +350,9 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a95c8ac93f830a6d740b1930b5785dea7"><div>
+          <section class="m-doc-details" id="a6840bad203f09f032a80be0c9d06c44c"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a95c8ac93f830a6d740b1930b5785dea7" class="m-doc-self">grayscale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> grayscale_intensity,
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6840bad203f09f032a80be0c9d06c44c" class="m-doc-self">grayscale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span></span>
             </h3>
             <p>Applies a grayscale effect to all referenced colors.</p>
@@ -355,7 +362,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">grayscale_intensity</td>
+                  <td style="width: 1%">intensity</td>
                   <td>Grayscale effect intensity in the range [0..1].</td>
                 </tr>
                 <tr>
@@ -365,10 +372,10 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a995b89486a68549ffe1d61ddaab85ef0"><div>
+          <section class="m-doc-details" id="a5c9cebd44f1ef882972c698e0b541253"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a995b89486a68549ffe1d61ddaab85ef0" class="m-doc-self">grayscale</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> grayscale_intensity,
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c9cebd44f1ef882972c698e0b541253" class="m-doc-self">grayscale</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span></span>
             </h3>
             <p>Applies a grayscale effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</p>
@@ -382,7 +389,7 @@
                   <td>Source colors reference.</td>
                 </tr>
                 <tr>
-                  <td>grayscale_intensity</td>
+                  <td>intensity</td>
                   <td>Grayscale effect intensity in the range [0..1].</td>
                 </tr>
                 <tr>
@@ -392,9 +399,9 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a27eb659607927241744dbbe11badc54b"><div>
+          <section class="m-doc-details" id="a0849ea23fa31c7457aa157859cdcb683"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a27eb659607927241744dbbe11badc54b" class="m-doc-self">hue_shift</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> hue_shift_intensity,
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0849ea23fa31c7457aa157859cdcb683" class="m-doc-self">hue_shift</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span></span>
             </h3>
             <p>Applies a hue shift effect to all referenced colors.</p>
@@ -404,7 +411,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">hue_shift_intensity</td>
+                  <td style="width: 1%">intensity</td>
                   <td>Hue shift effect intensity in the range [0..1].</td>
                 </tr>
                 <tr>
@@ -414,10 +421,10 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a336ed018dc8dc3e1eb9b74eacdcce157"><div>
+          <section class="m-doc-details" id="ad994322a4638fdcdc6f0eeb334dd392c"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a336ed018dc8dc3e1eb9b74eacdcce157" class="m-doc-self">hue_shift</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> hue_shift_intensity,
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad994322a4638fdcdc6f0eeb334dd392c" class="m-doc-self">hue_shift</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span></span>
             </h3>
             <p>Applies a hue shift effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</p>
@@ -431,7 +438,7 @@
                   <td>Source colors reference.</td>
                 </tr>
                 <tr>
-                  <td>hue_shift_intensity</td>
+                  <td>intensity</td>
                   <td>Hue shift effect intensity in the range [0..1].</td>
                 </tr>
                 <tr>
@@ -441,10 +448,42 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a73af3a7c0426ed0ee4be14a81d34e014"><div>
+          <section class="m-doc-details" id="accda48ec4faad48cba35663421facd5f"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a73af3a7c0426ed0ee4be14a81d34e014" class="m-doc-self">fade</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> fade_color,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> fade_intensity,
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#accda48ec4faad48cba35663421facd5f" class="m-doc-self">blend</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; first_source_colors_ref,
+              const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; second_source_colors_ref,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> weight,
+              <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span></span>
+            </h3>
+            <p>Blends two color arrays referenced by first_source_colors_ref and second_source_colors_ref, storing the result in destination_colors_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first_source_colors_ref</td>
+                  <td>First source colors reference.</td>
+                </tr>
+                <tr>
+                  <td>second_source_colors_ref</td>
+                  <td>Second source colors reference.</td>
+                </tr>
+                <tr>
+                  <td>weight</td>
+                  <td>Blend weight in the range [0..1].</td>
+                </tr>
+                <tr>
+                  <td>destination_colors_ref</td>
+                  <td>Destination colors reference.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8d43575a9b0f173520b82005863f6038"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8d43575a9b0f173520b82005863f6038" class="m-doc-self">fade</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> fade_color,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; colors_ref)</span></span>
             </h3>
             <p>Applies a fade effect to all referenced colors.</p>
@@ -458,7 +497,7 @@
                   <td>Fade effect color.</td>
                 </tr>
                 <tr>
-                  <td>fade_intensity</td>
+                  <td>intensity</td>
                   <td>Fade effect intensity in the range [0..1].</td>
                 </tr>
                 <tr>
@@ -468,11 +507,11 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a5ba1fad7869793b5c1c680eeb0892c0f"><div>
+          <section class="m-doc-details" id="a448a4ec08fc65c6e4793be451526ea49"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5ba1fad7869793b5c1c680eeb0892c0f" class="m-doc-self">fade</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
+              <span class="m-doc-wrap-bumper">void bn::<wbr />color_effect::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a448a4ec08fc65c6e4793be451526ea49" class="m-doc-self">fade</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; source_colors_ref,
               <a href="classbn_1_1color.html" class="m-doc">color</a> fade_color,
-              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> fade_intensity,
+              <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> intensity,
               <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; destination_colors_ref)</span></span>
             </h3>
             <p>Applies a fade effect to all colors referenced by source_colors_ref, storing the result in destination_colors_ref.</p>
@@ -490,7 +529,7 @@
                   <td>Fade effect color.</td>
                 </tr>
                 <tr>
-                  <td>fade_intensity</td>
+                  <td>intensity</td>
                   <td>Fade effect intensity in the range [0..1].</td>
                 </tr>
                 <tr>

@@ -109,12 +109,11 @@ void invert(const span<const color>& source_colors_ref, span<color> destination_
     }
 }
 
-void grayscale(fixed grayscale_intensity, span<color> colors_ref)
+void grayscale(fixed intensity, span<color> colors_ref)
 {
-    BN_ASSERT(grayscale_intensity >= 0 && grayscale_intensity <= 1,
-              "Invalid grayscale intensity: ", grayscale_intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    if(int value = fixed_t<5>(grayscale_intensity).data())
+    if(int value = fixed_t<5>(intensity).data())
     {
         int colors_count = colors_ref.size();
         BN_ASSERT(colors_count <= hw::palettes::colors(), "Invalid colors count: ", colors_count);
@@ -123,63 +122,75 @@ void grayscale(fixed grayscale_intensity, span<color> colors_ref)
     }
 }
 
-void grayscale(const span<const color>& source_colors_ref, fixed grayscale_intensity,
+void grayscale(const span<const color>& source_colors_ref, fixed intensity,
                span<color> destination_colors_ref)
 {
     int colors_count = source_colors_ref.size();
     BN_ASSERT(colors_count <= hw::palettes::colors(), "Invalid source colors count: ", colors_count);
     BN_ASSERT(destination_colors_ref.size() >= colors_count, "Invalid destination colors count: ",
               destination_colors_ref.size(), " - ", colors_count);
-    BN_ASSERT(grayscale_intensity >= 0 && grayscale_intensity <= 1,
-              "Invalid grayscale intensity: ", grayscale_intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    int value = fixed_t<5>(grayscale_intensity).data();
+    int value = fixed_t<5>(intensity).data();
     hw::palettes::grayscale(source_colors_ref.data(), value, colors_count, destination_colors_ref.data());
 }
 
-void hue_shift(fixed hue_shift_intensity, span<color> colors_ref)
+void hue_shift(fixed intensity, span<color> colors_ref)
 {
-    BN_ASSERT(hue_shift_intensity >= 0 && hue_shift_intensity <= 1,
-              "Invalid hue shift intensity: ", hue_shift_intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    if(int value = fixed_t<5>(hue_shift_intensity).data())
+    if(int value = fixed_t<5>(intensity).data())
     {
         hw::palettes::hue_shift(colors_ref.data(), value, colors_ref.size(), colors_ref.data());
     }
 }
 
-void hue_shift(const span<const color>& source_colors_ref, fixed hue_shift_intensity,
+void hue_shift(const span<const color>& source_colors_ref, fixed intensity,
                span<color> destination_colors_ref)
 {
     int colors_count = source_colors_ref.size();
     BN_ASSERT(destination_colors_ref.size() >= colors_count, "Invalid destination colors count: ",
               destination_colors_ref.size(), " - ", colors_count);
-    BN_ASSERT(hue_shift_intensity >= 0 && hue_shift_intensity <= 1,
-              "Invalid hue shift intensity: ", hue_shift_intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    int value = fixed_t<5>(hue_shift_intensity).data();
+    int value = fixed_t<5>(intensity).data();
     hw::palettes::hue_shift(source_colors_ref.data(), value, colors_count, destination_colors_ref.data());
 }
 
-void fade(color fade_color, fixed fade_intensity, span<color> colors_ref)
+void fade(color fade_color, fixed intensity, span<color> colors_ref)
 {
-    BN_ASSERT(fade_intensity >= 0 && fade_intensity <= 1, "Invalid fade intensity: ", fade_intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    if(int value = fixed_t<5>(fade_intensity).data())
+    if(int value = fixed_t<5>(intensity).data())
     {
         hw::palettes::fade(colors_ref.data(), fade_color, value, colors_ref.size(), colors_ref.data());
     }
 }
 
-void fade(const span<const color>& source_colors_ref, color fade_color, fixed fade_intensity,
+void blend(const span<const color>& first_source_colors_ref, const span<const color>& second_source_colors_ref,
+           fixed weight, span<color> destination_colors_ref)
+{
+    int colors_count = first_source_colors_ref.size();
+    BN_ASSERT(second_source_colors_ref.size() == colors_count, "Invalid second source colors count: ",
+              second_source_colors_ref.size(), " - ", colors_count);
+    BN_ASSERT(destination_colors_ref.size() >= colors_count, "Invalid destination colors count: ",
+              destination_colors_ref.size(), " - ", colors_count);
+    BN_ASSERT(weight >= 0 && weight <= 1, "Invalid weight: ", weight);
+
+    int value = fixed_t<5>(weight).data();
+    hw::palettes::blend(first_source_colors_ref.data(), second_source_colors_ref.data(), value, colors_count,
+                        destination_colors_ref.data());
+}
+
+void fade(const span<const color>& source_colors_ref, color fade_color, fixed intensity,
           span<color> destination_colors_ref)
 {
     int colors_count = source_colors_ref.size();
     BN_ASSERT(destination_colors_ref.size() >= colors_count, "Invalid destination colors count: ",
               destination_colors_ref.size(), " - ", colors_count);
-    BN_ASSERT(fade_intensity >= 0 && fade_intensity <= 1, "Invalid fade intensity: ", fade_intensity);
+    BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
 
-    int value = fixed_t<5>(fade_intensity).data();
+    int value = fixed_t<5>(intensity).data();
     hw::palettes::fade(source_colors_ref.data(), fade_color, value, colors_count, destination_colors_ref.data());
 }
 

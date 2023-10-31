@@ -98,6 +98,11 @@ Get the latest Varooom 3D ROMs from [itch.io](https://gvaliente.itch.io/varooom-
 
 ## Also made with Butano
 
+* [GBA Microjam '23](https://gbadev.itch.io/gba-microjam-23): a spooky microgame collection for the Game Boy Advance
+created by the members of the gbadev.net community.
+
+![](docs_tools/images/gba_microjam_23_title.png) ![](docs_tools/images/gba_microjam_23_gameplay.png)
+
 * [Feline](https://foopod.itch.io/feline): explore the world as a cat, meet new people, learn new languages, 
 face difficult foes and save your family!
 

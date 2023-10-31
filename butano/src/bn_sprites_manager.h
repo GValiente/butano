@@ -214,9 +214,9 @@ namespace sprites_manager
 
     void update_cameras();
 
-    void remove_identity_affine_mat_if_not_needed(id_type id);
+    void remove_identity_affine_mat_when_not_needed(id_type id);
 
-    void update_affine_mat_double_size(id_type id, int affine_mat_id);
+    void update_auto_double_size(id_type id, int affine_mat_id);
 
     void update();
 

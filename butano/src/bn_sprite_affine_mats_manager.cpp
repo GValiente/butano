@@ -68,6 +68,7 @@ namespace
         intrusive_list<sprite_affine_mat_attach_node_type> attached_nodes;
         unsigned usages;
         bool flipped_identity;
+        bool update;
         bool remove_if_not_needed;
 
         void init()
@@ -75,6 +76,7 @@ namespace
             attributes = affine_mat_attributes();
             usages = 1;
             flipped_identity = true;
+            update = false;
             remove_if_not_needed = false;
         }
 
@@ -83,6 +85,7 @@ namespace
             attributes = new_attributes;
             usages = 1;
             flipped_identity = attributes.flipped_identity();
+            update = false;
             remove_if_not_needed = false;
         }
     };
@@ -95,10 +98,12 @@ namespace
         item_type items[max_items];
         vector<int8_t, max_items> free_item_indexes;
         hw::sprite_affine_mats::handle* handles_ptr = nullptr;
-        int first_index_to_commit = max_items;
-        int last_index_to_commit = 0;
+        int first_index_to_update = max_items;
+        int last_index_to_update = 0;
         int first_index_to_remove_if_not_needed = max_items;
         int last_index_to_remove_if_not_needed = 0;
+        int first_index_to_commit = max_items;
+        int last_index_to_commit = 0;
     };
 
     BN_DATA_EWRAM_BSS static_data data;
@@ -140,14 +145,9 @@ namespace
     void _update(int index)
     {
         item_type& item = data.items[index];
-        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[index]);
-        _update_indexes_to_commit(index);
-
-        for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
-        {
-            sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-            sprites_manager::update_affine_mat_double_size(&sprite_item, index);
-        }
+        item.update = true;
+        data.first_index_to_update = min(data.first_index_to_update, index);
+        data.last_index_to_update = max(data.last_index_to_update, index);
     }
 
     [[nodiscard]] int _new_item_index()
@@ -295,6 +295,7 @@ void decrease_usages(int id)
 
     if(! item.usages)
     {
+        item.update = false;
         item.remove_if_not_needed = false;
         data.free_item_indexes.push_back(int8_t(id));
     }
@@ -696,7 +697,11 @@ void update()
                     ++it;
 
                     sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-                    sprites_manager::remove_identity_affine_mat_if_not_needed(&sprite_item);
+
+                    if(sprite_item.remove_affine_mat_when_not_needed)
+                    {
+                        sprites_manager::remove_identity_affine_mat_when_not_needed(&sprite_item);
+                    }
                 }
 
                 decrease_usages(index);
@@ -705,6 +710,36 @@ void update()
 
         data.first_index_to_remove_if_not_needed = max_items;
         data.last_index_to_remove_if_not_needed = 0;
+    }
+
+    int first_index_to_update = data.first_index_to_update;
+
+    if(first_index_to_update < max_items)
+    {
+        for(int index = first_index_to_update, last = data.last_index_to_update; index <= last; ++index)
+        {
+            item_type& item = data.items[index];
+
+            if(item.update)
+            {
+                hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[index]);
+                _update_indexes_to_commit(index);
+                item.update = false;
+
+                for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
+                {
+                    sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
+
+                    if(sprite_double_size_mode(sprite_item.double_size_mode) == sprite_double_size_mode::AUTO)
+                    {
+                        sprites_manager::update_auto_double_size(&sprite_item, index);
+                    }
+                }
+            }
+        }
+
+        data.first_index_to_update = max_items;
+        data.last_index_to_update = 0;
     }
 }
 

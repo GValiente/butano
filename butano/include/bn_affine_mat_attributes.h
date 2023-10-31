@@ -400,11 +400,11 @@ private:
 
         if(scale_8_data < reciprocal_16_lut_size) [[likely]]
         {
-            return is_constant_evaluated() ? calculate_reciprocal_lut_value<16>(scale_8_data).data() :
+            return is_constant_evaluated() ? uint16_t(calculate_reciprocal_lut_value<16>(scale_8_data).data()) :
                                              reciprocal_16_lut._data[scale_8_data];
         }
 
-        return calculate_reciprocal_lut_value<16>(scale_8_data).data();
+        return uint16_t(calculate_reciprocal_lut_value<16>(scale_8_data).data());
     }
 
     constexpr void _update_rotation_angle()

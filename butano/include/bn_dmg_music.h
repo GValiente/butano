@@ -15,6 +15,7 @@
 
 #include "bn_fixed.h"
 #include "bn_optional.h"
+#include "bn_dmg_music_master_volume.h"
 
 namespace bn
 {
@@ -149,6 +150,16 @@ namespace bn::dmg_music
      * @param right_volume Right speaker volume level, in the range [0..1].
      */
     void set_volume(fixed left_volume, fixed right_volume);
+
+    /**
+     * @brief Returns the master volume of all DMG music.
+     */
+    [[nodiscard]] dmg_music_master_volume master_volume();
+
+    /**
+     * @brief Sets the master volume of all DMG music.
+     */
+    void set_master_volume(dmg_music_master_volume volume);
 }
 
 #endif

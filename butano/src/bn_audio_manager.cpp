@@ -300,6 +300,25 @@ namespace
     };
 
 
+    class set_dmg_music_master_volume_command
+    {
+
+    public:
+        explicit set_dmg_music_master_volume_command(int volume) :
+            _volume(volume)
+        {
+        }
+
+        void execute() const
+        {
+            hw::audio::set_dmg_music_master_volume(bn::dmg_music_master_volume(_volume));
+        }
+
+    private:
+        int _volume;
+    };
+
+
     class play_sound_command
     {
 
@@ -499,6 +518,7 @@ namespace
         DMG_MUSIC_RESUME,
         DMG_MUSIC_SET_POSITION,
         DMG_MUSIC_SET_VOLUME,
+        DMG_MUSIC_SET_MASTER_VOLUME,
         SOUND_PLAY,
         SOUND_PLAY_EX,
         SOUND_STOP,
@@ -542,6 +562,7 @@ namespace
         uint16_t new_sound_handle = 0;
         command_code command_codes[max_commands];
         bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
+        bn::dmg_music_master_volume dmg_music_master_volume = dmg_music_master_volume::QUARTER;
         bool music_playing = false;
         bool music_paused = false;
         bool jingle_playing = false;
@@ -959,6 +980,26 @@ void set_dmg_music_volume(fixed left_volume, fixed right_volume)
     data.dmg_music_right_volume = right_volume;
 }
 
+bn::dmg_music_master_volume dmg_music_master_volume()
+{
+    return data.dmg_music_master_volume;
+}
+
+void set_dmg_music_master_volume(bn::dmg_music_master_volume volume)
+{
+    if(volume != data.dmg_music_master_volume)
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = DMG_MUSIC_SET_MASTER_VOLUME;
+        new(data.command_datas + commands) set_dmg_music_master_volume_command(int(volume));
+        data.commands_count = commands + 1;
+
+        data.dmg_music_master_volume = volume;
+    }
+}
+
 bool dmg_sync_enabled()
 {
     return data.dmg_sync_enabled;
@@ -1314,6 +1355,10 @@ void execute_commands()
             {
                 reinterpret_cast<const set_dmg_music_volume_command&>(data.command_datas[index].data).execute();
             }
+            break;
+
+        case DMG_MUSIC_SET_MASTER_VOLUME:
+            reinterpret_cast<const set_dmg_music_master_volume_command&>(data.command_datas[index].data).execute();
             break;
 
         case SOUND_PLAY:

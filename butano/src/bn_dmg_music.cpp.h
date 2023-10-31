@@ -115,4 +115,14 @@ void set_volume(fixed left_volume, fixed right_volume)
     audio_manager::set_dmg_music_volume(left_volume, right_volume);
 }
 
+dmg_music_master_volume master_volume()
+{
+    return audio_manager::dmg_music_master_volume();
+}
+
+void set_master_volume(dmg_music_master_volume volume)
+{
+    audio_manager::set_dmg_music_master_volume(volume);
+}
+
 }

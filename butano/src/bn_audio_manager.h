@@ -8,6 +8,7 @@
 
 #include "bn_fixed.h"
 #include "bn_optional.h"
+#include "bn_dmg_music_master_volume.h"
 
 namespace bn
 {
@@ -101,6 +102,10 @@ namespace bn::audio_manager
     void set_dmg_music_right_volume(fixed right_volume);
 
     void set_dmg_music_volume(fixed left_volume, fixed right_volume);
+
+    [[nodiscard]] bn::dmg_music_master_volume dmg_music_master_volume();
+
+    void set_dmg_music_master_volume(bn::dmg_music_master_volume volume);
 
     [[nodiscard]] bool dmg_sync_enabled();
 

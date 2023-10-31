@@ -407,6 +407,14 @@ void set_dmg_music_volume(int left_volume, int right_volume)
     }
 }
 
+void set_dmg_music_master_volume(dmg_music_master_volume volume)
+{
+    uint16_t snddscnt = REG_SNDDSCNT;
+    snddscnt &= 0b1111111111111100;
+    snddscnt += uint16_t(volume);
+    REG_SNDDSCNT = snddscnt;
+}
+
 mm_sfxhand play_sound(int priority, int id)
 {
     _check_sounds_queue();

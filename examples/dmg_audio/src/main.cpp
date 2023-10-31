@@ -193,6 +193,79 @@ namespace
 
         bn::dmg_music::stop();
     }
+
+    void dmg_music_master_volume_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "LEFT: decrease volume",
+            "RIGHT: increase volume",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("DMG music master volume", info_text_lines, text_generator);
+        info.set_show_always(true);
+
+        bn::dmg_music_items::arachno_a_sad_touch.play();
+
+        while(! bn::keypad::start_pressed())
+        {
+            bn::dmg_music_master_volume master_volume = bn::dmg_music::master_volume();
+
+            if(bn::keypad::left_pressed())
+            {
+                switch(master_volume)
+                {
+
+                case bn::dmg_music_master_volume::QUARTER:
+                    break;
+
+                case bn::dmg_music_master_volume::HALF:
+                    master_volume = bn::dmg_music_master_volume::QUARTER;
+                    break;
+
+                case bn::dmg_music_master_volume::FULL:
+                    master_volume = bn::dmg_music_master_volume::HALF;
+                    break;
+
+                default:
+                    break;
+                }
+            }
+            else if(bn::keypad::right_pressed())
+            {
+                switch(master_volume)
+                {
+
+                case bn::dmg_music_master_volume::QUARTER:
+                    master_volume = bn::dmg_music_master_volume::HALF;
+                    break;
+
+                case bn::dmg_music_master_volume::HALF:
+                    master_volume = bn::dmg_music_master_volume::FULL;
+                    break;
+
+                case bn::dmg_music_master_volume::FULL:
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
+            bn::dmg_music::set_master_volume(master_volume);
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::dmg_music::stop();
+        bn::dmg_music::set_master_volume(bn::dmg_music_master_volume::QUARTER);
+    }
 }
 
 int main()
@@ -214,6 +287,9 @@ int main()
         bn::core::update();
 
         vgm_music_scene(text_generator);
+        bn::core::update();
+
+        dmg_music_master_volume_scene(text_generator);
         bn::core::update();
     }
 }

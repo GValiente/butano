@@ -8,6 +8,7 @@
 
 #include "maxmod.h"
 #include "bn_dmg_music_type.h"
+#include "bn_dmg_music_master_volume.h"
 
 namespace bn::hw::audio
 {
@@ -82,6 +83,8 @@ namespace bn::hw::audio
     void set_dmg_music_position(int pattern, int row);
 
     void set_dmg_music_volume(int left_volume, int right_volume);
+
+    void set_dmg_music_master_volume(dmg_music_master_volume volume);
 
     [[nodiscard]] inline bool sound_active(mm_sfxhand handle)
     {

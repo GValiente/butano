@@ -9,6 +9,9 @@
 
 extern "C"
 {
+    // No need for shared objects:
+    void* __dso_handle __attribute__((weak)) = nullptr;
+
     // Call init routines:
     // https://stackoverflow.com/a/30972459
     extern void (*__preinit_array_start[])(void);

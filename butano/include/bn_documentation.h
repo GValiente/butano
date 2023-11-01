@@ -1521,6 +1521,9 @@
  * must be converted from 50Hz to 60Hz (`true` by default). This option is ignored when importing audio files
  * with `*.s3m` and `*.vgm` extensions.
  *
+ * The default DMG music master volume is set to 25% ( bn::dmg_music_master_volume::QUARTER ).
+ * If it sounds too quiet for you, you can change it via bn::dmg_music::set_master_volume.
+ *
  *
  * @subsection import_sound Sound effects
  *

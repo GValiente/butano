@@ -285,8 +285,6 @@ void schr4c_rect(const TSurface *dst,
 void schr4c_frame(const TSurface *dst, 
 	int left, int top, int right, int bottom, u32 clr);
 
-void schr4c_blit(const TSurface *dst, int dstX, int dstY, 
-	uint width, uint height, const TSurface *src, int srcX, int srcY);
 void schr4c_floodfill(const TSurface *dst, int x, int y, u32 clr);
 
 // Additional routines

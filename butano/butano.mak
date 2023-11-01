@@ -100,7 +100,7 @@ endif
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project:
 #---------------------------------------------------------------------------------------------------------------------
-LIBS        := -lmm -lgcc $(USERLIBS)
+LIBS        := -lgcc $(USERLIBS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing libraries, this must be the top level containing include and lib directories:
@@ -122,7 +122,9 @@ BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
 				$(LIBBUTANOABS)/hw/3rd_party/gba-modern/src \
 				$(LIBBUTANOABS)/hw/3rd_party/cult-of-gba-bios/src \
 				$(LIBBUTANOABS)/hw/3rd_party/gbt-player/src \
-				$(LIBBUTANOABS)/hw/3rd_party/vgm-player/src
+				$(LIBBUTANOABS)/hw/3rd_party/vgm-player/src \
+				$(LIBBUTANOABS)/hw/3rd_party/maxmod/source \
+				$(LIBBUTANOABS)/hw/3rd_party/maxmod/source_gba
 
 #---------------------------------------------------------------------------------------------------------------------
 # Don't remove intermediary files (avoid rebuilding graphics files more than once):
@@ -209,13 +211,11 @@ all:
 $(BUILD):
 	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --grit="$(BN_GRIT)" --mmutil="$(BN_MMUTIL)" \
 			--audio="$(AUDIO)" --dmg_audio="$(DMGAUDIO)" --graphics="$(GRAPHICS)" --build=$(BUILD)
-	@$(MAKE) -s -C $(LIBBUTANOABS)/hw/3rd_party/maxmod gba
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@$(MAKE) -s -C $(LIBBUTANOABS)/hw/3rd_party/maxmod clean
 	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).elf.* $(TARGET).gba $(USERBUILD)
 
 #---------------------------------------------------------------------------------------------------------------------

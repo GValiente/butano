@@ -26,7 +26,9 @@
 
 @----------------------------------------------------------------------------
 
-#include "mp_defs.inc"
+#include "../asm_include/mm_gba_setup.inc"
+
+#include "../asm_include/mp_defs.inc"
 
 .equ mixlen, 1056	// 16khz
 

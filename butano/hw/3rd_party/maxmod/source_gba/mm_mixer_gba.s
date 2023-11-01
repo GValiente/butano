@@ -22,11 +22,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.           *
  ****************************************************************************/
 
+#include "../asm_include/mm_gba_setup.inc"
+
 @ DEFINITIONS
 
-#include "mp_macros.inc"
-#include "mp_format_mas.inc"
-#include "mp_defs.inc"
+#include "../asm_include/mp_macros.inc"
+#include "../asm_include/mp_format_mas.inc"
+#include "../asm_include/mp_defs.inc"
 
 @ timer freq = 2^24 / mixfreq
 @ mixlen ~= mixfreq * 0.01673

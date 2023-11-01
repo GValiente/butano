@@ -26,11 +26,13 @@
  *
  ******************************************************************************/
 
-#include "mp_defs.inc"
-#include "mp_mas.inc"
-#include "mp_mas_structs.inc"
-#include "mp_macros.inc"
-#include "mp_mixer_gba.inc"
+#include "../asm_include/mm_gba_setup.inc"
+
+#include "../asm_include/mp_defs.inc"
+#include "../asm_include/mp_mas.inc"
+#include "../asm_include/mp_mas_structs.inc"
+#include "../asm_include/mp_macros.inc"
+#include "../asm_include/mp_mixer_gba.inc"
 
 /******************************************************************************
  *

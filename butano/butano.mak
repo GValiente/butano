@@ -7,6 +7,8 @@ ifeq ($(strip $(DEVKITARM)),)
 endif
 
 include $(DEVKITARM)/gba_rules
+BN_GRIT		:=	grit
+BN_MMUTIL	:=	mmutil
 
 #---------------------------------------------------------------------------------------------------------------------
 # Butano custom IWRAM base rules without flto:
@@ -205,8 +207,8 @@ all:
 	
 #---------------------------------------------------------------------------------
 $(BUILD):
-	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --audio="$(AUDIO)" --dmg_audio="$(DMGAUDIO)" \
-			--graphics="$(GRAPHICS)" --build=$(BUILD)
+	@$(PYTHON) -B $(LIBBUTANOABS)/tools/butano_assets_tool.py --grit="$(BN_GRIT)" --mmutil="$(BN_MMUTIL)" \
+			--audio="$(AUDIO)" --dmg_audio="$(DMGAUDIO)" --graphics="$(GRAPHICS)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------

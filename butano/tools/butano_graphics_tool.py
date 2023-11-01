@@ -215,27 +215,29 @@ class SpriteItem:
             except KeyError:
                 self.__palette_compression = 'none'
 
-    def process(self):
+    def process(self, grit):
         tiles_compression = self.__tiles_compression
         palette_compression = self.__palette_compression
 
         if tiles_compression == 'auto':
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'huffman', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
+                                                                         file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
         if palette_compression == 'auto':
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
                                                                              file_size)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
+                                                                             file_size)
 
-        self.__execute_command(tiles_compression, palette_compression)
+        self.__execute_command(grit, tiles_compression, palette_compression)
         return self.__write_header(tiles_compression, palette_compression, False)
 
-    def __test_tiles_compression(self, best_tiles_compression, new_tiles_compression, best_file_size):
-        self.__execute_command(new_tiles_compression, 'none')
+    def __test_tiles_compression(self, grit, best_tiles_compression, new_tiles_compression, best_file_size):
+        self.__execute_command(grit, new_tiles_compression, 'none')
         new_file_size = self.__write_header(new_tiles_compression, 'none', True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -243,8 +245,8 @@ class SpriteItem:
 
         return best_tiles_compression, best_file_size
 
-    def __test_palette_compression(self, best_palette_compression, new_palette_compression, best_file_size):
-        self.__execute_command('none', new_palette_compression)
+    def __test_palette_compression(self, grit, best_palette_compression, new_palette_compression, best_file_size):
+        self.__execute_command(grit, 'none', new_palette_compression)
         new_file_size = self.__write_header('none', new_palette_compression, True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -316,8 +318,8 @@ class SpriteItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, tiles_compression, palette_compression):
-        command = ['grit', self.__file_path, '-gt', '-pe' + str(self.__colors_count)]
+    def __execute_command(self, grit, tiles_compression, palette_compression):
+        command = [grit, self.__file_path, '-gt', '-pe' + str(self.__colors_count)]
 
         if self.__bpp_8:
             command.append('-gB8')
@@ -332,7 +334,7 @@ class SpriteItem:
         try:
             subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
 class SpriteTilesItem:
@@ -369,20 +371,20 @@ class SpriteTilesItem:
         except KeyError:
             self.__compression = 'none'
 
-    def process(self):
+    def process(self, grit):
         compression = self.__compression
 
         if compression == 'auto':
-            compression, file_size = self.__test_compression(compression, 'none', None)
-            compression, file_size = self.__test_compression(compression, 'run_length', file_size)
-            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
-            compression, file_size = self.__test_compression(compression, 'huffman', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'none', None)
+            compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
 
-        self.__execute_command(compression)
+        self.__execute_command(grit, compression)
         return self.__write_header(compression, False)
 
-    def __test_compression(self, best_compression, new_compression, best_file_size):
-        self.__execute_command(new_compression)
+    def __test_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, new_compression)
         new_file_size = self.__write_header(new_compression, True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -452,8 +454,8 @@ class SpriteTilesItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, compression):
-        command = ['grit', self.__file_path, '-gt', '-p!']
+    def __execute_command(self, grit, compression):
+        command = [grit, self.__file_path, '-gt', '-p!']
 
         if self.__bpp_8:
             command.append('-gB8')
@@ -467,7 +469,7 @@ class SpriteTilesItem:
         try:
             subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
 class SpritePaletteItem:
@@ -486,19 +488,19 @@ class SpritePaletteItem:
         except KeyError:
             self.__compression = 'none'
 
-    def process(self):
+    def process(self, grit):
         compression = self.__compression
 
         if compression == 'auto':
-            compression, file_size = self.__test_compression(compression, 'none', None)
-            compression, file_size = self.__test_compression(compression, 'run_length', file_size)
-            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'none', None)
+            compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
 
-        self.__execute_command(compression)
+        self.__execute_command(grit, compression)
         return self.__write_header(compression, False)
 
-    def __test_compression(self, best_compression, new_compression, best_file_size):
-        self.__execute_command(new_compression)
+    def __test_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, new_compression)
         new_file_size = self.__write_header(new_compression, True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -554,8 +556,8 @@ class SpritePaletteItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, compression):
-        command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
+    def __execute_command(self, grit, compression):
+        command = [grit, self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
         append_compression_command('p', compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
@@ -563,7 +565,7 @@ class SpritePaletteItem:
         try:
             subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
 class RegularBgItem:
@@ -693,34 +695,36 @@ class RegularBgItem:
             except KeyError:
                 self.__map_compression = 'none'
 
-    def process(self):
+    def process(self, grit):
         tiles_compression = self.__tiles_compression
         palette_compression = self.__palette_compression
         map_compression = self.__map_compression
 
         if tiles_compression == 'auto':
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'huffman', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
+                                                                         file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
         if palette_compression == 'auto':
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
                                                                              file_size)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
+                                                                             file_size)
 
         if map_compression == 'auto':
-            map_compression, file_size = self.__test_map_compression(map_compression, 'none', None)
-            map_compression, file_size = self.__test_map_compression(map_compression, 'run_length', file_size)
-            map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
-            map_compression, file_size = self.__test_map_compression(map_compression, 'huffman', file_size)
+            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'none', None)
+            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'run_length', file_size)
+            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'lz77', file_size)
+            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'huffman', file_size)
 
-        self.__execute_command(tiles_compression, palette_compression, map_compression)
+        self.__execute_command(grit, tiles_compression, palette_compression, map_compression)
         return self.__write_header(tiles_compression, palette_compression, map_compression, False)
 
-    def __test_tiles_compression(self, best_tiles_compression, new_tiles_compression, best_file_size):
-        self.__execute_command(new_tiles_compression, 'none', 'none')
+    def __test_tiles_compression(self, grit, best_tiles_compression, new_tiles_compression, best_file_size):
+        self.__execute_command(grit, new_tiles_compression, 'none', 'none')
         new_file_size = self.__write_header(new_tiles_compression, 'none', 'none', True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -728,8 +732,8 @@ class RegularBgItem:
 
         return best_tiles_compression, best_file_size
 
-    def __test_palette_compression(self, best_palette_compression, new_palette_compression, best_file_size):
-        self.__execute_command('none', new_palette_compression, 'none')
+    def __test_palette_compression(self, grit, best_palette_compression, new_palette_compression, best_file_size):
+        self.__execute_command(grit, 'none', new_palette_compression, 'none')
         new_file_size = self.__write_header('none', new_palette_compression, 'none', True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -737,8 +741,8 @@ class RegularBgItem:
 
         return best_palette_compression, best_file_size
 
-    def __test_map_compression(self, best_map_compression, new_map_compression, best_file_size):
-        self.__execute_command('none', 'none', new_map_compression)
+    def __test_map_compression(self, grit, best_map_compression, new_map_compression, best_file_size):
+        self.__execute_command(grit, 'none', 'none', new_map_compression)
         new_file_size = self.__write_header('none', 'none', new_map_compression, True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -828,8 +832,8 @@ class RegularBgItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, tiles_compression, palette_compression, map_compression):
-        command = ['grit', self.__file_path]
+    def __execute_command(self, grit, tiles_compression, palette_compression, map_compression):
+        command = [grit, self.__file_path]
 
         if self.__colors_count > 0:
             command.append('-pe' + str(self.__colors_count))
@@ -871,7 +875,7 @@ class RegularBgItem:
         try:
             subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
 class RegularBgTilesItem:
@@ -889,20 +893,20 @@ class RegularBgTilesItem:
         except KeyError:
             self.__compression = 'none'
 
-    def process(self):
+    def process(self, grit):
         compression = self.__compression
 
         if compression == 'auto':
-            compression, file_size = self.__test_compression(compression, 'none', None)
-            compression, file_size = self.__test_compression(compression, 'run_length', file_size)
-            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
-            compression, file_size = self.__test_compression(compression, 'huffman', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'none', None)
+            compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
 
-        self.__execute_command(compression)
+        self.__execute_command(grit, compression)
         return self.__write_header(compression, False)
 
-    def __test_compression(self, best_compression, new_compression, best_file_size):
-        self.__execute_command(new_compression)
+    def __test_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, new_compression)
         new_file_size = self.__write_header(new_compression, True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -971,8 +975,8 @@ class RegularBgTilesItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, compression):
-        command = ['grit', self.__file_path, '-p!', '-m!']
+    def __execute_command(self, grit, compression):
+        command = [grit, self.__file_path, '-p!', '-m!']
 
         if self.__bpp_8:
             command.append('-gB8')
@@ -986,7 +990,7 @@ class RegularBgTilesItem:
         try:
             subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
 class AffineBgItem:
@@ -1088,34 +1092,36 @@ class AffineBgItem:
             except KeyError:
                 self.__map_compression = 'none'
 
-    def process(self):
+    def process(self, grit):
         tiles_compression = self.__tiles_compression
         palette_compression = self.__palette_compression
         map_compression = self.__map_compression
 
         if tiles_compression == 'auto':
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'none', None)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'run_length', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'lz77', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(tiles_compression, 'huffman', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
+                                                                         file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
         if palette_compression == 'auto':
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'none', None)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'run_length',
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
                                                                              file_size)
-            palette_compression, file_size = self.__test_palette_compression(palette_compression, 'lz77', file_size)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
+                                                                             file_size)
 
         if map_compression == 'auto':
-            map_compression, file_size = self.__test_map_compression(map_compression, 'none', None)
-            map_compression, file_size = self.__test_map_compression(map_compression, 'run_length', file_size)
-            map_compression, file_size = self.__test_map_compression(map_compression, 'lz77', file_size)
-            map_compression, file_size = self.__test_map_compression(map_compression, 'huffman', file_size)
+            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'none', None)
+            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'run_length', file_size)
+            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'lz77', file_size)
+            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'huffman', file_size)
 
-        self.__execute_command(tiles_compression, palette_compression, map_compression)
+        self.__execute_command(grit, tiles_compression, palette_compression, map_compression)
         return self.__write_header(tiles_compression, palette_compression, map_compression, False)
 
-    def __test_tiles_compression(self, best_tiles_compression, new_tiles_compression, best_file_size):
-        self.__execute_command(new_tiles_compression, 'none', 'none')
+    def __test_tiles_compression(self, grit, best_tiles_compression, new_tiles_compression, best_file_size):
+        self.__execute_command(grit, new_tiles_compression, 'none', 'none')
         new_file_size = self.__write_header(new_tiles_compression, 'none', 'none', True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -1123,8 +1129,8 @@ class AffineBgItem:
 
         return best_tiles_compression, best_file_size
 
-    def __test_palette_compression(self, best_palette_compression, new_palette_compression, best_file_size):
-        self.__execute_command('none', new_palette_compression, 'none')
+    def __test_palette_compression(self, grit, best_palette_compression, new_palette_compression, best_file_size):
+        self.__execute_command(grit, 'none', new_palette_compression, 'none')
         new_file_size = self.__write_header('none', new_palette_compression, 'none', True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -1132,8 +1138,8 @@ class AffineBgItem:
 
         return best_palette_compression, best_file_size
 
-    def __test_map_compression(self, best_map_compression, new_map_compression, best_file_size):
-        self.__execute_command('none', 'none', new_map_compression)
+    def __test_map_compression(self, grit, best_map_compression, new_map_compression, best_file_size):
+        self.__execute_command(grit, 'none', 'none', new_map_compression)
         new_file_size = self.__write_header('none', 'none', new_map_compression, True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -1218,8 +1224,8 @@ class AffineBgItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, tiles_compression, palette_compression, map_compression):
-        command = ['grit', self.__file_path, '-gB8', '-mLa', '-mu8']
+    def __execute_command(self, grit, tiles_compression, palette_compression, map_compression):
+        command = [grit, self.__file_path, '-gB8', '-mLa', '-mu8']
 
         if self.__colors_count > 0:
             command.append('-pe' + str(self.__colors_count))
@@ -1240,7 +1246,7 @@ class AffineBgItem:
         try:
             subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
 class AffineBgTilesItem:
@@ -1257,20 +1263,20 @@ class AffineBgTilesItem:
         except KeyError:
             self.__compression = 'none'
 
-    def process(self):
+    def process(self, grit):
         compression = self.__compression
 
         if compression == 'auto':
-            compression, file_size = self.__test_compression(compression, 'none', None)
-            compression, file_size = self.__test_compression(compression, 'run_length', file_size)
-            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
-            compression, file_size = self.__test_compression(compression, 'huffman', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'none', None)
+            compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
 
-        self.__execute_command(compression)
+        self.__execute_command(grit, compression)
         return self.__write_header(compression, False)
 
-    def __test_compression(self, best_compression, new_compression, best_file_size):
-        self.__execute_command(new_compression)
+    def __test_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, new_compression)
         new_file_size = self.__write_header(new_compression, True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -1334,8 +1340,8 @@ class AffineBgTilesItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, compression):
-        command = ['grit', self.__file_path, '-gB8', '-m!', '-p!']
+    def __execute_command(self, grit, compression):
+        command = [grit, self.__file_path, '-gB8', '-m!', '-p!']
         append_compression_command('g', compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
@@ -1343,7 +1349,7 @@ class AffineBgTilesItem:
         try:
             subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
 class BgPaletteItem:
@@ -1362,19 +1368,19 @@ class BgPaletteItem:
         except KeyError:
             self.__compression = 'none'
 
-    def process(self):
+    def process(self, grit):
         compression = self.__compression
 
         if compression == 'auto':
-            compression, file_size = self.__test_compression(compression, 'none', None)
-            compression, file_size = self.__test_compression(compression, 'run_length', file_size)
-            compression, file_size = self.__test_compression(compression, 'lz77', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'none', None)
+            compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
 
-        self.__execute_command(compression)
+        self.__execute_command(grit, compression)
         return self.__write_header(compression, False)
 
-    def __test_compression(self, best_compression, new_compression, best_file_size):
-        self.__execute_command(new_compression)
+    def __test_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, new_compression)
         new_file_size = self.__write_header(new_compression, True)
 
         if best_file_size is None or new_file_size < best_file_size:
@@ -1430,8 +1436,8 @@ class BgPaletteItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, compression):
-        command = ['grit', self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
+    def __execute_command(self, grit, compression):
+        command = [grit, self.__file_path, '-g!', '-pe' + str(self.__colors_count)]
         append_compression_command('p', compression, command)
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
@@ -1439,7 +1445,7 @@ class BgPaletteItem:
         try:
             subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
-            raise ValueError('grit call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
 class GraphicsFileInfo:
@@ -1454,7 +1460,7 @@ class GraphicsFileInfo:
     def print_file_name(self):
         print(self.__file_name)
 
-    def process(self, build_folder_path):
+    def process(self, grit, build_folder_path):
         try:
             try:
                 with open(self.__json_file_path) as json_file:
@@ -1487,7 +1493,7 @@ class GraphicsFileInfo:
                 raise ValueError('Unknown graphics type "' + graphics_type +
                                  '" found in graphics json file: ' + self.__json_file_path)
 
-            total_size, header_file_path = item.process()
+            total_size, header_file_path = item.process(grit)
 
             with open(self.__file_info_path, 'w') as file_info:
                 file_info.write('')
@@ -1499,11 +1505,12 @@ class GraphicsFileInfo:
 
 class GraphicsFileInfoProcessor:
 
-    def __init__(self, build_folder_path):
+    def __init__(self, grit, build_folder_path):
+        self.__grit = grit
         self.__build_folder_path = build_folder_path
 
     def __call__(self, graphics_file_info):
-        return graphics_file_info.process(self.__build_folder_path)
+        return graphics_file_info.process(self.__grit, self.__build_folder_path)
 
 
 def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
@@ -1556,7 +1563,7 @@ def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
     return graphics_file_infos
 
 
-def process_graphics(graphics_folder_paths, build_folder_path):
+def process_graphics(grit, graphics_folder_paths, build_folder_path):
     graphics_file_infos = list_graphics_file_infos(graphics_folder_paths, build_folder_path)
 
     if len(graphics_file_infos) > 0:
@@ -1566,7 +1573,7 @@ def process_graphics(graphics_folder_paths, build_folder_path):
         sys.stdout.flush()
 
         pool = Pool()
-        process_results = pool.map(GraphicsFileInfoProcessor(build_folder_path), graphics_file_infos)
+        process_results = pool.map(GraphicsFileInfoProcessor(grit, build_folder_path), graphics_file_infos)
         pool.close()
 
         total_size = 0

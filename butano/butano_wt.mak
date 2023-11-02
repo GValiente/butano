@@ -27,7 +27,7 @@ ifdef ADD_COMPILE_COMMAND
 	$(ADD_COMPILE_COMMAND) end
 endif
 	@echo $(OFILES) > bn_ofiles.txt
-	$(_V)$(ROMLINK) -v -o $(OUTPUT).gba --output-elf $(OUTPUT).elf $(ROMLINKFLAGS) -- $(LIBPATHS) @bn_ofiles.txt \
+	$(_V)$(ROMLINK) -o $(OUTPUT).gba --output-elf $(OUTPUT).elf $(ROMLINKFLAGS) -- $(LIBPATHS) @bn_ofiles.txt \
 	$(WF_CRT0) $(LIBS) $(LDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------

@@ -9,7 +9,7 @@ endif
 BN_TOOLS	:=	$(LIBBUTANOABS)/tools
 include $(BN_TOOLS)/wt_setup.mak
 
-BN_TOOLCHAIN_CFLAGS	:=	-DBN_WONDERFUL
+BN_TOOLCHAIN_CFLAGS	:=	-DBN_WONDERFUL -specs=$(WF)/target/$(WF_TARGET)/$(WF_SUBTARGET)/gcc.specs
 BN_GRIT				:=	$(WONDERFUL_TOOLCHAIN)/thirdparty/blocksds/core/tools/grit/grit
 BN_MMUTIL			:=	$(WONDERFUL_TOOLCHAIN)/thirdparty/blocksds/core/tools/mmutil/mmutil
 
@@ -27,19 +27,13 @@ ifdef ADD_COMPILE_COMMAND
 	$(ADD_COMPILE_COMMAND) end
 endif
 	@echo $(OFILES) > bn_ofiles.txt
-	$(SILENTCMD)$(ROMLINK) -o $(OUTPUT).gba --output-elf $(OUTPUT).elf $(ROMLINKFLAGS) -- $(LIBPATHS) @bn_ofiles.txt \
-	$(WF_CRT0) $(LIBS) $(LDFLAGS)
+	$(SILENTCMD)$(ROMLINK) -c $(BN_TOOLS)/wt_config.toml -o $(OUTPUT).gba --output-elf $(OUTPUT).elf $(ROMLINKFLAGS) \
+	-- $(LIBPATHS) @bn_ofiles.txt $(LIBS) $(LDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation:
 #---------------------------------------------------------------------------------------------------------------------
 include $(BN_TOOLS)/codegen_options.mak
-
-ifndef DEFAULTLIBS
-	BN_NODEFAULT_LIBS	:=	-nostdlib
-else
-	BN_NODEFAULT_LIBS	:=	
-endif
 
 LDFLAGS	=	-gdwarf-4 $(ARCH) $(BN_NODEFAULT_LIBS) -Wl,--no-warn-rwx-segments,--gc-sections,-Map,$(notdir $*.map) \
 			$(foreach path,$(WF_ARCH_LIBDIRS),-L$(path)/lib) $(USERLDFLAGS)

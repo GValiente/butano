@@ -16,3 +16,9 @@ CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++20 -fno-rtti -fno-exceptions -fn
 				-fuse-cxa-atexit
 
 ASFLAGS     :=	-gdwarf-4 $(ARCH) $(USERASFLAGS)
+
+ifndef DEFAULTLIBS
+	BN_NODEFAULT_LIBS	:=	-nodefaultlibs
+else
+	BN_NODEFAULT_LIBS	:=	
+endif

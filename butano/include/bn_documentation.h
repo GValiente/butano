@@ -2159,7 +2159,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_16_2_0 16.2.0 (next release)
+ * @section changelog_16_2_0 16.2.0
  *
  * * bn::dmg_music::master_volume and bn::dmg_music::set_master_volume added.
  * * bn::color_effect::blend added.

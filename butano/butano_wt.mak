@@ -27,7 +27,7 @@ ifdef ADD_COMPILE_COMMAND
 	$(ADD_COMPILE_COMMAND) end
 endif
 	@echo $(OFILES) > bn_ofiles.txt
-	$(_V)$(ROMLINK) -o $(OUTPUT).gba --output-elf $(OUTPUT).elf $(ROMLINKFLAGS) -- $(LIBPATHS) @bn_ofiles.txt \
+	$(SILENTCMD)$(ROMLINK) -o $(OUTPUT).gba --output-elf $(OUTPUT).elf $(ROMLINKFLAGS) -- $(LIBPATHS) @bn_ofiles.txt \
 	$(WF_CRT0) $(LIBS) $(LDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ else
 
 $(OUTPUT).gba       :   $(OUTPUT).elf
 	@echo Fixing $(notdir $@) ...
-	$(_V)$(WONDERFUL_TOOLCHAIN)/bin/wf-gbatool fix $@ -t "$(ROMTITLE)" --code "$(ROMCODE)"
+	$(SILENTCMD)$(WONDERFUL_TOOLCHAIN)/bin/wf-gbatool fix $@ -t "$(ROMTITLE)" --code "$(ROMCODE)"
 
 $(OUTPUT).elf       :	$(OFILES)
 
@@ -85,10 +85,10 @@ $(OFILES_SOURCES)   :   $(HFILES)
 %.bin.o	%_bin.h : %.bin
 #---------------------------------------------------------------------------------------------------------------------
 	@echo "$<"
-	@$(MKDIR) -p $(@D)
-	$(_V)$(WF)/bin/wf-bin2c -a 4 $(@D) $< $*_bin
-	@$(PYTHON) -B $(BN_TOOLS)/butano_awful_tool.py --file="$(@D)/$*_bin.c"
-	$(_V)$(CC) $(CFLAGS) -MMD -MP -c -o $(@D)/$*.bin.o $(@D)/$*_bin.c
+	$(SILENTCMD)$(MKDIR) -p $(@D)
+	$(SILENTCMD)$(WF)/bin/wf-bin2c -a 4 $(@D) $< $*_bin
+	$(SILENTCMD)$(PYTHON) -B $(BN_TOOLS)/butano_awful_tool.py --file="$(@D)/$*_bin.c"
+	$(SILENTCMD)$(CC) $(CFLAGS) -MMD -MP -c -o $(@D)/$*.bin.o $(@D)/$*_bin.c
 
 -include $(DEPSDIR)/*.d
 

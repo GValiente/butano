@@ -35,12 +35,13 @@ endif
 #---------------------------------------------------------------------------------------------------------------------
 include $(BN_TOOLS)/codegen_options.mak
 
-BN_LDFLAGS_SUFFIX	:=	$(foreach path,$(WF_ARCH_LIBDIRS),-L$(path)/lib) $(USERLDFLAGS)
+BN_LDFLAGS_SUFFIX	:=	-Wl,--no-warn-rwx-segments,--gc-sections,-Map,$(notdir $*.map) \
+						$(foreach path,$(WF_ARCH_LIBDIRS),-L$(path)/lib) $(USERLDFLAGS)
 
 ifndef DEFAULTLIBS
-	LDFLAGS     =	-gdwarf-4 $(ARCH) -nostdlib -Wl,--no-warn-rwx-segments,-Map,$(notdir $*.map) $(BN_LDFLAGS_SUFFIX)
+	LDFLAGS     =	-gdwarf-4 $(ARCH) -nostdlib $(BN_LDFLAGS_SUFFIX)
 else
-	LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,--no-warn-rwx-segments,-Map,$(notdir $*.map) $(BN_LDFLAGS_SUFFIX)
+	LDFLAGS     =	-gdwarf-4 $(ARCH) $(BN_LDFLAGS_SUFFIX)
 endif
 
 #---------------------------------------------------------------------------------------------------------------------

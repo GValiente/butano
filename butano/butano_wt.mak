@@ -81,7 +81,6 @@ $(OFILES_SOURCES)   :   $(HFILES)
 	@echo "$<"
 	$(SILENTCMD)$(MKDIR) -p $(@D)
 	$(SILENTCMD)$(WF)/bin/wf-bin2c -a 4 $(@D) $< $*_bin
-	$(SILENTCMD)$(PYTHON) -B $(BN_TOOLS)/butano_awful_tool.py --file="$(@D)/$*_bin.c"
 	$(SILENTCMD)$(CC) $(CFLAGS) -MMD -MP -c -o $(@D)/$*.bin.o $(@D)/$*_bin.c
 
 -include $(DEPSDIR)/*.d

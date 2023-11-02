@@ -21,6 +21,11 @@ optional<music_item> playing_item()
     return audio_manager::playing_jingle_item();
 }
 
+void play(music_item item)
+{
+    audio_manager::play_jingle(item, 1);
+}
+
 void play(music_item item, fixed volume)
 {
     BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);

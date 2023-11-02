@@ -67,7 +67,6 @@ else
 #---------------------------------------------------------------------------------------------------------------------
 
 $(OUTPUT).gba       :   $(OUTPUT).elf
-	$(SILENTCMD)$(OBJCOPY) -O binary $< $@
 	@echo Fixing $(notdir $@) ...
 	$(_V)$(WONDERFUL_TOOLCHAIN)/bin/wf-gbatool fix $@ -t "$(ROMTITLE)" --code "$(ROMCODE)"
 

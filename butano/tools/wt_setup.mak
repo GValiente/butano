@@ -88,9 +88,3 @@ ADD_COMPILE_COMMAND := @true
 	$(SILENTMSG) $(notdir $<)
 	$(ADD_COMPILE_COMMAND) add $(CC) "-x assembler-with-cpp $(CPPFLAGS) $(ASFLAGS) -c $< -o $@" $<
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.d -x assembler-with-cpp $(CPPFLAGS) $(ASFLAGS) -c $< -o $@ $(ERROR_FILTER)
-
-#---------------------------------------------------------------------------------
-%_mb.elf:
-	$(SILENTMSG) linking multiboot
-	$(ADD_COMPILE_COMMAND) end
-	$(SILENTCMD)$(LD) -specs=gba_mb.specs $(LDFLAGS) $(OFILES) $(LIBPATHS) $(LIBS) -o $@

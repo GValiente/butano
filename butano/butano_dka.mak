@@ -19,7 +19,7 @@ BN_MMUTIL			:=	mmutil
 include $(BN_TOOLS)/custom_base_rules.mak
 
 #---------------------------------------------------------------------------------------------------------------------
-# Butano custom link rule for avoiding issues when linking too much object files:
+# Butano custom link rules for avoiding issues when linking too much object files:
 #---------------------------------------------------------------------------------------------------------------------
 %.elf:
 	$(SILENTMSG) Linking ROM...
@@ -28,6 +28,14 @@ ifdef ADD_COMPILE_COMMAND
 endif
 	@echo $(OFILES) > bn_ofiles.txt
 	$(SILENTCMD)$(LD) $(LDFLAGS) -specs=gba.specs @bn_ofiles.txt $(LIBPATHS) $(LIBS) -o $@
+
+%_mb.elf:
+	$(SILENTMSG) Linking multiboot...
+ifdef ADD_COMPILE_COMMAND
+	$(ADD_COMPILE_COMMAND) end
+endif
+	@echo $(OFILES) > bn_ofiles.txt
+	$(SILENTCMD)$(LD) $(LDFLAGS) -specs=gba_mb.specs @bn_ofiles.txt $(LIBPATHS) $(LIBS) -o $@
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation:

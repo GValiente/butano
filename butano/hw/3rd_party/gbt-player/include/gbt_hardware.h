@@ -11,7 +11,11 @@
 
 #define BIT(n)              (1 << (n))
 
-#define EWRAM_BSS           __attribute__((section(".sbss")))
+#ifdef BN_WONDERFUL
+	#define EWRAM_BSS __attribute__((section(".bss.ewram")))
+#else
+	#define EWRAM_BSS __attribute__((section(".sbss")))
+#endif
 
 // Definitions taken from libugba
 

@@ -1,0 +1,2 @@
+[memory]
+data_region = "IWRAM"

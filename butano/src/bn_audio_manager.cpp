@@ -627,16 +627,17 @@ void play_music(music_item item, fixed volume, bool loop)
 
 void stop_music()
 {
-    BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
+    if(data.music_playing)
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
-    int commands = data.commands_count;
-    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+        data.command_codes[commands] = MUSIC_STOP;
+        data.commands_count = commands + 1;
 
-    data.command_codes[commands] = MUSIC_STOP;
-    data.commands_count = commands + 1;
-
-    data.music_playing = false;
-    data.music_paused = false;
+        data.music_playing = false;
+        data.music_paused = false;
+    }
 }
 
 bool music_paused()
@@ -867,16 +868,17 @@ void play_dmg_music(const dmg_music_item& item, int speed, bool loop)
 
 void stop_dmg_music()
 {
-    BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
+    if(data.dmg_music_data)
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
-    int commands = data.commands_count;
-    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+        data.command_codes[commands] = DMG_MUSIC_STOP;
+        data.commands_count = commands + 1;
 
-    data.command_codes[commands] = DMG_MUSIC_STOP;
-    data.commands_count = commands + 1;
-
-    data.dmg_music_data = nullptr;
-    data.dmg_music_paused = false;
+        data.dmg_music_data = nullptr;
+        data.dmg_music_paused = false;
+    }
 }
 
 bool dmg_music_paused()
@@ -1063,28 +1065,28 @@ uint16_t play_sound(int priority, bn::sound_item item, fixed volume, fixed speed
 
 void stop_sound(uint16_t handle)
 {
-    auto it = data.sound_map.find(handle);
-    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+    if(data.sound_map.find(handle) != data.sound_map.end())
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
-    int commands = data.commands_count;
-    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
-
-    data.command_codes[commands] = SOUND_STOP;
-    new(data.command_datas + commands) stop_sound_command(handle);
-    data.commands_count = commands + 1;
+        data.command_codes[commands] = SOUND_STOP;
+        new(data.command_datas + commands) stop_sound_command(handle);
+        data.commands_count = commands + 1;
+    }
 }
 
 void release_sound(uint16_t handle)
 {
-    BN_BASIC_ASSERT(data.sound_map.find(handle) != data.sound_map.end(),
-                    "Sound is not active: ", handle);
+    if(data.sound_map.find(handle) != data.sound_map.end())
+    {
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
-    int commands = data.commands_count;
-    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
-
-    data.command_codes[commands] = SOUND_RELEASE;
-    new(data.command_datas + commands) release_sound_command(handle);
-    data.commands_count = commands + 1;
+        data.command_codes[commands] = SOUND_RELEASE;
+        new(data.command_datas + commands) release_sound_command(handle);
+        data.commands_count = commands + 1;
+    }
 }
 
 bn::sound_item sound_item(uint16_t handle)

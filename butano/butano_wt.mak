@@ -38,9 +38,9 @@ include $(BN_TOOLS)/codegen_options.mak
 BN_LDFLAGS_SUFFIX	:=	$(foreach path,$(WF_ARCH_LIBDIRS),-L$(path)/lib) $(USERLDFLAGS)
 
 ifndef DEFAULTLIBS
-	LDFLAGS     =	-gdwarf-4 $(ARCH) -nostdlib -Wl,-Map,$(notdir $*.map) $(BN_LDFLAGS_SUFFIX)
+	LDFLAGS     =	-gdwarf-4 $(ARCH) -nostdlib -Wl,--no-warn-rwx-segments,-Map,$(notdir $*.map) $(BN_LDFLAGS_SUFFIX)
 else
-	LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,-Map,$(notdir $*.map) $(BN_LDFLAGS_SUFFIX)
+	LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,--no-warn-rwx-segments,-Map,$(notdir $*.map) $(BN_LDFLAGS_SUFFIX)
 endif
 
 #---------------------------------------------------------------------------------------------------------------------

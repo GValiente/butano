@@ -35,10 +35,12 @@ endif
 include $(BN_TOOLS)/codegen_options.mak
 
 ifndef DEFAULTLIBS
-	LDFLAGS     =	-gdwarf-4 $(ARCH) -nodefaultlibs -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
+	BN_NODEFAULT_LIBS	:=	-nodefaultlibs
 else
-	LDFLAGS     =	-gdwarf-4 $(ARCH) -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
+	BN_NODEFAULT_LIBS	:=	
 endif
+
+LDFLAGS	=	-gdwarf-4 $(ARCH) $(BN_NODEFAULT_LIBS) -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Sources setup:

@@ -34,12 +34,6 @@ endif
 #---------------------------------------------------------------------------------------------------------------------
 include $(BN_TOOLS)/codegen_options.mak
 
-ifndef DEFAULTLIBS
-	BN_NODEFAULT_LIBS	:=	-nodefaultlibs
-else
-	BN_NODEFAULT_LIBS	:=	
-endif
-
 LDFLAGS	=	-gdwarf-4 $(ARCH) $(BN_NODEFAULT_LIBS) -Wl,-Map,$(notdir $*.map) $(USERLDFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------

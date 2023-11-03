@@ -63,7 +63,7 @@ else
 
 $(OUTPUT).gba       :   $(OUTPUT).elf
 	@echo Fixing $(notdir $@) ...
-	$(SILENTCMD)$(WONDERFUL_TOOLCHAIN)/bin/wf-gbatool fix $@ -t "$(ROMTITLE)" --code "$(ROMCODE)"
+	$(SILENTCMD)$(WONDERFUL_TOOLCHAIN)/bin/wf-gbatool fix $@ -l official -t "$(ROMTITLE)" --code "$(ROMCODE)"
 
 $(OUTPUT).elf       :	$(OFILES)
 

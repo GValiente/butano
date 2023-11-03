@@ -535,17 +535,21 @@ const affine_mat_attributes& attributes(int id)
 void set_attributes(int id, const affine_mat_attributes& attributes)
 {
     item_type& item = data.items[id];
-    int pa = item.attributes.pa_register_value();
-    int pb = item.attributes.pb_register_value();
-    int pc = item.attributes.pc_register_value();
-    int pd = item.attributes.pd_register_value();
-    item.attributes = attributes;
-    _update_flipped_identity(id);
 
-    if(item.attributes.pa_register_value() != pa || item.attributes.pb_register_value() != pb ||
-        item.attributes.pc_register_value() != pc || item.attributes.pd_register_value() != pd)
+    if(item.attributes != attributes)
     {
-        _update(id);
+        int pa = item.attributes.pa_register_value();
+        int pb = item.attributes.pb_register_value();
+        int pc = item.attributes.pc_register_value();
+        int pd = item.attributes.pd_register_value();
+        item.attributes = attributes;
+        _update_flipped_identity(id);
+
+        if(item.attributes.pa_register_value() != pa || item.attributes.pb_register_value() != pb ||
+            item.attributes.pc_register_value() != pc || item.attributes.pd_register_value() != pd)
+        {
+            _update(id);
+        }
     }
 }
 
@@ -708,6 +712,9 @@ void update()
 
     if(first_index_to_update < max_items)
     {
+        int first_index_to_commit = data.first_index_to_commit;
+        int last_index_to_commit = data.last_index_to_commit;
+
         for(int index = first_index_to_update, last = data.last_index_to_update; index <= last; ++index)
         {
             item_type& item = data.items[index];
@@ -715,7 +722,8 @@ void update()
             if(item.update)
             {
                 hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[index]);
-                _update_indexes_to_commit(index);
+                first_index_to_commit = min(first_index_to_commit, index);
+                last_index_to_commit = max(last_index_to_commit, index);
                 item.update = false;
 
                 for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
@@ -732,6 +740,8 @@ void update()
 
         data.first_index_to_update = max_items;
         data.last_index_to_update = 0;
+        data.first_index_to_commit = first_index_to_commit;
+        data.last_index_to_commit = last_index_to_commit;
     }
 }
 

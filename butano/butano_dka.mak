@@ -13,6 +13,9 @@ BN_TOOLCHAIN_CFLAGS	:=
 BN_GRIT				:=	grit
 BN_MMUTIL			:=	mmutil
 
+GAME_TITLE			:= $(ROMTITLE)
+GAME_CODE			:= $(ROMCODE)
+
 #---------------------------------------------------------------------------------------------------------------------
 # Butano custom base rules without flto:
 #---------------------------------------------------------------------------------------------------------------------
@@ -63,9 +66,6 @@ else
 #---------------------------------------------------------------------------------------------------------------------
 
 $(OUTPUT).gba       :   $(OUTPUT).elf
-	$(SILENTCMD)$(OBJCOPY) -O binary $< $@
-	@echo Fixing $(notdir $@) ...
-	$(SILENTCMD)gbafix -t"$(ROMTITLE)" -c"$(ROMCODE)" $@
 
 $(OUTPUT).elf       :	$(OFILES)
 

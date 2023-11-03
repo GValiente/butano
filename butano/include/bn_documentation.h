@@ -2164,6 +2164,7 @@
  * * bn::music::stop, bn::dmg_music::stop, bn::sound_handle::stop and bn::sound_handle::release can be called
  *   without triggering an assert if the music/sound in question isn't playing.
  * * Target `*.gba` file is rebuilt when the target `*.elf` file isn't present.
+ * * Sprite affine mats management CPU usage reduced.
  *
  *
  * @section changelog_16_2_0 16.2.0

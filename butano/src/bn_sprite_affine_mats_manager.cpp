@@ -76,7 +76,6 @@ namespace
             attributes = affine_mat_attributes();
             usages = 1;
             flipped_identity = true;
-            update = false;
             remove_if_not_needed = false;
         }
 
@@ -85,7 +84,6 @@ namespace
             attributes = new_attributes;
             usages = 1;
             flipped_identity = attributes.flipped_identity();
-            update = false;
             remove_if_not_needed = false;
         }
     };
@@ -258,10 +256,8 @@ int create_optional()
 
     if(item_index >= 0)
     {
-        item_type& new_item = data.items[item_index];
-        new_item.init();
-        hw::sprite_affine_mats::setup(data.handles_ptr[item_index]);
-        _update_indexes_to_commit(item_index);
+        data.items[item_index].init();
+        _update(item_index);
     }
 
     return item_index;
@@ -273,10 +269,8 @@ int create_optional(const affine_mat_attributes& attributes)
 
     if(item_index >= 0)
     {
-        item_type& new_item = data.items[item_index];
-        new_item.init(attributes);
-        hw::sprite_affine_mats::setup(attributes, data.handles_ptr[item_index]);
-        _update_indexes_to_commit(item_index);
+        data.items[item_index].init(attributes);
+        _update(item_index);
     }
 
     return item_index;
@@ -513,8 +507,7 @@ void set_horizontal_flip(int id, bool horizontal_flip)
     if(horizontal_flip != item.attributes.horizontal_flip())
     {
         item.attributes.set_horizontal_flip(horizontal_flip);
-        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-        _update_indexes_to_commit(id);
+        _update(id);
     }
 }
 
@@ -530,8 +523,7 @@ void set_vertical_flip(int id, bool vertical_flip)
     if(vertical_flip != item.attributes.vertical_flip())
     {
         item.attributes.set_vertical_flip(vertical_flip);
-        hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[id]);
-        _update_indexes_to_commit(id);
+        _update(id);
     }
 }
 

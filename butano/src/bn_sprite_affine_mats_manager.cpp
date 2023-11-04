@@ -7,48 +7,13 @@
 
 #include "bn_vector.h"
 #include "bn_sprites_manager_item.h"
+#include "bn_affine_mat_attributes_reader.h"
 #include "../hw/include/bn_hw_sprites_constants.h"
 #include "../hw/include/bn_hw_sprite_affine_mats.h"
 #include "../hw/include/bn_hw_sprite_affine_mats_constants.h"
 
 #include "bn_sprite_affine_mats.cpp.h"
 #include "bn_sprite_affine_mat_ptr.cpp.h"
-
-namespace bn
-{
-    class affine_mat_attributes_reader
-    {
-
-    public:
-        affine_mat_attributes_reader(const affine_mat_attributes& attributes) :
-            _attributes(attributes)
-        {
-        }
-
-        [[nodiscard]] int sin() const
-        {
-            return _attributes._sin;
-        }
-
-        [[nodiscard]] int cos() const
-        {
-            return _attributes._cos;
-        }
-
-        [[nodiscard]] unsigned sx() const
-        {
-            return _attributes._sx;
-        }
-
-        [[nodiscard]] unsigned sy() const
-        {
-            return _attributes._sy;
-        }
-
-    private:
-        const affine_mat_attributes& _attributes;
-    };
-}
 
 namespace bn::sprite_affine_mats_manager
 {

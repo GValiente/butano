@@ -1337,23 +1337,16 @@ void remove_identity_affine_mat_when_not_needed(id_type id)
     _remove_affine_mat(*item);
 }
 
-void update_auto_double_size(id_type id, int affine_mat_id)
+void update_auto_double_size(id_type id)
 {
     auto item = static_cast<item_type*>(id);
-    bool new_double_size = sprite_affine_mats_manager::sprite_double_size(
-            affine_mat_id, hw::sprites::shape_size(item->handle));
 
-    if(item->double_size != new_double_size)
+    if(item->visible)
     {
-        item->double_size = new_double_size;
-
-        if(item->visible)
-        {
-            hw::sprites::show_affine(new_double_size, item->handle);
-        }
-
-        _update_item_dimensions(*item);
+        hw::sprites::show_affine(item->double_size, item->handle);
     }
+
+    _update_item_dimensions(*item);
 }
 
 void update()

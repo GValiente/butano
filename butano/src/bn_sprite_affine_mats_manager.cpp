@@ -6,6 +6,7 @@
 #include "bn_sprite_affine_mats_manager.h"
 
 #include "bn_vector.h"
+#include "bn_unordered_map.h"
 #include "bn_sprites_manager_item.h"
 #include "bn_affine_mat_attributes_reader.h"
 #include "../hw/include/bn_hw_sprites_constants.h"
@@ -24,6 +25,39 @@ namespace
     constexpr int affine_mat_id_multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
 
     static_assert(max_items <= numeric_limits<int8_t>::max());
+
+    template<int half_width, int half_height>
+    [[nodiscard]] bool _sprite_double_size(int pa, int pb, int pc, int pd, int divisor)
+    {
+        if(pb || pd)
+        {
+            int ix1 = ((-256 * half_height * pb) - (256 * half_width * pd) + (256 * pb)) / divisor;
+
+            if(ix1 < -half_width || ix1 >= half_width)
+            {
+                return true;
+            }
+
+            int ix2 = ((-256 * half_height * pb) + (256 * half_width * pd) + (256 * pb) - (256 * pd)) / divisor;
+
+            if(ix2 < -half_width || ix2 >= half_width)
+            {
+                return true;
+            }
+        }
+
+        int iy1 = (256 * ((half_height * pa) + (half_width * pc) - pa)) / divisor;
+
+        if(iy1 < -half_height || iy1 >= half_height)
+        {
+            return true;
+        }
+
+        int iy2 = (256 * ((half_height * pa) - (half_width * pc) - pa + pc)) / divisor;
+
+        return iy2 < -half_height || iy2 >= half_height;
+    }
+
 
     class item_type
     {
@@ -50,6 +84,77 @@ namespace
             usages = 1;
             flipped_identity = attributes.flipped_identity();
             remove_if_not_needed = false;
+        }
+
+        [[nodiscard]] bool sprite_double_size(int divisor, const sprite_shape_size& shape_size) const
+        {
+            int pa = attributes.pa_register_value();
+            int pb = attributes.pb_register_value();
+            int pc = attributes.pc_register_value();
+            int pd = attributes.pd_register_value();
+
+            switch(shape_size.shape())
+            {
+
+            case sprite_shape::SQUARE:
+                return _sprite_double_size<32, 32>(pa, pb, pc, pd, divisor);
+
+            case sprite_shape::WIDE:
+                switch(shape_size.size())
+                {
+
+                case sprite_size::SMALL:
+                    return _sprite_double_size<32, 16>(pa, pb, pc, pd, divisor);
+
+                case sprite_size::NORMAL:
+                    return _sprite_double_size<32, 8>(pa, pb, pc, pd, divisor);
+
+                case sprite_size::BIG:
+                case sprite_size::HUGE:
+                    return _sprite_double_size<32, 16>(pa, pb, pc, pd, divisor);
+
+                default:
+                    return false;
+                }
+
+            case sprite_shape::TALL:
+                switch(shape_size.size())
+                {
+
+                case sprite_size::SMALL:
+                    return _sprite_double_size<16, 32>(pa, pb, pc, pd, divisor);
+
+                case sprite_size::NORMAL:
+                    return _sprite_double_size<8, 32>(pa, pb, pc, pd, divisor);
+
+                case sprite_size::BIG:
+                case sprite_size::HUGE:
+                    return _sprite_double_size<16, 32>(pa, pb, pc, pd, divisor);
+
+                default:
+                    return false;
+                }
+
+            default:
+                return false;
+            }
+        }
+
+        void update_attached_nodes_auto_double_size(bool double_size)
+        {
+            for(sprite_affine_mat_attach_node_type& attached_node : attached_nodes)
+            {
+                sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
+
+                if(sprite_item.double_size_mode == uint8_t(sprite_double_size_mode::AUTO))
+                {
+                    if(sprite_item.double_size != double_size)
+                    {
+                        sprite_item.double_size = double_size;
+                        sprites_manager::update_auto_double_size(&sprite_item);
+                    }
+                }
+            }
         }
     };
 
@@ -144,36 +249,152 @@ namespace
         return -1;
     }
 
-    template<int half_width, int half_height>
-    [[nodiscard]] bool _sprite_double_size(int pa, int pb, int pc, int pd, int divisor)
+    void _update_remove_if_not_needed()
     {
-        if(pb || pd)
-        {
-            int ix1 = ((-256 * half_height * pb) - (256 * half_width * pd) + (256 * pb)) / divisor;
+        int first_index_to_remove = data.first_index_to_remove_if_not_needed;
 
-            if(ix1 < -half_width || ix1 >= half_width)
+        if(first_index_to_remove < max_items)
+        {
+            for(int index = first_index_to_remove, last = data.last_index_to_remove_if_not_needed;
+                 index <= last; ++index)
             {
-                return true;
+                item_type& item = data.items[index];
+
+                if(item.remove_if_not_needed)
+                {
+                    auto it = item.attached_nodes.begin();
+                    auto end = item.attached_nodes.end();
+                    item.remove_if_not_needed = false;
+                    increase_usages(index);
+
+                    while(it != end)
+                    {
+                        sprite_affine_mat_attach_node_type& attached_node = *it;
+                        ++it;
+
+                        sprites_manager_item& sprite_item =
+                                sprites_manager_item::affine_mat_attach_node_item(attached_node);
+
+                        if(sprite_item.remove_affine_mat_when_not_needed)
+                        {
+                            sprites_manager::remove_identity_affine_mat_when_not_needed(&sprite_item);
+                        }
+                    }
+
+                    decrease_usages(index);
+                }
             }
 
-            int ix2 = ((-256 * half_height * pb) + (256 * half_width * pd) + (256 * pb) - (256 * pd)) / divisor;
-
-            if(ix2 < -half_width || ix2 >= half_width)
-            {
-                return true;
-            }
+            data.first_index_to_remove_if_not_needed = max_items;
+            data.last_index_to_remove_if_not_needed = 0;
         }
+    }
 
-        int iy1 = (256 * ((half_height * pa) + (half_width * pc) - pa)) / divisor;
+    void _update_impl()
+    {
+        int first_index_to_update = data.first_index_to_update;
 
-        if(iy1 < -half_height || iy1 >= half_height)
+        if(first_index_to_update < max_items)
         {
-            return true;
+            bn::unordered_map<uint16_t, bool, 32> double_sizes_map;
+            int first_index_to_commit = data.first_index_to_commit;
+            int last_index_to_commit = data.last_index_to_commit;
+
+            for(int index = first_index_to_update, last = data.last_index_to_update; index <= last; ++index)
+            {
+                item_type& item = data.items[index];
+
+                if(item.update)
+                {
+                    hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[index]);
+                    first_index_to_commit = min(first_index_to_commit, index);
+                    last_index_to_commit = max(last_index_to_commit, index);
+                    item.update = false;
+
+                    if(item.flipped_identity)
+                    {
+                        item.update_attached_nodes_auto_double_size(false);
+                    }
+                    else
+                    {
+                        const affine_mat_attributes& item_attributes = item.attributes;
+                        int pa = item_attributes.pa_register_value();
+                        int pb = item_attributes.pb_register_value();
+                        int pc = item_attributes.pc_register_value();
+                        int pd = item_attributes.pd_register_value();
+                        int divisor = (pa * pd) - (pb * pc);
+
+                        if(divisor) [[likely]]
+                        {
+                            if(item.attached_nodes.size() == 1)
+                            {
+                                sprites_manager_item& sprite_item =
+                                        sprites_manager_item::affine_mat_attach_node_item(*item.attached_nodes.begin());
+
+                                if(sprite_item.double_size_mode == uint8_t(sprite_double_size_mode::AUTO))
+                                {
+                                    bool double_size = item.sprite_double_size(
+                                            divisor, hw::sprites::shape_size(sprite_item.handle));
+
+                                    if(sprite_item.double_size != double_size)
+                                    {
+                                        sprite_item.double_size = double_size;
+                                        sprites_manager::update_auto_double_size(&sprite_item);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                auto double_sizes_map_end = double_sizes_map.end();
+                                double_sizes_map.clear();
+
+                                for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
+                                {
+                                    sprites_manager_item& sprite_item =
+                                            sprites_manager_item::affine_mat_attach_node_item(attached_node);
+
+                                    if(sprite_item.double_size_mode == uint8_t(sprite_double_size_mode::AUTO))
+                                    {
+                                        sprite_shape shape = hw::sprites::shape(sprite_item.handle);
+                                        sprite_size size = hw::sprites::size(sprite_item.handle);
+                                        uint16_t shape_size_key = uint16_t((int(shape) << 8) + int(size));
+
+                                        auto double_sizes_map_it = double_sizes_map.find(shape_size_key);
+                                        bool double_size;
+
+                                        if(double_sizes_map_it != double_sizes_map_end)
+                                        {
+                                            double_size = double_sizes_map_it->second;
+                                        }
+                                        else
+                                        {
+                                            double_size = item.sprite_double_size(
+                                                    divisor, sprite_shape_size(shape, size));
+                                            double_sizes_map.insert(shape_size_key, double_size);
+                                        }
+
+                                        if(sprite_item.double_size != double_size)
+                                        {
+                                            sprite_item.double_size = double_size;
+                                            sprites_manager::update_auto_double_size(&sprite_item);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            item.update_attached_nodes_auto_double_size(true);
+                        }
+                    }
+                }
+            }
+
+            data.first_index_to_update = max_items;
+            data.last_index_to_update = 0;
+            data.first_index_to_commit = first_index_to_commit;
+            data.last_index_to_commit = last_index_to_commit;
         }
-
-        int iy2 = (256 * ((half_height * pa) - (half_width * pc) - pa + pc)) / divisor;
-
-        return iy2 < -half_height || iy2 >= half_height;
     }
 }
 
@@ -551,51 +772,7 @@ bool sprite_double_size(int id, const sprite_shape_size& shape_size)
         return true;
     }
 
-    switch(shape_size.shape())
-    {
-
-    case sprite_shape::SQUARE:
-        return _sprite_double_size<32, 32>(pa, pb, pc, pd, divisor);
-
-    case sprite_shape::WIDE:
-        switch(shape_size.size())
-        {
-
-        case sprite_size::SMALL:
-            return _sprite_double_size<32, 16>(pa, pb, pc, pd, divisor);
-
-        case sprite_size::NORMAL:
-            return _sprite_double_size<32, 8>(pa, pb, pc, pd, divisor);
-
-        case sprite_size::BIG:
-        case sprite_size::HUGE:
-            return _sprite_double_size<32, 16>(pa, pb, pc, pd, divisor);
-
-        default:
-            return false;
-        }
-
-    case sprite_shape::TALL:
-        switch(shape_size.size())
-        {
-
-        case sprite_size::SMALL:
-            return _sprite_double_size<16, 32>(pa, pb, pc, pd, divisor);
-
-        case sprite_size::NORMAL:
-            return _sprite_double_size<8, 32>(pa, pb, pc, pd, divisor);
-
-        case sprite_size::BIG:
-        case sprite_size::HUGE:
-            return _sprite_double_size<16, 32>(pa, pb, pc, pd, divisor);
-
-        default:
-            return false;
-        }
-
-    default:
-        return false;
-    }
+    return item.sprite_double_size(divisor, shape_size);
 }
 
 void reserve_sprite_handles([[maybe_unused]] int sprite_handles_count)
@@ -637,77 +814,8 @@ void reload(int id)
 
 void update()
 {
-    int first_index_to_remove = data.first_index_to_remove_if_not_needed;
-
-    if(first_index_to_remove < max_items)
-    {
-        for(int index = first_index_to_remove, last = data.last_index_to_remove_if_not_needed; index <= last; ++index)
-        {
-            item_type& item = data.items[index];
-
-            if(item.remove_if_not_needed)
-            {
-                auto it = item.attached_nodes.begin();
-                auto end = item.attached_nodes.end();
-                item.remove_if_not_needed = false;
-                increase_usages(index);
-
-                while(it != end)
-                {
-                    sprite_affine_mat_attach_node_type& attached_node = *it;
-                    ++it;
-
-                    sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-
-                    if(sprite_item.remove_affine_mat_when_not_needed)
-                    {
-                        sprites_manager::remove_identity_affine_mat_when_not_needed(&sprite_item);
-                    }
-                }
-
-                decrease_usages(index);
-            }
-        }
-
-        data.first_index_to_remove_if_not_needed = max_items;
-        data.last_index_to_remove_if_not_needed = 0;
-    }
-
-    int first_index_to_update = data.first_index_to_update;
-
-    if(first_index_to_update < max_items)
-    {
-        int first_index_to_commit = data.first_index_to_commit;
-        int last_index_to_commit = data.last_index_to_commit;
-
-        for(int index = first_index_to_update, last = data.last_index_to_update; index <= last; ++index)
-        {
-            item_type& item = data.items[index];
-
-            if(item.update)
-            {
-                hw::sprite_affine_mats::setup(item.attributes, data.handles_ptr[index]);
-                first_index_to_commit = min(first_index_to_commit, index);
-                last_index_to_commit = max(last_index_to_commit, index);
-                item.update = false;
-
-                for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
-                {
-                    sprites_manager_item& sprite_item = sprites_manager_item::affine_mat_attach_node_item(attached_node);
-
-                    if(sprite_double_size_mode(sprite_item.double_size_mode) == sprite_double_size_mode::AUTO)
-                    {
-                        sprites_manager::update_auto_double_size(&sprite_item, index);
-                    }
-                }
-            }
-        }
-
-        data.first_index_to_update = max_items;
-        data.last_index_to_update = 0;
-        data.first_index_to_commit = first_index_to_commit;
-        data.last_index_to_commit = last_index_to_commit;
-    }
+    _update_remove_if_not_needed();
+    _update_impl();
 }
 
 commit_data retrieve_commit_data()

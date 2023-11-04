@@ -2165,7 +2165,7 @@
  *   without triggering an assert if the music/sound in question isn't playing.
  * * Target `*.gba` file is rebuilt when the target `*.elf` file isn't present.
  * * Sprite affine mats management CPU usage reduced.
- * * Affine backgrounds management CPU usage reduced.
+ * * Backgrounds management CPU usage reduced.
  *
  *
  * @section changelog_16_2_0 16.2.0

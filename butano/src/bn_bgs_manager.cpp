@@ -58,7 +58,6 @@ namespace
         int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
-        bool update: 1;
         bool big_map: 1;
         bool commit_big_map: 1;
         bool full_commit_big_map: 1;
@@ -69,8 +68,7 @@ namespace
             regular_map(move(_regular_map)),
             camera(builder.release_camera()),
             blending_enabled(builder.blending_enabled()),
-            visible(builder.visible()),
-            update(true)
+            visible(builder.visible())
         {
             for(bool& visible_in_window : visible_in_windows)
             {
@@ -89,8 +87,7 @@ namespace
             affine_map(move(_affine_map)),
             camera(builder.release_camera()),
             blending_enabled(builder.blending_enabled()),
-            visible(builder.visible()),
-            update(true)
+            visible(builder.visible())
         {
             for(bool& visible_in_window : visible_in_windows)
             {

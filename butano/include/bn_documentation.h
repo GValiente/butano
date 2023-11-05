@@ -2159,7 +2159,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_16_3_0 16.3.0 (next release)
+ * @section changelog_16_3_0 16.3.0
  *
  * * bn::music::stop, bn::dmg_music::stop, bn::sound_handle::stop and bn::sound_handle::release can be called
  *   without triggering an assert if the music/sound in question isn't playing.

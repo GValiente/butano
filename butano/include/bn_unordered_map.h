@@ -999,13 +999,46 @@ public:
         }
 
         next_index = _index(index + 1);
-        _size -= reinsert_count;
 
         for(int reinsert_index = 0; reinsert_index < reinsert_count; ++reinsert_index)
         {
             value_type temp_value(move(storage[next_index]));
             storage[next_index].~value_type();
             allocated[next_index] = false;
+            --_size;
+
+            if(_size)
+            {
+                first_valid_index = _first_valid_index;
+
+                if(next_index == first_valid_index)
+                {
+                    while(! allocated[first_valid_index])
+                    {
+                        ++first_valid_index;
+                    }
+
+                    _first_valid_index = first_valid_index;
+                }
+
+                last_valid_index = _last_valid_index;
+
+                if(next_index == last_valid_index)
+                {
+                    while(! allocated[last_valid_index])
+                    {
+                        --last_valid_index;
+                    }
+
+                    _last_valid_index = last_valid_index;
+                }
+            }
+            else
+            {
+                _first_valid_index = max_size();
+                _last_valid_index = 0;
+            }
+
             insert(move(temp_value));
             next_index = _index(next_index + 1);
         }

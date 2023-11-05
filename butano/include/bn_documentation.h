@@ -2166,6 +2166,7 @@
  * * Target `*.gba` file is rebuilt when the target `*.elf` file isn't present.
  * * Sprite affine mats management CPU usage reduced.
  * * Backgrounds management CPU usage reduced.
+ * * bn::unordered_map::erase and bn::unordered_set::erase fixed.
  *
  *
  * @section changelog_16_2_0 16.2.0

@@ -7,6 +7,7 @@
 
 #include "bn_config_audio.h"
 #include "bn_unordered_map.h"
+#include "bn_identity_hasher.h"
 #include "bn_dmg_music_position.h"
 #include "../hw/include/bn_hw_audio.h"
 
@@ -545,7 +546,7 @@ namespace
 
     public:
         command_data command_datas[max_commands];
-        unordered_map<unsigned, sound_data_type, max_sound_channels * 2> sound_map;
+        unordered_map<unsigned, sound_data_type, max_sound_channels * 2, identity_hasher> sound_map;
         fixed music_volume;
         fixed music_tempo;
         fixed music_pitch;

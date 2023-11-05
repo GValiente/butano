@@ -2165,6 +2165,7 @@
  *   without triggering an assert if the music/sound in question isn't playing.
  * * Target `*.gba` file is rebuilt when the target `*.elf` file isn't present.
  * * Sprite affine mats management CPU usage reduced.
+ * * Sound handles management CPU usage reduced.
  * * Backgrounds management CPU usage reduced.
  * * bn::unordered_map::erase and bn::unordered_set::erase fixed.
  *

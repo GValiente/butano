@@ -13,6 +13,7 @@
 #include "bn_optional.h"
 #include "bn_config_log.h"
 #include "bn_unordered_map.h"
+#include "bn_identity_hasher.h"
 #include "../hw/include/bn_hw_palettes.h"
 
 namespace bn
@@ -225,16 +226,6 @@ private:
         bool locked: 1 = false;
 
         void apply_effects(int dest_colors_count, color* dest_colors_ptr) const;
-    };
-
-    class identity_hasher
-    {
-
-    public:
-        [[nodiscard]] constexpr unsigned operator()(uint16_t value) const
-        {
-            return value;
-        }
     };
 
     palette _palettes[hw::palettes::count()] = {};

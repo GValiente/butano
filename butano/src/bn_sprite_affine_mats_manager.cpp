@@ -6,7 +6,6 @@
 #include "bn_sprite_affine_mats_manager.h"
 
 #include "bn_vector.h"
-#include "bn_unordered_map.h"
 #include "bn_sprites_manager_item.h"
 #include "bn_affine_mat_attributes_reader.h"
 #include "../hw/include/bn_hw_sprites_constants.h"
@@ -296,7 +295,6 @@ namespace
 
         if(first_index_to_update < max_items)
         {
-            bn::unordered_map<uint16_t, bool, 32> double_sizes_map;
             int first_index_to_commit = data.first_index_to_commit;
             int last_index_to_commit = data.last_index_to_commit;
 
@@ -345,8 +343,7 @@ namespace
                             }
                             else
                             {
-                                auto double_sizes_map_end = double_sizes_map.end();
-                                double_sizes_map.clear();
+                                uint8_t shape_size_values[12] = {};
 
                                 for(sprite_affine_mat_attach_node_type& attached_node : item.attached_nodes)
                                 {
@@ -357,20 +354,18 @@ namespace
                                     {
                                         sprite_shape shape = hw::sprites::shape(sprite_item.handle);
                                         sprite_size size = hw::sprites::size(sprite_item.handle);
-                                        uint16_t shape_size_key = uint16_t((int(shape) << 8) + int(size));
-
-                                        auto double_sizes_map_it = double_sizes_map.find(shape_size_key);
+                                        int shape_size_key = (int(shape) << 2) + int(size);
                                         bool double_size;
 
-                                        if(double_sizes_map_it != double_sizes_map_end)
+                                        if(uint8_t shape_size_value = shape_size_values[shape_size_key])
                                         {
-                                            double_size = double_sizes_map_it->second;
+                                            double_size = shape_size_value == 2;
                                         }
                                         else
                                         {
                                             double_size = item.sprite_double_size(
                                                     divisor, sprite_shape_size(shape, size));
-                                            double_sizes_map.insert(shape_size_key, double_size);
+                                            shape_size_values[shape_size_key] = double_size ? 2 : 1;
                                         }
 
                                         if(sprite_item.double_size != double_size)

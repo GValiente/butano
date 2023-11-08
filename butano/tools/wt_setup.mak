@@ -1,7 +1,11 @@
 #---------------------------------------------------------------------------------
 # initial setup
 #---------------------------------------------------------------------------------
-include $(WONDERFUL_TOOLCHAIN)/target/gba/rom/makedefs.mk
+ifeq ($(patsubst %_mb,,$(lastword $(TARGET))),)
+	include $(WONDERFUL_TOOLCHAIN)/target/gba/multiboot/makedefs.mk
+else
+	include $(WONDERFUL_TOOLCHAIN)/target/gba/rom/makedefs.mk
+endif
 
 #---------------------------------------------------------------------------------
 # compiler executables

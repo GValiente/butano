@@ -19,6 +19,13 @@ BN_MMUTIL			:=	$(WONDERFUL_TOOLCHAIN)/thirdparty/blocksds/core/tools/mmutil/mmut
 include $(BN_TOOLS)/custom_base_rules.mak
 
 #---------------------------------------------------------------------------------------------------------------------
+# Butano custom .gba rule with spaces allowed:
+#---------------------------------------------------------------------------------------------------------------------
+%.gba:
+	@echo Fixing $(notdir $@)...
+	$(SILENTCMD)$(WONDERFUL_TOOLCHAIN)/bin/wf-gbatool fix $@ -l official -t "$(ROMTITLE)" --code "$(ROMCODE)"
+	
+#---------------------------------------------------------------------------------------------------------------------
 # Butano custom link rule for avoiding issues when linking too much object files:
 #---------------------------------------------------------------------------------------------------------------------
 %.elf:
@@ -57,8 +64,6 @@ else
 #---------------------------------------------------------------------------------------------------------------------
 
 $(OUTPUT).gba       :   $(OUTPUT).elf
-	@echo Fixing $(notdir $@) ...
-	$(SILENTCMD)$(WONDERFUL_TOOLCHAIN)/bin/wf-gbatool fix $@ -l official -t "$(ROMTITLE)" --code "$(ROMCODE)"
 
 $(OUTPUT).elf       :	$(OFILES)
 

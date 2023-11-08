@@ -29,7 +29,11 @@ include $(BN_TOOLS)/custom_base_rules.mak
 # Butano custom link rule for avoiding issues when linking too much object files:
 #---------------------------------------------------------------------------------------------------------------------
 %.elf:
+ifeq ($(patsubst %_mb,,$(lastword $(TARGET))),)
+	$(SILENTMSG) Linking multiboot...
+else
 	$(SILENTMSG) Linking ROM...
+endif
 ifdef ADD_COMPILE_COMMAND
 	$(ADD_COMPILE_COMMAND) end
 endif

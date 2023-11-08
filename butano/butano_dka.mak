@@ -19,16 +19,16 @@ BN_MMUTIL			:=	mmutil
 include $(BN_TOOLS)/custom_base_rules.mak
 
 #---------------------------------------------------------------------------------------------------------------------
+# Butano custom .gba rule with spaces allowed:
+#---------------------------------------------------------------------------------------------------------------------
+%.gba: %.elf
+	$(SILENTCMD)$(OBJCOPY) -O binary $< $@
+	@echo Fixing $(notdir $@)...
+	$(SILENTCMD)gbafix -t"$(ROMTITLE)" -c"$(ROMCODE)" $@
+
+#---------------------------------------------------------------------------------------------------------------------
 # Butano custom link rules for avoiding issues when linking too much object files:
 #---------------------------------------------------------------------------------------------------------------------
-%.elf:
-	$(SILENTMSG) Linking ROM...
-ifdef ADD_COMPILE_COMMAND
-	$(ADD_COMPILE_COMMAND) end
-endif
-	@echo $(OFILES) > bn_ofiles.txt
-	$(SILENTCMD)$(LD) $(LDFLAGS) -specs=gba.specs @bn_ofiles.txt $(LIBPATHS) $(LIBS) -o $@
-
 %_mb.elf:
 	$(SILENTMSG) Linking multiboot...
 ifdef ADD_COMPILE_COMMAND
@@ -36,6 +36,14 @@ ifdef ADD_COMPILE_COMMAND
 endif
 	@echo $(OFILES) > bn_ofiles.txt
 	$(SILENTCMD)$(LD) $(LDFLAGS) -specs=gba_mb.specs @bn_ofiles.txt $(LIBPATHS) $(LIBS) -o $@
+	
+%.elf:
+	$(SILENTMSG) Linking ROM...
+ifdef ADD_COMPILE_COMMAND
+	$(ADD_COMPILE_COMMAND) end
+endif
+	@echo $(OFILES) > bn_ofiles.txt
+	$(SILENTCMD)$(LD) $(LDFLAGS) -specs=gba.specs @bn_ofiles.txt $(LIBPATHS) $(LIBS) -o $@
 
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation:
@@ -63,9 +71,6 @@ else
 #---------------------------------------------------------------------------------------------------------------------
 
 $(OUTPUT).gba       :   $(OUTPUT).elf
-	$(SILENTCMD)$(OBJCOPY) -O binary $< $@
-	@echo Fixing $(notdir $@) ...
-	$(SILENTCMD)gbafix -t"$(ROMTITLE)" -c"$(ROMCODE)" $@
 
 $(OUTPUT).elf       :	$(OFILES)
 

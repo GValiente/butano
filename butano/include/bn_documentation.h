@@ -2159,6 +2159,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_16_4_0 16.4.0 (next release)
+ *
+ * `memcmp` optimized.
+ *
+ *
  * @section changelog_16_3_0 16.3.0
  *
  * * bn::music::stop, bn::dmg_music::stop, bn::sound_handle::stop and bn::sound_handle::release can be called

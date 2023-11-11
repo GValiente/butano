@@ -11,6 +11,13 @@
  */
 #define BN_DATA_EWRAM __attribute__((section(".ewram")))
 
+#ifndef BN_EWRAM_BSS_SECTION
+    /**
+     * @brief Default EWRAM BSS section.
+     */
+    #define BN_EWRAM_BSS_SECTION ".sbss"
+#endif
+
 /**
  * @brief Store uninitialized data in EWRAM.
  */

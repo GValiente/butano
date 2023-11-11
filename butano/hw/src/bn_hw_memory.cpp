@@ -11,25 +11,9 @@
     #include "bn_random.h"
 #endif
 
-#ifdef BN_WONDERFUL
-    extern unsigned __iwram_start;
-    #define BN_IWRAM_START __iwram_start
-
-    extern unsigned __sp_sys;
-    #define BN_IWRAM_TOP __sp_sys
-
-    extern unsigned __iwram_end;
-    #define BN_IWRAM_END __iwram_end
-#else
-    extern unsigned __iwram_start__;
-    #define BN_IWRAM_START __iwram_start__
-
-    extern unsigned __iwram_top;
-    #define BN_IWRAM_TOP __iwram_top
-
-    extern unsigned __fini_array_end;
-    #define BN_IWRAM_END __fini_array_end
-#endif
+extern unsigned BN_IWRAM_START;
+extern unsigned BN_IWRAM_TOP;
+extern unsigned BN_IWRAM_END;
 
 extern unsigned __ewram_start;
 extern char __eheap_start[], __eheap_end[];

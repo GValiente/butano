@@ -9,7 +9,9 @@ endif
 BN_TOOLS	:=	$(LIBBUTANOABS)/tools
 include $(BN_TOOLS)/wt_setup.mak
 
-BN_TOOLCHAIN_CFLAGS	:=	-DBN_WONDERFUL -specs=$(WF)/target/$(WF_TARGET)/$(WF_SUBTARGET)/gcc.specs
+BN_TOOLCHAIN_CFLAGS	:=	-specs=$(WF)/target/$(WF_TARGET)/$(WF_SUBTARGET)/gcc.specs \
+						-DBN_EWRAM_BSS_SECTION=\".ewram_bss\" -DBN_IWRAM_START=__iwram_start \
+						-DBN_IWRAM_TOP=__sp_sys -DBN_IWRAM_END=__iwram_end
 BN_GRIT				:=	$(WONDERFUL_TOOLCHAIN)/thirdparty/blocksds/core/tools/grit/grit
 BN_MMUTIL			:=	$(WONDERFUL_TOOLCHAIN)/thirdparty/blocksds/core/tools/mmutil/mmutil
 

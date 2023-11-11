@@ -14,11 +14,7 @@
 /**
  * @brief Store uninitialized data in EWRAM.
  */
-#ifdef BN_WONDERFUL
-	#define BN_DATA_EWRAM_BSS __attribute__((section(".ewram_bss")))
-#else
-	#define BN_DATA_EWRAM_BSS __attribute__((section(".sbss")))
-#endif
+#define BN_DATA_EWRAM_BSS __attribute__((section(BN_EWRAM_BSS_SECTION)))
 
 /**
  * @brief Store code in IWRAM.

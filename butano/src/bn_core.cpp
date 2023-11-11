@@ -123,7 +123,7 @@ namespace
         timer cpu_usage_timer;
         ticks last_ticks;
         bn::system_font system_font;
-        string_view assert_tag = BN_VERSION_STRING;
+        string_view assert_tag = BN_VERSION_STRING " " BN_TOOLCHAIN_TAG;
         int skip_frames = 0;
         int last_update_frames = 1;
         int missed_frames = 0;

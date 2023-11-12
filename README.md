@@ -60,7 +60,7 @@ Butano would have not been possible without these libraries:
 
 If you spotted a bug, need a feature or have an awesome idea,
 the best you can do is to head over to the [issues page](https://github.com/GValiente/butano/issues), 
-to the [gbadev.net forums](https://forum.gbadev.net) or to the [gbadev Discord server](https://discord.io/gbadev).
+to the [gbadev.net forums](https://forum.gbadev.net) or to the [gbadev Discord server](https://discord.gg/ctGSNxRkg2).
 
 
 ## Licenses

@@ -60,7 +60,7 @@ Butano would have not been possible without these libraries:
 
 If you spotted a bug, need a feature or have an awesome idea,
 the best you can do is to head over to the [issues page](https://github.com/GValiente/butano/issues), 
-to the [gbadev forums](https://forum.gbadev.net) or to the [gbadev Discord server](https://discord.io/gbadev).
+to the [gbadev.net forums](https://forum.gbadev.net) or to the [gbadev Discord server](https://discord.io/gbadev).
 
 
 ## Licenses
@@ -99,7 +99,7 @@ Get the latest Varooom 3D ROMs from [itch.io](https://gvaliente.itch.io/varooom-
 ## Also made with Butano
 
 * [GBA Microjam '23](https://gbadev.itch.io/gba-microjam-23): a spooky microgame collection for the Game Boy Advance
-created by the members of the gbadev.net community.
+created by the members of the [gbadev.net](https://gbadev.net) community.
 
 ![](docs_tools/images/gba_microjam_23_title.png) ![](docs_tools/images/gba_microjam_23_gameplay.png)
 

@@ -2161,7 +2161,8 @@
  *
  * @section changelog_16_4_0 16.4.0 (next release)
  *
- * `memcmp` optimized.
+ * * bn::isprite_animate_action::current_graphics_index and bn::isprite_cached_animate_action::current_tiles added.
+ * * `memcmp` optimized.
  *
  *
  * @section changelog_16_3_0 16.3.0

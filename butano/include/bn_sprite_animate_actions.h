@@ -134,6 +134,14 @@ public:
         return _current_graphics_indexes_index;
     }
 
+    /**
+     * @brief Returns the current index of the tile set to reference in the given tiles_item.
+     */
+    [[nodiscard]] int current_graphics_index() const
+    {
+        return graphics_indexes()[_current_graphics_indexes_index];
+    }
+
 protected:
     /// @cond DO_NOT_DOCUMENT
 
@@ -537,6 +545,14 @@ public:
     [[nodiscard]] int current_index() const
     {
         return _current_tiles_list_index;
+    }
+
+    /**
+     * @brief Returns the current tile set.
+     */
+    [[nodiscard]] const sprite_tiles_ptr& current_tiles() const
+    {
+        return tiles_list()[_current_tiles_list_index];
     }
 
 protected:

@@ -11,15 +11,12 @@
 namespace bn::hw::gpio
 {
 
-inline void init()
+inline void set_rumble_enabled(bool enabled)
 {
     volatile uint16_t& gpio_direction_register = *reinterpret_cast<uint16_t*>(0x80000C6);
     uint16_t gpio_direction = gpio_direction_register;
     gpio_direction_register = gpio_direction | (1 << 3);
-}
 
-inline void set_rumble_enabled(bool enabled)
-{
     volatile uint16_t& gpio_data_register = *reinterpret_cast<uint16_t*>(0x80000C4);
     uint16_t gpio_data = gpio_data_register;
 

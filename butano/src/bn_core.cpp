@@ -294,10 +294,6 @@ namespace
         audio_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_DETAILED_START("eng_gpio_commit");
-        gpio_manager::commit();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
         BN_PROFILER_ENGINE_GENERAL_STOP();
 
         return result;

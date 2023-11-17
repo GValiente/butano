@@ -14,13 +14,14 @@ namespace bn::gpio_manager
 
     void set_rumble_enabled(bool enabled);
 
-    void commit();
-
     void sleep();
 
     void wake_up();
 
-    void stop();
+    inline void stop()
+    {
+        sleep();
+    }
 }
 
 #endif

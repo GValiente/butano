@@ -2162,6 +2162,7 @@
  * @section changelog_16_4_0 16.4.0 (next release)
  *
  * * bn::isprite_animate_action::current_graphics_index and bn::isprite_cached_animate_action::current_tiles added.
+ * * Rumble management CPU usage reduced.
  * * `memcmp` optimized.
  *
  *

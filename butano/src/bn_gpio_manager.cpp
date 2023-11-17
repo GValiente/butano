@@ -5,7 +5,6 @@
 
 #include "bn_gpio_manager.h"
 
-#include <new>
 #include "../hw/include/bn_hw_gpio.h"
 
 #include "bn_rumble.cpp.h"
@@ -19,21 +18,10 @@ namespace
     {
 
     public:
-        bool first_commit = true;
         bool rumble_enabled = false;
-        bool commit_rumble = false;
     };
 
     BN_DATA_EWRAM static_data data;
-
-    void _check_first_commit()
-    {
-        if(data.first_commit)
-        {
-            hw::gpio::init();
-            data.first_commit = false;
-        }
-    }
 }
 
 bool rumble_enabled()
@@ -46,17 +34,7 @@ void set_rumble_enabled(bool enabled)
     if(data.rumble_enabled != enabled)
     {
         data.rumble_enabled = enabled;
-        data.commit_rumble = true;
-    }
-}
-
-void commit()
-{
-    if(data.commit_rumble)
-    {
-        _check_first_commit();
-        hw::gpio::set_rumble_enabled(data.rumble_enabled);
-        data.commit_rumble = false;
+        hw::gpio::set_rumble_enabled(enabled);
     }
 }
 
@@ -64,20 +42,16 @@ void sleep()
 {
     if(data.rumble_enabled)
     {
-        _check_first_commit();
         hw::gpio::set_rumble_enabled(false);
-        data.commit_rumble = true;
     }
 }
 
 void wake_up()
 {
-    commit();
-}
-
-void stop()
-{
-    sleep();
+    if(data.rumble_enabled)
+    {
+        hw::gpio::set_rumble_enabled(true);
+    }
 }
 
 }

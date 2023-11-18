@@ -174,12 +174,12 @@ int __agbabi_sqrt(unsigned int x) __attribute__((const));
 /**
  * Empty IRQ handler that acknowledges raised IRQs
  */
-void __agbabi_irq_empty() __attribute__((error("IRQ handler should not be directly called")));
+void __agbabi_irq_empty(void) __attribute__((error("IRQ handler should not be directly called")));
 
 /**
  * Nested IRQ handler that calls __agbabi_irq_user_fn with the raised IRQ flags
  */
-void __agbabi_irq_user() __attribute__((error("IRQ handler should not be directly called")));
+void __agbabi_irq_user(void) __attribute__((error("IRQ handler should not be directly called")));
 
 /**
  * Handler called by __agbabi_irq_user
@@ -223,13 +223,13 @@ void __agbabi_coro_yield(__agbabi_coro_t* coro, int value) __attribute__((nonnul
  * Initialize GPIO pins for RTC
  * @return 0 for success
  */
-int __agbabi_rtc_init();
+int __agbabi_rtc_init(void);
 
 /**
  * Get the current, raw time from the RTC
  * @return Raw time in BCD
  */
-unsigned int __agbabi_rtc_time();
+unsigned int __agbabi_rtc_time(void);
 
 /**
  * Set the Hour, Minute, Second
@@ -246,7 +246,7 @@ typedef unsigned int __attribute__((vector_size(sizeof(unsigned int) * 2))) __ag
  * Get the current, raw date & time from the RTC
  * @return [raw time in BCD, raw date in BCD]
  */
-__agbabi_datetime_t __agbabi_rtc_datetime();
+__agbabi_datetime_t __agbabi_rtc_datetime(void);
 
 /**
  * Set the time and date
@@ -274,7 +274,7 @@ typedef struct {
     int(*clients_connected)(int mask);
     int(*header_progress)(int prog);
     int(*palette_progress)(int mask);
-    int(*accept)();
+    int(*accept)(void);
 } __agbabi_multiboot_t;
 
 /**
@@ -284,6 +284,12 @@ typedef struct {
  * @return 0 on success, 1 on failure with errno set to the error code
  */
 int __agbabi_multiboot(const __agbabi_multiboot_t* param) __attribute__((nonnull(1)));
+
+/**
+ * Check EWRAM speed
+ * @return 0 for slow WRAM (OXY, NTR), 1 for fast EWRAM (AGB, AGS)
+ */
+int __agbabi_poll_ewram(void) __attribute__((const));
 
 #ifdef __cplusplus
 }

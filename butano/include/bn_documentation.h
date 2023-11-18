@@ -298,6 +298,12 @@
  */
 
 /**
+ * @defgroup date_time Date and time
+ *
+ * Utilities for the real time clock (RTC), if the cart has one.
+ */
+
+/**
  * @defgroup rumble Rumble
  *
  * It allows your GBA to vibrate, if the cart supports it.
@@ -833,19 +839,25 @@
  *
  * Shows how to sleep and reset the GBA among other things.
  *
+ * <td> @ref date_time
+ *
+ * @image html examples_date_time.png
+ *
+ * Real time clock (RTC) showcase (if your cart has one).
+ *
  * <td> **Dynamic affine background**
  *
  * @image html examples_dynamic_affine_bg.png
  *
  * Basic dynamic affine background example.
  *
- * <td> **Dynamic regular background**
+ * <tr><td> **Dynamic regular background**
  *
  * @image html examples_dynamic_regular_bg.png
  *
  * Basic dynamic regular background example.
  *
- * <tr><td> **External tool**
+ * <td> **External tool**
  *
  * @image html examples_external_tool.png
  *
@@ -857,13 +869,13 @@
  *
  * See how it looks this undocumented graphic effect.
  *
- * <td> @ref keypad
+ * <tr><td> @ref keypad
  *
  * @image html examples_keypad.png
  *
  * Simple keypad status demo.
  *
- * <tr><td> @ref link
+ * <td> @ref link
  *
  * @image html examples_link.png
  *
@@ -875,13 +887,13 @@
  *
  * Integration of emulator logging into Butano.
  *
- * <td> **Map collision**
+ * <tr><td> **Map collision**
  *
  * @image html examples_map_collision.png
  *
  * Sprite against map collision example.
  *
- * <tr><td> **Mode 7**
+ * <td> **Mode 7**
  *
  * @image html examples_mode_7.png
  *
@@ -893,13 +905,13 @@
  *
  * Sprites and backgrounds mosaic effects.
  *
- * <td> @ref palette
+ * <tr><td> @ref palette
  *
  * @image html examples_palettes.png
  *
  * Showcases multiple color palette effects.
  *
- * <tr><td> **Flat polygons**
+ * <td> **Flat polygons**
  *
  * @image html examples_polygons.png
  *
@@ -911,13 +923,13 @@
  *
  * Basic code blocks profiling.
  *
- * <td> @ref regular_bg
+ * <tr><td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <tr><td> @ref rumble
+ * <td> @ref rumble
  *
  * @image html examples_rumble.png
  *
@@ -929,13 +941,13 @@
  *
  * Demonstrates usage of one affine matrix for multiple sprites.
  *
- * <td> @ref sprite
+ * <tr><td> @ref sprite
  *
  * @image html examples_sprites.png
  *
  * Simple sprites examples.
  *
- * <tr><td> @ref sram
+ * <td> @ref sram
  *
  * @image html examples_sram.png
  *
@@ -947,13 +959,13 @@
  *
  * Showcase of Butano sprite text rendering.
  *
- * <td> **Textured polygons**
+ * <tr><td> **Textured polygons**
  *
  * @image html examples_texture_polygons.png
  *
  * Showcases textured polygons rendering with sprites.
  *
- * <tr><td> @ref window
+ * <td> @ref window
  *
  * @image html examples_windows.png
  *
@@ -2161,6 +2173,8 @@
  *
  * @section changelog_16_4_0 16.4.0 (next release)
  *
+ * * Real time clock (RTC) support thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.
+ *   See bn::date, bn::time and the `date_time` example to learn how to deal with the RTC.
  * * bn::isprite_animate_action::current_graphics_index and bn::isprite_cached_animate_action::current_tiles added.
  * * Rumble management CPU usage reduced.
  * * `memcmp` optimized.

@@ -7,6 +7,8 @@
 
 #include "../hw/include/bn_hw_gpio.h"
 
+#include "bn_date.cpp.h"
+#include "bn_time.cpp.h"
 #include "bn_rumble.cpp.h"
 
 namespace bn::gpio_manager
@@ -14,14 +16,100 @@ namespace bn::gpio_manager
 
 namespace
 {
+    enum class rtc_status_type : uint8_t
+    {
+        INITIAL,
+        FAIL,
+        OK
+    };
+
     class static_data
     {
 
     public:
+        rtc_status_type rtc_status = rtc_status_type::INITIAL;
         bool rumble_enabled = false;
     };
 
     BN_DATA_EWRAM static_data data;
+
+    void _check_init_rtc()
+    {
+        if(data.rtc_status == rtc_status_type::INITIAL)
+        {
+            if(hw::gpio::init_rtc())
+            {
+                data.rtc_status = rtc_status_type::OK;
+            }
+            else
+            {
+                data.rtc_status = rtc_status_type::FAIL;
+            }
+        }
+    }
+
+    void _check_rumble_enabled()
+    {
+        if(data.rumble_enabled)
+        {
+            hw::gpio::set_rumble_enabled(true);
+        }
+    }
+}
+
+bool rtc_active()
+{
+    _check_init_rtc();
+    _check_rumble_enabled();
+    return data.rtc_status == rtc_status_type::OK;
+}
+
+optional<date> current_date()
+{
+    optional<date> result;
+    _check_init_rtc();
+
+    if(data.rtc_status == rtc_status_type::OK)
+    {
+            result = hw::gpio::rtc_date();
+    }
+
+    _check_rumble_enabled();
+    return result;
+}
+
+void set_current_date(date date)
+{
+    _check_init_rtc();
+
+    BN_BASIC_ASSERT(data.rtc_status == rtc_status_type::OK, "RTC is not present");
+
+    hw::gpio::set_rtc_date(date);
+    _check_rumble_enabled();
+}
+
+optional<time> current_time()
+{
+    optional<time> result;
+    _check_init_rtc();
+
+    if(data.rtc_status == rtc_status_type::OK)
+    {
+        result = hw::gpio::rtc_time();
+    }
+
+    _check_rumble_enabled();
+    return result;
+}
+
+void set_current_time(time time)
+{
+    _check_init_rtc();
+
+    BN_BASIC_ASSERT(data.rtc_status == rtc_status_type::OK, "RTC is not present");
+
+    hw::gpio::set_rtc_time(time);
+    _check_rumble_enabled();
 }
 
 bool rumble_enabled()
@@ -48,10 +136,7 @@ void sleep()
 
 void wake_up()
 {
-    if(data.rumble_enabled)
-    {
-        hw::gpio::set_rumble_enabled(true);
-    }
+    _check_rumble_enabled();
 }
 
 }

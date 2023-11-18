@@ -13,6 +13,7 @@
 @
 @===============================================================================
 
+.syntax unified
 #include "macros.inc"
 
     .arm
@@ -45,10 +46,10 @@ __aeabi_memset:
     @ Copy head to align to next word
     rsb     r3, r0, #4
     joaobapt_test r3
-    strmib  r2, [r0], #1
+    strbmi  r2, [r0], #1
     submi   r1, r1, #1
-    strcsb  r2, [r0], #1
-    strcsb  r2, [r0], #1
+    strbcs  r2, [r0], #1
+    strbcs  r2, [r0], #1
     subcs   r1, r1, #2
 
     .global __aeabi_memset8
@@ -84,7 +85,7 @@ __agbabi_lwordset4:
 
 .Lset_8_words:
     subs    r1, r1, #32
-    stmgeia r0!, {r2-r9}
+    stmiage r0!, {r2-r9}
     bgt     .Lset_8_words
     pop     {r4-r9}
     bxeq    lr
@@ -93,7 +94,7 @@ __agbabi_lwordset4:
     add     r1, r1, #32
 .Lset_2_words:
     subs    r1, r1, #8
-    stmgeia r0!, {r2-r3}
+    stmiage r0!, {r2-r3}
     bgt     .Lset_2_words
     bxeq    lr
 
@@ -104,15 +105,15 @@ __agbabi_lwordset4:
 
     @ Set tail
     joaobapt_test r1
-    strcsh  r2, [r0], #2
-    strmib  r2, [r0], #1
+    strhcs  r2, [r0], #2
+    strbmi  r2, [r0], #1
     bx      lr
 
     .global __agbabi_memset1
     .type __agbabi_memset1, %function
 __agbabi_memset1:
     subs    r1, r1, #1
-    strgeb  r2, [r0], #1
+    strbge  r2, [r0], #1
     bgt     __agbabi_memset1
     bx      lr
 

@@ -25,6 +25,7 @@ __aeabi_memmove:
     .extern __aeabi_memcpy
     b       __aeabi_memcpy
 
+    .section .iwram.__aeabi_memmove8, "ax", %progbits
     .global __aeabi_memmove8
     .type __aeabi_memmove8, %function
 __aeabi_memmove8:
@@ -37,6 +38,7 @@ __aeabi_memmove4:
     .extern __aeabi_memcpy4
     b       __aeabi_memcpy4
 
+    .section .iwram.__agbabi_memmove1, "ax", %progbits
     .global __agbabi_memmove1
     .type __agbabi_memmove1, %function
 __agbabi_memmove1:

@@ -2176,6 +2176,7 @@
  * * Real time clock (RTC) support thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  *   See bn::date, bn::time and the `date_time` example to learn how to deal with the RTC.
  * * bn::isprite_animate_action::current_graphics_index and bn::isprite_cached_animate_action::current_tiles added.
+ * * <a href="https://github.com/felixjones/agbabi">agbabi</a> memory routines IWRAM usage reduced.
  * * Rumble management CPU usage reduced.
  * * `memcmp` optimized.
  *

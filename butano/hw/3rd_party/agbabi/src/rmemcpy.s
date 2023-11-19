@@ -97,6 +97,7 @@ __agbabi_rmemcpy:
     strb    r3, [r0]
     bx      lr
 
+    .section .iwram.__agbabi_rmemcpy1, "ax", %progbits
     .global __agbabi_rmemcpy1
     .type __agbabi_rmemcpy1, %function
 __agbabi_rmemcpy1:

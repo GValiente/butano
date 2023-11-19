@@ -110,6 +110,7 @@ __agbabi_memcpy2:
     strbne  r3, [r0]
     bx      lr
 
+    .section .iwram.__agbabi_memcpy1, "ax", %progbits
     .global __agbabi_memcpy1
     .type __agbabi_memcpy1, %function
 __agbabi_memcpy1:

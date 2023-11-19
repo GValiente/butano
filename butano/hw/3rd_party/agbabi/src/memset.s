@@ -109,6 +109,7 @@ __agbabi_lwordset4:
     strbmi  r2, [r0], #1
     bx      lr
 
+    .section .iwram.__agbabi_memset1, "ax", %progbits
     .global __agbabi_memset1
     .type __agbabi_memset1, %function
 __agbabi_memset1:

@@ -20,11 +20,7 @@ namespace bn::gpio_manager
 
     [[nodiscard]] optional<date> current_date();
 
-    void set_current_date(date date);
-
     [[nodiscard]] optional<time> current_time();
-
-    void set_current_time(time time);
 
     [[nodiscard]] bool rumble_enabled();
 

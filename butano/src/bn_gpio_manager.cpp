@@ -78,16 +78,6 @@ optional<date> current_date()
     return result;
 }
 
-void set_current_date(date date)
-{
-    _check_init_rtc();
-
-    BN_BASIC_ASSERT(data.rtc_status == rtc_status_type::OK, "RTC is not present");
-
-    hw::gpio::set_rtc_date(date);
-    _check_rumble_enabled();
-}
-
 optional<time> current_time()
 {
     optional<time> result;
@@ -100,16 +90,6 @@ optional<time> current_time()
 
     _check_rumble_enabled();
     return result;
-}
-
-void set_current_time(time time)
-{
-    _check_init_rtc();
-
-    BN_BASIC_ASSERT(data.rtc_status == rtc_status_type::OK, "RTC is not present");
-
-    hw::gpio::set_rtc_time(time);
-    _check_rumble_enabled();
 }
 
 bool rumble_enabled()

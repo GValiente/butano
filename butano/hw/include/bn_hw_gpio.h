@@ -16,14 +16,9 @@ namespace bn::hw::gpio
 
 namespace
 {
-    int _bcd_decode(unsigned x)
+    [[nodiscard]] int _bcd_decode(unsigned x)
     {
         return int(x & 0xf) + int(x >> 4) * 10;
-    }
-
-    unsigned _bcd_encode(int x)
-    {
-        return unsigned(x) % 10U | unsigned(x) / 10U << 4;
     }
 }
 
@@ -49,13 +44,6 @@ namespace
     return result;
 }
 
-inline void set_rtc_date(date date)
-{
-    unsigned hw_date = _bcd_encode(date.year()) | (_bcd_encode(date.month()) << 8) |
-                       (_bcd_encode(date.month_day()) << 16) | (_bcd_encode(date.week_day()) << 24);
-    __agbabi_rtc_setdatetime(__agbabi_datetime_t{ hw_date, __agbabi_rtc_time() });
-}
-
 [[nodiscard]] inline optional<time> rtc_time()
 {
     optional<time> result;
@@ -70,13 +58,6 @@ inline void set_rtc_date(date date)
     }
 
     return result;
-}
-
-inline void set_rtc_time(time time)
-{
-    unsigned hw_time = _bcd_encode(time.hour()) | (_bcd_encode(time.minute()) << 8) |
-                       (_bcd_encode(time.second()) << 16);
-    __agbabi_rtc_settime(hw_time);
 }
 
 inline void set_rumble_enabled(bool enabled)

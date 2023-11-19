@@ -19,13 +19,13 @@ namespace
     void date_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view week_days[] = {
+            "Sunday",
             "Monday",
             "Tuesday",
             "Wednesday",
             "Thursday",
             "Friday",
             "Saturday",
-            "Sunday",
         };
 
         constexpr bn::string_view info_text_lines[] = {
@@ -45,7 +45,7 @@ namespace
             {
                 if(bn::optional<bn::date> date = bn::date::current())
                 {
-                    text += week_days[date->week_day() - 1];
+                    text += week_days[date->week_day()];
                     text += ' ';
                     text += bn::to_string<4>(date->year());
                     text += '/';
@@ -89,11 +89,30 @@ namespace
             {
                 if(bn::optional<bn::time> time = bn::time::current())
                 {
-                    text += bn::to_string<4>(time->hour());
+                    bn::string<4> hour = bn::to_string<4>(time->hour());
+                    bn::string<4> minute = bn::to_string<4>(time->minute());
+                    bn::string<4> second = bn::to_string<4>(time->second());
+
+                    if(hour.size() == 1)
+                    {
+                        hour = "0" + hour;
+                    }
+
+                    if(minute.size() == 1)
+                    {
+                        minute = "0" + minute;
+                    }
+
+                    if(second.size() == 1)
+                    {
+                        second = "0" + second;
+                    }
+
+                    text += hour;
                     text += ':';
-                    text += bn::to_string<4>(time->minute());
+                    text += minute;
                     text += ':';
-                    text += bn::to_string<4>(time->second());
+                    text += second;
                 }
                 else
                 {

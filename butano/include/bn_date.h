@@ -33,12 +33,12 @@ public:
      * @param year Year part of the date, in the range [0..99].
      * @param month Month part of the date, in the range [1..12].
      * @param month_day Month day part of the date, in the range [1..31].
-     * @param week_day Week day part of the date, in the range [1..7].
+     * @param week_day Week day part of the date, in the range [0..6].
      * @return `true` if the specified date is valid; `false` otherwise.
      */
     [[nodiscard]] constexpr static bool valid(int year, int month, int month_day, int week_day)
     {
-        if(year >= 0 && year <= 99 && month >= 1 && month <= 12 && week_day >= 1 && week_day <= 7 && month_day >= 1)
+        if(year >= 0 && year <= 99 && month >= 1 && month <= 12 && week_day >= 0 && week_day <= 6 && month_day >= 1)
         {
             int max_month_day = 31;
 
@@ -82,7 +82,7 @@ public:
      * @param year Year part of the date, in the range [0..99].
      * @param month Month part of the date, in the range [1..12].
      * @param month_day Month day part of the date, in the range [1..31].
-     * @param week_day Week day part of the date, in the range [1..7].
+     * @param week_day Week day part of the date, in the range [0..6].
      */
     constexpr date(int year, int month, int month_day, int week_day) :
         _year(uint8_t(year)),
@@ -164,7 +164,7 @@ public:
 
     /**
      * @brief Sets the week day part of the date.
-     * @param week_day Week day part of the date, in the range [1..31].
+     * @param week_day Week day part of the date, in the range [0..6].
      */
     constexpr void set_week_day(int week_day)
     {

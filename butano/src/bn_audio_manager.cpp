@@ -1207,11 +1207,6 @@ void set_update_on_vblank(bool update_on_vblank)
     hw::audio::set_update_on_vblank(update_on_vblank);
 }
 
-void disable_vblank_handler()
-{
-    hw::audio::disable_vblank_handler();
-}
-
 void update()
 {
     hw::audio::update(data.dmg_sync_enabled);
@@ -1445,13 +1440,9 @@ void commit()
 void stop()
 {
     data.commands_count = 0;
+    data.sound_map.clear();
 
-    if(data.music_playing)
-    {
-        stop_music();
-    }
-
-    stop_all_sounds();
+    hw::audio::stop();
 }
 
 }

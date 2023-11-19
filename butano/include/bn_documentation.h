@@ -2179,6 +2179,7 @@
  * * <a href="https://github.com/felixjones/agbabi">agbabi</a> memory routines IWRAM usage reduced.
  * * Rumble management CPU usage reduced.
  * * `memcmp` optimized.
+ * * Error message crash fixed.
  *
  *
  * @section changelog_16_3_0 16.3.0

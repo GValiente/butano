@@ -66,7 +66,6 @@ namespace
             _states[0].elements = 0;
             _states[1].elements = 0;
             _updated = false;
-            disable();
         }
 
         void update()
@@ -158,16 +157,16 @@ void enable()
     commit(false);
 }
 
-void disable()
-{
-    data.low_priority_entry.disable();
-    data.high_priority_entry.disable();
-}
-
 void force_stop()
 {
     data.low_priority_entry.force_stop();
     data.high_priority_entry.force_stop();
+}
+
+void disable()
+{
+    data.low_priority_entry.disable();
+    data.high_priority_entry.disable();
 }
 
 bool low_priority_running()

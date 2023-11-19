@@ -141,11 +141,11 @@ namespace
         hdma_manager::enable();
     }
 
-    void disable(bool disable_audio)
+    void disable(bool disable_vblank_irq)
     {
         hdma_manager::disable();
 
-        if(disable_audio)
+        if(disable_vblank_irq)
         {
             audio_manager::disable();
         }
@@ -154,18 +154,11 @@ namespace
         hblank_effects_manager::disable();
     }
 
-    void stop(bool disable_audio)
+    void stop(bool disable_vblank_irq)
     {
+        data.waiting_for_vblank = false;
+
         audio_manager::stop();
-        hw::core::wait_for_vblank();
-
-        if(disable_audio)
-        {
-            audio_manager::disable_vblank_handler();
-        }
-
-        audio_manager::update();
-
         palettes_manager::stop();
         bgs_manager::stop();
         display_manager::stop();
@@ -173,7 +166,7 @@ namespace
         gpio_manager::stop();
         hdma_manager::force_stop();
 
-        disable(disable_audio);
+        disable(disable_vblank_irq);
     }
 
     [[nodiscard]] ticks update_impl()
@@ -588,49 +581,47 @@ core_lock::~core_lock()
 
     namespace _bn::assert
     {
+        namespace
+        {
+            [[noreturn]] void _show_impl(
+                    const char* condition, const char* file_name, const char* function, int line,
+                    const bn::string_view& message)
+            {
+                if(bn::assert::callback_type assert_callback = bn::core::data.assert_callback)
+                {
+                    assert_callback();
+                }
+
+                bn::core::stop(false);
+                bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message,
+                                    bn::core::assert_tag());
+
+                while(true)
+                {
+                    bn::hw::core::wait_for_vblank();
+                }
+            }
+        }
+
         void show(const char* file_name, int line)
         {
-            show("", file_name, "", line, "");
+            _show_impl("", file_name, "", line, "");
         }
 
         void show(const char* condition, const char* file_name, const char* function, int line)
         {
-            show(condition, file_name, function, line, "");
+            _show_impl(condition, file_name, function, line, "");
         }
 
         void show(const char* condition, const char* file_name, const char* function, int line, const char* message)
         {
-            if(bn::assert::callback_type assert_callback = bn::core::data.assert_callback)
-            {
-                assert_callback();
-            }
-
-            bn::core::stop(true);
-            bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message,
-                                bn::core::assert_tag());
-
-            while(true)
-            {
-                bn::hw::core::wait_for_vblank();
-            }
+            _show_impl(condition, file_name, function, line, message);
         }
 
         void show(const char* condition, const char* file_name, const char* function, int line,
                   const bn::istring_base& message)
         {
-            if(bn::assert::callback_type assert_callback = bn::core::data.assert_callback)
-            {
-                assert_callback();
-            }
-
-            bn::core::stop(true);
-            bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message,
-                                bn::core::assert_tag());
-
-            while(true)
-            {
-                bn::hw::core::wait_for_vblank();
-            }
+            _show_impl(condition, file_name, function, line, message);
         }
     }
 #endif

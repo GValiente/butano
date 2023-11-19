@@ -14,6 +14,8 @@ namespace bn::hw::audio
 {
     void init();
 
+    void stop();
+
     void enable();
 
     void disable();
@@ -125,8 +127,6 @@ namespace bn::hw::audio
     [[nodiscard]] bool update_on_vblank();
 
     void set_update_on_vblank(bool update_on_vblank);
-
-    void disable_vblank_handler();
 
     void update(bool dmg_sync);
 

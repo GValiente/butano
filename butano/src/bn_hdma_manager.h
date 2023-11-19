@@ -14,9 +14,9 @@ namespace bn::hdma_manager
 
     void enable();
 
-    void disable();
-
     void force_stop();
+
+    void disable();
 
     [[nodiscard]] bool low_priority_running();
 

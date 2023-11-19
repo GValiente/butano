@@ -54,6 +54,9 @@ namespace
         bool update_on_vblank = false;
         bool delay_commit = true;
         bool dmg_sync = false;
+        #if BN_CFG_ASSERT_ENABLED
+            bool commit_assert_enabled = true;
+        #endif
     };
 
     BN_DATA_EWRAM_BSS static_data data;
@@ -190,12 +193,13 @@ namespace
             else
             {
                 [[maybe_unused]] bool success = VgmIntrVblank();
-                BN_BASIC_ASSERT(success, "VgmIntrVblank failed: ", VgmGetOffsetPlay());
+                BN_BASIC_ASSERT(success && data.commit_assert_enabled,
+                                "VgmIntrVblank failed: ", VgmGetOffsetPlay());
             }
         }
     }
 
-    void _enabled_vblank_handler()
+    void _vblank_handler()
     {
         core::on_vblank();
 
@@ -204,12 +208,6 @@ namespace
             _commit();
         }
 
-        hw::link::commit();
-    }
-
-    void _disabled_vblank_handler()
-    {
-        core::on_vblank();
         hw::link::commit();
     }
 }
@@ -235,7 +233,24 @@ void init()
     maxmod_info.soundbank = mm_addr(_bn_audio_soundbank_bin);
     mmInit(&maxmod_info);
 
-    mmSetVBlankHandler(reinterpret_cast<void*>(_enabled_vblank_handler));
+    mmSetVBlankHandler(reinterpret_cast<void*>(_vblank_handler));
+}
+
+void stop()
+{
+    #if BN_CFG_ASSERT_ENABLED
+        data.commit_assert_enabled = false;
+    #endif
+
+    stop_music();
+
+    if(jingle_playing())
+    {
+        set_jingle_volume(0);
+    }
+
+    stop_dmg_music();
+    stop_all_sounds();
 }
 
 void enable()
@@ -471,11 +486,6 @@ bool update_on_vblank()
 void set_update_on_vblank(bool update_on_vblank)
 {
     data.update_on_vblank = update_on_vblank;
-}
-
-void disable_vblank_handler()
-{
-    mmSetVBlankHandler(reinterpret_cast<void*>(_disabled_vblank_handler));
 }
 
 void update(bool dmg_sync)

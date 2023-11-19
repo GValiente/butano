@@ -149,8 +149,6 @@ namespace bn::audio_manager
 
     void set_update_on_vblank(bool update_on_vblank);
 
-    void disable_vblank_handler();
-
     void update();
 
     void execute_commands();

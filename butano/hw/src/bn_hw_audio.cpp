@@ -245,19 +245,6 @@ void init()
     mmSetVBlankHandler(reinterpret_cast<void*>(_vblank_handler));
 }
 
-void stop()
-{
-    stop_music();
-
-    if(jingle_playing())
-    {
-        set_jingle_volume(0);
-    }
-
-    stop_dmg_music();
-    stop_all_sounds();
-}
-
 void enable()
 {
     REG_SNDDMGCNT = data.dmg_control_value;
@@ -425,14 +412,6 @@ void set_dmg_music_volume(int left_volume, int right_volume)
     {
         BN_ERROR("Volume change not supported by the VGM player");
     }
-}
-
-void set_dmg_music_master_volume(dmg_music_master_volume volume)
-{
-    uint16_t snddscnt = REG_SNDDSCNT;
-    snddscnt &= 0b1111111111111100;
-    snddscnt += uint16_t(volume);
-    REG_SNDDSCNT = snddscnt;
 }
 
 mm_sfxhand play_sound(int priority, int id)

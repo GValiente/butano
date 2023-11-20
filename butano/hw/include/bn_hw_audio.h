@@ -9,12 +9,11 @@
 #include "maxmod.h"
 #include "bn_dmg_music_type.h"
 #include "bn_dmg_music_master_volume.h"
+#include "bn_hw_tonc.h"
 
 namespace bn::hw::audio
 {
     void init();
-
-    void stop();
 
     void enable();
 
@@ -86,7 +85,13 @@ namespace bn::hw::audio
 
     void set_dmg_music_volume(int left_volume, int right_volume);
 
-    void set_dmg_music_master_volume(dmg_music_master_volume volume);
+    inline void set_dmg_music_master_volume(dmg_music_master_volume volume)
+    {
+        uint16_t snddscnt = REG_SNDDSCNT;
+        snddscnt &= 0b1111111111111100;
+        snddscnt += uint16_t(volume);
+        REG_SNDDSCNT = snddscnt;
+    }
 
     [[nodiscard]] inline bool sound_active(mm_sfxhand handle)
     {
@@ -133,6 +138,19 @@ namespace bn::hw::audio
     void update_sounds_queue();
 
     void commit();
+
+    inline void stop()
+    {
+        stop_music();
+
+        if(jingle_playing())
+        {
+            set_jingle_volume(0);
+        }
+
+        stop_dmg_music();
+        stop_all_sounds();
+    }
 }
 
 #endif

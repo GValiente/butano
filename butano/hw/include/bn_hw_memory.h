@@ -10,6 +10,13 @@
 #include "../3rd_party/agbabi/include/aeabi.h"
 #include "../3rd_party/agbabi/include/agbabi.h"
 
+extern unsigned BN_IWRAM_START;
+extern unsigned BN_IWRAM_TOP;
+extern unsigned BN_IWRAM_END;
+
+extern unsigned __ewram_start;
+extern char __eheap_start[], __eheap_end[];
+
 namespace bn::hw::memory
 {
     void init();
@@ -26,15 +33,36 @@ namespace bn::hw::memory
         return int(ptr) >= MEM_PAL && int(ptr) < MEM_ROM;
     }
 
-    [[nodiscard]] int used_stack_iwram(int current_stack_address);
+    [[nodiscard]] inline int used_stack_iwram(int current_stack_address)
+    {
+        auto iwram_top = reinterpret_cast<uint8_t*>(&BN_IWRAM_TOP);
+        auto iwram_stack = reinterpret_cast<uint8_t*>(&current_stack_address);
+        return iwram_top - iwram_stack;
+    }
 
-    [[nodiscard]] int used_static_iwram();
+    [[nodiscard]] inline int used_static_iwram()
+    {
+        auto iwram_start = reinterpret_cast<uint8_t*>(&BN_IWRAM_START);
+        auto iwram_end = reinterpret_cast<uint8_t*>(&BN_IWRAM_END);
+        return iwram_end - iwram_start;
+    }
 
-    [[nodiscard]] int used_static_ewram();
+    [[nodiscard]] inline int used_static_ewram()
+    {
+        auto ewram_start = reinterpret_cast<uint8_t*>(&__ewram_start);
+        auto eheap_start = reinterpret_cast<uint8_t*>(&__eheap_start);
+        return eheap_start - ewram_start;
+    }
 
-    [[nodiscard]] char* ewram_heap_start();
+    [[nodiscard]] inline char* ewram_heap_start()
+    {
+        return __eheap_start;
+    }
 
-    [[nodiscard]] char* ewram_heap_end();
+    [[nodiscard]] inline char* ewram_heap_end()
+    {
+        return __eheap_end;
+    }
 
     inline void copy_bytes(const void* source, int bytes, void* destination)
     {

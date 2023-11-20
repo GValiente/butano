@@ -7,7 +7,6 @@
 #define BN_HW_SPRITE_TILES_H
 
 #include "bn_tile.h"
-#include "bn_compression_type.h"
 #include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
 
@@ -49,12 +48,29 @@ namespace bn::hw::sprite_tiles
         hw::dma::copy_words(source_tiles_ptr, count * int(sizeof(tile) / 4), tile_vram(index));
     }
 
-    void commit(const tile* source_tiles_ptr, compression_type compression, int index, int count);
-
-    void plot_tiles(int width, const tile* source_tiles_ptr, int source_y, int destination_y,
-                    tile* destination_tiles_ptr);
-
     BN_CODE_IWRAM void _plot_hideous_tiles(int width, const unsigned* srcD, int dstX0, unsigned* dstD);
+
+    inline void plot_tiles(int width, const tile* source_tiles_ptr, int source_y, int destination_y,
+                           tile* destination_tiles_ptr)
+    {
+        // From TONC:
+
+        auto srcD = reinterpret_cast<const unsigned*>(source_tiles_ptr + source_y / 8);
+        auto dstD = reinterpret_cast<unsigned*>(destination_tiles_ptr + destination_y / 8);
+
+        if(int dstX0 = destination_y & 7)
+        {
+            // Hideous cases: srcX0 != dstX0:
+
+            _plot_hideous_tiles(width, srcD, dstX0, dstD);
+        }
+        else
+        {
+            // Simple cases: aligned pixels:
+
+            hw::memory::copy_words(srcD, 8, dstD);
+        }
+    }
 }
 
 #endif

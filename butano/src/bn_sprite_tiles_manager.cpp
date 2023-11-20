@@ -503,6 +503,34 @@ namespace
         return -1;
     }
 
+    __attribute__((noinline)) void _hw_commit(
+            const tile* source_tiles_ptr, compression_type compression, int index, int count)
+    {
+        switch(compression)
+        {
+
+        case compression_type::NONE:
+            hw::sprite_tiles::commit_with_cpu(source_tiles_ptr, index, count);
+            break;
+
+        case compression_type::LZ77:
+            hw::decompress::lz77_vram(source_tiles_ptr, hw::sprite_tiles::tile_vram(index));
+            break;
+
+        case compression_type::RUN_LENGTH:
+            hw::decompress::rl_vram(source_tiles_ptr, hw::sprite_tiles::tile_vram(index));
+            break;
+
+        case compression_type::HUFFMAN:
+            hw::decompress::huff(source_tiles_ptr, hw::sprite_tiles::tile_vram(index));
+            break;
+
+        default:
+            BN_ERROR("Unknown compression type: ", int(compression));
+            break;
+        }
+    }
+
     [[nodiscard]] int _create_item(
             int id, const tile* tiles_data, compression_type compression, int tiles_count, bool delay_commit)
     {
@@ -545,7 +573,7 @@ namespace
             }
             else
             {
-                hw::sprite_tiles::commit(tiles_data, compression, int(item.start_tile), tiles_count);
+                _hw_commit(tiles_data, compression, int(item.start_tile), tiles_count);
             }
         }
 
@@ -1112,7 +1140,7 @@ void commit_compressed()
         for(int item_index : data.to_commit_compressed_items)
         {
             item_type& item = data.items.item(item_index);
-            hw::sprite_tiles::commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
+            _hw_commit(item.data, item.compression(), int(item.start_tile), int(item.tiles_count));
             item.commit = false;
         }
 

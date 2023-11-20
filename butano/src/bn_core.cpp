@@ -156,7 +156,7 @@ namespace
 
     void stop(bool disable_vblank_irq)
     {
-        data.waiting_for_vblank = false;
+        hw::core::wait_for_vblank();
 
         audio_manager::stop();
         palettes_manager::stop();

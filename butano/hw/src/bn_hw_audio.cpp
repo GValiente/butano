@@ -46,6 +46,9 @@ namespace
 
     public:
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
+        #if BN_CFG_ASSERT_ENABLED
+            unsigned vgm_offset_play = 0;
+        #endif
         uint16_t direct_sound_control_value = 0;
         uint16_t dmg_control_value = 0;
         bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
@@ -55,7 +58,7 @@ namespace
         bool delay_commit = true;
         bool dmg_sync = false;
         #if BN_CFG_ASSERT_ENABLED
-            bool commit_assert_enabled = true;
+            bool vgm_commit_failed = false;
         #endif
     };
 
@@ -192,9 +195,15 @@ namespace
             }
             else
             {
-                [[maybe_unused]] bool success = VgmIntrVblank();
-                BN_BASIC_ASSERT(success && data.commit_assert_enabled,
-                                "VgmIntrVblank failed: ", VgmGetOffsetPlay());
+                #if BN_CFG_ASSERT_ENABLED
+                    if(! data.vgm_commit_failed && ! VgmIntrVblank())
+                    {
+                        data.vgm_commit_failed = true;
+                        data.vgm_offset_play = VgmGetOffsetPlay();
+                    }
+                #else
+                    VgmIntrVblank();
+                #endif
             }
         }
     }
@@ -238,10 +247,6 @@ void init()
 
 void stop()
 {
-    #if BN_CFG_ASSERT_ENABLED
-        data.commit_assert_enabled = false;
-    #endif
-
     stop_music();
 
     if(jingle_playing())
@@ -523,6 +528,8 @@ void commit()
         _commit();
         data.delay_commit = false;
     }
+
+    BN_BASIC_ASSERT(! data.vgm_commit_failed, "VGM commit failed: ", data.vgm_offset_play);
 }
 
 }

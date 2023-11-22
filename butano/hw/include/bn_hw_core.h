@@ -11,6 +11,8 @@
 extern "C"
 {
     void bn_hw_soft_reset(unsigned reset_flags);
+
+    void bn_hw_hard_reset();
 }
 
 namespace bn::hw::core
@@ -48,6 +50,15 @@ namespace bn::hw::core
     [[noreturn]] inline void reset()
     {
         bn_hw_soft_reset(0xFF);
+
+        while(true)
+        {
+        }
+    }
+
+    [[noreturn]] inline void hard_reset()
+    {
+        bn_hw_hard_reset();
 
         while(true)
         {

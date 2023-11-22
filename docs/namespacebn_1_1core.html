@@ -98,6 +98,10 @@
             </dt>
             <dd>Resets the GBA, going back to the start of main().</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a601c5cc430d5772238e879e97ef214b3" class="m-doc">hard_reset</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Resets the GBA, going back to the start of main() after showing the BIOS intro.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc">current_cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the current CPU usage.</dd>
@@ -182,6 +186,13 @@
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adab0aa2898c9c07fe9e8cfb75ab820ec" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Resets the GBA, going back to the start of main().</p>
+<p>Keep in mind that it doesn&#x27;t rewind the stack, so alive objects are not destroyed.</p>
+          </div></section>
+          <section class="m-doc-details" id="a601c5cc430d5772238e879e97ef214b3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a601c5cc430d5772238e879e97ef214b3" class="m-doc-self">hard_reset</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Resets the GBA, going back to the start of main() after showing the BIOS intro.</p>
 <p>Keep in mind that it doesn&#x27;t rewind the stack, so alive objects are not destroyed.</p>
           </div></section>
           <section class="m-doc-details" id="aed64f380e43b831c5b6b4602a508f811"><div>

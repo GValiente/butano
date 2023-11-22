@@ -85,6 +85,13 @@ namespace bn::core
     [[noreturn]] void reset();
 
     /**
+     * @brief Resets the GBA, going back to the start of main() after showing the BIOS intro.
+     *
+     * Keep in mind that it doesn't rewind the stack, so alive objects are not destroyed.
+     */
+    [[noreturn]] void hard_reset();
+
+    /**
      * @brief Returns the current CPU usage.
      *
      * A CPU usage greater than 1 means that at least one screen refresh should have been missed.

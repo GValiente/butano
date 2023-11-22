@@ -469,6 +469,12 @@ void reset()
     hw::core::reset();
 }
 
+void hard_reset()
+{
+    stop(true);
+    hw::core::hard_reset();
+}
+
 fixed current_cpu_usage()
 {
     int current_cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();

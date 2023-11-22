@@ -26,3 +26,12 @@ bn_hw_soft_reset:
     swi 1
     swi 0
     .pool
+
+@ void bn_hw_hard_reset()
+    .align 2
+    .thumb_func
+    .global bn_hw_hard_reset
+    .type bn_hw_hard_reset STT_FUNC
+bn_hw_hard_reset:
+    swi 38
+    .pool

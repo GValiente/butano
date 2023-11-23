@@ -159,12 +159,12 @@ namespace
         hw::core::wait_for_vblank();
 
         audio_manager::stop();
+        hdma_manager::force_stop();
         palettes_manager::stop();
         bgs_manager::stop();
         display_manager::stop();
         keypad_manager::stop();
         gpio_manager::stop();
-        hdma_manager::force_stop();
 
         disable(disable_vblank_irq);
     }

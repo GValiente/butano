@@ -66,6 +66,7 @@ namespace
             _states[0].elements = 0;
             _states[1].elements = 0;
             _updated = false;
+            disable();
         }
 
         void update()

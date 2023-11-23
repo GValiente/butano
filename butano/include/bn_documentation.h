@@ -2181,7 +2181,8 @@
  * * Rumble management CPU usage reduced.
  * * `memcmp` optimized.
  * * Hardware access ROM usage reduced.
- * * Error message crash fixed.
+ * * Error messages crash fixed.
+ * * Error messages with HDMA enabled have been fixed too.
  *
  *
  * @section changelog_16_3_0 16.3.0

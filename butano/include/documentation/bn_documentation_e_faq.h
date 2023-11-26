@@ -1,0 +1,512 @@
+/*
+ * Copyright (c) 2020-2023 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
+#ifndef BN_DOCUMENTATION_FAQ_H
+#define BN_DOCUMENTATION_FAQ_H
+
+/**
+ * @page faq Frequently asked questions (FAQ)
+ *
+ * @tableofcontents
+ *
+ *
+ * @section faq_general General
+ *
+ *
+ * @subsection faq_how_do_i How do I-
+ *
+ * The best way to get started is to read the
+ * @ref getting_started "guide to download, install and start using Butano".
+ *
+ * After that, there are various @ref examples "examples" explaining most aspects of the engine.
+ *
+ * At last, check how to @ref import "import" your own assets in a game and
+ * take a look at the <a href="modules.html">modules</a> page.
+ *
+ * This page is worth a look too.
+ *
+ *
+ * @subsection faq_sell_money Would I be able to sell my game made with Butano for money?
+ *
+ * Sure!
+ *
+ * If you comply with <a href="https://github.com/GValiente/butano/blob/master/LICENSE">Butano license</a>
+ * and <a href="https://github.com/GValiente/butano/blob/master/licenses">third party libraries licenses</a>
+ * used by Butano you can sell your game without issues.
+ *
+ *
+ * @subsection faq_multiboot Is it possible to use Butano to create multiboot games?
+ *
+ * It is possible, but not recommended as Butano footprint is too big for multiboot stuff,
+ * unless you want to make something *very* simple.
+ *
+ * Multiboot ROMs *should be* generated when they have the suffix `_mb`:
+ *
+ * @code{.cpp}
+ * TARGET := $(notdir $(CURDIR))_mb
+ * @endcode
+ *
+ *
+ * @section faq_programming Programming
+ *
+ *
+ * @subsection faq_cpp Can I use Butano without knowing C++?
+ *
+ * While Butano is easy to use if you have some C++ skills,
+ * it is going to be hard to work with it if you don't know nothing about C++,
+ * so you should learn a bit of C++ before diving into Butano.
+ *
+ * After that, maybe you can learn both C++ and Butano at the same time while you make a game,
+ * but if you don't want to have a hard time with Butano you should know the basics of C++ before messing with it.
+ *
+ *
+ * @subsection faq_ide Is there any good free IDE for Butano projects out there?
+ *
+ * Take a look at the @ref qt_creator.
+ *
+ *
+ * @subsection faq_incomplete_type Why I get an incomplete type error when trying to use a Butano class?
+ *
+ * If you get an error message like these:
+ *
+ * @code{.cpp}
+ * error: variable 'bn::regular_bg_ptr bg' has initializer but incomplete type
+ * error: invalid use of incomplete type 'class bn::regular_bg_ptr'
+ * error: aggregate 'bn::fixed' has incomplete type and cannot be defined
+ * error: static assertion failed: template argument must be a complete class or an unbounded array
+ * @endcode
+ *
+ * It is almost always because of lack of included headers.
+ *
+ * You can find the header of each Butano class in its documentation page.
+ *
+ *
+ * @subsection faq_common_folder Why can't I use the content of the common folder in a new project?
+ *
+ * The `common` folder contains code and assets used by most Butano examples and tests.
+ *
+ * It is not part of Butano (the library), so it is not included by default in new projects.
+ *
+ * As the content of the `common` folder could change in future Butano versions,
+ * you should copy its content to your project if you want to use it:
+ * * Copy `common` `*.cpp` files to the `src` folder of your project.
+ * * Copy `common` `*.h` files to the `include` folder of your project.
+ * * Do the same with the rest of the files in the `common` folder (`*.bmp`, `*.json`, etc).
+ *
+ *
+ * @subsection faq_error_after_update Why I get undefined reference errors after updating Butano?
+ *
+ * If after updating Butano you get error messages like this one:
+ *
+ * @code{.cpp}
+ * error: undefined reference to 'bn::reciprocal_lut_16'
+ * @endcode
+ *
+ * They usually go away with a full rebuild of your project (`make clean` before `make`).
+ *
+ * Also make sure you update <a href="https://devkitpro.org/">devkitARM</a> when you update Butano,
+ * since some Butano features don't work with older devkitARM releases.
+ *
+ *
+ * @subsection faq_containers Why there's std like containers included with Butano?
+ *
+ * Butano containers differ from the standard library ones in two important points:
+ * * They don't use the heap, their content is always on the stack.
+ * * They don't throw exceptions. @ref assert are used instead.
+ *
+ * Since avoiding heap usage and exceptions is usually good for GBA development,
+ * use Butano containers whenever possible.
+ *
+ * Keep in mind that unlike most Butano containers, bn::unique_ptr uses the heap instead of the stack.
+ *
+ *
+ * @subsection faq_heap So I shouldn't use the heap?
+ *
+ * Since heap usage is slow and the heap allocator included with Butano is very limited,
+ * avoid heap usage whenever possible.
+ *
+ * Also, remember to call bn::core::init before using the heap.
+ *
+ *
+ * @subsection faq_memory_types Why I run out of memory so often?
+ *
+ * Besides VRAM and such, the GBA provides two memory banks:
+ * * IWRAM: 32KB fast RAM.
+ * * EWRAM: 256KB slow RAM.
+ *
+ * Data is allocated in IWRAM by default, so it is common to run out of memory if you don't use EWRAM.
+ *
+ * To place data in EWRAM, you can:
+ * * Allocate memory in the heap, since it is placed in EWRAM.
+ * * Declare static data with the `BN_DATA_EWRAM` macro:
+ * @code{.cpp}
+ * BN_DATA_EWRAM static_data data;
+ * @endcode
+ *
+ * However, if the data is read only, you can avoid wasting RAM by placing it in ROM with the `constexpr` qualifier:
+ * @code{.cpp}
+ * constexpr const_data data;
+ * @endcode
+ *
+ *
+ * @subsection faq_destroy_ptr How to destroy sprites and backgrounds?
+ *
+ * bn::sprite_ptr, bn::regular_bg_ptr and all Butano classes that end with the `_ptr` suffix are
+ * `std::shared_ptr` like smart pointers that retains shared ownership of a hardware resource.
+ *
+ * In the case of bn::sprite_ptr, several bn::sprite_ptr objects may own the same sprite.
+ * The sprite is released when the last remaining bn::sprite_ptr owning it is destroyed.
+ *
+ * If you want to learn more about `std::shared_ptr`, you can read:
+ * * <a href="https://www.geeksforgeeks.org/auto_ptr-unique_ptr-shared_ptr-weak_ptr-2">A basic introduction of standard smart pointers</a>.
+ * * <a href="https://docs.microsoft.com/en-us/cpp/cpp/how-to-create-and-use-shared-ptr-instances?view=msvc-160">A std::shared_ptr usage guide</a>.
+ *
+ *
+ * @subsection faq_destroy_optional That's cool, but how can I destroy and reload sprites and backgrounds as easy as possible?
+ *
+ * bn::optional helps to unload and reload hardware resources easily:
+ *
+ * @code{.cpp}
+ * // bg_optional is empty:
+ * bn::optional<bn::regular_bg_ptr> bg_optional;
+ *
+ * // bg_optional now contains the background specified by bn::regular_bg_items::bg1:
+ * bg_optional = bn::regular_bg_items::bg1.create_bg(0, 0);
+ *
+ * // bg_optional is empty again:
+ * bg_optional.reset();
+ *
+ * // bg_optional now contains the background specified by bn::regular_bg_items::bg2:
+ * bg_optional = bn::regular_bg_items::bg2.create_bg(0, 0);
+ * @endcode
+ *
+ *
+ * @subsection faq_float_double Can I use float or double when coding for the GBA?
+ *
+ * Modern CPUs have dedicated hardware for processing `float`s and `double`s.
+ * The GBA doesn't have it, so you're left with two choices:
+ *
+ * * Using `float`s and `double`s emulated in software (*very* slow).
+ * * Using fixed point arithmetic, which is just integer arithmetic with a few extra steps.
+ *
+ * Butano provides bn::fixed, which tries to be as close as possible to a `float` with fixed point arithmetic.
+ * Use it when you want to work with numbers with decimal points.
+ *
+ *
+ * @subsection faq_sprintf How do I print a number in a string?
+ *
+ * *Don't* use `sprintf`, `std::ostringstream` or anything else from the standard library, because:
+ *
+ * * Butano functions for printing numbers in strings can be more than 5 times faster than the standard functions.
+ * * Standard functions can take more than 4KB of IWRAM.
+ * * Standard functions sometimes can't be used because they throw link errors.
+ *
+ * If you want to print a number in a string with Butano, bn::to_string provides the easiest way to do it:
+ *
+ * @code{.cpp}
+ * bn::string<16> string = bn::to_string<16>(number);
+ * @endcode
+ *
+ * If you want to compose a string with multiple numbers, you can use bn::ostringstream too:
+ *
+ * @code{.cpp}
+ * bn::string<64> string;
+ * bn::ostringstream string_stream(string);
+ * string_stream << "Text: ";
+ * string_stream << 123;
+ * string_stream << " - ";
+ * string_stream << number;
+ * @endcode
+ *
+ *
+ * @subsection faq_global_objects Does Butano allow to declare bn::sprite_ptr or bn::regular_bg_ptr objects globally?
+ *
+ * In general, you should not do anything with Butano before calling bn::core::init,
+ * including creating global Butano objects and allocating memory in the heap.
+ *
+ * If you want to declare global Butano objects, you can do something like this instead:
+ *
+ * @code{.cpp}
+ * struct global_data
+ * {
+ *     bn::sprite_ptr sprite;
+ *     bn::regular_bg_ptr bg;
+ * };
+ *
+ * global_data* global_ptr;
+ *
+ * int main()
+ * {
+ *     bn::core::init();
+ *
+ *     global_data global_instance = {
+ *         bn::sprite_items::sprite_item.create_sprite(0, 0),
+ *         bn::regular_bg_items::bg_item.create_bg(0, 0)
+ *     };
+ *
+ *     global_ptr = &global_instance;
+ *
+ *     // ...
+ * }
+ * @endcode
+ *
+ * With that, you can access global Butano objects from anywhere in your project with this code:
+ *
+ * @code{.cpp}
+ * global_ptr->sprite.set_position(50, 50);
+ * @endcode
+ *
+ *
+ * @subsection faq_random_seed How can I set the seed of a bn::random?
+ *
+ * If you want to do that, use bn::seed_random instead.
+ *
+ *
+ * @subsection faq_rect_odd_dimensions Does bn::rect work with odd dimensions?
+ *
+ * Since it takes a center point as position instead of a top-left point, bn::rect has problems with odd dimensions.
+ *
+ * If you need to handle odd dimensions, use bn::top_left_rect instead.
+ *
+ *
+ * @subsection faq_wait_updates Is there a way to stop running my code for a certain amount of time?
+ *
+ * Since you can usually assume than your game is running at 60FPS,
+ * for example you can wait one second with this code:
+ *
+ * @code{.cpp}
+ * for(int index = 0; index < 60; ++index)
+ * {
+ *     bn::core::update();
+ * }
+ * @endcode
+ *
+ *
+ * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
+ *
+ * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.
+ *
+ *
+ * @section faq_images Images
+ *
+ *
+ * @subsection faq_images_invalid_header_size Why I get an "invalid header size" error when I try to import a *.bmp file?
+ *
+ * If you get that error when importing a `*.bmp` file, it probably means that it contains unsupported features, such as:
+ * * Compression.
+ * * Color space information.
+ * * Non-indexed colors.
+ *
+ * Please check the @ref import_image import guide to learn more about how to generate supported `*.bmp` files.
+ *
+ *
+ * @section faq_color Colors
+ *
+ *
+ * @subsection faq_transparent_color Which color is the transparent one?
+ *
+ * Butano supports 16 or 256 color images only, so they must have a color palette.
+ *
+ * The transparent color is the first one in the color palette,
+ * so in order to change it you should use a bitmap editor with color palette manipulation tools,
+ * like <a href="https://www.coranac.com/projects/usenti/">Usenti</a>:
+ *
+ * @image html import_usenti.png
+ *
+ *
+ * @subsection faq_backdrop_color How can I set the backdrop color?
+ *
+ * The transparent or the backdrop color (displayed color when nothing else is)
+ * is the first one in the backgrounds palette.
+ *
+ * You can override its default value with bn::bg_palettes::set_transparent_color.
+ *
+ *
+ * @subsection faq_share_palettes How to share the same color palette between sprites or backgrounds?
+ *
+ * If two sprites or backgrounds have the same colors, by default they share the same color palette.
+ *
+ * Keep in mind that unused colors are also taken into account when deciding if two color palettes are equal or not.
+ *
+ *
+ * @section faq_sprites Sprites
+ *
+ *
+ * @subsection faq_sprites_multiple_8bpp Why everything looks weird when I show two or more sprites with more than 16 colors?
+ *
+ * Since the GBA has only 256 colors for sprites, if you use two sprites with more than 16 colors at the same time,
+ * Butano assumes that they have the same color palette (same colors in the same order).
+ *
+ * So if you are going to show multiple sprites with more than 16 colors at the same time, use the same color palette
+ * with all of them (in the same scene of course, sprites shown in different scenes can have different color palettes).
+ *
+ *
+ * @subsection faq_sprites_scanline Why whenever I have too many sprites on screen, some of them get cut off?
+ *
+ * If you show too many sprites on screen (especially if they're rotated or scaled),
+ * they won't be rendered because the GBA has a
+ * <a href="https://problemkaputt.de/gbatek-lcd-obj-overview.htm">maximum number of sprite pixels per scanline</a>.
+ *
+ * You can try to get around this limitation by showing sprites without rotation or scaling, or even better,
+ * using backgrounds instead of sprites.
+ *
+ *
+ * @subsection faq_sprites_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
+ *
+ * bn::sprite_text_generator already supports UTF-8 characters rendering,
+ * but the bn::sprite_font instances used in the examples don't provide japanese nor chinese characters,
+ * so you will have to make a new one with them.
+ *
+ *
+ * @section faq_backgrounds Backgrounds
+ *
+ *
+ * @subsection faq_bg_multiple_8bpp Why everything looks weird when I show two or more backgrounds with more than 16 colors?
+ *
+ * Since the GBA has only 256 colors for tiled backgrounds, if you use two 8BPP backgrounds with more than 16 colors
+ * at the same time, Butano assumes that they have the same color palette (same colors in the same order).
+ *
+ * So if you are going to show multiple backgrounds with more than 16 colors at the same time, you can:
+ * * Use the same color palette with all of them (in the same scene of course, backgrounds shown in different scenes
+ *   can have different color palettes).
+ * * Change their BPP mode to 4BPP, so each background can have its own color palette with more than 16 colors.
+ *
+ *
+ * @subsection faq_bg_wrapping Why some backgrounds don't allow wrapping?
+ *
+ * If you try to move a big background beyond its boundaries, an error message like this one should be displayed:
+ *
+ * @image html faq_bg_wrapping.png
+ *
+ * That's because big backgrounds don't allow wrapping, so if you are using a big background,
+ * avoid moving it beyond its boundaries (or avoid using big backgrounds).
+ *
+ *
+ * @subsection faq_big_background What's a big background?
+ *
+ * The GBA only supports some fixed sizes for background maps.
+ *
+ * However, Butano allows to manage background maps with any size multiple of 256 pixels.
+ * These special background maps and the backgrounds that display them are called big maps/backgrounds.
+ *
+ * Try to avoid big backgrounds whenever possible, because they are slower CPU wise and
+ * don't support wrapping (they can't be moved beyond their boundaries).
+ *
+ *
+ * @subsection faq_regular_affine_background Why there are two types of backgrounds (regular and affine)?
+ *
+ * It seems it is always better to use affine backgrounds, since they can be rotated, scaled, etc.
+ * and its size can be up to 1024x1024 pixels without becoming big backgrounds.
+ *
+ * However, compared to regular backgrounds, affine backgrounds have these limitations:
+ * * Only two of them can be displayed at the same time, instead of four.
+ * * They don't support 16 color tiles, only 256 color ones.
+ * * They only support up to 256 different tiles, instead of 1024.
+ * * They don't support flipped tiles.
+ *
+ * Because of these limitations, you should avoid affine backgrounds whenever possible.
+ *
+ *
+ * @subsection faq_background_error_grit Why can't I import a regular background with 1024 or less tiles?
+ *
+ * If you get this error when trying to import a regular background with 1024 or less tiles:
+ *
+ * `error: Regular BGs with more than 1024 tiles not supported: 1025`
+ *
+ * Or you get this error when importing an affine background with 256 or less tiles:
+ *
+ * `error: Affine BGs with more than 256 tiles not supported: 257`
+ *
+ * Your image is fine, but <a href="https://www.coranac.com/projects/grit/">grit</a>
+ * (the tool used by Butano to import images) is generating unneeded extra tiles.
+ *
+ * The only workaround that I know of is reducing detail in your input image until the tiles count of
+ * the generated background is valid.
+ *
+ * However, if you are working with unique tiles to generate a dynamic background,
+ * importing background tiles only instead of a background with map should work.
+ * Check @ref import_regular_bg_tiles, @ref import_affine_bg_tiles, the `dynamic_regular_bg` example and
+ * the `dynamic_affine_bg` example for that.
+ *
+ *
+ * @section faq_audio Audio
+ *
+ *
+ * @subsection faq_music_crash Why the game crashes when some Direct Sound songs are played?
+ *
+ * Butano uses the excellent <a href="https://maxmod.devkitpro.org/">Maxmod</a> library
+ * for Direct Sound audio support.
+ *
+ * It provides impressive performance and support for lots of module music formats,
+ * but unfortunately it crashes with some songs.
+ *
+ * Sometimes it helps to change song's file format (for example, from `*.xm` to `*.it`).
+ * You can use <a href="https://openmpt.org/">OpenMPT</a> to do that.
+ *
+ * You can also try to create a new issue in its
+ * <a href="https://github.com/devkitPro/maxmod/issues">GitHub issues</a> page,
+ * but since it seems the library was abandoned long time ago, don't hold your hopes up too much.
+ *
+ *
+ * @subsection faq_music_wav Why can't I use a long *.wav file as music?
+ *
+ * <a href="https://maxmod.devkitpro.org/">Maxmod</a> doesn't allow to play long `*.wav` files as music,
+ * unfortunately.
+ *
+ * The maximum length of sound samples is also small, so if you try to play a long `*.wav` file as a sound effect,
+ * it should stop after a few seconds.
+ *
+ * What you can do is to split your long `*.wav` file in small pieces and put them in a module file
+ * (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions).
+ * You can use <a href="https://sox.sourceforge.net/">SoX</a> to split the long `*.wav` file and
+ * <a href="https://openmpt.org/">OpenMPT</a> to create the final module file.
+ *
+ *
+ * @subsection faq_music_missing_notes Why there are missing notes when playing some Direct Sound songs?
+ *
+ * If a song doesn't have more channels than the maximum number of active Direct Sound music channels
+ * specified by @ref BN_CFG_AUDIO_MAX_MUSIC_CHANNELS, as before,
+ * sometimes it helps to change its file format (for example, from `*.xm` to `*.it`).
+ * You can use <a href="https://openmpt.org/">OpenMPT</a> to do that.
+ *
+ *
+ * @subsection faq_audio_quality How can I improve Direct Sound audio quality?
+ *
+ * If you have some free CPU left, you can increase Direct Sound audio mixing rate to improve its quality.
+ *
+ * The easiest way to specify Direct Sound audio mixing rate for a specific project is
+ * to define it in the `USERFLAGS` of its `Makefile`.
+ *
+ * For example, to set Direct Sound audio mixing rate to 21KHz:
+ *
+ * `USERFLAGS := -DBN_CFG_AUDIO_MIXING_RATE=BN_AUDIO_MIXING_RATE_21_KHZ`
+ *
+ * Remember to rebuild your project from scratch after modifying a `Makefile`.
+ *
+ * Available Direct Sound mixing rates are @ref audio "here".
+ *
+ *
+ * @section faq_flash_carts Flash carts
+ *
+ *
+ * @subsection faq_flash_carts_start Why my game runs fine on emulators but doesn't work on a real GBA with a flash cart?
+ *
+ * Some flash carts allow to improve commercial games with patches like `saver patch`, `enable restart`,
+ * `enable real time save`, etc.
+ *
+ * These patches can break homebrew games, so try to disable some or all of them if you run into any issues.
+ *
+ *
+ * @subsection faq_flash_carts_sram Why SRAM works on emulators but doesn't work with this old flash cart?
+ *
+ * While SRAM works out-of-the-box with most modern flash carts, it can fail with some older ones.
+ *
+ * To fix it you can try to:
+ * * Set save type as SRAM.
+ * * Disable or enable save patches.
+ * * Update the firmware of the flash cart.
+ */
+
+#endif

@@ -356,7 +356,7 @@
  * @subsection faq_sprites_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
  *
  * bn::sprite_text_generator already supports UTF-8 characters rendering,
- * but the bn::sprite_font instances used in the examples don't provide japanese nor chinese characters,
+ * but the bn::sprite_font instances used in the examples don't provide japanese or chinese characters,
  * so you will have to make a new one with them.
  *
  *

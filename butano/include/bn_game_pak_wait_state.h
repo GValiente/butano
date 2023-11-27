@@ -40,7 +40,7 @@
  *
  * Game Pak access time is 2+1 clock cycles for non-sequential accesses.
  *
- * This setting is not supported by the Nintendo 3DS nor slow flash carts like the SuperCard SD.
+ * This setting is not supported by the Nintendo 3DS or slow flash carts like the SuperCard SD.
  *
  * @ingroup game_pak
  */

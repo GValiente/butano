@@ -34,7 +34,7 @@
  * Butano for now is a little finicky about the images it likes, sorry.
  *
  * The required image format is the following:
- * * BMP without compression nor color space information.
+ * * BMP without compression or color space information.
  * * 16 or 256 colors only.
  * * The first color in the color palette is the transparent one, so in most cases it will not be shown on screen.
  *

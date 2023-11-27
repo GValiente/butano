@@ -14,6 +14,8 @@
  *
  * @section changelog_16_4_0 16.4.0 (next release)
  *
+ * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> experimental support!
+ *   See the @ref getting_started_wt guide to learn how to build Butano games with it.
  * * Real time clock (RTC) support thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  *   See bn::date, bn::time and the `date_time` example to learn how to deal with the RTC.
  * * bn::core::hard_reset added.
@@ -500,7 +502,7 @@
  * @section changelog_10_3_0 10.3.0
  *
  * * bn::bg_tiles::allow_offset and bn::bg_tiles::set_allow_offset added.
- * * Import tool now can generate regular and affine background tiles without maps nor palettes.
+ * * Import tool can now generate regular and affine background tiles without maps or palettes.
  *   See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides to learn how to import them.
  * * BPP mode can be specified when importing sprite tiles.
  *   See the @ref import_sprite_tiles import guide to learn how to specify it.
@@ -790,7 +792,7 @@
  *
  * @section changelog_7_3_0 7.3.0
  *
- * * bn::sprite_text_generator now can plot multiple 16x16 variable width characters in a single sprite.
+ * * bn::sprite_text_generator can now plot multiple 16x16 variable width characters in a single sprite.
  * * bn::sprite_text_generator IWRAM usage reduced.
  * * Third party libraries to link can be specified in the project's `Makefile`.
  * * Project's `Makefile` allows to build source files generated with an external tool.
@@ -1094,7 +1096,7 @@
  *
  * @section changelog_4_2_0 4.2.0
  *
- * * Sprite and background palettes can be generated from images alone, without tiles nor maps.
+ * * Sprite and background palettes can be generated from images alone, without tiles or maps.
  * * `<cstddef>` is always included (`bn_cstddef.h` header file removed).
  * * bn::unordered_map and bn::unordered_set assignment fixed.
  *

@@ -13,10 +13,15 @@
  *
  * @tableofcontents
  *
+ *
  * @section getting_started_supported_platforms Supported platforms
  *
  * Butano is built on top of the <a href="https://devkitpro.org/">devkitARM</a> toolchain,
  * so it supports Windows, macOS and Unix-like platforms.
+ *
+ * There's also experimental support for <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>.
+ * If you want to try it, go to @ref getting_started_wt.
+ *
  *
  * @section getting_started_emulator GBA emulator
  *
@@ -37,7 +42,7 @@
  * * Make sure that **with the system console (not with the MSYS2 one)** you are able to build and run
  *   some of the examples located in `/path/to/devkitpro/examples/gba`:
  *   * By default, devkitARM is installed in `C:\devkitPro\` on Windows and in `/opt/devkitpro/` on Ubuntu.
- *   * To build a devkitARM example open the system console, `cd` to the folder of the example you want to build
+ *   * To build a devkitARM example, open the system console, `cd` to the folder of the example you want to build
  *     and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
  *   * In particular, you should build and run the Maxmod example located in
  *     `/path/to/devkitpro/examples/gba/audio/maxmod` before going on.
@@ -55,7 +60,7 @@
  * you are going to need <a href="https://www.python.org/">Python</a>.
  *
  * If you are going to install Python on Windows,
- * remember to add it to the PATH and to close all system console windows before installing it:
+ * remember to add it to the `PATH` and to close all system console windows before installing it:
  *
  * @image html python_windows.png
  *
@@ -74,7 +79,7 @@
  * @section getting_started_butano Butano
  *
  * Download or clone the latest Butano release from <a href="https://github.com/GValiente/butano">GitHub</a>
- * and put it in a path without spaces or anything weird like that, please.
+ * and put it in a path without spaces or anything weird, please.
  *
  *
  * @section getting_started_examples Butano examples
@@ -83,7 +88,7 @@
  *
  * Make sure that you are able to build and run some of them:
  * * They are located in `/path/to/butano/examples/`.
- * * As with <a href="https://devkitpro.org/">devkitARM</a> examples, to build a Butano example
+ * * As with <a href="https://devkitpro.org/">devkitARM</a> examples, to build a Butano example,
  *   open the system console (not the MSYS2 one), `cd` to the folder of the example you want to build
  *   and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
  *
@@ -100,7 +105,7 @@
  *
  * If you were able to build and run some examples, congrats! Now you can make your own GBA game with Butano.
  * To do that:
- * * Copy the template project located in `/path/to/butano/template/` to a path without spaces nor weird characters.
+ * * Copy the template project located in `/path/to/butano/template/` to a path without spaces or weird characters.
  * * Change in the `Makefile` the path in which Butano library folder is located.
  *   For example, if Butano is located in `/path/to/butano/`,
  *   `LIBBUTANO` variable should be set to `/path/to/butano/butano`.

@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_16_4_0 16.4.0 (next release)
+ * @section changelog_16_4_0 16.4.0
  *
  * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> experimental support!
  *   See the @ref getting_started_wt guide to learn how to build Butano games with it.

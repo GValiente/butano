@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_16_5_0 16.5.0 (next release)
+ *
+ * `GRAPHICS`, `AUDIO` and `DMGAUDIO` makefile variables accept file and folder paths.
+ *
+ *
  * @section changelog_16_4_0 16.4.0
  *
  * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> experimental support!

@@ -1513,58 +1513,68 @@ class GraphicsFileInfoProcessor:
         return graphics_file_info.process(self.__grit, self.__build_folder_path)
 
 
-def list_graphics_file_infos(graphics_folder_paths, build_folder_path):
-    graphics_folder_path_list = graphics_folder_paths.split(' ')
+def list_graphics_file_infos(graphics_paths, build_folder_path):
+    graphics_file_paths = []
+
+    for graphics_path in graphics_paths.split(' '):
+        if os.path.isdir(graphics_path):
+            graphics_file_names = os.listdir(graphics_path)
+
+            for graphics_file_name in graphics_file_names:
+                graphics_file_path = graphics_path + '/' + graphics_file_name
+
+                if os.path.isfile(graphics_file_path):
+                    graphics_file_paths.append(graphics_file_path)
+        elif os.path.isfile(graphics_path):
+            graphics_file_paths.append(graphics_path)
+
     graphics_file_infos = []
     file_names_set = set()
 
-    for graphics_folder_path in graphics_folder_path_list:
-        graphics_file_names = os.listdir(graphics_folder_path)
+    for graphics_file_path in graphics_file_paths:
+        graphics_file_name = os.path.basename(graphics_file_path)
 
-        for graphics_file_name in graphics_file_names:
-            graphics_file_path = graphics_folder_path + '/' + graphics_file_name
+        if FileInfo.validate(graphics_file_name):
+            graphics_file_name_split = os.path.splitext(graphics_file_name)
+            graphics_file_name_ext = graphics_file_name_split[1]
 
-            if os.path.isfile(graphics_file_path) and FileInfo.validate(graphics_file_name):
-                graphics_file_name_split = os.path.splitext(graphics_file_name)
-                graphics_file_name_ext = graphics_file_name_split[1]
+            if graphics_file_name_ext == '.bmp':
+                graphics_file_name_no_ext = graphics_file_name_split[0]
 
-                if graphics_file_name_ext == '.bmp':
-                    graphics_file_name_no_ext = graphics_file_name_split[0]
+                if graphics_file_name_no_ext in file_names_set:
+                    raise ValueError('There\'s two or more graphics files with the same name: ' +
+                                     graphics_file_name_no_ext)
 
-                    if graphics_file_name_no_ext in file_names_set:
-                        raise ValueError('There\'s two or more graphics files with the same name: ' +
-                                         graphics_file_name_no_ext)
+                file_names_set.add(graphics_file_name_no_ext)
+                json_file_path = graphics_file_path[:-len(graphics_file_name_ext)] + '.json'
 
-                    file_names_set.add(graphics_file_name_no_ext)
-                    json_file_path = graphics_folder_path + '/' + graphics_file_name_no_ext + '.json'
+                if not os.path.isfile(json_file_path):
+                    raise ValueError('Graphics json file not found: ' + json_file_path)
 
-                    if not os.path.isfile(json_file_path):
-                        raise ValueError('Graphics json file not found: ' + json_file_path)
+                file_info_path = build_folder_path + '/_bn_' + graphics_file_name_no_ext + '_graphics_file_info.txt'
 
-                    file_info_path = build_folder_path + '/_bn_' + graphics_file_name_no_ext + '_graphics_file_info.txt'
+                if not os.path.exists(file_info_path):
+                    build = True
+                else:
+                    file_info_mtime = os.path.getmtime(file_info_path)
+                    graphics_file_mtime = os.path.getmtime(graphics_file_path)
 
-                    if not os.path.exists(file_info_path):
+                    if file_info_mtime < graphics_file_mtime:
                         build = True
                     else:
-                        file_info_mtime = os.path.getmtime(file_info_path)
-                        graphics_file_mtime = os.path.getmtime(graphics_file_path)
+                        json_file_mtime = os.path.getmtime(json_file_path)
+                        build = file_info_mtime < json_file_mtime
 
-                        if file_info_mtime < graphics_file_mtime:
-                            build = True
-                        else:
-                            json_file_mtime = os.path.getmtime(json_file_path)
-                            build = file_info_mtime < json_file_mtime
-
-                    if build:
-                        graphics_file_infos.append(GraphicsFileInfo(
-                            json_file_path, graphics_file_path, graphics_file_name, graphics_file_name_no_ext,
-                            file_info_path))
+                if build:
+                    graphics_file_infos.append(GraphicsFileInfo(
+                        json_file_path, graphics_file_path, graphics_file_name, graphics_file_name_no_ext,
+                        file_info_path))
 
     return graphics_file_infos
 
 
-def process_graphics(grit, graphics_folder_paths, build_folder_path):
-    graphics_file_infos = list_graphics_file_infos(graphics_folder_paths, build_folder_path)
+def process_graphics(grit, graphics_paths, build_folder_path):
+    graphics_file_infos = list_graphics_file_infos(graphics_paths, build_folder_path)
 
     if len(graphics_file_infos) > 0:
         for graphics_file_info in graphics_file_infos:

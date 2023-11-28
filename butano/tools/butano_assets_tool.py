@@ -11,9 +11,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Butano assets tool.')
     parser.add_argument('--grit', required=True, help='git executable path')
     parser.add_argument('--mmutil', required=True, help='mmutil executable path')
-    parser.add_argument('--audio', required=True, help='audio folder paths')
-    parser.add_argument('--dmg_audio', required=True, help='dmg audio folder paths')
-    parser.add_argument('--graphics', required=True, help='graphics folder paths')
+    parser.add_argument('--audio', required=True, help='audio folder and file paths')
+    parser.add_argument('--dmg_audio', required=True, help='dmg audio folder and file paths')
+    parser.add_argument('--graphics', required=True, help='graphics folder and file paths')
     parser.add_argument('--build', required=True, help='build folder path')
 
     try:

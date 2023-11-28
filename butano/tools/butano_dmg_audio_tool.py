@@ -166,65 +166,75 @@ class DmgAudioFileInfoProcessor:
         return audio_file_info.process(self.__build_folder_path)
 
 
-def list_dmg_audio_file_infos(audio_folder_paths, build_folder_path):
-    audio_folder_path_list = audio_folder_paths.split(' ')
+def list_dmg_audio_file_infos(audio_paths, build_folder_path):
+    audio_file_paths = []
+
+    for audio_path in audio_paths.split(' '):
+        if os.path.isdir(audio_path):
+            audio_file_names = os.listdir(audio_path)
+
+            for audio_file_name in audio_file_names:
+                audio_file_path = audio_path + '/' + audio_file_name
+
+                if os.path.isfile(audio_file_path):
+                    audio_file_paths.append(audio_file_path)
+        elif os.path.isfile(audio_path):
+            audio_file_paths.append(audio_path)
+
     audio_file_infos = []
     file_names_set = set()
 
-    for audio_folder_path in audio_folder_path_list:
-        audio_file_names = os.listdir(audio_folder_path)
+    for audio_file_path in audio_file_paths:
+        audio_file_name = os.path.basename(audio_file_path)
 
-        for audio_file_name in audio_file_names:
-            audio_file_path = audio_folder_path + '/' + audio_file_name
+        if os.path.isfile(audio_file_path) and FileInfo.validate(audio_file_name):
+            audio_file_name_split = os.path.splitext(audio_file_name)
+            audio_file_name_ext = audio_file_name_split[1]
 
-            if os.path.isfile(audio_file_path) and FileInfo.validate(audio_file_name):
-                audio_file_name_split = os.path.splitext(audio_file_name)
-                audio_file_name_ext = audio_file_name_split[1]
+            if audio_file_name_ext == '.mod' or audio_file_name_ext == '.s3m' or audio_file_name_ext == '.vgm':
+                audio_file_name_no_ext = audio_file_name_split[0]
 
-                if audio_file_name_ext == '.mod' or audio_file_name_ext == '.s3m' or audio_file_name_ext == '.vgm':
-                    audio_file_name_no_ext = audio_file_name_split[0]
+                if audio_file_name_no_ext in file_names_set:
+                    raise ValueError('There\'s two or more DMG audio files with the same name: ' +
+                                     audio_file_name_no_ext)
 
-                    if audio_file_name_no_ext in file_names_set:
-                        raise ValueError('There\'s two or more DMG audio files with the same name: ' +
-                                         audio_file_name_no_ext)
+                file_names_set.add(audio_file_name_no_ext)
+                json_file_path = audio_file_path[:-len(audio_file_name_ext)] + '.json'
 
-                    file_names_set.add(audio_file_name_no_ext)
-                    json_file_path = audio_folder_path + '/' + audio_file_name_no_ext + '.json'
+                if not os.path.isfile(json_file_path):
+                    json_file_path = None
 
-                    if not os.path.isfile(json_file_path):
-                        json_file_path = None
+                file_info_path = build_folder_path + '/_bn_' + audio_file_name_no_ext
 
-                    file_info_path = build_folder_path + '/_bn_' + audio_file_name_no_ext
+                if json_file_path is not None:
+                    file_info_path += '_dmg_audio_with_json_file_info.txt'
+                else:
+                    file_info_path += '_dmg_audio_without_json_file_info.txt'
 
-                    if json_file_path is not None:
-                        file_info_path += '_dmg_audio_with_json_file_info.txt'
-                    else:
-                        file_info_path += '_dmg_audio_without_json_file_info.txt'
+                if not os.path.exists(file_info_path):
+                    build = True
+                else:
+                    file_info_mtime = os.path.getmtime(file_info_path)
+                    audio_file_mtime = os.path.getmtime(audio_file_path)
+                    build = file_info_mtime < audio_file_mtime
 
-                    if not os.path.exists(file_info_path):
-                        build = True
-                    else:
-                        file_info_mtime = os.path.getmtime(file_info_path)
-                        audio_file_mtime = os.path.getmtime(audio_file_path)
-                        build = file_info_mtime < audio_file_mtime
+                    if not build and json_file_path is not None:
+                        json_file_mtime = os.path.getmtime(json_file_path)
+                        build = file_info_mtime < json_file_mtime
 
-                        if not build and json_file_path is not None:
-                            json_file_mtime = os.path.getmtime(json_file_path)
-                            build = file_info_mtime < json_file_mtime
-
-                    if build:
-                        audio_file_infos.append(DmgAudioFileInfo(
-                            json_file_path, audio_file_path, audio_file_name, audio_file_name_no_ext,
-                            audio_file_name_ext, file_info_path))
+                if build:
+                    audio_file_infos.append(DmgAudioFileInfo(
+                        json_file_path, audio_file_path, audio_file_name, audio_file_name_no_ext, audio_file_name_ext,
+                        file_info_path))
 
     return audio_file_infos
 
 
-def process_dmg_audio(audio_folder_paths, build_folder_path):
-    if len(audio_folder_paths) == 0:
+def process_dmg_audio(audio_paths, build_folder_path):
+    if len(audio_paths) == 0:
         return
 
-    audio_file_infos = list_dmg_audio_file_infos(audio_folder_paths, build_folder_path)
+    audio_file_infos = list_dmg_audio_file_infos(audio_paths, build_folder_path)
 
     if len(audio_file_infos) > 0:
         for audio_file_info in audio_file_infos:

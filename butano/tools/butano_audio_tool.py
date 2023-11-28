@@ -10,24 +10,34 @@ import sys
 from file_info import FileInfo
 
 
-def list_audio_files(audio_folder_paths):
-    audio_folder_path_list = audio_folder_paths.split(' ')
+def list_audio_files(audio_paths):
+    temp_audio_file_paths = []
+
+    for audio_path in audio_paths.split(' '):
+        if os.path.isdir(audio_path):
+            audio_file_names = os.listdir(audio_path)
+
+            for audio_file_name in audio_file_names:
+                audio_file_path = audio_path + '/' + audio_file_name
+
+                if os.path.isfile(audio_file_path):
+                    temp_audio_file_paths.append(audio_file_path)
+        elif os.path.isfile(audio_path):
+            temp_audio_file_paths.append(audio_path)
+
     audio_file_names = []
     audio_file_names_no_ext = []
     audio_file_paths = []
 
-    for audio_folder_path in audio_folder_path_list:
-        folder_audio_file_names = sorted(os.listdir(audio_folder_path))
+    for audio_file_path in sorted(temp_audio_file_paths):
+        audio_file_name = os.path.basename(audio_file_path)
 
-        for audio_file_name in folder_audio_file_names:
-            audio_file_path = audio_folder_path + '/' + audio_file_name
-
-            if os.path.isfile(audio_file_path) and FileInfo.validate(audio_file_name):
-                audio_file_name_split = os.path.splitext(audio_file_name)
-                audio_file_name_no_ext = audio_file_name_split[0]
-                audio_file_names.append(audio_file_name)
-                audio_file_names_no_ext.append(audio_file_name_no_ext)
-                audio_file_paths.append(audio_file_path)
+        if FileInfo.validate(audio_file_name):
+            audio_file_name_split = os.path.splitext(audio_file_name)
+            audio_file_name_no_ext = audio_file_name_split[0]
+            audio_file_names.append(audio_file_name)
+            audio_file_names_no_ext.append(audio_file_name_no_ext)
+            audio_file_paths.append(audio_file_path)
 
     return audio_file_names, audio_file_names_no_ext, audio_file_paths
 
@@ -161,8 +171,8 @@ def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_fol
                            'sound_item', build_folder_path + '/bn_sound_items_info.h')
 
 
-def process_audio(mmutil, audio_folder_paths, build_folder_path):
-    audio_file_names, audio_file_names_no_ext, audio_file_paths = list_audio_files(audio_folder_paths)
+def process_audio(mmutil, audio_paths, build_folder_path):
+    audio_file_names, audio_file_names_no_ext, audio_file_paths = list_audio_files(audio_paths)
     file_info_path = build_folder_path + '/_bn_audio_files_info.txt'
     old_file_info = FileInfo.read(file_info_path)
     new_file_info = FileInfo.build_from_files(audio_file_paths)

@@ -56,7 +56,6 @@ namespace
         bool dmg_music_paused = false;
         bool update_on_vblank = false;
         bool delay_commit = true;
-        bool dmg_sync = false;
         #if BN_CFG_ASSERT_ENABLED
             bool vgm_commit_failed = false;
         #endif
@@ -165,46 +164,21 @@ namespace
     {
         mmFrame();
 
-        if(data.dmg_sync && mmActive() && gbt_is_playing())
+        if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
         {
-            auto mmPosition = int(mmGetPosition());
-            auto mmRow = int(mmGetPositionRow());
-            auto mmTick = int(mmGetPositionTick());
-            int gbtPosition;
-            int gbtRow;
-            int gbtTick;
-            int tries = 5;
-
-            while(tries > 0)
-            {
-                gbt_update();
-                gbt_get_position(&gbtPosition, &gbtRow, &gbtTick);
-                --tries;
-
-                if(gbtPosition == mmPosition && gbtRow == mmRow && gbtTick == mmTick)
-                {
-                    break;
-                }
-            }
+            gbt_update();
         }
         else
         {
-            if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-            {
-                gbt_update();
-            }
-            else
-            {
-                #if BN_CFG_ASSERT_ENABLED
-                    if(! data.vgm_commit_failed && ! VgmIntrVblank())
-                    {
-                        data.vgm_commit_failed = true;
-                        data.vgm_offset_play = VgmGetOffsetPlay();
-                    }
-                #else
-                    VgmIntrVblank();
-                #endif
-            }
+            #if BN_CFG_ASSERT_ENABLED
+                if(! data.vgm_commit_failed && ! VgmIntrVblank())
+                {
+                    data.vgm_commit_failed = true;
+                    data.vgm_offset_play = VgmGetOffsetPlay();
+                }
+            #else
+                VgmIntrVblank();
+            #endif
         }
     }
 
@@ -472,9 +446,8 @@ void set_update_on_vblank(bool update_on_vblank)
     data.update_on_vblank = update_on_vblank;
 }
 
-void update(bool dmg_sync)
+void update()
 {
-    data.dmg_sync = dmg_sync;
     data.delay_commit = ! data.update_on_vblank;
 }
 

@@ -568,7 +568,6 @@ namespace
         bool music_paused = false;
         bool jingle_playing = false;
         bool dmg_music_paused = false;
-        bool dmg_sync_enabled = false;
     };
 
     BN_DATA_EWRAM_BSS static_data data;
@@ -860,11 +859,6 @@ void play_dmg_music(const dmg_music_item& item, int speed, bool loop)
     data.dmg_music_data = item.data_ptr();
     data.dmg_music_type = item.type();
     data.dmg_music_paused = false;
-
-    if(data.dmg_music_type != dmg_music_type::GBT_PLAYER)
-    {
-        data.dmg_sync_enabled = false;
-    }
 }
 
 void stop_dmg_music()
@@ -1001,19 +995,6 @@ void set_dmg_music_master_volume(bn::dmg_music_master_volume volume)
 
         data.dmg_music_master_volume = volume;
     }
-}
-
-bool dmg_sync_enabled()
-{
-    return data.dmg_sync_enabled;
-}
-
-void set_dmg_sync_enabled(bool enabled)
-{
-    BN_BASIC_ASSERT(! enabled || data.dmg_music_type == dmg_music_type::GBT_PLAYER,
-                    "Synchronization not supported by the VGM player");
-
-    data.dmg_sync_enabled = enabled;
 }
 
 sound_data_type* sound_data(uint16_t handle)
@@ -1209,7 +1190,7 @@ void set_update_on_vblank(bool update_on_vblank)
 
 void update()
 {
-    hw::audio::update(data.dmg_sync_enabled);
+    hw::audio::update();
 }
 
 void execute_commands()

@@ -73,14 +73,6 @@
               <span class="m-doc-wrap-bumper">void <a href="#a8e8e0f8ecfeb2e8d7f5d3f6d091fc4b3" class="m-doc">set_update_on_vblank</a>(</span><span class="m-doc-wrap">bool update_on_vblank)</span>
             </dt>
             <dd>Sets if audio must be updated on the V-Blank interrupt or not.</dd>
-            <dt id="a1a08746d242253b7e8d01ac6cc0da243">
-              <span class="m-doc-wrap-bumper">auto <a href="#a1a08746d242253b7e8d01ac6cc0da243" class="m-doc-self">dmg_sync_enabled</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
-            </dt>
-            <dd>Indicates if DMG music update frequency is synchronized with Direct Sound music.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#ac66eaced9897e29de11a72ed4b7d5c12" class="m-doc">set_dmg_sync_enabled</a>(</span><span class="m-doc-wrap">bool dmg_sync_enabled)</span>
-            </dt>
-            <dd>Sets if DMG music update frequency must be synchronized with Direct Sound music.</dd>
           </dl>
         </section>
         <section>
@@ -98,13 +90,6 @@
             </h3>
             <p>Sets if audio must be updated on the V-Blank interrupt or not.</p>
 <p>Updating audio on the V-Blank interrupt helps to reduce audio noise but increases the possibility of visual bugs because of lack of V-Blank time.</p>
-          </div></section>
-          <section class="m-doc-details" id="ac66eaced9897e29de11a72ed4b7d5c12"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />audio::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac66eaced9897e29de11a72ed4b7d5c12" class="m-doc-self">set_dmg_sync_enabled</a>(</span><span class="m-doc-wrap">bool dmg_sync_enabled)</span></span>
-            </h3>
-            <p>Sets if DMG music update frequency must be synchronized with Direct Sound music.</p>
-<p>If this synchronization is enabled, the user is responsible for keeping both music systems in the same position (e.g. pausing and resuming them at the same time).</p>
           </div></section>
         </section>
       </div>

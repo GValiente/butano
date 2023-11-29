@@ -37,19 +37,6 @@ namespace bn::audio
      * but increases the possibility of visual bugs because of lack of V-Blank time.
      */
     void set_update_on_vblank(bool update_on_vblank);
-
-    /**
-     * @brief Indicates if DMG music update frequency is synchronized with Direct Sound music.
-     */
-    [[nodiscard]] bool dmg_sync_enabled();
-
-    /**
-     * @brief Sets if DMG music update frequency must be synchronized with Direct Sound music.
-     *
-     * If this synchronization is enabled, the user is responsible for keeping both music systems
-     * in the same position (e.g. pausing and resuming them at the same time).
-     */
-    void set_dmg_sync_enabled(bool dmg_sync_enabled);
 }
 
 #endif

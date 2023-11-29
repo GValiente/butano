@@ -107,10 +107,6 @@ namespace bn::audio_manager
 
     void set_dmg_music_master_volume(bn::dmg_music_master_volume volume);
 
-    [[nodiscard]] bool dmg_sync_enabled();
-
-    void set_dmg_sync_enabled(bool enabled);
-
 
     // sound
 

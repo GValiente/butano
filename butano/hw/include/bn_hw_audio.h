@@ -133,7 +133,7 @@ namespace bn::hw::audio
 
     void set_update_on_vblank(bool update_on_vblank);
 
-    void update(bool dmg_sync);
+    void update();
 
     void update_sounds_queue();
 

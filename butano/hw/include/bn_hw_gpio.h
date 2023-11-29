@@ -52,6 +52,11 @@ namespace
     int minute = _bcd_decode(hw_time >> 8 & 0xff);
     int second = _bcd_decode(hw_time >> 16 & 0xff);
 
+    if(hour >= 80)
+    {
+        hour -= 80;
+    }
+
     if(time::valid(hour, minute, second))
     {
         result.emplace(hour, minute, second);

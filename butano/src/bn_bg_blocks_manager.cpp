@@ -2636,7 +2636,13 @@ void set_regular_map_position(int id, int x, int y)
 
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            int fixed_row = _fix_map_y(row, map_height);
+            int fixed_row = row;
+
+            if(fixed_row >= map_height)
+            {
+                fixed_row -= map_height;
+            }
+
             const uint16_t* first_source_data = item_data + ((fixed_row * map_width) + x);
             uint16_t* dest_data = vram_data + (((fixed_row & 31) * 32) + x_separator);
             _hw_commit_offset(first_source_data, unsigned(elements), offset, dest_data);
@@ -2650,7 +2656,13 @@ void set_regular_map_position(int id, int x, int y)
     {
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            int fixed_row = _fix_map_y(row, map_height);
+            int fixed_row = row;
+
+            if(fixed_row >= map_height)
+            {
+                fixed_row -= map_height;
+            }
+
             const uint16_t* first_source_data = item_data + ((fixed_row * map_width) + x);
             uint16_t* dest_data = vram_data + (((fixed_row & 31) * 32) + x_separator);
             hw::memory::copy_half_words(first_source_data, elements, dest_data);
@@ -2690,7 +2702,13 @@ void set_affine_map_position(int id, int x, int y)
 
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            int fixed_row = _fix_map_y(row, map_height);
+            int fixed_row = row;
+
+            if(fixed_row >= map_height)
+            {
+                fixed_row -= map_height;
+            }
+
             const uint8_t* first_source_data = item_data + ((fixed_row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
             _hw_commit_offset(reinterpret_cast<const uint16_t*>(first_source_data), unsigned(elements) / 2,
@@ -2706,7 +2724,13 @@ void set_affine_map_position(int id, int x, int y)
     {
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            int fixed_row = _fix_map_y(row, map_height);
+            int fixed_row = row;
+
+            if(fixed_row >= map_height)
+            {
+                fixed_row -= map_height;
+            }
+
             const uint8_t* first_source_data = item_data + ((fixed_row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
             hw::memory::copy_half_words(first_source_data, elements / 2, dest_data);

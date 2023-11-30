@@ -51,10 +51,10 @@ namespace
         optional<affine_bg_map_ptr> affine_map;
         optional<camera_ptr> camera;
         uint16_t hw_cnt;
-        uint16_t old_big_map_x = 0;
-        uint16_t old_big_map_y = 0;
-        uint16_t new_big_map_x = 0;
-        uint16_t new_big_map_y = 0;
+        int16_t old_big_map_x = 0;
+        int16_t old_big_map_y = 0;
+        int16_t new_big_map_x = 0;
+        int16_t new_big_map_y = 0;
         int8_t handles_index = -1;
         bool blending_enabled: 1;
         bool visible: 1;
@@ -222,12 +222,10 @@ namespace
             }
 
             int hw_x = -real_x - (display::width() / 2) + half_dimensions.width();
-            hw_position.set_x(hw_x);
-            commit_regular_hw_x();
-
             int hw_y = -real_y - (display::height() / 2) + half_dimensions.height();
+            hw_position.set_x(hw_x);
             hw_position.set_y(hw_y);
-            commit_regular_hw_y();
+            check_commit_big_map();
         }
 
         void update_affine_mat_attributes()
@@ -252,28 +250,10 @@ namespace
             update_affine_hw_y();
         }
 
-        void commit_regular_hw_x()
+        void check_commit_big_map()
         {
             if(big_map)
             {
-                BN_ASSERT(hw_position.x() >= 0 &&
-                          hw_position.x() <= (half_dimensions.width() * 2) - display::width(),
-                          "Regular BGs with big maps\ndon't allow horizontal wrapping: ",
-                          hw_position.x(), " - ", (half_dimensions.width() * 2) - display::width());
-
-                commit_big_map = true;
-            }
-        }
-
-        void commit_regular_hw_y()
-        {
-            if(big_map)
-            {
-                BN_ASSERT(hw_position.y() >= 0 &&
-                          hw_position.y() <= (half_dimensions.height() * 2) - display::height(),
-                          "Regular BGs with big maps\ndon't allow vertical wrapping: ",
-                          hw_position.y(), " - ", (half_dimensions.height() * 2) - display::height());
-
                 commit_big_map = true;
             }
         }
@@ -299,11 +279,6 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(affine_map_position().x() >= 0 &&
-                          affine_map_position().x() <= (half_dimensions.width() / 4) - (display::width() / 8),
-                          "Affine BGs with big maps\ndon't allow horizontal wrapping: ",
-                          affine_map_position().x(), " - ", (half_dimensions.width() / 4) - (display::width() / 8));
-
                 commit_big_map = true;
             }
         }
@@ -316,11 +291,6 @@ namespace
 
             if(big_map)
             {
-                BN_ASSERT(affine_map_position().y() >= 0 &&
-                          affine_map_position().y() <= (half_dimensions.height() / 4) - (display::height() / 8),
-                          "Affine BGs with big maps\ndon't allow vertical wrapping: ",
-                          affine_map_position().y(), " - ", (half_dimensions.height() / 4) - (display::height() / 8));
-
                 commit_big_map = true;
             }
         }
@@ -453,9 +423,6 @@ namespace
                     }
                 }
 
-                new_map_x = min(new_map_x, (item->half_dimensions.width() / 4) - 32);
-                new_map_y = min(new_map_y, (item->half_dimensions.height() / 4) - 22);
-
                 int map_handle = item_regular_map ? item_regular_map->handle() : item->affine_map->handle();
                 bool full_commit_big_map = item->full_commit_big_map || bg_blocks_manager::must_commit(map_handle);
                 bool commit_big_map = full_commit_big_map;
@@ -467,8 +434,8 @@ namespace
 
                 if(commit_big_map)
                 {
-                    item->new_big_map_x = uint16_t(new_map_x);
-                    item->new_big_map_y = uint16_t(new_map_y);
+                    item->new_big_map_x = int16_t(new_map_x);
+                    item->new_big_map_y = int16_t(new_map_y);
                     item->commit_big_map = true;
                     item->full_commit_big_map = full_commit_big_map || bn::abs(new_map_x - old_map_x) > 8 ||
                             bn::abs(new_map_y - old_map_y) > 8;
@@ -721,7 +688,7 @@ void set_regular_x(id_type id, fixed x)
     if(diff)
     {
         item->hw_position.set_x(item->hw_position.x() - diff);
-        item->commit_regular_hw_x();
+        item->check_commit_big_map();
         _update_item_hw_regular_offset(*item);
     }
 }
@@ -758,7 +725,7 @@ void set_regular_y(id_type id, fixed y)
     if(diff)
     {
         item->hw_position.set_y(item->hw_position.y() - diff);
-        item->commit_regular_hw_y();
+        item->check_commit_big_map();
         _update_item_hw_regular_offset(*item);
     }
 }
@@ -795,8 +762,7 @@ void set_regular_position(id_type id, const fixed_point& position)
     if(diff != point())
     {
         item->hw_position -= diff;
-        item->commit_regular_hw_x();
-        item->commit_regular_hw_y();
+        item->check_commit_big_map();
         _update_item_hw_regular_offset(*item);
     }
 }
@@ -1702,8 +1668,8 @@ void commit_big_maps()
             int old_map_y = item->old_big_map_y;
             int new_map_x = item->new_big_map_x;
             int new_map_y = item->new_big_map_y;
-            item->old_big_map_x = uint16_t(new_map_x);
-            item->old_big_map_y = uint16_t(new_map_y);
+            item->old_big_map_x = int16_t(new_map_x);
+            item->old_big_map_y = int16_t(new_map_y);
             item->commit_big_map = false;
 
             if(item->full_commit_big_map)

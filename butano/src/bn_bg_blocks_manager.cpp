@@ -1112,6 +1112,30 @@ namespace
 
         return remove;
     }
+
+    [[nodiscard]] int _fix_map_x(int map_x, int map_width)
+    {
+        map_x %= map_width;
+
+        if(map_x < 0)
+        {
+            map_x += map_width;
+        }
+
+        return map_x;
+    };
+
+    [[nodiscard]] int _fix_map_y(int map_y, int map_height)
+    {
+        map_y %= map_height;
+
+        if(map_y < 0)
+        {
+            map_y += map_height;
+        }
+
+        return map_y;
+    };
 }
 
 void init()
@@ -2321,18 +2345,24 @@ bool must_commit(int id)
 void update_regular_map_col(int id, int x, int y)
 {
     const item_type& item = data.items.item(id);
-    const uint16_t* source_data = item.data;
+    const uint16_t* item_data = item.data;
 
-    if(! source_data)
+    if(! item_data)
     {
         return;
     }
 
     int map_width = item.width;
-    source_data += ((y * map_width) + x);
+    int map_height = item.height;
+    x = _fix_map_x(x, map_width);
+    y = _fix_map_y(y, map_height);
 
+    const uint16_t* first_source_data = item_data + ((y * map_width) + x);
     int y_separator = y & 31;
-    uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + ((y_separator * 32) + (x & 31));
+    int second_y = _fix_map_y(y + 32 - y_separator, map_height);
+
+    const uint16_t* second_source_data = item_data + ((second_y * map_width) + x);
+    uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + (y_separator * 32) + (x & 31);
     auto tiles_offset = unsigned(item.regular_tiles_offset());
     auto palette_offset = unsigned(item.palette_offset());
 
@@ -2342,36 +2372,36 @@ void update_regular_map_col(int id, int x, int y)
 
         for(int iy = y_separator; iy < 32; ++iy)
         {
-            *dest_data = *source_data + offset;
+            *dest_data = *first_source_data + offset;
             dest_data += 32;
-            source_data += map_width;
+            first_source_data += map_width;
         }
 
         dest_data -= 1024;
 
         for(int iy = 0; iy < y_separator; ++iy)
         {
-            *dest_data = *source_data + offset;
+            *dest_data = *second_source_data + offset;
             dest_data += 32;
-            source_data += map_width;
+            second_source_data += map_width;
         }
     }
     else
     {
         for(int iy = y_separator; iy < 32; ++iy)
         {
-            *dest_data = *source_data;
+            *dest_data = *first_source_data;
             dest_data += 32;
-            source_data += map_width;
+            first_source_data += map_width;
         }
 
         dest_data -= 1024;
 
         for(int iy = 0; iy < y_separator; ++iy)
         {
-            *dest_data = *source_data;
+            *dest_data = *second_source_data;
             dest_data += 32;
-            source_data += map_width;
+            second_source_data += map_width;
         }
     }
 }
@@ -2379,17 +2409,23 @@ void update_regular_map_col(int id, int x, int y)
 void update_affine_map_col(int id, int x, int y)
 {
     const item_type& item = data.items.item(id);
-    auto source_data = reinterpret_cast<const uint8_t*>(item.data);
+    auto item_data = reinterpret_cast<const uint8_t*>(item.data);
 
-    if(! source_data)
+    if(! item_data)
     {
         return;
     }
 
     int map_width = item.width;
-    source_data += ((y * map_width) + x);
+    int map_height = item.height;
+    x = _fix_map_x(x, map_width);
+    y = _fix_map_y(y, map_height);
 
+    const uint8_t* first_source_data = item_data + ((y * map_width) + x);
     int y_separator = y & 31;
+    int second_y = _fix_map_y(y + 32 - y_separator, map_height);
+
+    const uint8_t* second_source_data = item_data + ((second_y * map_width) + x);
     auto dest_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
     dest_data += ((y_separator * 32) + (x & 31));
 
@@ -2400,10 +2436,10 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = y_separator; iy < 32; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
-                auto joined_value = uint16_t(((*source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF));
+                auto joined_value = uint16_t(((*first_source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
-                source_data += map_width;
+                first_source_data += map_width;
             }
 
             dest_data -= 1024;
@@ -2411,10 +2447,10 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
-                auto joined_value = uint16_t(((*source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF));
+                auto joined_value = uint16_t(((*second_source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
-                source_data += map_width;
+                second_source_data += map_width;
             }
         }
         else
@@ -2422,10 +2458,10 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = y_separator; iy < 32; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-                auto joined_value = uint16_t((*u16_dest_data & 0xFF00) | (*source_data + tiles_offset));
+                auto joined_value = uint16_t((*u16_dest_data & 0xFF00) | (*first_source_data + tiles_offset));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
-                source_data += map_width;
+                first_source_data += map_width;
             }
 
             dest_data -= 1024;
@@ -2433,10 +2469,10 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-                auto joined_value = uint16_t((*u16_dest_data & 0xFF00) | (*source_data + tiles_offset));
+                auto joined_value = uint16_t((*u16_dest_data & 0xFF00) | (*second_source_data + tiles_offset));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
-                source_data += map_width;
+                second_source_data += map_width;
             }
         }
     }
@@ -2447,10 +2483,10 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = y_separator; iy < 32; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
-                auto joined_value = uint16_t((unsigned(*source_data) << 8) | (*u16_dest_data & 0xFF));
+                auto joined_value = uint16_t((unsigned(*first_source_data) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
-                source_data += map_width;
+                first_source_data += map_width;
             }
 
             dest_data -= 1024;
@@ -2458,10 +2494,10 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
-                uint16_t joined_value = uint16_t((unsigned(*source_data) << 8) | (*u16_dest_data & 0xFF));
+                uint16_t joined_value = uint16_t((unsigned(*second_source_data) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
                 dest_data += 32;
-                source_data += map_width;
+                second_source_data += map_width;
             }
         }
         else
@@ -2469,10 +2505,10 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = y_separator; iy < 32; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-                uint16_t joined_value = uint16_t((*u16_dest_data & 0xFF00) | *source_data);
+                uint16_t joined_value = uint16_t((*u16_dest_data & 0xFF00) | *first_source_data);
                 *u16_dest_data = joined_value;
                 dest_data += 32;
-                source_data += map_width;
+                first_source_data += map_width;
             }
 
             dest_data -= 1024;
@@ -2480,10 +2516,10 @@ void update_affine_map_col(int id, int x, int y)
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
-                uint16_t joined_value = uint16_t((*u16_dest_data & 0xFF00) | *source_data);
+                uint16_t joined_value = uint16_t((*u16_dest_data & 0xFF00) | *second_source_data);
                 *u16_dest_data = joined_value;
                 dest_data += 32;
-                source_data += map_width;
+                second_source_data += map_width;
             }
         }
     }
@@ -2492,17 +2528,24 @@ void update_affine_map_col(int id, int x, int y)
 void update_regular_map_row(int id, int x, int y)
 {
     const item_type& item = data.items.item(id);
-    const uint16_t* source_data = item.data;
+    const uint16_t* item_data = item.data;
 
-    if(! source_data)
+    if(! item_data)
     {
         return;
     }
 
-    source_data += ((y * item.width) + x);
+    int map_width = item.width;
+    int map_height = item.height;
+    x = _fix_map_x(x, map_width);
+    y = _fix_map_y(y, map_height);
 
+    const uint16_t* first_source_data = item_data + ((y * map_width) + x);
     int x_separator = x & 31;
     int elements = 32 - x_separator;
+    int second_x = _fix_map_x(x + elements, map_width);
+
+    const uint16_t* second_source_data = item_data + ((y * map_width) + second_x);
     uint16_t* dest_data = hw::bg_blocks::vram(item.start_block) + (((y & 31) * 32) + x_separator);
     auto tiles_offset = unsigned(item.regular_tiles_offset());
     auto palette_offset = unsigned(item.palette_offset());
@@ -2510,17 +2553,15 @@ void update_regular_map_row(int id, int x, int y)
     if(tiles_offset || palette_offset)
     {
         uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
-        _hw_commit_offset(source_data, unsigned(elements), offset, dest_data);
-        source_data += elements;
+        _hw_commit_offset(first_source_data, unsigned(elements), offset, dest_data);
         dest_data -= x_separator;
-        _hw_commit_offset(source_data, unsigned(x_separator), offset, dest_data);
+        _hw_commit_offset(second_source_data, unsigned(x_separator), offset, dest_data);
     }
     else
     {
-        hw::memory::copy_half_words(source_data, elements, dest_data);
-        source_data += elements;
+        hw::memory::copy_half_words(first_source_data, elements, dest_data);
         dest_data -= x_separator;
-        hw::memory::copy_half_words(source_data, x_separator, dest_data);
+        hw::memory::copy_half_words(second_source_data, x_separator, dest_data);
     }
 }
 
@@ -2529,36 +2570,41 @@ void update_affine_map_row(int id, int x, int y)
     // BN_ASSERT(x % 2 == 0, "Invalid x: ", x);
 
     const item_type& item = data.items.item(id);
-    auto source_data = reinterpret_cast<const uint8_t*>(item.data);
+    auto item_data = reinterpret_cast<const uint8_t*>(item.data);
 
-    if(! source_data)
+    if(! item_data)
     {
         return;
     }
 
-    source_data += ((y * item.width) + x);
+    int map_width = item.width;
+    int map_height = item.height;
+    x = _fix_map_x(x, map_width);
+    y = _fix_map_y(y, map_height);
 
+    const uint8_t* first_source_data = item_data + ((y * map_width) + x);
     int x_separator = x & 31;
     int elements = 32 - x_separator;
+    int second_x = _fix_map_x(x + elements, map_width);
+
+    const uint8_t* second_source_data = item_data + ((y * map_width) + second_x);
     auto dest_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
     dest_data += ((y & 31) * 32) + x_separator;
 
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
         uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
-        _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), unsigned(elements) / 2, offset,
+        _hw_commit_offset(reinterpret_cast<const uint16_t*>(first_source_data), unsigned(elements) / 2, offset,
                           reinterpret_cast<uint16_t*>(dest_data));
-        source_data += elements;
         dest_data -= x_separator;
-        _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), unsigned(x_separator) / 2, offset,
+        _hw_commit_offset(reinterpret_cast<const uint16_t*>(second_source_data), unsigned(x_separator) / 2, offset,
                           reinterpret_cast<uint16_t*>(dest_data));
     }
     else
     {
-        hw::memory::copy_half_words(source_data, elements / 2, dest_data);
-        source_data += elements;
+        hw::memory::copy_half_words(first_source_data, elements / 2, dest_data);
         dest_data -= x_separator;
-        hw::memory::copy_half_words(source_data, x_separator / 2, dest_data);
+        hw::memory::copy_half_words(second_source_data, x_separator / 2, dest_data);
     }
 }
 
@@ -2572,10 +2618,15 @@ void set_regular_map_position(int id, int x, int y)
         return;
     }
 
-    uint16_t* vram_data = hw::bg_blocks::vram(item.start_block);
     int map_width = item.width;
+    int map_height = item.height;
+    x = _fix_map_x(x, map_width);
+    y = _fix_map_y(y, map_height);
+
+    uint16_t* vram_data = hw::bg_blocks::vram(item.start_block);
     int x_separator = x & 31;
     int elements = 32 - x_separator;
+    int second_x = _fix_map_x(x + elements, map_width);
     auto tiles_offset = unsigned(item.regular_tiles_offset());
     auto palette_offset = unsigned(item.palette_offset());
 
@@ -2585,24 +2636,28 @@ void set_regular_map_position(int id, int x, int y)
 
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            const uint16_t* source_data = item_data + ((row * map_width) + x);
-            uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            _hw_commit_offset(source_data, unsigned(elements), offset, dest_data);
-            source_data += elements;
+            int fixed_row = _fix_map_y(row, map_height);
+            const uint16_t* first_source_data = item_data + ((fixed_row * map_width) + x);
+            uint16_t* dest_data = vram_data + (((fixed_row & 31) * 32) + x_separator);
+            _hw_commit_offset(first_source_data, unsigned(elements), offset, dest_data);
+
+            const uint16_t* second_source_data = item_data + ((fixed_row * map_width) + second_x);
             dest_data -= x_separator;
-            _hw_commit_offset(source_data, unsigned(x_separator), offset, dest_data);
+            _hw_commit_offset(second_source_data, unsigned(x_separator), offset, dest_data);
         }
     }
     else
     {
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            const uint16_t* source_data = item_data + ((row * map_width) + x);
-            uint16_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            hw::memory::copy_half_words(source_data, elements, dest_data);
-            source_data += elements;
+            int fixed_row = _fix_map_y(row, map_height);
+            const uint16_t* first_source_data = item_data + ((fixed_row * map_width) + x);
+            uint16_t* dest_data = vram_data + (((fixed_row & 31) * 32) + x_separator);
+            hw::memory::copy_half_words(first_source_data, elements, dest_data);
+
+            const uint16_t* second_source_data = item_data + ((fixed_row * map_width) + second_x);
             dest_data -= x_separator;
-            hw::memory::copy_half_words(source_data, x_separator, dest_data);
+            hw::memory::copy_half_words(second_source_data, x_separator, dest_data);
         }
     }
 }
@@ -2619,10 +2674,15 @@ void set_affine_map_position(int id, int x, int y)
         return;
     }
 
-    auto vram_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
     int map_width = item.width;
+    int map_height = item.height;
+    x = _fix_map_x(x, map_width);
+    y = _fix_map_y(y, map_height);
+
+    auto vram_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
     int x_separator = x & 31;
     int elements = 32 - x_separator;
+    int second_x = _fix_map_x(x + elements, map_width);
 
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
@@ -2630,26 +2690,30 @@ void set_affine_map_position(int id, int x, int y)
 
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            const uint8_t* source_data = item_data + ((row * map_width) + x);
+            int fixed_row = _fix_map_y(row, map_height);
+            const uint8_t* first_source_data = item_data + ((fixed_row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), unsigned(elements) / 2, offset,
-                              reinterpret_cast<uint16_t*>(dest_data));
-            source_data += elements;
+            _hw_commit_offset(reinterpret_cast<const uint16_t*>(first_source_data), unsigned(elements) / 2,
+                              offset, reinterpret_cast<uint16_t*>(dest_data));
+
+            const uint8_t* second_source_data = item_data + ((fixed_row * map_width) + second_x);
             dest_data -= x_separator;
-            _hw_commit_offset(reinterpret_cast<const uint16_t*>(source_data), unsigned(x_separator) / 2, offset,
-                              reinterpret_cast<uint16_t*>(dest_data));
+            _hw_commit_offset(reinterpret_cast<const uint16_t*>(second_source_data), unsigned(x_separator) / 2,
+                              offset, reinterpret_cast<uint16_t*>(dest_data));
         }
     }
     else
     {
         for(int row = y, row_limit = y + 22; row < row_limit; ++row)
         {
-            const uint8_t* source_data = item_data + ((row * map_width) + x);
+            int fixed_row = _fix_map_y(row, map_height);
+            const uint8_t* first_source_data = item_data + ((fixed_row * map_width) + x);
             uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
-            hw::memory::copy_half_words(source_data, elements / 2, dest_data);
-            source_data += elements;
+            hw::memory::copy_half_words(first_source_data, elements / 2, dest_data);
+
+            const uint8_t* second_source_data = item_data + ((fixed_row * map_width) + second_x);
             dest_data -= x_separator;
-            hw::memory::copy_half_words(source_data, x_separator / 2, dest_data);
+            hw::memory::copy_half_words(second_source_data, x_separator / 2, dest_data);
         }
     }
 }

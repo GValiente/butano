@@ -142,8 +142,7 @@ public:
      * @param maps_count Number of maps contained in cells_ref.
      * @param big Indicates if maps generated with this item are big or not.
      *
-     * Big backgrounds are slower CPU wise and don't support wrapping
-     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     * Big backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
      */
     constexpr affine_bg_map_item(
             const affine_bg_map_cell& cells_ref, const size& dimensions, compression_type compression,
@@ -212,8 +211,7 @@ public:
     /**
      * @brief Indicates if maps generated with this item are big or not.
      *
-     * Big backgrounds are slower CPU wise and don't support wrapping
-     * (they can't be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.
+     * Big backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
      */
     [[nodiscard]] constexpr bool big() const
     {

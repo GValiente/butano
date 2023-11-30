@@ -222,8 +222,7 @@
  *
  * An image file can contain multiple regular backgrounds.
  * The size of a small regular background (which are faster) must be 256x256, 256x512, 512x256 or 512x512 pixels.
- * Big regular backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
- * but can have any width or height multiple of 256 pixels.
+ * Big regular backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
  *
  * An example of the `*.json` files required for regular backgrounds is the following:
  *
@@ -343,8 +342,7 @@
  *
  * An image file can contain multiple affine backgrounds.
  * The size of a small affine background (which are faster) must be 128x128, 256x256, 512x512 or 1024x1024 pixels.
- * Big affine backgrounds are slower CPU wise and don't support wrapping (they can't be moved beyond their boundaries),
- * but can have any width or height multiple of 256 pixels.
+ * Big affine backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
  *
  * An example of the `*.json` files required for affine backgrounds is the following:
  *

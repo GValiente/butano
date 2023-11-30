@@ -269,16 +269,16 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a2ba3f5fd7124261660481d7cb814faf7" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the horizontal position of the regular background (relative to its camera, if it has one).</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#aec1ab0fff2ab875ea66b2b40c14a8440" class="m-doc">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x)</span>
+            <dt id="aec1ab0fff2ab875ea66b2b40c14a8440">
+              <span class="m-doc-wrap-bumper">void <a href="#aec1ab0fff2ab875ea66b2b40c14a8440" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x)</span>
             </dt>
             <dd>Sets the horizontal position of the regular background (relative to its camera, if it has one).</dd>
             <dt id="ad8e94bd7ffd9c9f8d29361fba281515a">
               <span class="m-doc-wrap-bumper">auto <a href="#ad8e94bd7ffd9c9f8d29361fba281515a" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the vertical position of the regular background (relative to its camera, if it has one).</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#abb1eab31f8b6445ce619d85703afd152" class="m-doc">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
+            <dt id="abb1eab31f8b6445ce619d85703afd152">
+              <span class="m-doc-wrap-bumper">void <a href="#abb1eab31f8b6445ce619d85703afd152" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
             </dt>
             <dd>Sets the vertical position of the regular background (relative to its camera, if it has one).</dd>
             <dt id="ae4f90a9a6628de7b0ba707e401569807">
@@ -290,8 +290,8 @@
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
             </dt>
             <dd>Sets the position of the regular background (relative to its camera, if it has one).</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#aeb070a05be227b2da422169438379ea0" class="m-doc">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span>
+            <dt id="aeb070a05be227b2da422169438379ea0">
+              <span class="m-doc-wrap-bumper">void <a href="#aeb070a05be227b2da422169438379ea0" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span>
             </dt>
             <dd>Sets the position of the regular background (relative to its camera, if it has one).</dd>
             <dt>
@@ -977,7 +977,7 @@
               <span class="m-doc-wrap-bumper">bool bn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2c9c0e2ad6466d1a76cc135e5f3d99f0" class="m-doc-self">big</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <p>Indicates if this regular background is big or not.</p>
-<p>Big backgrounds are slower CPU wise and don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.</p>
+<p>Big backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.</p>
           </div></section>
           <section class="m-doc-details" id="ac4fa98192606b4d769837b8e31c4842b"><div>
             <h3>
@@ -1249,20 +1249,6 @@
             </table>
 <p>Before creating new resources, the resources used by this regular background are removed, so VRAM usage is reduced.</p>
           </div></section>
-          <section class="m-doc-details" id="aec1ab0fff2ab875ea66b2b40c14a8440"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aec1ab0fff2ab875ea66b2b40c14a8440" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x)</span></span>
-            </h3>
-            <p>Sets the horizontal position of the regular background (relative to its camera, if it has one).</p>
-<p>Remember that big backgrounds don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries).</p>
-          </div></section>
-          <section class="m-doc-details" id="abb1eab31f8b6445ce619d85703afd152"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abb1eab31f8b6445ce619d85703afd152" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span></span>
-            </h3>
-            <p>Sets the vertical position of the regular background (relative to its camera, if it has one).</p>
-<p>Remember that big backgrounds don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries).</p>
-          </div></section>
           <section class="m-doc-details" id="a8b22cd255a954b5c1c704a66f7e2a7c0"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8b22cd255a954b5c1c704a66f7e2a7c0" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
@@ -1284,14 +1270,6 @@
                 </tr>
               </tbody>
             </table>
-<p>Remember that big backgrounds don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries).</p>
-          </div></section>
-          <section class="m-doc-details" id="aeb070a05be227b2da422169438379ea0"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeb070a05be227b2da422169438379ea0" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span></span>
-            </h3>
-            <p>Sets the position of the regular background (relative to its camera, if it has one).</p>
-<p>Remember that big backgrounds don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries).</p>
           </div></section>
           <section class="m-doc-details" id="aa59eb0d1a777cf78b1f9c5cf9df80dcf"><div>
             <h3>

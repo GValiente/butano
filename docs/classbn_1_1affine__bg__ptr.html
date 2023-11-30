@@ -259,16 +259,16 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a3f28d919ec5253f227d093f1bedba11a" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the horizontal position of the affine background (relative to its camera, if it has one).</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a5c1a9a2a67893fd50b084717d6fa3e65" class="m-doc">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x)</span>
+            <dt id="a5c1a9a2a67893fd50b084717d6fa3e65">
+              <span class="m-doc-wrap-bumper">void <a href="#a5c1a9a2a67893fd50b084717d6fa3e65" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x)</span>
             </dt>
             <dd>Sets the horizontal position of the affine background (relative to its camera, if it has one).</dd>
             <dt id="a2f993da9dc8876cf81df00ba67c3cd9a">
               <span class="m-doc-wrap-bumper">auto <a href="#a2f993da9dc8876cf81df00ba67c3cd9a" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the vertical position of the affine background (relative to its camera, if it has one).</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a92e809c7f72b4e889310e4de50597834" class="m-doc">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
+            <dt id="a92e809c7f72b4e889310e4de50597834">
+              <span class="m-doc-wrap-bumper">void <a href="#a92e809c7f72b4e889310e4de50597834" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
             </dt>
             <dd>Sets the vertical position of the affine background (relative to its camera, if it has one).</dd>
             <dt id="ab69015c52750f0369095014a6cedda3b">
@@ -280,8 +280,8 @@
               <a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span>
             </dt>
             <dd>Sets the position of the affine background (relative to its camera, if it has one).</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#afd6ee5c5601df48ae476d0fd8370f717" class="m-doc">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span>
+            <dt id="afd6ee5c5601df48ae476d0fd8370f717">
+              <span class="m-doc-wrap-bumper">void <a href="#afd6ee5c5601df48ae476d0fd8370f717" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span>
             </dt>
             <dd>Sets the position of the affine background (relative to its camera, if it has one).</dd>
             <dt id="af5646ff5d3aea014fe0dccdc0bc72ce8">
@@ -1086,7 +1086,7 @@
               <span class="m-doc-wrap-bumper">bool bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4b369e9edcf115a2349b0fbacf6f9e1f" class="m-doc-self">big</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <p>Indicates if this affine background is big or not.</p>
-<p>Big backgrounds are slower CPU wise and don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries), but can have any width or height multiple of 256 pixels.</p>
+<p>Big backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.</p>
           </div></section>
           <section class="m-doc-details" id="a4febffc15191460072fd4af2132aceb9"><div>
             <h3>
@@ -1310,20 +1310,6 @@
             </table>
 <p>Before creating new resources, the resources used by this affine background are removed, so VRAM usage is reduced.</p>
           </div></section>
-          <section class="m-doc-details" id="a5c1a9a2a67893fd50b084717d6fa3e65"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c1a9a2a67893fd50b084717d6fa3e65" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x)</span></span>
-            </h3>
-            <p>Sets the horizontal position of the affine background (relative to its camera, if it has one).</p>
-<p>Remember that big backgrounds don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries).</p>
-          </div></section>
-          <section class="m-doc-details" id="a92e809c7f72b4e889310e4de50597834"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a92e809c7f72b4e889310e4de50597834" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> y)</span></span>
-            </h3>
-            <p>Sets the vertical position of the affine background (relative to its camera, if it has one).</p>
-<p>Remember that big backgrounds don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries).</p>
-          </div></section>
           <section class="m-doc-details" id="a8f8891a139429df3ab19d65e3e695852"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8f8891a139429df3ab19d65e3e695852" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a5af5ad0ce2b28e24d6d5d758be12b6da" class="m-doc">fixed</a> x,
@@ -1345,14 +1331,6 @@
                 </tr>
               </tbody>
             </table>
-<p>Remember that big backgrounds don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries).</p>
-          </div></section>
-          <section class="m-doc-details" id="afd6ee5c5601df48ae476d0fd8370f717"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afd6ee5c5601df48ae476d0fd8370f717" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point.html" class="m-doc">fixed_<wbr />point</a>&amp; position)</span></span>
-            </h3>
-            <p>Sets the position of the affine background (relative to its camera, if it has one).</p>
-<p>Remember that big backgrounds don&#x27;t support wrapping (they can&#x27;t be moved beyond their boundaries).</p>
           </div></section>
           <section class="m-doc-details" id="ae598fe668677e809c6b847466b640899"><div>
             <h3>

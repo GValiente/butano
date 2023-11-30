@@ -5,7 +5,6 @@
 
 #include "bn_core.h"
 #include "bn_keypad.h"
-#include "bn_display.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 
@@ -30,8 +29,6 @@ namespace
         common::info info(title, info_text_lines, text_generator);
 
         bn::affine_bg_ptr bg = item.create_bg(0, 0);
-        int x_limit = (bg.dimensions().width() - bn::display::width()) / 2;
-        int y_limit = (bg.dimensions().height() - bn::display::height()) / 2;
 
         while(! bn::keypad::start_pressed())
         {
@@ -39,20 +36,20 @@ namespace
 
             if(bn::keypad::left_held())
             {
-                bg.set_x(bn::max(bg.x().right_shift_integer() - inc, -x_limit));
+                bg.set_x(bg.x().right_shift_integer() - inc);
             }
             else if(bn::keypad::right_held())
             {
-                bg.set_x(bn::min(bg.x().right_shift_integer() + inc, x_limit));
+                bg.set_x(bg.x().right_shift_integer() + inc);
             }
 
             if(bn::keypad::up_held())
             {
-                bg.set_y(bn::max(bg.y().right_shift_integer() - inc, -y_limit));
+                bg.set_y(bg.y().right_shift_integer() - inc);
             }
             else if(bn::keypad::down_held())
             {
-                bg.set_y(bn::min(bg.y().right_shift_integer() + inc, y_limit));
+                bg.set_y(bg.y().right_shift_integer() + inc);
             }
 
             info.update();

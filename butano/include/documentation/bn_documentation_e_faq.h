@@ -374,16 +374,6 @@
  * * Change their BPP mode to 4BPP, so each background can have its own color palette with more than 16 colors.
  *
  *
- * @subsection faq_bg_wrapping Why some backgrounds don't allow wrapping?
- *
- * If you try to move a big background beyond its boundaries, an error message like this one should be displayed:
- *
- * @image html faq_bg_wrapping.png
- *
- * That's because big backgrounds don't allow wrapping, so if you are using a big background,
- * avoid moving it beyond its boundaries (or avoid using big backgrounds).
- *
- *
  * @subsection faq_big_background What's a big background?
  *
  * The GBA only supports some fixed sizes for background maps.
@@ -391,8 +381,7 @@
  * However, Butano allows to manage background maps with any size multiple of 256 pixels.
  * These special background maps and the backgrounds that display them are called big maps/backgrounds.
  *
- * Try to avoid big backgrounds whenever possible, because they are slower CPU wise and
- * don't support wrapping (they can't be moved beyond their boundaries).
+ * Try to avoid big backgrounds whenever possible, because they are slower CPU wise.
  *
  *
  * @subsection faq_regular_affine_background Why there are two types of backgrounds (regular and affine)?

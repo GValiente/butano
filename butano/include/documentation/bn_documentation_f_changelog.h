@@ -15,6 +15,7 @@
  * @section changelog_16_5_0 16.5.0 (next release)
  *
  * * Big maps allow wrapping (they can now be moved beyond their boundaries).
+ * * Stack trace logging on error messages can be enabled with the `STACKTRACE` makefile variable.
  * * `GRAPHICS`, `AUDIO` and `DMGAUDIO` makefile variables accept file and folder paths.
  * * `bn::audio::dmg_sync_enabled` and `bn::audio::set_dmg_sync_enabled` removed
  *   as <a href="https://github.com/AntonioND/gbt-player/issues/20">they don't work properly</a>.

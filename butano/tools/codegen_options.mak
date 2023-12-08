@@ -2,6 +2,11 @@
 # Options for code generation:
 #---------------------------------------------------------------------------------------------------------------------
 ARCH        :=	-mthumb -mthumb-interwork $(BN_TOOLCHAIN_CFLAGS)
+
+ifdef STACKTRACE
+	ARCH		+=	-funwind-tables -mpoke-function-name -DBN_STACKTRACE
+endif
+
 CWARNINGS   :=	-Wall -Wextra -Wpedantic -Wshadow -Wundef -Wunused-parameter -Wmisleading-indentation \
 				-Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wnull-dereference -Wswitch-default \
 				-Wstack-usage=16384

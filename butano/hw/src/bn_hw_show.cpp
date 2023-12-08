@@ -14,6 +14,10 @@
     #include "../include/bn_hw_display.h"
 #endif
 
+#if BN_CFG_ASSERT_ENABLED
+    #include "bn_config_log.h"
+#endif
+
 #if BN_CFG_PROFILER_ENABLED
     #include "bn_core.h"
     #include "bn_vector.h"
@@ -104,6 +108,17 @@ namespace
         buffer.append(message.begin(), message.end());
         tte_set_ink(colors::white.data());
         tte_write(buffer.c_str());
+
+        // Show stacktrace warning:
+        #ifdef BN_STACKTRACE
+            #if BN_CFG_LOG_ENABLED
+                const char* stacktrace_warning = "Stack trace logged";
+                POINT16 stacktrace_warning_size = tte_get_text_size(stacktrace_warning);
+                tte_set_pos(tte_margin, display::height() - tte_margin - stacktrace_warning_size.y);
+                tte_set_ink(colors::purple.data());
+                tte_write(stacktrace_warning);
+            #endif
+        #endif
 
         // Show tag:
         if(! tag.empty())

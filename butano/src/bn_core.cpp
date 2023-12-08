@@ -42,6 +42,12 @@
     #include "../hw/include/bn_hw_show.h"
 #endif
 
+#ifdef BN_STACKTRACE
+    #if BN_CFG_LOG_ENABLED
+        #include "../hw/include/bn_hw_stacktrace.h"
+    #endif
+#endif
+
 #if BN_CFG_PROFILER_ENABLED && BN_CFG_PROFILER_LOG_ENGINE
     #if BN_CFG_PROFILER_LOG_ENGINE_DETAILED
         #define BN_PROFILER_ENGINE_GENERAL_START(id) \
@@ -601,6 +607,13 @@ core_lock::~core_lock()
                 bn::core::stop(false);
                 bn::hw::show::error(bn::core::system_font(), condition, file_name, function, line, message,
                                     bn::core::assert_tag());
+
+                #ifdef BN_STACKTRACE
+                    #if BN_CFG_LOG_ENABLED
+                        bn::hw::core::wait_for_vblank();
+                        bn::hw::stacktrace::log();
+                    #endif
+                #endif
 
                 while(true)
                 {

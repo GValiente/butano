@@ -8,6 +8,11 @@
 
 #include <unwind.h>
 #include "bn_log.h"
+#include "bn_config_assert.h"
+
+#if BN_CFG_ASSERT_STACKTRACE_DEMANGLE
+    #include <cxxabi.h>
+#endif
 
 namespace bn::hw::stacktrace
 {
@@ -55,7 +60,21 @@ namespace
                 if(const opcode_function_name_tag* func_name_tag = function_name_tag(address))
                 {
                     auto name = reinterpret_cast<const char*>(unsigned(func_name_tag) - func_name_tag->length);
-                    BN_LOG(reinterpret_cast<void*>(address), " - ", name);
+
+                    #if BN_CFG_ASSERT_STACKTRACE_DEMANGLE
+                        int status;
+                        char* demangled_name = abi::__cxa_demangle(name, nullptr, nullptr, &status);
+
+                        if(status == 0 && demangled_name)
+                        {
+                            name = demangled_name;
+                        }
+
+                        BN_LOG(reinterpret_cast<void*>(address), " - ", name);
+                        free(demangled_name);
+                    #else
+                        BN_LOG(reinterpret_cast<void*>(address), " - ", name);
+                    #endif
                 }
                 else
                 {

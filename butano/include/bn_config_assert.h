@@ -50,4 +50,19 @@
     #define BN_CFG_ASSERT_BUFFER_SIZE 512
 #endif
 
+/**
+ * @def BN_CFG_ASSERT_STACKTRACE_DEMANGLE
+ *
+ * Indicates if the stack trace logged in error messages must be demangled or not.
+ *
+ * Stack trace demangle requires to link standard system libraries (`DEFAULTLIBS` makefile variable).
+ *
+ * Expect a crash after logging the stack trace.
+ *
+ * @ingroup assert
+ */
+#ifndef BN_CFG_ASSERT_STACKTRACE_DEMANGLE
+    #define BN_CFG_ASSERT_STACKTRACE_DEMANGLE false
+#endif
+
 #endif

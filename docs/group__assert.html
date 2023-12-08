@@ -110,6 +110,10 @@
               <span class="m-doc-wrap-bumper">#define <a href="#gae130b2a4530372f13f67f7bb22d15070" class="m-doc">BN_CFG_ASSERT_BUFFER_SIZE</a></span>
             </dt>
             <dd></dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga486ff2d0af04c8caa5d31685b07f2200" class="m-doc">BN_CFG_ASSERT_STACKTRACE_DEMANGLE</a></span>
+            </dt>
+            <dd></dd>
           </dl>
         </section>
         <section>
@@ -171,6 +175,13 @@
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__config__assert_8h.html">&lt;bn_config_assert.h&gt;</a></div>
             </h3>
 <p>Specifies the maximum size of the messages that can be displayed by an assert.</p>
+          </div></section>
+          <section class="m-doc-details" id="ga486ff2d0af04c8caa5d31685b07f2200"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#ga486ff2d0af04c8caa5d31685b07f2200" class="m-doc-self">BN_CFG_ASSERT_STACKTRACE_DEMANGLE</a></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__config__assert_8h.html">&lt;bn_config_assert.h&gt;</a></div>
+            </h3>
+<p>Indicates if the stack trace logged in error messages must be demangled or not.</p><p>Stack trace demangle requires to link standard system libraries (<code>DEFAULTLIBS</code> makefile variable).</p><p>Expect a crash after logging the stack trace.</p>
           </div></section>
         </section>
       </div>

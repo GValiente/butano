@@ -21,6 +21,7 @@
  * * `bn::audio::dmg_sync_enabled` and `bn::audio::set_dmg_sync_enabled` removed
  *   as <a href="https://github.com/AntonioND/gbt-player/issues/20">they don't work properly</a>.
  * * bn::time::current 12-hour mode support.
+ * * <a href="https://github.com/felixjones/agbabi">agbabi</a> updated to 2.1.6.
  * * Old documentation header restored.
  *
  *

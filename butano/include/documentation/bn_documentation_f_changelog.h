@@ -23,6 +23,7 @@
  * * bn::time::current 12-hour mode support.
  * * <a href="https://github.com/felixjones/agbabi">agbabi</a> updated to 2.1.6.
  * * Old documentation header restored.
+ * * Tiles offset disabled in `dynamic_regular_bg` and `dynamic_affine_bg` examples.
  *
  *
  * @section changelog_16_4_0 16.4.0

@@ -6,6 +6,7 @@
 #include "bn_core.h"
 #include "bn_keypad.h"
 #include "bn_memory.h"
+#include "bn_bg_tiles.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_regular_bg_item.h"
 #include "bn_regular_bg_map_ptr.h"
@@ -195,11 +196,15 @@ int main()
 
     common::info info("Dynamic regular BG", info_text_lines, text_generator);
 
+    bn::bg_tiles::set_allow_offset(false);
+
     bn::unique_ptr<bg_map> bg_map_ptr(new bg_map());
     bn::regular_bg_item bg_item(
                 bn::regular_bg_tiles_items::tiles, bn::bg_palette_items::palette, bg_map_ptr->map_item);
     bn::regular_bg_ptr bg = bg_item.create_bg(0, 0);
     bn::regular_bg_map_ptr bg_map = bg.map();
+
+    bn::bg_tiles::set_allow_offset(true);
 
     int cursor_x = bg_map::columns / 2;
     int cursor_y = bg_map::rows / 2;

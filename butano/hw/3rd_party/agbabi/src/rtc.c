@@ -54,7 +54,7 @@
 
 // Amount of iterations to wait after writing the data,
 // before touching other RTC-related registers. Dependant on optimization level
-#define TIMEOUT_CYCLES_WAIT_AFTER_WRITE_PER_BYTE 1858
+#define TIMEOUT_CYCLES_WAIT_AFTER_WRITE_PER_BYTE 5574
 
 /* Compiler hacks */
 #define assume(cond) do { if (!(cond)) __builtin_unreachable(); } while (0)
@@ -138,10 +138,16 @@ static void rtc_cmd_arg(const unsigned int cmd, unsigned int data, unsigned int 
     assume(len > 0 && len <= 32);
     rtc_write(data, len);
 
+    int wait = (TIMEOUT_CYCLES_WAIT_AFTER_WRITE_PER_BYTE * 7 + 11 + 6) / 12;
     __asm__ volatile (
-        "L1%=: sub %[wait], %[wait], #1"  "\n\t"
-        "bne L1%="
-        ::  [wait]"l"(((TIMEOUT_CYCLES_WAIT_AFTER_WRITE_PER_BYTE * len + 7) / 8 + 11 + 6) / 12)
+        "L1%=:"                         "\n\t"
+#if defined(__ARM_ASM_SYNTAX_UNIFIED__) && __ARM_ASM_SYNTAX_UNIFIED__ == 1
+        "subs  %[wait], %[wait], #1"    "\n\t"
+#else
+        "sub   %[wait], #1"             "\n\t"
+#endif
+        "bne   L1%="
+        : [wait]"+r"(wait)
     );
 }
 
@@ -154,10 +160,16 @@ static void rtc_cmd_arg_datetime(unsigned int cmd, __agbabi_datetime_t datetime,
     rtc_write(date, 32);
     rtc_write(time, 24);
 
+    int wait = (TIMEOUT_CYCLES_WAIT_AFTER_WRITE_PER_BYTE * 7 + 11 + 6) / 12;
     __asm__ volatile (
-        "L1%=: sub %[wait], %[wait], #1"  "\n\t"
-        "bne L1%="
-        ::  [wait]"l"((TIMEOUT_CYCLES_WAIT_AFTER_WRITE_PER_BYTE * 7 + 11 + 6) / 12)
+        "L1%=:"                         "\n\t"
+#if defined(__ARM_ASM_SYNTAX_UNIFIED__) && __ARM_ASM_SYNTAX_UNIFIED__ == 1
+        "subs  %[wait], %[wait], #1"    "\n\t"
+#else
+        "sub   %[wait], #1"             "\n\t"
+#endif
+        "bne   L1%="
+        : [wait]"+r"(wait)
     );
 }
 

@@ -15,9 +15,9 @@ from bmp import BMP
 from file_info import FileInfo
 
 
-def parse_colors_count(info, bmp):
+def parse_colors_count(info, bmp, tag='colors_count'):
     try:
-        colors_count = int(info['colors_count'])
+        colors_count = int(info[tag])
 
         if colors_count < 1 or colors_count > 256:
             raise ValueError('Invalid colors count: ' + str(colors_count))
@@ -881,40 +881,75 @@ class RegularBgItem:
 class RegularBgTilesItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
-        BMP(file_path)
+        bmp = BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
         self.__bpp_8 = parse_bg_bpp_mode(info, file_name_no_ext)
 
         try:
-            self.__compression = info['compression']
-            validate_compression(self.__compression)
+            self.__tiles_compression = info['compression']
+            validate_compression(self.__tiles_compression)
         except KeyError:
-            self.__compression = 'none'
+            self.__tiles_compression = 'none'
+
+        try:
+            self.__generate_palette = bool(info['generate_palette'])
+        except KeyError:
+            self.__generate_palette = False
+
+        if self.__generate_palette:
+            self.__palette_colors_count = parse_colors_count(info, bmp, 'palette_colors_count')
+
+            try:
+                self.__palette_compression = info['palette_compression']
+                validate_compression(self.__palette_compression)
+            except KeyError:
+                self.__palette_compression = 'none'
+        else:
+            self.__palette_colors_count = 0
+            self.__palette_compression = 'none'
 
     def process(self, grit):
-        compression = self.__compression
+        tiles_compression = self.__tiles_compression
+        palette_compression = self.__palette_compression
 
-        if compression == 'auto':
-            compression, file_size = self.__test_compression(grit, compression, 'none', None)
-            compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
-            compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
-            compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
+        if tiles_compression == 'auto':
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
+                                                                         file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
-        self.__execute_command(grit, compression)
-        return self.__write_header(compression, False)
+        if palette_compression == 'auto':
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
+                                                                             file_size)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
+                                                                             file_size)
 
-    def __test_compression(self, grit, best_compression, new_compression, best_file_size):
-        self.__execute_command(grit, new_compression)
-        new_file_size = self.__write_header(new_compression, True)
+        self.__execute_command(grit, tiles_compression, palette_compression)
+        return self.__write_header(tiles_compression, palette_compression, False)
+
+    def __test_tiles_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, new_compression, 'none')
+        new_file_size = self.__write_header(new_compression, 'none', True)
 
         if best_file_size is None or new_file_size < best_file_size:
             return new_compression, new_file_size
 
         return best_compression, best_file_size
 
-    def __write_header(self, compression, skip_write):
+    def __test_palette_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, 'none', new_compression)
+        new_file_size = self.__write_header('none', new_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_compression, new_file_size
+
+        return best_compression, best_file_size
+
+    def __write_header(self, tiles_compression, palette_compression, skip_write):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
         header_file_path = self.__build_folder_path + '/bn_regular_bg_tiles_items_' + name + '.h'
@@ -922,6 +957,9 @@ class RegularBgTilesItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile', 1)
+
+            if self.__generate_palette:
+                grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 
             for grit_line in grit_data.splitlines():
                 if ' tiles ' in grit_line:
@@ -954,20 +992,35 @@ class RegularBgTilesItem:
 
         grit_data = re.sub(r'Tiles\[([0-9]+)]', 'Tiles[' + str(tiles_count) + ']', grit_data)
 
+        if self.__generate_palette:
+            grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__palette_colors_count) + ']', grit_data)
+
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_REGULAR_BG_TILES_ITEMS_' + name.upper() + '_H'
             header_file.write('#ifndef ' + include_guard + '\n')
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')
             header_file.write('#include "bn_regular_bg_tiles_item.h"' + '\n')
+
+            if self.__generate_palette:
+                header_file.write('#include "bn_bg_palette_item.h"' + '\n')
+
             header_file.write(grit_data)
             header_file.write('\n')
             header_file.write('namespace bn::regular_bg_tiles_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline regular_bg_tiles_item ' + name + '(' + '\n            ' +
                               'span<const tile>(' + name + '_bn_gfxTiles, ' +
-                              str(tiles_count) + '), ' + bpp_mode_label + ', ' + compression_label(compression) +
+                              str(tiles_count) + '), ' + bpp_mode_label + ', ' + compression_label(tiles_compression) +
                               ');' + '\n')
+
+            if self.__generate_palette:
+                header_file.write('\n')
+                header_file.write('    constexpr inline bg_palette_item ' + name + '_palette(' +
+                                  'span<const color>(' + name + '_bn_gfxPal, ' +
+                                  str(self.__palette_colors_count) + '), ' + '\n            ' +
+                                  bpp_mode_label + ', ' + compression_label(palette_compression) + ');' + '\n')
+
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -975,15 +1028,22 @@ class RegularBgTilesItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, grit, compression):
-        command = [grit, self.__file_path, '-p!', '-m!']
+    def __execute_command(self, grit, tiles_compression, palette_compression):
+        command = [grit, self.__file_path, '-m!']
 
         if self.__bpp_8:
             command.append('-gB8')
         else:
             command.append('-gB4')
 
-        append_compression_command('g', compression, command)
+        append_compression_command('g', tiles_compression, command)
+
+        if self.__generate_palette:
+            command.append('-pe' + str(self.__palette_colors_count))
+            append_compression_command('p', palette_compression, command)
+        else:
+            command.append('-p!')
+
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 
@@ -1252,39 +1312,74 @@ class AffineBgItem:
 class AffineBgTilesItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
-        BMP(file_path)
+        bmp = BMP(file_path)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
 
         try:
-            self.__compression = info['compression']
-            validate_compression(self.__compression)
+            self.__tiles_compression = info['compression']
+            validate_compression(self.__tiles_compression)
         except KeyError:
-            self.__compression = 'none'
+            self.__tiles_compression = 'none'
+
+        try:
+            self.__generate_palette = bool(info['generate_palette'])
+        except KeyError:
+            self.__generate_palette = False
+
+        if self.__generate_palette:
+            self.__palette_colors_count = parse_colors_count(info, bmp, 'palette_colors_count')
+
+            try:
+                self.__palette_compression = info['palette_compression']
+                validate_compression(self.__palette_compression)
+            except KeyError:
+                self.__palette_compression = 'none'
+        else:
+            self.__palette_colors_count = 0
+            self.__palette_compression = 'none'
 
     def process(self, grit):
-        compression = self.__compression
+        tiles_compression = self.__tiles_compression
+        palette_compression = self.__palette_compression
 
-        if compression == 'auto':
-            compression, file_size = self.__test_compression(grit, compression, 'none', None)
-            compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
-            compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
-            compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
+        if tiles_compression == 'auto':
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
+                                                                         file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
+            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
-        self.__execute_command(grit, compression)
-        return self.__write_header(compression, False)
+        if palette_compression == 'auto':
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
+                                                                             file_size)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
+                                                                             file_size)
 
-    def __test_compression(self, grit, best_compression, new_compression, best_file_size):
-        self.__execute_command(grit, new_compression)
-        new_file_size = self.__write_header(new_compression, True)
+        self.__execute_command(grit, tiles_compression, palette_compression)
+        return self.__write_header(tiles_compression, palette_compression, False)
+
+    def __test_tiles_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, new_compression, 'none')
+        new_file_size = self.__write_header(new_compression, 'none', True)
 
         if best_file_size is None or new_file_size < best_file_size:
             return new_compression, new_file_size
 
         return best_compression, best_file_size
 
-    def __write_header(self, compression, skip_write):
+    def __test_palette_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, 'none', new_compression)
+        new_file_size = self.__write_header('none', new_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_compression, new_file_size
+
+        return best_compression, best_file_size
+
+    def __write_header(self, tiles_compression, palette_compression, skip_write):
         name = self.__file_name_no_ext
         grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
         header_file_path = self.__build_folder_path + '/bn_affine_bg_tiles_items_' + name + '.h'
@@ -1292,6 +1387,9 @@ class AffineBgTilesItem:
         with open(grit_file_path, 'r') as grit_file:
             grit_data = grit_file.read()
             grit_data = grit_data.replace('unsigned int', 'bn::tile', 1)
+
+            if self.__generate_palette:
+                grit_data = grit_data.replace('unsigned short', 'bn::color', 1)
 
             for grit_line in grit_data.splitlines():
                 if ' tiles ' in grit_line:
@@ -1319,20 +1417,35 @@ class AffineBgTilesItem:
         tiles_count *= 2
         grit_data = re.sub(r'Tiles\[([0-9]+)]', 'Tiles[' + str(tiles_count) + ']', grit_data)
 
+        if self.__generate_palette:
+            grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__palette_colors_count) + ']', grit_data)
+
         with open(header_file_path, 'w') as header_file:
             include_guard = 'BN_AFFINE_BG_TILES_ITEMS_' + name.upper() + '_H'
             header_file.write('#ifndef ' + include_guard + '\n')
             header_file.write('#define ' + include_guard + '\n')
             header_file.write('\n')
             header_file.write('#include "bn_affine_bg_tiles_item.h"' + '\n')
+
+            if self.__generate_palette:
+                header_file.write('#include "bn_bg_palette_item.h"' + '\n')
+
             header_file.write(grit_data)
             header_file.write('\n')
             header_file.write('namespace bn::affine_bg_tiles_items' + '\n')
             header_file.write('{' + '\n')
             header_file.write('    constexpr inline affine_bg_tiles_item ' + name + '(' + '\n            ' +
                               'span<const tile>(' + name + '_bn_gfxTiles, ' +
-                              str(tiles_count) + '), ' + compression_label(compression) +
+                              str(tiles_count) + '), ' + compression_label(tiles_compression) +
                               ');' + '\n')
+
+            if self.__generate_palette:
+                header_file.write('\n')
+                header_file.write('    constexpr inline bg_palette_item ' + name + '_palette(' +
+                                  'span<const color>(' + name + '_bn_gfxPal, ' +
+                                  str(self.__palette_colors_count) + '), ' + '\n            ' +
+                                  'bpp_mode::BPP_8, ' + compression_label(palette_compression) + ');' + '\n')
+
             header_file.write('}' + '\n')
             header_file.write('\n')
             header_file.write('#endif' + '\n')
@@ -1340,9 +1453,16 @@ class AffineBgTilesItem:
 
         return total_size, header_file_path
 
-    def __execute_command(self, grit, compression):
-        command = [grit, self.__file_path, '-gB8', '-m!', '-p!']
-        append_compression_command('g', compression, command)
+    def __execute_command(self, grit, tiles_compression, palette_compression):
+        command = [grit, self.__file_path, '-gB8', '-m!']
+        append_compression_command('g', tiles_compression, command)
+
+        if self.__generate_palette:
+            command.append('-pe' + str(self.__palette_colors_count))
+            append_compression_command('p', palette_compression, command)
+        else:
+            command.append('-p!')
+
         command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
         command = ' '.join(command)
 

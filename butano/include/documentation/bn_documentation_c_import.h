@@ -322,6 +322,14 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"generate_palette"`: optional field which specifies if a background palette must be generated (`false` by default).
+ * * `"palette_colors_count"`: optional field which specifies the background palette size [1..256].
+ * * `"palette_compression"`: optional field which specifies the compression of the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
  * a bn::regular_bg_tiles_item should have been generated in the `build` folder.
@@ -422,6 +430,14 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ * * `"generate_palette"`: optional field which specifies if a background palette must be generated (`false` by default).
+ * * `"palette_colors_count"`: optional field which specifies the background palette size [1..256].
+ * * `"palette_compression"`: optional field which specifies the compression of the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
  *
  * If the conversion process has finished successfully,
  * a bn::affine_bg_tiles_item should have been generated in the `build` folder.
@@ -455,7 +471,7 @@
  *   * `"bpp_8"`: up to 256 colors.
  *   * `"bpp_4"`: up to 16 colors per @ref tile "tile".
  * * `"colors_count"`: optional field which specifies the background palette size [1..256].
- * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
+ * * `"compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.

@@ -17,6 +17,9 @@
  * * Big maps allow wrapping (they can now be moved beyond their boundaries).
  * * Stack trace logging on error messages can be enabled with the `STACKTRACE` makefile variable.
  * * Stack trace demangle can be enabled with @ref BN_CFG_ASSERT_STACKTRACE_DEMANGLE.
+ * * Import tool can now generate palettes for regular and affine background tiles.
+ *   See the @ref import_regular_bg_tiles and the @ref import_affine_bg_tiles import guides
+ *   to learn how to generate them.
  * * `GRAPHICS`, `AUDIO` and `DMGAUDIO` makefile variables accept file and folder paths.
  * * `bn::audio::dmg_sync_enabled` and `bn::audio::set_dmg_sync_enabled` removed
  *   as <a href="https://github.com/AntonioND/gbt-player/issues/20">they don't work properly</a>.

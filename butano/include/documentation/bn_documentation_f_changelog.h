@@ -26,6 +26,7 @@
  * * bn::time::current 12-hour mode support.
  * * <a href="https://github.com/felixjones/agbabi">agbabi</a> updated to 2.1.6.
  * * Old documentation header restored.
+ * * `dynamic_regular_bg` example shows how to deal with multiple palette ids.
  * * Tiles offset disabled in `dynamic_regular_bg` and `dynamic_affine_bg` examples.
  *
  *

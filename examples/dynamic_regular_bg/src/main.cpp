@@ -45,17 +45,12 @@ namespace
             reset();
         }
 
-        bool dig(int x, int y)
+        void dig(int x, int y)
         {
             bn::regular_bg_map_cell& current_cell = cells[map_item.cell_index(x, y)];
             bn::regular_bg_map_cell_info current_cell_info(current_cell);
-
-            if(current_cell_info.tile_index() == ground_tile_index)
-            {
-                return false;
-            }
-
             current_cell_info.set_tile_index(ground_tile_index);
+            current_cell_info.set_palette_id(1);
             current_cell_info.set_horizontal_flip(false);
             current_cell = current_cell_info.cell();
 
@@ -69,8 +64,6 @@ namespace
             _update_wall(x - 1, y + 1);
             _update_wall(x, y + 1);
             _update_wall(x + 1, y + 1);
-
-            return true;
         }
 
         void reset()
@@ -86,6 +79,8 @@ namespace
 
             if(current_cell_info.tile_index() == ground_tile_index)
             {
+                current_cell_info.set_palette_id(0);
+                current_cell = current_cell_info.cell();
                 return;
             }
 
@@ -94,6 +89,7 @@ namespace
             if(down_cell_info.tile_index() == ground_tile_index)
             {
                 current_cell_info.set_tile_index(wall_top_middle_tile_index);
+                current_cell_info.set_palette_id(0);
                 current_cell_info.set_horizontal_flip(false);
                 current_cell = current_cell_info.cell();
                 return;
@@ -104,6 +100,7 @@ namespace
             if(right_cell_info.tile_index() == ground_tile_index)
             {
                 current_cell_info.set_tile_index(wall_middle_tile_index);
+                current_cell_info.set_palette_id(0);
                 current_cell_info.set_horizontal_flip(false);
                 current_cell = current_cell_info.cell();
                 return;
@@ -114,6 +111,7 @@ namespace
             if(left_cell_info.tile_index() == ground_tile_index)
             {
                 current_cell_info.set_tile_index(wall_middle_tile_index);
+                current_cell_info.set_palette_id(0);
                 current_cell_info.set_horizontal_flip(true);
                 current_cell = current_cell_info.cell();
                 return;
@@ -124,6 +122,7 @@ namespace
             if(up_cell_info.tile_index() == ground_tile_index)
             {
                 current_cell_info.set_tile_index(wall_bottom_middle_tile_index);
+                current_cell_info.set_palette_id(0);
                 current_cell_info.set_horizontal_flip(false);
                 current_cell = current_cell_info.cell();
                 return;
@@ -134,6 +133,7 @@ namespace
             if(right_down_cell_info.tile_index() == ground_tile_index)
             {
                 current_cell_info.set_tile_index(wall_top_corner_tile_index);
+                current_cell_info.set_palette_id(0);
                 current_cell_info.set_horizontal_flip(false);
                 current_cell = current_cell_info.cell();
                 return;
@@ -144,6 +144,7 @@ namespace
             if(left_down_cell_info.tile_index() == ground_tile_index)
             {
                 current_cell_info.set_tile_index(wall_top_corner_tile_index);
+                current_cell_info.set_palette_id(0);
                 current_cell_info.set_horizontal_flip(true);
                 current_cell = current_cell_info.cell();
                 return;
@@ -154,6 +155,7 @@ namespace
             if(right_up_cell_info.tile_index() == ground_tile_index)
             {
                 current_cell_info.set_tile_index(wall_bottom_corner_tile_index);
+                current_cell_info.set_palette_id(0);
                 current_cell_info.set_horizontal_flip(false);
                 current_cell = current_cell_info.cell();
                 return;
@@ -164,6 +166,7 @@ namespace
             if(left_up_cell_info.tile_index() == ground_tile_index)
             {
                 current_cell_info.set_tile_index(wall_bottom_corner_tile_index);
+                current_cell_info.set_palette_id(0);
                 current_cell_info.set_horizontal_flip(true);
                 current_cell = current_cell_info.cell();
                 return;
@@ -220,10 +223,8 @@ int main()
             {
                 --cursor_x;
 
-                if(bg_map_ptr->dig(cursor_x, cursor_y))
-                {
-                    bg_map.reload_cells_ref();
-                }
+                bg_map_ptr->dig(cursor_x, cursor_y);
+                bg_map.reload_cells_ref();
             }
         }
         else if(bn::keypad::right_pressed())
@@ -232,10 +233,8 @@ int main()
             {
                 ++cursor_x;
 
-                if(bg_map_ptr->dig(cursor_x, cursor_y))
-                {
-                    bg_map.reload_cells_ref();
-                }
+                bg_map_ptr->dig(cursor_x, cursor_y);
+                bg_map.reload_cells_ref();
             }
         }
 
@@ -245,10 +244,8 @@ int main()
             {
                 --cursor_y;
 
-                if(bg_map_ptr->dig(cursor_x, cursor_y))
-                {
-                    bg_map.reload_cells_ref();
-                }
+                bg_map_ptr->dig(cursor_x, cursor_y);
+                bg_map.reload_cells_ref();
             }
         }
         else if(bn::keypad::down_pressed())
@@ -257,10 +254,8 @@ int main()
             {
                 ++cursor_y;
 
-                if(bg_map_ptr->dig(cursor_x, cursor_y))
-                {
-                    bg_map.reload_cells_ref();
-                }
+                bg_map_ptr->dig(cursor_x, cursor_y);
+                bg_map.reload_cells_ref();
             }
         }
 
@@ -272,10 +267,8 @@ int main()
             cursor_y = bg_map::rows / 2;
             cursor_sprite.set_position(sprite_x(cursor_x), sprite_y(cursor_y));
 
-            if(bg_map_ptr->dig(cursor_x, cursor_y))
-            {
-                bg_map.reload_cells_ref();
-            }
+            bg_map_ptr->dig(cursor_x, cursor_y);
+            bg_map.reload_cells_ref();
         }
         else
         {

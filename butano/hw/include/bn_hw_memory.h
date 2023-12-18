@@ -13,6 +13,8 @@
 extern unsigned BN_IWRAM_START;
 extern unsigned BN_IWRAM_TOP;
 extern unsigned BN_IWRAM_END;
+extern unsigned BN_ROM_START;
+extern unsigned BN_ROM_END;
 
 extern unsigned __ewram_start;
 extern char __eheap_start[], __eheap_end[];
@@ -62,6 +64,13 @@ namespace bn::hw::memory
     [[nodiscard]] inline char* ewram_heap_end()
     {
         return __eheap_end;
+    }
+
+    [[nodiscard]] inline int used_rom()
+    {
+        auto rom_start = reinterpret_cast<uint8_t*>(&BN_ROM_START);
+        auto rom_end = reinterpret_cast<uint8_t*>(&BN_ROM_END);
+        return rom_end - rom_start;
     }
 
     inline void copy_bytes(const void* source, int bytes, void* destination)

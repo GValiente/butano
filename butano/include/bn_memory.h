@@ -125,19 +125,24 @@ namespace bn::memory
     #endif
 
     /**
-     * @brief Returns the IWRAM used by the stack in bytes.
+     * @brief Returns the number of bytes of IWRAM used by the stack.
      */
     [[nodiscard]] int used_stack_iwram();
 
     /**
-     * @brief Returns the bytes of all static objects in IWRAM.
+     * @brief Returns the size in bytes of all static objects in IWRAM.
      */
     [[nodiscard]] int used_static_iwram();
 
     /**
-     * @brief Returns the bytes of all static objects in EWRAM.
+     * @brief Returns the size in bytes of all static objects in EWRAM.
      */
     [[nodiscard]] int used_static_ewram();
+
+    /**
+     * @brief Returns the size of the ROM in bytes.
+     */
+    [[nodiscard]] int used_rom();
 
     /**
      * @brief Copies the given amount of elements from the object referenced by source_ref

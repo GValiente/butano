@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_16_5_0 16.5.0 (next release)
+ * @section changelog_16_5_0 16.5.0
  *
  * * Big maps allow wrapping (they can now be moved beyond their boundaries).
  * * Stack trace logging on error messages can be enabled with the `STACKTRACE` makefile variable.

@@ -5,6 +5,7 @@
 
 #include "bn_sprites.h"
 
+#include "bn_display_manager.h"
 #include "bn_sprites_manager.h"
 
 namespace bn::sprites
@@ -18,6 +19,16 @@ int used_items_count()
 int available_items_count()
 {
     return sprites_manager::available_items_count();
+}
+
+bool visible()
+{
+    return display_manager::sprites_visible();
+}
+
+void set_visible(bool visible)
+{
+    display_manager::set_sprites_visible(visible);
 }
 
 int reserved_handles_count()

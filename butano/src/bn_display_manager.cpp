@@ -29,7 +29,6 @@ namespace
     {
 
     public:
-        int mode = 0;
         bool enabled_bgs[hw::bgs::count()] = {};
         fixed sprites_mosaic_horizontal_stretch;
         fixed sprites_mosaic_vertical_stretch;
@@ -52,8 +51,10 @@ namespace
         uint16_t blending_cnt;
         uint16_t blending_transparency_cnt;
         bool inside_windows_enabled[hw::display::inside_windows_count()] = {};
+        uint8_t mode = 0;
         bool commit = true;
         bool commit_display = true;
+        bool sprites_visible = true;
         bool green_swap_enabled = false;
         bool update_mosaic = true;
         bool blending_fade_enabled = false;
@@ -127,7 +128,22 @@ void set_mode(int mode)
 {
     if(data.mode != mode)
     {
-        data.mode = mode;
+        data.mode = uint8_t(mode);
+        data.commit_display = true;
+        data.commit = true;
+    }
+}
+
+bool sprites_visible()
+{
+    return data.sprites_visible;
+}
+
+void set_sprites_visible(bool visible)
+{
+    if(data.sprites_visible != visible)
+    {
+        data.sprites_visible = visible;
         data.commit_display = true;
         data.commit = true;
     }
@@ -896,7 +912,8 @@ void update()
 
         if(data.commit_display)
         {
-            hw::display::set_display(data.mode, data.enabled_bgs, data.inside_windows_enabled, data.display_cnt);
+            hw::display::set_display(
+                    data.mode, data.sprites_visible, data.enabled_bgs, data.inside_windows_enabled, data.display_cnt);
         }
 
         if(data.update_mosaic)

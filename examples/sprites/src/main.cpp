@@ -7,6 +7,7 @@
 #include "bn_math.h"
 #include "bn_keypad.h"
 #include "bn_display.h"
+#include "bn_sprites.h"
 #include "bn_blending.h"
 #include "bn_bg_palettes.h"
 #include "bn_regular_bg_ptr.h"
@@ -82,6 +83,32 @@ namespace
             info.update();
             bn::core::update();
         }
+    }
+
+    void sprite_layer_visibility_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "A: hide/show sprite layer",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Sprite layer visibility", info_text_lines, text_generator);
+
+        bn::sprite_ptr red_sprite = bn::sprite_items::red_sprite.create_sprite(0, 0);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::a_pressed())
+            {
+                bn::sprites::set_visible(! bn::sprites::visible());
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::sprites::set_visible(true);
     }
 
     void sprites_position_scene(bn::sprite_text_generator& text_generator)
@@ -1096,6 +1123,9 @@ int main()
         bn::core::update();
 
         sprites_visibility_actions_scene(text_generator);
+        bn::core::update();
+
+        sprite_layer_visibility_scene(text_generator);
         bn::core::update();
 
         sprites_position_scene(text_generator);

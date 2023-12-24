@@ -71,6 +71,16 @@ namespace bn::sprites
     }
 
     /**
+     * @brief Indicates if the sprite layer is visible or not.
+     */
+    [[nodiscard]] bool visible();
+
+    /**
+     * @brief Sets if the sprite layer is visible or not.
+     */
+    void set_visible(bool visible);
+
+    /**
      * @brief Returns the number of hardware sprite handles not used by Butano sprites manager.
      *
      * Normally you should not need to reserve handles, but it can be useful for messing with HDMA for example.

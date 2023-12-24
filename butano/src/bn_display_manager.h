@@ -24,6 +24,10 @@ namespace bn::display_manager
 
     void set_mode(int mode);
 
+    [[nodiscard]] bool sprites_visible();
+
+    void set_sprites_visible(bool visible);
+
     [[nodiscard]] bool bg_enabled(int bg);
 
     void set_bg_enabled(int bg, bool enabled);

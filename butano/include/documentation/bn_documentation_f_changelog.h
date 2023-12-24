@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_16_6_0 16.6.0 (next release)
+ *
+ * bn::sprites::visible and bn::sprites::set_visible added.
+ *
+ *
  * @section changelog_16_5_0 16.5.0
  *
  * * Big maps allow wrapping (they can now be moved beyond their boundaries).

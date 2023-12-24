@@ -41,10 +41,15 @@ namespace bn::hw::display
         return 2;
     }
 
-    inline void set_display(
-            int mode, const bool* enabled_bgs, const bool* enabled_inside_windows, uint16_t& display_cnt)
+    inline void set_display(int mode, bool show_sprites, const bool* enabled_bgs,
+                            const bool* enabled_inside_windows, uint16_t& display_cnt)
     {
-        unsigned dispcnt = unsigned(mode) | DCNT_OBJ | DCNT_OBJ_1D;
+        unsigned dispcnt = unsigned(mode) | DCNT_OBJ_1D;
+
+        if(show_sprites)
+        {
+            dispcnt |= unsigned(DCNT_OBJ);
+        }
 
         for(int index = 0; index < bgs::count(); ++index)
         {

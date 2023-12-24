@@ -7,13 +7,13 @@
 #include "bn_math.h"
 #include "bn_keypad.h"
 #include "bn_display.h"
-#include "bn_sprites.h"
 #include "bn_blending.h"
 #include "bn_bg_palettes.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_sprites_mosaic.h"
 #include "bn_sprite_actions.h"
 #include "bn_sprite_builder.h"
+#include "bn_sprites_actions.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
 #include "bn_sprite_first_attributes.h"
@@ -104,6 +104,27 @@ namespace
                 bn::sprites::set_visible(! bn::sprites::visible());
             }
 
+            info.update();
+            bn::core::update();
+        }
+
+        bn::sprites::set_visible(true);
+    }
+
+    void sprite_layer_visibility_actions_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Sprite layer visibility actions", info_text_lines, text_generator);
+
+        bn::sprite_ptr green_sprite = bn::sprite_items::green_sprite.create_sprite(0, 0);
+        bn::sprites_visible_toggle_action action(60);
+
+        while(! bn::keypad::start_pressed())
+        {
+            action.update();
             info.update();
             bn::core::update();
         }
@@ -1126,6 +1147,9 @@ int main()
         bn::core::update();
 
         sprite_layer_visibility_scene(text_generator);
+        bn::core::update();
+
+        sprite_layer_visibility_actions_scene(text_generator);
         bn::core::update();
 
         sprites_position_scene(text_generator);

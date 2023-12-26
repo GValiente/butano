@@ -16,6 +16,7 @@
  *
  * * bn::sprites::visible and bn::sprites::set_visible added.
  * * bn::sprites actions added.
+ * * bn::date year range not longer limited to [0..99].
  *
  *
  * @section changelog_16_5_0 16.5.0

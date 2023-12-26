@@ -30,7 +30,7 @@ class date
 public:
     /**
      * @brief Indicates if the specified date is valid or not.
-     * @param year Year part of the date, in the range [0..99].
+     * @param year Year part of the date.
      * @param month Month part of the date, in the range [1..12].
      * @param month_day Month day part of the date, in the range [1..31].
      * @param week_day Week day part of the date, in the range [0..6].
@@ -38,7 +38,7 @@ public:
      */
     [[nodiscard]] constexpr static bool valid(int year, int month, int month_day, int week_day)
     {
-        if(year >= 0 && year <= 99 && month >= 1 && month <= 12 && week_day >= 0 && week_day <= 6 && month_day >= 1)
+        if(year >= 0 && month >= 1 && month <= 12 && week_day >= 0 && week_day <= 6 && month_day >= 1)
         {
             int max_month_day = 31;
 
@@ -46,7 +46,23 @@ public:
             {
 
             case 2:
-                max_month_day = year % 4 ? 28 : 29;
+                {
+                    bool leap_year = false;
+
+                    if(year % 4 == 0)
+                    {
+                        if(year % 100 == 0)
+                        {
+                            leap_year = year % 400 == 0;
+                        }
+                        else
+                        {
+                            leap_year = true;
+                        }
+                    }
+
+                    max_month_day = leap_year ? 29 : 28;
+                }
                 break;
 
             case 4:
@@ -79,13 +95,13 @@ public:
 
     /**
      * @brief Constructor.
-     * @param year Year part of the date, in the range [0..99].
+     * @param year Year part of the date.
      * @param month Month part of the date, in the range [1..12].
      * @param month_day Month day part of the date, in the range [1..31].
      * @param week_day Week day part of the date, in the range [0..6].
      */
     constexpr date(int year, int month, int month_day, int week_day) :
-        _year(uint8_t(year)),
+        _year(year),
         _month(uint8_t(month)),
         _month_day(uint8_t(month_day)),
         _week_day(uint8_t(week_day))
@@ -104,14 +120,14 @@ public:
 
     /**
      * @brief Sets the year part of the date.
-     * @param year Year part of the date, in the range [0..99].
+     * @param year Year part of the date.
      */
     constexpr void set_year(int year)
     {
         BN_BASIC_ASSERT(valid(year, _month, _month_day, _week_day),
                         "Invalid date: ", year, '/', _month, '/', _month_day, " (", _week_day, ')');
 
-        _year = uint8_t(year);
+        _year = year;
     }
 
     /**
@@ -234,7 +250,7 @@ public:
     }
 
 private:
-    uint8_t _year;
+    int _year;
     uint8_t _month;
     uint8_t _month_day;
     uint8_t _week_day;

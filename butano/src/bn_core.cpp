@@ -262,22 +262,28 @@ namespace
         hdma_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        hdma_manager::commit(use_dma);
+        bool hdma_running = hdma_manager::commit(use_dma);
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_hblank_fx_commit");
-        hblank_effects_manager::commit();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        BN_PROFILER_ENGINE_DETAILED_START("eng_spr_tiles_cmp_commit");
-        sprite_tiles_manager::commit_compressed();
+        bool hblank_effects_running = hblank_effects_manager::commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_big_maps_commit");
         bgs_manager::commit_big_maps();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        BN_PROFILER_ENGINE_DETAILED_START("eng_bg_blocks_commit");
-        bg_blocks_manager::commit();
+        use_dma = use_dma && ! hdma_running && ! hblank_effects_running;
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_bg_blocks_unc_commit");
+        bg_blocks_manager::commit_uncompressed(use_dma);
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_spr_tiles_cmp_commit");
+        sprite_tiles_manager::commit_compressed();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
+        BN_PROFILER_ENGINE_DETAILED_START("eng_bg_blocks_cmp_commit");
+        bg_blocks_manager::commit_compressed();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_vblank_callback");

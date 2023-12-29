@@ -32,7 +32,7 @@ namespace bn::hdma_manager
 
     void update();
 
-    void commit(bool use_dma);
+    bool commit(bool use_dma);
 }
 
 #endif

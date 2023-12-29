@@ -88,7 +88,7 @@ namespace
             }
         }
 
-        void commit(bool use_dma)
+        bool commit(bool use_dma)
         {
             const state& current_state = _current_state();
 
@@ -108,11 +108,11 @@ namespace
                 }
 
                 hw::dma::start_hdma(_channel, source_ptr, elements, destination_ptr);
+                return true;
             }
-            else
-            {
-                hw::dma::stop_hdma(_channel);
-            }
+
+            hw::dma::stop_hdma(_channel);
+            return false;
         }
 
     private:
@@ -206,10 +206,11 @@ void update()
     data.low_priority_entry.update();
 }
 
-void commit(bool use_dma)
+bool commit(bool use_dma)
 {
-    data.high_priority_entry.commit(use_dma);
-    data.low_priority_entry.commit(use_dma);
+    bool running = data.high_priority_entry.commit(use_dma);
+    running |= data.low_priority_entry.commit(use_dma);
+    return running;
 }
 
 }

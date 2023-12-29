@@ -17,6 +17,7 @@
  * * bn::sprites::visible and bn::sprites::set_visible added.
  * * bn::sprites actions added.
  * * bn::date year range not longer limited to [0..99].
+ * * Uncompressed backgrounds commit CPU usage reduced.
  * * Memory copy speed tests added to the `profiler` example.
  *
  *

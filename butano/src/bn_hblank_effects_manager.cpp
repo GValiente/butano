@@ -1382,7 +1382,7 @@ void update()
     }
 }
 
-void commit()
+bool commit()
 {
     if(external_data.commit)
     {
@@ -1408,6 +1408,8 @@ void commit()
             }
         }
     }
+
+    return external_data.enabled;
 }
 
 }

@@ -179,7 +179,9 @@ namespace bn::bg_blocks_manager
 
     void update();
 
-    void commit();
+    void commit_uncompressed(bool use_dma);
+
+    void commit_compressed();
 }
 
 #endif

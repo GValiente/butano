@@ -86,7 +86,7 @@ namespace bn::hblank_effects_manager
 
     void update();
 
-    void commit();
+    bool commit();
 }
 
 #endif

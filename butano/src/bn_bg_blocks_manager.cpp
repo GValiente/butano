@@ -9,6 +9,7 @@
 #include "bn_string_view.h"
 #include "bn_bgs_manager.h"
 #include "bn_config_bg_blocks.h"
+#include "../hw/include/bn_hw_dma.h"
 #include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_bg_blocks.h"
 
@@ -99,13 +100,21 @@ namespace
         return _ceil_half_words_to_blocks((width * height) / 2);
     }
 
-    void _hw_commit(const uint16_t* source_ptr, compression_type compression, int count, uint16_t* destination_ptr)
+    void _hw_commit(const uint16_t* source_ptr, compression_type compression, int count, bool use_dma,
+                    uint16_t* destination_ptr)
     {
         switch(compression)
         {
 
         case compression_type::NONE:
-            hw::memory::copy_words(source_ptr, count / 2, destination_ptr);
+            if(use_dma)
+            {
+                hw::dma::copy_words(source_ptr, count / 2, destination_ptr);
+            }
+            else
+            {
+                hw::memory::copy_words(source_ptr, count / 2, destination_ptr);
+            }
             break;
 
         case compression_type::LZ77:
@@ -414,10 +423,12 @@ namespace
 
     public:
         items_list items;
-        alignas(int) uint8_t to_commit_items_array[max_items];
+        alignas(int) uint8_t to_commit_uncompressed_items_array[max_items];
+        alignas(int) uint8_t to_commit_compressed_items_array[max_items];
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
-        int to_commit_items_count = 0;
+        int to_commit_uncompressed_items_count = 0;
+        int to_commit_compressed_items_count = 0;
         bool allow_tiles_offset = true;
         bool check_commit = false;
         bool delay_commit = false;
@@ -785,7 +796,7 @@ namespace
         return -1;
     }
 
-    void _commit_item(const item_type& item)
+    void _commit_item(const item_type& item, bool use_dma)
     {
         const uint16_t* source_data_ptr = item.data;
 
@@ -797,7 +808,7 @@ namespace
         if(item.is_tiles)
         {
             uint16_t* destination_vram_ptr = hw::bg_blocks::vram(item.start_block);
-            _hw_commit(source_data_ptr, item.compression(), item.width, destination_vram_ptr);
+            _hw_commit(source_data_ptr, item.compression(), item.width, use_dma, destination_vram_ptr);
             return;
         }
 
@@ -818,7 +829,7 @@ namespace
             {
                 if(compression != compression_type::NONE)
                 {
-                    _hw_commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                    _hw_commit(source_data_ptr, compression, half_words, use_dma, destination_vram_ptr);
                     source_data_ptr = destination_vram_ptr;
                 }
 
@@ -827,7 +838,7 @@ namespace
             }
             else
             {
-                _hw_commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                _hw_commit(source_data_ptr, compression, half_words, use_dma, destination_vram_ptr);
             }
         }
         else
@@ -846,7 +857,7 @@ namespace
 
             if(compression != compression_type::NONE && (tiles_offset || palette_offset))
             {
-                _hw_commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                _hw_commit(source_data_ptr, compression, half_words, use_dma, destination_vram_ptr);
                 source_data_ptr = destination_vram_ptr;
             }
 
@@ -857,7 +868,7 @@ namespace
             }
             else
             {
-                _hw_commit(source_data_ptr, compression, half_words, destination_vram_ptr);
+                _hw_commit(source_data_ptr, compression, half_words, use_dma, destination_vram_ptr);
             }
         }
     }
@@ -961,7 +972,7 @@ namespace
             }
             else
             {
-                _commit_item(*item);
+                _commit_item(*item, false);
             }
         }
 
@@ -2754,7 +2765,8 @@ void update()
         auto iterator = previous_iterator;
         ++iterator;
 
-        int commit_items_count = 0;
+        int commit_uncompressed_items_count = 0;
+        int commit_compressed_items_count = 0;
         data.to_remove_blocks_count = 0;
         data.check_commit = false;
 
@@ -2799,8 +2811,16 @@ void update()
             }
             else if(item.commit)
             {
-                data.to_commit_items_array[commit_items_count] = uint8_t(iterator.id());
-                ++commit_items_count;
+                if(item.compression() == compression_type::NONE)
+                {
+                    data.to_commit_uncompressed_items_array[commit_uncompressed_items_count] = uint8_t(iterator.id());
+                    ++commit_uncompressed_items_count;
+                }
+                else
+                {
+                    data.to_commit_compressed_items_array[commit_compressed_items_count] = uint8_t(iterator.id());
+                    ++commit_compressed_items_count;
+                }
             }
 
             before_previous_iterator = previous_iterator;
@@ -2808,7 +2828,8 @@ void update()
             ++iterator;
         }
 
-        data.to_commit_items_count = commit_items_count;
+        data.to_commit_uncompressed_items_count = commit_uncompressed_items_count;
+        data.to_commit_compressed_items_count = commit_compressed_items_count;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
@@ -2816,21 +2837,41 @@ void update()
     data.delay_commit = false;
 }
 
-void commit()
+void commit_uncompressed(bool use_dma)
 {
-    if(int commit_items_count = data.to_commit_items_count)
+    if(int commit_items_count = data.to_commit_uncompressed_items_count)
     {
-        BN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT");
+        BN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT UNCOMPRESSED");
 
         for(int index = 0; index < commit_items_count; ++index)
         {
-            int item_index = data.to_commit_items_array[index];
+            int item_index = data.to_commit_uncompressed_items_array[index];
             item_type& item = data.items.item(item_index);
             item.commit = false;
-            _commit_item(item);
+            _commit_item(item, use_dma);
         }
 
-        data.to_commit_items_count = 0;
+        data.to_commit_uncompressed_items_count = 0;
+
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+}
+
+void commit_compressed()
+{
+    if(int commit_items_count = data.to_commit_compressed_items_count)
+    {
+        BN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT COMPRESSED");
+
+        for(int index = 0; index < commit_items_count; ++index)
+        {
+            int item_index = data.to_commit_compressed_items_array[index];
+            item_type& item = data.items.item(item_index);
+            item.commit = false;
+            _commit_item(item, false);
+        }
+
+        data.to_commit_compressed_items_count = 0;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }

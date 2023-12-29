@@ -7,14 +7,30 @@
 #include "bn_math.h"
 #include "bn_random.h"
 #include "bn_profiler.h"
-#include "bn_algorithm.h"
 #include "bn_seed_random.h"
 
-#include "../../butano/hw/include/bn_hw_tonc.h"
+#include "../../butano/hw/include/bn_hw_dma.h"
+#include "../../butano/hw/include/bn_hw_memory.h"
 
 int main()
 {
     bn::core::init();
+
+    constexpr int copy_words = 2048;
+    constexpr int a[copy_words] = {};
+    int b[copy_words];
+
+    BN_PROFILER_START("copy_words_dma");
+    bn::hw::dma::copy_words(a, copy_words, b);
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("copy_words");
+    bn::hw::memory::copy_words(a, copy_words, b);
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("copy_words_fiq");
+    bn::hw::memory::copy_words_fiq(a, copy_words, b);
+    BN_PROFILER_STOP();
 
     bn::random random;
     bn::seed_random seed_random;

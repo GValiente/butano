@@ -88,6 +88,22 @@ namespace bn::hw::memory
         __aeabi_memcpy4(destination, source, size_t(words) * 4);
     }
 
+    inline void copy_words_fiq(const void* source, int words, void* destination)
+    {
+        constexpr int words_per_slot = 48 / 4;
+
+        if(int slots = words / words_per_slot)
+        {
+            int fiq_words = slots * words_per_slot;
+            __agbabi_fiq_memcpy4x4(destination, source, size_t(fiq_words) * 4);
+            source = static_cast<const uint32_t*>(source) + fiq_words;
+            destination = static_cast<uint32_t*>(destination) + fiq_words;
+            words -= fiq_words;
+        }
+
+        __aeabi_memcpy4(destination, source, size_t(words) * 4);
+    }
+
     inline void set_bytes(uint8_t value, int bytes, void* destination)
     {
         __aeabi_memset(destination, size_t(bytes), int(value));

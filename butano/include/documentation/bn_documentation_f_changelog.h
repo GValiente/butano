@@ -17,6 +17,7 @@
  * * bn::sprites::visible and bn::sprites::set_visible added.
  * * bn::sprites actions added.
  * * bn::date year range not longer limited to [0..99].
+ * * Memory copy speed tests added to the `profiler` example.
  *
  *
  * @section changelog_16_5_0 16.5.0

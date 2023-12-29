@@ -94,6 +94,7 @@ void invert(const span<const color>& source_colors_ref, span<color> destination_
  * @brief Applies a grayscale effect to all referenced colors.
  * @param intensity Grayscale effect intensity in the range [0..1].
  * @param colors_ref Colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  */
 void grayscale(fixed intensity, span<color> colors_ref);
 
@@ -101,8 +102,10 @@ void grayscale(fixed intensity, span<color> colors_ref);
  * @brief Applies a grayscale effect to all colors referenced by source_colors_ref,
  * storing the result in destination_colors_ref.
  * @param source_colors_ref Source colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  * @param intensity Grayscale effect intensity in the range [0..1].
  * @param destination_colors_ref Destination colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  */
 void grayscale(const span<const color>& source_colors_ref, fixed intensity, span<color> destination_colors_ref);
 
@@ -126,9 +129,12 @@ void hue_shift(const span<const color>& source_colors_ref, fixed intensity, span
  * @brief Blends two color arrays referenced by first_source_colors_ref and second_source_colors_ref,
  * storing the result in destination_colors_ref.
  * @param first_source_colors_ref First source colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  * @param second_source_colors_ref Second source colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  * @param weight Blend weight in the range [0..1].
  * @param destination_colors_ref Destination colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  */
 void blend(const span<const color>& first_source_colors_ref, const span<const color>& second_source_colors_ref,
            fixed weight, span<color> destination_colors_ref);
@@ -138,6 +144,7 @@ void blend(const span<const color>& first_source_colors_ref, const span<const co
  * @param fade_color Fade effect color.
  * @param intensity Fade effect intensity in the range [0..1].
  * @param colors_ref Colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  */
 void fade(color fade_color, fixed intensity, span<color> colors_ref);
 
@@ -145,9 +152,11 @@ void fade(color fade_color, fixed intensity, span<color> colors_ref);
  * @brief Applies a fade effect to all colors referenced by source_colors_ref,
  * storing the result in destination_colors_ref.
  * @param source_colors_ref Source colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  * @param fade_color Fade effect color.
  * @param intensity Fade effect intensity in the range [0..1].
  * @param destination_colors_ref Destination colors reference.
+ * It must be 4-byte aligned and have an even number of colors.
  */
 void fade(const span<const color>& source_colors_ref, color fade_color, fixed intensity,
           span<color> destination_colors_ref);

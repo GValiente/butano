@@ -17,6 +17,8 @@
  * * bn::sprites::visible and bn::sprites::set_visible added.
  * * bn::sprites actions added.
  * * bn::date year range not longer limited to [0..99].
+ * * bn::color_effect::grayscale, bn::color_effect::blend and bn::color_effect::fade
+ *   require 4-byte aligned color references with an even number of colors.
  * * Uncompressed backgrounds commit CPU usage reduced.
  * * Memory copy speed tests added to the `profiler` example.
  *

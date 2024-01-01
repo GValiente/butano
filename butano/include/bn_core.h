@@ -15,11 +15,13 @@
 
 #include "bn_span.h"
 #include "bn_fixed.h"
+#include "bn_optional.h"
 #include "bn_string_view.h"
 #include "bn_vblank_callback_type.h"
 
 namespace bn
 {
+    class color;
     class system_font;
 }
 
@@ -42,11 +44,26 @@ namespace bn::core
 
     /**
      * @brief This function must be called before using Butano, and it must be called only once.
+     * @param transparent_color Initial transparent color of the backgrounds.
+     */
+    void init(const optional<color>& transparent_color);
+
+    /**
+     * @brief This function must be called before using Butano, and it must be called only once.
      * @param keypad_commands Keypad commands recorded with the keypad logger.
      *
      * Instead of reading the keypad of the GBA, these keypad commands are replayed.
      */
     void init(const string_view& keypad_commands);
+
+    /**
+     * @brief This function must be called before using Butano, and it must be called only once.
+     * @param transparent_color Initial transparent color of the backgrounds.
+     * @param keypad_commands Keypad commands recorded with the keypad logger.
+     *
+     * Instead of reading the keypad of the GBA, these keypad commands are replayed.
+     */
+    void init(const optional<color>& transparent_color, const string_view& keypad_commands);
 
     /**
      * @brief Returns the number of frames to skip.

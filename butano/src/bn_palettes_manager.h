@@ -6,16 +6,17 @@
 #ifndef BN_PALETTES_MANAGER_H
 #define BN_PALETTES_MANAGER_H
 
-#include "bn_common.h"
+#include "bn_optional_fwd.h"
 
 namespace bn
 {
 
+class color;
 class palettes_bank;
 
 namespace palettes_manager
 {
-    void init();
+    void init(const optional<color>& transparent_color);
 
     [[nodiscard]] palettes_bank& sprite_palettes_bank();
 

@@ -70,7 +70,16 @@
             </dt>
             <dd>This function must be called before using Butano, and it must be called only once.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a244f1bdfb1bc19f614fcdd18d27d3d9c" class="m-doc">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; transparent_color)</span>
+            </dt>
+            <dd>This function must be called before using Butano, and it must be called only once.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a5af341bebc6d65fcf821c8109c3b474c" class="m-doc">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; keypad_commands)</span>
+            </dt>
+            <dd>This function must be called before using Butano, and it must be called only once.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abaf51e6d112cc8df2c3e938044344012" class="m-doc">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; transparent_color,
+              const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; keypad_commands)</span>
             </dt>
             <dd>This function must be called before using Butano, and it must be called only once.</dd>
             <dt>
@@ -149,6 +158,23 @@
         </section>
         <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a244f1bdfb1bc19f614fcdd18d27d3d9c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a244f1bdfb1bc19f614fcdd18d27d3d9c" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; transparent_color)</span></span>
+            </h3>
+            <p>This function must be called before using Butano, and it must be called only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">transparent_color</td>
+                  <td>Initial transparent color of the backgrounds.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="a5af341bebc6d65fcf821c8109c3b474c"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5af341bebc6d65fcf821c8109c3b474c" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; keypad_commands)</span></span>
@@ -161,6 +187,29 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">keypad_commands</td>
+                  <td>Keypad commands recorded with the keypad logger.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Instead of reading the keypad of the GBA, these keypad commands are replayed.</p>
+          </div></section>
+          <section class="m-doc-details" id="abaf51e6d112cc8df2c3e938044344012"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abaf51e6d112cc8df2c3e938044344012" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; transparent_color,
+              const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; keypad_commands)</span></span>
+            </h3>
+            <p>This function must be called before using Butano, and it must be called only once.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">transparent_color</td>
+                  <td>Initial transparent color of the backgrounds.</td>
+                </tr>
+                <tr>
+                  <td>keypad_commands</td>
                   <td>Keypad commands recorded with the keypad logger.</td>
                 </tr>
               </tbody>

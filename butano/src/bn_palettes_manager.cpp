@@ -29,9 +29,11 @@ namespace
     BN_DATA_EWRAM_BSS static_data data;
 }
 
-void init()
+void init(const optional<color>& transparent_color)
 {
     new(&data) static_data();
+
+    bg_palettes_bank().set_transparent_color(transparent_color);
 }
 
 palettes_bank& sprite_palettes_bank()

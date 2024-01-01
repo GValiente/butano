@@ -6,6 +6,7 @@
 #include "bn_core.h"
 #include "bn_core_lock.h"
 
+#include "bn_color.h"
 #include "bn_timer.h"
 #include "bn_keypad.h"
 #include "bn_timers.h"
@@ -307,10 +308,20 @@ namespace
 
 void init()
 {
-    init(string_view());
+    init(nullopt, string_view());
+}
+
+void init(const optional<color>& transparent_color)
+{
+    init(transparent_color, string_view());
 }
 
 void init(const string_view& keypad_commands)
+{
+    init(nullopt, keypad_commands);
+}
+
+void init(const optional<color>& transparent_color, const string_view& keypad_commands)
 {
     new(&data) static_data();
 
@@ -345,7 +356,7 @@ void init(const string_view& keypad_commands)
     // Init high level systems:
     memory_manager::init();
     cameras_manager::init();
-    palettes_manager::init();
+    palettes_manager::init(transparent_color);
     sprite_tiles_manager::init();
     sprites_manager::init();
     bg_blocks_manager::init();

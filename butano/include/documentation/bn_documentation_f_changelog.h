@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_0_0 17.0.0 (next release)
+ *
+ * bn::fixed_point_t, bn::fixed_size_t, bn::fixed_rect_t and bn::top_left_fixed_rect_t added.
+ *
+ *
  * @section changelog_16_6_0 16.6.0
  *
  * * bn::sprites::visible and bn::sprites::set_visible added.

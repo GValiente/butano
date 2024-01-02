@@ -8,16 +8,12 @@
 
 #include "bn_array.h"
 #include "bn_forward_list.h"
+#include "bn_fixed_rect_fwd.h"
 #include "bn_sprite_actions.h"
 #include "bn_sprite_tiles_ptr.h"
 #include "bn_sprite_palette_actions.h"
 #include "bf_constants.h"
 #include "bf_game_enemy_bullet_type.h"
-
-namespace bn
-{
-    class fixed_rect;
-}
 
 namespace bf::game
 {

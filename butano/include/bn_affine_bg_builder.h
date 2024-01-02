@@ -14,7 +14,6 @@
  */
 
 #include "bn_camera_ptr.h"
-#include "bn_fixed_point.h"
 #include "bn_affine_bg_item.h"
 #include "bn_affine_bg_map_ptr.h"
 #include "bn_affine_mat_attributes.h"

@@ -6,7 +6,6 @@
 #include "bn_window.h"
 
 #include "bn_bgs_manager.h"
-#include "bn_fixed_point.h"
 #include "bn_affine_bg_ptr.h"
 #include "bn_regular_bg_ptr.h"
 #include "bn_display_manager.h"

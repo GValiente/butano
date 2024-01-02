@@ -6,11 +6,6 @@
 #include "bn_sprite_tiles_ptr.h"
 #include "bn_sprite_palette_ptr.h"
 
-namespace bn
-{
-    class fixed_point;
-}
-
 class polygon;
 
 class polygon_sprite

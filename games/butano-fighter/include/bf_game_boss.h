@@ -8,14 +8,14 @@
 
 #include "bn_color.h"
 #include "bn_vector.h"
+#include "bn_fixed_rect_fwd.h"
 #include "bn_unique_ptr_fwd.h"
+#include "bn_fixed_point_fwd.h"
 #include "bn_sprite_palette_ptr.h"
 
 namespace bn
 {
     class camera_ptr;
-    class fixed_rect;
-    class fixed_point;
 }
 
 namespace bf::game

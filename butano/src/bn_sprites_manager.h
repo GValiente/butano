@@ -6,8 +6,9 @@
 #ifndef BN_SPRITES_MANAGER_H
 #define BN_SPRITES_MANAGER_H
 
-#include "bn_fixed.h"
-#include "bn_optional.h"
+#include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
+#include "bn_fixed_point_fwd.h"
 #include "bn_intrusive_list_fwd.h"
 
 namespace bn
@@ -16,7 +17,6 @@ namespace bn
 class size;
 class point;
 class camera_ptr;
-class fixed_point;
 class sprite_builder;
 class sprite_tiles_ptr;
 class sprite_shape_size;

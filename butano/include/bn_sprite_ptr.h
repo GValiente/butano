@@ -13,15 +13,14 @@
  * @ingroup sprite
  */
 
-#include "bn_fixed.h"
 #include "bn_optional.h"
+#include "bn_fixed_point.h"
 
 namespace bn
 {
 
 class size;
 class camera_ptr;
-class fixed_point;
 class sprite_item;
 class sprite_builder;
 class sprite_tiles_ptr;

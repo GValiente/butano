@@ -5,10 +5,8 @@
 
 #include "bn_rect_window.h"
 
-#include "bn_fixed_rect.h"
 #include "bn_camera_ptr.h"
 #include "bn_display_manager.h"
-#include "bn_top_left_fixed_rect.h"
 
 namespace bn
 {

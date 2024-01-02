@@ -8,7 +8,7 @@
 
 /**
  * @file
- * bn::fixed_rect header file.
+ * bn::fixed_rect_t and bn::fixed_rect implementation header file.
  *
  * @ingroup math
  */
@@ -16,30 +16,27 @@
 #include "bn_rect.h"
 #include "bn_fixed_size.h"
 #include "bn_fixed_point.h"
+#include "bn_fixed_rect_fwd.h"
 
 namespace bn
 {
 
-/**
- * @brief Defines a two-dimensional rectangle using fixed point precision and a center point as position.
- *
- * @ingroup math
- */
-class fixed_rect
+template<int Precision>
+class fixed_rect_t
 {
 
 public:
     /**
      * @brief Default constructor.
      */
-    constexpr fixed_rect() = default;
+    constexpr fixed_rect_t() = default;
 
     /**
      * @brief Constructor.
      * @param position Position of the center point of the rectangle.
      * @param dimensions Size of the rectangle.
      */
-    constexpr fixed_rect(const fixed_point& position, const fixed_size& dimensions) :
+    constexpr fixed_rect_t(const fixed_point_t<Precision>& position, const fixed_size_t<Precision>& dimensions) :
         _position(position),
         _dimensions(dimensions)
     {
@@ -52,7 +49,8 @@ public:
      * @param width Valid width of the rectangle (>= 0).
      * @param height Valid height of the rectangle (>= 0).
      */
-    constexpr fixed_rect(fixed x, fixed y, fixed width, fixed height) :
+    constexpr fixed_rect_t(
+            fixed_t<Precision> x, fixed_t<Precision> y, fixed_t<Precision> width, fixed_t<Precision> height) :
         _position(x, y),
         _dimensions(width, height)
     {
@@ -62,7 +60,7 @@ public:
      * @brief Constructor.
      * @param rect Integer rectangle.
      */
-    constexpr fixed_rect(const rect& rect) :
+    constexpr fixed_rect_t(const rect& rect) :
         _position(rect.position()),
         _dimensions(rect.dimensions())
     {
@@ -71,7 +69,7 @@ public:
     /**
      * @brief Returns the position of the center point of the rectangle.
      */
-    [[nodiscard]] constexpr const fixed_point& position() const
+    [[nodiscard]] constexpr const fixed_point_t<Precision>& position() const
     {
         return _position;
     }
@@ -79,7 +77,7 @@ public:
     /**
      * @brief Sets the position of the center point of the rectangle.
      */
-    constexpr void set_position(const fixed_point& position)
+    constexpr void set_position(const fixed_point_t<Precision>& position)
     {
         _position = position;
     }
@@ -89,15 +87,15 @@ public:
      * @param x Horizontal position of the center point of the rectangle.
      * @param y Vertical position of the center point of the rectangle.
      */
-    constexpr void set_position(fixed x, fixed y)
+    constexpr void set_position(fixed_t<Precision> x, fixed_t<Precision> y)
     {
-        _position = fixed_point(x, y);
+        _position = fixed_point_t<Precision>(x, y);
     }
 
     /**
      * @brief Returns the size of the rectangle.
      */
-    [[nodiscard]] constexpr const fixed_size& dimensions() const
+    [[nodiscard]] constexpr const fixed_size_t<Precision>& dimensions() const
     {
         return _dimensions;
     }
@@ -105,7 +103,7 @@ public:
     /**
      * @brief Sets the size of the rectangle.
      */
-    constexpr void set_dimensions(const fixed_size& dimensions)
+    constexpr void set_dimensions(const fixed_size_t<Precision>& dimensions)
     {
         _dimensions = dimensions;
     }
@@ -115,15 +113,15 @@ public:
      * @param width Valid width of the rectangle (>= 0).
      * @param height Valid height of the rectangle (>= 0).
      */
-    constexpr void set_dimensions(fixed width, fixed height)
+    constexpr void set_dimensions(fixed_t<Precision> width, fixed_t<Precision> height)
     {
-        _dimensions = fixed_size(width, height);
+        _dimensions = fixed_size_t<Precision>(width, height);
     }
 
     /**
      * @brief Returns the horizontal position of the center point of the rectangle.
      */
-    [[nodiscard]] constexpr fixed x() const
+    [[nodiscard]] constexpr fixed_t<Precision> x() const
     {
         return _position.x();
     }
@@ -131,7 +129,7 @@ public:
     /**
      * @brief Sets the horizontal position of the center point of the rectangle.
      */
-    constexpr void set_x(fixed x)
+    constexpr void set_x(fixed_t<Precision> x)
     {
         _position.set_x(x);
     }
@@ -139,7 +137,7 @@ public:
     /**
      * @brief Returns the vertical position of the center point of the rectangle.
      */
-    [[nodiscard]] constexpr fixed y() const
+    [[nodiscard]] constexpr fixed_t<Precision> y() const
     {
         return _position.y();
     }
@@ -147,7 +145,7 @@ public:
     /**
      * @brief Sets the vertical position of the center point of the rectangle.
      */
-    constexpr void set_y(fixed y)
+    constexpr void set_y(fixed_t<Precision> y)
     {
         _position.set_y(y);
     }
@@ -155,7 +153,7 @@ public:
     /**
      * @brief Returns the width of the rectangle.
      */
-    [[nodiscard]] constexpr fixed width() const
+    [[nodiscard]] constexpr fixed_t<Precision> width() const
     {
         return _dimensions.width();
     }
@@ -164,7 +162,7 @@ public:
      * @brief Sets the width of the rectangle.
      * @param width Valid width (>= 0).
      */
-    constexpr void set_width(fixed width)
+    constexpr void set_width(fixed_t<Precision> width)
     {
         _dimensions.set_width(width);
     }
@@ -172,7 +170,7 @@ public:
     /**
      * @brief Returns the height of the rectangle.
      */
-    [[nodiscard]] constexpr fixed height() const
+    [[nodiscard]] constexpr fixed_t<Precision> height() const
     {
         return _dimensions.height();
     }
@@ -181,7 +179,7 @@ public:
      * @brief Sets the height of the rectangle.
      * @param height Valid height (>= 0).
      */
-    constexpr void set_height(fixed height)
+    constexpr void set_height(fixed_t<Precision> height)
     {
         return _dimensions.set_height(height);
     }
@@ -189,7 +187,7 @@ public:
     /**
      * @brief Returns the position of the top boundary of the rectangle.
      */
-    [[nodiscard]] constexpr fixed top() const
+    [[nodiscard]] constexpr fixed_t<Precision> top() const
     {
         return y() - (height() / 2);
     }
@@ -197,7 +195,7 @@ public:
     /**
      * @brief Returns the position of the left boundary of the rectangle.
      */
-    [[nodiscard]] constexpr fixed left() const
+    [[nodiscard]] constexpr fixed_t<Precision> left() const
     {
         return x() - (width() / 2);
     }
@@ -205,7 +203,7 @@ public:
     /**
      * @brief Returns the position of the bottom boundary of the rectangle.
      */
-    [[nodiscard]] constexpr fixed bottom() const
+    [[nodiscard]] constexpr fixed_t<Precision> bottom() const
     {
         return y() + (height() / 2);
     }
@@ -213,7 +211,7 @@ public:
     /**
      * @brief Returns the position of the right boundary of the rectangle.
      */
-    [[nodiscard]] constexpr fixed right() const
+    [[nodiscard]] constexpr fixed_t<Precision> right() const
     {
         return x() + (width() / 2);
     }
@@ -221,39 +219,39 @@ public:
     /**
      * @brief Returns the position of the top-left corner of the rectangle.
      */
-    [[nodiscard]] constexpr fixed_point top_left() const
+    [[nodiscard]] constexpr fixed_point_t<Precision> top_left() const
     {
-        return fixed_point(left(), top());
+        return fixed_point_t<Precision>(left(), top());
     }
 
     /**
      * @brief Returns the position of the top-right corner of the rectangle.
      */
-    [[nodiscard]] constexpr fixed_point top_right() const
+    [[nodiscard]] constexpr fixed_point_t<Precision> top_right() const
     {
-        return fixed_point(right(), top());
+        return fixed_point_t<Precision>(right(), top());
     }
 
     /**
      * @brief Returns the position of the bottom-left corner of the rectangle.
      */
-    [[nodiscard]] constexpr fixed_point bottom_left() const
+    [[nodiscard]] constexpr fixed_point_t<Precision> bottom_left() const
     {
-        return fixed_point(left(), bottom());
+        return fixed_point_t<Precision>(left(), bottom());
     }
 
     /**
      * @brief Returns the position of the bottom-right corner of the rectangle.
      */
-    [[nodiscard]] constexpr fixed_point bottom_right() const
+    [[nodiscard]] constexpr fixed_point_t<Precision> bottom_right() const
     {
-        return fixed_point(right(), bottom());
+        return fixed_point_t<Precision>(right(), bottom());
     }
 
     /**
      * @brief Returns the horizontal position of the center point of the rectangle.
      */
-    [[nodiscard]] constexpr fixed center_x() const
+    [[nodiscard]] constexpr fixed_t<Precision> center_x() const
     {
         return x();
     }
@@ -261,7 +259,7 @@ public:
     /**
      * @brief Returns the vertical position of the center point of the rectangle.
      */
-    [[nodiscard]] constexpr fixed center_y() const
+    [[nodiscard]] constexpr fixed_t<Precision> center_y() const
     {
         return y();
     }
@@ -269,9 +267,9 @@ public:
     /**
      * @brief Returns the position of the center point of the rectangle.
      */
-    [[nodiscard]] constexpr fixed_point center() const
+    [[nodiscard]] constexpr fixed_point_t<Precision> center() const
     {
-        return fixed_point(center_x(), center_y());
+        return fixed_point_t<Precision>(center_x(), center_y());
     }
 
     /**
@@ -279,13 +277,13 @@ public:
      *
      * If the point is in the edge of the rectangle, it returns `false`.
      */
-    [[nodiscard]] constexpr bool contains(const fixed_point& point) const
+    [[nodiscard]] constexpr bool contains(const fixed_point_t<Precision>& point) const
     {
-        fixed this_left = left();
+        fixed_t<Precision> this_left = left();
 
         if(this_left < point.x() && this_left + width() > point.x())
         {
-            fixed this_top = top();
+            fixed_t<Precision> this_top = top();
             return this_top < point.y() && this_top + height() > point.y();
         }
 
@@ -297,15 +295,15 @@ public:
      *
      * Two rectangles intersect if there is at least one point that is within both rectangles.
      */
-    [[nodiscard]] constexpr bool intersects(const fixed_rect& other) const
+    [[nodiscard]] constexpr bool intersects(const fixed_rect_t& other) const
     {
-        fixed this_left = left();
-        fixed other_left = other.left();
+        fixed_t<Precision> this_left = left();
+        fixed_t<Precision> other_left = other.left();
 
         if(this_left < other_left + other.width() && this_left + width() > other_left)
         {
-            fixed this_top = top();
-            fixed other_top = other.top();
+            fixed_t<Precision> this_top = top();
+            fixed_t<Precision> other_top = other.top();
             return this_top < other_top + other.height() && height() + this_top > other_top;
         }
 
@@ -315,103 +313,103 @@ public:
     /**
      * @brief Returns the multiplication of this rectangle by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_rect multiplication(int value) const
+    [[nodiscard]] constexpr fixed_rect_t multiplication(int value) const
     {
-        return fixed_rect(_position, _dimensions.multiplication(value));
+        return fixed_rect_t(_position, _dimensions.multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this rectangle by the given fixed point value,
      * using half precision to try to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_rect multiplication(fixed value) const
+    [[nodiscard]] constexpr fixed_rect_t multiplication(fixed_t<Precision> value) const
     {
-        return fixed_rect(_position, _dimensions.multiplication(value));
+        return fixed_rect_t(_position, _dimensions.multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this rectangle by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_rect safe_multiplication(int value) const
+    [[nodiscard]] constexpr fixed_rect_t safe_multiplication(int value) const
     {
-        return fixed_rect(_position, _dimensions.safe_multiplication(value));
+        return fixed_rect_t(_position, _dimensions.safe_multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this rectangle by the given fixed point value,
      * casting them to int64_t to try to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_rect safe_multiplication(fixed value) const
+    [[nodiscard]] constexpr fixed_rect_t safe_multiplication(fixed_t<Precision> value) const
     {
-        return fixed_rect(_position, _dimensions.safe_multiplication(value));
+        return fixed_rect_t(_position, _dimensions.safe_multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this rectangle by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_rect unsafe_multiplication(int value) const
+    [[nodiscard]] constexpr fixed_rect_t unsafe_multiplication(int value) const
     {
-        return fixed_rect(_position, _dimensions.unsafe_multiplication(value));
+        return fixed_rect_t(_position, _dimensions.unsafe_multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this rectangle by the given fixed point value
      * without trying to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_rect unsafe_multiplication(fixed value) const
+    [[nodiscard]] constexpr fixed_rect_t unsafe_multiplication(fixed_t<Precision> value) const
     {
-        return fixed_rect(_position, _dimensions.unsafe_multiplication(value));
+        return fixed_rect_t(_position, _dimensions.unsafe_multiplication(value));
     }
 
     /**
      * @brief Returns the division of this rectangle by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_rect division(int value) const
+    [[nodiscard]] constexpr fixed_rect_t division(int value) const
     {
-        return fixed_rect(_position, _dimensions.division(value));
+        return fixed_rect_t(_position, _dimensions.division(value));
     }
 
     /**
      * @brief Returns the division of this rectangle by the given fixed point value,
      * using half precision to try to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_rect division(fixed value) const
+    [[nodiscard]] constexpr fixed_rect_t division(fixed_t<Precision> value) const
     {
-        return fixed_rect(_position, _dimensions.division(value));
+        return fixed_rect_t(_position, _dimensions.division(value));
     }
 
     /**
      * @brief Returns the division of this rectangle by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_rect safe_division(int value) const
+    [[nodiscard]] constexpr fixed_rect_t safe_division(int value) const
     {
-        return fixed_rect(_position, _dimensions.safe_division(value));
+        return fixed_rect_t(_position, _dimensions.safe_division(value));
     }
 
     /**
      * @brief Returns the division of this rectangle by the given fixed point value,
      * casting them to int64_t to try to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_rect safe_division(fixed value) const
+    [[nodiscard]] constexpr fixed_rect_t safe_division(fixed_t<Precision> value) const
     {
-        return fixed_rect(_position, _dimensions.safe_division(value));
+        return fixed_rect_t(_position, _dimensions.safe_division(value));
     }
 
     /**
      * @brief Returns the division of this rectangle by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_rect unsafe_division(int value) const
+    [[nodiscard]] constexpr fixed_rect_t unsafe_division(int value) const
     {
-        return fixed_rect(_position, _dimensions.unsafe_division(value));
+        return fixed_rect_t(_position, _dimensions.unsafe_division(value));
     }
 
     /**
      * @brief Returns the division of this rectangle by the given fixed point value
      * without trying to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_rect unsafe_division(fixed value) const
+    [[nodiscard]] constexpr fixed_rect_t unsafe_division(fixed_t<Precision> value) const
     {
-        return fixed_rect(_position, _dimensions.unsafe_division(value));
+        return fixed_rect_t(_position, _dimensions.unsafe_division(value));
     }
 
     /**
@@ -419,7 +417,7 @@ public:
      * @param value Valid integer multiplication factor (>= 0).
      * @return Reference to this.
      */
-    constexpr fixed_rect& operator*=(int value)
+    constexpr fixed_rect_t& operator*=(int value)
     {
         _dimensions *= value;
         return *this;
@@ -430,7 +428,7 @@ public:
      * @param value Valid fixed point multiplication factor (>= 0).
      * @return Reference to this.
      */
-    constexpr fixed_rect& operator*=(fixed value)
+    constexpr fixed_rect_t& operator*=(fixed_t<Precision> value)
     {
         _dimensions *= value;
         return *this;
@@ -441,7 +439,7 @@ public:
      * @param value Valid integer divisor (> 0).
      * @return Reference to this.
      */
-    constexpr fixed_rect& operator/=(int value)
+    constexpr fixed_rect_t& operator/=(int value)
     {
         _dimensions /= value;
         return *this;
@@ -452,7 +450,7 @@ public:
      * @param value Valid fixed point divisor (> 0).
      * @return Reference to this.
      */
-    constexpr fixed_rect& operator/=(fixed value)
+    constexpr fixed_rect_t& operator/=(fixed_t<Precision> value)
     {
         _dimensions /= value;
         return *this;
@@ -461,59 +459,59 @@ public:
     /**
      * @brief Returns a multiplied by b.
      */
-    [[nodiscard]] constexpr friend fixed_rect operator*(const fixed_rect& a, int b)
+    [[nodiscard]] constexpr friend fixed_rect_t operator*(const fixed_rect_t& a, int b)
     {
-        return fixed_rect(a._position, a._dimensions * b);
+        return fixed_rect_t(a._position, a._dimensions * b);
     }
 
     /**
      * @brief Returns a multiplied by b.
      */
-    [[nodiscard]] constexpr friend fixed_rect operator*(const fixed_rect& a, fixed b)
+    [[nodiscard]] constexpr friend fixed_rect_t operator*(const fixed_rect_t& a, fixed_t<Precision> b)
     {
-        return fixed_rect(a._position, a._dimensions * b);
+        return fixed_rect_t(a._position, a._dimensions * b);
     }
 
     /**
      * @brief Returns a divided by b.
      */
-    [[nodiscard]] constexpr friend fixed_rect operator/(const fixed_rect& a, int b)
+    [[nodiscard]] constexpr friend fixed_rect_t operator/(const fixed_rect_t& a, int b)
     {
-        return fixed_rect(a._position, a._dimensions / b);
+        return fixed_rect_t(a._position, a._dimensions / b);
     }
 
     /**
      * @brief Returns a divided by b.
      */
-    [[nodiscard]] constexpr friend fixed_rect operator/(const fixed_rect& a, fixed b)
+    [[nodiscard]] constexpr friend fixed_rect_t operator/(const fixed_rect_t& a, fixed_t<Precision> b)
     {
-        return fixed_rect(a._position, a._dimensions / b);
+        return fixed_rect_t(a._position, a._dimensions / b);
     }
 
     /**
      * @brief Default equal operator.
      */
-    [[nodiscard]] constexpr friend bool operator==(const fixed_rect& a, const fixed_rect& b) = default;
+    [[nodiscard]] constexpr friend bool operator==(const fixed_rect_t& a, const fixed_rect_t& b) = default;
 
 private:
-    fixed_point _position;
-    fixed_size _dimensions;
+    fixed_point_t<Precision> _position;
+    fixed_size_t<Precision> _dimensions;
 };
 
 
 /**
- * @brief Hash support for fixed_rect.
+ * @brief Hash support for fixed_rect_t.
  *
  * @ingroup math
  * @ingroup functional
  */
-template<>
-struct hash<fixed_rect>
+template<int Precision>
+struct hash<fixed_rect_t<Precision>>
 {
     /**
-     * @brief Returns the hash of the given fixed_rect.
+     * @brief Returns the hash of the given fixed_rect_t.
      */
-    [[nodiscard]] constexpr unsigned operator()(const fixed_rect& value) const
+    [[nodiscard]] constexpr unsigned operator()(const fixed_rect_t<Precision>& value) const
     {
         unsigned result = make_hash(value.position());
         hash_combine(value.dimensions(), result);

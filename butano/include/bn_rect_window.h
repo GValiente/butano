@@ -13,17 +13,15 @@
  * @ingroup rect_window
  */
 
-#include "bn_fixed.h"
 #include "bn_optional.h"
+#include "bn_fixed_rect.h"
 #include "bn_inside_window.h"
+#include "bn_top_left_fixed_rect.h"
 
 namespace bn
 {
 
-class fixed_rect;
 class camera_ptr;
-class fixed_point;
-class top_left_fixed_rect;
 
 /**
  * @brief Rectangular window.

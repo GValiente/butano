@@ -14,7 +14,7 @@
  * @ingroup tool
  */
 
-#include "bn_fixed.h"
+#include "bn_fixed_point.h"
 #include "bn_sprite_shape_size.h"
 #include "bn_sprite_tiles_item.h"
 #include "bn_sprite_palette_item.h"
@@ -23,7 +23,6 @@ namespace bn
 {
 
 class sprite_ptr;
-class fixed_point;
 
 /**
  * @brief Contains the required information to generate sprites.

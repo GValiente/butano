@@ -15,7 +15,6 @@
 
 #include "bn_camera_ptr.h"
 #include "bn_sprite_item.h"
-#include "bn_fixed_point.h"
 #include "bn_sprite_tiles_ptr.h"
 #include "bn_sprite_shape_size.h"
 #include "bn_sprite_palette_ptr.h"

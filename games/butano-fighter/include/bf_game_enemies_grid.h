@@ -7,14 +7,10 @@
 #define BF_GAME_ENEMIES_GRID_H
 
 #include "bn_pool.h"
+#include "bn_fixed_rect_fwd.h"
+#include "bn_fixed_point_fwd.h"
 #include "bn_intrusive_forward_list.h"
 #include "bf_constants.h"
-
-namespace bn
-{
-    class fixed_rect;
-    class fixed_point;
-}
 
 namespace bf::game
 {

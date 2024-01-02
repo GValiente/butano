@@ -9,7 +9,6 @@
 #include "bn_display.h"
 #include "bn_sort_key.h"
 #include "bn_camera_ptr.h"
-#include "bn_fixed_point.h"
 #include "bn_intrusive_list.h"
 #include "bn_display_manager.h"
 #include "bn_sprites_manager.h"

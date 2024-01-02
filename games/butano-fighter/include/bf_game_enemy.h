@@ -6,15 +6,11 @@
 #ifndef BF_GAME_ENEMY_H
 #define BF_GAME_ENEMY_H
 
+#include "bn_fixed_rect_fwd.h"
 #include "bn_sprite_actions.h"
 #include "bn_sprite_palette_ptr.h"
 #include "bn_sprite_animate_actions.h"
 #include "bf_game_explosion.h"
-
-namespace bn
-{
-    class fixed_rect;
-}
 
 namespace bf::game
 {

@@ -9,12 +9,8 @@
 #include "bn_sprite_ptr.h"
 #include "bn_fixed_size.h"
 #include "bn_fixed_point.h"
+#include "bn_fixed_rect_fwd.h"
 #include "bn_sprite_palette_ptr.h"
-
-namespace bn
-{
-    class fixed_rect;
-}
 
 namespace bf::game
 {

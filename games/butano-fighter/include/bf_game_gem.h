@@ -9,11 +9,7 @@
 #include "bn_span.h"
 #include "bn_sprite_ptr.h"
 #include "bn_fixed_point.h"
-
-namespace bn
-{
-    class fixed_rect;
-}
+#include "bn_fixed_rect_fwd.h"
 
 namespace bf::game
 {

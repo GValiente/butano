@@ -6,13 +6,14 @@
 #ifndef BN_DISPLAY_MANAGER_H
 #define BN_DISPLAY_MANAGER_H
 
-#include "bn_fixed.h"
-#include "bn_optional.h"
+#include "bn_utility.h"
+#include "bn_fixed_fwd.h"
+#include "bn_optional_fwd.h"
+#include "bn_fixed_point_fwd.h"
 
 namespace bn
 {
     class camera_ptr;
-    class fixed_point;
     class mosaic_attributes;
     class blending_fade_alpha;
     class blending_transparency_attributes;

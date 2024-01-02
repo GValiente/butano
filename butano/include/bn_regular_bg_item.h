@@ -14,7 +14,7 @@
  * @ingroup tool
  */
 
-#include "bn_fixed.h"
+#include "bn_fixed_point.h"
 #include "bn_bg_palette_item.h"
 #include "bn_regular_bg_map_item.h"
 #include "bn_regular_bg_tiles_item.h"
@@ -22,7 +22,6 @@
 namespace bn
 {
 
-class fixed_point;
 class regular_bg_ptr;
 
 /**

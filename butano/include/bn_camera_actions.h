@@ -15,7 +15,6 @@
  */
 
 #include "bn_camera_ptr.h"
-#include "bn_fixed_point.h"
 #include "bn_value_template_actions.h"
 
 namespace bn

@@ -14,7 +14,6 @@
  * @ingroup action
  */
 
-#include "bn_fixed_point.h"
 #include "bn_rect_window.h"
 #include "bn_value_template_actions.h"
 

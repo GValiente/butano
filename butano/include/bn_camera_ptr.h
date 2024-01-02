@@ -13,13 +13,11 @@
  * @ingroup camera
  */
 
-#include "bn_fixed.h"
 #include "bn_optional.h"
+#include "bn_fixed_point.h"
 
 namespace bn
 {
-
-class fixed_point;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of a camera.

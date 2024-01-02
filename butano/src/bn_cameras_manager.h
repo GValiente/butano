@@ -6,12 +6,8 @@
 #ifndef BN_CAMERAS_MANAGER_H
 #define BN_CAMERAS_MANAGER_H
 
-#include "bn_fixed.h"
-
-namespace bn
-{
-    class fixed_point;
-}
+#include "bn_fixed_fwd.h"
+#include "bn_fixed_point_fwd.h"
 
 namespace bn::cameras_manager
 {

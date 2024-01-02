@@ -469,9 +469,6 @@ private:
 };
 
 
-using fixed = fixed_t<12>; //!< Default precision fixed_t alias.
-
-
 /**
  * @brief Hash support for fixed_t.
  *

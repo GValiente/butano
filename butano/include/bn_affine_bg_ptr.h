@@ -13,8 +13,8 @@
  * @ingroup affine_bg
  */
 
-#include "bn_fixed.h"
 #include "bn_optional.h"
+#include "bn_fixed_point.h"
 
 namespace bn
 {
@@ -22,7 +22,6 @@ namespace bn
 class size;
 class window;
 class camera_ptr;
-class fixed_point;
 class bg_palette_ptr;
 class affine_bg_item;
 class bg_palette_item;

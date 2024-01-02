@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::top_left_fixed_rect_t class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__top__left__fixed__rect_8h.html">&lt;bn_top_left_fixed_rect.h&gt;</a></div>
+          <div class="m-doc-template">template&lt;int Precision&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>top_left_fixed_rect_t <span class="m-thin">class</span>
+        </h1>
+        <p>Defines a two-dimensional rectangle using fixed point precision and a top-left point as position.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="acdc7dd9a79a6823247d54504f41e2d18">
+              <span class="m-doc-wrap-bumper"><a href="#acdc7dd9a79a6823247d54504f41e2d18" class="m-doc-self">top_left_fixed_rect_t</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#ad597fc1dc4405d607e586c519275716e" class="m-doc">top_left_fixed_rect_t</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; position,
+              const <a href="classbn_1_1fixed__size__t.html" class="m-doc">fixed_<wbr />size_<wbr />t</a>&lt;Precision&gt;&amp; dimensions) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#aa7d38ecc30a1788f89d76ed4dc582e61" class="m-doc">top_left_fixed_rect_t</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; x,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; y,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; width,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; height) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a4625c2691424ea13869a358e08aa614d" class="m-doc">top_left_fixed_rect_t</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__rect.html" class="m-doc">top_<wbr />left_<wbr />rect</a>&amp; rect) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="ae3293c09a636cd787e532d176517fdf2">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae3293c09a636cd787e532d176517fdf2" class="m-doc-self">position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the top-left point of the rectangle.</dd>
+            <dt id="a05d89a5b2ff4fa974722c81dd5435f77">
+              <span class="m-doc-wrap-bumper">void <a href="#a05d89a5b2ff4fa974722c81dd5435f77" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; position) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the position of the top-left point of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abb7ef2f1e5bda1d8f31c02731e40efab" class="m-doc">set_position</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; x,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; y) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the position of the top-left point of the rectangle.</dd>
+            <dt id="ad3ab821a8b0943e88463f51cd5bdd234">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad3ab821a8b0943e88463f51cd5bdd234" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1fixed__size__t.html" class="m-doc">fixed_<wbr />size_<wbr />t</a>&lt;Precision&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the size of the rectangle.</dd>
+            <dt id="a3e64a9505bcda6f200d32ca5de4c1821">
+              <span class="m-doc-wrap-bumper">void <a href="#a3e64a9505bcda6f200d32ca5de4c1821" class="m-doc-self">set_dimensions</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__size__t.html" class="m-doc">fixed_<wbr />size_<wbr />t</a>&lt;Precision&gt;&amp; dimensions) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the size of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a92c71c358d0cffeeb034054e66554d7b" class="m-doc">set_dimensions</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; width,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; height) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the size of the rectangle.</dd>
+            <dt id="a51847b7bea0911a256084c41e9a95683">
+              <span class="m-doc-wrap-bumper">auto <a href="#a51847b7bea0911a256084c41e9a95683" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the horizontal position of the top-left point of the rectangle.</dd>
+            <dt id="a9841b724d82eadead122628821a63056">
+              <span class="m-doc-wrap-bumper">void <a href="#a9841b724d82eadead122628821a63056" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; x) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the horizontal position of the top-left point of the rectangle.</dd>
+            <dt id="ac1d5760cdbd8c5d78c07920d40a7379f">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac1d5760cdbd8c5d78c07920d40a7379f" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the vertical position of the top-left point of the rectangle.</dd>
+            <dt id="a99d839b9e2597ea85d70703ebcd4c9d9">
+              <span class="m-doc-wrap-bumper">void <a href="#a99d839b9e2597ea85d70703ebcd4c9d9" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; y) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the vertical position of the top-left point of the rectangle.</dd>
+            <dt id="a28194c3b55881c07ec6d1cd77cb67428">
+              <span class="m-doc-wrap-bumper">auto <a href="#a28194c3b55881c07ec6d1cd77cb67428" class="m-doc-self">width</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the width of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aae351f37d39eb5a2bce4a85a9becc220" class="m-doc">set_width</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; width) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the width of the rectangle.</dd>
+            <dt id="a524c7b42de9d272a24878603c120d2a6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a524c7b42de9d272a24878603c120d2a6" class="m-doc-self">height</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the height of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a90d7d955a3aec337afef56d35cccf015" class="m-doc">set_height</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; height) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the height of the rectangle.</dd>
+            <dt id="a834b350810b768772c8380abb39766fb">
+              <span class="m-doc-wrap-bumper">auto <a href="#a834b350810b768772c8380abb39766fb" class="m-doc-self">top</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the top boundary of the rectangle.</dd>
+            <dt id="a67d2c65dce8d590b951812cfe50f1f55">
+              <span class="m-doc-wrap-bumper">auto <a href="#a67d2c65dce8d590b951812cfe50f1f55" class="m-doc-self">left</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the left boundary of the rectangle.</dd>
+            <dt id="a220fd0a4e0ecb97a61e968486393a394">
+              <span class="m-doc-wrap-bumper">auto <a href="#a220fd0a4e0ecb97a61e968486393a394" class="m-doc-self">bottom</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the bottom boundary of the rectangle.</dd>
+            <dt id="af89a280a4e3c8cd8dec413016d8b6f9d">
+              <span class="m-doc-wrap-bumper">auto <a href="#af89a280a4e3c8cd8dec413016d8b6f9d" class="m-doc-self">right</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the right boundary of the rectangle.</dd>
+            <dt id="ab7ec1cc655a3b268aa4fef955707ee4c">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab7ec1cc655a3b268aa4fef955707ee4c" class="m-doc-self">top_left</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the top-left corner of the rectangle.</dd>
+            <dt id="ac2ebc9b3a74865dec74934cd2b4550de">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac2ebc9b3a74865dec74934cd2b4550de" class="m-doc-self">top_right</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the top-right corner of the rectangle.</dd>
+            <dt id="a648b5fa76234164e7dc03eb338d8a87e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a648b5fa76234164e7dc03eb338d8a87e" class="m-doc-self">bottom_left</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the bottom-left corner of the rectangle.</dd>
+            <dt id="a60a5f7357a9b406c6d9f8bd5e598d6a0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a60a5f7357a9b406c6d9f8bd5e598d6a0" class="m-doc-self">bottom_right</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the bottom-right corner of the rectangle.</dd>
+            <dt id="a9d837d4b4bc7736748bf25c430d70ac6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9d837d4b4bc7736748bf25c430d70ac6" class="m-doc-self">center_x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the horizontal position of the center point of the rectangle.</dd>
+            <dt id="ac1cc6c73c2e2f4d33379c638431a92a1">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac1cc6c73c2e2f4d33379c638431a92a1" class="m-doc-self">center_y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the vertical position of the center point of the rectangle.</dd>
+            <dt id="aa3ae5a65d89725a1d7fabce0d9807091">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa3ae5a65d89725a1d7fabce0d9807091" class="m-doc-self">center</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the position of the center point of the rectangle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac8ab4df2f4a2060592db32d44c604b47" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; point) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if the given point is inside the rectangle or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a565ce1545855e815ed314980f3166bb3" class="m-doc">intersects</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if this rectangle intersects with the given one or not.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="a8f29679effd3f61411fa7bd98a954636">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8f29679effd3f61411fa7bd98a954636" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; a,
+              const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ad597fc1dc4405d607e586c519275716e"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad597fc1dc4405d607e586c519275716e" class="m-doc-self">top_left_fixed_rect_t</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; position,
+              const <a href="classbn_1_1fixed__size__t.html" class="m-doc">fixed_<wbr />size_<wbr />t</a>&lt;Precision&gt;&amp; dimensions) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the top-left point of the rectangle.</td>
+                </tr>
+                <tr>
+                  <td>dimensions</td>
+                  <td>Size of the rectangle.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa7d38ecc30a1788f89d76ed4dc582e61"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa7d38ecc30a1788f89d76ed4dc582e61" class="m-doc-self">top_left_fixed_rect_t</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; x,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; y,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; width,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the top-left point of the rectangle.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the top-left point of the rectangle.</td>
+                </tr>
+                <tr>
+                  <td>width</td>
+                  <td>Valid width of the rectangle (&gt;= 0).</td>
+                </tr>
+                <tr>
+                  <td>height</td>
+                  <td>Valid height of the rectangle (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4625c2691424ea13869a358e08aa614d"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4625c2691424ea13869a358e08aa614d" class="m-doc-self">top_left_fixed_rect_t</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__rect.html" class="m-doc">top_<wbr />left_<wbr />rect</a>&amp; rect) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rect</td>
+                  <td>Integer rectangle.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abb7ef2f1e5bda1d8f31c02731e40efab"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abb7ef2f1e5bda1d8f31c02731e40efab" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; x,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; y) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the position of the top-left point of the rectangle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the top-left point of the rectangle.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the top-left point of the rectangle.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a92c71c358d0cffeeb034054e66554d7b"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a92c71c358d0cffeeb034054e66554d7b" class="m-doc-self">set_dimensions</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; width,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the size of the rectangle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">width</td>
+                  <td>Valid width of the rectangle (&gt;= 0).</td>
+                </tr>
+                <tr>
+                  <td>height</td>
+                  <td>Valid height of the rectangle (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aae351f37d39eb5a2bce4a85a9becc220"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aae351f37d39eb5a2bce4a85a9becc220" class="m-doc-self">set_width</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; width) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the width of the rectangle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">width</td>
+                  <td>Valid width (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a90d7d955a3aec337afef56d35cccf015"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a90d7d955a3aec337afef56d35cccf015" class="m-doc-self">set_height</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;Precision&gt; height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the height of the rectangle.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">height</td>
+                  <td>Valid height (&gt;= 0).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac8ab4df2f4a2060592db32d44c604b47"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac8ab4df2f4a2060592db32d44c604b47" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; point) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if the given point is inside the rectangle or not.</p>
+<p>If the point is in the edge of the rectangle, it returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a565ce1545855e815ed314980f3166bb3"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a565ce1545855e815ed314980f3166bb3" class="m-doc-self">intersects</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if this rectangle intersects with the given one or not.</p>
+<p>Two rectangles intersect if there is at least one point that is within both rectangles.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

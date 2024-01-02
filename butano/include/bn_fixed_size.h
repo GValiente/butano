@@ -8,37 +8,34 @@
 
 /**
  * @file
- * bn::fixed_size header file.
+ * bn::fixed_size_t and bn::fixed_size implementation header file.
  *
  * @ingroup math
  */
 
 #include "bn_size.h"
 #include "bn_fixed.h"
+#include "bn_fixed_size_fwd.h"
 
 namespace bn
 {
 
-/**
- * @brief Defines the size of a two-dimensional object using fixed point precision.
- *
- * @ingroup math
- */
-class fixed_size
+template<int Precision>
+class fixed_size_t
 {
 
 public:
     /**
      * @brief Default constructor.
      */
-    constexpr fixed_size() = default;
+    constexpr fixed_size_t() = default;
 
     /**
      * @brief Constructor.
      * @param width Valid width (>= 0).
      * @param height Valid height (>= 0).
      */
-    constexpr fixed_size(fixed width, fixed height) :
+    constexpr fixed_size_t(fixed_t<Precision> width, fixed_t<Precision> height) :
         _width(width),
         _height(height)
     {
@@ -50,7 +47,7 @@ public:
      * @brief Constructor.
      * @param size Integer size.
      */
-    constexpr fixed_size(const size& size) :
+    constexpr fixed_size_t(const size& size) :
         _width(size.width()),
         _height(size.height())
     {
@@ -61,7 +58,7 @@ public:
     /**
      * @brief Returns the width.
      */
-    [[nodiscard]] constexpr fixed width() const
+    [[nodiscard]] constexpr fixed_t<Precision> width() const
     {
         return _width;
     }
@@ -70,7 +67,7 @@ public:
      * @brief Sets the width.
      * @param width Valid width (>= 0).
      */
-    constexpr void set_width(fixed width)
+    constexpr void set_width(fixed_t<Precision> width)
     {
         BN_ASSERT(width >= 0, "Invalid width: ", width);
 
@@ -80,7 +77,7 @@ public:
     /**
      * @brief Returns the height.
      */
-    [[nodiscard]] constexpr fixed height() const
+    [[nodiscard]] constexpr fixed_t<Precision> height() const
     {
         return _height;
     }
@@ -89,7 +86,7 @@ public:
      * @brief Sets the height.
      * @param height Valid height (>= 0).
      */
-    constexpr void set_height(fixed height)
+    constexpr void set_height(fixed_t<Precision> height)
     {
         BN_ASSERT(height >= 0, "Invalid height: ", height);
 
@@ -99,111 +96,111 @@ public:
     /**
      * @brief Returns the multiplication of this size by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_size multiplication(int value) const
+    [[nodiscard]] constexpr fixed_size_t multiplication(int value) const
     {
-        return fixed_size(_width.multiplication(value), _height.multiplication(value));
+        return fixed_size_t(_width.multiplication(value), _height.multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this size by the given fixed point value,
      * using half precision to try to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_size multiplication(fixed value) const
+    [[nodiscard]] constexpr fixed_size_t multiplication(fixed_t<Precision> value) const
     {
-        return fixed_size(_width.multiplication(value), _height.multiplication(value));
+        return fixed_size_t(_width.multiplication(value), _height.multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this size by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_size safe_multiplication(int value) const
+    [[nodiscard]] constexpr fixed_size_t safe_multiplication(int value) const
     {
-        return fixed_size(_width.safe_multiplication(value), _height.safe_multiplication(value));
+        return fixed_size_t(_width.safe_multiplication(value), _height.safe_multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this size by the given fixed point value,
      * casting them to int64_t to try to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_size safe_multiplication(fixed value) const
+    [[nodiscard]] constexpr fixed_size_t safe_multiplication(fixed_t<Precision> value) const
     {
-        return fixed_size(_width.safe_multiplication(value), _height.safe_multiplication(value));
+        return fixed_size_t(_width.safe_multiplication(value), _height.safe_multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this size by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_size unsafe_multiplication(int value) const
+    [[nodiscard]] constexpr fixed_size_t unsafe_multiplication(int value) const
     {
-        return fixed_size(_width.unsafe_multiplication(value), _height.unsafe_multiplication(value));
+        return fixed_size_t(_width.unsafe_multiplication(value), _height.unsafe_multiplication(value));
     }
 
     /**
      * @brief Returns the multiplication of this size by the given fixed point value
      * without trying to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_size unsafe_multiplication(fixed value) const
+    [[nodiscard]] constexpr fixed_size_t unsafe_multiplication(fixed_t<Precision> value) const
     {
-        return fixed_size(_width.unsafe_multiplication(value), _height.unsafe_multiplication(value));
+        return fixed_size_t(_width.unsafe_multiplication(value), _height.unsafe_multiplication(value));
     }
 
     /**
      * @brief Returns the division of this size by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_size division(int value) const
+    [[nodiscard]] constexpr fixed_size_t division(int value) const
     {
-        return fixed_size(_width.division(value), _height.division(value));
+        return fixed_size_t(_width.division(value), _height.division(value));
     }
 
     /**
      * @brief Returns the division of this size by the given fixed point value,
      * using half precision to try to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_size division(fixed value) const
+    [[nodiscard]] constexpr fixed_size_t division(fixed_t<Precision> value) const
     {
-        return fixed_size(_width.division(value), _height.division(value));
+        return fixed_size_t(_width.division(value), _height.division(value));
     }
 
     /**
      * @brief Returns the division of this value by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_size safe_division(int value) const
+    [[nodiscard]] constexpr fixed_size_t safe_division(int value) const
     {
-        return fixed_size(_width.safe_division(value), _height.safe_division(value));
+        return fixed_size_t(_width.safe_division(value), _height.safe_division(value));
     }
 
     /**
      * @brief Returns the division of this size by the given fixed point value,
      * casting them to int64_t to try to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_size safe_division(fixed value) const
+    [[nodiscard]] constexpr fixed_size_t safe_division(fixed_t<Precision> value) const
     {
-        return fixed_size(_width.safe_division(value), _height.safe_division(value));
+        return fixed_size_t(_width.safe_division(value), _height.safe_division(value));
     }
 
     /**
      * @brief Returns the division of this value by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_size unsafe_division(int value) const
+    [[nodiscard]] constexpr fixed_size_t unsafe_division(int value) const
     {
-        return fixed_size(_width.unsafe_division(value), _height.unsafe_division(value));
+        return fixed_size_t(_width.unsafe_division(value), _height.unsafe_division(value));
     }
 
     /**
      * @brief Returns the division of this size by the given fixed point value
      * without trying to avoid overflow.
      */
-    [[nodiscard]] constexpr fixed_size unsafe_division(fixed value) const
+    [[nodiscard]] constexpr fixed_size_t unsafe_division(fixed_t<Precision> value) const
     {
-        return fixed_size(_width.unsafe_division(value), _height.unsafe_division(value));
+        return fixed_size_t(_width.unsafe_division(value), _height.unsafe_division(value));
     }
 
     /**
-     * @brief Adds the given fixed_size to this one.
-     * @param other fixed_size to add.
+     * @brief Adds the given fixed_size_t to this one.
+     * @param other fixed_size_t to add.
      * @return Reference to this.
      */
-    constexpr fixed_size& operator+=(const fixed_size& other)
+    constexpr fixed_size_t& operator+=(const fixed_size_t& other)
     {
         set_width(_width + other._width);
         set_height(_height + other._height);
@@ -211,11 +208,11 @@ public:
     }
 
     /**
-     * @brief Subtracts the given fixed_size to this one.
-     * @param other fixed_size to subtract.
+     * @brief Subtracts the given fixed_size_t to this one.
+     * @param other fixed_size_t to subtract.
      * @return Reference to this.
      */
-    constexpr fixed_size& operator-=(const fixed_size& other)
+    constexpr fixed_size_t& operator-=(const fixed_size_t& other)
     {
         set_width(_width - other._width);
         set_height(_height - other._height);
@@ -227,7 +224,7 @@ public:
      * @param value Valid integer multiplication factor (>= 0).
      * @return Reference to this.
      */
-    constexpr fixed_size& operator*=(int value)
+    constexpr fixed_size_t& operator*=(int value)
     {
         set_width(_width * value);
         set_height(_height * value);
@@ -239,7 +236,7 @@ public:
      * @param value Valid fixed point multiplication factor (>= 0).
      * @return Reference to this.
      */
-    constexpr fixed_size& operator*=(fixed value)
+    constexpr fixed_size_t& operator*=(fixed_t<Precision> value)
     {
         set_width(_width * value);
         set_height(_height * value);
@@ -251,7 +248,7 @@ public:
      * @param value Valid integer divisor (> 0).
      * @return Reference to this.
      */
-    constexpr fixed_size& operator/=(int value)
+    constexpr fixed_size_t& operator/=(int value)
     {
         set_width(_width / value);
         set_height(_height / value);
@@ -263,7 +260,7 @@ public:
      * @param value Valid fixed point divisor (> 0).
      * @return Reference to this.
      */
-    constexpr fixed_size& operator/=(fixed value)
+    constexpr fixed_size_t& operator/=(fixed_t<Precision> value)
     {
         set_width(_width / value);
         set_height(_height / value);
@@ -273,75 +270,75 @@ public:
     /**
      * @brief Returns the sum of a and b.
      */
-    [[nodiscard]] constexpr friend fixed_size operator+(const fixed_size& a, const fixed_size& b)
+    [[nodiscard]] constexpr friend fixed_size_t operator+(const fixed_size_t& a, const fixed_size_t& b)
     {
-        return fixed_size(a._width + b._width, a._height + b._height);
+        return fixed_size_t(a._width + b._width, a._height + b._height);
     }
 
     /**
      * @brief Returns b subtracted from a.
      */
-    [[nodiscard]] constexpr friend fixed_size operator-(const fixed_size& a, const fixed_size& b)
+    [[nodiscard]] constexpr friend fixed_size_t operator-(const fixed_size_t& a, const fixed_size_t& b)
     {
-        return fixed_size(a._width - b._width, a._height - b._height);
+        return fixed_size_t(a._width - b._width, a._height - b._height);
     }
 
     /**
      * @brief Returns a multiplied by b.
      */
-    [[nodiscard]] constexpr friend fixed_size operator*(const fixed_size& a, int b)
+    [[nodiscard]] constexpr friend fixed_size_t operator*(const fixed_size_t& a, int b)
     {
-        return fixed_size(a._width * b, a._height * b);
+        return fixed_size_t(a._width * b, a._height * b);
     }
 
     /**
      * @brief Returns a multiplied by b.
      */
-    [[nodiscard]] constexpr friend fixed_size operator*(const fixed_size& a, fixed b)
+    [[nodiscard]] constexpr friend fixed_size_t operator*(const fixed_size_t& a, fixed_t<Precision> b)
     {
-        return fixed_size(a._width * b, a._height * b);
+        return fixed_size_t(a._width * b, a._height * b);
     }
 
     /**
      * @brief Returns a divided by b.
      */
-    [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, int b)
+    [[nodiscard]] constexpr friend fixed_size_t operator/(const fixed_size_t& a, int b)
     {
-        return fixed_size(a._width / b, a._height / b);
+        return fixed_size_t(a._width / b, a._height / b);
     }
 
     /**
      * @brief Returns a divided by b.
      */
-    [[nodiscard]] constexpr friend fixed_size operator/(const fixed_size& a, fixed b)
+    [[nodiscard]] constexpr friend fixed_size_t operator/(const fixed_size_t& a, fixed_t<Precision> b)
     {
-        return fixed_size(a._width / b, a._height / b);
+        return fixed_size_t(a._width / b, a._height / b);
     }
 
     /**
      * @brief Default equal operator.
      */
-    [[nodiscard]] constexpr friend bool operator==(const fixed_size& a, const fixed_size& b) = default;
+    [[nodiscard]] constexpr friend bool operator==(const fixed_size_t& a, const fixed_size_t& b) = default;
 
 private:
-    fixed _width;
-    fixed _height;
+    fixed_t<Precision> _width;
+    fixed_t<Precision> _height;
 };
 
 
 /**
- * @brief Hash support for fixed_size.
+ * @brief Hash support for fixed_size_t.
  *
  * @ingroup math
  * @ingroup functional
  */
-template<>
-struct hash<fixed_size>
+template<int Precision>
+struct hash<fixed_size_t<Precision>>
 {
     /**
-     * @brief Returns the hash of the given fixed_size.
+     * @brief Returns the hash of the given fixed_size_t.
      */
-    [[nodiscard]] constexpr unsigned operator()(const fixed_size& value) const
+    [[nodiscard]] constexpr unsigned operator()(const fixed_size_t<Precision>& value) const
     {
         unsigned result = make_hash(value.width());
         hash_combine(value.height(), result);

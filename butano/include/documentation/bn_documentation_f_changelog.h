@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_16_6_0 16.6.0 (next release)
+ * @section changelog_16_6_0 16.6.0
  *
  * * bn::sprites::visible and bn::sprites::set_visible added.
  * * bn::sprites actions added.

@@ -34,13 +34,15 @@ namespace
         fixed sprites_mosaic_vertical_stretch;
         fixed bgs_mosaic_horizontal_stretch;
         fixed bgs_mosaic_vertical_stretch;
-        bool blending_bgs[hw::bgs::count()] = {};
+        bool blending_top_bgs[hw::bgs::count()] = {};
+        bool blending_bottom_bgs[hw::bgs::count()] = {};
         fixed blending_transparency_alpha = 1;
         fixed blending_intensity_alpha = 0;
         fixed blending_transparency_top_weight = -1;
         fixed blending_transparency_bottom_weight = -1;
         fixed blending_fade_alpha = 0;
-        int blending_layers = 0;
+        uint8_t blending_top_layer = 0;
+        uint8_t blending_bottom_layer = 0;
         hw::display::blending_mode blending_mode;
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
@@ -321,16 +323,31 @@ void fill_mosaic_hblank_effect_attributes(const mosaic_attributes* mosaic_attrib
     }
 }
 
-bool blending_bg_enabled(int bg)
+bool blending_top_bg_enabled(int bg)
 {
-    return data.blending_bgs[bg];
+    return data.blending_top_bgs[bg];
 }
 
-void set_blending_bg_enabled(int bg, bool enabled)
+void set_blending_top_bg_enabled(int bg, bool enabled)
 {
-    if(data.blending_bgs[bg] != enabled)
+    if(data.blending_top_bgs[bg] != enabled)
     {
-        data.blending_bgs[bg] = enabled;
+        data.blending_top_bgs[bg] = enabled;
+        data.update_blending_layers = true;
+        data.commit = true;
+    }
+}
+
+bool blending_bottom_bg_enabled(int bg)
+{
+    return data.blending_bottom_bgs[bg];
+}
+
+void set_blending_bottom_bg_enabled(int bg, bool enabled)
+{
+    if(data.blending_bottom_bgs[bg] != enabled)
+    {
+        data.blending_bottom_bgs[bg] = enabled;
         data.update_blending_layers = true;
         data.commit = true;
     }
@@ -893,14 +910,16 @@ void update()
         if(data.update_blending_layers)
         {
             bool fade = data.blending_mode != hw::display::blending_mode::TRANSPARENCY;
-            data.blending_layers = hw::display::blending_layers(data.blending_bgs, hw::bgs::count(), fade);
+            data.blending_top_layer = hw::display::blending_layer(data.blending_top_bgs, fade, fade);
+            data.blending_bottom_layer = hw::display::blending_layer(data.blending_bottom_bgs, true, true);
             data.update_blending_layers = false;
             update_blending_cnt = true;
         }
 
         if(update_blending_cnt)
         {
-            hw::display::set_blending_cnt(data.blending_layers, data.blending_mode, data.blending_cnt);
+            hw::display::set_blending_cnt(
+                    data.blending_top_layer, data.blending_bottom_layer, data.blending_mode, data.blending_cnt);
         }
 
         if(data.update_windows_visible_bgs)

@@ -460,14 +460,24 @@ void regular_bg_ptr::set_mosaic_enabled(bool mosaic_enabled)
     bgs_manager::set_mosaic_enabled(_handle, mosaic_enabled);
 }
 
-bool regular_bg_ptr::blending_enabled() const
+bool regular_bg_ptr::blending_top_enabled() const
 {
-    return bgs_manager::blending_enabled(_handle);
+    return bgs_manager::blending_top_enabled(_handle);
 }
 
-void regular_bg_ptr::set_blending_enabled(bool blending_enabled)
+void regular_bg_ptr::set_blending_top_enabled(bool blending_top_enabled)
 {
-    bgs_manager::set_blending_enabled(_handle, blending_enabled);
+    bgs_manager::set_blending_top_enabled(_handle, blending_top_enabled);
+}
+
+bool regular_bg_ptr::blending_bottom_enabled() const
+{
+    return bgs_manager::blending_bottom_enabled(_handle);
+}
+
+void regular_bg_ptr::set_blending_bottom_enabled(bool blending_bottom_enabled)
+{
+    bgs_manager::set_blending_bottom_enabled(_handle, blending_bottom_enabled);
 }
 
 bool regular_bg_ptr::visible() const

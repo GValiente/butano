@@ -2672,6 +2672,150 @@ public:
     }
 };
 
+
+/**
+ * @brief Manages if an affine_bg_ptr must be part of the blending top layer or not.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_blending_top_manager
+{
+
+public:
+    /**
+     * @brief Indicates if the given affine_bg_ptr is part of the blending top layer or not.
+     */
+    [[nodiscard]] static bool get(const affine_bg_ptr& bg)
+    {
+        return bg.blending_top_enabled();
+    }
+
+    /**
+     * @brief Sets if the given affine_bg_ptr must be part of the blending top layer or not.
+     */
+    static void set(bool blending_top_enabled, affine_bg_ptr& bg)
+    {
+        bg.set_blending_top_enabled(blending_top_enabled);
+    }
+};
+
+
+/**
+ * @brief Toggles if an affine_bg_ptr is part of the blending top layer or not
+ * when the action is updated a given number of times.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_blending_top_toggle_action :
+        public bool_toggle_value_template_action<affine_bg_ptr, affine_bg_blending_top_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the given affine_bg_ptr is part of the blending top layer or not.
+     */
+    affine_bg_blending_top_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
+        bool_toggle_value_template_action(bg, duration_updates)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the given affine_bg_ptr is part of the blending top layer or not.
+     */
+    affine_bg_blending_top_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
+        bool_toggle_value_template_action(move(bg), duration_updates)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+};
+
+
+/**
+ * @brief Manages if an affine_bg_ptr must be part of the blending bottom layer or not.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_blending_bottom_manager
+{
+
+public:
+    /**
+     * @brief Indicates if the given affine_bg_ptr is part of the blending bottom layer or not.
+     */
+    [[nodiscard]] static bool get(const affine_bg_ptr& bg)
+    {
+        return bg.blending_bottom_enabled();
+    }
+
+    /**
+     * @brief Sets if the given affine_bg_ptr must be part of the blending bottom layer or not.
+     */
+    static void set(bool blending_bottom_enabled, affine_bg_ptr& bg)
+    {
+        bg.set_blending_bottom_enabled(blending_bottom_enabled);
+    }
+};
+
+
+/**
+ * @brief Toggles if an affine_bg_ptr is part of the blending bottom layer or not
+ * when the action is updated a given number of times.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_blending_bottom_toggle_action :
+        public bool_toggle_value_template_action<affine_bg_ptr, affine_bg_blending_bottom_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the given affine_bg_ptr is part of the blending bottom layer or not.
+     */
+    affine_bg_blending_bottom_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
+        bool_toggle_value_template_action(bg, duration_updates)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated to toggle
+     * if the given affine_bg_ptr is part of the blending bottom layer or not.
+     */
+    affine_bg_blending_bottom_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
+        bool_toggle_value_template_action(move(bg), duration_updates)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+};
+
 }
 
 #endif

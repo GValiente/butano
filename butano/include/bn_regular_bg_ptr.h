@@ -481,13 +481,43 @@ public:
 
     /**
      * @brief Indicates if blending must be applied to this regular background or not.
+     *
+     * Blending is applied to this regular background by making it part of the blending top layer.
      */
-    [[nodiscard]] bool blending_enabled() const;
+    [[nodiscard]] bool blending_enabled() const
+    {
+        return blending_top_enabled();
+    }
 
     /**
      * @brief Sets if blending must be applied to this regular background or not.
+     *
+     * Blending is applied to this regular background by making it part of the blending top layer.
      */
-    void set_blending_enabled(bool blending_enabled);
+    void set_blending_enabled(bool blending_enabled)
+    {
+        set_blending_top_enabled(blending_enabled);
+    }
+
+    /**
+     * @brief Indicates if this regular background is part of the blending top layer or not.
+     */
+    [[nodiscard]] bool blending_top_enabled() const;
+
+    /**
+     * @brief Sets if this regular background is part of the blending top layer or not.
+     */
+    void set_blending_top_enabled(bool blending_top_enabled);
+
+    /**
+     * @brief Indicates if this regular background is part of the blending bottom layer or not.
+     */
+    [[nodiscard]] bool blending_bottom_enabled() const;
+
+    /**
+     * @brief Sets if this regular background is part of the blending bottom layer or not.
+     */
+    void set_blending_bottom_enabled(bool blending_bottom_enabled);
 
     /**
      * @brief Indicates if this regular background must be committed to the GBA or not.

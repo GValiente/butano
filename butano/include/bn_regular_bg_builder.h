@@ -226,20 +226,64 @@ public:
 
     /**
      * @brief Indicates if blending must be applied to the regular backgrounds to generate or not.
+     *
+     * Blending is applied to regular backgrounds by making them part of the blending top layer.
      */
     [[nodiscard]] bool blending_enabled() const
     {
-        return _blending_enabled;
+        return blending_top_enabled();
     }
 
     /**
      * @brief Sets if blending must be applied to the regular backgrounds to generate or not.
+     *
+     * Blending is applied to regular backgrounds by making them part of the blending top layer.
      * @param blending_enabled `true` if blending must be applied; `false` otherwise.
      * @return Reference to this.
      */
     regular_bg_builder& set_blending_enabled(bool blending_enabled)
     {
-        _blending_enabled = blending_enabled;
+        set_blending_top_enabled(blending_enabled);
+        return *this;
+    }
+
+    /**
+     * @brief Indicates if the regular backgrounds to generate must be part of the blending top layer or not.
+     */
+    [[nodiscard]] bool blending_top_enabled() const
+    {
+        return _blending_top_enabled;
+    }
+
+    /**
+     * @brief Sets if the regular backgrounds to generate must be part of the blending top layer or not.
+     * @param blending_top_enabled `true` if generated backgrounds must be part of the blending top layer;
+     * `false` otherwise.
+     * @return Reference to this.
+     */
+    regular_bg_builder& set_blending_top_enabled(bool blending_top_enabled)
+    {
+        _blending_top_enabled = blending_top_enabled;
+        return *this;
+    }
+
+    /**
+     * @brief Indicates if the regular backgrounds to generate must be part of the blending bottom layer or not.
+     */
+    [[nodiscard]] bool blending_bottom_enabled() const
+    {
+        return _blending_bottom_enabled;
+    }
+
+    /**
+     * @brief Sets if the regular backgrounds to generate must be part of the blending bottom layer or not.
+     * @param blending_bottom_enabled `true` if generated backgrounds must be part of the blending bottom layer;
+     * `false` otherwise.
+     * @return Reference to this.
+     */
+    regular_bg_builder& set_blending_bottom_enabled(bool blending_bottom_enabled)
+    {
+        _blending_bottom_enabled = blending_bottom_enabled;
         return *this;
     }
 
@@ -393,7 +437,8 @@ private:
     optional<regular_bg_map_ptr> _map;
     optional<camera_ptr> _camera;
     bool _mosaic_enabled = false;
-    bool _blending_enabled = false;
+    bool _blending_top_enabled = false;
+    bool _blending_bottom_enabled = true;
     bool _visible = true;
 };
 

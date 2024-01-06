@@ -68,13 +68,13 @@ namespace bn::blending
     void set_intensity_alpha(fixed intensity_alpha);
 
     /**
-     * @brief Returns the weight of the transparency blending for the top layers,
+     * @brief Returns the weight of the transparency blending for the top layer,
      * with 0 being fully transparent and 1 being fully visible.
      */
     [[nodiscard]] fixed transparency_top_weight();
 
     /**
-     * @brief Sets the weight of the transparency blending for the top layers,
+     * @brief Sets the weight of the transparency blending for the top layer,
      * with 0 being fully transparent and 1 being fully visible.
      *
      * Keep in mind that transparency and fade blendings can't be enabled at the same time.
@@ -84,13 +84,13 @@ namespace bn::blending
     void set_transparency_top_weight(fixed transparency_top_weight);
 
     /**
-     * @brief Returns the weight of the transparency blending for the bottom layers,
+     * @brief Returns the weight of the transparency blending for the bottom layer,
      * with 0 being fully transparent and 1 being fully visible.
      */
     [[nodiscard]] fixed transparency_bottom_weight();
 
     /**
-     * @brief Sets the weight of the transparency blending for the bottom layers,
+     * @brief Sets the weight of the transparency blending for the bottom layer,
      * with 0 being fully transparent and 1 being fully visible.
      *
      * Keep in mind that transparency and fade blendings can't be enabled at the same time.

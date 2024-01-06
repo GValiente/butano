@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>bn::blending_transparency_bottom_weight_loop_action class | Butano Docs</title>
+  <title>bn::regular_bg_blending_bottom_toggle_action class | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,10 +47,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>blending_transparency_bottom_weight_loop_action <span class="m-thin">class</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__blending__actions_8h.html">&lt;bn_blending_actions.h&gt;</a></div>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>regular_bg_blending_bottom_toggle_action <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__regular__bg__actions_8h.html">&lt;bn_regular_bg_actions.h&gt;</a></div>
         </h1>
-        <p>Modifies the weight of the transparency blending for the bottom layer from a minimum to a maximum. When the weight is equal to the given final state, it goes back to its initial state and vice versa.</p>
+        <p>Toggles if a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> is part of the blending bottom layer or not when the action is updated a given number of times.</p>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
@@ -68,18 +68,23 @@
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename Property, class PropertyManager&gt;</div>
-              class <a href="classbn_1_1loop__template__action.html" class="m-doc">loop_template_action&lt;fixed, blending_transparency_bottom_weight_manager&gt;</a>
+              <div class="m-doc-template">template&lt;typename Value, class PropertyManager&gt;</div>
+              class <a href="classbn_1_1bool__toggle__value__template__action.html" class="m-doc">bool_toggle_value_template_action&lt;regular_bg_ptr, regular_bg_blending_bottom_manager&gt;</a>
             </dt>
-            <dd>Modifies the property by delta from a minimum to a maximum. When the property is equal to the given final state, it goes back to its initial state and vice versa.</dd>
+            <dd>Toggles a boolean property of a value when the action is updated a given number of times.</dd>
           </dl>
         </section>
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a5c80c893d357485e5f954911f29a1eee" class="m-doc">blending_transparency_bottom_weight_loop_action</a>(</span><span class="m-doc-wrap">int duration_updates,
-              <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> final_transparency_bottom_weight)</span>
+              <span class="m-doc-wrap-bumper"><a href="#a0be15d9dc0e68541839ddb082038a74b" class="m-doc">regular_bg_blending_bottom_toggle_action</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg,
+              int duration_updates)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a47561cf820aed9ebd304c438b88c5d17" class="m-doc">regular_bg_blending_bottom_toggle_action</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp;&amp; bg,
+              int duration_updates)</span>
             </dt>
             <dd>Constructor.</dd>
           </dl>
@@ -87,18 +92,18 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="a8e2c47af0b6dc4eb54800dd1b4c4ae91">
-              <span class="m-doc-wrap-bumper">auto <a href="#a8e2c47af0b6dc4eb54800dd1b4c4ae91" class="m-doc-self">final_transparency_bottom_weight</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
+            <dt id="a619038fc75a543017d4afde20b4a5041">
+              <span class="m-doc-wrap-bumper">auto <a href="#a619038fc75a543017d4afde20b4a5041" class="m-doc-self">bg</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp;</span>
             </dt>
-            <dd>When the weight of the transparency blending for the bottom layer is equal to this parameter, it goes back to its initial state and vice versa.</dd>
+            <dd>Returns the <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to modify.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="a5c80c893d357485e5f954911f29a1eee"><div>
+          <section class="m-doc-details" id="a0be15d9dc0e68541839ddb082038a74b"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />blending_transparency_bottom_weight_loop_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c80c893d357485e5f954911f29a1eee" class="m-doc-self">blending_transparency_bottom_weight_loop_action</a>(</span><span class="m-doc-wrap">int duration_updates,
-              <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> final_transparency_bottom_weight)</span></span>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />regular_bg_blending_bottom_toggle_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0be15d9dc0e68541839ddb082038a74b" class="m-doc-self">regular_bg_blending_bottom_toggle_action</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp; bg,
+              int duration_updates)</span></span>
             </h3>
             <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -107,16 +112,37 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">duration_updates</td>
-                  <td>How much times the action has to be updated before changing the direction of the weight delta.</td>
+                  <td style="width: 1%">bg</td>
+                  <td><a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to copy.</td>
                 </tr>
                 <tr>
-                  <td>final_transparency_bottom_weight</td>
-                  <td>When the weight of the transparency blending for the bottom layer is equal to this parameter, it goes back to its initial state and vice versa.</td>
+                  <td>duration_updates</td>
+                  <td>How much times the action has to be updated to toggle if the given <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> is part of the blending bottom layer or not.</td>
                 </tr>
               </tbody>
             </table>
-<p>This weight must be in the range [0..1].</p><p>Keep in mind that transparency and fade blendings can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a47561cf820aed9ebd304c438b88c5d17"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />regular_bg_blending_bottom_toggle_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a47561cf820aed9ebd304c438b88c5d17" class="m-doc-self">regular_bg_blending_bottom_toggle_action</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&amp;&amp; bg,
+              int duration_updates)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bg</td>
+                  <td><a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+                <tr>
+                  <td>duration_updates</td>
+                  <td>How much times the action has to be updated to toggle if the given <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> is part of the blending bottom layer or not.</td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
         </section>
       </div>

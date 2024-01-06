@@ -63,9 +63,13 @@ namespace bn::display_manager
 
     void fill_mosaic_hblank_effect_attributes(const mosaic_attributes* mosaic_attributes_ptr, uint16_t* dest_ptr);
 
-    [[nodiscard]] bool blending_bg_enabled(int bg);
+    [[nodiscard]] bool blending_top_bg_enabled(int bg);
 
-    void set_blending_bg_enabled(int bg, bool enabled);
+    void set_blending_top_bg_enabled(int bg, bool enabled);
+
+    [[nodiscard]] bool blending_bottom_bg_enabled(int bg);
+
+    void set_blending_bottom_bg_enabled(int bg, bool enabled);
 
     [[nodiscard]] fixed blending_transparency_alpha();
 

@@ -56,7 +56,8 @@ namespace
         int16_t new_big_map_x = 0;
         int16_t new_big_map_y = 0;
         int8_t handles_index = -1;
-        bool blending_enabled: 1;
+        bool blending_top_enabled: 1;
+        bool blending_bottom_enabled: 1;
         bool visible: 1;
         bool big_map: 1;
         bool commit_big_map: 1;
@@ -67,7 +68,8 @@ namespace
             bg_sort_key(builder.priority(), builder.z_order()),
             regular_map(move(_regular_map)),
             camera(builder.release_camera()),
-            blending_enabled(builder.blending_enabled()),
+            blending_top_enabled(builder.blending_top_enabled()),
+            blending_bottom_enabled(builder.blending_bottom_enabled()),
             visible(builder.visible())
         {
             for(bool& visible_in_window : visible_in_windows)
@@ -86,7 +88,8 @@ namespace
             bg_sort_key(builder.priority(), builder.z_order()),
             affine_map(move(_affine_map)),
             camera(builder.release_camera()),
-            blending_enabled(builder.blending_enabled()),
+            blending_top_enabled(builder.blending_top_enabled()),
+            blending_bottom_enabled(builder.blending_bottom_enabled()),
             visible(builder.visible())
         {
             for(bool& visible_in_window : visible_in_windows)
@@ -1254,20 +1257,37 @@ void set_affine_attributes(id_type id, const affine_bg_attributes& attributes)
     set_mosaic_enabled(id, attributes.mosaic_enabled());
 }
 
-bool blending_enabled(id_type id)
+bool blending_top_enabled(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    return item->blending_enabled;
+    return item->blending_top_enabled;
 }
 
-void set_blending_enabled(id_type id, bool blending_enabled)
+void set_blending_top_enabled(id_type id, bool blending_top_enabled)
 {
     auto item = static_cast<item_type*>(id);
-    item->blending_enabled = blending_enabled;
+    item->blending_top_enabled = blending_top_enabled;
 
     if(! data.rebuild_handles && item->visible)
     {
-        display_manager::set_blending_bg_enabled(item->handles_index, blending_enabled);
+        display_manager::set_blending_top_bg_enabled(item->handles_index, blending_top_enabled);
+    }
+}
+
+bool blending_bottom_enabled(id_type id)
+{
+    auto item = static_cast<const item_type*>(id);
+    return item->blending_bottom_enabled;
+}
+
+void set_blending_bottom_enabled(id_type id, bool blending_bottom_enabled)
+{
+    auto item = static_cast<item_type*>(id);
+    item->blending_bottom_enabled = blending_bottom_enabled;
+
+    if(! data.rebuild_handles && item->visible)
+    {
+        display_manager::set_blending_bottom_bg_enabled(item->handles_index, blending_bottom_enabled);
     }
 }
 
@@ -1631,7 +1651,8 @@ void rebuild_handles()
                 item->handles_index = int8_t(id);
                 data.commit_data.cnts[id] = item->hw_cnt;
                 display_manager::set_bg_enabled(id, true);
-                display_manager::set_blending_bg_enabled(id, item->blending_enabled);
+                display_manager::set_blending_top_bg_enabled(id, item->blending_top_enabled);
+                display_manager::set_blending_bottom_bg_enabled(id, item->blending_bottom_enabled);
             }
             else
             {

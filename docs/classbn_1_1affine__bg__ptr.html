@@ -435,14 +435,30 @@
               <span class="m-doc-wrap-bumper">void <a href="#a1d3d93185fd4fdd303f95f62ad65aa1f" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
             </dt>
             <dd>Sets if the mosaic effect must be applied to this affine background or not.</dd>
-            <dt id="ad1654cd868c7810d393e402610960e59">
-              <span class="m-doc-wrap-bumper">auto <a href="#ad1654cd868c7810d393e402610960e59" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad1654cd868c7810d393e402610960e59" class="m-doc">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
             <dd>Indicates if blending must be applied to this affine background or not.</dd>
-            <dt id="a715b1bc30121d4d9ef1cb359200a830a">
-              <span class="m-doc-wrap-bumper">void <a href="#a715b1bc30121d4d9ef1cb359200a830a" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a715b1bc30121d4d9ef1cb359200a830a" class="m-doc">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
             </dt>
             <dd>Sets if blending must be applied to this affine background or not.</dd>
+            <dt id="acea61a44aa59cf21ca050e816749b6d6">
+              <span class="m-doc-wrap-bumper">auto <a href="#acea61a44aa59cf21ca050e816749b6d6" class="m-doc-self">blending_top_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this affine background is part of the blending top layer or not.</dd>
+            <dt id="a13daf15f8a8b89be894bd8f42d4d3741">
+              <span class="m-doc-wrap-bumper">void <a href="#a13daf15f8a8b89be894bd8f42d4d3741" class="m-doc-self">set_blending_top_enabled</a>(</span><span class="m-doc-wrap">bool blending_top_enabled)</span>
+            </dt>
+            <dd>Sets if this affine background is part of the blending top layer or not.</dd>
+            <dt id="a5e04b0d291e8f69af20242664ea8591d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5e04b0d291e8f69af20242664ea8591d" class="m-doc-self">blending_bottom_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this affine background is part of the blending bottom layer or not.</dd>
+            <dt id="a949e081f54bcf8abdd71c4c3f5904382">
+              <span class="m-doc-wrap-bumper">void <a href="#a949e081f54bcf8abdd71c4c3f5904382" class="m-doc-self">set_blending_bottom_enabled</a>(</span><span class="m-doc-wrap">bool blending_bottom_enabled)</span>
+            </dt>
+            <dd>Sets if this affine background is part of the blending bottom layer or not.</dd>
             <dt id="a711ebbd8f56b6fb3e938a7a9274ee0f9">
               <span class="m-doc-wrap-bumper">auto <a href="#a711ebbd8f56b6fb3e938a7a9274ee0f9" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
@@ -1481,6 +1497,20 @@
               </tbody>
             </table>
 <p>Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="ad1654cd868c7810d393e402610960e59"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad1654cd868c7810d393e402610960e59" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if blending must be applied to this affine background or not.</p>
+<p>Blending is applied to this affine background by making it part of the blending top layer.</p>
+          </div></section>
+          <section class="m-doc-details" id="a715b1bc30121d4d9ef1cb359200a830a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a715b1bc30121d4d9ef1cb359200a830a" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span></span>
+            </h3>
+            <p>Sets if blending must be applied to this affine background or not.</p>
+<p>Blending is applied to this affine background by making it part of the blending top layer.</p>
           </div></section>
           <section class="m-doc-details" id="af560d9ebe678e2b1b3e4354b79c78b39"><div>
             <h3>

@@ -162,9 +162,13 @@ namespace bgs_manager
 
     void set_affine_attributes(id_type id, const affine_bg_attributes& attributes);
 
-    [[nodiscard]] bool blending_enabled(id_type id);
+    [[nodiscard]] bool blending_top_enabled(id_type id);
 
-    void set_blending_enabled(id_type id, bool blending_enabled);
+    void set_blending_top_enabled(id_type id, bool blending_top_enabled);
+
+    [[nodiscard]] bool blending_bottom_enabled(id_type id);
+
+    void set_blending_bottom_enabled(id_type id, bool blending_bottom_enabled);
 
     [[nodiscard]] bool visible(id_type id);
 

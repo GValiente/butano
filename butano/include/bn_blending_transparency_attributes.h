@@ -36,9 +36,9 @@ public:
 
     /**
      * @brief Constructor.
-     * @param transparency_top_weight Transparency weight in the range [0..1] for the top layers,
+     * @param transparency_top_weight Transparency weight in the range [0..1] for the top layer,
      * with 0 being fully transparent and 1 being fully visible.
-     * @param transparency_bottom_weight Transparency weight in the range [0..1] for the bottom layers,
+     * @param transparency_bottom_weight Transparency weight in the range [0..1] for the bottom layer,
      * with 0 being fully transparent and 1 being fully visible.
      */
     constexpr blending_transparency_attributes(fixed transparency_top_weight, fixed transparency_bottom_weight) :
@@ -52,7 +52,7 @@ public:
     }
 
     /**
-     * @brief Returns the weight of the transparency blending for the top layers,
+     * @brief Returns the weight of the transparency blending for the top layer,
      * with 0 being fully transparent and 1 being fully visible.
      */
     [[nodiscard]] constexpr fixed transparency_top_weight() const
@@ -61,7 +61,7 @@ public:
     }
 
     /**
-     * @brief Sets the weight of the transparency blending for the top layers,
+     * @brief Sets the weight of the transparency blending for the top layer,
      * with 0 being fully transparent and 1 being fully visible.
      * @param transparency_top_weight Transparency weight in the range [0..1].
      */
@@ -74,7 +74,7 @@ public:
     }
 
     /**
-     * @brief Returns the weight of the transparency blending for the bottom layers,
+     * @brief Returns the weight of the transparency blending for the bottom layer,
      * with 0 being fully transparent and 1 being fully visible.
      */
     [[nodiscard]] constexpr fixed transparency_bottom_weight() const
@@ -83,7 +83,7 @@ public:
     }
 
     /**
-     * @brief Sets the weight of the transparency blending for the bottom layers,
+     * @brief Sets the weight of the transparency blending for the bottom layer,
      * with 0 being fully transparent and 1 being fully visible.
      * @param transparency_bottom_weight Transparency weight in the range [0..1].
      */

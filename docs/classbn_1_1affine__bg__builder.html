@@ -269,14 +269,30 @@
               <span class="m-doc-wrap-bumper">auto <a href="#abdba39d89a83bf6f9078b79867edda9f" class="m-doc">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
             </dt>
             <dd>Sets if the mosaic effect must be applied to the affine backgrounds to generate or not.</dd>
-            <dt id="a9f58af81f8e1e6a1abf0076ca32823f4">
-              <span class="m-doc-wrap-bumper">auto <a href="#a9f58af81f8e1e6a1abf0076ca32823f4" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9f58af81f8e1e6a1abf0076ca32823f4" class="m-doc">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
             <dd>Indicates if blending must be applied to the affine backgrounds to generate or not.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a2b47fd396438e6d72a4f919950eb7450" class="m-doc">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
             </dt>
             <dd>Sets if blending must be applied to the affine backgrounds to generate or not.</dd>
+            <dt id="a21fbaf4c6a8f811366e3d77af77bc28d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a21fbaf4c6a8f811366e3d77af77bc28d" class="m-doc-self">blending_top_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the affine backgrounds to generate must be part of the blending top layer or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab9010ba702cd541ad3d8a918a409a232" class="m-doc">set_blending_top_enabled</a>(</span><span class="m-doc-wrap">bool blending_top_enabled) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the affine backgrounds to generate must be part of the blending top layer or not.</dd>
+            <dt id="ab0defc36f691f0d6d0e6b2b6083491c4">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab0defc36f691f0d6d0e6b2b6083491c4" class="m-doc-self">blending_bottom_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the affine backgrounds to generate must be part of the blending bottom layer or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac6876b510e7cc9721b62e4ddb1df5ad0" class="m-doc">set_blending_bottom_enabled</a>(</span><span class="m-doc-wrap">bool blending_bottom_enabled) -&gt; <a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the affine backgrounds to generate must be part of the blending bottom layer or not.</dd>
             <dt id="a0a5494c3a585e1a14b735cf55fc43db9">
               <span class="m-doc-wrap-bumper">auto <a href="#a0a5494c3a585e1a14b735cf55fc43db9" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
@@ -952,6 +968,13 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="a9f58af81f8e1e6a1abf0076ca32823f4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />affine_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9f58af81f8e1e6a1abf0076ca32823f4" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if blending must be applied to the affine backgrounds to generate or not.</p>
+<p>Blending is applied to affine backgrounds by making them part of the blending top layer.</p>
+          </div></section>
           <section class="m-doc-details" id="a2b47fd396438e6d72a4f919950eb7450"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; bn::<wbr />affine_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2b47fd396438e6d72a4f919950eb7450" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span></span>
@@ -965,6 +988,53 @@
                 <tr>
                   <td style="width: 1%">blending_enabled</td>
                   <td><code>true</code> if blending must be applied; <code>false</code> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Blending is applied to affine backgrounds by making them part of the blending top layer.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab9010ba702cd541ad3d8a918a409a232"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; bn::<wbr />affine_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab9010ba702cd541ad3d8a918a409a232" class="m-doc-self">set_blending_top_enabled</a>(</span><span class="m-doc-wrap">bool blending_top_enabled)</span></span>
+            </h3>
+            <p>Sets if the affine backgrounds to generate must be part of the blending top layer or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">blending_top_enabled</td>
+                  <td><code>true</code> if generated backgrounds must be part of the blending top layer; <code>false</code> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac6876b510e7cc9721b62e4ddb1df5ad0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__builder.html" class="m-doc">affine_<wbr />bg_<wbr />builder</a>&amp; bn::<wbr />affine_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac6876b510e7cc9721b62e4ddb1df5ad0" class="m-doc-self">set_blending_bottom_enabled</a>(</span><span class="m-doc-wrap">bool blending_bottom_enabled)</span></span>
+            </h3>
+            <p>Sets if the affine backgrounds to generate must be part of the blending bottom layer or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">blending_bottom_enabled</td>
+                  <td><code>true</code> if generated backgrounds must be part of the blending bottom layer; <code>false</code> otherwise.</td>
                 </tr>
               </tbody>
               <tfoot>

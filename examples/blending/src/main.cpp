@@ -14,6 +14,7 @@
 #include "bn_blending_transparency_attributes.h"
 #include "bn_blending_transparency_attributes_hbe_ptr.h"
 
+#include "bn_regular_bg_items_tree.h"
 #include "bn_sprite_items_dinosaur.h"
 #include "bn_regular_bg_items_mountain.h"
 #include "bn_sprite_items_variable_8x16_font_yellow.h"
@@ -58,6 +59,57 @@ namespace
         }
 
         bn::blending::set_transparency_alpha(1);
+    }
+
+    void transparency_bottom_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
+                                   bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "PAD: move dinosaur",
+            "",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Transparency bottom", info_text_lines, text_generator);
+
+        mountain_bg.set_blending_enabled(false);
+        dinosaur_sprite.set_blending_enabled(false);
+
+        bn::regular_bg_ptr tree_bg = bn::regular_bg_items::tree.create_bg(0, 0);
+        tree_bg.set_priority(2);
+        tree_bg.set_blending_enabled(true);
+
+        bn::blending::set_transparency_alpha(0.75);
+        mountain_bg.set_blending_bottom_enabled(false);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::left_held())
+            {
+                dinosaur_sprite.set_x(bn::max(dinosaur_sprite.x() - 1, bn::fixed(-60)));
+            }
+            else if(bn::keypad::right_held())
+            {
+                dinosaur_sprite.set_x(bn::min(dinosaur_sprite.x() + 1, bn::fixed(60)));
+            }
+
+            if(bn::keypad::up_held())
+            {
+                dinosaur_sprite.set_y(bn::max(dinosaur_sprite.y() - 1, bn::fixed(-30)));
+            }
+            else if(bn::keypad::down_held())
+            {
+                dinosaur_sprite.set_y(bn::min(dinosaur_sprite.y() + 1, bn::fixed(30)));
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::blending::set_transparency_alpha(1);
+        mountain_bg.set_blending_bottom_enabled(true);
+        dinosaur_sprite.set_position(0, 0);
     }
 
     void transparency_actions_scene(bn::regular_bg_ptr& mountain_bg, bn::sprite_ptr& dinosaur_sprite,
@@ -370,6 +422,9 @@ int main()
     while(true)
     {
         transparency_scene(mountain_bg, dinosaur_sprite, text_generator);
+        bn::core::update();
+
+        transparency_bottom_scene(mountain_bg, dinosaur_sprite, text_generator);
         bn::core::update();
 
         transparency_actions_scene(mountain_bg, dinosaur_sprite, text_generator);

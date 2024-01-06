@@ -14,7 +14,9 @@
  *
  * @section changelog_17_0_0 17.0.0 (next release)
  *
- * bn::fixed_point_t, bn::fixed_size_t, bn::fixed_rect_t and bn::top_left_fixed_rect_t added.
+ * * Regular and affine backgrounds allow to specify if they are part of the blending bottom layer or not.
+ *   See the `blending` example to learn how to do it.
+ * * bn::fixed_point_t, bn::fixed_size_t, bn::fixed_rect_t and bn::top_left_fixed_rect_t added.
  *
  *
  * @section changelog_16_6_0 16.6.0

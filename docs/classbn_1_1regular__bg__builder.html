@@ -150,14 +150,30 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a2e24192246299d0addade075b18f875a" class="m-doc">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled) -&gt; <a href="classbn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp;</span>
             </dt>
             <dd>Sets if the mosaic effect must be applied to the regular backgrounds to generate or not.</dd>
-            <dt id="a50eb9ed9db95d9dc525d19131c6d07df">
-              <span class="m-doc-wrap-bumper">auto <a href="#a50eb9ed9db95d9dc525d19131c6d07df" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a50eb9ed9db95d9dc525d19131c6d07df" class="m-doc">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
             <dd>Indicates if blending must be applied to the regular backgrounds to generate or not.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a9c5fcf3042019c8d8e1efaa737364799" class="m-doc">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled) -&gt; <a href="classbn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp;</span>
             </dt>
             <dd>Sets if blending must be applied to the regular backgrounds to generate or not.</dd>
+            <dt id="aaef76dd3e842d3307382ae6f0b390c7d">
+              <span class="m-doc-wrap-bumper">auto <a href="#aaef76dd3e842d3307382ae6f0b390c7d" class="m-doc-self">blending_top_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the regular backgrounds to generate must be part of the blending top layer or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae5c255071ef446a5ed37a79ae8c1cdc1" class="m-doc">set_blending_top_enabled</a>(</span><span class="m-doc-wrap">bool blending_top_enabled) -&gt; <a href="classbn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the regular backgrounds to generate must be part of the blending top layer or not.</dd>
+            <dt id="aeb20bcce9aaf7a984687ca98cc55b2f5">
+              <span class="m-doc-wrap-bumper">auto <a href="#aeb20bcce9aaf7a984687ca98cc55b2f5" class="m-doc-self">blending_bottom_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the regular backgrounds to generate must be part of the blending bottom layer or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acdad9233b22e97e07c6e08a76484140d" class="m-doc">set_blending_bottom_enabled</a>(</span><span class="m-doc-wrap">bool blending_bottom_enabled) -&gt; <a href="classbn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets if the regular backgrounds to generate must be part of the blending bottom layer or not.</dd>
             <dt id="a716db23735ce6ffb46cf40ced7dbcdf6">
               <span class="m-doc-wrap-bumper">auto <a href="#a716db23735ce6ffb46cf40ced7dbcdf6" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
@@ -485,6 +501,13 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="a50eb9ed9db95d9dc525d19131c6d07df"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />regular_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a50eb9ed9db95d9dc525d19131c6d07df" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if blending must be applied to the regular backgrounds to generate or not.</p>
+<p>Blending is applied to regular backgrounds by making them part of the blending top layer.</p>
+          </div></section>
           <section class="m-doc-details" id="a9c5fcf3042019c8d8e1efaa737364799"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp; bn::<wbr />regular_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9c5fcf3042019c8d8e1efaa737364799" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span></span>
@@ -498,6 +521,53 @@
                 <tr>
                   <td style="width: 1%">blending_enabled</td>
                   <td><code>true</code> if blending must be applied; <code>false</code> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Blending is applied to regular backgrounds by making them part of the blending top layer.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae5c255071ef446a5ed37a79ae8c1cdc1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp; bn::<wbr />regular_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae5c255071ef446a5ed37a79ae8c1cdc1" class="m-doc-self">set_blending_top_enabled</a>(</span><span class="m-doc-wrap">bool blending_top_enabled)</span></span>
+            </h3>
+            <p>Sets if the regular backgrounds to generate must be part of the blending top layer or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">blending_top_enabled</td>
+                  <td><code>true</code> if generated backgrounds must be part of the blending top layer; <code>false</code> otherwise.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acdad9233b22e97e07c6e08a76484140d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__builder.html" class="m-doc">regular_<wbr />bg_<wbr />builder</a>&amp; bn::<wbr />regular_bg_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acdad9233b22e97e07c6e08a76484140d" class="m-doc-self">set_blending_bottom_enabled</a>(</span><span class="m-doc-wrap">bool blending_bottom_enabled)</span></span>
+            </h3>
+            <p>Sets if the regular backgrounds to generate must be part of the blending bottom layer or not.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">blending_bottom_enabled</td>
+                  <td><code>true</code> if generated backgrounds must be part of the blending bottom layer; <code>false</code> otherwise.</td>
                 </tr>
               </tbody>
               <tfoot>

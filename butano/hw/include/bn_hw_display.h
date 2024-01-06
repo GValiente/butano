@@ -100,25 +100,33 @@ namespace bn::hw::display
         FADE_TO_BLACK
     };
 
-    [[nodiscard]] inline int blending_layers(const bool* bgs_ptr, int count, bool fade)
+    [[nodiscard]] inline uint8_t blending_layer(const bool* bgs_ptr, bool sprites, bool backdrop)
     {
-        unsigned result = fade ? BLD_OBJ | BLD_BACKDROP : 0;
+        uint8_t result = 0;
 
-        for(int index = 0; index < count; ++index)
+        for(int index = 0; index < bgs::count(); ++index)
         {
             if(bgs_ptr[index])
             {
-                result |= unsigned(1 << index);
+                result |= uint8_t(1 << index);
             }
         }
 
-        return int(result);
+        if(sprites)
+        {
+            result |= BLD_OBJ;
+        }
+
+        if(backdrop)
+        {
+            result |= BLD_BACKDROP;
+        }
+
+        return result;
     }
 
-    inline void set_blending_cnt(int layers, blending_mode mode, uint16_t& blending_cnt)
+    inline void set_blending_cnt(int top, int bottom, blending_mode mode, uint16_t& blending_cnt)
     {
-        int top = layers;
-        int bottom = BLD_ALL | BLD_BACKDROP;
         blending_cnt = uint16_t((bottom << 8) | (int(mode) << 6) | top);
     }
 

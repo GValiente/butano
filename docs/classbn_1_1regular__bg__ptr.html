@@ -326,14 +326,30 @@
               <span class="m-doc-wrap-bumper">void <a href="#aa96206efea0a13c65a984962e93635f0" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
             </dt>
             <dd>Sets if the mosaic effect must be applied to this regular background or not.</dd>
-            <dt id="a83bf33997a10ccb01b28c670fd5d3c09">
-              <span class="m-doc-wrap-bumper">auto <a href="#a83bf33997a10ccb01b28c670fd5d3c09" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a83bf33997a10ccb01b28c670fd5d3c09" class="m-doc">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
             <dd>Indicates if blending must be applied to this regular background or not.</dd>
-            <dt id="a750daf2296fa7dbba5f5f779dec75810">
-              <span class="m-doc-wrap-bumper">void <a href="#a750daf2296fa7dbba5f5f779dec75810" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a750daf2296fa7dbba5f5f779dec75810" class="m-doc">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
             </dt>
             <dd>Sets if blending must be applied to this regular background or not.</dd>
+            <dt id="a32632ad4e289c0e4252bfbe2f8862f5e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a32632ad4e289c0e4252bfbe2f8862f5e" class="m-doc-self">blending_top_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this regular background is part of the blending top layer or not.</dd>
+            <dt id="a8ec965fe46f3cdc6c7b4bbb1167d95a9">
+              <span class="m-doc-wrap-bumper">void <a href="#a8ec965fe46f3cdc6c7b4bbb1167d95a9" class="m-doc-self">set_blending_top_enabled</a>(</span><span class="m-doc-wrap">bool blending_top_enabled)</span>
+            </dt>
+            <dd>Sets if this regular background is part of the blending top layer or not.</dd>
+            <dt id="a0fac6653828d9aa1cb7fcd5e5b6c3170">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0fac6653828d9aa1cb7fcd5e5b6c3170" class="m-doc-self">blending_bottom_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this regular background is part of the blending bottom layer or not.</dd>
+            <dt id="ae79be583de26ed0038057f2a727c8d3d">
+              <span class="m-doc-wrap-bumper">void <a href="#ae79be583de26ed0038057f2a727c8d3d" class="m-doc-self">set_blending_bottom_enabled</a>(</span><span class="m-doc-wrap">bool blending_bottom_enabled)</span>
+            </dt>
+            <dd>Sets if this regular background is part of the blending bottom layer or not.</dd>
             <dt id="a98cf7703e32c2e542a19a80465f9ecb1">
               <span class="m-doc-wrap-bumper">auto <a href="#a98cf7703e32c2e542a19a80465f9ecb1" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
@@ -1320,6 +1336,20 @@
               </tbody>
             </table>
 <p>Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a83bf33997a10ccb01b28c670fd5d3c09"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a83bf33997a10ccb01b28c670fd5d3c09" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if blending must be applied to this regular background or not.</p>
+<p>Blending is applied to this regular background by making it part of the blending top layer.</p>
+          </div></section>
+          <section class="m-doc-details" id="a750daf2296fa7dbba5f5f779dec75810"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />regular_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a750daf2296fa7dbba5f5f779dec75810" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span></span>
+            </h3>
+            <p>Sets if blending must be applied to this regular background or not.</p>
+<p>Blending is applied to this regular background by making it part of the blending top layer.</p>
           </div></section>
           <section class="m-doc-details" id="aa9facd682d2029350eb195fdfd889d5b"><div>
             <h3>

@@ -31,6 +31,16 @@ void set_visible(bool visible)
     display_manager::set_sprites_visible(visible);
 }
 
+bool blending_bottom_enabled()
+{
+    return display_manager::blending_bottom_sprites_enabled();
+}
+
+void set_blending_bottom_enabled(bool blending_bottom_enabled)
+{
+    display_manager::set_blending_bottom_sprites_enabled(blending_bottom_enabled);
+}
+
 int reserved_handles_count()
 {
     return sprites_manager::reserved_handles_count();

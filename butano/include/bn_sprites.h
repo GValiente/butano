@@ -81,6 +81,16 @@ namespace bn::sprites
     void set_visible(bool visible);
 
     /**
+     * @brief Indicates if the sprite layer is part of the blending bottom layer or not.
+     */
+    [[nodiscard]] bool blending_bottom_enabled();
+
+    /**
+     * @brief Sets if the sprite layer must be part of the blending bottom layer or not.
+     */
+    void set_blending_bottom_enabled(bool blending_bottom_enabled);
+
+    /**
      * @brief Returns the number of hardware sprite handles not used by Butano sprites manager.
      *
      * Normally you should not need to reserve handles, but it can be useful for messing with HDMA for example.

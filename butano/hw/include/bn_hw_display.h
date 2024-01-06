@@ -92,7 +92,7 @@ namespace bn::hw::display
         return &REG_MOSAIC_U16;
     }
 
-    enum class blending_mode
+    enum class blending_mode : uint8_t
     {
         OFF,
         TRANSPARENCY,

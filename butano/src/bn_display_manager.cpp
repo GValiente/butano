@@ -34,16 +34,11 @@ namespace
         fixed sprites_mosaic_vertical_stretch;
         fixed bgs_mosaic_horizontal_stretch;
         fixed bgs_mosaic_vertical_stretch;
-        bool blending_top_bgs[hw::bgs::count()] = {};
-        bool blending_bottom_bgs[hw::bgs::count()] = {};
         fixed blending_transparency_alpha = 1;
         fixed blending_intensity_alpha = 0;
         fixed blending_transparency_top_weight = -1;
         fixed blending_transparency_bottom_weight = -1;
         fixed blending_fade_alpha = 0;
-        uint8_t blending_top_layer = 0;
-        uint8_t blending_bottom_layer = 0;
-        hw::display::blending_mode blending_mode;
         unsigned windows_flags[hw::display::windows_count()];
         fixed_point rect_windows_boundaries[hw::display::rect_windows_count() * 2];
         point rect_windows_hw_boundaries[hw::display::rect_windows_count() * 2];
@@ -59,6 +54,12 @@ namespace
         bool sprites_visible = true;
         bool green_swap_enabled = false;
         bool update_mosaic = true;
+        hw::display::blending_mode blending_mode;
+        bool blending_top_bgs[hw::bgs::count()] = {};
+        bool blending_bottom_bgs[hw::bgs::count()] = {};
+        bool blending_bottom_sprites = true;
+        uint8_t blending_top_layer = 0;
+        uint8_t blending_bottom_layer = 0;
         bool blending_fade_enabled = false;
         bool blending_fade_to_black = true;
         bool update_blending_layers = true;
@@ -348,6 +349,21 @@ void set_blending_bottom_bg_enabled(int bg, bool enabled)
     if(data.blending_bottom_bgs[bg] != enabled)
     {
         data.blending_bottom_bgs[bg] = enabled;
+        data.update_blending_layers = true;
+        data.commit = true;
+    }
+}
+
+bool blending_bottom_sprites_enabled()
+{
+    return data.blending_bottom_sprites;
+}
+
+void set_blending_bottom_sprites_enabled(bool enabled)
+{
+    if(data.blending_bottom_sprites != enabled)
+    {
+        data.blending_bottom_sprites = enabled;
         data.update_blending_layers = true;
         data.commit = true;
     }
@@ -911,7 +927,8 @@ void update()
         {
             bool fade = data.blending_mode != hw::display::blending_mode::TRANSPARENCY;
             data.blending_top_layer = hw::display::blending_layer(data.blending_top_bgs, fade, fade);
-            data.blending_bottom_layer = hw::display::blending_layer(data.blending_bottom_bgs, true, true);
+            data.blending_bottom_layer = hw::display::blending_layer(
+                    data.blending_bottom_bgs, data.blending_bottom_sprites, true);
             data.update_blending_layers = false;
             update_blending_cnt = true;
         }

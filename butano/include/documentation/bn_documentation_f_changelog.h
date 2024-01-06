@@ -16,6 +16,7 @@
  *
  * * Regular and affine backgrounds allow to specify if they are part of the blending bottom layer or not.
  *   See the `blending` example to learn how to do it.
+ * * bn::sprites::blending_bottom_enabled and bn::sprites::set_blending_bottom_enabled added.
  * * bn::fixed_point_t, bn::fixed_size_t, bn::fixed_rect_t and bn::top_left_fixed_rect_t added.
  *
  *

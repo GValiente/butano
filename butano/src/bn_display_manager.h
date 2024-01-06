@@ -71,6 +71,10 @@ namespace bn::display_manager
 
     void set_blending_bottom_bg_enabled(int bg, bool enabled);
 
+    [[nodiscard]] bool blending_bottom_sprites_enabled();
+
+    void set_blending_bottom_sprites_enabled(bool enabled);
+
     [[nodiscard]] fixed blending_transparency_alpha();
 
     void set_blending_transparency_alpha(fixed transparency_alpha);

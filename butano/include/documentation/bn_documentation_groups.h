@@ -110,6 +110,14 @@
  */
 
 /**
+ * @defgroup backdrop Backdrop
+ *
+ * Single color layer displayed behind all backgrounds and sprites.
+ *
+ * @ingroup display
+ */
+
+/**
  * @defgroup mosaic Mosaic
  *
  * It makes sprites and backgrounds look blocky.

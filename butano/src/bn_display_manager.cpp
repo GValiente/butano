@@ -58,6 +58,7 @@ namespace
         bool blending_top_bgs[hw::bgs::count()] = {};
         bool blending_bottom_bgs[hw::bgs::count()] = {};
         bool blending_bottom_sprites = true;
+        bool blending_bottom_backdrop = true;
         uint8_t blending_top_layer = 0;
         uint8_t blending_bottom_layer = 0;
         bool blending_fade_enabled = false;
@@ -364,6 +365,21 @@ void set_blending_bottom_sprites_enabled(bool enabled)
     if(data.blending_bottom_sprites != enabled)
     {
         data.blending_bottom_sprites = enabled;
+        data.update_blending_layers = true;
+        data.commit = true;
+    }
+}
+
+bool blending_bottom_backdrop_enabled()
+{
+    return data.blending_bottom_backdrop;
+}
+
+void set_blending_bottom_backdrop_enabled(bool enabled)
+{
+    if(data.blending_bottom_backdrop != enabled)
+    {
+        data.blending_bottom_backdrop = enabled;
         data.update_blending_layers = true;
         data.commit = true;
     }
@@ -928,7 +944,7 @@ void update()
             bool fade = data.blending_mode != hw::display::blending_mode::TRANSPARENCY;
             data.blending_top_layer = hw::display::blending_layer(data.blending_top_bgs, fade, fade);
             data.blending_bottom_layer = hw::display::blending_layer(
-                    data.blending_bottom_bgs, data.blending_bottom_sprites, true);
+                    data.blending_bottom_bgs, data.blending_bottom_sprites, data.blending_bottom_backdrop);
             data.update_blending_layers = false;
             update_blending_cnt = true;
         }

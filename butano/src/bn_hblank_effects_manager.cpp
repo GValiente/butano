@@ -44,6 +44,7 @@
 #include "bn_hbe_ptr.cpp.h"
 #include "bn_bg_palette_color_hbe_ptr.cpp.h"
 #include "bn_bg_palettes_transparent_color_hbe_ptr.cpp.h"
+#include "bn_backdrop_color_hbe_ptr.cpp.h"
 #include "bn_blending_fade_alpha_hbe_ptr.cpp.h"
 #include "bn_blending_transparency_attributes_hbe_ptr.cpp.h"
 #include "bn_green_swap_hbe_ptr.cpp.h"

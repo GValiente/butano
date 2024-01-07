@@ -12,6 +12,7 @@
 #include "bn_sprite_palette_ptr.cpp.h"
 #include "bn_sprite_palette_item.cpp.h"
 #include "bn_palettes_bank.cpp.h"
+#include "bn_color_effect.cpp.h"
 
 namespace bn::palettes_manager
 {

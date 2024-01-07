@@ -20,6 +20,7 @@
  * * bn::backdrop functions and actions added.
  * * bn::backdrop_color_hbe_ptr added.
  * * bn::fixed_point_t, bn::fixed_size_t, bn::fixed_rect_t and bn::top_left_fixed_rect_t added.
+ * * Build time reduced.
  *
  *
  * @section changelog_16_6_0 16.6.0

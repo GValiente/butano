@@ -115,14 +115,24 @@
  * @ingroup assert
  */
 
+/**
+ * @def BN_ASSERT_FILE
+ *
+ * Current input file name if available; otherwise input file path.
+ *
+ * @ingroup assert
+ */
+
+#ifdef __FILE_NAME__
+    #define BN_ASSERT_FILE __FILE_NAME__
+#else
+    #define BN_ASSERT_FILE __FILE__
+#endif
+
 #if BN_CFG_ASSERT_ENABLED || BN_DOXYGEN
     #include "bn_sstream.h"
     #include "bn_istring_base.h"
     #include "bn_assert_callback_type.h"
-
-    #ifndef __FILE_NAME__
-        #error "__FILE_NAME__ is not defined. Please update devkitARM."
-    #endif
 
     /**
      * @brief Assert related functions.
@@ -155,7 +165,7 @@
                     { \
                         if(! (condition)) [[unlikely]] \
                         { \
-                            _bn::assert::show_args(#condition, __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                            _bn::assert::show_args(#condition, BN_ASSERT_FILE, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                         } \
                     } \
                 } while(false)
@@ -171,7 +181,7 @@
                     { \
                         if(! (condition)) [[unlikely]] \
                         { \
-                            _bn::assert::show(__FILE_NAME__, __LINE__); \
+                            _bn::assert::show(BN_ASSERT_FILE, __LINE__); \
                         } \
                     } \
                 } while(false)
@@ -191,7 +201,7 @@
                     { \
                         if(! (condition)) [[unlikely]] \
                         { \
-                            _bn::assert::show_args("", __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                            _bn::assert::show_args("", BN_ASSERT_FILE, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                         } \
                     } \
                 } while(false)
@@ -211,7 +221,7 @@
                     } \
                     else \
                     { \
-                        _bn::assert::show_args("", __FILE_NAME__, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
+                        _bn::assert::show_args("", BN_ASSERT_FILE, __func__, __LINE__ __VA_OPT__(, ) __VA_ARGS__); \
                     } \
                 } while(false)
         #else
@@ -224,7 +234,7 @@
                     } \
                     else \
                     { \
-                        _bn::assert::show(__FILE_NAME__, __LINE__); \
+                        _bn::assert::show(BN_ASSERT_FILE, __LINE__); \
                     } \
                 } while(false)
         #endif

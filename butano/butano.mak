@@ -7,6 +7,6 @@ else
 	ifneq ($(strip $(WONDERFUL_TOOLCHAIN)),)
 		include $(LIBBUTANOABS)/butano_wt.mak
 	else
-		$(error "DEVKITARM and WONDERFUL_TOOLCHAIN not found")
+$(error "DEVKITARM and WONDERFUL_TOOLCHAIN not found")
 	endif
 endif

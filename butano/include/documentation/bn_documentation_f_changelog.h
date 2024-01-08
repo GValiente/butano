@@ -21,6 +21,7 @@
  * * bn::backdrop_color_hbe_ptr added.
  * * bn::fixed_point_t, bn::fixed_size_t, bn::fixed_rect_t and bn::top_left_fixed_rect_t added.
  * * `__FILE_NAME__` macro is no longer required.
+ * * Toolchain detection fixed.
  * * Build time reduced.
  *
  *

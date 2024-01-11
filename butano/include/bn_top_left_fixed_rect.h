@@ -276,7 +276,7 @@ public:
     /**
      * @brief Indicates if the given point is inside the rectangle or not.
      *
-     * If the point is in the edge of the rectangle, it returns `false`.
+     * If the point is on the edge of the rectangle, it returns `false`.
      */
     [[nodiscard]] constexpr bool contains(const fixed_point_t<Precision>& point) const
     {
@@ -292,9 +292,50 @@ public:
     }
 
     /**
+     * @brief Indicates if the given point is inside the rectangle or not.
+     *
+     * If the point is on the edge of the rectangle, it returns `true`.
+     */
+    [[nodiscard]] constexpr bool edge_contains(const fixed_point_t<Precision>& point) const
+    {
+        fixed_t<Precision> this_left = left();
+
+        if(this_left <= point.x() && this_left + width() >= point.x())
+        {
+            fixed_t<Precision> this_top = top();
+            return this_top <= point.y() && this_top + height() >= point.y();
+        }
+
+        return false;
+    }
+
+    /**
+     * @brief Indicates if the given rectangle is inside this one or not.
+     *
+     * If the given rectangle is on the edge of this one, it returns `false`.
+     */
+    [[nodiscard]] constexpr bool contains(const top_left_fixed_rect_t& other) const
+    {
+        return left() < other.left() && right() > other.right() &&
+               top() < other.top() && bottom() > other.bottom();
+    }
+
+    /**
+     * @brief Indicates if the given rectangle is inside this one or not.
+     *
+     * If the given rectangle is on the edge of this one, it returns `true`.
+     */
+    [[nodiscard]] constexpr bool edge_contains(const top_left_fixed_rect_t& other) const
+    {
+        return left() <= other.left() && right() >= other.right() &&
+               top() <= other.top() && bottom() >= other.bottom();
+    }
+
+    /**
      * @brief Indicates if this rectangle intersects with the given one or not.
      *
-     * Two rectangles intersect if there is at least one point that is within both rectangles.
+     * Two rectangles intersect if there is at least one point that is within both rectangles,
+     * excluding their edges.
      */
     [[nodiscard]] constexpr bool intersects(const top_left_fixed_rect_t& other) const
     {
@@ -306,6 +347,27 @@ public:
             fixed_t<Precision> this_top = top();
             fixed_t<Precision> other_top = other.top();
             return this_top < other_top + other.height() && height() + this_top > other_top;
+        }
+
+        return false;
+    }
+
+    /**
+     * @brief Indicates if this rectangle touches the given one or not.
+     *
+     * Two rectangles touch each other if there is at least one point that is within both rectangles,
+     * including their edges.
+     */
+    [[nodiscard]] constexpr bool touches(const top_left_fixed_rect_t& other) const
+    {
+        fixed_t<Precision> this_left = left();
+        fixed_t<Precision> other_left = other.left();
+
+        if(this_left <= other_left + other.width() && this_left + width() >= other_left)
+        {
+            fixed_t<Precision> this_top = top();
+            fixed_t<Precision> other_top = other.top();
+            return this_top <= other_top + other.height() && height() + this_top >= other_top;
         }
 
         return false;

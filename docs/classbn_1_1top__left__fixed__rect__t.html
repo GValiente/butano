@@ -200,9 +200,25 @@
             </dt>
             <dd>Indicates if the given point is inside the rectangle or not.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a16b92ef6621bb85da2b35c75f499df54" class="m-doc">edge_contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; point) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if the given point is inside the rectangle or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac957ce9875f0a55ad1a196d56b6cde2c" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if the given rectangle is inside this one or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7be651789f2093ab2813cf9cb9282f58" class="m-doc">edge_contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if the given rectangle is inside this one or not.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a565ce1545855e815ed314980f3166bb3" class="m-doc">intersects</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Indicates if this rectangle intersects with the given one or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afe50d4e3201beb7734bb172dbaacc0f8" class="m-doc">touches</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Indicates if this rectangle touches the given one or not.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -395,7 +411,37 @@
               <span class="m-doc-wrap-bumper">bool bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac8ab4df2f4a2060592db32d44c604b47" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; point) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Indicates if the given point is inside the rectangle or not.</p>
-<p>If the point is in the edge of the rectangle, it returns <code>false</code>.</p>
+<p>If the point is on the edge of the rectangle, it returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a16b92ef6621bb85da2b35c75f499df54"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a16b92ef6621bb85da2b35c75f499df54" class="m-doc-self">edge_contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1fixed__point__t.html" class="m-doc">fixed_<wbr />point_<wbr />t</a>&lt;Precision&gt;&amp; point) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if the given point is inside the rectangle or not.</p>
+<p>If the point is on the edge of the rectangle, it returns <code>true</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac957ce9875f0a55ad1a196d56b6cde2c"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac957ce9875f0a55ad1a196d56b6cde2c" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if the given rectangle is inside this one or not.</p>
+<p>If the given rectangle is on the edge of this one, it returns <code>false</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7be651789f2093ab2813cf9cb9282f58"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7be651789f2093ab2813cf9cb9282f58" class="m-doc-self">edge_contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if the given rectangle is inside this one or not.</p>
+<p>If the given rectangle is on the edge of this one, it returns <code>true</code>.</p>
           </div></section>
           <section class="m-doc-details" id="a565ce1545855e815ed314980f3166bb3"><div>
             <h3>
@@ -405,7 +451,17 @@
               <span class="m-doc-wrap-bumper">bool bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a565ce1545855e815ed314980f3166bb3" class="m-doc-self">intersects</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Indicates if this rectangle intersects with the given one or not.</p>
-<p>Two rectangles intersect if there is at least one point that is within both rectangles.</p>
+<p>Two rectangles intersect if there is at least one point that is within both rectangles, excluding their edges.</p>
+          </div></section>
+          <section class="m-doc-details" id="afe50d4e3201beb7734bb172dbaacc0f8"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />top_left_fixed_rect_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afe50d4e3201beb7734bb172dbaacc0f8" class="m-doc-self">touches</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1top__left__fixed__rect__t.html" class="m-doc">top_<wbr />left_<wbr />fixed_<wbr />rect_<wbr />t</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Indicates if this rectangle touches the given one or not.</p>
+<p>Two rectangles touch each other if there is at least one point that is within both rectangles, including their edges.</p>
           </div></section>
         </section>
       </div>

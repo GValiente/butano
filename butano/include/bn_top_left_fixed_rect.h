@@ -312,6 +312,28 @@ public:
     }
 
     /**
+     * @brief Indicates if this rectangle contains the given one entirely.
+     *
+     * A rectangle is considered to contain another rectangle entirely if all four corners of
+     * the specified rectangle are within the boundaries of this rectangle.
+     *
+     */
+    [[nodiscard]] constexpr bool contains(const fixed_rect_t& other) const
+    {
+        fixed_t<Precision> this_left = left();
+        fixed_t<Precision> other_left = other.left();
+
+        if (this_left <= other_left && this_left + width() >= other_left + other.width())
+        {
+            fixed_t<Precision> this_top = top();
+            fixed_t<Precision> other_top = other.top();
+            return this_top <= other_top && this_top + height() >= other_top + other.height();
+        }
+
+        return false;
+    }
+
+    /**
      * @brief Default equal operator.
      */
     [[nodiscard]] constexpr friend bool operator==(

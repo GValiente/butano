@@ -318,7 +318,7 @@ public:
      * the specified rectangle are within the boundaries of this rectangle.
      *
      */
-    [[nodiscard]] constexpr bool contains(const fixed_rect_t& other) const
+    [[nodiscard]] constexpr bool contains(const top_left_fixed_rect_t& other) const
     {
         fixed_t<Precision> this_left = left();
         fixed_t<Precision> other_left = other.left();

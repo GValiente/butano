@@ -278,7 +278,7 @@ public:
      *
      * If the point is in the edge of the rectangle, it returns `false`.
      */
-    [[nodiscard]] constexpr bool contains(const fixed_point_t<Precision>& point) const
+    [[nodiscard]] constexpr bool contains(const top_left_fixed_point_t<Precision>& point) const
     {
         fixed_t<Precision> this_left = left();
 

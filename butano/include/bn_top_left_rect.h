@@ -308,7 +308,7 @@ public:
      * the specified rectangle are within the boundaries of this rectangle.
      *
      */
-    [[nodiscard]] constexpr bool contains(const rect& other) const
+    [[nodiscard]] constexpr bool contains(const top_left_rect& other) const
     {
         int this_left = left();
         int other_left = other.left();

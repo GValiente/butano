@@ -118,7 +118,7 @@
 /**
  * @def BN_ASSERT_FILE
  *
- * Current input file name if available; otherwise input file path.
+ * Current input file name if available; otherwise an empty string.
  *
  * @ingroup assert
  */
@@ -126,7 +126,7 @@
 #ifdef __FILE_NAME__
     #define BN_ASSERT_FILE __FILE_NAME__
 #else
-    #define BN_ASSERT_FILE __FILE__
+    #define BN_ASSERT_FILE ""
 #endif
 
 #if BN_CFG_ASSERT_ENABLED || BN_DOXYGEN

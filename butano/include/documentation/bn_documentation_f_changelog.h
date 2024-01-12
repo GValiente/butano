@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_0_0 17.0.0 (next release)
+ * @section changelog_17_0_0 17.0.0
  *
  * * Regular and affine backgrounds allow to specify if they are part of the blending bottom layer or not.
  *   See the `blending` example to learn how to do it.

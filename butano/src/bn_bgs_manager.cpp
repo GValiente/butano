@@ -149,7 +149,7 @@ namespace
 
             if(big_map)
             {
-                map_size = 1;
+                map_size = int(map_ref.big_canvas_size()) + 1;
             }
             else
             {
@@ -1713,25 +1713,25 @@ void commit_big_maps()
                     while(new_map_x < old_map_x)
                     {
                         --old_map_x;
-                        bg_blocks_manager::update_regular_map_col(map_handle, old_map_x, new_map_y);
+                        bg_blocks_manager::update_regular_map_left_col(map_handle, old_map_x, new_map_y);
                     }
 
                     while(new_map_x > old_map_x)
                     {
                         ++old_map_x;
-                        bg_blocks_manager::update_regular_map_col(map_handle, old_map_x + 31, new_map_y);
+                        bg_blocks_manager::update_regular_map_right_col(map_handle, old_map_x, new_map_y);
                     }
 
                     while(new_map_y < old_map_y)
                     {
                         --old_map_y;
-                        bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, old_map_y);
+                        bg_blocks_manager::update_regular_map_top_row(map_handle, new_map_x, old_map_y);
                     }
 
                     while(new_map_y > old_map_y)
                     {
                         ++old_map_y;
-                        bg_blocks_manager::update_regular_map_row(map_handle, new_map_x, old_map_y + 21);
+                        bg_blocks_manager::update_regular_map_bottom_row(map_handle, new_map_x, old_map_y);
                     }
                 }
                 else
@@ -1739,25 +1739,25 @@ void commit_big_maps()
                     while(new_map_x < old_map_x)
                     {
                         --old_map_x;
-                        bg_blocks_manager::update_affine_map_col(map_handle, old_map_x, new_map_y);
+                        bg_blocks_manager::update_affine_map_left_col(map_handle, old_map_x, new_map_y);
                     }
 
                     while(new_map_x > old_map_x)
                     {
                         ++old_map_x;
-                        bg_blocks_manager::update_affine_map_col(map_handle, old_map_x + 31, new_map_y);
+                        bg_blocks_manager::update_affine_map_right_col(map_handle, old_map_x, new_map_y);
                     }
 
                     while(new_map_y < old_map_y)
                     {
                         --old_map_y;
-                        bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, old_map_y);
+                        bg_blocks_manager::update_affine_map_top_row(map_handle, new_map_x, old_map_y);
                     }
 
                     while(new_map_y > old_map_y)
                     {
                         ++old_map_y;
-                        bg_blocks_manager::update_affine_map_row(map_handle, new_map_x, old_map_y + 21);
+                        bg_blocks_manager::update_affine_map_bottom_row(map_handle, new_map_x, old_map_y);
                     }
                 }
             }

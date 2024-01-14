@@ -16,6 +16,11 @@
 #include "bn_config_log.h"
 #include "bn_config_doxygen.h"
 
+namespace bn
+{
+    enum class affine_bg_big_map_canvas_size : uint8_t;
+}
+
 /**
  * @brief Background maps related functions.
  *
@@ -42,6 +47,16 @@ namespace bn::bg_maps
      * @brief Returns the number of available background map cell blocks.
      */
     [[nodiscard]] int available_blocks_count();
+
+    /**
+     * @brief Returns the size of the canvas used to create big affine background maps.
+     */
+    [[nodiscard]] affine_bg_big_map_canvas_size new_affine_big_map_canvas_size();
+
+    /**
+     * @brief Sets the size of the canvas used to create big affine background maps.
+     */
+    void set_new_affine_big_map_canvas_size(affine_bg_big_map_canvas_size affine_big_map_canvas_size);
 
     #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
         /**

@@ -30,6 +30,16 @@ int available_blocks_count()
     return bg_blocks_manager::available_map_blocks_count();
 }
 
+affine_bg_big_map_canvas_size new_affine_big_map_canvas_size()
+{
+    return bg_blocks_manager::new_affine_big_map_canvas_size();
+}
+
+void set_new_affine_big_map_canvas_size(affine_bg_big_map_canvas_size affine_big_map_canvas_size)
+{
+    bg_blocks_manager::set_new_affine_big_map_canvas_size(affine_big_map_canvas_size);
+}
+
 #if BN_CFG_LOG_ENABLED
     void log_status()
     {

@@ -5,6 +5,7 @@
 
 #include "bn_core.h"
 #include "bn_keypad.h"
+#include "bn_bg_maps.h"
 #include "bn_display.h"
 #include "bn_blending.h"
 #include "bn_unique_ptr.h"
@@ -13,6 +14,7 @@
 #include "bn_affine_bg_ptr.h"
 #include "bn_sprite_text_generator.h"
 #include "bn_sprite_animate_actions.h"
+#include "bn_affine_bg_big_map_canvas_size.h"
 #include "bn_affine_bg_pa_register_hbe_ptr.h"
 #include "bn_affine_bg_pd_register_hbe_ptr.h"
 #include "bn_affine_bg_dx_register_hbe_ptr.h"
@@ -40,6 +42,8 @@ int main()
 
     bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     common::info info("World map", info_text_lines, text_generator);
+
+    bn::bg_maps::set_new_affine_big_map_canvas_size(bn::affine_bg_big_map_canvas_size::HUGE);
 
     bn::affine_bg_ptr land_bg = bn::affine_bg_items::land.create_bg(0, 0);
     land_bg.set_pivot_position(1432, 874);
@@ -105,7 +109,8 @@ int main()
     direction last_direction;
     last_direction.keys.down = true;
 
-    bool first_frame = true;
+    bn::fixed scale = 1;
+    bool scale_changed = true;
 
     while(true)
     {
@@ -143,17 +148,32 @@ int main()
         clouds_bg.set_pivot_position(clouds_bg.pivot_position() + land_bg.pivot_position() - old_pivot_position +
                                      bn::fixed_point(0.1, 0.1));
 
-        load_attributes(land_bg.mat_attributes(), land_attributes._data);
-        load_attributes(clouds_bg.mat_attributes(), clouds_attributes._data);
-
-        if(first_frame)
+        if(bn::keypad::l_held())
         {
+            scale = bn::max(scale - 0.0075, bn::fixed(0.25));
+            scale_changed = true;
+        }
+        else if(bn::keypad::r_held())
+        {
+            scale = bn::min(scale + 0.0075, bn::fixed(1));
+            scale_changed = true;
+        }
+
+        if(scale_changed)
+        {
+            land_bg.set_scale(scale);
+            clouds_bg.set_scale(scale);
+
             land_pa_hbe.reload_attributes_ref();
             land_pd_hbe.reload_attributes_ref();
             clouds_pa_hbe.reload_attributes_ref();
             clouds_pd_hbe.reload_attributes_ref();
-            first_frame = false;
+
+            scale_changed = false;
         }
+
+        load_attributes(land_bg.mat_attributes(), land_attributes._data);
+        load_attributes(clouds_bg.mat_attributes(), clouds_attributes._data);
 
         land_dx_hbe.reload_attributes_ref();
         land_dy_hbe.reload_attributes_ref();

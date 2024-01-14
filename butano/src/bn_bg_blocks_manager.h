@@ -25,6 +25,7 @@ namespace bn
     class regular_bg_tiles_item;
     enum class bpp_mode : uint8_t;
     enum class compression_type : uint8_t;
+    enum class affine_bg_big_map_canvas_size : uint8_t;
 }
 
 namespace bn::bg_blocks_manager
@@ -46,6 +47,10 @@ namespace bn::bg_blocks_manager
     [[nodiscard]] int used_map_blocks_count();
 
     [[nodiscard]] int available_map_blocks_count();
+
+    [[nodiscard]] affine_bg_big_map_canvas_size new_affine_big_map_canvas_size();
+
+    void set_new_affine_big_map_canvas_size(affine_bg_big_map_canvas_size affine_big_map_canvas_size);
 
     [[nodiscard]] bool allow_tiles_offset();
 
@@ -111,6 +116,8 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] bool big_map(int id);
 
+    [[nodiscard]] affine_bg_big_map_canvas_size affine_big_map_canvas_size(int id);
+
     [[nodiscard]] int regular_tiles_offset(int id);
 
     [[nodiscard]] int affine_tiles_offset(int id);
@@ -167,11 +174,45 @@ namespace bn::bg_blocks_manager
 
     void update_regular_map_col(int id, int x, int y);
 
+    inline void update_regular_map_left_col(int id, int x, int y)
+    {
+        update_regular_map_col(id, x, y);
+    }
+
+    inline void update_regular_map_right_col(int id, int x, int y)
+    {
+        update_regular_map_col(id, x + 31, y);
+    }
+
     void update_affine_map_col(int id, int x, int y);
+
+    inline void update_affine_map_left_col(int id, int x, int y)
+    {
+        update_affine_map_col(id, x, y);
+    }
+
+    void update_affine_map_right_col(int id, int x, int y);
 
     void update_regular_map_row(int id, int x, int y);
 
+    inline void update_regular_map_top_row(int id, int x, int y)
+    {
+        update_regular_map_row(id, x, y);
+    }
+
+    inline void update_regular_map_bottom_row(int id, int x, int y)
+    {
+        update_regular_map_row(id, x, y + 21);
+    }
+
     void update_affine_map_row(int id, int x, int y);
+
+    inline void update_affine_map_top_row(int id, int x, int y)
+    {
+        update_affine_map_row(id, x, y);
+    }
+
+    void update_affine_map_bottom_row(int id, int x, int y);
 
     void set_regular_map_position(int id, int x, int y);
 

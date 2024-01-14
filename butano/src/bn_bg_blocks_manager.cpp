@@ -9,6 +9,7 @@
 #include "bn_string_view.h"
 #include "bn_bgs_manager.h"
 #include "bn_config_bg_blocks.h"
+#include "bn_affine_bg_big_map_canvas_size.h"
 #include "../hw/include/bn_hw_dma.h"
 #include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_bg_blocks.h"
@@ -78,26 +79,6 @@ namespace
         }
 
         return result;
-    }
-
-    [[nodiscard]] constexpr int _regular_map_blocks_count(int width, int height, bool big)
-    {
-        if(big)
-        {
-            return _ceil_half_words_to_blocks(32 * 32);
-        }
-
-        return _ceil_half_words_to_blocks(width * height);
-    }
-
-    [[nodiscard]] constexpr int _affine_map_blocks_count(int width, int height, bool big)
-    {
-        if(big)
-        {
-            return _ceil_half_words_to_blocks((32 * 32) / 2);
-        }
-
-        return _ceil_half_words_to_blocks((width * height) / 2);
     }
 
     void _hw_commit(const uint16_t* source_ptr, compression_type compression, int count, bool use_dma,
@@ -217,6 +198,7 @@ namespace
     private:
         uint8_t _status: 2 = uint8_t(status_type::FREE);
         uint8_t _compression: 2 = uint8_t(compression_type::NONE);
+        uint8_t _big_map_canvas_size: 2 = uint8_t(affine_bg_big_map_canvas_size::NORMAL);
 
     public:
         bool is_tiles: 1 = false;
@@ -242,6 +224,16 @@ namespace
         void set_compression(compression_type compression)
         {
             _compression = uint8_t(compression);
+        }
+
+        [[nodiscard]] affine_bg_big_map_canvas_size big_map_canvas_size() const
+        {
+            return static_cast<affine_bg_big_map_canvas_size>(_big_map_canvas_size);
+        }
+
+        void set_big_map_canvas_size(affine_bg_big_map_canvas_size big_map_canvas_size)
+        {
+            _big_map_canvas_size = uint8_t(big_map_canvas_size);
         }
 
         [[nodiscard]] int tiles_count() const
@@ -418,6 +410,62 @@ namespace
     };
 
 
+    class affine_bg_big_map_canvas_info
+    {
+
+    public:
+        constexpr explicit affine_bg_big_map_canvas_info(affine_bg_big_map_canvas_size canvas_size) :
+            _size_bits(5 + int(canvas_size))
+        {
+        }
+
+        constexpr explicit affine_bg_big_map_canvas_info() :
+            affine_bg_big_map_canvas_info(affine_bg_big_map_canvas_size::NORMAL)
+        {
+        }
+
+        [[nodiscard]] constexpr affine_bg_big_map_canvas_size canvas_size() const
+        {
+            return affine_bg_big_map_canvas_size(_size_bits - 5);
+        }
+
+        [[nodiscard]] constexpr int size_bits() const
+        {
+            // Default: 5
+            return _size_bits;
+        }
+
+        [[nodiscard]] constexpr int size() const
+        {
+            // Default: 1 << 5 = 32
+            return 1 << _size_bits;
+        }
+
+        [[nodiscard]] constexpr int cells() const
+        {
+            // Default: 1 << 10 = 32 * 32 = 1024
+            return 1 << (_size_bits * 2);
+        }
+
+        [[nodiscard]] constexpr int viewport_size() const
+        {
+            // Default: 32 - 1 = 31
+            return size() - 1;
+        }
+
+        [[nodiscard]] constexpr int viewport_dec() const
+        {
+            // 32   0
+            // 64   16
+            // 128  48
+            return (size() / 2) - 16;
+        }
+
+    private:
+        int _size_bits;
+    };
+
+
     class static_data
     {
 
@@ -425,6 +473,7 @@ namespace
         items_list items;
         alignas(int) uint8_t to_commit_uncompressed_items_array[max_items];
         alignas(int) uint8_t to_commit_compressed_items_array[max_items];
+        affine_bg_big_map_canvas_info new_affine_big_map_canvas_info;
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
         int to_commit_uncompressed_items_count = 0;
@@ -435,6 +484,27 @@ namespace
     };
 
     BN_DATA_EWRAM_BSS static_data data;
+
+
+    [[nodiscard]] constexpr int _new_regular_map_blocks_count(int width, int height, bool big)
+    {
+        if(big)
+        {
+            return _ceil_half_words_to_blocks(32 * 32);
+        }
+
+        return _ceil_half_words_to_blocks(width * height);
+    }
+
+    [[nodiscard]] constexpr int _new_affine_map_blocks_count(int width, int height, bool big)
+    {
+        if(big)
+        {
+            return _ceil_half_words_to_blocks(data.new_affine_big_map_canvas_info.cells() / 2);
+        }
+
+        return _ceil_half_words_to_blocks((width * height) / 2);
+    }
 
 
     struct create_data
@@ -479,7 +549,7 @@ namespace
         {
             int width = dimensions.width();
             int height = dimensions.height();
-            int blocks_count = _regular_map_blocks_count(width, height, big);
+            int blocks_count = _new_regular_map_blocks_count(width, height, big);
             bpp_mode bpp = palette.bpp();
 
             return create_data{ data_ptr, blocks_count, width, height, move(tiles), nullopt, move(palette),
@@ -492,7 +562,7 @@ namespace
         {
             int width = dimensions.width();
             int height = dimensions.height();
-            int blocks_count = _affine_map_blocks_count(width, height, big);
+            int blocks_count = _new_affine_map_blocks_count(width, height, big);
             bpp_mode bpp = palette.bpp();
 
             return create_data{ data_ptr, blocks_count, width, height, nullopt, move(tiles), move(palette),
@@ -950,6 +1020,7 @@ namespace
         item->data = data_ptr;
         item->blocks_count = uint8_t(blocks_count);
         item->set_compression(create_data.compression);
+        item->set_big_map_canvas_size(data.new_affine_big_map_canvas_info.canvas_size());
         item->regular_tiles = move(create_data.regular_tiles);
         item->affine_tiles = move(create_data.affine_tiles);
         item->palette = move(create_data.palette);
@@ -1134,19 +1205,12 @@ namespace
         }
 
         return map_x;
-    };
+    }
 
     [[nodiscard]] int _fix_map_y(int map_y, int map_height)
     {
-        map_y %= map_height;
-
-        if(map_y < 0)
-        {
-            map_y += map_height;
-        }
-
-        return map_y;
-    };
+        return _fix_map_x(map_y, map_height);
+    }
 }
 
 void init()
@@ -1221,6 +1285,16 @@ int used_map_blocks_count()
 int available_map_blocks_count()
 {
     return data.free_blocks_count;
+}
+
+affine_bg_big_map_canvas_size new_affine_big_map_canvas_size()
+{
+    return data.new_affine_big_map_canvas_info.canvas_size();
+}
+
+void set_new_affine_big_map_canvas_size(affine_bg_big_map_canvas_size affine_big_map_canvas_size)
+{
+    data.new_affine_big_map_canvas_info = affine_bg_big_map_canvas_info(affine_big_map_canvas_size);
 }
 
 bool allow_tiles_offset()
@@ -1476,7 +1550,7 @@ int create_regular_map(const regular_bg_map_item& map_item, const regular_bg_map
                      "\n\tMap data: ", data_ptr,
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
-                     "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height(), big),
+                     "\n\tBlocks count: ", _new_regular_map_blocks_count(dimensions.width(), dimensions.height(), big),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1506,6 +1580,12 @@ int create_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_ce
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
     BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
+    BN_BASIC_ASSERT(! big || dimensions.width() % data.new_affine_big_map_canvas_info.size() == 0,
+                    "Big maps width must be divisible by canvas width: ",
+                    dimensions.width(), " - ", data.new_affine_big_map_canvas_info.size());
+    BN_BASIC_ASSERT(! big || dimensions.height() % data.new_affine_big_map_canvas_info.size() == 0,
+                    "Big maps height must be divisible by canvas height: ",
+                    dimensions.height(), " - ", data.new_affine_big_map_canvas_info.size());
 
     auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
     result = _create_impl(
@@ -1530,7 +1610,7 @@ int create_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_ce
                      "\n\tMap data: ", data_ptr,
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
-                     "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height(), big),
+                     "\n\tBlocks count: ", _new_affine_map_blocks_count(dimensions.width(), dimensions.height(), big),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1577,7 +1657,7 @@ int create_new_regular_map(const regular_bg_map_item& map_item, const regular_bg
                      "\n\tMap data: ", data_ptr,
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
-                     "\n\tBlocks count: ", _regular_map_blocks_count(dimensions.width(), dimensions.height(), big),
+                     "\n\tBlocks count: ", _new_regular_map_blocks_count(dimensions.width(), dimensions.height(), big),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1600,6 +1680,12 @@ int create_new_affine_map(const affine_bg_map_item& map_item, const affine_bg_ma
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
     BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
+    BN_BASIC_ASSERT(! big || dimensions.width() % data.new_affine_big_map_canvas_info.size() == 0,
+                    "Big maps width must be divisible by canvas width: ",
+                    dimensions.width(), " - ", data.new_affine_big_map_canvas_info.size());
+    BN_BASIC_ASSERT(! big || dimensions.height() % data.new_affine_big_map_canvas_info.size() == 0,
+                    "Big maps height must be divisible by canvas height: ",
+                    dimensions.height(), " - ", data.new_affine_big_map_canvas_info.size());
 
     auto u16_data_ptr = reinterpret_cast<const uint16_t*>(data_ptr);
     int result = _create_impl(
@@ -1624,7 +1710,7 @@ int create_new_affine_map(const affine_bg_map_item& map_item, const affine_bg_ma
                      "\n\tMap data: ", data_ptr,
                      "\n\tMap width: ", dimensions.width(),
                      "\n\tMap height: ", dimensions.height(),
-                     "\n\tBlocks count: ", _affine_map_blocks_count(dimensions.width(), dimensions.height(), big),
+                     "\n\tBlocks count: ", _new_affine_map_blocks_count(dimensions.width(), dimensions.height(), big),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1743,8 +1829,8 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
             BN_ERROR("Regular BG map allocate failed:",
                      "\n\tMap width: ", map_dimensions.width(),
                      "\n\tMap height: ", map_dimensions.height(),
-                     "\n\tBlocks count: ", _regular_map_blocks_count(
-                         map_dimensions.width(), map_dimensions.height(), false),
+                     "\n\tBlocks count: ", _new_regular_map_blocks_count(
+                            map_dimensions.width(), map_dimensions.height(), false),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1788,8 +1874,8 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
             BN_ERROR("Affine BG map allocate failed:",
                      "\n\tMap width: ", map_dimensions.width(),
                      "\n\tMap height: ", map_dimensions.height(),
-                     "\n\tBlocks count: ", _affine_map_blocks_count(
-                         map_dimensions.width(), map_dimensions.height(), false),
+                     "\n\tBlocks count: ", _new_affine_map_blocks_count(
+                            map_dimensions.width(), map_dimensions.height(), false),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);
         }
@@ -1854,6 +1940,14 @@ size map_dimensions(int id)
 bool big_map(int id)
 {
     return data.items.item(id).is_big;
+}
+
+affine_bg_big_map_canvas_size affine_big_map_canvas_size(int id)
+{
+    const item_type& item = data.items.item(id);
+    BN_BASIC_ASSERT(item.is_big, "Map isn't big");
+
+    return item.big_map_canvas_size();
 }
 
 int regular_tiles_offset(int id)
@@ -2427,62 +2521,71 @@ void update_affine_map_col(int id, int x, int y)
         return;
     }
 
+    affine_bg_big_map_canvas_info canvas_info(item.big_map_canvas_size());
+    int canvas_size = canvas_info.size();
+    int canvas_cells = canvas_info.cells();
+    int canvas_size_bits = canvas_info.size_bits();
+    int canvas_viewport_size = canvas_info.viewport_size();
+    int canvas_viewport_dec = canvas_info.viewport_dec();
+    x -= canvas_viewport_dec;
+    y -= canvas_viewport_dec;
+
     int map_width = item.width;
     int map_height = item.height;
     x = _fix_map_x(x, map_width);
     y = _fix_map_y(y, map_height);
 
     const uint8_t* first_source_data = item_data + ((y * map_width) + x);
-    int y_separator = y & 31;
-    int second_y = _fix_map_y(y + 32 - y_separator, map_height);
+    int y_separator = y & canvas_viewport_size;
+    int second_y = _fix_map_y(y + canvas_size - y_separator, map_height);
 
     const uint8_t* second_source_data = item_data + ((second_y * map_width) + x);
     auto dest_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
-    dest_data += ((y_separator * 32) + (x & 31));
+    dest_data += ((y_separator << canvas_size_bits) + (x & canvas_viewport_size));
 
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
         if(x % 2)
         {
-            for(int iy = y_separator; iy < 32; ++iy)
+            for(int iy = y_separator; iy < canvas_size; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
                 auto joined_value = uint16_t(((*first_source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
-                dest_data += 32;
+                dest_data += canvas_size;
                 first_source_data += map_width;
             }
 
-            dest_data -= 1024;
+            dest_data -= canvas_cells;
 
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
                 auto joined_value = uint16_t(((*second_source_data + tiles_offset) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
-                dest_data += 32;
+                dest_data += canvas_size;
                 second_source_data += map_width;
             }
         }
         else
         {
-            for(int iy = y_separator; iy < 32; ++iy)
+            for(int iy = y_separator; iy < canvas_size; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
                 auto joined_value = uint16_t((*u16_dest_data & 0xFF00) | (*first_source_data + tiles_offset));
                 *u16_dest_data = joined_value;
-                dest_data += 32;
+                dest_data += canvas_size;
                 first_source_data += map_width;
             }
 
-            dest_data -= 1024;
+            dest_data -= canvas_cells;
 
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
                 auto joined_value = uint16_t((*u16_dest_data & 0xFF00) | (*second_source_data + tiles_offset));
                 *u16_dest_data = joined_value;
-                dest_data += 32;
+                dest_data += canvas_size;
                 second_source_data += map_width;
             }
         }
@@ -2491,49 +2594,56 @@ void update_affine_map_col(int id, int x, int y)
     {
         if(x % 2)
         {
-            for(int iy = y_separator; iy < 32; ++iy)
+            for(int iy = y_separator; iy < canvas_size; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
                 auto joined_value = uint16_t((unsigned(*first_source_data) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
-                dest_data += 32;
+                dest_data += canvas_size;
                 first_source_data += map_width;
             }
 
-            dest_data -= 1024;
+            dest_data -= canvas_cells;
 
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data - 1);
                 uint16_t joined_value = uint16_t((unsigned(*second_source_data) << 8) | (*u16_dest_data & 0xFF));
                 *u16_dest_data = joined_value;
-                dest_data += 32;
+                dest_data += canvas_size;
                 second_source_data += map_width;
             }
         }
         else
         {
-            for(int iy = y_separator; iy < 32; ++iy)
+            for(int iy = y_separator; iy < canvas_size; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
                 uint16_t joined_value = uint16_t((*u16_dest_data & 0xFF00) | *first_source_data);
                 *u16_dest_data = joined_value;
-                dest_data += 32;
+                dest_data += canvas_size;
                 first_source_data += map_width;
             }
 
-            dest_data -= 1024;
+            dest_data -= canvas_cells;
 
             for(int iy = 0; iy < y_separator; ++iy)
             {
                 auto u16_dest_data = reinterpret_cast<uint16_t*>(dest_data);
                 uint16_t joined_value = uint16_t((*u16_dest_data & 0xFF00) | *second_source_data);
                 *u16_dest_data = joined_value;
-                dest_data += 32;
+                dest_data += canvas_size;
                 second_source_data += map_width;
             }
         }
     }
+}
+
+void update_affine_map_right_col(int id, int x, int y)
+{
+    const item_type& item = data.items.item(id);
+    affine_bg_big_map_canvas_info canvas_info(item.big_map_canvas_size());
+    update_affine_map_col(id, x + canvas_info.viewport_size(), y);
 }
 
 void update_regular_map_row(int id, int x, int y)
@@ -2588,19 +2698,26 @@ void update_affine_map_row(int id, int x, int y)
         return;
     }
 
+    affine_bg_big_map_canvas_info canvas_info(item.big_map_canvas_size());
+    int canvas_size_bits = canvas_info.size_bits();
+    int canvas_viewport_size = canvas_info.viewport_size();
+    int canvas_viewport_dec = canvas_info.viewport_dec();
+    x -= canvas_viewport_dec;
+    y -= canvas_viewport_dec;
+
     int map_width = item.width;
     int map_height = item.height;
     x = _fix_map_x(x, map_width);
     y = _fix_map_y(y, map_height);
 
     const uint8_t* first_source_data = item_data + ((y * map_width) + x);
-    int x_separator = x & 31;
-    int elements = 32 - x_separator;
+    int x_separator = x & canvas_viewport_size;
+    int elements = canvas_info.size() - x_separator;
     int second_x = _fix_map_x(x + elements, map_width);
 
     const uint8_t* second_source_data = item_data + ((y * map_width) + second_x);
     auto dest_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
-    dest_data += ((y & 31) * 32) + x_separator;
+    dest_data += ((y & canvas_viewport_size) << canvas_size_bits) + x_separator;
 
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
@@ -2617,6 +2734,13 @@ void update_affine_map_row(int id, int x, int y)
         dest_data -= x_separator;
         hw::memory::copy_half_words(second_source_data, x_separator / 2, dest_data);
     }
+}
+
+void update_affine_map_bottom_row(int id, int x, int y)
+{
+    const item_type& item = data.items.item(id);
+    affine_bg_big_map_canvas_info canvas_info(item.big_map_canvas_size());
+    update_affine_map_row(id, x, y + canvas_info.viewport_size());
 }
 
 void set_regular_map_position(int id, int x, int y)
@@ -2697,21 +2821,28 @@ void set_affine_map_position(int id, int x, int y)
         return;
     }
 
+    affine_bg_big_map_canvas_info canvas_info(item.big_map_canvas_size());
+    int canvas_size_bits = canvas_info.size_bits();
+    int canvas_viewport_size = canvas_info.viewport_size();
+    int canvas_viewport_dec = canvas_info.viewport_dec();
+    x -= canvas_viewport_dec;
+    y -= canvas_viewport_dec;
+
     int map_width = item.width;
     int map_height = item.height;
     x = _fix_map_x(x, map_width);
     y = _fix_map_y(y, map_height);
 
     auto vram_data = reinterpret_cast<uint8_t*>(hw::bg_blocks::vram(item.start_block));
-    int x_separator = x & 31;
-    int elements = 32 - x_separator;
+    int x_separator = x & canvas_viewport_size;
+    int elements = canvas_info.size() - x_separator;
     int second_x = _fix_map_x(x + elements, map_width);
 
     if(auto tiles_offset = unsigned(item.affine_tiles_offset()))
     {
         uint16_t offset = hw::bg_blocks::affine_map_cells_offset(tiles_offset);
 
-        for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+        for(int row = y, row_limit = y + canvas_viewport_size; row <= row_limit; ++row)
         {
             int fixed_row = row;
 
@@ -2721,7 +2852,7 @@ void set_affine_map_position(int id, int x, int y)
             }
 
             const uint8_t* first_source_data = item_data + ((fixed_row * map_width) + x);
-            uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+            uint8_t* dest_data = vram_data + (((row & canvas_viewport_size) << canvas_size_bits) + x_separator);
             _hw_commit_offset(reinterpret_cast<const uint16_t*>(first_source_data), unsigned(elements) / 2,
                               offset, reinterpret_cast<uint16_t*>(dest_data));
 
@@ -2733,7 +2864,7 @@ void set_affine_map_position(int id, int x, int y)
     }
     else
     {
-        for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+        for(int row = y, row_limit = y + canvas_viewport_size; row <= row_limit; ++row)
         {
             int fixed_row = row;
 
@@ -2743,7 +2874,7 @@ void set_affine_map_position(int id, int x, int y)
             }
 
             const uint8_t* first_source_data = item_data + ((fixed_row * map_width) + x);
-            uint8_t* dest_data = vram_data + (((row & 31) * 32) + x_separator);
+            uint8_t* dest_data = vram_data + (((row & canvas_viewport_size) << canvas_size_bits) + x_separator);
             hw::memory::copy_half_words(first_source_data, elements / 2, dest_data);
 
             const uint8_t* second_source_data = item_data + ((fixed_row * map_width) + second_x);

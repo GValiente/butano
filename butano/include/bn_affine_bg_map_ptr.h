@@ -29,6 +29,7 @@ class affine_bg_map_item;
 class affine_bg_tiles_ptr;
 class affine_bg_tiles_item;
 enum class compression_type : uint8_t;
+enum class affine_bg_big_map_canvas_size : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of an affine background map.
@@ -429,6 +430,11 @@ public:
      * Big backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
      */
     [[nodiscard]] bool big() const;
+
+    /**
+     * @brief Returns the size of the canvas used to render this big map.
+     */
+    [[nodiscard]] affine_bg_big_map_canvas_size big_canvas_size() const;
 
     /**
      * @brief Returns how much tiles to offset in the cells of this map before writing them in VRAM.

@@ -372,6 +372,11 @@ bool affine_bg_map_ptr::big() const
     return bg_blocks_manager::big_map(_handle);
 }
 
+affine_bg_big_map_canvas_size affine_bg_map_ptr::big_canvas_size() const
+{
+    return bg_blocks_manager::affine_big_map_canvas_size(_handle);
+}
+
 int affine_bg_map_ptr::tiles_offset() const
 {
     return bg_blocks_manager::affine_tiles_offset(_handle);

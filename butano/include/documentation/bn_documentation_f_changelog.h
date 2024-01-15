@@ -14,9 +14,10 @@
  *
  * @section changelog_17_1_0 17.1.0 (next release)
  *
- * Affine big maps canvas size can be specified by the user: bn::affine_bg_big_map_canvas_size,
- * bn::bg_maps::new_affine_big_map_canvas_size, bn::bg_maps::set_new_affine_big_map_canvas_size and
- * bn::affine_bg_map_ptr::big_canvas_size added.
+ * * Affine big maps canvas size can be specified by the user: bn::affine_bg_big_map_canvas_size,
+ *   bn::bg_maps::new_affine_big_map_canvas_size, bn::bg_maps::set_new_affine_big_map_canvas_size and
+ *   bn::affine_bg_map_ptr::big_canvas_size added.
+ * * Scale can be changed in the `world_map` example.
  *
  *
  * @section changelog_17_0_0 17.0.0

@@ -36,8 +36,8 @@ int main()
     constexpr bn::string_view info_text_lines[] = {
         "PAD: move ninja",
         "PAD+A: move ninja faster",
-        "",
-        "START: go to next scene",
+        "L: decrease scale",
+        "R: increase scale",
     };
 
     bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);

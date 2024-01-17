@@ -2769,7 +2769,7 @@ void set_regular_map_position(int id, int x, int y)
     {
         uint16_t offset = hw::bg_blocks::regular_map_cells_offset(tiles_offset, palette_offset);
 
-        for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+        for(int row = y, row_limit = y + 31; row <= row_limit; ++row)
         {
             int fixed_row = row;
 
@@ -2789,7 +2789,7 @@ void set_regular_map_position(int id, int x, int y)
     }
     else
     {
-        for(int row = y, row_limit = y + 22; row < row_limit; ++row)
+        for(int row = y, row_limit = y + 31; row <= row_limit; ++row)
         {
             int fixed_row = row;
 

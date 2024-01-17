@@ -202,7 +202,7 @@ namespace bn::bg_blocks_manager
 
     inline void update_regular_map_bottom_row(int id, int x, int y)
     {
-        update_regular_map_row(id, x, y + 21);
+        update_regular_map_row(id, x, y + 31);
     }
 
     void update_affine_map_row(int id, int x, int y);

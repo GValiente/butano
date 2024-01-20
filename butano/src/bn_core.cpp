@@ -449,6 +449,9 @@ void sleep(const span<const keypad::key_type>& wake_up_keys)
 {
     BN_ASSERT(! wake_up_keys.empty(), "There's no wake up keys");
 
+    // Force at least one update:
+    update();
+
     // Wait until a wake up key is not pressed:
     bool wait = true;
 

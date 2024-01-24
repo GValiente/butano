@@ -135,7 +135,7 @@ public:
      */
     [[nodiscard]] constexpr size_type size_bytes() const
     {
-        return (_end - _begin) * sizeof(value_type);
+        return size() * size_type(sizeof(value_type));
     }
 
     /**

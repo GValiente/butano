@@ -19,6 +19,7 @@
  *   bn::affine_bg_map_ptr::big_canvas_size added.
  * * Regular big maps canvas height increased.
  * * Force at least one update before sleeping in bn::core::sleep.
+ * * bn::span::size_bytes implicit conversion warning fixed.
  * * Scale can be changed in the `world_map` example.
  *
  *

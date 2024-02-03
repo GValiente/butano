@@ -20,6 +20,7 @@
  * * Regular big maps canvas height increased.
  * * Force at least one update before sleeping in bn::core::sleep.
  * * bn::span::size_bytes implicit conversion warning fixed.
+ * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> binary files build time reduced.
  * * Scale can be changed in the `world_map` example.
  *
  *

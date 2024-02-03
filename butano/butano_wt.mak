@@ -88,7 +88,8 @@ $(OFILES_SOURCES)   :   $(HFILES)
 	@echo "$<"
 	$(SILENTCMD)$(MKDIR) -p $(@D)
 	$(SILENTCMD)$(WF)/bin/wf-bin2c -a 4 $(@D) $< $*_bin
-	$(SILENTCMD)$(CC) $(CFLAGS) -MMD -MP -c -o $(@D)/$*.bin.o $(@D)/$*_bin.c
+	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.d -x assembler-with-cpp $(CPPFLAGS) $(ASFLAGS) \
+		-c -o $(@D)/$*.bin.o $(@D)/$*_bin.s $(ERROR_FILTER)
 
 -include $(DEPSDIR)/*.d
 

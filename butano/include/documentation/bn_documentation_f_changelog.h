@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_1_1 17.1.1 (next release)
+ *
+ * bn::unique_ptr move fixed.
+ *
+ *
  * @section changelog_17_1_0 17.1.0
  *
  * * Affine big maps canvas size can be specified by the user: bn::affine_bg_big_map_canvas_size,

@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_1_1 17.1.1 (next release)
+ * @section changelog_17_1_1 17.1.1
  *
  * bn::unique_ptr move fixed.
  *

@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_2_0 17.2.0 (next release)
+ *
+ * @ref faq_stack_trace question added to the @ref faq page.
+ *
+ *
  * @section changelog_17_1_1 17.1.1
  *
  * bn::unique_ptr move fixed.

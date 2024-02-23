@@ -96,6 +96,22 @@
  * * Do the same with the rest of the files in the `common` folder (`*.bmp`, `*.json`, etc).
  *
  *
+ * @subsection faq_stack_trace What function or method call is the source of an error message?
+ *
+ * You can enable stack trace logging in the `Makefile` of your project, so that when an error message is displayed,
+ * the current stack trace will be logged.
+ *
+ * To enable stack trace logging, the `STACKTRACE` variable must not be empty. For example:
+ *
+ * `STACKTRACE := true`
+ *
+ * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
+ *
+ * If everything went well, the error message should indicate that the stack trace has been logged.
+ * In that case, open the logs window of your emulator and the mangled stack trace should be there.
+ * To demangle it, you can use <a href="http://demangler.com/">demangler.com</a> for example.
+ *
+ *
  * @subsection faq_error_after_update Why I get undefined reference errors after updating Butano?
  *
  * If after updating Butano you get error messages like this one:
@@ -472,7 +488,7 @@
  *
  * `USERFLAGS := -DBN_CFG_AUDIO_MIXING_RATE=BN_AUDIO_MIXING_RATE_21_KHZ`
  *
- * Remember to rebuild your project from scratch after modifying a `Makefile`.
+ * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
  *
  * Available Direct Sound mixing rates are @ref audio "here".
  *

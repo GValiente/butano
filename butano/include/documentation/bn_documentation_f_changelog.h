@@ -15,6 +15,7 @@
  * @section changelog_17_2_0 17.2.0 (next release)
  *
  * * bn::core::log_stacktrace added.
+ * * `bn::pair` is now a `std::pair` alias.
  * * @ref faq_stack_trace question added to the @ref faq page.
  *
  *

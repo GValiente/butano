@@ -481,7 +481,9 @@ void commit()
         data.delay_commit = false;
     }
 
-    BN_BASIC_ASSERT(! data.vgm_commit_failed, "VGM commit failed: ", data.vgm_offset_play);
+    #if BN_CFG_ASSERT_ENABLED
+        BN_BASIC_ASSERT(! data.vgm_commit_failed, "VGM commit failed: ", data.vgm_offset_play);
+    #endif
 }
 
 }

@@ -23,12 +23,17 @@ namespace
 
     constexpr unsigned opcode_function_name_tag_id = 0x00ff0000;
     constexpr int maximum_function_name_visits = 0x1000;
-    constexpr int minimum_log_depth = 5;
 
     struct opcode_function_name_tag
     {
         unsigned length: 8;
         unsigned id: 24;
+    };
+
+    struct depth_info
+    {
+        int minimum;
+        int current;
     };
 
     const opcode_function_name_tag* function_name_tag(unsigned address)
@@ -50,10 +55,10 @@ namespace
 
     _Unwind_Reason_Code trace_fcn(_Unwind_Context* ctx, void* depth_ptr)
     {
-        int& depth = *static_cast<int*>(depth_ptr);
-        ++depth;
+        auto depth = static_cast<depth_info*>(depth_ptr);
+        ++depth->current;
 
-        if(depth >= minimum_log_depth)
+        if(depth->current >= depth->minimum)
         {
             if(unsigned address = _Unwind_GetIP(ctx))
             {
@@ -91,11 +96,11 @@ namespace
     }
 }
 
-inline void log()
+inline void log(int minimum_depth)
 {
     BN_LOG("- stack trace -");
 
-    int depth = 0;
+    depth_info depth{ minimum_depth, 0 };
     _Unwind_Backtrace(&trace_fcn, &depth);
 }
 

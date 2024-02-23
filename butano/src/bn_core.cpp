@@ -557,6 +557,17 @@ void set_assert_tag(const string_view& assert_tag)
     data.assert_tag = assert_tag;
 }
 
+#if BN_CFG_LOG_ENABLED
+    void log_stacktrace()
+    {
+        #ifdef BN_STACKTRACE
+            bn::hw::stacktrace::log(3);
+        #else
+            BN_ERROR("Stack trace logging is disabled");
+        #endif
+    }
+#endif
+
 }
 
 namespace bn
@@ -631,7 +642,7 @@ core_lock::~core_lock()
                 #ifdef BN_STACKTRACE
                     #if BN_CFG_LOG_ENABLED
                         bn::hw::core::wait_for_vblank();
-                        bn::hw::stacktrace::log();
+                        bn::hw::stacktrace::log(5);
                     #endif
                 #endif
 

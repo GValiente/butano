@@ -154,6 +154,10 @@
               <span class="m-doc-wrap-bumper">void <a href="#a0c70920adc9c80848ccf38de9192c24d" class="m-doc-self">set_assert_tag</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; assert_tag)</span>
             </dt>
             <dd>Sets the tag displayed in assert messages.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a70441922960e810dd149a7849c7bd047" class="m-doc">log_stacktrace</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Logs the current stack trace.</dd>
           </dl>
         </section>
         <section>
@@ -264,6 +268,13 @@
             </h3>
             <p>Returns the V-Blank usage of the last elapsed frame.</p>
 <p>A V-Blank usage greater than 1 means that the screen is being redrawn before all of GBA display components being updated.</p>
+          </div></section>
+          <section class="m-doc-details" id="a70441922960e810dd149a7849c7bd047"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a70441922960e810dd149a7849c7bd047" class="m-doc-self">log_stacktrace</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Logs the current stack trace.</p>
+<p>The stack trace is mangled, you can demangle it with <a href="http://demangler.com/">demangler.com</a> for example.</p>
           </div></section>
         </section>
       </div>

@@ -16,7 +16,9 @@
 #include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_optional.h"
+#include "bn_config_log.h"
 #include "bn_string_view.h"
+#include "bn_config_doxygen.h"
 #include "bn_vblank_callback_type.h"
 
 namespace bn
@@ -172,6 +174,16 @@ namespace bn::core
      * @brief Sets the tag displayed in assert messages.
      */
     void set_assert_tag(const string_view& assert_tag);
+
+    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
+        /**
+         * @brief Logs the current stack trace.
+         *
+         * The stack trace is mangled, you can demangle it with <a href="http://demangler.com/">demangler.com</a>
+         * for example.
+         */
+        void log_stacktrace();
+    #endif
 }
 
 #endif

@@ -17,6 +17,7 @@
  * * bn::core::log_stacktrace added.
  * * `bn::pair` is now a `std::pair` alias.
  * * @ref faq_stack_trace question added to the @ref faq page.
+ * * <a href="https://github.com/nikku4211/wavefront2varooom3d">Wavefront To Varooom 3D</a> added to `README.md`.
  *
  *
  * @section changelog_17_1_1 17.1.1

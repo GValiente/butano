@@ -180,3 +180,7 @@ to your opponent's base, then place tiles on their base to damage them.
 It comes with tools and examples to import them into a Butano project.
 
 ![](docs_tools/images/gba_free_fonts_1.png) ![](docs_tools/images/gba_free_fonts_2.png)
+
+* [Wavefront To Varooom 3D](https://github.com/nikku4211/wavefront2varooom3d): converter that takes 
+[Wavefront .obj](https://en.wikipedia.org/wiki/Wavefront_.obj_file) files and converts them into the format 
+used by [Varooom 3D](#made-with-butano-varooom-3d).

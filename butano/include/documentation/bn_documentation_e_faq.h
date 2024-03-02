@@ -347,6 +347,29 @@
  * Keep in mind that unused colors are also taken into account when deciding if two color palettes are equal or not.
  *
  *
+ * @subsection faq_8bpp_palette_change Why changing the color palette of an 8BPP sprite or background doesn't work?
+ *
+ * Since the GBA has only 256 colors for sprites, if you use two sprites with more than 16 colors at the same time,
+ * Butano assumes that they have the same color palette (same colors in the same order).
+ *
+ * So if you change the palette of an 8BPP sprite with a new palette item, Butano assumes that the palette
+ * created with the palette item is the same as the old one and doesn't update the colors of the sprite:
+ *
+ * @code{.cpp}
+ * sprite.set_palette(palette_item);
+ * @endcode
+ *
+ * If what you want to do is to update the colors of the sprite, you have to retrieve the palette of the sprite
+ * and update its colors:
+ *
+ * @code{.cpp}
+ * bn::sprite_palette_ptr sprite_palette = sprite.palette();
+ * sprite_palette.set_colors(palette_item);
+ * @endcode
+ *
+ * The same happens with 8BPP backgrounds.
+ *
+ *
  * @section faq_sprites Sprites
  *
  *
@@ -381,10 +404,10 @@
  *
  * @subsection faq_bg_multiple_8bpp Why everything looks weird when I show two or more backgrounds with more than 16 colors?
  *
- * Since the GBA has only 256 colors for tiled backgrounds, if you use two 8BPP backgrounds with more than 16 colors
- * at the same time, Butano assumes that they have the same color palette (same colors in the same order).
+ * Since the GBA has only 256 colors for tiled backgrounds, if you use two 8BPP backgrounds,
+ * Butano assumes that they have the same color palette (same colors in the same order).
  *
- * So if you are going to show multiple backgrounds with more than 16 colors at the same time, you can:
+ * So if you are going to show multiple 8BPP backgrounds, you can:
  * * Use the same color palette with all of them (in the same scene of course, backgrounds shown in different scenes
  *   can have different color palettes).
  * * Change their BPP mode to 4BPP, so each background can have its own color palette with more than 16 colors.

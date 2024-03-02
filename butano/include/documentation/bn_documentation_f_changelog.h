@@ -18,6 +18,7 @@
  * * `bn::pair` is now a `std::pair` alias.
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> ASM ROM usage reduced.
  * * @ref faq_stack_trace question added to the @ref faq page.
+ * * @ref faq_8bpp_palette_change question added to the @ref faq page.
  * * <a href="https://github.com/nikku4211/wavefront2varooom3d">Wavefront To Varooom 3D</a> added to `README.md`.
  *
  *

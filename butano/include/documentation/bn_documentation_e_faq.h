@@ -166,6 +166,9 @@
  * constexpr const_data data;
  * @endcode
  *
+ * To avoid running out of IWRAM, Butano Fighter and Varooom 3D place all scenes in EWRAM.
+ * Check their `main.cpp` files to see how it works.
+ *
  *
  * @subsection faq_destroy_ptr How to destroy sprites and backgrounds?
  *

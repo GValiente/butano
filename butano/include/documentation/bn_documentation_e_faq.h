@@ -395,6 +395,20 @@
  * using backgrounds instead of sprites.
  *
  *
+ * @subsection faq_sprites_hidden Does hiding a sprite make it count towards the total number of allowed sprites?
+ *
+ * Hidden sprites are not committed to the GBA, but they still take resources like color palettes and VRAM.
+ *
+ * The easiest way to increase the maximum number of hidden sprites allowed for a specific project is
+ * to define it in the `USERFLAGS` of its `Makefile`.
+ *
+ * For example, to set the maximum number of hidden sprites to 256:
+ *
+ * `USERFLAGS := -DBN_CFG_SPRITES_MAX_ITEMS=256`
+ *
+ * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
+ *
+ *
  * @subsection faq_sprites_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
  *
  * bn::sprite_text_generator already supports UTF-8 characters rendering,
@@ -460,6 +474,20 @@
  * importing background tiles only instead of a background with map should work.
  * Check @ref import_regular_bg_tiles, @ref import_affine_bg_tiles, the `dynamic_regular_bg` example and
  * the `dynamic_affine_bg` example for that.
+ *
+ *
+ * @subsection faq_background_hidden Does hiding a background make it count towards the total number of allowed backgrounds?
+ *
+ * Hidden backgrounds are not committed to the GBA, but they still take resources like color palettes and VRAM.
+ *
+ * The easiest way to increase the maximum number of hidden backgrounds allowed for a specific project is
+ * to define it in the `USERFLAGS` of its `Makefile`.
+ *
+ * For example, to set the maximum number of hidden backgrounds to 8:
+ *
+ * `USERFLAGS := -DBN_CFG_BGS_MAX_ITEMS=8`
+ *
+ * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
  *
  *
  * @section faq_audio Audio

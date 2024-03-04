@@ -37,6 +37,13 @@ Check out the [changelog](https://gvaliente.github.io/butano/changelog.html) in 
 The best way to get started is to read the 
 [download, install and start using Butano guide](https://gvaliente.github.io/butano/getting_started.html).
 
+If everything went as expected, you should:
+* Play around with the [examples](https://gvaliente.github.io/butano/examples.html) 
+as they cover most of what Butano offers.
+* Learn how to [import your assets](https://gvaliente.github.io/butano/import.html) in your project.
+* Take a look at the [frequently asked questions (FAQ)](https://gvaliente.github.io/butano/faq.html), 
+as they answer most of the initial questions.
+
 
 ## Third party libraries
 

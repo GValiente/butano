@@ -114,9 +114,11 @@
  * * Type `make -j#cpu_cores#` again.
  *
  * If everything went as expected, a `*.gba` file should have been generated in the project folder!
+ *
  * Now learn how to @ref import "import your assets" in the game and
  * also take a look at the <a href="modules.html">modules</a> page.
- * The @ref faq "frequently asked questions (FAQ)" are worth a look too.
+ * It's always a good idea to play around with the examples as they cover most of what Butano offers.
+ * The @ref faq "frequently asked questions (FAQ)" are worth a look too, as they answer most of the initial questions.
  */
 
 #endif

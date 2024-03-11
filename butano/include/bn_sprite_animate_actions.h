@@ -102,6 +102,14 @@ public:
     void set_wait_updates(int wait_updates);
 
     /**
+     * @brief Returns the number of times the action must be updated before the next tiles change.
+     */
+    [[nodiscard]] int next_wait_updates() const
+    {
+        return _current_wait_updates;
+    }
+
+    /**
      * @brief Returns the sprite_tiles_item used to create the new sprite tiles to use by the given sprite_ptr.
      */
     [[nodiscard]] const sprite_tiles_item& tiles_item() const
@@ -522,6 +530,14 @@ public:
      * of the given sprite_ptr.
      */
     void set_wait_updates(int wait_updates);
+
+    /**
+     * @brief Returns the number of times the action must be updated before the next tiles change.
+     */
+    [[nodiscard]] int next_wait_updates() const
+    {
+        return _current_wait_updates;
+    }
 
     /**
      * @brief Returns the tile sets to use by the given sprite_ptr.

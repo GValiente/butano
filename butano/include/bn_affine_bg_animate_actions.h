@@ -102,6 +102,14 @@ public:
     void set_wait_updates(int wait_updates);
 
     /**
+     * @brief Returns the number of times the action must be updated before the next map change.
+     */
+    [[nodiscard]] int next_wait_updates() const
+    {
+        return _current_wait_updates;
+    }
+
+    /**
      * @brief Returns the affine_bg_map_item used to create the new map to use by the given affine_bg_ptr.
      */
     [[nodiscard]] const affine_bg_map_item& map_item() const
@@ -524,6 +532,14 @@ public:
      * of the given affine_bg_ptr.
      */
     void set_wait_updates(int wait_updates);
+
+    /**
+     * @brief Returns the number of times the action must be updated before the next map change.
+     */
+    [[nodiscard]] int next_wait_updates() const
+    {
+        return _current_wait_updates;
+    }
 
     /**
      * @brief Returns the maps to use by the given affine_bg_ptr.

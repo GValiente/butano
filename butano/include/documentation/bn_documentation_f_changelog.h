@@ -15,9 +15,9 @@
  * @section changelog_17_2_0 17.2.0 (next release)
  *
  * * bn::core::log_stacktrace added.
- * * bn::isprite_animate_action::next_wait_updates, bn::isprite_cached_animate_action::next_wait_updates,
- *   bn::iregular_bg_animate_action::next_wait_updates, bn::iregular_bg_cached_animate_action::next_wait_updates,
- *   bn::iaffine_bg_animate_action::next_wait_updates and bn::iaffine_bg_cached_animate_action::next_wait_updates added.
+ * * bn::isprite_animate_action::next_change_updates, bn::isprite_cached_animate_action::next_change_updates,
+ *   bn::iregular_bg_animate_action::next_change_updates, bn::iregular_bg_cached_animate_action::next_change_updates,
+ *   bn::iaffine_bg_animate_action::next_change_updates and bn::iaffine_bg_cached_animate_action::next_change_updates added.
  * * `bn::pair` is now a `std::pair` alias.
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> ASM ROM usage reduced.
  * * @ref faq_stack_trace question added to the @ref faq page.

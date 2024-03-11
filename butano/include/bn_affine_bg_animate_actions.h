@@ -104,7 +104,7 @@ public:
     /**
      * @brief Returns the number of times the action must be updated before the next map change.
      */
-    [[nodiscard]] int next_wait_updates() const
+    [[nodiscard]] int next_change_updates() const
     {
         return _current_wait_updates;
     }
@@ -536,7 +536,7 @@ public:
     /**
      * @brief Returns the number of times the action must be updated before the next map change.
      */
-    [[nodiscard]] int next_wait_updates() const
+    [[nodiscard]] int next_change_updates() const
     {
         return _current_wait_updates;
     }

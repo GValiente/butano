@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_2_0 17.2.0 (next release)
+ * @section changelog_17_2_0 17.2.0
  *
  * * bn::core::log_stacktrace added. See the `log` example to see how to log the current stack trace.
  * * bn::isprite_animate_action::next_change_updates, bn::isprite_cached_animate_action::next_change_updates,

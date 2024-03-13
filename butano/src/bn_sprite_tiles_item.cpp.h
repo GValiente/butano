@@ -28,7 +28,7 @@ sprite_tiles_item sprite_tiles_item::decompress(span<tile> decompressed_tiles_re
         break;
 
     case compression_type::LZ77:
-        hw::decompress::lz77_wram(_tiles_ref.data(), dest_tiles_ptr);
+        hw::decompress::lz77(_tiles_ref.data(), dest_tiles_ptr);
         result._tiles_ref = span<const tile>(dest_tiles_ptr, source_tiles_count);
         result._compression = uint8_t(compression_type::NONE);
         break;

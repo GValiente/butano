@@ -99,7 +99,7 @@ namespace
             break;
 
         case compression_type::LZ77:
-            hw::decompress::lz77_vram(source_ptr, destination_ptr);
+            hw::decompress::lz77(source_ptr, destination_ptr);
             break;
 
         case compression_type::RUN_LENGTH:

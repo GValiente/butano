@@ -232,21 +232,15 @@ void lz77_decomp_test()
     const bn::tile* tiles = bn::regular_bg_items::butano_huge_lz77.tiles_item().tiles_ref().data();
     auto buffer = new bn::array<uint8_t, 64 * 1024>();
 
-    BN_PROFILER_START("lz77_wram_regular");
+    BN_PROFILER_START("lz77_regular");
 
-    bn::hw::decompress::lz77_wram(tiles, buffer);
+    bn::hw::decompress::lz77(tiles, buffer);
 
     BN_PROFILER_STOP();
 
     BN_PROFILER_START("lz77_wram_bios");
 
     LZ77UnCompWram(tiles, buffer);
-
-    BN_PROFILER_STOP();
-
-    BN_PROFILER_START("lz77_vram_regular");
-
-    bn::hw::decompress::lz77_vram(tiles, buffer);
 
     BN_PROFILER_STOP();
 

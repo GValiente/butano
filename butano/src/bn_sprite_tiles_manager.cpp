@@ -514,7 +514,7 @@ namespace
             break;
 
         case compression_type::LZ77:
-            hw::decompress::lz77_vram(source_tiles_ptr, hw::sprite_tiles::tile_vram(index));
+            hw::decompress::lz77(source_tiles_ptr, hw::sprite_tiles::tile_vram(index));
             break;
 
         case compression_type::RUN_LENGTH:

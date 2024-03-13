@@ -30,7 +30,7 @@ bg_palette_item bg_palette_item::decompress(span<color> decompressed_colors_ref)
         break;
 
     case compression_type::LZ77:
-        hw::decompress::lz77_wram(_colors_ref.data(), dest_colors_ptr);
+        hw::decompress::lz77(_colors_ref.data(), dest_colors_ptr);
         result._colors_ref = span<const color>(dest_colors_ptr, source_colors_count);
         result._compression = compression_type::NONE;
         break;

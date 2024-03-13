@@ -181,14 +181,7 @@ void decompress(compression_type compression, const void* source_ptr, int bytes,
         break;
 
     case compression_type::LZ77:
-        if(hw::memory::in_vram(destination_ptr))
-        {
-            hw::decompress::lz77_vram(source_ptr, destination_ptr);
-        }
-        else
-        {
-            hw::decompress::lz77_wram(source_ptr, destination_ptr);
-        }
+        hw::decompress::lz77(source_ptr, destination_ptr);
         break;
 
     case compression_type::RUN_LENGTH:

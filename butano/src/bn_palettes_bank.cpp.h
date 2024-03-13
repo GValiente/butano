@@ -227,7 +227,7 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, compression_typ
                 break;
 
             case compression_type::LZ77:
-                hw::decompress::lz77_wram(colors.data(), dest_colors_array);
+                hw::decompress::lz77(colors.data(), dest_colors_array);
                 dest_colors_span = span<const color>(dest_colors_array, colors_count);
                 break;
 

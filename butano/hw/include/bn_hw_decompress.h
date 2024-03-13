@@ -11,12 +11,7 @@
 
 namespace bn::hw::decompress
 {
-    inline void lz77_wram(const void* src, void* dst)
-    {
-        swi_LZ77UnCompWrite8bit(src, dst);
-    }
-
-    inline void lz77_vram(const void* src, void* dst)
+    inline void lz77(const void* src, void* dst)
     {
         swi_LZ77UnCompWrite16bit(src, dst);
     }

@@ -31,7 +31,7 @@ affine_bg_map_item affine_bg_map_item::decompress(span<affine_bg_map_cell> decom
         break;
 
     case compression_type::LZ77:
-        hw::decompress::lz77_wram(_cells_ptr, decompressed_cells_ptr);
+        hw::decompress::lz77(_cells_ptr, decompressed_cells_ptr);
         result._cells_ptr = decompressed_cells_ptr;
         result._compression = compression_type::NONE;
         break;

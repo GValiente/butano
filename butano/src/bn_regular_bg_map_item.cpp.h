@@ -31,7 +31,7 @@ regular_bg_map_item regular_bg_map_item::decompress(span<regular_bg_map_cell> de
         break;
 
     case compression_type::LZ77:
-        hw::decompress::lz77_wram(_cells_ptr, decompressed_cells_ptr);
+        hw::decompress::lz77(_cells_ptr, decompressed_cells_ptr);
         result._cells_ptr = decompressed_cells_ptr;
         result._compression = compression_type::NONE;
         break;

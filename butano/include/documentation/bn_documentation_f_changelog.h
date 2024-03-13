@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_3_0 17.3.0 (next release)
+ *
+ * LZ77 decompression optimized (thanks Lorenzooone!).
+ *
+ *
  * @section changelog_17_2_0 17.2.0
  *
  * * bn::core::log_stacktrace added. See the `log` example to see how to log the current stack trace.

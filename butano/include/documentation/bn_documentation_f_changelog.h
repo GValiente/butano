@@ -14,7 +14,7 @@
  *
  * @section changelog_17_2_0 17.2.0 (next release)
  *
- * * bn::core::log_stacktrace added.
+ * * bn::core::log_stacktrace added. See the `log` example to see how to log the current stack trace.
  * * bn::isprite_animate_action::next_change_updates, bn::isprite_cached_animate_action::next_change_updates,
  *   bn::iregular_bg_animate_action::next_change_updates, bn::iregular_bg_cached_animate_action::next_change_updates,
  *   bn::iaffine_bg_animate_action::next_change_updates and bn::iaffine_bg_cached_animate_action::next_change_updates added.

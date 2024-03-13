@@ -27,6 +27,21 @@ namespace
     }
 }
 
+__attribute__((noinline)) void log_example_c_function()
+{
+    bn::core::log_stacktrace();
+}
+
+__attribute__((noinline)) void log_example_b_function()
+{
+    log_example_c_function();
+}
+
+__attribute__((noinline)) void log_example_a_function()
+{
+    log_example_b_function();
+}
+
 int main()
 {
     bn::core::init();
@@ -69,6 +84,8 @@ int main()
     BN_LOG("Multiple arguments: ", 1, 'a', 2, 'b', 3, 'c');
     BN_LOG("Even fixed point numbers: ", bn::fixed(0.125));
     BN_LOG("Custom types too: ", custom_type());
+
+    log_example_a_function();
 
     while(true)
     {

@@ -11,6 +11,11 @@
 
 #include "../../butano/hw/include/bn_hw_dma.h"
 #include "../../butano/hw/include/bn_hw_memory.h"
+#include "../../butano/hw/include/bn_hw_decompress.h"
+
+#include "bn_regular_bg_items_butano_huge_rl.h"
+#include "bn_regular_bg_items_butano_huge_huff.h"
+#include "bn_regular_bg_items_butano_huge_lz77.h"
 
 namespace
 {
@@ -192,6 +197,84 @@ void atan2_test(int& integer)
     BN_PROFILER_STOP();
 }
 
+void rl_decomp_test()
+{
+    const bn::tile* tiles = bn::regular_bg_items::butano_huge_rl.tiles_item().tiles_ref().data();
+    auto buffer = new bn::array<uint8_t, 64 * 1024>();
+
+    BN_PROFILER_START("rl_wram_regular");
+
+    bn::hw::decompress::rl_wram(tiles, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("rl_wram_bios");
+
+    RLUnCompWram(tiles, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("rl_vram_regular");
+
+    bn::hw::decompress::rl_vram(tiles, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("rl_vram_bios");
+
+    RLUnCompVram(tiles, buffer);
+
+    BN_PROFILER_STOP();
+}
+
+void lz77_decomp_test()
+{
+    const bn::tile* tiles = bn::regular_bg_items::butano_huge_lz77.tiles_item().tiles_ref().data();
+    auto buffer = new bn::array<uint8_t, 64 * 1024>();
+
+    BN_PROFILER_START("lz77_wram_regular");
+
+    bn::hw::decompress::lz77_wram(tiles, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("lz77_wram_bios");
+
+    LZ77UnCompWram(tiles, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("lz77_vram_regular");
+
+    bn::hw::decompress::lz77_vram(tiles, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("lz77_vram_bios");
+
+    LZ77UnCompVram(tiles, buffer);
+
+    BN_PROFILER_STOP();
+}
+
+void huff_decomp_test()
+{
+    const bn::tile* tiles = bn::regular_bg_items::butano_huge_huff.tiles_item().tiles_ref().data();
+    auto buffer = new bn::array<uint8_t, 64 * 1024>();
+
+    BN_PROFILER_START("huff_regular");
+
+    bn::hw::decompress::huff(tiles, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("huff_bios");
+
+    HuffUnComp(tiles, buffer);
+
+    BN_PROFILER_STOP();
+}
+
 }
 
 int main()
@@ -205,6 +288,9 @@ int main()
     random_test(integer);
     lut_sin_test(integer);
     atan2_test(integer);
+    rl_decomp_test();
+    lz77_decomp_test();
+    huff_decomp_test();
 
     if(integer)
     {

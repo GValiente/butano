@@ -21,6 +21,7 @@
  * * `bn::pair` is now a `std::pair` alias.
  * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> ASM ROM usage reduced.
  * * `profiler` example simplified.
+ * * Compression algorithms added to the `profiler` test.
  * * @ref faq_stack_trace question added to the @ref faq page.
  * * @ref faq_8bpp_palette_change question added to the @ref faq page.
  * * @ref faq_sprites_hidden and @ref faq_background_hidden questions added to the @ref faq page.

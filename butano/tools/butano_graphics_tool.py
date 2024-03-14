@@ -80,7 +80,7 @@ def validate_palette_item(palette_item):
 
 
 def validate_compression(compression):
-    if compression not in ['none', 'lz77', 'run_length', 'huffman', 'auto']:
+    if compression not in ['none', 'lz77', 'run_length', 'huffman', 'auto', 'auto_no_huffman']:
         raise ValueError('Unknown compression: ' + str(compression))
 
 
@@ -219,19 +219,28 @@ class SpriteItem:
         tiles_compression = self.__tiles_compression
         palette_compression = self.__palette_compression
 
-        if tiles_compression == 'auto':
+        if tiles_compression.startswith('auto'):
+            test_huffman = tiles_compression == 'auto'
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
                                                                          file_size)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
-        if palette_compression == 'auto':
+            if test_huffman:
+                tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman',
+                                                                             file_size)
+
+        if palette_compression.startswith('auto'):
+            test_huffman = palette_compression == 'auto'
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
                                                                              file_size)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
                                                                              file_size)
+
+            if test_huffman:
+                palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'huffman',
+                                                                                 file_size)
 
         self.__execute_command(grit, tiles_compression, palette_compression)
         return self.__write_header(tiles_compression, palette_compression, False)
@@ -374,11 +383,14 @@ class SpriteTilesItem:
     def process(self, grit):
         compression = self.__compression
 
-        if compression == 'auto':
+        if compression.startswith('auto'):
+            test_huffman = compression == 'auto'
             compression, file_size = self.__test_compression(grit, compression, 'none', None)
             compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
             compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
-            compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
+
+            if test_huffman:
+                compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
 
         self.__execute_command(grit, compression)
         return self.__write_header(compression, False)
@@ -491,10 +503,14 @@ class SpritePaletteItem:
     def process(self, grit):
         compression = self.__compression
 
-        if compression == 'auto':
+        if compression.startswith('auto'):
+            test_huffman = compression == 'auto'
             compression, file_size = self.__test_compression(grit, compression, 'none', None)
             compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
             compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
+
+            if test_huffman:
+                compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
 
         self.__execute_command(grit, compression)
         return self.__write_header(compression, False)
@@ -700,25 +716,37 @@ class RegularBgItem:
         palette_compression = self.__palette_compression
         map_compression = self.__map_compression
 
-        if tiles_compression == 'auto':
+        if tiles_compression.startswith('auto'):
+            test_huffman = tiles_compression == 'auto'
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
                                                                          file_size)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
-        if palette_compression == 'auto':
+            if test_huffman:
+                tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman',
+                                                                             file_size)
+
+        if palette_compression.startswith('auto'):
+            test_huffman = palette_compression == 'auto'
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
                                                                              file_size)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
                                                                              file_size)
 
-        if map_compression == 'auto':
+            if test_huffman:
+                palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'huffman',
+                                                                                 file_size)
+
+        if map_compression.startswith('auto'):
+            test_huffman = map_compression == 'auto'
             map_compression, file_size = self.__test_map_compression(grit, map_compression, 'none', None)
             map_compression, file_size = self.__test_map_compression(grit, map_compression, 'run_length', file_size)
             map_compression, file_size = self.__test_map_compression(grit, map_compression, 'lz77', file_size)
-            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'huffman', file_size)
+
+            if test_huffman:
+                map_compression, file_size = self.__test_map_compression(grit, map_compression, 'huffman', file_size)
 
         self.__execute_command(grit, tiles_compression, palette_compression, map_compression)
         return self.__write_header(tiles_compression, palette_compression, map_compression, False)
@@ -914,19 +942,28 @@ class RegularBgTilesItem:
         tiles_compression = self.__tiles_compression
         palette_compression = self.__palette_compression
 
-        if tiles_compression == 'auto':
+        if tiles_compression.startswith('auto'):
+            test_huffman = tiles_compression == 'auto'
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
                                                                          file_size)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
-        if palette_compression == 'auto':
+            if test_huffman:
+                tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman',
+                                                                             file_size)
+
+        if palette_compression.startswith('auto'):
+            test_huffman = palette_compression == 'auto'
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
                                                                              file_size)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
                                                                              file_size)
+
+            if test_huffman:
+                palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'huffman',
+                                                                                 file_size)
 
         self.__execute_command(grit, tiles_compression, palette_compression)
         return self.__write_header(tiles_compression, palette_compression, False)
@@ -1157,25 +1194,37 @@ class AffineBgItem:
         palette_compression = self.__palette_compression
         map_compression = self.__map_compression
 
-        if tiles_compression == 'auto':
+        if tiles_compression.startswith('auto'):
+            test_huffman = tiles_compression == 'auto'
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
                                                                          file_size)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
-        if palette_compression == 'auto':
+            if test_huffman:
+                tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman',
+                                                                             file_size)
+
+        if palette_compression.startswith('auto'):
+            test_huffman = palette_compression == 'auto'
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
                                                                              file_size)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
                                                                              file_size)
 
-        if map_compression == 'auto':
+            if test_huffman:
+                palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'huffman',
+                                                                                 file_size)
+
+        if map_compression.startswith('auto'):
+            test_huffman = map_compression == 'auto'
             map_compression, file_size = self.__test_map_compression(grit, map_compression, 'none', None)
             map_compression, file_size = self.__test_map_compression(grit, map_compression, 'run_length', file_size)
             map_compression, file_size = self.__test_map_compression(grit, map_compression, 'lz77', file_size)
-            map_compression, file_size = self.__test_map_compression(grit, map_compression, 'huffman', file_size)
+
+            if test_huffman:
+                map_compression, file_size = self.__test_map_compression(grit, map_compression, 'huffman', file_size)
 
         self.__execute_command(grit, tiles_compression, palette_compression, map_compression)
         return self.__write_header(tiles_compression, palette_compression, map_compression, False)
@@ -1344,19 +1393,28 @@ class AffineBgTilesItem:
         tiles_compression = self.__tiles_compression
         palette_compression = self.__palette_compression
 
-        if tiles_compression == 'auto':
+        if tiles_compression.startswith('auto'):
+            test_huffman = tiles_compression == 'auto'
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'none', None)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'run_length',
                                                                          file_size)
             tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'lz77', file_size)
-            tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman', file_size)
 
-        if palette_compression == 'auto':
+            if test_huffman:
+                tiles_compression, file_size = self.__test_tiles_compression(grit, tiles_compression, 'huffman',
+                                                                             file_size)
+
+        if palette_compression.startswith('auto'):
+            test_huffman = palette_compression == 'auto'
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
                                                                              file_size)
             palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
                                                                              file_size)
+
+            if test_huffman:
+                palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'huffman',
+                                                                                 file_size)
 
         self.__execute_command(grit, tiles_compression, palette_compression)
         return self.__write_header(tiles_compression, palette_compression, False)
@@ -1491,10 +1549,14 @@ class BgPaletteItem:
     def process(self, grit):
         compression = self.__compression
 
-        if compression == 'auto':
+        if compression.startswith('auto'):
+            test_huffman = compression == 'auto'
             compression, file_size = self.__test_compression(grit, compression, 'none', None)
             compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
             compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
+
+            if test_huffman:
+                compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
 
         self.__execute_command(grit, compression)
         return self.__write_header(compression, False)

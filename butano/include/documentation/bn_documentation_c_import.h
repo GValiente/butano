@@ -104,18 +104,21 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"compression"`: optional field which specifies the compression of the tiles and the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  *
  * If the conversion process has finished successfully,
  * a bn::sprite_item should have been generated in the `build` folder.
@@ -164,6 +167,7 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  *
  * If the conversion process has finished successfully,
  * a bn::sprite_tiles_item should have been generated in the `build` folder.
@@ -202,6 +206,7 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  *
  * If the conversion process has finished successfully,
  * a bn::sprite_palette_item should have been generated in the `build` folder.
@@ -263,24 +268,28 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"map_compression"`: optional field which specifies the compression of the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"compression"`: optional field which specifies the compression of the tiles, the colors and the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  *
  * If the conversion process has finished successfully,
  * a bn::regular_bg_item should have been generated in the `build` folder.
@@ -322,6 +331,7 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"generate_palette"`: optional field which specifies if a background palette must be generated (`false` by default).
  * * `"palette_colors_count"`: optional field which specifies the background palette size [1..256].
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
@@ -330,6 +340,7 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  *
  * If the conversion process has finished successfully,
  * a bn::regular_bg_tiles_item should have been generated in the `build` folder.
@@ -376,24 +387,28 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"map_compression"`: optional field which specifies the compression of the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"compression"`: optional field which specifies the compression of the tiles, the colors and the map data:
  *   * `"none"`: uncompressed data (this is the default option).
  *   * `"lz77"`: LZ77 compressed data.
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  *
  * If the conversion process has finished successfully,
  * a bn::affine_bg_item should have been generated in the `build` folder.
@@ -430,6 +445,7 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  * * `"generate_palette"`: optional field which specifies if a background palette must be generated (`false` by default).
  * * `"palette_colors_count"`: optional field which specifies the background palette size [1..256].
  * * `"palette_compression"`: optional field which specifies the compression of the colors data:
@@ -438,6 +454,7 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  *
  * If the conversion process has finished successfully,
  * a bn::affine_bg_tiles_item should have been generated in the `build` folder.
@@ -477,6 +494,7 @@
  *   * `"run_length"`: run-length compressed data.
  *   * `"huffman"`: Huffman compressed data.
  *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
  *
  * If the conversion process has finished successfully,
  * a bn::bg_palette_item should have been generated in the `build` folder.

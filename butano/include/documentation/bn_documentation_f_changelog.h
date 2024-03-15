@@ -15,7 +15,7 @@
  * @section changelog_17_3_0 17.3.0 (next release)
  *
  * * Import tool now allows to exclude Huffman when choosing the best compression for images.
- *   See the @ref import_image import guide to learn how to specify it.
+ *   See the @ref import_image import guide to learn how to exclude it.
  * * LZ77 decompression optimized (thanks Lorenzooone!).
  *
  *

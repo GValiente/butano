@@ -7,6 +7,7 @@
 #include "bn_math.h"
 #include "bn_random.h"
 #include "bn_profiler.h"
+#include "bn_unique_ptr.h"
 #include "bn_seed_random.h"
 
 #include "../../butano/hw/include/bn_hw_dma.h"
@@ -22,40 +23,6 @@ namespace
 
 constexpr int its_sqrt = 100;
 constexpr int its = its_sqrt * its_sqrt;
-
-void copy_words_test()
-{
-    constexpr int copy_words = 1024;
-    constexpr int a[copy_words] = {};
-    int b[copy_words];
-
-    BN_PROFILER_START("copy_words_regular");
-
-    for(int i = 0; i < its_sqrt; ++i)
-    {
-        bn::hw::memory::copy_words(a, copy_words, b);
-    }
-
-    BN_PROFILER_STOP();
-
-    BN_PROFILER_START("copy_words_dma");
-
-    for(int i = 0; i < its_sqrt; ++i)
-    {
-        bn::hw::dma::copy_words(a, copy_words, b);
-    }
-
-    BN_PROFILER_STOP();
-
-    BN_PROFILER_START("copy_words_fiq");
-
-    for(int i = 0; i < its_sqrt; ++i)
-    {
-        bn::hw::memory::copy_words_fiq(a, copy_words, b);
-    }
-
-    BN_PROFILER_STOP();
-}
 
 void div_test(int& integer)
 {
@@ -197,10 +164,38 @@ void atan2_test(int& integer)
     BN_PROFILER_STOP();
 }
 
+constexpr int copy_words = bn::regular_bg_items::butano_huge_huff.tiles_item().tiles_ref().size_bytes() / 4;
+constexpr int copy_words_data[copy_words] = {};
+
+void copy_words_test()
+{
+    bn::unique_ptr<bn::array<int, copy_words>> buffer_ptr(new bn::array<int, copy_words>());
+    int* buffer = buffer_ptr->data();
+
+    BN_PROFILER_START("copy_words_regular");
+
+    bn::hw::memory::copy_words(copy_words_data, copy_words, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("copy_words_dma");
+
+    bn::hw::dma::copy_words(copy_words_data, copy_words, buffer);
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("copy_words_fiq");
+
+    bn::hw::memory::copy_words_fiq(copy_words_data, copy_words, buffer);
+
+    BN_PROFILER_STOP();
+}
+
 void rl_decomp_test()
 {
     const bn::tile* tiles = bn::regular_bg_items::butano_huge_rl.tiles_item().tiles_ref().data();
-    auto buffer = new bn::array<uint8_t, 64 * 1024>();
+    bn::unique_ptr<bn::array<uint8_t, 64 * 1024>> buffer_ptr(new bn::array<uint8_t, 64 * 1024>());
+    uint8_t* buffer = buffer_ptr->data();
 
     BN_PROFILER_START("rl_wram_regular");
 
@@ -230,7 +225,8 @@ void rl_decomp_test()
 void lz77_decomp_test()
 {
     const bn::tile* tiles = bn::regular_bg_items::butano_huge_lz77.tiles_item().tiles_ref().data();
-    auto buffer = new bn::array<uint8_t, 64 * 1024>();
+    bn::unique_ptr<bn::array<uint8_t, 64 * 1024>> buffer_ptr(new bn::array<uint8_t, 64 * 1024>());
+    uint8_t* buffer = buffer_ptr->data();
 
     BN_PROFILER_START("lz77_regular");
 
@@ -254,7 +250,8 @@ void lz77_decomp_test()
 void huff_decomp_test()
 {
     const bn::tile* tiles = bn::regular_bg_items::butano_huge_huff.tiles_item().tiles_ref().data();
-    auto buffer = new bn::array<uint8_t, 64 * 1024>();
+    bn::unique_ptr<bn::array<uint8_t, 64 * 1024>> buffer_ptr(new bn::array<uint8_t, 64 * 1024>());
+    uint8_t* buffer = buffer_ptr->data();
 
     BN_PROFILER_START("huff_regular");
 
@@ -276,12 +273,12 @@ int main()
     bn::core::init();
 
     int integer = 123456789;
-    copy_words_test();
     div_test(integer);
     sqrt_test(integer);
     random_test(integer);
     lut_sin_test(integer);
     atan2_test(integer);
+    copy_words_test();
     rl_decomp_test();
     lz77_decomp_test();
     huff_decomp_test();

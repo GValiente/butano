@@ -408,7 +408,7 @@ void update()
         {
             ticks frame_ticks = update_impl();
             total_ticks.cpu_usage_ticks += frame_ticks.cpu_usage_ticks;
-            total_ticks.vblank_usage_ticks += frame_ticks.vblank_usage_ticks;
+            total_ticks.vblank_usage_ticks = bn::max(total_ticks.vblank_usage_ticks, frame_ticks.vblank_usage_ticks);
             frame_index += frame_ticks.missed_frames + 1;
         }
 
@@ -514,7 +514,7 @@ fixed last_cpu_usage()
 
 fixed last_vblank_usage()
 {
-    return fixed(data.last_ticks.vblank_usage_ticks) / (timers::ticks_per_vblank() * data.last_update_frames);
+    return fixed(data.last_ticks.vblank_usage_ticks) / timers::ticks_per_vblank();
 }
 
 int last_missed_frames()

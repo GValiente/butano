@@ -504,7 +504,8 @@ void hard_reset()
 fixed current_cpu_usage()
 {
     int current_cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
-    return fixed(current_cpu_usage_ticks) / timers::ticks_per_frame();
+    int current_update_frames = data.skip_frames + 1;
+    return fixed(current_cpu_usage_ticks) / (timers::ticks_per_frame() * current_update_frames);
 }
 
 fixed last_cpu_usage()

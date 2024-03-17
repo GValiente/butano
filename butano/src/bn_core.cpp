@@ -508,14 +508,29 @@ fixed current_cpu_usage()
     return fixed(current_cpu_usage_ticks) / (timers::ticks_per_frame() * current_update_frames);
 }
 
+int current_cpu_ticks()
+{
+    return data.cpu_usage_timer.elapsed_ticks();
+}
+
 fixed last_cpu_usage()
 {
     return fixed(data.last_ticks.cpu_usage_ticks) / (timers::ticks_per_frame() * data.last_update_frames);
 }
 
+int last_cpu_ticks()
+{
+    return data.last_ticks.cpu_usage_ticks;
+}
+
 fixed last_vblank_usage()
 {
     return fixed(data.last_ticks.vblank_usage_ticks) / timers::ticks_per_vblank();
+}
+
+int last_vblank_ticks()
+{
+    return data.last_ticks.vblank_usage_ticks;
 }
 
 int last_missed_frames()

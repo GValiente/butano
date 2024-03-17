@@ -111,11 +111,19 @@ namespace bn::core
     [[noreturn]] void hard_reset();
 
     /**
-     * @brief Returns the current CPU usage.
+     * @brief Returns the CPU usage of the current frame.
      *
      * A CPU usage greater than 1 means that at least one screen refresh should have been missed.
      */
     [[nodiscard]] fixed current_cpu_usage();
+
+    /**
+     * @brief Returns the CPU timer ticks of the current frame.
+     *
+     * A CPU tick count greater than timers::ticks_per_frame() means that at least one screen refresh
+     * should have been missed.
+     */
+    [[nodiscard]] int current_cpu_ticks();
 
     /**
      * @brief Returns the CPU usage of the last elapsed frame.
@@ -128,12 +136,31 @@ namespace bn::core
     [[nodiscard]] fixed last_cpu_usage();
 
     /**
+     * @brief Returns the CPU timer ticks of the last elapsed frame.
+     *
+     * A CPU tick count greater than timers::ticks_per_frame() means that at least one screen refresh
+     * should have been missed.
+     *
+     * If you only want to retrieve the number of missed screen refreshes,
+     * core::last_missed_frames is more accurate.
+     */
+    [[nodiscard]] int last_cpu_ticks();
+
+    /**
      * @brief Returns the V-Blank usage of the last elapsed frame.
      *
      * A V-Blank usage greater than 1 means that the screen is being redrawn
-     * before all of GBA display components being updated.
+     * before all of GBA display components are updated.
      */
     [[nodiscard]] fixed last_vblank_usage();
+
+    /**
+     * @brief Returns the V-Blank timer ticks of the last elapsed frame.
+     *
+     * A V-Blank tick count greater than timers::ticks_per_vblank() means that the screen is being redrawn
+     * before all of GBA display components are updated.
+     */
+    [[nodiscard]] int last_vblank_ticks();
 
     /**
      * @brief Returns the number of screen refreshes that were missed in the last core::update call.

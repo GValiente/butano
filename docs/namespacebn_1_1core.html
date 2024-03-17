@@ -113,15 +113,27 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc">current_cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
             </dt>
-            <dd>Returns the current CPU usage.</dd>
+            <dd>Returns the CPU usage of the current frame.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac399daa5263756c037b34f14729e8a7a" class="m-doc">current_cpu_ticks</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the CPU timer ticks of the current frame.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc">last_cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the CPU usage of the last elapsed frame.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a836c1d35b22654721c3af7e05b397217" class="m-doc">last_cpu_ticks</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the CPU timer ticks of the last elapsed frame.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc">last_vblank_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the V-Blank usage of the last elapsed frame.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a15afc3dfa39d1ad455e0e4bfd6fecac3" class="m-doc">last_vblank_ticks</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            </dt>
+            <dd>Returns the V-Blank timer ticks of the last elapsed frame.</dd>
             <dt id="a98c2b2065c2694d96b695a6076df8506">
               <span class="m-doc-wrap-bumper">auto <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc-self">last_missed_frames</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
@@ -252,8 +264,15 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc-self">current_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
-            <p>Returns the current CPU usage.</p>
+            <p>Returns the CPU usage of the current frame.</p>
 <p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac399daa5263756c037b34f14729e8a7a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac399daa5263756c037b34f14729e8a7a" class="m-doc-self">current_cpu_ticks</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Returns the CPU timer ticks of the current frame.</p>
+<p>A CPU tick count greater than <a href="namespacebn_1_1timers.html#a2b5acebc6a8c3e13df226753bd827d52" class="m-doc">timers::<wbr />ticks_per_frame()</a> means that at least one screen refresh should have been missed.</p>
           </div></section>
           <section class="m-doc-details" id="a5c36ceb40cf617f8ffa442bbf15126c1"><div>
             <h3>
@@ -262,12 +281,26 @@
             <p>Returns the CPU usage of the last elapsed frame.</p>
 <p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="namespacebn_1_1core.html#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
           </div></section>
+          <section class="m-doc-details" id="a836c1d35b22654721c3af7e05b397217"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a836c1d35b22654721c3af7e05b397217" class="m-doc-self">last_cpu_ticks</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Returns the CPU timer ticks of the last elapsed frame.</p>
+<p>A CPU tick count greater than <a href="namespacebn_1_1timers.html#a2b5acebc6a8c3e13df226753bd827d52" class="m-doc">timers::<wbr />ticks_per_frame()</a> means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="namespacebn_1_1core.html#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
+          </div></section>
           <section class="m-doc-details" id="aace6487154c238af8d207e0e400f6fcf"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc-self">last_vblank_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Returns the V-Blank usage of the last elapsed frame.</p>
-<p>A V-Blank usage greater than 1 means that the screen is being redrawn before all of GBA display components being updated.</p>
+<p>A V-Blank usage greater than 1 means that the screen is being redrawn before all of GBA display components are updated.</p>
+          </div></section>
+          <section class="m-doc-details" id="a15afc3dfa39d1ad455e0e4bfd6fecac3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a15afc3dfa39d1ad455e0e4bfd6fecac3" class="m-doc-self">last_vblank_ticks</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Returns the V-Blank timer ticks of the last elapsed frame.</p>
+<p>A V-Blank tick count greater than <a href="namespacebn_1_1timers.html#a1d3f3ae79d73235127a2396b67033477" class="m-doc">timers::<wbr />ticks_per_vblank()</a> means that the screen is being redrawn before all of GBA display components are updated.</p>
           </div></section>
           <section class="m-doc-details" id="a70441922960e810dd149a7849c7bd047"><div>
             <h3>

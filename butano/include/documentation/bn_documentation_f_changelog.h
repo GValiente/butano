@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_3_0 17.3.0 (next release)
+ * @section changelog_17_3_0 17.3.0
  *
  * * bn::core::current_cpu_ticks, bn::core::last_cpu_ticks and bn::core::last_vblank_ticks added.
  * * Import tool now allows to exclude Huffman when choosing the best compression for images.

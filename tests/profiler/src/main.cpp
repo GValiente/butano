@@ -166,7 +166,7 @@ void atan2_test(int& integer)
 }
 
 
-class coroutine_task
+class std_coroutine_task
 {
 
 public:
@@ -175,9 +175,9 @@ public:
 
     struct promise_type
     {
-        [[nodiscard]] coroutine_task get_return_object()
+        [[nodiscard]] std_coroutine_task get_return_object()
         {
-            return coroutine_task(co_handle_t::from_promise(*this));
+            return std_coroutine_task(co_handle_t::from_promise(*this));
         }
 
         [[nodiscard]] auto initial_suspend()
@@ -199,12 +199,12 @@ public:
         }
     };
 
-    coroutine_task(co_handle_t co_handle) :
+    std_coroutine_task(co_handle_t co_handle) :
         _co_handle(co_handle)
     {
     }
 
-    ~coroutine_task()
+    ~std_coroutine_task()
     {
         if(_co_handle)
         {
@@ -212,16 +212,16 @@ public:
         }
     }
 
-    coroutine_task(const coroutine_task&) = delete;
-    coroutine_task& operator=(const coroutine_task&) = delete;
+    std_coroutine_task(const std_coroutine_task&) = delete;
+    std_coroutine_task& operator=(const std_coroutine_task&) = delete;
 
-    coroutine_task(coroutine_task&& other) noexcept :
+    std_coroutine_task(std_coroutine_task&& other) noexcept :
         _co_handle(bn::move(other._co_handle))
     {
         other._co_handle = co_handle_t();
     }
 
-    coroutine_task& operator=(coroutine_task&& other) noexcept
+    std_coroutine_task& operator=(std_coroutine_task&& other) noexcept
     {
         if(this != &other)
         {
@@ -252,7 +252,7 @@ private:
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wswitch-default"
 
-coroutine_task coroutine_impl(int& integer)
+std_coroutine_task std_coroutine_impl(int& integer)
 {
     bn::random random;
     unsigned last_result = 0;
@@ -268,6 +268,22 @@ coroutine_task coroutine_impl(int& integer)
 }
 
 #pragma GCC diagnostic pop
+
+int agbabi_coroutine_impl(__agbabi_coro_t* coro)
+{
+    bn::random random;
+    unsigned last_result = 0;
+
+    for(int i = 0; i < its; ++i)
+    {
+        unsigned new_result = random.get();
+        unsigned result = last_result + new_result;
+        last_result = new_result;
+        __agbabi_coro_yield(coro, int(result));
+    }
+
+    return 0;
+}
 
 void coroutine_test(int& integer)
 {
@@ -290,10 +306,10 @@ void coroutine_test(int& integer)
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("coroutine_enabled");
+    BN_PROFILER_START("coroutine_std");
 
-    int enabled_result = 0;
-    coroutine_task task(coroutine_impl(enabled_result));
+    int std_result = 0;
+    std_coroutine_task task(std_coroutine_impl(std_result));
 
     while(! task.done())
     {
@@ -302,10 +318,32 @@ void coroutine_test(int& integer)
 
     BN_PROFILER_STOP();
 
-    BN_ASSERT(disabled_result == enabled_result, "Invalid coroutine");
+    BN_ASSERT(disabled_result == std_result, "Invalid std coroutine");
+
+    BN_PROFILER_START("coroutine_agbabi");
+
+    int agbabi_result = 0;
+
+    {
+        constexpr int stack_length = 0x200;
+        int stack[stack_length];
+
+        __agbabi_coro_t coro;
+        __agbabi_coro_make(&coro, stack + stack_length, agbabi_coroutine_impl);
+
+        while(! coro.joined)
+        {
+            agbabi_result += __agbabi_coro_resume(&coro);
+        }
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_ASSERT(disabled_result == agbabi_result, "Invalid agbabi coroutine");
 
     integer += disabled_result;
-    integer += enabled_result;
+    integer += std_result;
+    integer += agbabi_result;
 }
 
 

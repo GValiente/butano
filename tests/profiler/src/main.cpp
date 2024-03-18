@@ -326,7 +326,8 @@ void coroutine_test(int& integer)
 
     {
         constexpr int stack_length = 0x200;
-        int stack[stack_length];
+        bn::unique_ptr<bn::array<int, stack_length>> stack_ptr(new bn::array<int, stack_length>());
+        int* stack = stack_ptr->data();
 
         __agbabi_coro_t coro;
         __agbabi_coro_make(&coro, stack + stack_length, agbabi_coroutine_impl);

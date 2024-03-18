@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_4_0 17.4.0 (next release)
+ *
+ * `profiler` coroutine test improved.
+ *
+ *
  * @section changelog_17_3_0 17.3.0
  *
  * * bn::core::current_cpu_ticks, bn::core::last_cpu_ticks and bn::core::last_vblank_ticks added.

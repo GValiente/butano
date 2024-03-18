@@ -147,7 +147,7 @@ namespace bn::core
     [[nodiscard]] int last_cpu_ticks();
 
     /**
-     * @brief Returns the V-Blank usage of the last elapsed frame.
+     * @brief Returns the maximum V-Blank usage of the last elapsed frame.
      *
      * A V-Blank usage greater than 1 means that the screen is being redrawn
      * before all of GBA display components are updated.
@@ -155,7 +155,7 @@ namespace bn::core
     [[nodiscard]] fixed last_vblank_usage();
 
     /**
-     * @brief Returns the V-Blank timer ticks of the last elapsed frame.
+     * @brief Returns the maximum V-Blank timer ticks of the last elapsed frame.
      *
      * A V-Blank tick count greater than timers::ticks_per_vblank() means that the screen is being redrawn
      * before all of GBA display components are updated.

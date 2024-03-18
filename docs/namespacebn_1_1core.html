@@ -129,11 +129,11 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc">last_vblank_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
             </dt>
-            <dd>Returns the V-Blank usage of the last elapsed frame.</dd>
+            <dd>Returns the maximum V-Blank usage of the last elapsed frame.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a15afc3dfa39d1ad455e0e4bfd6fecac3" class="m-doc">last_vblank_ticks</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
-            <dd>Returns the V-Blank timer ticks of the last elapsed frame.</dd>
+            <dd>Returns the maximum V-Blank timer ticks of the last elapsed frame.</dd>
             <dt id="a98c2b2065c2694d96b695a6076df8506">
               <span class="m-doc-wrap-bumper">auto <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc-self">last_missed_frames</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
@@ -292,14 +292,14 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc-self">last_vblank_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
-            <p>Returns the V-Blank usage of the last elapsed frame.</p>
+            <p>Returns the maximum V-Blank usage of the last elapsed frame.</p>
 <p>A V-Blank usage greater than 1 means that the screen is being redrawn before all of GBA display components are updated.</p>
           </div></section>
           <section class="m-doc-details" id="a15afc3dfa39d1ad455e0e4bfd6fecac3"><div>
             <h3>
               <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a15afc3dfa39d1ad455e0e4bfd6fecac3" class="m-doc-self">last_vblank_ticks</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
-            <p>Returns the V-Blank timer ticks of the last elapsed frame.</p>
+            <p>Returns the maximum V-Blank timer ticks of the last elapsed frame.</p>
 <p>A V-Blank tick count greater than <a href="namespacebn_1_1timers.html#a1d3f3ae79d73235127a2396b67033477" class="m-doc">timers::<wbr />ticks_per_vblank()</a> means that the screen is being redrawn before all of GBA display components are updated.</p>
           </div></section>
           <section class="m-doc-details" id="a70441922960e810dd149a7849c7bd047"><div>

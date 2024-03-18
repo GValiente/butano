@@ -3,6 +3,7 @@
  * zlib License, see LICENSE file.
  */
 
+#include <coroutine>
 #include "bn_core.h"
 #include "bn_math.h"
 #include "bn_random.h"
@@ -164,6 +165,150 @@ void atan2_test(int& integer)
     BN_PROFILER_STOP();
 }
 
+
+class coroutine_task
+{
+
+public:
+    struct promise_type;
+    using co_handle_t = std::coroutine_handle<promise_type>;
+
+    struct promise_type
+    {
+        [[nodiscard]] coroutine_task get_return_object()
+        {
+            return coroutine_task(co_handle_t::from_promise(*this));
+        }
+
+        [[nodiscard]] auto initial_suspend()
+        {
+            return std::suspend_never();
+        }
+
+        [[nodiscard]] auto final_suspend() noexcept
+        {
+            return std::suspend_always();
+        }
+
+        void unhandled_exception()
+        {
+        }
+
+        void return_void()
+        {
+        }
+    };
+
+    coroutine_task(co_handle_t co_handle) :
+        _co_handle(co_handle)
+    {
+    }
+
+    ~coroutine_task()
+    {
+        if(_co_handle)
+        {
+            _co_handle.destroy();
+        }
+    }
+
+    coroutine_task(const coroutine_task&) = delete;
+    coroutine_task& operator=(const coroutine_task&) = delete;
+
+    coroutine_task(coroutine_task&& other) noexcept :
+        _co_handle(bn::move(other._co_handle))
+    {
+        other._co_handle = co_handle_t();
+    }
+
+    coroutine_task& operator=(coroutine_task&& other) noexcept
+    {
+        if(this != &other)
+        {
+            _co_handle = std::move(other._co_handle);
+            other._co_handle = co_handle_t();
+        }
+
+        return *this;
+    }
+
+    [[nodiscard]] bool done() const
+    {
+        return _co_handle.done();
+    }
+
+    void operator()()
+    {
+        if(_co_handle && ! _co_handle.done())
+        {
+            _co_handle.resume();
+        }
+    }
+
+private:
+    co_handle_t _co_handle;
+};
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wswitch-default"
+
+coroutine_task coroutine_impl(int& integer)
+{
+    bn::random random;
+    unsigned last_result = 0;
+
+    for(int i = 0; i < its; ++i)
+    {
+        unsigned new_result = random.get();
+        unsigned result = last_result + new_result;
+        last_result = new_result;
+        integer += int(result);
+        co_await std::suspend_always{};
+    }
+}
+
+#pragma GCC diagnostic pop
+
+void coroutine_test(int& integer)
+{
+    BN_PROFILER_START("coroutine_disabled");
+
+    int disabled_result = 0;
+
+    {
+        bn::random random;
+        unsigned last_result = 0;
+
+        for(int i = 0; i < its; ++i)
+        {
+            unsigned new_result = random.get();
+            unsigned result = last_result + new_result;
+            last_result = new_result;
+            disabled_result += int(result);
+        }
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_PROFILER_START("coroutine_enabled");
+
+    int enabled_result = 0;
+    coroutine_task task(coroutine_impl(enabled_result));
+
+    while(! task.done())
+    {
+        task();
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_ASSERT(disabled_result == enabled_result, "Invalid coroutine");
+
+    integer += disabled_result;
+    integer += enabled_result;
+}
+
+
 constexpr int copy_words = bn::regular_bg_items::butano_huge_huff.tiles_item().tiles_ref().size_bytes() / 4;
 constexpr int copy_words_data[copy_words] = {};
 
@@ -278,6 +423,7 @@ int main()
     random_test(integer);
     lut_sin_test(integer);
     atan2_test(integer);
+    coroutine_test(integer);
     copy_words_test();
     rl_decomp_test();
     lz77_decomp_test();

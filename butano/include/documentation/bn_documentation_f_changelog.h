@@ -19,6 +19,7 @@
  *   See the @ref import_image import guide to learn how to exclude it.
  * * LZ77 decompression optimized (thanks Lorenzooone!).
  * * bn::core::current_cpu_usage and bn::core::last_vblank_usage with skip frames fixed.
+ * * Coroutine added to the `profiler` test.
  *
  *
  * @section changelog_17_2_0 17.2.0

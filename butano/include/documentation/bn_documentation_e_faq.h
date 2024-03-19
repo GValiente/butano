@@ -83,6 +83,20 @@
  * You can find the header of each Butano class in its documentation page.
  *
  *
+ * @subsection faq_standard Why can't I use some standard functions and classes?
+ *
+ * You need to link the standard system libraries to use standard functions like `strlen`
+ * and standard classes like `std::shared_ptr`.
+ *
+ * To do that, the `DEFAULTLIBS` variable of the `Makefile` of your project must not be empty. For example:
+ *
+ * `DEFAULTLIBS := true`
+ *
+ * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
+ *
+ * Since you are now linking the standard system libraries, you must comply with their license.
+ *
+ *
  * @subsection faq_common_folder Why can't I use the content of the common folder in a new project?
  *
  * The `common` folder contains code and assets used by most Butano examples and tests.

@@ -14,6 +14,7 @@
  *
  * @section changelog_17_4_0 17.4.0 (next release)
  *
+ * * VRAM related error messages shortened.
  * * `profiler` coroutine test improved.
  * * @ref faq_standard question added to the @ref faq page.
  *

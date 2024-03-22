@@ -27,7 +27,7 @@ namespace bn::colors
     constexpr color white(0x7FFF); //!< White color.
 
     constexpr color red(0x001F); //!< Red color.
-    constexpr color green(0x0200); //!< Green color.
+    constexpr color green(0x03E0); //!< Green color.
     constexpr color blue(0x7C00); //!< Blue color.
 
     constexpr color yellow(0x03FF); //!< Yellow color.

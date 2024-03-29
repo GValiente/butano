@@ -180,6 +180,9 @@
  * constexpr const_data data;
  * @endcode
  *
+ * bn::memory provides functions to query available and used RAM, like bn::memory::used_stack_iwram
+ * and bn::memory::used_static_iwram.
+ *
  * To avoid running out of IWRAM, Butano Fighter and Varooom 3D place all scenes in EWRAM.
  * Check their `main.cpp` files to see how it works.
  *

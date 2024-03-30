@@ -18,6 +18,7 @@
  * * `profiler` coroutine test improved.
  * * @ref faq_standard question added to the @ref faq page.
  * * @ref faq_memory_types question improved.
+ * * BIOS calls can be disabled in the `profiler` test.
  *
  *
  * @section changelog_17_3_0 17.3.0

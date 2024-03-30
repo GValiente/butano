@@ -24,32 +24,39 @@ namespace
 
 constexpr int its_sqrt = 100;
 constexpr int its = its_sqrt * its_sqrt;
+constexpr bool check_bios = true;
 
 void div_test(int& integer)
 {
+    constexpr int dividend = bn::numeric_limits<int>::max() / 2;
+
     int div_result = 0;
     BN_PROFILER_START("div_regular");
 
     for(int i = 0; i < its; ++i)
     {
-        div_result += integer / (i + 1);
+        div_result += dividend / (i + 1);
     }
 
     BN_PROFILER_STOP();
 
-    int bios_div_result = 0;
-    BN_PROFILER_START("div_bios");
-
-    for(int i = 0; i < its; ++i)
-    {
-        bios_div_result += Div(integer, i + 1);
-    }
-
-    BN_PROFILER_STOP();
-
-    BN_ASSERT(div_result == bios_div_result, "Invalid division");
     integer += div_result;
-    integer += bios_div_result;
+
+    if(check_bios)
+    {
+        int bios_div_result = 0;
+        BN_PROFILER_START("div_bios");
+
+        for(int i = 0; i < its; ++i)
+        {
+            bios_div_result += Div(dividend, i + 1);
+        }
+
+        BN_PROFILER_STOP();
+
+        BN_ASSERT(div_result == bios_div_result, "Invalid division");
+        integer += bios_div_result;
+    }
 }
 
 void sqrt_test(int& integer)
@@ -64,19 +71,23 @@ void sqrt_test(int& integer)
 
     BN_PROFILER_STOP();
 
-    int bios_sqrt_result = 0;
-    BN_PROFILER_START("sqrt_bios");
-
-    for(int i = 0; i < its; ++i)
-    {
-        bios_sqrt_result += Sqrt(unsigned(bn::abs(bios_sqrt_result)));
-    }
-
-    BN_PROFILER_STOP();
-
-    BN_ASSERT(sqrt_result == bios_sqrt_result, "Invalid sqrt");
     integer += sqrt_result;
-    integer += bios_sqrt_result;
+
+    if(check_bios)
+    {
+        int bios_sqrt_result = 0;
+        BN_PROFILER_START("sqrt_bios");
+
+        for(int i = 0; i < its; ++i)
+        {
+            bios_sqrt_result += Sqrt(unsigned(bn::abs(bios_sqrt_result)));
+        }
+
+        BN_PROFILER_STOP();
+
+        BN_ASSERT(sqrt_result == bios_sqrt_result, "Invalid sqrt");
+        integer += bios_sqrt_result;
+    }
 }
 
 void random_test(int& integer)
@@ -140,17 +151,20 @@ void atan2_test(int& integer)
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("atan2_bios");
-
-    for(int y = -its_sqrt_half; y < its_sqrt_half; ++y)
+    if(check_bios)
     {
-        for(int x = -its_sqrt_half; x < its_sqrt_half; ++x)
-        {
-            integer += int(ArcTan2(int16_t(x), int16_t(y)));
-        }
-    }
+        BN_PROFILER_START("atan2_bios");
 
-    BN_PROFILER_STOP();
+        for(int y = -its_sqrt_half; y < its_sqrt_half; ++y)
+        {
+            for(int x = -its_sqrt_half; x < its_sqrt_half; ++x)
+            {
+                integer += int(ArcTan2(int16_t(x), int16_t(y)));
+            }
+        }
+
+        BN_PROFILER_STOP();
+    }
 
     BN_PROFILER_START("atan2_diamond_angle");
 
@@ -387,11 +401,14 @@ void rl_decomp_test()
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("rl_wram_bios");
+    if(check_bios)
+    {
+        BN_PROFILER_START("rl_wram_bios");
 
-    RLUnCompWram(tiles, buffer);
+        RLUnCompWram(tiles, buffer);
 
-    BN_PROFILER_STOP();
+        BN_PROFILER_STOP();
+    }
 
     BN_PROFILER_START("rl_vram_regular");
 
@@ -399,11 +416,14 @@ void rl_decomp_test()
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("rl_vram_bios");
+    if(check_bios)
+    {
+        BN_PROFILER_START("rl_vram_bios");
 
-    RLUnCompVram(tiles, buffer);
+        RLUnCompVram(tiles, buffer);
 
-    BN_PROFILER_STOP();
+        BN_PROFILER_STOP();
+    }
 }
 
 void lz77_decomp_test()
@@ -418,17 +438,20 @@ void lz77_decomp_test()
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("lz77_wram_bios");
+    if(check_bios)
+    {
+        BN_PROFILER_START("lz77_wram_bios");
 
-    LZ77UnCompWram(tiles, buffer);
+        LZ77UnCompWram(tiles, buffer);
 
-    BN_PROFILER_STOP();
+        BN_PROFILER_STOP();
 
-    BN_PROFILER_START("lz77_vram_bios");
+        BN_PROFILER_START("lz77_vram_bios");
 
-    LZ77UnCompVram(tiles, buffer);
+        LZ77UnCompVram(tiles, buffer);
 
-    BN_PROFILER_STOP();
+        BN_PROFILER_STOP();
+    }
 }
 
 void huff_decomp_test()
@@ -443,11 +466,14 @@ void huff_decomp_test()
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("huff_bios");
+    if(check_bios)
+    {
+        BN_PROFILER_START("huff_bios");
 
-    HuffUnComp(tiles, buffer);
+        HuffUnComp(tiles, buffer);
 
-    BN_PROFILER_STOP();
+        BN_PROFILER_STOP();
+    }
 }
 
 }

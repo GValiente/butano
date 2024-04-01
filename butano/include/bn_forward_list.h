@@ -381,8 +381,6 @@ public:
      */
     void push_front(const_reference value)
     {
-        BN_BASIC_ASSERT(! full(), "List is full");
-
         node_type& new_node = _ipool->create(value);
         _insert_after(before_begin(), new_node);
     }
@@ -393,8 +391,6 @@ public:
      */
     void push_front(value_type&& value)
     {
-        BN_BASIC_ASSERT(! full(), "List is full");
-
         node_type& new_node = _ipool->create(move(value));
         _insert_after(before_begin(), new_node);
     }
@@ -407,8 +403,6 @@ public:
     template<typename... Args>
     reference emplace_front(Args&&... args)
     {
-        BN_BASIC_ASSERT(! full(), "List is full");
-
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert_after(before_begin(), new_node);
         return static_cast<value_node_type*>(&new_node)->value;
@@ -432,8 +426,6 @@ public:
      */
     iterator insert_after(const_iterator position, const_reference value)
     {
-        BN_BASIC_ASSERT(! full(), "List is full");
-
         node_type& new_node = _ipool->create(value);
         _insert_after(_mutable_iterator(position), new_node);
         return iterator(&new_node);
@@ -447,8 +439,6 @@ public:
      */
     iterator insert_after(const_iterator position, value_type&& value)
     {
-        BN_BASIC_ASSERT(! full(), "List is full");
-
         node_type& new_node = _ipool->create(move(value));
         _insert_after(_mutable_iterator(position), new_node);
         return iterator(&new_node);
@@ -463,8 +453,6 @@ public:
     template<typename... Args>
     iterator emplace_after(const_iterator position, Args&&... args)
     {
-        BN_BASIC_ASSERT(! full(), "List is full");
-
         node_type& new_node = _ipool->create(forward<Args>(args)...);
         _insert_after(_mutable_iterator(position), new_node);
         return iterator(&new_node);
@@ -607,8 +595,6 @@ public:
 
         for(Iterator it = first; it != last; ++it)
         {
-            BN_BASIC_ASSERT(! full(), "List is full");
-
             node_type& new_node = _ipool->create(*it);
             _insert_after(before_it, new_node);
             ++before_it;

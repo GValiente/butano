@@ -20,6 +20,7 @@
  * * BIOS calls can be disabled in the `profiler` test.
  * * @ref faq_standard question added to the @ref faq page.
  * * @ref faq_memory_types question improved.
+ * * <a href="https://neofidstudios.itch.io/demons-of-asteborg-dx">Demons of Asteborg DX</a> added to `README.md`.
  *
  *
  * @section changelog_17_3_0 17.3.0

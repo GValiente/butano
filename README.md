@@ -110,6 +110,11 @@ created by the members of the [gbadev.net](https://gbadev.net) community.
 
 ![](docs_tools/images/gba_microjam_23_title.png) ![](docs_tools/images/gba_microjam_23_gameplay.png)
 
+* [Demons of Asteborg DX](https://neofidstudios.itch.io/demons-of-asteborg-dx): a GBA remake
+of the infamous Mega Drive game!
+
+![](docs_tools/images/doadx_title.png) ![](docs_tools/images/doadx_gameplay.png)
+
 * [Feline](https://foopod.itch.io/feline): explore the world as a cat, meet new people, learn new languages, 
 face difficult foes and save your family!
 

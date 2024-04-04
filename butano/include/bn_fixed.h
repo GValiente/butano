@@ -15,6 +15,7 @@
 
 #include "bn_compare.h"
 #include "bn_fixed_fwd.h"
+#include "bn_algorithm.h"
 #include "bn_functional.h"
 
 namespace bn
@@ -420,11 +421,35 @@ public:
     }
 
     /**
-     * @brief Returns b subtracted from a.
+     * @brief Returns the sum of a and b.
+     */
+    template<int OtherPrecision>
+    [[nodiscard]] constexpr friend fixed_t<bn::max(Precision, OtherPrecision)> operator+(
+            fixed_t a, fixed_t<OtherPrecision> b)
+    {
+        using output_fixed_t = fixed_t<bn::max(Precision, OtherPrecision)>;
+
+        return output_fixed_t(a) + output_fixed_t(b);
+    }
+
+    /**
+     * @brief Returns the subtraction of a and b.
      */
     [[nodiscard]] constexpr friend fixed_t operator-(fixed_t a, fixed_t b)
     {
         return from_data(a._data - b._data);
+    }
+
+    /**
+     * @brief Returns the subtraction of a and b.
+     */
+    template<int OtherPrecision>
+    [[nodiscard]] constexpr friend fixed_t<bn::max(Precision, OtherPrecision)> operator-(
+        fixed_t a, fixed_t<OtherPrecision> b)
+    {
+        using output_fixed_t = fixed_t<bn::max(Precision, OtherPrecision)>;
+
+        return output_fixed_t(a) - output_fixed_t(b);
     }
 
     /**
@@ -444,6 +469,18 @@ public:
     }
 
     /**
+     * @brief Returns a multiplied by b.
+     */
+    template<int OtherPrecision>
+    [[nodiscard]] constexpr friend fixed_t<bn::max(Precision, OtherPrecision)> operator*(
+        fixed_t a, fixed_t<OtherPrecision> b)
+    {
+        using output_fixed_t = fixed_t<bn::max(Precision, OtherPrecision)>;
+
+        return output_fixed_t(a) * output_fixed_t(b);
+    }
+
+    /**
      * @brief Returns a divided by b.
      */
     [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, int b)
@@ -457,6 +494,18 @@ public:
     [[nodiscard]] constexpr friend fixed_t operator/(fixed_t a, fixed_t b)
     {
         return a.division(b);
+    }
+
+    /**
+     * @brief Returns a divided by b.
+     */
+    template<int OtherPrecision>
+    [[nodiscard]] constexpr friend fixed_t<bn::max(Precision, OtherPrecision)> operator/(
+        fixed_t a, fixed_t<OtherPrecision> b)
+    {
+        using output_fixed_t = fixed_t<bn::max(Precision, OtherPrecision)>;
+
+        return output_fixed_t(a) / output_fixed_t(b);
     }
 
     /**

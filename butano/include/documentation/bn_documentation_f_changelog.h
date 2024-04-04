@@ -14,6 +14,7 @@
  *
  * @section changelog_17_4_0 17.4.0 (next release)
  *
+ * * bn::fixed `friend` operators allow different levels of precision.
  * * bn::list and bn::forward_list unnecessary asserts removed.
  * * VRAM related error messages shortened.
  * * `profiler` coroutine test improved.

@@ -16,7 +16,6 @@
  */
 
 #include "bn_fixed.h"
-#include "bn_algorithm.h"
 #include "bn_sprite_palette_ptr.h"
 #include "bn_value_template_actions.h"
 

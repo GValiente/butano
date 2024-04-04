@@ -258,11 +258,23 @@
               <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the sum of a and b.</dd>
+            <dt id="a9c6195bdd51bd2a6ca5915b94b45869c">
+              <div class="m-doc-template">template&lt;int OtherPrecision&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9c6195bdd51bd2a6ca5915b94b45869c" class="m-doc-self">operator+</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;OtherPrecision&gt; b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;bn::max(Precision, OtherPrecision)&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the sum of a and b.</dd>
             <dt id="aa4059d082d4b5a35069fbb74c734243c">
               <span class="m-doc-wrap-bumper">auto <a href="#aa4059d082d4b5a35069fbb74c734243c" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
               <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Returns b subtracted from a.</dd>
+            <dd>Returns the subtraction of a and b.</dd>
+            <dt id="ac03256a8b936955303012c061f908e06">
+              <div class="m-doc-template">template&lt;int OtherPrecision&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac03256a8b936955303012c061f908e06" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;OtherPrecision&gt; b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;bn::max(Precision, OtherPrecision)&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the subtraction of a and b.</dd>
             <dt id="aedf425e62e9b02874423b067f92a3bc5">
               <span class="m-doc-wrap-bumper">auto <a href="#aedf425e62e9b02874423b067f92a3bc5" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
               int b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -273,6 +285,12 @@
               <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a multiplied by b.</dd>
+            <dt id="ad9eb5295f7b6c04eece06c01625abd37">
+              <div class="m-doc-template">template&lt;int OtherPrecision&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad9eb5295f7b6c04eece06c01625abd37" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;OtherPrecision&gt; b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;bn::max(Precision, OtherPrecision)&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a multiplied by b.</dd>
             <dt id="a60afe81e5b6b40ae61d9da71f7755dfb">
               <span class="m-doc-wrap-bumper">auto <a href="#a60afe81e5b6b40ae61d9da71f7755dfb" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
               int b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -281,6 +299,12 @@
             <dt id="a9fa41c65adbb933f0fa2d0da95dc7ae2">
               <span class="m-doc-wrap-bumper">auto <a href="#a9fa41c65adbb933f0fa2d0da95dc7ae2" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
               <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a divided by b.</dd>
+            <dt id="ac5dc1cbad6f50eae5afb09cfc96e30a4">
+              <div class="m-doc-template">template&lt;int OtherPrecision&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac5dc1cbad6f50eae5afb09cfc96e30a4" class="m-doc-self">operator/</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
+              <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;OtherPrecision&gt; b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;bn::max(Precision, OtherPrecision)&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a divided by b.</dd>
             <dt id="a40b885fe63178ff9609523d8cefe24fa">

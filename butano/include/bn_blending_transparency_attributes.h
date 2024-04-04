@@ -15,7 +15,6 @@
 
 #include "bn_fixed.h"
 #include "bn_assert.h"
-#include "bn_algorithm.h"
 
 namespace bn
 {

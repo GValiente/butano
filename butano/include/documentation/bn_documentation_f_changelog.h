@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_4_0 17.4.0 (next release)
+ * @section changelog_17_4_0 17.4.0
  *
  * * bn::blending::set_black_fade_color and bn::blending::set_white_fade_color added.
  * * bn::fixed `friend` operators allow different levels of precision.

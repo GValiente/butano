@@ -112,6 +112,16 @@ void set_fade_color(fade_color_type fade_color)
     display_manager::set_blending_fade_to_black(fade_color == fade_color_type::BLACK);
 }
 
+void set_black_fade_color()
+{
+    display_manager::set_blending_fade_to_black(true);
+}
+
+void set_white_fade_color()
+{
+    display_manager::set_blending_fade_to_black(false);
+}
+
 fixed fade_alpha()
 {
     return display_manager::blending_fade_alpha();

@@ -327,11 +327,11 @@ namespace
             {
                 if(bn::blending::fade_color() == bn::blending::fade_color_type::BLACK)
                 {
-                    bn::blending::set_fade_color(bn::blending::fade_color_type::WHITE);
+                    bn::blending::set_white_fade_color();
                 }
                 else
                 {
-                    bn::blending::set_fade_color(bn::blending::fade_color_type::BLACK);
+                    bn::blending::set_black_fade_color();
                 }
             }
 
@@ -350,7 +350,7 @@ namespace
             bn::core::update();
         }
 
-        bn::blending::set_fade_color(bn::blending::fade_color_type::BLACK);
+        bn::blending::set_black_fade_color();
         bn::blending::set_fade_alpha(0);
     }
 

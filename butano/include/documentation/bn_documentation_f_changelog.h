@@ -14,6 +14,7 @@
  *
  * @section changelog_17_4_0 17.4.0 (next release)
  *
+ * * bn::blending::set_black_fade_color and bn::blending::set_white_fade_color added.
  * * bn::fixed `friend` operators allow different levels of precision.
  * * bn::list and bn::forward_list unnecessary asserts removed.
  * * VRAM related error messages shortened.

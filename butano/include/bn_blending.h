@@ -131,6 +131,16 @@ namespace bn::blending
     void set_fade_color(fade_color_type fade_color);
 
     /**
+     * @brief Sets black as the color used for fade blending.
+     */
+    void set_black_fade_color();
+
+    /**
+     * @brief Sets white as the color used for fade blending.
+     */
+    void set_white_fade_color();
+
+    /**
      * @brief Returns the weight of the fade blending, with 0 being disabled and 1 being fully applied.
      */
     [[nodiscard]] fixed fade_alpha();

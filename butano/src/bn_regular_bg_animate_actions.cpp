@@ -12,7 +12,7 @@ iregular_bg_animate_action& iregular_bg_animate_action::operator=(const iregular
     if(this != &other)
     {
         BN_ASSERT(other.map_indexes().size() <= map_indexes().max_size(),
-                  "Too much map indexes: ", other.map_indexes().size(), " - ", map_indexes().max_size());
+                  "Too many map indexes: ", other.map_indexes().size(), " - ", map_indexes().max_size());
 
         *_regular_bg_ref = *other._regular_bg_ref;
         *_map_item_ref = *other._map_item_ref;
@@ -28,7 +28,7 @@ iregular_bg_animate_action& iregular_bg_animate_action::operator=(iregular_bg_an
     if(this != &other)
     {
         BN_ASSERT(other.map_indexes().size() <= map_indexes().max_size(),
-                  "Too much map indexes: ", other.map_indexes().size(), " - ", map_indexes().max_size());
+                  "Too many map indexes: ", other.map_indexes().size(), " - ", map_indexes().max_size());
 
         *_regular_bg_ref = move(*other._regular_bg_ref);
         *_map_item_ref = *other._map_item_ref;
@@ -74,7 +74,7 @@ void iregular_bg_animate_action::set_wait_updates(int wait_updates)
 {
     BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
     BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-              "Too much wait updates: ", wait_updates);
+              "Too many wait updates: ", wait_updates);
 
     _wait_updates = uint16_t(wait_updates);
 
@@ -125,7 +125,7 @@ iregular_bg_cached_animate_action& iregular_bg_cached_animate_action::operator=(
     if(this != &other)
     {
         BN_ASSERT(other.maps().size() <= maps().max_size(),
-                  "Too much maps: ", other.maps().size(), " - ", maps().max_size());
+                  "Too many maps: ", other.maps().size(), " - ", maps().max_size());
 
         *_regular_bg_ref = *other._regular_bg_ref;
         *_maps_ref = *other._maps_ref;
@@ -141,7 +141,7 @@ iregular_bg_cached_animate_action& iregular_bg_cached_animate_action::operator=(
     if(this != &other)
     {
         BN_ASSERT(other.maps().size() <= maps().max_size(),
-                  "Too much maps: ", other.maps().size(), " - ", maps().max_size());
+                  "Too many maps: ", other.maps().size(), " - ", maps().max_size());
 
         *_regular_bg_ref = move(*other._regular_bg_ref);
         *_maps_ref = move(*other._maps_ref);
@@ -176,7 +176,7 @@ void iregular_bg_cached_animate_action::set_wait_updates(int wait_updates)
 {
     BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
     BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-              "Too much wait updates: ", wait_updates);
+              "Too many wait updates: ", wait_updates);
 
     _wait_updates = uint16_t(wait_updates);
 

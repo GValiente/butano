@@ -29,7 +29,7 @@ include $(BN_TOOLS)/custom_base_rules.mak
 	$(SILENTCMD)$(WONDERFUL_TOOLCHAIN)/bin/wf-gbatool fix $@ -l official -t "$(ROMTITLE)" --code "$(ROMCODE)"
 	
 #---------------------------------------------------------------------------------------------------------------------
-# Butano custom link rule for avoiding issues when linking too much object files:
+# Butano custom link rule for avoiding issues when linking too many object files:
 #---------------------------------------------------------------------------------------------------------------------
 %.elf:
 ifeq ($(patsubst %_mb,,$(lastword $(TARGET))),)

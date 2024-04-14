@@ -282,7 +282,7 @@ public:
         _graphics_indexes(other.graphics_indexes())
     {
         BN_ASSERT(other.graphics_indexes().size() <= MaxSize,
-                  "Too much graphics indexes: ", other.graphics_indexes().size(), " - ", MaxSize);
+                  "Too many graphics indexes: ", other.graphics_indexes().size(), " - ", MaxSize);
 
         this->_set_refs(_sprite, _tiles_item, _graphics_indexes);
         this->_assign(other);
@@ -756,7 +756,7 @@ public:
         _tiles_list(other.tiles_list())
     {
         BN_ASSERT(other.tiles_list().size() <= MaxSize,
-                  "Too much tiles: ", other.tiles_list().size(), " - ", MaxSize);
+                  "Too many tiles: ", other.tiles_list().size(), " - ", MaxSize);
 
         this->_set_refs(_sprite, _tiles_list);
         this->_assign(other);

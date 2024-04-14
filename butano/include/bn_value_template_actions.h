@@ -586,7 +586,7 @@ private:
     {
         BN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
         BN_ASSERT(duration_updates <= numeric_limits<decltype(_current_update)>::max(),
-                   "Too much duration updates: ", duration_updates);
+                   "Too many duration updates: ", duration_updates);
 
         return (_final_property - _initial_property) / duration_updates;
     }
@@ -728,7 +728,7 @@ private:
     {
         BN_ASSERT(duration_updates > 0, "Invalid duration updates: ", duration_updates);
         BN_ASSERT(duration_updates <= numeric_limits<decltype(_current_update)>::max(),
-                   "Too much duration updates: ", duration_updates);
+                   "Too many duration updates: ", duration_updates);
 
         return (_final_property - _initial_property) / duration_updates;
     }

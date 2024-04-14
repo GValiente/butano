@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_5_0 17.5.0 (next release)
+ *
+ * Spelling mistakes corrected.
+ *
+ *
  * @section changelog_17_4_0 17.4.0
  *
  * * bn::blending::set_black_fade_color and bn::blending::set_white_fade_color added.
@@ -455,7 +460,7 @@
  *
  * * @ref BN_CONST added.
  * * bn::sqrt, bn::atan2 and bn::degrees_atan2 marked as @ref BN_CONST.
- * * Linking with too much object files fixed.
+ * * Linking with too many object files fixed.
  *
  *
  * @section changelog_13_2_0 13.2.0

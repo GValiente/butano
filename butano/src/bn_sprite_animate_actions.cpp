@@ -10,7 +10,7 @@ isprite_animate_action& isprite_animate_action::operator=(const isprite_animate_
     if(this != &other)
     {
         BN_ASSERT(other.graphics_indexes().size() <= graphics_indexes().max_size(),
-                  "Too much graphics indexes: ", other.graphics_indexes().size(), " - ",
+                  "Too many graphics indexes: ", other.graphics_indexes().size(), " - ",
                   graphics_indexes().max_size());
 
         *_sprite_ref = *other._sprite_ref;
@@ -27,7 +27,7 @@ isprite_animate_action& isprite_animate_action::operator=(isprite_animate_action
     if(this != &other)
     {
         BN_ASSERT(other.graphics_indexes().size() <= graphics_indexes().max_size(),
-                  "Too much graphics indexes: ", other.graphics_indexes().size(), " - ",
+                  "Too many graphics indexes: ", other.graphics_indexes().size(), " - ",
                   graphics_indexes().max_size());
 
         *_sprite_ref = move(*other._sprite_ref);
@@ -75,7 +75,7 @@ void isprite_animate_action::set_wait_updates(int wait_updates)
 {
     BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
     BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-              "Too much wait updates: ", wait_updates);
+              "Too many wait updates: ", wait_updates);
 
     _wait_updates = uint16_t(wait_updates);
 
@@ -126,7 +126,7 @@ isprite_cached_animate_action& isprite_cached_animate_action::operator=(
     if(this != &other)
     {
         BN_ASSERT(other.tiles_list().size() <= tiles_list().max_size(),
-                  "Too much tiles: ", other.tiles_list().size(), " - ", tiles_list().max_size());
+                  "Too many tiles: ", other.tiles_list().size(), " - ", tiles_list().max_size());
 
         *_sprite_ref = *other._sprite_ref;
         *_tiles_list_ref = *other._tiles_list_ref;
@@ -142,7 +142,7 @@ isprite_cached_animate_action& isprite_cached_animate_action::operator=(
     if(this != &other)
     {
         BN_ASSERT(other.tiles_list().size() <= tiles_list().max_size(),
-                  "Too much tiles: ", other.tiles_list().size(), " - ", tiles_list().max_size());
+                  "Too many tiles: ", other.tiles_list().size(), " - ", tiles_list().max_size());
 
         *_sprite_ref = move(*other._sprite_ref);
         *_tiles_list_ref = move(*other._tiles_list_ref);
@@ -177,7 +177,7 @@ void isprite_cached_animate_action::set_wait_updates(int wait_updates)
 {
     BN_ASSERT(wait_updates >= 0, "Invalid wait updates: ", wait_updates);
     BN_ASSERT(wait_updates <= numeric_limits<decltype(_wait_updates)>::max(),
-              "Too much wait updates: ", wait_updates);
+              "Too many wait updates: ", wait_updates);
 
     _wait_updates = uint16_t(wait_updates);
 

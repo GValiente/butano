@@ -53,7 +53,7 @@
 /**
  * @def BN_CFG_PROFILER_MAX_ENTRIES
  *
- * Specifies the maximum number of code blocks that can be profiled without too much performance issues.
+ * Specifies the maximum number of code blocks that can be profiled without too many performance issues.
  *
  * @ingroup profiler
  */

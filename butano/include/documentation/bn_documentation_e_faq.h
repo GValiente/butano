@@ -523,7 +523,7 @@
  *
  * You can also try to create a new issue in its
  * <a href="https://github.com/devkitPro/maxmod/issues">GitHub issues</a> page,
- * but since it seems the library was abandoned long time ago, don't hold your hopes up too much.
+ * but since it seems the library was abandoned long time ago, don't get your hopes up too high.
  *
  *
  * @subsection faq_music_wav Why can't I use a long *.wav file as music?

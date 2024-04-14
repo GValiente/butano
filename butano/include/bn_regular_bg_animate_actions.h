@@ -278,7 +278,7 @@ public:
         _map_indexes(other.map_indexes())
     {
         BN_ASSERT(other.map_indexes().size() <= MaxSize,
-                  "Too much map indexes: ", other.map_indexes().size(), " - ", MaxSize);
+                  "Too many map indexes: ", other.map_indexes().size(), " - ", MaxSize);
 
         this->_set_refs(_regular_bg, _map_item, _map_indexes);
         this->_assign(other);
@@ -756,7 +756,7 @@ public:
         _regular_bg(other.regular_bg()),
         _maps(other.maps())
     {
-        BN_ASSERT(other.maps().size() <= MaxSize, "Too much maps: ", other.maps().size(), " - ", MaxSize);
+        BN_ASSERT(other.maps().size() <= MaxSize, "Too many maps: ", other.maps().size(), " - ", MaxSize);
 
         this->_set_refs(_regular_bg, _maps);
         this->_assign(other);

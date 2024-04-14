@@ -1600,7 +1600,7 @@ void rebuild_handles()
             }
         }
 
-        BN_BASIC_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too much affine BGs on screen");
+        BN_BASIC_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too many affine BGs on screen");
 
         int regular_id;
         int affine_id;
@@ -1641,7 +1641,7 @@ void rebuild_handles()
                 }
                 else
                 {
-                    BN_BASIC_ASSERT(regular_id >= 0, "Too much regular BGs on screen");
+                    BN_BASIC_ASSERT(regular_id >= 0, "Too many regular BGs on screen");
 
                     id = regular_id;
                     --regular_id;

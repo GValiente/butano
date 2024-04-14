@@ -75,7 +75,7 @@ private:
                     }
                     else
                     {
-                        BN_ASSERT(result.models_count < constants_3d::max_static_models, "Too much static models");
+                        BN_ASSERT(result.models_count < constants_3d::max_static_models, "Too many static models");
 
                         result.model_indexes[result.models_count] = model_index;
                         ++result.models_count;

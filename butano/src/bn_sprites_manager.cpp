@@ -187,7 +187,7 @@ namespace
             }
 
             int visible_items_count = _rebuild_handles_impl(reserved_count, handles, data.sorter.layers());
-            BN_BASIC_ASSERT(visible_items_count >= 0, "Too much on screen sprites");
+            BN_BASIC_ASSERT(visible_items_count >= 0, "Too many on screen sprites");
 
             int last_visible_items_count = data.last_visible_items_count;
             data.rebuild_handles = false;

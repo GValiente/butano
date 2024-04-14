@@ -40,7 +40,7 @@ def parse_sprite_bpp_mode(info, colors_count):
             return True
         elif bpp_mode == 'bpp_4':
             if colors_count > 16:
-                raise ValueError('Too much colors for BPP4 mode: ' + str(colors_count))
+                raise ValueError('Too many colors for BPP4 mode: ' + str(colors_count))
 
             return False
         else:

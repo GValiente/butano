@@ -573,7 +573,7 @@ namespace
             if(_is_uint32(handler))
             {
                 BN_BASIC_ASSERT(entries.uint32_entries_count < max_uint32_output_values,
-                                "Too much 32 bits entries");
+                                "Too many 32 bits entries");
 
                 hw::hblank_effects::uint32_entry& uint32_entry = entries.uint32_entries[entries.uint32_entries_count];
                 const uint16_t* src = uint32_output_values->a_active ? uint32_output_values->a : uint32_output_values->b;

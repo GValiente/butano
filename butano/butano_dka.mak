@@ -29,7 +29,7 @@ include $(BN_TOOLS)/custom_base_rules.mak
 	$(SILENTCMD)gbafix -t"$(ROMTITLE)" -c"$(ROMCODE)" $@
 
 #---------------------------------------------------------------------------------------------------------------------
-# Butano custom link rules for avoiding issues when linking too much object files:
+# Butano custom link rules for avoiding issues when linking too many object files:
 #---------------------------------------------------------------------------------------------------------------------
 %_mb.elf:
 	$(SILENTMSG) Linking multiboot...

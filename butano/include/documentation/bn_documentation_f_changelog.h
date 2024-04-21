@@ -14,7 +14,8 @@
  *
  * @section changelog_17_5_0 17.5.0 (next release)
  *
- * Spelling mistakes corrected.
+ * * Custom C++ flags can be specified in the project's `Makefile`.
+ * * Spelling mistakes corrected.
  *
  *
  * @section changelog_17_4_0 17.4.0

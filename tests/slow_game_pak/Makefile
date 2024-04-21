@@ -14,6 +14,7 @@
 # USERFLAGS is a list of additional compiler flags:
 #     Pass -flto to enable link-time optimization.
 #     Pass -O0 or -Og to try to make debugging work.
+# USERCXXFLAGS is a list of additional compiler flags for C++ code only.
 # USERASFLAGS is a list of additional assembler flags.
 # USERLDFLAGS is a list of additional linker flags:
 #     Pass -flto=<number_of_cpu_cores> to enable parallel link-time optimization.
@@ -27,28 +28,29 @@
 #
 # All directories are specified relative to the project directory where the makefile is found.
 #---------------------------------------------------------------------------------------------------------------------
-TARGET      :=  $(notdir $(CURDIR))
-BUILD       :=  build
-LIBBUTANO   :=  ../../butano
-PYTHON      :=  python
-SOURCES     :=  src ../../common/src
-INCLUDES    :=  include ../../common/include
-DATA        :=
-GRAPHICS    :=  graphics ../../common/graphics
-AUDIO       :=  audio ../../common/audio
-DMGAUDIO    :=  dmg_audio ../../common/dmg_audio
-ROMTITLE    :=  BUTANO SLGPK
-ROMCODE     :=  SBTP
-USERFLAGS   :=  -DBN_CFG_GAME_PAK_WAIT_STATE_FIRST=BN_GAME_PAK_WAIT_STATE_FIRST_AUTO \
-                    -DBN_CFG_GAME_PAK_WAIT_STATE_SECOND=BN_GAME_PAK_WAIT_STATE_SECOND_AUTO
-USERASFLAGS :=  
-USERLDFLAGS :=  
-USERLIBDIRS :=  
-USERLIBS    :=  
-DEFAULTLIBS :=  
-STACKTRACE	:=	
-USERBUILD   :=  
-EXTTOOL     :=  
+TARGET      	:=  $(notdir $(CURDIR))
+BUILD       	:=  build
+LIBBUTANO   	:=  ../../butano
+PYTHON      	:=  python
+SOURCES     	:=  src ../../common/src
+INCLUDES    	:=  include ../../common/include
+DATA        	:=
+GRAPHICS    	:=  graphics ../../common/graphics
+AUDIO       	:=  audio ../../common/audio
+DMGAUDIO    	:=  dmg_audio ../../common/dmg_audio
+ROMTITLE    	:=  BUTANO SLGPK
+ROMCODE     	:=  SBTP
+USERFLAGS   	:=  -DBN_CFG_GAME_PAK_WAIT_STATE_FIRST=BN_GAME_PAK_WAIT_STATE_FIRST_AUTO \
+						-DBN_CFG_GAME_PAK_WAIT_STATE_SECOND=BN_GAME_PAK_WAIT_STATE_SECOND_AUTO
+USERCXXFLAGS	:=  
+USERASFLAGS 	:=  
+USERLDFLAGS 	:=  
+USERLIBDIRS 	:=  
+USERLIBS    	:=  
+DEFAULTLIBS 	:=  
+STACKTRACE		:=	
+USERBUILD   	:=  
+EXTTOOL     	:=  
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

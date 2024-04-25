@@ -128,11 +128,11 @@ void set_fade(color color, fixed intensity)
     palettes_manager::bg_palettes_bank().set_fade(color, intensity);
 }
 
-#if BN_CFG_LOG_ENABLED
-    void log_status()
-    {
+void log_status()
+{
+    #if BN_CFG_LOG_ENABLED
         palettes_manager::bg_palettes_bank().log_status();
-    }
-#endif
+    #endif
+}
 
 }

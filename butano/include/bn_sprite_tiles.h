@@ -14,8 +14,7 @@
  * @ingroup tile
  */
 
-#include "bn_config_log.h"
-#include "bn_config_doxygen.h"
+#include "bn_common.h"
 
 /**
  * @brief Sprite tiles related functions.
@@ -46,12 +45,10 @@ namespace bn::sprite_tiles
      */
     [[nodiscard]] int available_items_count();
 
-    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
-        /**
-         * @brief Logs the current status of the sprite tiles manager.
-         */
-        void log_status();
-    #endif
+    /**
+     * @brief Logs the current status of the sprite tiles manager.
+     */
+    void log_status();
 }
 
 #endif

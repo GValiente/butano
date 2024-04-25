@@ -13,8 +13,7 @@
  * @ingroup bg_map
  */
 
-#include "bn_config_log.h"
-#include "bn_config_doxygen.h"
+#include "bn_common.h"
 
 namespace bn
 {
@@ -58,12 +57,10 @@ namespace bn::bg_maps
      */
     void set_new_affine_big_map_canvas_size(affine_bg_big_map_canvas_size affine_big_map_canvas_size);
 
-    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
-        /**
-         * @brief Logs the current status of the background blocks manager.
-         */
-        void log_status();
-    #endif
+    /**
+     * @brief Logs the current status of the background blocks manager.
+     */
+    void log_status();
 }
 
 #endif

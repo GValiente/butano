@@ -30,11 +30,11 @@ int available_items_count()
     return sprite_tiles_manager::available_items_count();
 }
 
-#if BN_CFG_LOG_ENABLED
-    void log_status()
-    {
+void log_status()
+{
+    #if BN_CFG_LOG_ENABLED
         sprite_tiles_manager::log_status();
-    }
-#endif
+    #endif
+}
 
 }

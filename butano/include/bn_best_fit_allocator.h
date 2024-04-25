@@ -15,7 +15,6 @@
 
 #include "bn_assert.h"
 #include "bn_utility.h"
-#include "bn_config_log.h"
 #include "bn_config_best_fit_allocator.h"
 
 namespace bn
@@ -172,12 +171,10 @@ public:
      */
     void reset(void* start, size_type bytes);
 
-    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
-        /**
-         * @brief Logs the current status of the allocator.
-         */
-        void log_status() const;
-    #endif
+    /**
+     * @brief Logs the current status of the allocator.
+     */
+    void log_status() const;
 
 private:
     class item_type;

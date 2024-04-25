@@ -40,11 +40,11 @@ void set_new_affine_big_map_canvas_size(affine_bg_big_map_canvas_size affine_big
     bg_blocks_manager::set_new_affine_big_map_canvas_size(affine_big_map_canvas_size);
 }
 
-#if BN_CFG_LOG_ENABLED
-    void log_status()
-    {
+void log_status()
+{
+    #if BN_CFG_LOG_ENABLED
         bg_blocks_manager::log_status();
-    }
-#endif
+    #endif
+}
 
 }

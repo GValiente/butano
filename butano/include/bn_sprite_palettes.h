@@ -15,8 +15,6 @@
  */
 
 #include "bn_fixed.h"
-#include "bn_config_log.h"
-#include "bn_config_doxygen.h"
 
 namespace bn
 {
@@ -134,12 +132,10 @@ namespace bn::sprite_palettes
      */
     void set_fade(color color, fixed intensity);
 
-    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
-        /**
-         * @brief Logs the current status of the sprite color palettes manager.
-         */
-        void log_status();
-    #endif
+    /**
+     * @brief Logs the current status of the sprite color palettes manager.
+     */
+    void log_status();
 }
 
 #endif

@@ -40,11 +40,11 @@ void set_allow_offset(bool allow_offset)
     bg_blocks_manager::set_allow_tiles_offset(allow_offset);
 }
 
-#if BN_CFG_LOG_ENABLED
-    void log_status()
-    {
+void log_status()
+{
+    #if BN_CFG_LOG_ENABLED
         bg_blocks_manager::log_status();
-    }
-#endif
+    #endif
+}
 
 }

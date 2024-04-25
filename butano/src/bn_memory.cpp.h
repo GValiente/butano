@@ -115,12 +115,12 @@ int available_alloc_ewram()
     return memory_manager::available_alloc_ewram();
 }
 
-#if BN_CFG_LOG_ENABLED
-    void log_alloc_ewram_status()
-    {
+void log_alloc_ewram_status()
+{
+    #if BN_CFG_LOG_ENABLED
         memory_manager::log_alloc_ewram_status();
-    }
-#endif
+    #endif
+}
 
 int used_stack_iwram()
 {

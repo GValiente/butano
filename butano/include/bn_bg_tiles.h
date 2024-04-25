@@ -14,8 +14,7 @@
  * @ingroup tile
  */
 
-#include "bn_config_log.h"
-#include "bn_config_doxygen.h"
+#include "bn_common.h"
 
 /**
  * @brief Background tiles related functions.
@@ -61,12 +60,10 @@ namespace bn::bg_tiles
      */
     void set_allow_offset(bool allow_offset);
 
-    #if BN_CFG_LOG_ENABLED || BN_DOXYGEN
-        /**
-         * @brief Logs the current status of the background blocks manager.
-         */
-        void log_status();
-    #endif
+    /**
+     * @brief Logs the current status of the background blocks manager.
+     */
+    void log_status();
 }
 
 #endif

@@ -8,6 +8,7 @@
 #include "bn_memory.h"
 #include "bn_limits.h"
 #include "bn_algorithm.h"
+#include "bn_config_log.h"
 
 #if BN_CFG_LOG_ENABLED
     #include "bn_log.h"
@@ -329,9 +330,9 @@ void best_fit_allocator::reset(void* start, size_type bytes)
     #endif
 }
 
-#if BN_CFG_LOG_ENABLED
-    void best_fit_allocator::log_status() const
-    {
+void best_fit_allocator::log_status() const
+{
+    #if BN_CFG_LOG_ENABLED
         BN_LOG("items: ");
         BN_LOG('[');
 
@@ -350,8 +351,8 @@ void best_fit_allocator::reset(void* start, size_type bytes)
         BN_LOG(']');
         BN_LOG("free_bytes_count: ", _free_bytes_count);
         BN_LOG("total_bytes_count: ", _total_bytes_count);
-    }
-#endif
+    #endif
+}
 
 best_fit_allocator::item_type* best_fit_allocator::_best_free_item(size_type bytes)
 {

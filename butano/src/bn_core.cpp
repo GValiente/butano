@@ -573,16 +573,16 @@ void set_assert_tag(const string_view& assert_tag)
     data.assert_tag = assert_tag;
 }
 
-#if BN_CFG_LOG_ENABLED
-    void log_stacktrace()
-    {
+void log_stacktrace()
+{
+    #if BN_CFG_LOG_ENABLED
         #ifdef BN_STACKTRACE
             bn::hw::stacktrace::log(3);
         #else
             BN_ERROR("Stack trace logging is disabled");
         #endif
-    }
-#endif
+    #endif
+}
 
 }
 

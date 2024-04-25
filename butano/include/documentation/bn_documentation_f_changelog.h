@@ -15,6 +15,7 @@
  * @section changelog_17_5_0 17.5.0 (next release)
  *
  * * Custom C++ flags can be specified in the project's `Makefile`.
+ * * All logging functions and methods can be called with logging disabled.
  * * Spelling mistakes corrected.
  *
  *

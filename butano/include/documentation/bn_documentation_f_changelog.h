@@ -17,6 +17,8 @@
  * * Custom C++ flags can be specified in the project's `Makefile`.
  * * All logging functions and methods can be called with logging disabled.
  * * Spelling mistakes corrected.
+ * * <a href="https://github.com/Fralacticus/gba-wav-to-s3m-converter">GBA Wav to S3m Converter</a>
+ *   added to the @ref faq page.
  *
  *
  * @section changelog_17_4_0 17.4.0

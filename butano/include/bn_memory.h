@@ -286,6 +286,16 @@ namespace bn::memory
      * @param destination_ptr Destination of the decompressed data.
      */
     void decompress(compression_type compression, const void* source_ptr, int bytes, void* destination_ptr);
+
+    /**
+     * @brief Indicates if Butano can use DMA for memory copies when it's safe to do so.
+     */
+    [[nodiscard]] bool dma_enabled();
+
+    /**
+     * @brief Sets if Butano can use DMA for memory copies when it's safe to do so.
+     */
+    void set_dma_enabled(bool dma_enabled);
 }
 
 #endif

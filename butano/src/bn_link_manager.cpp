@@ -29,7 +29,7 @@ void send(int data_to_send)
 
 optional<link_state> receive()
 {
-    LinkResponse response;
+    lc::LinkResponse response;
     optional<link_state> result;
 
     if(hw::link::receive(response))

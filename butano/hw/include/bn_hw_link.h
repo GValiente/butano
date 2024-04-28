@@ -33,7 +33,7 @@ namespace bn::hw::link
 
     void send(int data_to_send);
 
-    [[nodiscard]] bool receive(LinkResponse& response);
+    [[nodiscard]] bool receive(lc::LinkResponse& response);
 
     void commit();
 }

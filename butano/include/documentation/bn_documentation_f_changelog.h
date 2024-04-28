@@ -17,6 +17,8 @@
  * * bn::memory::dma_enabled and bn::memory::set_dma_enabled added.
  * * Custom C++ flags can be specified in the project's `Makefile`.
  * * All logging functions and methods can be called with logging disabled.
+ * * Current <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> implementation
+ *   has been moved to a private namespace to allow using other implementations.
  * * Spelling mistakes corrected.
  * * <a href="https://github.com/Fralacticus/gba-wav-to-s3m-converter">GBA Wav to S3m Converter</a>
  *   added to the @ref faq page.

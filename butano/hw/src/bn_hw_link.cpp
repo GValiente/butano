@@ -16,10 +16,10 @@ namespace
     {
 
     public:
-        LinkConnection connection;
-        bn::deque<uint16_t, LINK_DEFAULT_BUFFER_SIZE> sendMessages;
-        bn::deque<LinkResponse, LINK_DEFAULT_BUFFER_SIZE> firstReceivedMessages;
-        bn::deque<LinkResponse, LINK_DEFAULT_BUFFER_SIZE> secondReceivedMessages;
+        lc::LinkConnection connection;
+        deque<uint16_t, LINK_DEFAULT_BUFFER_SIZE> sendMessages;
+        deque<lc::LinkResponse, LINK_DEFAULT_BUFFER_SIZE> firstReceivedMessages;
+        deque<lc::LinkResponse, LINK_DEFAULT_BUFFER_SIZE> secondReceivedMessages;
         volatile bool blockSendMessages = false;
         volatile bool blockReceivedMessages = false;
         volatile bool clearSendMessages = false;
@@ -51,7 +51,7 @@ namespace
         }
     }
 
-    void _receiveResponseCallback(const LinkResponse& response)
+    void _receiveResponseCallback(const lc::LinkResponse& response)
     {
         if(data.blockReceivedMessages)
         {
@@ -64,7 +64,7 @@ namespace
         }
         else
         {
-            for(const LinkResponse& secondReceivedMessage : data.secondReceivedMessages)
+            for(const lc::LinkResponse& secondReceivedMessage : data.secondReceivedMessages)
             {
                 if(data.firstReceivedMessages.full())
                 {
@@ -182,7 +182,7 @@ void send(int data_to_send)
     }
 }
 
-bool receive(LinkResponse& response)
+bool receive(lc::LinkResponse& response)
 {
     _check_active();
 

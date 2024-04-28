@@ -65,14 +65,17 @@ static_assert(BN_CFG_LINK_MAX_MISSING_MESSAGES >= 0);
 // 0xFFFF and 0x0 are reserved values, so don't use them
 // (they mean 'disconnected' and 'no data' respectively)
 
+namespace bn::lc
+{
+
 void LINK_ISR_VBLANK();
 void LINK_ISR_TIMER();
 void LINK_ISR_SERIAL();
-u16 LINK_QUEUE_POP(bn::ideque<u16>& q);
-void LINK_QUEUE_CLEAR(bn::ideque<u16>& q);
+u16 LINK_QUEUE_POP(ideque<u16>& q);
+void LINK_QUEUE_CLEAR(ideque<u16>& q);
 
 struct LinkState {
-    bn::deque<u16, LINK_DEFAULT_BUFFER_SIZE> _outgoingMessages;
+    deque<u16, LINK_DEFAULT_BUFFER_SIZE> _outgoingMessages;
     int _timeouts[LINK_MAX_PLAYERS];
     u32 _IRQTimeout;
     u8 playerCount;
@@ -278,7 +281,7 @@ private:
         REG_TM[LINK_DEFAULT_SEND_TIMER_ID].cnt = TM_ENABLE | TM_IRQ | LINK_BASE_FREQUENCY;
     }
     
-    void push(bn::ideque<u16>& q, u16 value) {
+    void push(ideque<u16>& q, u16 value) {
         if (q.full())
             q.pop_front();
         
@@ -304,7 +307,7 @@ inline void LINK_ISR_SERIAL() {
     linkConnection->_onSerial();
 }
 
-inline u16 LINK_QUEUE_POP(bn::ideque<u16>& q) {
+inline u16 LINK_QUEUE_POP(ideque<u16>& q) {
     if (q.empty())
         return LINK_NO_DATA;
     
@@ -313,8 +316,10 @@ inline u16 LINK_QUEUE_POP(bn::ideque<u16>& q) {
     return value;
 }
 
-inline void LINK_QUEUE_CLEAR(bn::ideque<u16>& q) {
+inline void LINK_QUEUE_CLEAR(ideque<u16>& q) {
     q.clear();
+}
+
 }
 
 #endif  // LINK_CONNECTION_H

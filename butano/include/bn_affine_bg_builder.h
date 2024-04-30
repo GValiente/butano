@@ -456,6 +456,8 @@ public:
      * excluding sprites.
      *
      * Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).
+     *
+     * Due to hardware limitations, affine backgrounds can be drawn before regular backgrounds with higher z order.
      */
     [[nodiscard]] int z_order() const
     {
@@ -467,6 +469,8 @@ public:
      * excluding sprites.
      *
      * Backgrounds with higher z orders are drawn first (and therefore can be covered by later backgrounds).
+     *
+     * Due to hardware limitations, affine backgrounds can be drawn before regular backgrounds with higher z order.
      *
      * @param z_order Priority relative to other backgrounds, excluding sprites, in the range [-32767..32767].
      * @return Reference to this.

@@ -20,6 +20,7 @@
  * * Current <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> implementation
  *   has been moved to a private namespace to allow using other implementations.
  * * Spelling mistakes corrected.
+ * * Background z order documentation improved.
  * * <a href="https://github.com/Fralacticus/gba-wav-to-s3m-converter">GBA Wav to S3m Converter</a>
  *   added to the @ref faq page.
  *

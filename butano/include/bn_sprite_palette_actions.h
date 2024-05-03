@@ -1055,6 +1055,404 @@ public:
     }
 };
 
+
+// rotate range
+
+struct sprite_palette_rotate_range_context
+{
+    sprite_palette_ptr palette;
+    int start_index;
+    int end_index;
+};
+
+/**
+ * @brief Manages the number of colors to rotate to the right within the specified range of indexes in a sprite_palette_ptr.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_rotate_range_manager
+{
+
+public:
+     /**
+     * @brief Returns the number of colors to rotate to the right in the sprite_palette_ptr provided through the given context.
+     */
+    [[nodiscard]] static int get(const sprite_palette_rotate_range_context& context)
+    {
+        return context.palette.rotate_count();
+    }
+
+     /**
+     * @brief Sets the number of colors to rotate to the right in the sprite_palette_ptr within the range of indexes, provided through the given context.
+     * @param count Number of colors to rotate to the right in the range [2 - colors_count() .. colors_count() - 2].
+     * @param context containing the palette sprite_palette_ptr to modify, and the start_index and end_index that specify the range of colors to be rotated.
+     */
+    static void set(int count, sprite_palette_rotate_range_context& context)
+    {
+        context.palette.set_rotate_count_range(count, context.start_index, context.end_index);
+    }
+};
+
+
+/**
+ * @brief Modifies the number of colors to rotate to the right within the specified range of indexes in a sprite_palette_ptr by delta_count
+ * when the action is updated a given number of times. When the property is over the given maximum,
+ * it goes back to the given minimum and vice versa.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_rotate_range_by_action :
+        public cyclic_duration_by_value_template_action<sprite_palette_rotate_range_context, int, sprite_palette_rotate_range_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before updating the number of colors to rotate.
+     * @param delta_count How much colors to add to the number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]   
+     */
+    sprite_palette_rotate_range_by_action(const sprite_palette_ptr& palette, int duration_updates, int delta_count, int start_index, int end_index) :
+        cyclic_duration_by_value_template_action({palette, start_index, end_index}, duration_updates, delta_count, 0, 0)       
+    {       
+        int colors_count = this->palette().colors_count();
+        
+        BN_ASSERT(start_index > 0 && start_index <= colors_count - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	    BN_ASSERT(end_index > 0 && end_index <= colors_count - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	    BN_ASSERT(abs(delta_count) <= ((end_index - start_index + colors_count) % colors_count - (start_index > end_index)),
+                    "Invalid delta_count: ", delta_count, " - ", colors_count);
+        
+        int rotation_range_length = (end_index - start_index + colors_count) % colors_count - (start_index > end_index);
+        set_after_max_property(rotation_range_length + 1);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before updating the number of colors to rotate.
+     * @param delta_count How much colors to add to the number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]   
+     */
+    sprite_palette_rotate_range_by_action(sprite_palette_ptr&& palette, int duration_updates, int delta_count, int start_index, int end_index) :
+        cyclic_duration_by_value_template_action({move(palette), start_index, end_index}, duration_updates, delta_count, 0, 0)
+    {        
+        int colors_count = this->palette().colors_count();
+
+        BN_ASSERT(start_index > 0 && start_index <= colors_count - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	    BN_ASSERT(end_index > 0 && end_index <= colors_count - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	    BN_ASSERT(abs(delta_count) <= ((end_index - start_index + colors_count) % colors_count - (start_index > end_index)),
+                    "Invalid delta_count: ", delta_count, " - ", colors_count);
+
+        int rotation_range_length = (end_index - start_index + colors_count) % colors_count - (start_index > end_index);
+        set_after_max_property(rotation_range_length + 1);
+    }
+
+    /**
+     * @brief Returns the sprite_palette_ptr to modify.
+     */
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value().palette;
+    }
+
+    /**
+     * @brief Returns how much colors to add to the number of colors to rotate to the right
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] int delta_count() const
+    {
+        return delta_property();
+    }    
+};
+
+
+/**
+ * @brief Modifies the number of colors to rotate to the right within the specified range of indexes in a sprite_palette_ptr until it has a given state.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_rotate_range_to_action : public to_value_template_action<sprite_palette_rotate_range_context, int, sprite_palette_rotate_range_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the number of colors to rotate to the right is equal to final_count.
+     * @param final_count Number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]   
+     */
+    sprite_palette_rotate_range_to_action(const sprite_palette_ptr& palette, int duration_updates, int final_count, int start_index, int end_index) :
+        to_value_template_action({palette, start_index, end_index}, duration_updates, final_count)        
+    {
+        int colors_count = this->palette().colors_count();
+
+        BN_ASSERT(start_index > 0 && start_index <= colors_count - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	    BN_ASSERT(end_index > 0 && end_index <= colors_count - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	    BN_ASSERT(abs(final_count) <= ((end_index - start_index + colors_count) % colors_count - (start_index > end_index)),
+                    "Invalid final count: ", final_count, " - ", colors_count);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the number of colors to rotate to the right is equal to final_count.
+     * @param final_count Number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]   
+     */
+    sprite_palette_rotate_range_to_action(sprite_palette_ptr&& palette, int duration_updates, int final_count, int start_index, int end_index) :
+        to_value_template_action({move(palette), start_index, end_index}, duration_updates, final_count) 
+    {
+        int colors_count = this->palette().colors_count();
+
+        BN_ASSERT(start_index > 0 && start_index <= colors_count - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	    BN_ASSERT(end_index > 0 && end_index <= colors_count - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	    BN_ASSERT(abs(final_count) <= ((end_index - start_index + colors_count) % colors_count - (start_index > end_index)),
+                    "Invalid final count: ", final_count, " - ", colors_count);
+    }
+
+    /**
+     * @brief Returns the sprite_palette_ptr to modify.
+     */
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value().palette;
+    }
+
+    /**
+     * @brief Returns the number of colors to rotate to the right
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] int final_count() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the number of colors to rotate to the right within the specified range of indexes in a sprite_palette_ptr from a minimum to a maximum.
+ * When the number of colors to rotate to the right is equal to the given final state,
+ * it goes back to its initial state and vice versa.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_rotate_range_loop_action :
+        public loop_value_template_action<sprite_palette_rotate_range_context, int, sprite_palette_rotate_range_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the number of colors to rotate delta.
+     * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This count must be in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]   
+     */
+    sprite_palette_rotate_range_loop_action(const sprite_palette_ptr& palette, int duration_updates, int final_count, int start_index, int end_index) :
+        loop_value_template_action({palette, start_index, end_index}, duration_updates, final_count)
+    {
+        int colors_count = this->palette().colors_count();
+
+        BN_ASSERT(start_index > 0 && start_index <= colors_count - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	    BN_ASSERT(end_index > 0 && end_index <= colors_count - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	    BN_ASSERT(abs(final_count) <= ((end_index - start_index + colors_count) % colors_count - (start_index > end_index)),
+                    "Invalid final count: ", final_count, " - ", colors_count);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the number of colors to rotate delta.
+     * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     *
+     * This count must be in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]   
+     */
+    sprite_palette_rotate_range_loop_action(sprite_palette_ptr&& palette, int duration_updates, int final_count, int start_index, int end_index) :
+        loop_value_template_action({move(palette), start_index, end_index}, duration_updates, final_count)
+    {
+        int colors_count = this->palette().colors_count();
+
+        BN_ASSERT(start_index > 0 && start_index <= colors_count - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	    BN_ASSERT(end_index > 0 && end_index <= colors_count - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	    BN_ASSERT(abs(final_count) <= ((end_index - start_index + colors_count) % colors_count - (start_index > end_index)),
+                    "Invalid final count: ", final_count, " - ", colors_count);
+    }
+
+    /**
+     * @brief Returns the sprite_palette_ptr to modify.
+     */
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value().palette;
+    }
+
+    /**
+     * @brief When the number of colors to rotate to the right is equal to the returned parameter,
+     * it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] int final_count() const
+    {
+        return final_property();
+    }   
+};
+
+
+/**
+ * @brief Changes the number of colors to rotate to the right within the specified range of indexes in a sprite_palette_ptr
+ * when the action is updated a given number of times.
+ *
+ * @ingroup sprite
+ * @ingroup palette
+ * @ingroup action
+ */
+class sprite_palette_rotate_range_toggle_action :
+        public toggle_value_template_action<sprite_palette_rotate_range_context, int, sprite_palette_rotate_range_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to copy.
+     * @param duration_updates How much times the action has to be updated to change
+     * the number of colors to rotate to the right.
+     * @param new_count New number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]   
+     */
+    sprite_palette_rotate_range_toggle_action(const sprite_palette_ptr& palette, int duration_updates, int new_count, int start_index, int end_index) :
+        toggle_value_template_action({palette, start_index, end_index}, duration_updates, new_count)      
+    {
+        int colors_count = this->palette().colors_count();
+
+        BN_ASSERT(start_index > 0 && start_index <= colors_count - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	    BN_ASSERT(end_index > 0 && end_index <= colors_count - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	    BN_ASSERT(abs(new_count) <= ((end_index - start_index + colors_count) % colors_count - (start_index > end_index)),
+                    "Invalid new count: ", new_count, " - ", colors_count);
+    }
+
+    /**
+     * @brief Constructor.
+     * @param palette sprite_palette_ptr to move.
+     * @param duration_updates How much times the action has to be updated to change
+     * the number of colors to rotate to the right.
+     * @param new_count New number of colors to rotate to the right
+     * when the action is updated duration_updates times.
+     *
+     * This count must be in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]   
+     */
+    sprite_palette_rotate_range_toggle_action(sprite_palette_ptr&& palette, int duration_updates, int new_count, int start_index, int end_index) :
+        toggle_value_template_action({move(palette), start_index, end_index}, duration_updates, new_count)
+    {
+        int colors_count = this->palette().colors_count();
+
+        BN_ASSERT(start_index > 0 && start_index <= colors_count - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	    BN_ASSERT(end_index > 0 && end_index <= colors_count - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	    BN_ASSERT(abs(new_count) <= ((end_index - start_index + colors_count) % colors_count - (start_index > end_index)),
+                    "Invalid new count: ", new_count, " - ", colors_count);
+    }
+
+    /**
+     * @brief Returns the sprite_palette_ptr to modify.
+     */
+    [[nodiscard]] const sprite_palette_ptr& palette() const
+    {
+        return value().palette;
+    }
+
+    /**
+     * @brief Returns the number of colors to rotate to the right
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] int new_count() const
+    {
+        return new_property();
+    }
+};
+
 }
 
 #endif

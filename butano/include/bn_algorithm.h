@@ -50,6 +50,8 @@ namespace bn
     using std::reverse;
 
     using std::swap_ranges;
+
+    using std::rotate;
 }
 
 #endif

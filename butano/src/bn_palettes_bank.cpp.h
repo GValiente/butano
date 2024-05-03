@@ -208,6 +208,8 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, compression_typ
             }
 
             first_pal.slots_count = int8_t(required_slots_count);
+            first_pal.rotate_end_index = colors_count - 1;
+
 
             for(int slot = 0; slot < required_slots_count; ++slot)
             {
@@ -304,6 +306,13 @@ span<const color> palettes_bank::colors(int id) const
 {
     int colors_per_palette = hw::palettes::colors_per_palette();
     const color* colors_data = _initial_colors + (id * colors_per_palette);
+    int colors_count = colors_per_palette * _palettes[id].slots_count;
+    return span<const color>(colors_data, colors_count);
+}
+
+span<const color> palettes_bank::colors_in_current_order(int id) const {
+    int colors_per_palette = hw::palettes::colors_per_palette();
+    const color* colors_data = _final_colors + (id * colors_per_palette);
     int colors_count = colors_per_palette * _palettes[id].slots_count;
     return span<const color>(colors_data, colors_count);
 }
@@ -427,9 +436,29 @@ void palettes_bank::set_rotate_count(int id, int count)
 
     palette& pal = _palettes[id];
 
-    if(pal.rotate_count != count)
+    if(pal.rotate_count != count || pal.rotate_start_index != 1 || pal.rotate_end_index != colors_count(id) - 1)
     {
         pal.rotate_count = int16_t(count);
+		pal.rotate_start_index = 1;
+		pal.rotate_end_index = colors_count(id) - 1;
+        pal.update = true;
+        _update = true;
+    }
+}
+
+void palettes_bank::set_rotate_count_range(int id, int count, int start_index, int end_index)
+{
+	BN_ASSERT(start_index > 0 && start_index <= colors_count(id) - 1 && start_index != end_index, "Invalid start_index: ", start_index);
+	BN_ASSERT(end_index > 0 && end_index <= colors_count(id) - 1 && end_index != start_index, "Invalid end_index: ", end_index);
+	BN_ASSERT(abs(count) <= ((end_index - start_index + colors_count(id)) % colors_count(id) - (start_index > end_index)), "Invalid count: ", count, " - ", colors_count(id) );
+	
+	palette& pal = _palettes[id];
+	
+	if(pal.rotate_count != count || pal.rotate_start_index != start_index || pal.rotate_end_index != end_index)
+    {
+        pal.rotate_count = int16_t(count);
+		pal.rotate_start_index = start_index;
+		pal.rotate_end_index = end_index;
         pal.update = true;
         _update = true;
     }
@@ -772,8 +801,25 @@ void palettes_bank::_update_palette(int id)
         hw::memory::copy_words(unsigned_final_pal_colors_ptr, pal_colors_count / 2, unsigned_temp_buffer);
 
         auto color_temp_buffer_ptr = reinterpret_cast<const color*>(unsigned_temp_buffer);
-        hw::palettes::rotate(color_temp_buffer_ptr + 1, pal.rotate_count, pal_colors_count - 1,
-                             final_pal_colors_ptr + 1);
+		if(pal.rotate_start_index == 1 && pal.rotate_end_index == pal_colors_count - 1)
+        {         
+            hw::palettes::rotate(
+                color_temp_buffer_ptr + 1, 
+                pal.rotate_count, 
+				pal_colors_count - 1,
+                final_pal_colors_ptr + 1
+            );
+		}		
+		else
+        {           
+		    hw::palettes::rotate_range(
+                pal.rotate_count, 
+			    pal_colors_count - 1,
+			    final_pal_colors_ptr + 1, 
+			    pal.rotate_start_index - 1, 
+			    pal.rotate_end_index - 1
+            );	
+		}		
     }
 }
 

@@ -221,6 +221,11 @@ span<const color> bg_palette_ptr::colors() const
     return palettes_manager::bg_palettes_bank().colors(_id);
 }
 
+span<const color> bg_palette_ptr::colors_in_current_order() const
+{
+    return palettes_manager::bg_palettes_bank().colors_in_current_order(_id);
+}
+
 void bg_palette_ptr::set_colors(const bg_palette_item& palette_item)
 {
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();
@@ -302,9 +307,24 @@ int bg_palette_ptr::rotate_count() const
     return palettes_manager::bg_palettes_bank().rotate_count(_id);
 }
 
+int bg_palette_ptr::rotate_start_index() const
+{
+    return palettes_manager::bg_palettes_bank().rotate_start_index(_id);
+}
+
+int bg_palette_ptr::rotate_end_index() const
+{
+    return palettes_manager::bg_palettes_bank().rotate_end_index(_id);
+}
+
 void bg_palette_ptr::set_rotate_count(int count)
 {
     palettes_manager::bg_palettes_bank().set_rotate_count(_id, count);
+}
+
+void bg_palette_ptr::set_rotate_count_range(int count, int start_index, int end_index)
+{
+	palettes_manager::bg_palettes_bank().set_rotate_count_range(_id, count, start_index, end_index);
 }
 
 }

@@ -130,9 +130,16 @@ public:
     [[nodiscard]] int colors_count() const;
 
     /**
-     * @brief Returns the colors contained in this palette.
+     * @brief Returns the colors contained in this palette in their original order.
+     * This order does not change and reflects the initial state of the palette as defined.
      */
     [[nodiscard]] span<const color> colors() const;
+
+    /**
+     * @brief Returns the colors contained in this palette in their current order.
+     * This order may have been altered (e.g., rotated or reordered) from the original.
+     */
+    [[nodiscard]] span<const color> colors_in_current_order() const;
 
     /**
      * @brief Sets the colors contained in this palette.
@@ -209,12 +216,35 @@ public:
      * @brief Returns the number of colors to rotate to the right in this palette.
      */
     [[nodiscard]] int rotate_count() const;
+	
+	/**
+     * @brief Returns the starting index (inclusive) for the rotation of colors in this palette.
+     */
+    [[nodiscard]] int rotate_start_index() const;
+	
+	/**
+     * @brief Returns the ending index (inclusive) for the rotation of colors in this palette.
+     */
+    [[nodiscard]] int rotate_end_index() const;
 
     /**
-     * @brief Sets the number of colors to rotate to the right in this palette.
+     * @brief Sets the number of colors to rotate to the right in this palette, excluding the first color (transparent).     
      * @param count Number of colors to rotate to the right in the range [2 - colors_count() .. colors_count() - 2].
      */
     void set_rotate_count(int count);
+	
+	/**
+     * @brief Sets the number of colors to rotate to the right in this palette within the specified range of indexes, excluding the first color (transparent).
+     * @param count Number of colors to rotate to the right in the range:
+     *  - If start_index < end_index, [-(end_index - start_index) .. end_index - start_index]
+     *  - If start_index > end_index, [-(colors_count() - 1 - start_index + end_index) .. colors_count() - 1 - start_index + end_index]
+     * @param start_index Index of the first color in the rotation range [1 .. colors_count() - 1]
+     * @param end_index Index of the last color in the rotation range:
+     *  - If start_index == 1, then [2 .. colors_count() - 1]
+     *  - If start_index > 1 and start_index < colors_count() - 1, [1 .. start_index - 1] and [start_index + 1 .. colors_count() - 1]
+     *  - If start_index == colors_count() - 1, [1 .. colors_count() - 2]                                                                 
+     */
+    void set_rotate_count_range(int count, int start_index, int end_index);  
 
     /**
      * @brief Exchanges the contents of this bg_palette_ptr with those of the other one.
@@ -242,6 +272,7 @@ public:
 
 private:
     int8_t _id;
+    
 
     explicit bg_palette_ptr(int id) :
         _id(int8_t(id))

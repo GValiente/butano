@@ -6,6 +6,7 @@
 #include "../include/bn_hw_palettes.h"
 
 #include "bn_math.h"
+#include "bn_algorithm.h"
 
 namespace bn::hw::palettes
 {
@@ -154,6 +155,38 @@ void rotate(const color* source_colors_ptr, int rotate_count, int colors_count, 
         destination_colors_ptr[destination_index] = source_colors_ptr[source_index];
         ++destination_index;
     }
+}
+
+void rotate_range(int rotate_count, int colors_count, color* destination_colors_ptr, int rotate_start_index, int rotate_end_index)
+{
+	if(rotate_start_index < rotate_end_index)
+    {
+        if (rotate_count > 0)
+        {
+            rotate(destination_colors_ptr + rotate_start_index, destination_colors_ptr + rotate_end_index + 1 - rotate_count, destination_colors_ptr + rotate_end_index + 1);
+        }
+        else if (rotate_count < 0)
+        {
+            rotate(destination_colors_ptr + rotate_start_index, destination_colors_ptr + rotate_start_index - rotate_count, destination_colors_ptr + rotate_end_index + 1);
+        }
+    }
+	else
+    {
+		rotate(destination_colors_ptr, destination_colors_ptr + rotate_start_index, destination_colors_ptr + colors_count);
+	
+		int temp_rotate_end_index = (rotate_end_index - rotate_start_index + colors_count) % colors_count;		
+
+		if (rotate_count > 0)
+        {		
+			rotate(destination_colors_ptr, destination_colors_ptr + temp_rotate_end_index - rotate_count + 1, destination_colors_ptr + temp_rotate_end_index + 1);			
+		}
+        else if (rotate_count < 0)
+        {
+			rotate(destination_colors_ptr, destination_colors_ptr - rotate_count, destination_colors_ptr + temp_rotate_end_index + 1);		
+		}
+
+		rotate(destination_colors_ptr, destination_colors_ptr + colors_count - rotate_start_index, destination_colors_ptr + colors_count);		
+	}    
 }
 
 }

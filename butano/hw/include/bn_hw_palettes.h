@@ -134,6 +134,8 @@ namespace bn::hw::palettes
 
     void rotate(const color* source_colors_ptr, int rotate_count, int colors_count, color* destination_colors_ptr);
 
+	void rotate_range(int rotate_count, int colors_count, color* destination_colors_ptr, int rotate_start_index, int rotate_end_index);	
+	
     inline void commit_sprites(const color* colors_ptr, int offset, int count, bool use_dma)
     {
         commit(colors_ptr, offset, count, reinterpret_cast<color*>(MEM_PAL_OBJ), use_dma);

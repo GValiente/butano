@@ -69,6 +69,8 @@ public:
 
     [[nodiscard]] span<const color> colors(int id) const;
 
+    [[nodiscard]] span<const color> colors_in_current_order(int id) const;
+
     void set_colors(int id, const span<const color>& colors);
 
     [[nodiscard]] bool inverted(int id) const
@@ -113,7 +115,19 @@ public:
         return _palettes[id].rotate_count;
     }
 
+	[[nodiscard]] int rotate_start_index(int id) const
+    {
+        return _palettes[id].rotate_start_index;
+    }
+
+	[[nodiscard]] int rotate_end_index(int id) const
+    {
+        return _palettes[id].rotate_end_index;
+    }
+
     void set_rotate_count(int id, int count);
+
+	void set_rotate_count_range(int id, int count, int start_index, int end_index);
 
     void reload(int id);
 
@@ -219,7 +233,12 @@ private:
         color fade_color;
         uint16_t hash = 0;
         int16_t rotate_count = 0;
+
         int8_t slots_count = 1;
+
+        int rotate_start_index = 1;
+		int rotate_end_index = hw::palettes::colors_per_palette() - 1;
+
         bool bpp_8: 1 = false;
         bool inverted: 1 = false;
         bool update: 1 = false;

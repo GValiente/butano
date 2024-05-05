@@ -15,6 +15,7 @@
  * @section changelog_17_5_0 17.5.0 (next release)
  *
  * * bn::memory::dma_enabled and bn::memory::set_dma_enabled added.
+ * * bn::fixed explicit conversion operators added.
  * * Custom C++ flags can be specified in the project's `Makefile`.
  * * All logging functions and methods can be called with logging disabled.
  * * Current <a href="https://github.com/rodri042/gba-link-connection">gba-link-connection</a> implementation

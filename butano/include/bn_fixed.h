@@ -135,6 +135,14 @@ public:
     }
 
     /**
+     * @brief Returns the integer part using a division.
+     */
+    [[nodiscard]] constexpr explicit operator int() const
+    {
+        return integer();
+    }
+
+    /**
      * @brief Returns the integer part using a right shift.
      */
     [[nodiscard]] constexpr int right_shift_integer() const
@@ -216,11 +224,27 @@ public:
     }
 
     /**
+     * @brief Returns the nearest single precision floating point value.
+     */
+    [[nodiscard]] constexpr explicit operator float() const
+    {
+        return to_float();
+    }
+
+    /**
      * @brief Returns the nearest double precision floating point value.
      */
     [[nodiscard]] constexpr double to_double() const
     {
         return double(_data) / scale();
+    }
+
+    /**
+     * @brief Returns the nearest double precision floating point value.
+     */
+    [[nodiscard]] constexpr explicit operator double() const
+    {
+        return to_double();
     }
 
     /**

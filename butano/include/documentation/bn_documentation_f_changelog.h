@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_5_0 17.5.0 (next release)
+ * @section changelog_17_5_0 17.5.0
  *
  * * bn::memory::dma_enabled and bn::memory::set_dma_enabled added.
  * * bn::fixed explicit conversion operators added.

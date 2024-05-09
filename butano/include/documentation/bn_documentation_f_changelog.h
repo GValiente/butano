@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_5_1 17.5.1 (next release)
+ *
+ * GCC14 false build warnings in Butano Fighter fixed.
+ *
+ *
  * @section changelog_17_5_0 17.5.0
  *
  * * bn::memory::dma_enabled and bn::memory::set_dma_enabled added.

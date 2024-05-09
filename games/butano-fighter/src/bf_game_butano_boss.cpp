@@ -60,7 +60,8 @@ butano_boss::butano_boss(const bn::sprite_palette_ptr& damage_palette, const bn:
         sprite.set_camera(camera);
     }
 
-    bn::color fade_color(10, 1, 8);
+    constexpr bn::color fade_color(10, 1, 8);
+	
     bn::sprite_palette_ptr body_palette = _sprites[0].palette();
     bn::sprite_palette_ptr fire_palette = _sprites[2].palette();
     body_palette.set_fade_color(fade_color);

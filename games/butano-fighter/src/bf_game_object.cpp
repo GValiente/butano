@@ -25,8 +25,9 @@ object object::create_hero_weapon(const bn::fixed_point& position, int hero_leve
                                   const bn::sprite_palette_ptr& flash_palette, const bn::camera_ptr& camera)
 {
     const bn::sprite_item* sprite_item = &bn::sprite_items::hero_weapon_big_2;
-    bn::fixed_size dimensions(28, 16);
-
+	int width = 28;
+	int height = 16;
+	
     switch(hero_level)
     {
 
@@ -35,37 +36,41 @@ object object::create_hero_weapon(const bn::fixed_point& position, int hero_leve
 
     case 2:
         sprite_item = &bn::sprite_items::hero_weapon_big_3;
-        dimensions = bn::fixed_size(33, 16);
+		width = 33;
         break;
 
     case 3:
         sprite_item = &bn::sprite_items::hero_weapon_big_4;
-        dimensions = bn::fixed_size(23, 16);
+		width = 23;
         break;
 
     case 4:
         sprite_item = &bn::sprite_items::hero_weapon_big_5;
-        dimensions = bn::fixed_size(22, 15);
+		width = 22;
+		height = 15;
         break;
 
     case 5:
         sprite_item = &bn::sprite_items::hero_weapon_big_6;
-        dimensions = bn::fixed_size(32, 16);
+		width = 32;
         break;
 
     case 6:
         sprite_item = &bn::sprite_items::hero_weapon_big_7;
-        dimensions = bn::fixed_size(27, 17);
+		width = 27;
+		height = 17;
         break;
 
     case 7:
         sprite_item = &bn::sprite_items::hero_weapon_big_8;
-        dimensions = bn::fixed_size(38, 18);
+		width = 38;
+		height = 18;
         break;
 
     case 8:
         sprite_item = &bn::sprite_items::hero_weapon_big_9;
-        dimensions = bn::fixed_size(17, 15);
+		width = 17;
+		height = 15;
         break;
 
     default:
@@ -77,7 +82,7 @@ object object::create_hero_weapon(const bn::fixed_point& position, int hero_leve
     builder.set_position(position);
     builder.set_z_order(constants::objects_z_order);
     builder.set_camera(camera);
-    return object(builder.release_build(), position, dimensions, bn::fixed_point(1, -1), flash_palette);
+    return object(builder.release_build(), position, bn::fixed_size(width, height), bn::fixed_point(1, -1), flash_palette);
 }
 
 object object::create_hero_bomb(const bn::fixed_point& position, const bn::sprite_palette_ptr& flash_palette,

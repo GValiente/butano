@@ -212,9 +212,27 @@ public:
 
     /**
      * @brief Sets the number of colors to rotate to the right in this palette.
-     * @param count Number of colors to rotate to the right in the range [2 - colors_count() .. colors_count() - 2].
+     * @param count Number of colors to rotate to the right in the range
+     * [1 - rotate_range_size() .. rotate_range_size() - 1].
      */
     void set_rotate_count(int count);
+
+    /**
+     * @brief Returns the starting color index of the rotation range in this palette.
+     */
+    [[nodiscard]] int rotate_range_start() const;
+
+    /**
+     * @brief Returns the number of colors of the rotation range in this palette.
+     */
+    [[nodiscard]] int rotate_range_size() const;
+
+    /**
+     * @brief Sets the rotation range of this palette.
+     * @param start Starting color index in the range [0 .. colors_count() - 2].
+     * @param size Number of colors in the range [2 .. colors_count()].
+     */
+    void set_rotate_range(int start, int size);
 
     /**
      * @brief Exchanges the contents of this bg_palette_ptr with those of the other one.

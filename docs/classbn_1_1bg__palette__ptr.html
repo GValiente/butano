@@ -192,6 +192,19 @@
               <span class="m-doc-wrap-bumper">void <a href="#ae30b4c0a09c12f1d05481d0f1232a420" class="m-doc">set_rotate_count</a>(</span><span class="m-doc-wrap">int count)</span>
             </dt>
             <dd>Sets the number of colors to rotate to the right in this palette.</dd>
+            <dt id="a6a56c5e4f58122a25b5d222825c04d19">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6a56c5e4f58122a25b5d222825c04d19" class="m-doc-self">rotate_range_start</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the starting color index of the rotation range in this palette.</dd>
+            <dt id="a98e4c6ef1489c9af05bd6b695c7d7b7a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a98e4c6ef1489c9af05bd6b695c7d7b7a" class="m-doc-self">rotate_range_size</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the number of colors of the rotation range in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aaec9baba67c2119b614c3237e319efe6" class="m-doc">set_rotate_range</a>(</span><span class="m-doc-wrap">int start,
+              int size)</span>
+            </dt>
+            <dd>Sets the rotation range of this palette.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a0bdcc8ff602032fc1f56f6a35681c237" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp; other)</span>
             </dt>
@@ -512,7 +525,29 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">count</td>
-                  <td>Number of colors to rotate to the right in the range [2 - <a href="classbn_1_1bg__palette__ptr.html#a47893cbc3bb013048a3de57a1045c190" class="m-doc">colors_<wbr />count()</a> .. <a href="classbn_1_1bg__palette__ptr.html#a47893cbc3bb013048a3de57a1045c190" class="m-doc">colors_<wbr />count()</a> - 2].</td>
+                  <td>Number of colors to rotate to the right in the range [1 - <a href="classbn_1_1bg__palette__ptr.html#a98e4c6ef1489c9af05bd6b695c7d7b7a" class="m-doc">rotate_<wbr />range_<wbr />size()</a> .. <a href="classbn_1_1bg__palette__ptr.html#a98e4c6ef1489c9af05bd6b695c7d7b7a" class="m-doc">rotate_<wbr />range_<wbr />size()</a> - 1].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaec9baba67c2119b614c3237e319efe6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />bg_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaec9baba67c2119b614c3237e319efe6" class="m-doc-self">set_rotate_range</a>(</span><span class="m-doc-wrap">int start,
+              int size)</span></span>
+            </h3>
+            <p>Sets the rotation range of this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">start</td>
+                  <td>Starting color index in the range [0 .. <a href="classbn_1_1bg__palette__ptr.html#a47893cbc3bb013048a3de57a1045c190" class="m-doc">colors_<wbr />count()</a> - 2].</td>
+                </tr>
+                <tr>
+                  <td>size</td>
+                  <td>Number of colors in the range [2 .. <a href="classbn_1_1bg__palette__ptr.html#a47893cbc3bb013048a3de57a1045c190" class="m-doc">colors_<wbr />count()</a>].</td>
                 </tr>
               </tbody>
             </table>

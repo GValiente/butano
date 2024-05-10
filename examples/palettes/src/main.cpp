@@ -282,7 +282,7 @@ namespace
 
         bn::sprite_ptr cavegirl_sprite = bn::sprite_items::cavegirl_green.create_sprite(0, 0);
         bn::sprite_palette_ptr cavegirl_palette = cavegirl_sprite.palette();
-        int palette_colors_count = cavegirl_palette.colors_count();
+        int rotate_range_size = cavegirl_palette.rotate_range_size();
 
         while(! bn::keypad::start_pressed())
         {
@@ -290,11 +290,11 @@ namespace
 
             if(bn::keypad::left_pressed())
             {
-                cavegirl_palette.set_rotate_count(bn::max(rotate_count - 1, 2 - palette_colors_count));
+                cavegirl_palette.set_rotate_count(bn::max(rotate_count - 1, 1 - rotate_range_size));
             }
             else if(bn::keypad::right_pressed())
             {
-                cavegirl_palette.set_rotate_count(bn::min(rotate_count + 1, palette_colors_count - 2));
+                cavegirl_palette.set_rotate_count(bn::min(rotate_count + 1, rotate_range_size - 1));
             }
 
             info.update();

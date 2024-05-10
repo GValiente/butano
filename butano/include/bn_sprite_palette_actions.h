@@ -781,7 +781,8 @@ public:
 
     /**
      * @brief Sets the number of colors to rotate to the right in the given sprite_palette_ptr.
-     * @param count Number of colors to rotate to the right in the range [2 - colors_count() .. colors_count() - 2].
+     * @param count Number of colors to rotate to the right in the range
+     * [1 - rotate_range_size() .. rotate_range_size() - 1].
      * @param palette sprite_palette_ptr to modify.
      */
     static void set(int count, sprite_palette_ptr& palette)
@@ -816,10 +817,11 @@ public:
     sprite_palette_rotate_by_action(const sprite_palette_ptr& palette, int duration_updates, int delta_count) :
         cyclic_duration_by_value_template_action(palette, duration_updates, delta_count, 0, 0)
     {
-        int colors_count = this->palette().colors_count();
-        BN_ASSERT(abs(delta_count) < colors_count - 1, "Invalid delta count: ", delta_count, " - ", colors_count);
+        int rotate_range_size = this->palette().rotate_range_size();
+        BN_ASSERT(abs(delta_count) < rotate_range_size,
+                  "Invalid delta count: ", delta_count, " - ", rotate_range_size);
 
-        set_after_max_property(colors_count - 1);
+        set_after_max_property(rotate_range_size);
     }
 
     /**
@@ -833,10 +835,11 @@ public:
     sprite_palette_rotate_by_action(sprite_palette_ptr&& palette, int duration_updates, int delta_count) :
         cyclic_duration_by_value_template_action(move(palette), duration_updates, delta_count, 0, 0)
     {
-        int colors_count = this->palette().colors_count();
-        BN_ASSERT(abs(delta_count) < colors_count - 1, "Invalid delta count: ", delta_count, " - ", colors_count);
+        int rotate_range_size = this->palette().rotate_range_size();
+        BN_ASSERT(abs(delta_count) < rotate_range_size,
+                  "Invalid delta count: ", delta_count, " - ", rotate_range_size);
 
-        set_after_max_property(colors_count - 1);
+        set_after_max_property(rotate_range_size);
     }
 
     /**
@@ -878,13 +881,13 @@ public:
      * @param final_count Number of colors to rotate to the right
      * when the action is updated duration_updates times.
      *
-     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
+     * This count must be in the range [1 - rotate_range_size() .. rotate_range_size() - 1].
      */
     sprite_palette_rotate_to_action(const sprite_palette_ptr& palette, int duration_updates, int final_count) :
         to_value_template_action(palette, duration_updates, final_count)
     {
-        BN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", this->palette().colors_count());
+        BN_ASSERT(abs(final_count) < this->palette().rotate_range_size(),
+                  "Invalid final count: ", final_count, " - ", this->palette().rotate_range_size());
     }
 
     /**
@@ -895,13 +898,13 @@ public:
      * @param final_count Number of colors to rotate to the right
      * when the action is updated duration_updates times.
      *
-     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
+     * This count must be in the range [1 - rotate_range_size() .. rotate_range_size() - 1].
      */
     sprite_palette_rotate_to_action(sprite_palette_ptr&& palette, int duration_updates, int final_count) :
         to_value_template_action(move(palette), duration_updates, final_count)
     {
-        BN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", this->palette().colors_count());
+        BN_ASSERT(abs(final_count) < this->palette().rotate_range_size(),
+                  "Invalid final count: ", final_count, " - ", this->palette().rotate_range_size());
     }
 
     /**
@@ -945,13 +948,13 @@ public:
      * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
      * it goes back to its initial state and vice versa.
      *
-     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
+     * This count must be in the range [1 - rotate_range_size() .. rotate_range_size() - 1].
      */
     sprite_palette_rotate_loop_action(const sprite_palette_ptr& palette, int duration_updates, int final_count) :
         loop_value_template_action(palette, duration_updates, final_count)
     {
-        BN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", this->palette().colors_count());
+        BN_ASSERT(abs(final_count) < this->palette().rotate_range_size(),
+                  "Invalid final count: ", final_count, " - ", this->palette().rotate_range_size());
     }
 
     /**
@@ -962,13 +965,13 @@ public:
      * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
      * it goes back to its initial state and vice versa.
      *
-     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
+     * This count must be in the range [1 - rotate_range_size() .. rotate_range_size() - 1].
      */
     sprite_palette_rotate_loop_action(sprite_palette_ptr&& palette, int duration_updates, int final_count) :
         loop_value_template_action(move(palette), duration_updates, final_count)
     {
-        BN_ASSERT(abs(final_count) < this->palette().colors_count() - 1,
-                   "Invalid final count: ", final_count, " - ", this->palette().colors_count());
+        BN_ASSERT(abs(final_count) < this->palette().rotate_range_size(),
+                  "Invalid final count: ", final_count, " - ", this->palette().rotate_range_size());
     }
 
     /**
@@ -1011,13 +1014,13 @@ public:
      * @param new_count New number of colors to rotate to the right
      * when the action is updated duration_updates times.
      *
-     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
+     * This count must be in the range [1 - rotate_range_size() .. rotate_range_size() - 1].
      */
     sprite_palette_rotate_toggle_action(const sprite_palette_ptr& palette, int duration_updates, int new_count) :
         toggle_value_template_action(palette, duration_updates, new_count)
     {
-        BN_ASSERT(abs(new_count) < this->palette().colors_count() - 1,
-                   "Invalid new count: ", new_count, " - ", this->palette().colors_count());
+        BN_ASSERT(abs(new_count) < this->palette().rotate_range_size(),
+                  "Invalid new count: ", new_count, " - ", this->palette().rotate_range_size());
     }
 
     /**
@@ -1028,13 +1031,13 @@ public:
      * @param new_count New number of colors to rotate to the right
      * when the action is updated duration_updates times.
      *
-     * This count must be in the range [2 - colors_count() .. colors_count() - 2].
+     * This count must be in the range [1 - rotate_range_size() .. rotate_range_size() - 1].
      */
     sprite_palette_rotate_toggle_action(sprite_palette_ptr&& palette, int duration_updates, int new_count) :
         toggle_value_template_action(move(palette), duration_updates, new_count)
     {
-        BN_ASSERT(abs(new_count) < this->palette().colors_count() - 1,
-                   "Invalid new count: ", new_count, " - ", this->palette().colors_count());
+        BN_ASSERT(abs(new_count) < this->palette().rotate_range_size(),
+                  "Invalid new count: ", new_count, " - ", this->palette().rotate_range_size());
     }
 
     /**

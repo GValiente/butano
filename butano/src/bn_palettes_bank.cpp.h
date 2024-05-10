@@ -150,6 +150,7 @@ int palettes_bank::create_bpp_4(const span<const color>& colors, uint16_t hash, 
                 pal.usages = 1;
                 pal.hash = hash;
                 pal.slots_count = int8_t(required_slots_count);
+                pal.rotate_range_size = int8_t(colors_count - 1);
 
                 for(int slot = 0; slot < required_slots_count; ++slot)
                 {
@@ -208,6 +209,7 @@ int palettes_bank::create_bpp_8(const span<const color>& colors, compression_typ
             }
 
             first_pal.slots_count = int8_t(required_slots_count);
+            first_pal.rotate_range_size = int8_t(colors_count - 1);
 
             for(int slot = 0; slot < required_slots_count; ++slot)
             {
@@ -423,15 +425,39 @@ void palettes_bank::set_fade(int id, color color, fixed intensity)
 
 void palettes_bank::set_rotate_count(int id, int count)
 {
-    BN_ASSERT(abs(count) < colors_count(id) - 1, "Invalid count: ", count, " - ", colors_count(id));
-
     palette& pal = _palettes[id];
 
     if(pal.rotate_count != count)
     {
+        BN_ASSERT(abs(count) < pal.rotate_range_size, "Invalid count: ", count, " - ", pal.rotate_range_size);
+
         pal.rotate_count = int16_t(count);
         pal.update = true;
         _update = true;
+    }
+}
+
+void palettes_bank::set_rotate_range(int id, int start, int size)
+{
+    palette& pal = _palettes[id];
+
+    if(pal.rotate_range_start != start || pal.rotate_range_size != size)
+    {
+        BN_ASSERT(start >= 0 && start <= colors_count(id) - 2, "Invalid start: ", start, " - ", colors_count(id));
+        BN_ASSERT(size >= 2 && size <= colors_count(id), "Invalid size: ", size, " - ", colors_count(id));
+        BN_ASSERT(start + size <= colors_count(id), "Invalid range: ", start, " - ", size, " - ", colors_count(id));
+
+        int count = pal.rotate_count;
+        pal.rotate_range_start = int8_t(start);
+        pal.rotate_range_size = int8_t(size);
+
+        if(count)
+        {
+            BN_ASSERT(abs(count) < size, "Invalid count: ", count, " - ", size);
+
+            pal.update = true;
+            _update = true;
+        }
     }
 }
 
@@ -765,15 +791,16 @@ void palettes_bank::_update_palette(int id)
     copy_colors(initial_pal_colors_ptr, pal_colors_count, final_pal_colors_ptr);
     pal.apply_effects(pal_colors_count, final_pal_colors_ptr);
 
-    if(pal.rotate_count)
+    if(int rotate_count = pal.rotate_count)
     {
         auto unsigned_final_pal_colors_ptr = reinterpret_cast<const unsigned*>(final_pal_colors_ptr);
         unsigned unsigned_temp_buffer[hw::palettes::colors() / 2];
         hw::memory::copy_words(unsigned_final_pal_colors_ptr, pal_colors_count / 2, unsigned_temp_buffer);
 
         auto color_temp_buffer_ptr = reinterpret_cast<const color*>(unsigned_temp_buffer);
-        hw::palettes::rotate(color_temp_buffer_ptr + 1, pal.rotate_count, pal_colors_count - 1,
-                             final_pal_colors_ptr + 1);
+        int first_index = pal.rotate_range_start;
+        hw::palettes::rotate(color_temp_buffer_ptr + first_index, rotate_count, pal.rotate_range_size,
+                             final_pal_colors_ptr + first_index);
     }
 }
 

@@ -307,4 +307,19 @@ void sprite_palette_ptr::set_rotate_count(int count)
     palettes_manager::sprite_palettes_bank().set_rotate_count(_id, count);
 }
 
+int sprite_palette_ptr::rotate_range_start() const
+{
+    return palettes_manager::sprite_palettes_bank().rotate_range_start(_id);
+}
+
+int sprite_palette_ptr::rotate_range_size() const
+{
+    return palettes_manager::sprite_palettes_bank().rotate_range_size(_id);
+}
+
+void sprite_palette_ptr::set_rotate_range(int start, int size)
+{
+    palettes_manager::sprite_palettes_bank().set_rotate_range(_id, start, size);
+}
+
 }

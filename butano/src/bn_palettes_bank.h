@@ -115,6 +115,18 @@ public:
 
     void set_rotate_count(int id, int count);
 
+    [[nodiscard]] int rotate_range_start(int id) const
+    {
+        return _palettes[id].rotate_range_start;
+    }
+
+    [[nodiscard]] int rotate_range_size(int id) const
+    {
+        return _palettes[id].rotate_range_size;
+    }
+
+    void set_rotate_range(int id, int start, int size);
+
     void reload(int id);
 
     [[nodiscard]] const optional<color>& transparent_color() const
@@ -220,6 +232,8 @@ private:
         uint16_t hash = 0;
         int16_t rotate_count = 0;
         int8_t slots_count = 1;
+        int8_t rotate_range_start = 1;
+        int8_t rotate_range_size = 0;
         bool bpp_8: 1 = false;
         bool inverted: 1 = false;
         bool update: 1 = false;

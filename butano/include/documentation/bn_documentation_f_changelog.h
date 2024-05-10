@@ -12,9 +12,13 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_5_1 17.5.1 (next release)
+ * @section changelog_17_6_0 17.6.0 (next release)
  *
- * GCC14 false build warnings in Butano Fighter fixed.
+ * * bn::bg_palette_ptr::rotate_range_start, bn::bg_palette_ptr::rotate_range_size
+ *   and bn::bg_palette_ptr::set_rotate_range added.
+ * * bn::sprite_palette_ptr::rotate_range_start, bn::sprite_palette_ptr::rotate_range_size
+ *   and bn::sprite_palette_ptr::set_rotate_range added.
+ * * GCC14 false build warnings in Butano Fighter fixed.
  *
  *
  * @section changelog_17_5_0 17.5.0

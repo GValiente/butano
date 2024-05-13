@@ -365,9 +365,10 @@ public:
     /**
      * @brief Returns the remainder of the division of this value by the given integer value.
      */
-    [[nodiscard]] constexpr fixed_t modulo(int value) const
+    [[nodiscard]] constexpr fixed_t modulus(int value) const
     {
-        return from_data(_data % value);
+        int n = division(value).integer();
+        return *this - (n * value);
     }
 
     /**
@@ -451,7 +452,7 @@ public:
      */
     constexpr fixed_t& operator%=(int other)
     {
-        *this = modulo(other);
+        *this = modulus(other);
         return *this;
     }
 
@@ -556,7 +557,7 @@ public:
      */
     [[nodiscard]] constexpr friend fixed_t operator%(fixed_t a, int b)
     {
-        return a.modulo(b);
+        return a.modulus(b);
     }
 
     /**

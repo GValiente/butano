@@ -18,7 +18,7 @@
  *   and bn::bg_palette_ptr::set_rotate_range added.
  * * bn::sprite_palette_ptr::rotate_range_start, bn::sprite_palette_ptr::rotate_range_size
  *   and bn::sprite_palette_ptr::set_rotate_range added.
- * * bn::fixed::modulo added.
+ * * bn::fixed::modulus added.
  * * GCC14 false build warnings in Butano Fighter fixed.
  *
  *

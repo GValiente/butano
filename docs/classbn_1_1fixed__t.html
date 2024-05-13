@@ -232,6 +232,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a631ef5845bdc1309302c809e6bd9ca1b" class="m-doc-self">unsafe_division</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the division of this value by the given fixed point value without trying to avoid overflow.</dd>
+            <dt id="ab1a836f2529dc5b641dbd4e43e9d2e53">
+              <span class="m-doc-wrap-bumper">auto <a href="#ab1a836f2529dc5b641dbd4e43e9d2e53" class="m-doc-self">modulo</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the remainder of the division of this value by the given integer value.</dd>
             <dt id="a12b0e8495d5d4caf389aa74a9895acff">
               <span class="m-doc-wrap-bumper">auto <a href="#a12b0e8495d5d4caf389aa74a9895acff" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -260,6 +264,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a578d1f756d1c3546cf2db4971a69fda5" class="m-doc">operator/=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Divides this <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> by the given divisor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a062d2dd538b0c4e30cd19fe9c8e8f4d5" class="m-doc">operator%=</a>(</span><span class="m-doc-wrap">int other) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Assigns the remainder of the division of this <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> by the given divisor.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -319,6 +327,11 @@
               <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;OtherPrecision&gt; b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&lt;bn::max(Precision, OtherPrecision)&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a divided by b.</dd>
+            <dt id="a28b366de61d6ee60a4dfce9c310ea3d7">
+              <span class="m-doc-wrap-bumper">auto <a href="#a28b366de61d6ee60a4dfce9c310ea3d7" class="m-doc-self">operator%</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
+              int b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the remainder of the division of a by b.</dd>
             <dt id="a40b885fe63178ff9609523d8cefe24fa">
               <span class="m-doc-wrap-bumper">auto <a href="#a40b885fe63178ff9609523d8cefe24fa" class="m-doc-self">operator&lt;=&gt;</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
               <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> b) -&gt; auto <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -585,6 +598,32 @@
                 <tr>
                   <td style="width: 1%">other</td>
                   <td>Valid fixed point divisor (!= 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a062d2dd538b0c4e30cd19fe9c8e8f4d5"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&amp; bn::<wbr />fixed_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a062d2dd538b0c4e30cd19fe9c8e8f4d5" class="m-doc-self">operator%=</a>(</span><span class="m-doc-wrap">int other) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Assigns the remainder of the division of this <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> by the given divisor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>Valid integer divisor (!= 0).</td>
                 </tr>
               </tbody>
               <tfoot>

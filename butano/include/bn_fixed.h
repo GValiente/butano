@@ -363,6 +363,14 @@ public:
     }
 
     /**
+     * @brief Returns the remainder of the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t modulo(int value) const
+    {
+        return from_data(_data % value);
+    }
+
+    /**
      * @brief Returns a fixed_t that is formed by changing the sign of this one.
      */
     [[nodiscard]] constexpr fixed_t operator-() const
@@ -433,6 +441,17 @@ public:
     constexpr fixed_t& operator/=(fixed_t other)
     {
         *this = division(other);
+        return *this;
+    }
+
+    /**
+     * @brief Assigns the remainder of the division of this fixed_t by the given divisor.
+     * @param other Valid integer divisor (!= 0).
+     * @return Reference to this.
+     */
+    constexpr fixed_t& operator%=(int other)
+    {
+        *this = modulo(other);
         return *this;
     }
 
@@ -530,6 +549,14 @@ public:
         using output_fixed_t = fixed_t<bn::max(Precision, OtherPrecision)>;
 
         return output_fixed_t(a) / output_fixed_t(b);
+    }
+
+    /**
+     * @brief Returns the remainder of the division of a by b.
+     */
+    [[nodiscard]] constexpr friend fixed_t operator%(fixed_t a, int b)
+    {
+        return a.modulo(b);
     }
 
     /**

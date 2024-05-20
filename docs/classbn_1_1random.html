@@ -96,6 +96,24 @@
               <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> limit) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a random <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">bn::<wbr />fixed</a> in the range [minimum..limit), updating its internal seed in the process.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a237dad71c95a3fad7d21bac4e53152e2" class="m-doc">get_unbiased_int</a>(</span><span class="m-doc-wrap">int limit) -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random signed integer in the range [0..limit), updating its internal seed in the process.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1f7dc025dbd1f86f15d203b5dfdf41de" class="m-doc">get_unbiased_fixed</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> limit) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">bn::<wbr />fixed</a> in the range [0..limit), updating its internal seed in the process.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a662264d3f438c6b000d0119cdfe821a0" class="m-doc">get_unbiased_int</a>(</span><span class="m-doc-wrap">int minimum,
+              int limit) -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random signed integer in the range [minimum..limit), updating its internal seed in the process.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae5d933b991efe28c7db05ec78a66d806" class="m-doc">get_unbiased_fixed</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> minimum,
+              <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> limit) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a random <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">bn::<wbr />fixed</a> in the range [minimum..limit), updating its internal seed in the process.</dd>
             <dt id="af576b431d31a4cf348dfddf17b5b6526">
               <span class="m-doc-wrap-bumper">void <a href="#af576b431d31a4cf348dfddf17b5b6526" class="m-doc-self">update</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -126,6 +144,7 @@
                 </tr>
               </tfoot>
             </table>
+<p>It&#x27;s possible that the output will be biased towards smaller numbers due to <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.</p><p><a href="classbn_1_1random.html#a237dad71c95a3fad7d21bac4e53152e2" class="m-doc">random::<wbr />get_unbiased_int</a> can be used to avoid modulo bias.</p>
           </div></section>
           <section class="m-doc-details" id="acac86f11c74f2cd093f6d2c8fb0adf3b"><div>
             <h3>
@@ -149,6 +168,7 @@
                 </tr>
               </tfoot>
             </table>
+<p>It&#x27;s possible that the output will be biased towards smaller numbers due to <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.</p><p><a href="classbn_1_1random.html#a1f7dc025dbd1f86f15d203b5dfdf41de" class="m-doc">random::<wbr />get_unbiased_fixed</a> can be used to avoid modulo bias.</p>
           </div></section>
           <section class="m-doc-details" id="af146d87e538a4b4f7dbdaecf2a3023d5"><div>
             <h3>
@@ -177,6 +197,7 @@
                 </tr>
               </tfoot>
             </table>
+<p>It&#x27;s possible that the output will be biased towards smaller numbers due to <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.</p><p><a href="classbn_1_1random.html#a237dad71c95a3fad7d21bac4e53152e2" class="m-doc">random::<wbr />get_unbiased_int</a> can be used to avoid modulo bias.</p>
           </div></section>
           <section class="m-doc-details" id="a31a5e1ff5ecd4a82193190378e1c3a27"><div>
             <h3>
@@ -205,6 +226,113 @@
                 </tr>
               </tfoot>
             </table>
+<p>It&#x27;s possible that the output will be biased towards smaller numbers due to <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.</p><p><a href="classbn_1_1random.html#a1f7dc025dbd1f86f15d203b5dfdf41de" class="m-doc">random::<wbr />get_unbiased_fixed</a> can be used to avoid modulo bias.</p>
+          </div></section>
+          <section class="m-doc-details" id="a237dad71c95a3fad7d21bac4e53152e2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />random::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a237dad71c95a3fad7d21bac4e53152e2" class="m-doc-self">get_unbiased_int</a>(</span><span class="m-doc-wrap">int limit) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a random signed integer in the range [0..limit), updating its internal seed in the process.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">limit</td>
+                  <td>Returned value is lower than this value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Random signed integer in the range [0..limit).</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This implementation avoids <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>, so it&#x27;s less likely that the output will be biased towards smaller numbers.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1f7dc025dbd1f86f15d203b5dfdf41de"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> bn::<wbr />random::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1f7dc025dbd1f86f15d203b5dfdf41de" class="m-doc-self">get_unbiased_fixed</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> limit) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a random <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">bn::<wbr />fixed</a> in the range [0..limit), updating its internal seed in the process.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">limit</td>
+                  <td>Returned value is lower than this value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Random <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">bn::<wbr />fixed</a> in the range [0..limit).</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This implementation avoids <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>, so it&#x27;s less likely that the output will be biased towards smaller numbers.</p>
+          </div></section>
+          <section class="m-doc-details" id="a662264d3f438c6b000d0119cdfe821a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />random::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a662264d3f438c6b000d0119cdfe821a0" class="m-doc-self">get_unbiased_int</a>(</span><span class="m-doc-wrap">int minimum,
+              int limit) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a random signed integer in the range [minimum..limit), updating its internal seed in the process.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">minimum</td>
+                  <td>Returned value is greater or equal than this value.</td>
+                </tr>
+                <tr>
+                  <td>limit</td>
+                  <td>Returned value is lower than this value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Random signed integer in the range [minimum..limit).</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This implementation avoids <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>, so it&#x27;s less likely that the output will be biased towards smaller numbers.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae5d933b991efe28c7db05ec78a66d806"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> bn::<wbr />random::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae5d933b991efe28c7db05ec78a66d806" class="m-doc-self">get_unbiased_fixed</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> minimum,
+              <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> limit) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a random <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">bn::<wbr />fixed</a> in the range [minimum..limit), updating its internal seed in the process.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">minimum</td>
+                  <td>Returned value is greater or equal than this value.</td>
+                </tr>
+                <tr>
+                  <td>limit</td>
+                  <td>Returned value is lower than this value.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Random <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">bn::<wbr />fixed</a> in the range [minimum..limit).</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>This implementation avoids <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>, so it&#x27;s less likely that the output will be biased towards smaller numbers.</p>
           </div></section>
         </section>
       </div>

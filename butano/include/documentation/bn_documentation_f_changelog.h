@@ -20,7 +20,7 @@
  *   and bn::sprite_palette_ptr::set_rotate_range added.
  * * bn::fixed::modulo added.
  * * bn::random::get_unbiased_int, bn::random::get_unbiased_fixed, bn::seed_random::get_unbiased_int
- *   and bn::seed_random::get_unbiased_fixed added.
+ *   and bn::seed_random::get_unbiased_fixed added (thanks <a href="https://github.com/alope107">alope107</a>!).
  * * GCC14 false build warnings in Butano Fighter fixed.
  *
  *

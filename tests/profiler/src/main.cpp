@@ -10,6 +10,7 @@
 #include "bn_profiler.h"
 #include "bn_unique_ptr.h"
 #include "bn_seed_random.h"
+#include "bn_best_fit_allocator.h"
 
 #include "../../butano/hw/include/bn_hw_dma.h"
 #include "../../butano/hw/include/bn_hw_memory.h"
@@ -179,7 +180,7 @@ void atan2_test(int& integer)
     BN_PROFILER_STOP();
 }
 
-
+template<class allocator>
 class std_coroutine_task
 {
 
@@ -210,6 +211,16 @@ public:
 
         void return_void()
         {
+        }
+
+        void* operator new(unsigned bytes)
+        {
+            return allocator::alloc(bytes);
+        }
+
+        void operator delete(void* ptr)
+        {
+            allocator::free(ptr);
         }
     };
 
@@ -263,10 +274,43 @@ private:
     co_handle_t _co_handle;
 };
 
+class ewram_allocator
+{
+
+public:
+    [[nodiscard]] static void* alloc(unsigned bytes)
+    {
+        return ::malloc(bytes);
+    }
+
+    static void free(void* ptr)
+    {
+        return ::free(ptr);
+    }
+};
+
+class iwram_allocator
+{
+
+public:
+    static inline bn::best_fit_allocator* allocator = nullptr;
+
+    [[nodiscard]] static void* alloc(unsigned bytes)
+    {
+        return allocator->alloc(int(bytes));
+    }
+
+    static void free(void* ptr)
+    {
+        allocator->free(ptr);
+    }
+};
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wswitch-default"
 
-std_coroutine_task std_coroutine_impl(int& integer)
+template<class allocator>
+std_coroutine_task<allocator> std_coroutine_impl(int& integer)
 {
     bn::random random;
     unsigned last_result = 0;
@@ -301,6 +345,8 @@ int agbabi_coroutine_impl(__agbabi_coro_t* coro)
 
 void coroutine_test(int& integer)
 {
+    constexpr int stack_length = 0x200;
+
     BN_PROFILER_START("coroutine_disabled");
 
     int disabled_result = 0;
@@ -320,26 +366,49 @@ void coroutine_test(int& integer)
 
     BN_PROFILER_STOP();
 
-    BN_PROFILER_START("coroutine_std");
+    BN_PROFILER_START("coroutine_std_ewram");
 
-    int std_result = 0;
-    std_coroutine_task task(std_coroutine_impl(std_result));
+    int std_ewram_result = 0;
 
-    while(! task.done())
     {
-        task();
+        std_coroutine_task<ewram_allocator> task(std_coroutine_impl<ewram_allocator>(std_ewram_result));
+
+        while(! task.done())
+        {
+            task();
+        }
     }
 
     BN_PROFILER_STOP();
 
-    BN_ASSERT(disabled_result == std_result, "Invalid std coroutine");
+    BN_ASSERT(disabled_result == std_ewram_result, "Invalid std ewram coroutine");
 
-    BN_PROFILER_START("coroutine_agbabi");
+    BN_PROFILER_START("coroutine_std_iwram");
 
-    int agbabi_result = 0;
+    int std_iwram_result = 0;
 
     {
-        constexpr int stack_length = 0x200;
+        alignas(int) char buffer[stack_length];
+        bn::best_fit_allocator allocator(buffer, stack_length);
+        iwram_allocator::allocator = &allocator;
+
+        std_coroutine_task<iwram_allocator> task(std_coroutine_impl<iwram_allocator>(std_iwram_result));
+
+        while(! task.done())
+        {
+            task();
+        }
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_ASSERT(disabled_result == std_iwram_result, "Invalid std iwram coroutine");
+
+    BN_PROFILER_START("coroutine_agbabi_ewram");
+
+    int agbabi_ewram_result = 0;
+
+    {
         bn::unique_ptr<bn::array<int, stack_length>> stack_ptr(new bn::array<int, stack_length>());
         int* stack = stack_ptr->data();
 
@@ -348,17 +417,39 @@ void coroutine_test(int& integer)
 
         while(! coro.joined)
         {
-            agbabi_result += __agbabi_coro_resume(&coro);
+            agbabi_ewram_result += __agbabi_coro_resume(&coro);
         }
     }
 
     BN_PROFILER_STOP();
 
-    BN_ASSERT(disabled_result == agbabi_result, "Invalid agbabi coroutine");
+    BN_ASSERT(disabled_result == agbabi_ewram_result, "Invalid agbabi ewram coroutine");
+
+    BN_PROFILER_START("coroutine_agbabi_iwram");
+
+    int agbabi_iwram_result = 0;
+
+    {
+        int stack[stack_length];
+
+        __agbabi_coro_t coro;
+        __agbabi_coro_make(&coro, stack + stack_length, agbabi_coroutine_impl);
+
+        while(! coro.joined)
+        {
+            agbabi_iwram_result += __agbabi_coro_resume(&coro);
+        }
+    }
+
+    BN_PROFILER_STOP();
+
+    BN_ASSERT(disabled_result == agbabi_iwram_result, "Invalid agbabi iwram coroutine");
 
     integer += disabled_result;
-    integer += std_result;
-    integer += agbabi_result;
+    integer += std_ewram_result;
+    integer += std_iwram_result;
+    integer += agbabi_ewram_result;
+    integer += agbabi_iwram_result;
 }
 
 

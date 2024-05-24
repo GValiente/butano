@@ -21,6 +21,9 @@ extern char __eheap_start[], __eheap_end[];
 
 namespace bn::hw::memory
 {
+    constexpr unsigned memctrl_address = 0x4000800;
+    constexpr unsigned fast_ewram_memctrl_value = 0x0E000020;
+
     void init();
 
     [[nodiscard]] inline int stack_address()
@@ -71,6 +74,12 @@ namespace bn::hw::memory
         auto rom_start = reinterpret_cast<uint8_t*>(&BN_ROM_START);
         auto rom_end = reinterpret_cast<uint8_t*>(&BN_ROM_END);
         return rom_end - rom_start;
+    }
+
+    [[nodiscard]] inline bool fast_ewram()
+    {
+        volatile unsigned& memctrl_register = *reinterpret_cast<unsigned*>(memctrl_address);
+        return memctrl_register == fast_ewram_memctrl_value;
     }
 
     inline void copy_bytes(const void* source, int bytes, void* destination)

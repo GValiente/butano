@@ -27,8 +27,9 @@ static_assert(BN_CFG_EWRAM_WAIT_STATE == BN_EWRAM_WAIT_STATE_2 ||
 void init()
 {
     #if BN_CFG_EWRAM_WAIT_STATE == BN_EWRAM_WAIT_STATE_1
-        volatile unsigned& memctrl_register = *reinterpret_cast<unsigned*>(0x4000800);
-        memctrl_register = 0x0E000020;
+        volatile unsigned& memctrl_register = *reinterpret_cast<unsigned*>(memctrl_address);
+        unsigned old_memctrl_value = memctrl_register;
+        memctrl_register = fast_ewram_memctrl_value;
 
         bn::random random;
 
@@ -40,7 +41,7 @@ void init()
 
             if(volatile_ewram_data != test_value)
             {
-                memctrl_register = 0x0D000020;
+                memctrl_register = old_memctrl_value;
                 return;
             }
         }

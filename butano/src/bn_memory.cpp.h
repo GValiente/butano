@@ -142,6 +142,11 @@ int used_rom()
     return hw::memory::used_rom();
 }
 
+bool fast_ewram()
+{
+    return hw::memory::fast_ewram();
+}
+
 void set_bytes(uint8_t value, int bytes, void* destination_ptr)
 {
     BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);

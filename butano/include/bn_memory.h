@@ -141,6 +141,11 @@ namespace bn::memory
     [[nodiscard]] int used_rom();
 
     /**
+     * @brief Indicates if EWRAM access time is 1+1 clock cycles for sequential accesses or not.
+     */
+    [[nodiscard]] bool fast_ewram();
+
+    /**
      * @brief Copies the given amount of elements from the object referenced by source_ref
      * to the object referenced by destination_ref.
      *

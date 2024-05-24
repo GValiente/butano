@@ -6,8 +6,8 @@
 #include "bn_core.h"
 #include "bn_colors.h"
 #include "bn_format.h"
+#include "bn_memory.h"
 #include "bn_bg_palettes.h"
-#include "bn_config_game_pak.h"
 #include "bn_sprite_text_generator.h"
 
 #include "common_info.h"
@@ -19,14 +19,11 @@ int main()
 {
     bn::core::init();
 
-    volatile unsigned& memctrl_register = *reinterpret_cast<unsigned*>(0x4000800);
-    bool fast_ewram = memctrl_register == 0x0E000020;
-
     bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
     bn::bg_palettes::set_transparent_color(bn::colors::gray);
 
     bn::string_view info_text_lines[] = {
-        fast_ewram ? "Detected speed: FAST" : "Detected speed: SLOW",
+        bn::memory::fast_ewram() ? "Detected speed: FAST" : "Detected speed: SLOW",
         "",
     };
 

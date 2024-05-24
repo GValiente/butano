@@ -19,6 +19,7 @@
  * * bn::sprite_palette_ptr::rotate_range_start, bn::sprite_palette_ptr::rotate_range_size
  *   and bn::sprite_palette_ptr::set_rotate_range added.
  * * bn::fixed::modulo added.
+ * * bn::memory::fast_ewram added.
  * * bn::random::get_unbiased_int, bn::random::get_unbiased_fixed, bn::seed_random::get_unbiased_int
  *   and bn::seed_random::get_unbiased_fixed added (thanks <a href="https://github.com/alope107">alope107</a>!).
  * * Slow EWRAM test added.

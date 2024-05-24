@@ -21,6 +21,7 @@
  * * bn::fixed::modulo added.
  * * bn::random::get_unbiased_int, bn::random::get_unbiased_fixed, bn::seed_random::get_unbiased_int
  *   and bn::seed_random::get_unbiased_fixed added (thanks <a href="https://github.com/alope107">alope107</a>!).
+ * * Slow EWRAM test added.
  * * IWRAM vs EWRAM stack tests added to the `profiler` coroutine test.
  * * Slow game pak test improved.
  * * GCC14 false build warnings in Butano Fighter fixed.

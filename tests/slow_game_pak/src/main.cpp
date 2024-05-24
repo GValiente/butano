@@ -1,14 +1,21 @@
+/*
+ * Copyright (c) 2020-2024 Gustavo Valiente gustavo.valiente@protonmail.com
+ * zlib License, see LICENSE file.
+ */
+
 #include "bn_core.h"
 #include "bn_colors.h"
+#include "bn_format.h"
 #include "bn_bg_palettes.h"
+#include "bn_config_game_pak.h"
 #include "bn_sprite_text_generator.h"
+
+#include "../../butano/hw/include/bn_hw_tonc.h"
 
 #include "common_info.h"
 #include "common_variable_8x16_sprite_font.h"
 
-#include "bn_string.h"
-#include "bn_config_game_pak.h"
-#include "../../butano/hw/include/bn_hw_tonc.h"
+#include "bn_music_items.h"
 
 int main()
 {
@@ -70,8 +77,31 @@ int main()
     common::info info("Slow game pak test", info_text_lines, text_generator);
     info.set_show_always(true);
 
+    bn::music_items::fruit.play();
+
+    bn::vector<bn::sprite_ptr, 8> cpu_sprites;
+    bn::fixed max_cpu_usage;
+    int frame_counter = 0;
+
     while(true)
     {
+        max_cpu_usage = bn::max(max_cpu_usage, bn::core::last_cpu_usage());
+        ++frame_counter;
+
+        if(frame_counter == 60)
+        {
+            bn::fixed max_cpu_usage_pct = max_cpu_usage * 100;
+            int max_cpu_usage_pct_int = max_cpu_usage_pct.right_shift_integer();
+            int max_cpu_usage_pct_dec = ((max_cpu_usage_pct - max_cpu_usage_pct_int) * 100).right_shift_integer();
+            cpu_sprites.clear();
+            text_generator.set_right_alignment();
+            text_generator.generate(
+                    112, 64, bn::format<16>("CPU: {}.{}%", max_cpu_usage_pct_int, max_cpu_usage_pct_dec),
+                    cpu_sprites);
+            max_cpu_usage = 0;
+            frame_counter = 0;
+        }
+
         bn::core::update();
     }
 }

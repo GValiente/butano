@@ -32,6 +32,8 @@
  * This wait states setting is not supported by the GBA Micro.
  * Enabling it will not crash the GBA Micro though, it will just fall back to @ref BN_EWRAM_WAIT_STATE_2.
  *
+ * Some GBA SPs will crash after a few frames with this setting.
+ *
  * @ingroup memory
  */
 #define BN_EWRAM_WAIT_STATE_1   1

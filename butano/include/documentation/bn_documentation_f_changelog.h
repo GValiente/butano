@@ -22,6 +22,7 @@
  * * bn::memory::fast_ewram added.
  * * bn::random::get_unbiased_int, bn::random::get_unbiased_fixed, bn::seed_random::get_unbiased_int
  *   and bn::seed_random::get_unbiased_fixed added (thanks <a href="https://github.com/alope107">alope107</a>!).
+ * * @ref BN_EWRAM_WAIT_STATE_1 crash after boot documented.
  * * Slow EWRAM test added.
  * * IWRAM vs EWRAM stack tests added to the `profiler` coroutine test.
  * * Slow game pak test improved.

@@ -1393,12 +1393,8 @@ bool commit()
         {
             hw_entries* entries = external_data.entries_a_active ? &internal_data.entries_a : &internal_data.entries_b;
             hw::hblank_effects::commit_entries(*entries);
-
-            if(! external_data.enabled)
-            {
-                external_data.enabled = true;
-                hw::hblank_effects::enable();
-            }
+            hw::hblank_effects::enable();
+            external_data.enabled = true;
         }
         else
         {
@@ -1407,6 +1403,13 @@ bool commit()
                 external_data.enabled = false;
                 hw::hblank_effects::disable();
             }
+        }
+    }
+    else
+    {
+        if(external_data.enabled)
+        {
+            hw::hblank_effects::enable();
         }
     }
 

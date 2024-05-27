@@ -8,6 +8,11 @@
 
 #include "bn_common.h"
 
+extern "C"
+{
+    #include "../3rd_party/libugba/include/ugba/interrupts.h"
+}
+
 namespace bn::hw::irq
 {
     enum class id
@@ -28,13 +33,25 @@ namespace bn::hw::irq
         GAMEPAK
     };
 
-    void init();
+    inline void init()
+    {
+        IRQ_Init();
+    }
 
-    void set_isr(id irq_id, void(*isr)());
+    inline void set_isr(id irq_id, void(*isr)())
+    {
+        IRQ_SetHandler(irq_index(irq_id), isr);
+    }
 
-    void enable(id irq_id);
+    inline void enable(id irq_id)
+    {
+        IRQ_Enable(irq_index(irq_id));
+    }
 
-    void disable(id irq_id);
+    inline void disable(id irq_id)
+    {
+        IRQ_Disable(irq_index(irq_id));
+    }
 }
 
 #endif

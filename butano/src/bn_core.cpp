@@ -237,6 +237,10 @@ namespace
         result.missed_frames = data.missed_frames;
         data.missed_frames = 0;
 
+        BN_PROFILER_ENGINE_DETAILED_START("eng_hblank_fx_commit");
+        hblank_effects_manager::disable();
+        BN_PROFILER_ENGINE_DETAILED_STOP();
+
         BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commands");
         audio_manager::execute_commands();
         BN_PROFILER_ENGINE_DETAILED_STOP();

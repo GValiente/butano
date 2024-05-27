@@ -7,24 +7,25 @@
 
 #include <stddef.h>
 
-#include "definitions.h"
+// #include "definitions.h"
+#define EXPORT_API
 
 typedef enum {
-    IRQ_VBLANK  = 0,
-    IRQ_HBLANK  = 1,
-    IRQ_VCOUNT  = 2,
-    IRQ_TIMER0  = 3,
-    IRQ_TIMER1  = 4,
-    IRQ_TIMER2  = 5,
-    IRQ_TIMER3  = 6,
-    IRQ_SERIAL  = 7,
-    IRQ_DMA0    = 8,
-    IRQ_DMA1    = 9,
-    IRQ_DMA2    = 10,
-    IRQ_DMA3    = 11,
-    IRQ_KEYPAD  = 12,
-    IRQ_GAMEPAK = 13,
-    IRQ_NUMBER
+    UGBA_IRQ_VBLANK  = 0,
+    UGBA_IRQ_HBLANK  = 1,
+    UGBA_IRQ_VCOUNT  = 2,
+    UGBA_IRQ_TIMER0  = 3,
+    UGBA_IRQ_TIMER1  = 4,
+    UGBA_IRQ_TIMER2  = 5,
+    UGBA_IRQ_TIMER3  = 6,
+    UGBA_IRQ_SERIAL  = 7,
+    UGBA_IRQ_DMA0    = 8,
+    UGBA_IRQ_DMA1    = 9,
+    UGBA_IRQ_DMA2    = 10,
+    UGBA_IRQ_DMA3    = 11,
+    UGBA_IRQ_KEYPAD  = 12,
+    UGBA_IRQ_GAMEPAK = 13,
+    UGBA_IRQ_NUMBER
 } irq_index;
 
 typedef void (*irq_vector)(void);

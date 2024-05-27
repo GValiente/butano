@@ -12,13 +12,13 @@
 
 extern void IRQ_GlobalInterruptHandler(void); // Assembly
 
-irq_vector IRQ_VectorTable[IRQ_NUMBER];
+irq_vector IRQ_VectorTable[UGBA_IRQ_NUMBER];
 
 void IRQ_Init(void)
 {
     REG_IME = 0;
 
-    for (int i = 0; i < IRQ_NUMBER; i ++)
+    for (int i = 0; i < UGBA_IRQ_NUMBER; i ++)
         IRQ_VectorTable[i] = NULL;
 
     BIOS_GLOBAL_IRQ_HANDLER = IRQ_GlobalInterruptHandler;
@@ -32,26 +32,22 @@ void IRQ_Init(void)
 
 void IRQ_SetHandler(irq_index index, irq_vector function)
 {
-    if (index < IRQ_NUMBER)
-        IRQ_VectorTable[index] = function;
+    IRQ_VectorTable[index] = function;
 }
 
 void IRQ_Enable(irq_index index)
 {
-    if (index >= IRQ_NUMBER)
-        return;
-
     // Entering critical section. Disable interrupts.
 
     uint16_t old_ime = REG_IME;
 
     REG_IME = 0;
 
-    if (index == IRQ_VBLANK)
-        REG_DISPSTAT |= DISPSTAT_VBLANK_IRQ_ENABLE;
-    else if (index == IRQ_HBLANK)
+    if (index == UGBA_IRQ_HBLANK)
         REG_DISPSTAT |= DISPSTAT_HBLANK_IRQ_ENABLE;
-    else if (index == IRQ_VCOUNT)
+    else if (index == UGBA_IRQ_VBLANK)
+        REG_DISPSTAT |= DISPSTAT_VBLANK_IRQ_ENABLE;
+    else if (index == UGBA_IRQ_VCOUNT)
         REG_DISPSTAT |= DISPSTAT_VCOUNT_IRQ_ENABLE;
 
     REG_IE |= (1 << index);
@@ -61,20 +57,17 @@ void IRQ_Enable(irq_index index)
 
 void IRQ_Disable(irq_index index)
 {
-    if (index >= IRQ_NUMBER)
-        return;
-
     uint16_t old_ime = REG_IME;
 
     // Entering critical section. Disable interrupts.
 
     REG_IME = 0;
 
-    if (index == IRQ_VBLANK)
-        REG_DISPSTAT &= ~DISPSTAT_VBLANK_IRQ_ENABLE;
-    else if (index == IRQ_HBLANK)
+    if (index == UGBA_IRQ_HBLANK)
         REG_DISPSTAT &= ~DISPSTAT_HBLANK_IRQ_ENABLE;
-    else if (index == IRQ_VCOUNT)
+    else if (index == UGBA_IRQ_VBLANK)
+        REG_DISPSTAT &= ~DISPSTAT_VBLANK_IRQ_ENABLE;
+    else if (index == UGBA_IRQ_VCOUNT)
         REG_DISPSTAT &= ~DISPSTAT_VCOUNT_IRQ_ENABLE;
 
     REG_IE &= ~(1 << index);

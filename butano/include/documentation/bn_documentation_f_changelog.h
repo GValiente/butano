@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_6_0 17.6.0 (next release)
+ * @section changelog_17_6_0 17.6.0
  *
  * * bn::bg_palette_ptr::rotate_range_start, bn::bg_palette_ptr::rotate_range_size
  *   and bn::bg_palette_ptr::set_rotate_range added.

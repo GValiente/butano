@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_7_0 17.7.0 (next release)
+ *
+ * bn::bg_palette_ptr::set_color and bn::sprite_palette_ptr::set_color added.
+ *
+ *
  * @section changelog_17_6_0 17.6.0
  *
  * * bn::bg_palette_ptr::rotate_range_start, bn::bg_palette_ptr::rotate_range_size

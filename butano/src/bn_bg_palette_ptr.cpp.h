@@ -237,6 +237,11 @@ void bg_palette_ptr::set_colors(const bg_palette_item& palette_item)
     }
 }
 
+void bg_palette_ptr::set_color(int color_index, color color)
+{
+    palettes_manager::bg_palettes_bank().set_color(_id, color_index, color);
+}
+
 bpp_mode bg_palette_ptr::bpp() const
 {
     return palettes_manager::bg_palettes_bank().bpp(_id);

@@ -141,6 +141,13 @@ public:
     void set_colors(const sprite_palette_item& palette_item);
 
     /**
+     * @brief Sets a single color in this palette.
+     * @param color_index Index of the color to set in the palette.
+     * @param color New color to set.
+     */
+    void set_color(int color_index, color color);
+
+    /**
      * @brief Returns the bits per pixel of this palette.
      */
     [[nodiscard]] bpp_mode bpp() const;

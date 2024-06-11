@@ -71,6 +71,8 @@ public:
 
     void set_colors(int id, const span<const color>& colors);
 
+    void set_color(int id, int color_index, color color);
+
     [[nodiscard]] bool inverted(int id) const
     {
         return _palettes[id].inverted;

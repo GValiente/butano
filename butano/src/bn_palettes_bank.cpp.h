@@ -22,6 +22,8 @@ namespace bn
 
 namespace
 {
+    constexpr int hash_colors = 6;
+
     void copy_colors(const color* source, int count, color* destination)
     {
         auto int_source = reinterpret_cast<const unsigned*>(source);
@@ -32,6 +34,8 @@ namespace
 
 uint16_t palettes_bank::colors_hash(const span<const color>& colors)
 {
+    static_assert(hash_colors == 6);
+
     const color* colors_data = colors.data();
     BN_ASSERT(aligned<4>(colors_data), "Colors are not aligned");
 
@@ -335,6 +339,37 @@ void palettes_bank::set_colors(int id, const span<const color>& colors)
     }
 
     _set_colors_bpp_impl(id, colors);
+}
+
+void palettes_bank::set_color(int id, int color_index, color color)
+{
+    palette& pal = _palettes[id];
+    int colors_per_palette = hw::palettes::colors_per_palette();
+    int colors_count = colors_per_palette * pal.slots_count;
+    BN_ASSERT(color_index >= 0 && color_index < colors_count,
+              "Invalid color index: ", color_index, " - ", colors_count);
+
+    bn::color* colors_data = _initial_colors + (id * colors_per_palette);
+
+    if(color != colors_data[color_index])
+    {
+        colors_data[color_index] = color;
+        pal.update = true;
+        _update = true;
+
+        if(! pal.bpp_8 && color_index < hash_colors)
+        {
+            uint16_t old_hash = pal.hash;
+            uint16_t new_hash = colors_hash(span<const bn::color>(colors_data, colors_count));
+
+            if(old_hash != new_hash)
+            {
+                _bpp_4_indexes_map.erase(old_hash);
+                _bpp_4_indexes_map.insert_or_assign(new_hash, int16_t(id));
+                pal.hash = new_hash;
+            }
+        }
+    }
 }
 
 void palettes_bank::set_inverted(int id, bool inverted)

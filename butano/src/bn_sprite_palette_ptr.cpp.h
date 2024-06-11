@@ -237,6 +237,11 @@ void sprite_palette_ptr::set_colors(const sprite_palette_item& palette_item)
     }
 }
 
+void sprite_palette_ptr::set_color(int color_index, color color)
+{
+    palettes_manager::sprite_palettes_bank().set_color(_id, color_index, color);
+}
+
 bpp_mode sprite_palette_ptr::bpp() const
 {
     return palettes_manager::sprite_palettes_bank().bpp(_id);

@@ -135,6 +135,11 @@
               <span class="m-doc-wrap-bumper">void <a href="#a4f924c69264f1b85e564045988196496" class="m-doc">set_colors</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
             </dt>
             <dd>Sets the colors contained in this palette.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a9fc00d0ef61e752c1794fa0e7fabe4d2" class="m-doc">set_color</a>(</span><span class="m-doc-wrap">int color_index,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Sets a single color in this palette.</dd>
             <dt id="a48dd895a5fa6bdab7161efc460044ca0">
               <span class="m-doc-wrap-bumper">auto <a href="#a48dd895a5fa6bdab7161efc460044ca0" class="m-doc-self">bpp</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a></span>
             </dt>
@@ -436,6 +441,28 @@
                 <tr>
                   <td style="width: 1%">palette_item</td>
                   <td><a href="classbn_1_1sprite__palette__item.html" class="m-doc">sprite_<wbr />palette_<wbr />item</a> which references the colors to copy to this palette.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9fc00d0ef61e752c1794fa0e7fabe4d2"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_palette_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9fc00d0ef61e752c1794fa0e7fabe4d2" class="m-doc-self">set_color</a>(</span><span class="m-doc-wrap">int color_index,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Sets a single color in this palette.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">color_index</td>
+                  <td>Index of the color to set in the palette.</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>New color to set.</td>
                 </tr>
               </tbody>
             </table>

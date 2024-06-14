@@ -75,8 +75,6 @@ public:
 private:
     using item_type = utf8_characters_map_ref::item_type;
 
-    static_assert(! Utf8Characters.empty());
-
     [[nodiscard]] constexpr static int _calculate_items_count()
     {
         int result = 1;

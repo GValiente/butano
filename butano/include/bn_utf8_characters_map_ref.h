@@ -60,7 +60,7 @@ public:
         _characters_count(characters_count)
     {
         BN_ASSERT(power_of_two(items_count), "Items count must be a power of two: ", items_count);
-        BN_ASSERT(characters_count > 0 && characters_count <= items_count,
+        BN_ASSERT(characters_count >= 0 && characters_count <= items_count,
                   "Invalid characters count: ", characters_count, " - ", items_count);
     }
 

@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_7_0 17.7.0 (next release)
+ * @section changelog_17_7_0 17.7.0
  *
  * * bn::bg_palette_ptr::set_color and bn::sprite_palette_ptr::set_color added.
  * * Empty bn::utf8_characters_map and bn::utf8_characters_map_ref allowed.

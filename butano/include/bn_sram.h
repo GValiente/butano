@@ -46,7 +46,7 @@ namespace bn::sram
 
     /**
      * @brief Copies SRAM data into the given value.
-     * @param destination SRAM data is copied into this value.
+     * @param destination SRAM data is copied into this trivially copyable value.
      */
     template<typename Type>
     void read(Type& destination)
@@ -59,7 +59,7 @@ namespace bn::sram
 
     /**
      * @brief Copies SRAM data into the given value.
-     * @param destination SRAM data is copied into this value.
+     * @param destination SRAM data is copied into this trivially copyable value.
      * @param offset Copying starts from SRAM start address + this offset.
      */
     template<typename Type>
@@ -89,7 +89,7 @@ namespace bn::sram
 
     /**
      * @brief Copies the given value into SRAM.
-     * @param source Value to copy.
+     * @param source Value to copy. It must be trivially copyable.
      */
     template<typename Type>
     void write(const Type& source)
@@ -102,7 +102,7 @@ namespace bn::sram
 
     /**
      * @brief Copies the given value into SRAM.
-     * @param source Value to copy.
+     * @param source Value to copy. It must be trivially copyable.
      * @param offset The given value is copied into SRAM start address + this offset.
      */
     template<typename Type>

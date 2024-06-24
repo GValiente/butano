@@ -29,7 +29,8 @@
  * so you don't have to test in real hardware each change you make in your project.
  *
  * For developing GBA games, <a href="https://mgba.io">mGBA</a>,
- * <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a> and the debug version of
+ * <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>,
+ * <a href="https://github.com/SourMesen/Mesen2">Mesen</a> and the debug version of
  * <a href="https://problemkaputt.de/gba.htm">No$gba</a> are recommended.
  *
  *

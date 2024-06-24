@@ -18,9 +18,10 @@
 /**
  * @def BN_LOG_BACKEND_MGBA
  *
- * mGBA emulator (https://mgba.io) log backend.
+ * <a href="https://mgba.io">mGBA</a> log backend.
  *
- * It also works with NanoBoyAdvance (https://github.com/nba-emu/NanoBoyAdvance).
+ * It also works with <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>
+ * and <a href="https://github.com/SourMesen/Mesen2">Mesen</a>.
  *
  * @ingroup log
  */
@@ -29,7 +30,7 @@
 /**
  * @def BN_LOG_BACKEND_NOCASHGBA
  *
- * No$gba emulator (https://problemkaputt.de/gba.htm) log backend.
+ * <a href="https://problemkaputt.de/gba.htm">No$gba</a> log backend.
  *
  * @ingroup log
  */
@@ -38,7 +39,7 @@
 /**
  * @def BN_LOG_BACKEND_VBA
  *
- * VisualBoyAdvance emulator (https://en.wikipedia.org/wiki/VisualBoyAdvance) log backend.
+ * <a href="https://en.wikipedia.org/wiki/VisualBoyAdvance">VisualBoyAdvance</a> log backend.
  *
  * It crashes on hardware and on other emulators!
  *

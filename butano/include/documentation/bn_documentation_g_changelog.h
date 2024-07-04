@@ -16,6 +16,7 @@
  *
  * * `random` example added.
  * * @ref nocashgba_exception added.
+ * * @ref faq_code_crash question added to the @ref faq page.
  * * @ref BN_LOG_BACKEND_MGBA also works with <a href="https://github.com/SourMesen/Mesen2">Mesen</a>.
  * * bn::sram documentation improved.
  *

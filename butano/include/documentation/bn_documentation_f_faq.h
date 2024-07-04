@@ -320,6 +320,15 @@
  * @endcode
  *
  *
+ * @subsection faq_code_crash How can I know what code makes my game crash?
+ *
+ * <a href="https://problemkaputt.de/gba.htm">No$gba</a> exception system allows to catch common programming errors.
+ * When an exception is triggered, No$gba can stop the execution of the ROM and show the code that has triggered the exception.
+ * Please check the @ref nocashgba_exception if you want to try it.
+ *
+ * As always, you also can remove code until the crash goes away.
+ *
+ *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *
  * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.

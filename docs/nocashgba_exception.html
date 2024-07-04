@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Butano Docs</title>
+  <title>No$gba exception setup guide | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -26,7 +26,7 @@
       <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
         <div class="m-row">
           <ol class="m-col-t-6 m-col-m-none">
-            <li><a href="pages.html" id="m-navbar-current">Pages</a></li>
+            <li><a href="pages.html">Pages</a></li>
             <li><a href="modules.html">Modules</a></li>
           </ol>
           <ol class="m-col-t-6 m-col-m-none" start="3">
@@ -46,33 +46,32 @@
   <div class="m-container m-container-inflatable">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <h1>Pages</h1>
-        <ul class="m-doc">
-          <li><a href="getting_started.html" class="m-doc">Getting started</a> <span class="m-doc"></span></li>
-          <li><a href="getting_started_wt.html" class="m-doc">Getting started with Wonderful Toolchain</a> <span class="m-doc"></span></li>
-          <li><a href="examples.html" class="m-doc">Examples</a> <span class="m-doc"></span></li>
-          <li><a href="import.html" class="m-doc">Importing assets</a> <span class="m-doc"></span></li>
-          <li><a href="qt_creator.html" class="m-doc">Qt Creator setup guide</a> <span class="m-doc"></span></li>
-          <li><a href="nocashgba_exception.html" class="m-doc">No$gba exception setup guide</a> <span class="m-doc"></span></li>
-          <li><a href="faq.html" class="m-doc">Frequently asked questions (FAQ)</a> <span class="m-doc"></span></li>
-          <li><a href="changelog.html" class="m-doc">Changelog</a> <span class="m-doc"></span></li>
-        </ul>
-        <script>
-        function toggle(e) {
-            e.parentElement.className = e.parentElement.className == 'm-doc-collapsible' ?
-                'm-doc-expansible' : 'm-doc-collapsible';
-            return false;
-        }
-        /* Collapse all nodes marked as such. Doing it via JS instead of
-           directly in markup so disabling it doesn't harm usability. The list
-           is somehow regenerated on every iteration and shrinks as I change
-           the classes. It's not documented anywhere and I'm not sure if this
-           is the same across browsers, so I am going backwards in that list to
-           be sure. */
-        var collapsed = document.getElementsByClassName("collapsed");
-        for(var i = collapsed.length - 1; i >= 0; --i)
-            collapsed[i].className = 'm-doc-expansible';
-        </script>
+        <h1>
+          No$gba exception setup guide
+        </h1>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li><a href="#nocashgba_exception_getting_started">Getting started</a></li>
+            <li><a href="#nocashgba_exception_enable">Enable exceptions</a></li>
+            <li><a href="#nocashgba_exception_example">Exception example</a></li>
+          </ul>
+        </nav>
+<p><a href="https://problemkaputt.de/gba.htm">No$gba</a> exception system allows to catch common programming errors.</p><p>When an exception is triggered, No$gba stops the execution of the ROM and shows the assembler instruction that has triggered the exception.</p><p>If you load an <code>*.elf</code> file instead of a <code>*.gba</code> file, it also shows the high level code that has triggered the exception.</p><section id="nocashgba_exception_getting_started"><h2><a href="#nocashgba_exception_getting_started">Getting started</a></h2><p>Download the &quot;no$gba Windows debug version&quot; from <a href="https://problemkaputt.de/gba.htm">here</a>. The gaming versions can&#x27;t show the code that has triggered an exception, they only show the number of exceptions detected.</p></section><section id="nocashgba_exception_enable"><h2><a href="#nocashgba_exception_enable">Enable exceptions</a></h2><p>Exceptions are disabled by default. You need to enable them in the <code>Xcept</code> tab of the setup menu:</p><img class="m-image" src="nocashgba_0.png" alt="Image" /></section><section id="nocashgba_exception_example"><h2><a href="#nocashgba_exception_example">Exception example</a></h2><p>Let&#x27;s trigger an exception by dereferencing a null pointer:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;bn_core.h&quot;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">init</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">skip_frames</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="n">skip_frames</span> <span class="o">+=</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+    <span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">set_skip_frames</span><span class="p">(</span><span class="n">skip_frames</span><span class="p">);</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">update</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre><p>If we build the project and we run the <code>*.elf</code> file with No$gba, it should stop the execution and display the following warning:</p><img class="m-image" src="nocashgba_1.png" alt="Image" /><p>As we can see, it also shows the C++ code that has triggered the exception:</p><img class="m-image" src="nocashgba_2.png" alt="Image" /></section>
       </div>
     </div>
   </div>

@@ -17,6 +17,8 @@
  * that has triggered the exception.
  *
  * If you load an `*.elf` file instead of a `*.gba` file, it also shows the high level code that has triggered the exception.
+ * Please remember that `*.elf` support only works with <a href="https://devkitpro.org/">devkitARM</a>,
+ * it doesn't work if you're using <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>.
  *
  *
  * @section nocashgba_exception_getting_started Getting started

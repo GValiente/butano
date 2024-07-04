@@ -12,8 +12,9 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_7_1 17.7.1 (next release)
+ * @section changelog_17_8_0 17.8.0 (next release)
  *
+ * * `random` example added.
  * * @ref BN_LOG_BACKEND_MGBA also works with <a href="https://github.com/SourMesen/Mesen2">Mesen</a>.
  * * bn::sram documentation improved.
  *

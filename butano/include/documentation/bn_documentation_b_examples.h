@@ -160,19 +160,25 @@
  *
  * Shows how to use regular backgrounds with Butano.
  *
+ * <td> @ref random
+ *
+ * @image html examples_random.png
+ *
+ * Simple random number generation example.
+ *
  * <td> @ref rumble
  *
  * @image html examples_rumble.png
  *
  * Vibration showcase (if your cart supports it).
  *
- * <td> @ref affine_mat "Sprite affine matrices"
+ * <tr><td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
  * Demonstrates usage of one affine matrix for multiple sprites.
  *
- * <tr><td> @ref sprite
+ * <td> @ref sprite
  *
  * @image html examples_sprites.png
  *
@@ -184,13 +190,13 @@
  *
  * SRAM reads and writes with Butano.
  *
- * <td> @ref text
+ * <tr><td> @ref text
  *
  * @image html examples_text.png
  *
  * Showcase of Butano sprite text rendering.
  *
- * <tr><td> **Textured polygons**
+ * <td> **Textured polygons**
  *
  * @image html examples_texture_polygons.png
  *
@@ -202,7 +208,7 @@
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <td> **World map**
+ * <tr><td> **World map**
  *
  * @image html examples_world_map.png
  *

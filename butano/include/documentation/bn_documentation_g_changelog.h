@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_8_0 17.8.0 (next release)
+ * @section changelog_17_8_0 17.8.0
  *
  * * H-Blank effects stop fixed.
  * * `random` example added.

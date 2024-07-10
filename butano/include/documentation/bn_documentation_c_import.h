@@ -137,11 +137,11 @@
  *
  * @subsection import_sprite_tiles Sprite tiles
  *
- * An image file can contain multiple sprite tiles sets.
- * If it only contains one sprite tiles set,
+ * An image file can contain multiple sprite tile sets.
+ * If it only contains one sprite tile set,
  * the size of the image must be one of the specified by @ref bn::sprite_shape_size.
  *
- * Multiple sprite tiles sets are allowed by layering them down on the vertical axis:
+ * Multiple sprite tile sets are allowed by layering them down on the vertical axis:
  *
  * @image html import_sprite.png
  *
@@ -155,8 +155,8 @@
  *
  * The fields for sprite tiles are the following:
  * * `"type"`: must be `"sprite_tiles"` for sprite tiles.
- * * `"height"`: optional field which specifies the height of each sprite tiles set in pixels.
- * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite tiles sets.
+ * * `"height"`: optional field which specifies the height of each sprite tile set in pixels.
+ * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite tile sets.
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite tiles:
  *   * `"bpp_8"`: up to 256 colors.
  *   * `"bpp_4"`: up to 16 colors.
@@ -228,6 +228,10 @@
  * An image file can contain multiple regular backgrounds.
  * The size of a small regular background (which are faster) must be 256x256, 256x512, 512x256 or 512x512 pixels.
  * Big regular backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
+ *
+ * Multiple regular background images are allowed by layering them down on the vertical axis:
+ *
+ * @image html import_regular_bg.png
  *
  * An example of the `*.json` files required for regular backgrounds is the following:
  *
@@ -362,6 +366,10 @@
  * An image file can contain multiple affine backgrounds.
  * The size of a small affine background (which are faster) must be 128x128, 256x256, 512x512 or 1024x1024 pixels.
  * Big affine backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
+ *
+ * Multiple affine background images are allowed by layering them down on the vertical axis:
+ *
+ * @image html import_affine_bg.png
  *
  * An example of the `*.json` files required for affine backgrounds is the following:
  *

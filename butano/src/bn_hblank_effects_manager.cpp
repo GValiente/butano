@@ -1191,6 +1191,17 @@ void disable()
     }
 }
 
+void stop()
+{
+    disable();
+
+    external_data.first_visible_item_index = max_items - 1;
+    external_data.last_visible_item_index = 0;
+    external_data.update = false;
+    external_data.commit = false;
+    external_data.enabled = false;
+}
+
 int create(const void* values_ptr, [[maybe_unused]] int values_count, intptr_t target_id, handler_type handler)
 {
     BN_ASSERT(values_count >= display::height(), "Invalid values count: ", values_count, " - ", display::height());

@@ -14,6 +14,7 @@
  *
  * @section changelog_17_8_0 17.8.0 (next release)
  *
+ * * H-Blank effects stop fixed.
  * * `random` example added.
  * * `log` example improved.
  * * @ref nocashgba_exception added.

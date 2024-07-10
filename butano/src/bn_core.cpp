@@ -169,6 +169,7 @@ namespace
 
         audio_manager::stop();
         hdma_manager::force_stop();
+        hblank_effects_manager::stop();
         palettes_manager::stop();
         bgs_manager::stop();
         display_manager::stop();

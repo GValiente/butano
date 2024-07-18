@@ -32,9 +32,13 @@
  *
  * Sure!
  *
- * If you comply with <a href="https://github.com/GValiente/butano/blob/master/LICENSE">Butano license</a>
- * and <a href="https://github.com/GValiente/butano/blob/master/licenses">third party libraries licenses</a>
- * used by Butano you can sell your game without issues.
+ * If you comply with <a href="https://github.com/GValiente/butano/blob/master/LICENSE">the Butano license</a>
+ * and <a href="https://github.com/GValiente/butano/blob/master/licenses">the licenses of the third party libraries</a>
+ * used by Butano, you can sell your game without issues.
+ *
+ * If you use assets such as the sprite font from the examples or from the `common` folder,
+ * you should also comply with their license. The licenses for these assets can be found in
+ * <a href="https://github.com/GValiente/butano/blob/master/credits">the credits folder</a>.
  *
  *
  * @subsection faq_multiboot Is it possible to use Butano to create multiboot games?

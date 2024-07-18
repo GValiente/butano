@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_8_1 17.8.1 (next release)
+ *
+ * @ref faq_sell_money question improved.
+ *
+ *
  * @section changelog_17_8_0 17.8.0
  *
  * * H-Blank effects stop fixed.

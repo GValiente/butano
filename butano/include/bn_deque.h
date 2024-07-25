@@ -977,10 +977,10 @@ public:
     {
         size_type first_index = first._index;
         size_type size = _size;
-        BN_ASSERT(first_index >= 0 && first_index < size, "Invalid first: ", first_index, " - ", size);
+        BN_ASSERT(first_index >= 0, "Invalid first: ", first_index, " - ", size);
 
         size_type last_index = last._index;
-        BN_ASSERT(last_index >= 0 && last_index < size, "Invalid last: ", last_index, " - ", size);
+        BN_ASSERT(last_index <= size, "Invalid last: ", last_index, " - ", size);
 
         size_type delete_count = last_index - first_index;
         BN_ASSERT(delete_count >= 0 && delete_count <= size, "Invalid delete count: ", delete_count, " - ", size);

@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_8_1 17.8.1 (next release)
+ * @section changelog_17_8_1 17.8.1
  *
  * * bn::deque::erase fixed (thanks <a href="https://github.com/copyrat90">copyrat90</a>!).
  * * @ref faq_sell_money question improved.

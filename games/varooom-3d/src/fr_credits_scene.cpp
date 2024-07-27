@@ -137,7 +137,7 @@ namespace
         "",
         "GBA hardware access and more",
         "Tonclib",
-        "coranac.com/projects/#tonc",
+        "coranac.com/man/tonclib",
         "",
         "Universal GBA Library",
         "github.com/AntonioND/ugba",

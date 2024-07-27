@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_17_8_2 17.8.2 (next release)
+ *
+ * Dead links updated.
+ *
+ *
  * @section changelog_17_8_1 17.8.1
  *
  * * bn::deque::erase fixed (thanks <a href="https://github.com/copyrat90">copyrat90</a>!).
@@ -98,7 +103,7 @@
  *   bn::iregular_bg_animate_action::next_change_updates, bn::iregular_bg_cached_animate_action::next_change_updates,
  *   bn::iaffine_bg_animate_action::next_change_updates and bn::iaffine_bg_cached_animate_action::next_change_updates added.
  * * `bn::pair` is now a `std::pair` alias.
- * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> ASM ROM usage reduced.
+ * * <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> ASM ROM usage reduced.
  * * `profiler` example simplified.
  * * Compression algorithms added to the `profiler` test.
  * * @ref faq_stack_trace question added to the @ref faq page.
@@ -270,8 +275,8 @@
  * * `BN_DATA_EWRAM_BSS` added.
  * * bn::memory::used_static_ewram fixed.
  * * Butano subsystems ROM usage reduced.
- * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> tiled surface functions added.
- * * Unused <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> functions and data removed.
+ * * <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> tiled surface functions added.
+ * * Unused <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> functions and data removed.
  *
  *
  * @section changelog_15_4_1 15.4.1
@@ -418,7 +423,7 @@
  *
  * @section changelog_13_12_1 13.12.1
  *
- * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> linking error fixed.
+ * <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> linking error fixed.
  *
  *
  * @section changelog_13_12_0 13.12.0
@@ -540,7 +545,7 @@
  * * bn::best_fit_allocator (used by the heap manager) CPU usage reduced.
  * * bn::best_fit_allocator sanity check can be enabled with @ref BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED.
  * * bn::best_fit_allocator::free calls can be validated with @ref BN_CFG_BEST_FIT_ALLOCATOR_FREE_CHECK_ENABLED.
- * * <a href="https://www.coranac.com/projects/#tonc">Tonclib</a> unused components removed
+ * * <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> unused components removed
  *   (EWRAM and ROM usage reduced).
  * * bn::best_fit_allocator::realloc can shrink allocations.
  * * BPP mode can be specified when importing sprites and sprite palettes.
@@ -571,7 +576,7 @@
  * * Destructors of classes with `_ptr` suffix ROM usage reduced.
  * * 4BPP regular backgrounds quantization improved.
  * * Some error messages improved.
- * * @ref import_image "Import images guide" explains why <a href="https://www.coranac.com/projects/usenti/">Usenti</a>
+ * * @ref import_image "Import images guide" explains why <a href="https://github.com/gb-archive/usenti">Usenti</a>
  *   is recommended over other image editors.
  *
  *

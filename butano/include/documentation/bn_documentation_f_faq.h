@@ -335,7 +335,7 @@
  *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *
- * <a href="https://www.coranac.com/tonc/text/first.htm#sec-notes">I'm glad you asked</a>.
+ * <a href="https://gbadev.net/tonc/first.html#sec-notes">I'm glad you asked</a>.
  *
  *
  * @section faq_images Images
@@ -360,7 +360,7 @@
  *
  * The transparent color is the first one in the color palette,
  * so in order to change it you should use a bitmap editor with color palette manipulation tools,
- * like <a href="https://www.coranac.com/projects/usenti/">Usenti</a>:
+ * like <a href="https://github.com/gb-archive/usenti">Usenti</a>:
  *
  * @image html import_usenti.png
  *
@@ -494,7 +494,7 @@
  *
  * `error: Affine BGs with more than 256 tiles not supported: 257`
  *
- * Your image is fine, but <a href="https://www.coranac.com/projects/grit/">grit</a>
+ * Your image is fine, but <a href="https://github.com/devkitPro/grit">grit</a>
  * (the tool used by Butano to import images) is generating unneeded extra tiles.
  *
  * The only workaround that I know of is reducing detail in your input image until the tiles count of

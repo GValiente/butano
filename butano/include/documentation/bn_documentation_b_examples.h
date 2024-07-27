@@ -18,7 +18,7 @@
  *
  * Deep knowledge of GBA hardware is not required, as Butano wraps most of the functionality in its own classes.
  *
- * As always, to understand how the little machine works, <a href="https://www.coranac.com/tonc/text/toc.htm">Tonc</a>
+ * As always, to understand how the little machine works, <a href="https://gbadev.net/tonc/">Tonc</a>
  * and <a href="http://problemkaputt.de/gbatek.htm">GBATEK</a> are your friends.
  *
  * Butano brings multiple examples of most aspects of the engine in `/path/to/butano/examples/`.

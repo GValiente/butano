@@ -15,6 +15,7 @@
  * @section changelog_17_9_0 17.9.0 (next release)
  *
  * * Some assert messages improved.
+ * * `hdma_palette` example added.
  * * Dead links updated.
  *
  *

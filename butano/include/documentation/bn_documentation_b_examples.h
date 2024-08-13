@@ -100,7 +100,13 @@
  *
  * See how it looks this undocumented graphic effect.
  *
- * <tr><td> @ref keypad
+ * <tr><td> **HDMA palette**
+ *
+ * @image html examples_hdma_palette.png
+ *
+ * In this example, the background palette is updated with HDMA.
+ *
+ * <td> @ref keypad
  *
  * @image html examples_keypad.png
  *
@@ -112,13 +118,13 @@
  *
  * Multiplayer communication through a link cable.
  *
- * <td> @ref log
+ * <tr><td> @ref log
  *
  * @image html examples_log.png
  *
  * Integration of emulator logging into Butano.
  *
- * <tr><td> **Map collision**
+ * <td> **Map collision**
  *
  * @image html examples_map_collision.png
  *
@@ -130,13 +136,13 @@
  *
  * Basic SNES mode 7 like background example.
  *
- * <td> @ref mosaic
+ * <tr><td> @ref mosaic
  *
  * @image html examples_mosaic.png
  *
  * Sprites and backgrounds mosaic effects.
  *
- * <tr><td> @ref palette
+ * <td> @ref palette
  *
  * @image html examples_palettes.png
  *
@@ -148,13 +154,13 @@
  *
  * Showcases flat polygons rendering with sprites.
  *
- * <td> @ref profiler
+ * <tr><td> @ref profiler
  *
  * @image html examples_profiler.png
  *
  * Basic code blocks profiling.
  *
- * <tr><td> @ref regular_bg
+ * <td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
@@ -166,13 +172,13 @@
  *
  * Simple random number generation example.
  *
- * <td> @ref rumble
+ * <tr><td> @ref rumble
  *
  * @image html examples_rumble.png
  *
  * Vibration showcase (if your cart supports it).
  *
- * <tr><td> @ref affine_mat "Sprite affine matrices"
+ * <td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
@@ -184,13 +190,13 @@
  *
  * Simple sprites examples.
  *
- * <td> @ref sram
+ * <tr><td> @ref sram
  *
  * @image html examples_sram.png
  *
  * SRAM reads and writes with Butano.
  *
- * <tr><td> @ref text
+ * <td> @ref text
  *
  * @image html examples_text.png
  *
@@ -202,13 +208,13 @@
  *
  * Showcases textured polygons rendering with sprites.
  *
- * <td> @ref window
+ * <tr><td> @ref window
  *
  * @image html examples_windows.png
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <tr><td> **World map**
+ * <td> **World map**
  *
  * @image html examples_world_map.png
  *

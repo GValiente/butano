@@ -253,11 +253,12 @@ void shape_groups::update()
         }
 
         int max_sprites = _max_hdma_sprites;
-        int screen_line_elements = max_sprites * 4;
-        bn::memory::copy(hdma_source[0], screen_line_elements,
-                         hdma_source[bn::display::height() * screen_line_elements]);
-        bn::hdma::start(hdma_source[screen_line_elements], screen_line_elements,
-                        bn::hw::sprites::vram()[128 - max_sprites].attr0);
+        int scanline_elements = max_sprites * 4;
+        int hdma_source_size = bn::display::height() * scanline_elements;
+        bn::memory::copy(hdma_source[0], scanline_elements, hdma_source[hdma_source_size]);
+
+        bn::span<const uint16_t> hdma_source_ref(hdma_source + scanline_elements, hdma_source_size);
+        bn::hdma::start(hdma_source_ref, bn::hw::sprites::vram()[128 - max_sprites].attr0);
 
         if(hdma_source == _hdma_source_a)
         {

@@ -36,8 +36,9 @@ int main()
     constexpr const bn::bg_palette_item& bg_palette_item = bn::affine_bg_items::butane_cylinder.palette_item();
     constexpr int colors_count = bg_palette_item.colors_ref().size();
     using hdma_source_type = bn::array<uint16_t, bn::display::height() * colors_count>;
-    bn::unique_ptr<hdma_source_type> hdma_source(new hdma_source_type());
-    uint16_t* hdma_source_data = hdma_source->data();
+    bn::unique_ptr<hdma_source_type> hdma_source_ptr(new hdma_source_type());
+    hdma_source_type& hdma_source = *hdma_source_ptr;
+    uint16_t* hdma_source_data = hdma_source.data();
 
     for(int scanline = 0; scanline < bn::display::height(); ++scanline)
     {
@@ -57,7 +58,7 @@ int main()
         }
     }
 
-    bn::hdma::start(*hdma_source_data, colors_count, *bn::hw::palettes::bg_color_register(0));
+    bn::hdma::start(hdma_source, *bn::hw::palettes::bg_color_register(0));
 
     while(true)
     {
@@ -69,7 +70,7 @@ int main()
             }
             else
             {
-                bn::hdma::start(*hdma_source_data, colors_count, *bn::hw::palettes::bg_color_register(0));
+                bn::hdma::start(hdma_source, *bn::hw::palettes::bg_color_register(0));
             }
         }
 

@@ -14,6 +14,7 @@
  *
  * @section changelog_17_9_0 17.9.0 (next release)
  *
+ * * bn::hdma::start and bn::hdma::high_priority_start API improved.
  * * Some assert messages improved.
  * * `hdma_palette` example added.
  * * Dead links updated.

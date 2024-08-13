@@ -42,18 +42,16 @@ int main()
     for(int scanline = 0; scanline < bn::display::height(); ++scanline)
     {
         uint16_t* hdma_scanline_data = hdma_source_data + (scanline * colors_count);
-        int color_dec = (scanline + 1) % 32;
+        int red_reduction = (scanline + 1) % 32;
 
-        if(color_dec > 16)
+        if(red_reduction > 16)
         {
-            color_dec = 32 - color_dec;
+            red_reduction = 32 - red_reduction;
         }
 
         for(bn::color color : bg_palette_item.colors_ref())
         {
-            color.set_red(bn::max(color.red() - color_dec, 0));
-            color.set_green(bn::max(color.green() - color_dec, 0));
-            color.set_blue(bn::max(color.blue() - color_dec, 0));
+            color.set_red(bn::max(color.red() - red_reduction, 0));
             *hdma_scanline_data = uint16_t(color.data());
             ++hdma_scanline_data;
         }

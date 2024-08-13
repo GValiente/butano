@@ -6,6 +6,7 @@
 #include "bn_core.h"
 
 #include "bn_hdma.h"
+#include "bn_keypad.h"
 #include "bn_display.h"
 #include "bn_unique_ptr.h"
 #include "bn_affine_bg_ptr.h"
@@ -22,10 +23,14 @@ int main()
 {
     bn::core::init();
 
-    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
-    common::info info("Palette updated with HDMA", bn::span<const bn::string_view>(), text_generator);
+    constexpr bn::string_view info_text_lines[] = {
+        "A: pause/resume HDMA",
+    };
 
-    bn::affine_bg_ptr bg = bn::affine_bg_items::butane_cylinder.create_bg(0, 8);
+    bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
+    common::info info("Palette updated with HDMA", info_text_lines, text_generator);
+
+    bn::affine_bg_ptr bg = bn::affine_bg_items::butane_cylinder.create_bg(0, 0);
     bg.set_wrapping_enabled(false);
 
     constexpr const bn::bg_palette_item& bg_palette_item = bn::affine_bg_items::butane_cylinder.palette_item();
@@ -58,6 +63,18 @@ int main()
 
     while(true)
     {
+        if(bn::keypad::a_pressed())
+        {
+            if(bn::hdma::running())
+            {
+                bn::hdma::stop();
+            }
+            else
+            {
+                bn::hdma::start(*hdma_source_data, colors_count, *bn::hw::palettes::bg_color_register(0));
+            }
+        }
+
         bg.set_rotation_angle((bg.rotation_angle() + 1) % 360);
 
         info.update();

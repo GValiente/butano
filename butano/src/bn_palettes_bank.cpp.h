@@ -317,7 +317,7 @@ span<const color> palettes_bank::colors(int id) const
 void palettes_bank::set_colors(int id, const span<const color>& colors)
 {
     BN_BASIC_ASSERT(colors.size() == colors_count(id),
-                    "Colors count mismatch: ", colors.size(), " - ", colors_count(id));
+                    "Different colors count: ", colors.size(), " - ", colors_count(id));
 
     palette& pal = _palettes[id];
 

@@ -500,7 +500,7 @@ void set_palette(id_type id, [[maybe_unused]] bpp_mode old_bpp, const sprite_pal
     if(palette != item->palette)
     {
         BN_BASIC_ASSERT(old_bpp == palette.bpp(),
-                        "Palette BPP mode mismatch: ", int(old_bpp), " - ", int(palette.bpp()));
+                        "Different palette BPP mode: ", int(old_bpp), " - ", int(palette.bpp()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = palette;
@@ -515,7 +515,7 @@ void set_palette(id_type id, [[maybe_unused]] bpp_mode old_bpp, sprite_palette_p
     if(palette != item->palette)
     {
         BN_BASIC_ASSERT(old_bpp == palette.bpp(),
-                        "Palette BPP mode mismatch: ", int(old_bpp), " - ", int(palette.bpp()));
+                        "Different palette BPP mode: ", int(old_bpp), " - ", int(palette.bpp()));
 
         hw::sprites::set_palette(palette.id(), item->handle);
         item->palette = move(palette);

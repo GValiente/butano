@@ -12,9 +12,10 @@
  * @tableofcontents
  *
  *
- * @section changelog_17_8_2 17.8.2 (next release)
+ * @section changelog_17_9_0 17.9.0 (next release)
  *
- * Dead links updated.
+ * * Some assert messages improved.
+ * * Dead links updated.
  *
  *
  * @section changelog_17_8_1 17.8.1

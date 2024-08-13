@@ -1550,7 +1550,7 @@ void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attribut
     {
         const regular_bg_attributes& attributes = attributes_ptr[index];
         const regular_bg_map_ptr& attributes_map = attributes.map();
-        BN_BASIC_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
+        BN_BASIC_ASSERT(current_dimensions == attributes_map.dimensions(), "Different map dimensions");
 
         uint16_t dest_hw_cnt = hw_cnt;
         hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_hw_cnt);
@@ -1572,7 +1572,7 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
     {
         const affine_bg_attributes& attributes = attributes_ptr[index];
         const affine_bg_map_ptr& attributes_map = attributes.map();
-        BN_BASIC_ASSERT(current_dimensions == attributes_map.dimensions(), "Map dimensions mismatch");
+        BN_BASIC_ASSERT(current_dimensions == attributes_map.dimensions(), "Different map dimensions");
 
         uint16_t dest_hw_cnt = hw_cnt;
         hw::bgs::set_tiles_cbb(attributes_map.tiles().cbb(), dest_hw_cnt);

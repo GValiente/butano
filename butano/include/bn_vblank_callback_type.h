@@ -13,6 +13,8 @@
  * @ingroup core
  */
 
+#include "bn_common.h"
+
 namespace bn
 {
     using vblank_callback_type = void(*)(); //!< V-Blank callback type alias.

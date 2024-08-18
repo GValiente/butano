@@ -16,6 +16,7 @@
  *
  * * bn::hdma::start and bn::hdma::high_priority_start API improved.
  * * Some assert messages improved.
+ * * Missing header includes added.
  * * `hdma_palette` example added.
  * * Dead links updated.
  *

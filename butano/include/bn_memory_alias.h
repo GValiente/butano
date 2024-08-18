@@ -14,6 +14,7 @@
  */
 
 #include <memory>
+#include "bn_common.h"
 
 namespace bn
 {

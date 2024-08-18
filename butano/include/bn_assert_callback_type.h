@@ -13,6 +13,8 @@
  * @ingroup assert
  */
 
+#include "bn_common.h"
+
 namespace bn::assert
 {
     using callback_type = void(*)(); //!< Assert callback type alias.

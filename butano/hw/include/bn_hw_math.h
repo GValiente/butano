@@ -6,6 +6,7 @@
 #ifndef BN_HW_MATH_H
 #define BN_HW_MATH_H
 
+#include "bn_common.h"
 #include "../3rd_party/agbabi/include/agbabi.h"
 #include "../3rd_party/gba-modern/include/gba-modern.h"
 

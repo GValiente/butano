@@ -19,6 +19,7 @@
  * * Missing header includes added.
  * * `hdma_palette` example added.
  * * Dead links updated.
+ * * New games made with Butano added to `README.md`.
  *
  *
  * @section changelog_17_8_1 17.8.1

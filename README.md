@@ -165,6 +165,10 @@ your flock of sheep!
 
 ![](docs_tools/images/sips_gameplay.png)
 
+* [Bata Dubnos](https://fralacticus.itch.io/bata-dubnos): shoot the possessed portrait faces and ???
+
+![](docs_tools/images/bata_dubnos_title.png) ![](docs_tools/images/bata_dubnos_gameplay.png)
+
 * [Nuclear Love](https://foopod.itch.io/nuclear-love): have fun getting to know other survivors in this dating-show, 
 who knows, maybe you might find your future Mr. or Mrs Right?
 

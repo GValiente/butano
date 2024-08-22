@@ -170,6 +170,10 @@ a boy who wakes up on a new, happy day to go to school.
 
 ![](docs_tools/images/happy_dawn_gameplay.png)
 
+* [Space Evangelion](https://fixxiefixx.itch.io/space-evangelion): you play as an angel fighting evil beeings in space.
+
+![](docs_tools/images/space_evangelion_title.png) ![](docs_tools/images/space_evangelion_gameplay.png)
+
 * [Knight Owls](https://blaise-rascal.itch.io/knight-owls): build up a powerful spellbook and take on many enemies, 
 gather owls and upgrades while managing your health and money and defeat the final boss to win!
 

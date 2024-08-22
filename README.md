@@ -156,6 +156,11 @@ small demo/prototype of a visual novel about joining an ordinary math club.
 
 ![](docs_tools/images/advance_amlc_title.png) ![](docs_tools/images/advance_amlc_gameplay.png)
 
+* [Happy Dawn](https://luife.itch.io/happy-dawn): a hilarious story unfolds about a day in the life of Carlitos,
+a boy who wakes up on a new, happy day to go to school.
+
+![](docs_tools/images/happy_dawn_gameplay.png)
+
 * [Knight Owls](https://blaise-rascal.itch.io/knight-owls): build up a powerful spellbook and take on many enemies, 
 gather owls and upgrades while managing your health and money and defeat the final boss to win!
 

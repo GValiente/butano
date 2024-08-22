@@ -150,6 +150,11 @@ NASA and even the FBI!
 
 ![](docs_tools/images/lro_title.png) ![](docs_tools/images/lro_gameplay.png)
 
+* [Sleep Paradox](https://staticlinkage.itch.io/sleep-paradox): as student Fredericko you'll explore the school,
+leveling up as you fight through the hordes, searching for some kind of answer to what is going on.
+
+![](docs_tools/images/sleep_paradox_title.png) ![](docs_tools/images/sleep_paradox_gameplay.png)
+
 * [Bridge Quest](https://fixxiefixx.itch.io/bridge-quest): find the way to the desert, but beware, 
 because enemies and an evil tree boss will try to stop you!
 

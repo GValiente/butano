@@ -115,6 +115,10 @@ of the infamous Mega Drive game!
 
 ![](docs_tools/images/doadx_title.png) ![](docs_tools/images/doadx_gameplay.png)
 
+* [BeatBeast](https://afska.itch.io/beat-beast): help Joaquín shoot his way out of this rhythmic world!
+
+![](docs_tools/images/beat_beast_title.png) ![](docs_tools/images/beat_beast_gameplay.png)
+
 * [Discrete Orange](https://tardigrade-nx.itch.io/discrete-orange): a turn-based puzzle-platformer 
 with discrete movement. 
 

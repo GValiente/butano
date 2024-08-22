@@ -165,6 +165,10 @@ small demo/prototype of a visual novel about joining an ordinary math club.
 
 ![](docs_tools/images/advance_amlc_title.png) ![](docs_tools/images/advance_amlc_gameplay.png)
 
+* [Toll Runner](https://jenkalab.itch.io/toll-runner): complete 17 levels to find out why the mouse had to run!
+
+![](docs_tools/images/toll_runner_title.png) ![](docs_tools/images/toll_runner_gameplay.png)
+
 * [Happy Dawn](https://luife.itch.io/happy-dawn): a hilarious story unfolds about a day in the life of Carlitos,
 a boy who wakes up on a new, happy day to go to school.
 

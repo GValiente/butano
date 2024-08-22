@@ -184,6 +184,11 @@ who knows, maybe you might find your future Mr. or Mrs Right?
 
 ![](docs_tools/images/nuclear_love_title.png) ![](docs_tools/images/nuclear_love_gameplay.png)
 
+* [Globlins!](https://jeremyelkayam.itch.io/globlins): early prototype for a single player action platformer
+with RPG elements and multiple endings.
+
+![](docs_tools/images/goblins_title.png) ![](docs_tools/images/goblins_gameplay.png)
+
 * [Tremblay Island](https://cinemint.itch.io/tremblay-island): take on the role of any island villager and 
 interact with the others, taking part in the drama while eventually trying to keep a grouchy alligator 
 from taking over the island.

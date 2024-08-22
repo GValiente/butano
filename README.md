@@ -161,6 +161,11 @@ your flock of sheep!
 
 ![](docs_tools/images/collie_defence_title.png) ![](docs_tools/images/collie_defence_gameplay.png)
 
+* [Detective Monroe: Murder at Sea](https://eragnarok.itch.io/detective-monroe-murder-at-sea): play as
+Detective Alex Monroe in his new adventure where he solves a murder mystery, while on vacation on a cruise ship!
+
+![](docs_tools/images/detective_monroe_title.png) ![](docs_tools/images/detective_monroe_gameplay.png)
+
 * [Sips](https://foopod.itch.io/sips): enjoy watching people while you earn money to upgrade your cafe.
 
 ![](docs_tools/images/sips_gameplay.png)

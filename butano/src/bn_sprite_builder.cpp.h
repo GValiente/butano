@@ -375,24 +375,16 @@ optional<sprite_palette_ptr> sprite_builder::palette_optional() const
 
 sprite_tiles_ptr sprite_builder::release_tiles()
 {
-    if(const sprite_item* item = _item.get())
-    {
-        return item->tiles_item().create_tiles(_graphics_index);
-    }
-
-    sprite_tiles_ptr result = move(*_tiles);
+    const sprite_item* item = _item.get();
+    sprite_tiles_ptr result = item ? item->tiles_item().create_tiles(_graphics_index) : move(*_tiles);
     _tiles.reset();
     return result;
 }
 
 sprite_palette_ptr sprite_builder::release_palette()
 {
-    if(const sprite_item* item = _item.get())
-    {
-        return item->palette_item().create_palette();
-    }
-
-    sprite_palette_ptr result = move(*_palette);
+    const sprite_item* item = _item.get();
+    sprite_palette_ptr result = item ? item->palette_item().create_palette() : move(*_palette);
     _palette.reset();
     return result;
 }

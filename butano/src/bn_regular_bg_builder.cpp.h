@@ -83,12 +83,8 @@ optional<regular_bg_map_ptr> regular_bg_builder::map_optional() const
 
 regular_bg_map_ptr regular_bg_builder::release_map()
 {
-    if(const regular_bg_item* item = _item.get())
-    {
-        return item->create_map(_map_index);
-    }
-
-    regular_bg_map_ptr result = move(*_map);
+    const regular_bg_item* item = _item.get();
+    regular_bg_map_ptr result = item ? item->create_map(_map_index) : move(*_map);
     _map.reset();
     return result;
 }

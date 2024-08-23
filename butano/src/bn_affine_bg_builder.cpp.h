@@ -83,12 +83,8 @@ optional<affine_bg_map_ptr> affine_bg_builder::map_optional() const
 
 affine_bg_map_ptr affine_bg_builder::release_map()
 {
-    if(const affine_bg_item* item = _item.get())
-    {
-        return item->create_map(_map_index);
-    }
-
-    affine_bg_map_ptr result = move(*_map);
+    const affine_bg_item* item = _item.get();
+    affine_bg_map_ptr result = item ? item->create_map(_map_index) : move(*_map);
     _map.reset();
     return result;
 }

@@ -18,6 +18,8 @@
  * * Old bn::hdma::start and bn::hdma::high_priority_start API deprecated.
  * * `BN_UNREACHABLE` deprecated.
  * * `bn::is_constant_evaluated` replaced with `consteval`.
+ * * bn::regular_bg_builder::release_map, bn::affine_bg_builder::release_map,
+ *   bn::sprite_builder::release_tiles and bn::sprite_builder::release_palette ROM usage reduced.
  *
  *
  * @section changelog_17_9_0 17.9.0

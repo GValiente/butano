@@ -26,14 +26,11 @@
  */
 #define BN_CONST __attribute__((const))
 
-/**
- * @def BN_UNREACHABLE
- *
- * If control flow reaches the point of this macro, the program is undefined.
- *
- * @ingroup other
- */
+/// @cond DO_NOT_DOCUMENT
+
 #define BN_UNREACHABLE __builtin_unreachable
+
+/// @endcond
 
 namespace bn
 {

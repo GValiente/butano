@@ -308,10 +308,7 @@
                 } \
                 else \
                 { \
-                    if(! (condition)) [[unlikely]] \
-                    { \
-                        BN_UNREACHABLE(); \
-                    } \
+                    [[assume(condition)]]; \
                 } \
             } while(false)
     #endif
@@ -330,7 +327,7 @@
                 } \
                 else \
                 { \
-                    BN_UNREACHABLE(); \
+                    [[assume(false)]]; \
                 } \
             } while(false)
     #endif

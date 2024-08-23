@@ -18,6 +18,7 @@
 #include "bn_utility.h"
 #include "bn_iterator.h"
 #include "bn_algorithm.h"
+#include "bn_type_traits.h"
 #include "bn_power_of_two.h"
 #include "bn_deque_fwd.h"
 

@@ -17,6 +17,7 @@
 #include "bn_utility.h"
 #include "bn_iterator.h"
 #include "bn_algorithm.h"
+#include "bn_type_traits.h"
 #include "bn_intrusive_list_fwd.h"
 
 namespace bn

@@ -7,7 +7,6 @@
 #define FR_DIV_LUT_H
 
 #include "bn_fixed.h"
-#include "bn_type_traits.h"
 
 namespace fr
 {

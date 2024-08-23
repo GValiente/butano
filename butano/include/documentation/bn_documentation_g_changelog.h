@@ -16,6 +16,7 @@
  *
  * * Language standard updated to C++23.
  * * Old bn::hdma::start and bn::hdma::high_priority_start API deprecated.
+ * * `bn::is_constant_evaluated` replaced with `consteval`.
  *
  *
  * @section changelog_17_9_0 17.9.0

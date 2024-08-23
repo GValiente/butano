@@ -14,7 +14,6 @@
  */
 
 #include <cassert>
-#include "bn_type_traits.h"
 #include "bn_config_assert.h"
 #include "bn_config_doxygen.h"
 
@@ -46,7 +45,7 @@
  * }
  * @endcode
  *
- * Note that it can be used in constexpr contexts (is_constant_evaluated() returns `true`).
+ * Note that it can be used in constexpr contexts (`if consteval` returns `true`).
  *
  * @ingroup assert
  */
@@ -79,7 +78,7 @@
  * }
  * @endcode
  *
- * Note that it can be used in constexpr contexts (is_constant_evaluated() returns `true`).
+ * Note that it can be used in constexpr contexts (`if consteval` returns `true`).
  *
  * @ingroup assert
  */
@@ -110,7 +109,7 @@
  * }
  * @endcode
  *
- * Note that it can be used in constexpr contexts (is_constant_evaluated() returns `true`).
+ * Note that it can be used in constexpr contexts (`if consteval` returns `true`).
  *
  * @ingroup assert
  */
@@ -157,7 +156,7 @@
             #define BN_ASSERT(condition, ...) \
                 do \
                 { \
-                    if(bn::is_constant_evaluated()) \
+                    if consteval \
                     { \
                         assert(condition); \
                     } \
@@ -173,7 +172,7 @@
             #define BN_ASSERT(condition, ...) \
                 do \
                 { \
-                    if(bn::is_constant_evaluated()) \
+                    if consteval \
                     { \
                         assert(condition); \
                     } \
@@ -193,7 +192,7 @@
             #define BN_BASIC_ASSERT(condition, ...) \
                 do \
                 { \
-                    if(bn::is_constant_evaluated()) \
+                    if consteval \
                     { \
                         assert(condition); \
                     } \
@@ -215,7 +214,7 @@
             #define BN_ERROR(...) \
                 do \
                 { \
-                    if(bn::is_constant_evaluated()) \
+                    if consteval \
                     { \
                         assert(false); \
                     } \
@@ -228,7 +227,7 @@
             #define BN_ERROR(...) \
                 do \
                 { \
-                    if(bn::is_constant_evaluated()) \
+                    if consteval \
                     { \
                         assert(false); \
                     } \
@@ -303,7 +302,7 @@
         #define BN_ASSERT(condition, ...) \
             do \
             { \
-                if(bn::is_constant_evaluated()) \
+                if consteval \
                 { \
                     assert(condition); \
                 } \
@@ -325,7 +324,7 @@
         #define BN_ERROR(...) \
             do \
             { \
-                if(bn::is_constant_evaluated()) \
+                if consteval \
                 { \
                     assert(false); \
                 } \

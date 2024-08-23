@@ -63,7 +63,7 @@ namespace bn
     {
         BN_ASSERT(value >= 0, "Invalid value: ", value);
 
-        if(is_constant_evaluated())
+        if consteval
         {
             int x0 = value / 2;
 
@@ -163,7 +163,7 @@ namespace bn
         BN_ASSERT(lut_angle >= 0 && lut_angle < sin_lut_size,
                   "Angle must be in the range [0, ", sin_lut_size - 1, "]: ", lut_angle);
 
-        if(is_constant_evaluated())
+        if consteval
         {
             int sin_lut_value = calculate_sin_lut_value((lut_angle * 65536) / (sin_lut_size - 1));
             return fixed::from_data(sin_lut_value);
@@ -189,7 +189,7 @@ namespace bn
         constexpr rule_of_three_approximation rule_of_three(fixed(360).data(), sin_lut_size - 1);
         int lut_angle = rule_of_three.calculate(degrees_angle.data());
 
-        if(is_constant_evaluated())
+        if consteval
         {
             int sin_lut_value = calculate_sin_lut_value((lut_angle * 65536) / (sin_lut_size - 1));
             return fixed::from_data(sin_lut_value);
@@ -241,7 +241,7 @@ namespace bn
 
         lut_angle = (lut_angle + ((sin_lut_size - 1) / 4)) & (sin_lut_size - 2);
 
-        if(is_constant_evaluated())
+        if consteval
         {
             int sin_lut_value = calculate_sin_lut_value((lut_angle * 65536) / (sin_lut_size - 1));
             return fixed::from_data(sin_lut_value);
@@ -268,7 +268,7 @@ namespace bn
         int lut_angle = rule_of_three.calculate(degrees_angle.data());
         lut_angle = (lut_angle + ((sin_lut_size - 1) / 4)) & (sin_lut_size - 2);
 
-        if(is_constant_evaluated())
+        if consteval
         {
             int sin_lut_value = calculate_sin_lut_value((lut_angle * 65536) / (sin_lut_size - 1));
             return fixed::from_data(sin_lut_value);
@@ -327,7 +327,7 @@ namespace bn
         int sin_lut_value;
         int cos_lut_value;
 
-        if(is_constant_evaluated())
+        if consteval
         {
             sin_lut_value = calculate_sin_lut_value((sin_lut_angle * 65536) / (sin_lut_size - 1));
             cos_lut_value = calculate_sin_lut_value((cos_lut_angle * 65536) / (sin_lut_size - 1));
@@ -359,7 +359,7 @@ namespace bn
         int sin_lut_value;
         int cos_lut_value;
 
-        if(is_constant_evaluated())
+        if consteval
         {
             sin_lut_value = calculate_sin_lut_value((sin_lut_angle * 65536) / (sin_lut_size - 1));
             cos_lut_value = calculate_sin_lut_value((cos_lut_angle * 65536) / (sin_lut_size - 1));
@@ -475,7 +475,7 @@ namespace bn
         BN_ASSERT(lut_value >= 1 && lut_value < reciprocal_lut_size,
                   "Value must be in the range [1, ", reciprocal_lut_size - 1, "]: ", lut_value);
 
-        if(is_constant_evaluated())
+        if consteval
         {
             return calculate_reciprocal_lut_value(lut_value);
         }

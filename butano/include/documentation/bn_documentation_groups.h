@@ -328,7 +328,7 @@
  *
  * It can be enabled or disabled by overloading the definition of @ref BN_CFG_ASSERT_ENABLED.
  *
- * Note that these asserts can be used in `constexpr` contexts (`is_constant_evaluated()` returns `true`).
+ * Note that these asserts can be used in `constexpr` contexts (`if consteval` returns `true`).
  */
 
 /**

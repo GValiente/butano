@@ -197,6 +197,10 @@ Detective Alex Monroe in his new adventure where he solves a murder mystery, whi
 
 ![](docs_tools/images/sips_gameplay.png)
 
+* [Work Life](https://jeffzzq.itch.io/work-life): visual novel focusing on relationships in a modern workplace.
+
+![](docs_tools/images/work_life_title.png) ![](docs_tools/images/work_life_gameplay.png)
+
 * [Bata Dubnos](https://fralacticus.itch.io/bata-dubnos): shoot the possessed portrait faces and ???
 
 ![](docs_tools/images/bata_dubnos_title.png) ![](docs_tools/images/bata_dubnos_gameplay.png)

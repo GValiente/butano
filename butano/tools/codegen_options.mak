@@ -17,7 +17,7 @@ CFLAGS      +=	$(INCLUDE)
 CFLAGS      +=	$(USERFLAGS)
 
 CPPWARNINGS	:=	-Wuseless-cast -Wnon-virtual-dtor -Woverloaded-virtual
-CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++20 -fno-rtti -fno-exceptions -fno-threadsafe-statics \
+CXXFLAGS    :=	$(CFLAGS) $(CPPWARNINGS) -std=c++23 -fno-rtti -fno-exceptions -fno-threadsafe-statics \
 				-fuse-cxa-atexit $(USERCXXFLAGS)
 
 ASFLAGS     :=	-gdwarf-4 $(ARCH) $(USERASFLAGS)

@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_0_0 18.0.0 (next release)
+ *
+ * Language standard updated to C++23.
+ *
+ *
  * @section changelog_17_9_0 17.9.0
  *
  * * bn::hdma::start and bn::hdma::high_priority_start API improved.

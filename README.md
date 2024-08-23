@@ -205,6 +205,11 @@ Detective Alex Monroe in his new adventure where he solves a murder mystery, whi
 
 ![](docs_tools/images/bata_dubnos_title.png) ![](docs_tools/images/bata_dubnos_gameplay.png)
 
+* [Sys*Crusher](https://drkylstein.itch.io/syscrusher): take on contracts to steal files, crash systems
+and commit industrial sabotage!
+
+![](docs_tools/images/sys_crusher_title.png) ![](docs_tools/images/sys_crusher_gameplay.png)
+
 * [Nuclear Love](https://foopod.itch.io/nuclear-love): have fun getting to know other survivors in this dating-show, 
 who knows, maybe you might find your future Mr. or Mrs Right?
 

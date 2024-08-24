@@ -279,23 +279,23 @@ public:
     }
 
     /**
-     * @brief Shrinks the string_view by moving its start forward by n characters.
+     * @brief Shrinks the string_view by moving its start forward by count characters.
      */
-    constexpr void remove_prefix(size_type n)
+    constexpr void remove_prefix(size_type count)
     {
-        BN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
+        BN_ASSERT(count >= 0 && count <= size(), "Invalid count: ", count, " - ", size());
 
-        _begin += n;
+        _begin += count;
     }
 
     /**
-     * @brief Shrinks the string_view by moving its end backward by n characters.
+     * @brief Shrinks the string_view by moving its end backward by count characters.
      */
-    constexpr void remove_suffix(size_type n)
+    constexpr void remove_suffix(size_type count)
     {
-        BN_ASSERT(n <= size(), "Invalid n: ", n, " - ", size());
+        BN_ASSERT(count >= 0 && count <= size(), "Invalid count: ", count, " - ", size());
 
-        _end -= n;
+        _end -= count;
     }
 
     /**

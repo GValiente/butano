@@ -18,6 +18,7 @@
  * * Old bn::hdma::start and bn::hdma::high_priority_start API deprecated.
  * * `BN_UNREACHABLE` deprecated.
  * * Construction of non-empty bn::string_view from `nullptr` is disallowed.
+ * * bn::string_view::remove_prefix and bn::string_view::remove_suffix assert fixed.
  * * `bn::is_constant_evaluated` replaced with `consteval`.
  * * bn::regular_bg_builder::release_map, bn::affine_bg_builder::release_map,
  *   bn::sprite_builder::release_tiles and bn::sprite_builder::release_palette ROM usage reduced.

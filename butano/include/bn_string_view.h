@@ -68,12 +68,11 @@ public:
     constexpr string_view(const_pointer char_array_ptr) :
         _begin(char_array_ptr)
     {
-        if(char_array_ptr)
+        BN_BASIC_ASSERT(char_array_ptr, "Null char array ptr");
+
+        while(*char_array_ptr)
         {
-            while(*char_array_ptr)
-            {
-                ++char_array_ptr;
-            }
+            ++char_array_ptr;
         }
 
         _end = char_array_ptr;
@@ -85,12 +84,15 @@ public:
      * @param char_array_size Characters count of the characters array.
      */
     constexpr string_view(const_pointer char_array_ptr, size_type char_array_size) :
-        _begin(char_array_ptr),
-        _end(char_array_ptr + char_array_size)
+        _begin(char_array_ptr)
     {
+        BN_BASIC_ASSERT(char_array_ptr, "Null char array ptr");
         BN_ASSERT(char_array_size >= 0, "Invalid char array size: ", char_array_size);
-        BN_BASIC_ASSERT(char_array_ptr || char_array_size == 0, "Null non-empty char array ptr: ", char_array_size);
+
+        _end = char_array_ptr + char_array_size;
     }
+
+    constexpr string_view(nullptr_t) = delete;
 
     /**
      * @brief Returns a const reference to the first character.
@@ -340,10 +342,7 @@ public:
      */
     [[nodiscard]] constexpr bool starts_with(const_pointer char_array_ptr) const
     {
-        if(! char_array_ptr)
-        {
-            return true;
-        }
+        BN_BASIC_ASSERT(char_array_ptr, "Null char array ptr");
 
         const_pointer this_char_array_ptr = _begin;
 
@@ -372,6 +371,8 @@ public:
 
         return *char_array_ptr == 0;
     }
+
+    [[nodiscard]] constexpr bool starts_with(nullptr_t) const = delete;
 
     /**
      * @brief Checks if the referenced string ends with the given prefix.

@@ -17,6 +17,7 @@
  * * Language standard updated to C++23.
  * * Old bn::hdma::start and bn::hdma::high_priority_start API deprecated.
  * * `BN_UNREACHABLE` deprecated.
+ * * Construction of non-empty bn::string_view from `nullptr` is disallowed.
  * * `bn::is_constant_evaluated` replaced with `consteval`.
  * * bn::regular_bg_builder::release_map, bn::affine_bg_builder::release_map,
  *   bn::sprite_builder::release_tiles and bn::sprite_builder::release_palette ROM usage reduced.

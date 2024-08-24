@@ -66,16 +66,17 @@ public:
      * @param char_array_ptr Pointer to null-terminated characters array.
      */
     constexpr string_view(const_pointer char_array_ptr) :
-        _begin(char_array_ptr),
-        _end(char_array_ptr)
+        _begin(char_array_ptr)
     {
         if(char_array_ptr)
         {
-            while(*char_array_ptr++)
+            while(*char_array_ptr)
             {
-                ++_end;
+                ++char_array_ptr;
             }
         }
+
+        _end = char_array_ptr;
     }
 
     /**
@@ -88,6 +89,7 @@ public:
         _end(char_array_ptr + char_array_size)
     {
         BN_ASSERT(char_array_size >= 0, "Invalid char array size: ", char_array_size);
+        BN_BASIC_ASSERT(char_array_ptr || char_array_size == 0, "Null non-empty char array ptr: ", char_array_size);
     }
 
     /**

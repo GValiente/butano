@@ -18,7 +18,36 @@ void* operator new(unsigned bytes)
     return ptr;
 }
 
+void* operator new[](unsigned bytes)
+{
+    void* ptr = bn::memory_manager::ewram_alloc(int(bytes));
+    BN_BASIC_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+
+    return ptr;
+}
+
+void* operator new(unsigned bytes, [[maybe_unused]] const std::nothrow_t& tag) noexcept
+{
+    void* ptr = bn::memory_manager::ewram_alloc(int(bytes));
+    BN_BASIC_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+
+    return ptr;
+}
+
+void* operator new[](unsigned bytes, [[maybe_unused]] const std::nothrow_t& tag) noexcept
+{
+    void* ptr = bn::memory_manager::ewram_alloc(int(bytes));
+    BN_BASIC_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
+
+    return ptr;
+}
+
 void operator delete(void* ptr) noexcept
+{
+    bn::memory_manager::ewram_free(ptr);
+}
+
+void operator delete[](void* ptr) noexcept
 {
     bn::memory_manager::ewram_free(ptr);
 }
@@ -28,20 +57,17 @@ void operator delete(void* ptr, [[maybe_unused]] unsigned bytes) noexcept
     bn::memory_manager::ewram_free(ptr);
 }
 
-void* operator new[](unsigned bytes)
-{
-    void* ptr = bn::memory_manager::ewram_alloc(int(bytes));
-    BN_BASIC_ASSERT(ptr, "Allocation failed. Size in bytes: ", bytes);
-
-    return ptr;
-}
-
-void operator delete[](void* ptr) noexcept
+void operator delete[](void* ptr, [[maybe_unused]] unsigned bytes) noexcept
 {
     bn::memory_manager::ewram_free(ptr);
 }
 
-void operator delete[](void* ptr, [[maybe_unused]] unsigned bytes) noexcept
+void operator delete(void* ptr, [[maybe_unused]] const std::nothrow_t& tag) noexcept
+{
+    bn::memory_manager::ewram_free(ptr);
+}
+
+void operator delete[](void* ptr, [[maybe_unused]] const std::nothrow_t& tag) noexcept
 {
     bn::memory_manager::ewram_free(ptr);
 }

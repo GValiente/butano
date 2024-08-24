@@ -23,6 +23,7 @@
  * * bn::string_view::ends_with char array added.
  * * bn::string_view::remove_prefix and bn::string_view::remove_suffix assert fixed.
  * * `bn::is_constant_evaluated` replaced with `consteval`.
+ * * Non-throwing `new` and `delete` supported.
  * * bn::regular_bg_builder::release_map, bn::affine_bg_builder::release_map,
  *   bn::sprite_builder::release_tiles and bn::sprite_builder::release_palette ROM usage reduced.
  *

@@ -246,6 +246,10 @@
             </dt>
             <dd>Checks if the referenced string ends with the given prefix.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a10d67a4912bc0aef91b56e101703cc23" class="m-doc">ends_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1string__view.html#a2f338d9a2eff32c5c28aecad98cc23d2" class="m-doc">const_<wbr />pointer</a> char_array_ptr) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string ends with the given prefix.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a3a3458908b9672982cf7bb96d19cd1f0" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Exchanges the contents of this <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> with those of the other one.</dd>
@@ -500,6 +504,29 @@
                 <tr>
                   <td style="width: 1%">other</td>
                   <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string ends with the given prefix; <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a10d67a4912bc0aef91b56e101703cc23"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />string_view::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a10d67a4912bc0aef91b56e101703cc23" class="m-doc-self">ends_with</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1string__view.html#a2f338d9a2eff32c5c28aecad98cc23d2" class="m-doc">const_<wbr />pointer</a> char_array_ptr) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string ends with the given prefix.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">char_array_ptr</td>
+                  <td>Pointer to null-terminated characters array.</td>
                 </tr>
               </tbody>
               <tfoot>

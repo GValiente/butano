@@ -19,6 +19,7 @@
  * * `BN_UNREACHABLE` deprecated.
  * * Construction of bn::string_view from `nullptr` is disallowed (thanks C++23).
  * * bn::string_view::starts_with with a `nullptr` char array is disallowed.
+ * * bn::string_view::ends_with char array added.
  * * bn::string_view::remove_prefix and bn::string_view::remove_suffix assert fixed.
  * * `bn::is_constant_evaluated` replaced with `consteval`.
  * * bn::regular_bg_builder::release_map, bn::affine_bg_builder::release_map,

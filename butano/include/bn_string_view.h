@@ -403,6 +403,18 @@ public:
     }
 
     /**
+     * @brief Checks if the referenced string ends with the given prefix.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return `true` if the referenced string ends with the given prefix; `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool ends_with(const_pointer char_array_ptr) const
+    {
+        return ends_with(string_view(char_array_ptr));
+    }
+
+    [[nodiscard]] constexpr bool ends_with(nullptr_t) const = delete;
+
+    /**
      * @brief Exchanges the contents of this string_view with those of the other one.
      * @param other string_view to exchange the contents with.
      */

@@ -37,14 +37,14 @@ struct default_delete
      * @brief Copy constructor.
      */
     template<typename OtherType>
-    default_delete(const default_delete<OtherType>&) noexcept
+    constexpr default_delete(const default_delete<OtherType>&) noexcept
     {
     }
 
     /**
      * @brief Deletes the object pointed by the given pointer.
      */
-    void operator()(Type* ptr) const noexcept
+    constexpr void operator()(Type* ptr) const noexcept
     {
         delete ptr;
     }

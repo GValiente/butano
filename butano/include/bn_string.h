@@ -726,7 +726,7 @@ public:
     /**
      * @brief Default constructor.
      */
-    constexpr string() :
+    string() :
         istring(_buffer, 0, MaxSize)
     {
         _data[0] = 0;
@@ -736,7 +736,7 @@ public:
      * @brief Copy constructor.
      * @param other string to copy.
      */
-    constexpr string(const string& other) :
+    string(const string& other) :
         string()
     {
         assign(other);
@@ -746,7 +746,7 @@ public:
      * @brief Copy constructor.
      * @param other istring_base to copy.
      */
-    constexpr string(const istring_base& other) :
+    string(const istring_base& other) :
         string()
     {
         assign(other);
@@ -756,7 +756,7 @@ public:
      * @brief Copy constructor.
      * @param view string_view to copy.
      */
-    constexpr string(const string_view& view) :
+    string(const string_view& view) :
         string()
     {
         assign(view);
@@ -766,7 +766,7 @@ public:
      * @brief Copy constructor.
      * @param char_array_ptr Pointer to null-terminated characters array.
      */
-    constexpr string(const_pointer char_array_ptr) :
+    string(const_pointer char_array_ptr) :
         string()
     {
         assign(char_array_ptr);
@@ -777,7 +777,7 @@ public:
      * @param char_array_ptr Pointer to characters array.
      * @param char_array_size Characters count of the characters array.
      */
-    constexpr string(const_pointer char_array_ptr, size_type char_array_size) :
+    string(const_pointer char_array_ptr, size_type char_array_size) :
         string()
     {
         assign(char_array_ptr, char_array_size);
@@ -788,7 +788,7 @@ public:
      * @param count Number of characters to assign.
      * @param value Character to assign.
      */
-    constexpr string(size_type count, value_type value) :
+    string(size_type count, value_type value) :
         string()
     {
         assign(count, value);
@@ -799,7 +799,7 @@ public:
      * @param first First element of the range.
      * @param last Last element of the range.
      */
-    constexpr string(const_iterator first, const_iterator last) :
+    string(const_iterator first, const_iterator last) :
         string()
     {
         assign(first, last);
@@ -810,7 +810,7 @@ public:
      * @param other string to copy.
      * @return Reference to this.
      */
-    constexpr string& operator=(const string& other)
+    string& operator=(const string& other)
     {
         assign(other);
         return *this;
@@ -821,7 +821,7 @@ public:
      * @param other istring_base to copy.
      * @return Reference to this.
      */
-    constexpr string& operator=(const istring_base& other)
+    string& operator=(const istring_base& other)
     {
         assign(other);
         return *this;
@@ -832,7 +832,7 @@ public:
      * @param view string_view to copy.
      * @return Reference to this.
      */
-    constexpr string& operator=(const string_view& view)
+    string& operator=(const string_view& view)
     {
         assign(view);
         return *this;
@@ -843,7 +843,7 @@ public:
      * @param char_array_ptr Pointer to null-terminated characters array.
      * @return Reference to this.
      */
-    constexpr string& operator=(const_pointer char_array_ptr)
+    string& operator=(const_pointer char_array_ptr)
     {
         assign(char_array_ptr);
         return *this;
@@ -855,7 +855,7 @@ public:
      * @param b Second istring_base to concatenate.
      * @return string containing characters from a followed by the characters from b.
      */
-    [[nodiscard]] constexpr friend string operator+(const string& a, const istring_base& b)
+    [[nodiscard]] friend string operator+(const string& a, const istring_base& b)
     {
         string result = a;
         result.append(b);
@@ -868,7 +868,7 @@ public:
      * @param b Second character to concatenate.
      * @return string containing characters from a followed by b.
      */
-    [[nodiscard]] constexpr friend string operator+(const string& a, value_type b)
+    [[nodiscard]] friend string operator+(const string& a, value_type b)
     {
         string result = a;
         result.append(b);
@@ -881,7 +881,7 @@ public:
      * @param b Second string_view to concatenate.
      * @return string containing characters from a followed by the characters from b.
      */
-    [[nodiscard]] constexpr friend string operator+(const string& a, const string_view& b)
+    [[nodiscard]] friend string operator+(const string& a, const string_view& b)
     {
         string result = a;
         result.append(b);
@@ -894,7 +894,7 @@ public:
      * @param b Second pointer to null-terminated characters array to concatenate.
      * @return string containing characters from a followed by the characters from b.
      */
-    [[nodiscard]] constexpr friend string operator+(const string& a, const_pointer b)
+    [[nodiscard]] friend string operator+(const string& a, const_pointer b)
     {
         string result = a;
         result.append(b);
@@ -914,7 +914,7 @@ private:
  * @ingroup string
  */
 template<int MaxSize>
-[[nodiscard]] constexpr string<MaxSize - 1> make_string(const char (&char_array)[MaxSize])
+[[nodiscard]] string<MaxSize - 1> make_string(const char (&char_array)[MaxSize])
 {
     return string<MaxSize - 1>(char_array, MaxSize - 1);
 }
@@ -970,7 +970,7 @@ struct hash<string<MaxSize>>
     /**
      * @brief Returns the hash of the given string.
      */
-    [[nodiscard]] constexpr unsigned operator()(const string<MaxSize>& value) const
+    [[nodiscard]] unsigned operator()(const string<MaxSize>& value) const
     {
         return hash<istring_base>()(value);
     }

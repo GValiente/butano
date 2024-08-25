@@ -60,6 +60,7 @@
                 <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#derived-classes">Derived classes</a></li>
                 <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
                 <li><a href="#friends">Friends</a></li>
               </ul>
@@ -97,6 +98,15 @@
               using <a href="#aa1c8e0dae74df28f5d6ed90feae094bb" class="m-doc-self">const_reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1istring__base.html#a5f507d86fc56f1e7dff51f6c698019b8" class="m-doc">const_<wbr />iterator</a>&gt;
             </dt>
             <dd>Const reverse iterator alias.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a21672dd3a61d1d6fda047f2fdeb1bb49">
+              <span class="m-doc-wrap-bumper"><a href="#a21672dd3a61d1d6fda047f2fdeb1bb49" class="m-doc-self">operator string_view</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> of this istring.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -195,6 +205,17 @@
             </dt>
             <dd>Replaces the contents of the istring.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8cae935dca120b7c4675aa821bd5486f" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Replaces the contents of the istring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#addb30189d122b9a36821df1808f41d52" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Replaces the contents of the istring.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ac07bb4fa1f00ba35e381646a73935d66" class="m-doc">assign</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Replaces the contents of the istring.</dd>
@@ -231,6 +252,17 @@
             <dd>Removes the last character of the istring.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a4a964fe22ba9e6221229ab8a99f844fa" class="m-doc">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Appends additional characters to the istring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af6c3e20a57fbc794b798228d97e7bd31" class="m-doc">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Appends additional characters to the istring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1ee8aac08fbfd3f6b2f546208ade3930" class="m-doc">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Appends additional characters to the istring.</dd>
             <dt>
@@ -523,6 +555,67 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="a8cae935dca120b7c4675aa821bd5486f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8cae935dca120b7c4675aa821bd5486f" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Replaces the contents of the istring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> replacement.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>Starting character index.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="addb30189d122b9a36821df1808f41d52"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#addb30189d122b9a36821df1808f41d52" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Replaces the contents of the istring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> replacement.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>Starting character index.</td>
+                </tr>
+                <tr>
+                  <td>count</td>
+                  <td>Number of characters to assign.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ac07bb4fa1f00ba35e381646a73935d66"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac07bb4fa1f00ba35e381646a73935d66" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1istring__base.html#a417fec9f28cf93d40fe145ae6d13d843" class="m-doc">value_<wbr />type</a> value) <span class="m-label m-primary">constexpr</span></span></span>
@@ -706,6 +799,67 @@
                 <tr>
                   <td style="width: 1%">other</td>
                   <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af6c3e20a57fbc794b798228d97e7bd31"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af6c3e20a57fbc794b798228d97e7bd31" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Appends additional characters to the istring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> to append.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>Starting character index.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1ee8aac08fbfd3f6b2f546208ade3930"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1ee8aac08fbfd3f6b2f546208ade3930" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; other,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Appends additional characters to the istring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> to append.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>Starting character index.</td>
+                </tr>
+                <tr>
+                  <td>count</td>
+                  <td>Number of characters to append.</td>
                 </tr>
               </tbody>
               <tfoot>

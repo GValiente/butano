@@ -195,6 +195,14 @@ public:
     }
 
     /**
+     * @brief Returns a string_view of this istring.
+     */
+    [[nodiscard]] constexpr operator string_view() const
+    {
+        return string_view(_data, _size);
+    }
+
+    /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param value Single character.
      * @return `true` if the referenced string begins with the given prefix; `false` otherwise.
@@ -300,6 +308,37 @@ public:
     constexpr istring& assign(const istring_base& other)
     {
         _assign(other.data(), other.size());
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents of the istring.
+     * @param other istring_base replacement.
+     * @param position Starting character index.
+     * @return Reference to this.
+     */
+    constexpr istring& assign(const istring_base& other, size_type position)
+    {
+        size_type other_size = other.size();
+        BN_ASSERT(position >= 0 && position <= other_size, "Invalid position: ", position, " - ", other_size);
+
+        _assign(other.data() + position, other_size - position);
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents of the istring.
+     * @param other istring_base replacement.
+     * @param position Starting character index.
+     * @param count Number of characters to assign.
+     * @return Reference to this.
+     */
+    constexpr istring& assign(const istring_base& other, size_type position, size_type count)
+    {
+        BN_ASSERT(position >= 0 && position <= other.size(), "Invalid position: ", position, " - ", other.size());
+        BN_ASSERT(count >= 0 && count <= other.size() - position, "Invalid count: ", count, " - ", other.size());
+
+        _assign(other.data() + position, count);
         return *this;
     }
 
@@ -414,6 +453,37 @@ public:
     constexpr istring& append(const istring_base& other)
     {
         _append(other.data(), other.size());
+        return *this;
+    }
+
+    /**
+     * @brief Appends additional characters to the istring.
+     * @param other istring_base to append.
+     * @param position Starting character index.
+     * @return Reference to this.
+     */
+    constexpr istring& append(const istring_base& other, size_type position)
+    {
+        size_type other_size = other.size();
+        BN_ASSERT(position >= 0 && position <= other_size, "Invalid position: ", position, " - ", other_size);
+
+        _append(other.data() + position, other_size - position);
+        return *this;
+    }
+
+    /**
+     * @brief Appends additional characters to the istring.
+     * @param other istring_base to append.
+     * @param position Starting character index.
+     * @param count Number of characters to append.
+     * @return Reference to this.
+     */
+    constexpr istring& append(const istring_base& other, size_type position, size_type count)
+    {
+        BN_ASSERT(position >= 0 && position <= other.size(), "Invalid position: ", position, " - ", other.size());
+        BN_ASSERT(count >= 0 && count <= other.size() - position, "Invalid count: ", count, " - ", other.size());
+
+        _append(other.data() + position, count);
         return *this;
     }
 
@@ -754,6 +824,29 @@ public:
 
     /**
      * @brief Copy constructor.
+     * @param other istring_base to copy.
+     * @param position Starting character index.
+     */
+    string(const istring_base& other, size_type position) :
+        string()
+    {
+        assign(other, position);
+    }
+
+    /**
+     * @brief Copy constructor.
+     * @param other istring_base to copy.
+     * @param position Starting character index.
+     * @param count Number of characters to copy.
+     */
+    string(const istring_base& other, size_type position, size_type count) :
+        string()
+    {
+        assign(other, position, count);
+    }
+
+    /**
+     * @brief Copy constructor.
      * @param view string_view to copy.
      */
     string(const string_view& view) :
@@ -805,6 +898,8 @@ public:
         assign(first, last);
     }
 
+    string(nullptr_t) = delete;
+
     /**
      * @brief Copy assignment operator.
      * @param other string to copy.
@@ -848,6 +943,8 @@ public:
         assign(char_array_ptr);
         return *this;
     }
+
+    string& operator=(nullptr_t) = delete;
 
     /**
      * @brief Concatenates a string and a istring_base.

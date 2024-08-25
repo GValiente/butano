@@ -158,7 +158,7 @@ public:
          */
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
-            return ! (a == b);
+            return a._index != b._index;
         }
 
     private:
@@ -286,7 +286,7 @@ public:
          */
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {
-            return ! (a == b);
+            return a._index != b._index;
         }
 
     private:
@@ -1076,18 +1076,6 @@ public:
         }
 
         return true;
-    }
-
-
-    /**
-     * @brief Not equal operator.
-     * @param a First iunordered_set to compare.
-     * @param b Second iunordered_set to compare.
-     * @return `true` if the first iunordered_set is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] friend bool operator!=(const iunordered_set& a, const iunordered_set& b)
-    {
-        return ! (a == b);
     }
 
     /**

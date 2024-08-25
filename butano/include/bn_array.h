@@ -315,17 +315,6 @@ public:
     }
 
     /**
-     * @brief Not equal operator.
-     * @param a First array to compare.
-     * @param b Second array to compare.
-     * @return `true` if the first array is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const array& a, const array& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
      * @brief Less than operator.
      * @param a First array to compare.
      * @param b Second array to compare.
@@ -583,17 +572,6 @@ public:
     [[nodiscard]] constexpr friend bool operator==([[maybe_unused]] const array& a, [[maybe_unused]] const array& b)
     {
         return true;
-    }
-
-    /**
-     * @brief Not equal operator.
-     * @param a First array to compare.
-     * @param b Second array to compare.
-     * @return `true` if the first array is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const array& a, const array& b)
-    {
-        return ! (a == b);
     }
 
     /**

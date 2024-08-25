@@ -700,17 +700,6 @@ public:
     }
 
     /**
-     * @brief Not equal operator.
-     * @param a First iforward_list to compare.
-     * @param b Second iforward_list to compare.
-     * @return `true` if the first iforward_list is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] friend bool operator!=(const iforward_list& a, const iforward_list& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
      * @brief Less than operator.
      * @param a First iforward_list to compare.
      * @param b Second iforward_list to compare.

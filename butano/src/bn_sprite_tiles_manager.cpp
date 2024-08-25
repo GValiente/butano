@@ -136,14 +136,9 @@ namespace
                 return _list->_items[_index];
             }
 
-            [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
-            {
-                return a._index == b._index;
-            }
-
             [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
             {
-                return ! (a == b);
+                return a._index != b._index;
             }
 
         private:

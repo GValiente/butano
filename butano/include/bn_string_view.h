@@ -461,17 +461,6 @@ public:
     }
 
     /**
-     * @brief Not equal operator.
-     * @param a First string_view to compare.
-     * @param b Second string_view to compare.
-     * @return `true` if the first string_view is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const string_view& a, const string_view& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
      * @brief Less than operator.
      * @param a First string_view to compare.
      * @param b Second string_view to compare.

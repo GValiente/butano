@@ -179,7 +179,7 @@ public:
          */
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
-            return ! (a == b);
+            return a._index != b._index;
         }
 
         /**
@@ -379,7 +379,7 @@ public:
          */
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {
-            return ! (a == b);
+            return a._index != b._index;
         }
 
         /**

@@ -412,17 +412,6 @@ public:
     }
 
     /**
-     * @brief Not equal operator.
-     * @param a First span to compare.
-     * @param b Second span to compare.
-     * @return `true` if the first span is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const span& a, const span& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
      * @brief Less than operator.
      * @param a First span to compare.
      * @param b Second span to compare.

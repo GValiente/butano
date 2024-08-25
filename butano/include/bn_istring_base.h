@@ -214,17 +214,6 @@ public:
     }
 
     /**
-     * @brief Not equal operator.
-     * @param a First istring_base to compare.
-     * @param b Second istring_base to compare.
-     * @return `true` if the first istring_base is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const istring_base& a, const istring_base& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
      * @brief Less than operator.
      * @param a First istring_base to compare.
      * @param b Second istring_base to compare.

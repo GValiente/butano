@@ -355,17 +355,6 @@ public:
                 a._pa == b._pa && a._pb == b._pb && a._pc == b._pc && a._pd == b._pd;
     }
 
-    /**
-     * @brief Not equal operator.
-     * @param a First affine_mat_attributes to compare.
-     * @param b Second affine_mat_attributes to compare.
-     * @return `true` if the first affine_mat_attributes is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const affine_mat_attributes& a, const affine_mat_attributes& b)
-    {
-        return ! (a == b);
-    }
-
 private:
     constexpr static fixed _min_inv_scale = 128;
     constexpr static fixed _min_scale = 1 / _min_inv_scale;

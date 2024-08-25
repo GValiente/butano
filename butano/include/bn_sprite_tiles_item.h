@@ -315,17 +315,6 @@ public:
                 a._graphics_count == b._graphics_count;
     }
 
-    /**
-     * @brief Not equal operator.
-     * @param a First sprite_tiles_item to compare.
-     * @param b Second sprite_tiles_item to compare.
-     * @return `true` if the first sprite_tiles_item is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const sprite_tiles_item& a, const sprite_tiles_item& b)
-    {
-        return ! (a == b);
-    }
-
 private:
     span<const tile> _tiles_ref;
 

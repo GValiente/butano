@@ -444,18 +444,6 @@ public:
                 a._pivot_position == b._pivot_position && a._mat_attributes == b._mat_attributes;
     }
 
-    /**
-     * @brief Not equal operator.
-     * @param a First affine_bg_mat_attributes to compare.
-     * @param b Second affine_bg_mat_attributes to compare.
-     * @return `true` if the first affine_bg_mat_attributes is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const affine_bg_mat_attributes& a,
-                                                   const affine_bg_mat_attributes& b)
-    {
-        return ! (a == b);
-    }
-
 private:
     static constexpr int _right_shift = fixed::precision() - 8;
 

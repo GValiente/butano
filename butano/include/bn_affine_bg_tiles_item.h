@@ -164,17 +164,6 @@ public:
         return a._tiles_ref.data() == b._tiles_ref.data() && a._tiles_ref.size() == b._tiles_ref.size();
     }
 
-    /**
-     * @brief Not equal operator.
-     * @param a First affine_bg_tiles_item to compare.
-     * @param b Second affine_bg_tiles_item to compare.
-     * @return `true` if the first affine_bg_tiles_item is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const affine_bg_tiles_item& a, const affine_bg_tiles_item& b)
-    {
-        return ! (a == b);
-    }
-
 private:
     span<const tile> _tiles_ref;
     compression_type _compression;

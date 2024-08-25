@@ -22,9 +22,10 @@
  * * bn::unique_ptr is now `constexpr`.
  * * bn::bitset isn't `constexpr` anymore (it didn't work).
  * * bn::string_view::ends_with char array added.
+ * * Non-throwing `new` and `delete` supported.
  * * bn::string_view::remove_prefix and bn::string_view::remove_suffix assert fixed.
  * * `bn::is_constant_evaluated` replaced with `consteval`.
- * * Non-throwing `new` and `delete` supported.
+ * * Unnecessary `operator!=` implementations removed.
  * * bn::regular_bg_builder::release_map, bn::affine_bg_builder::release_map,
  *   bn::sprite_builder::release_tiles and bn::sprite_builder::release_palette ROM usage reduced.
  *

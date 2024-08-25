@@ -149,7 +149,7 @@ public:
          */
         [[nodiscard]] friend bool operator==(const iterator& a, const iterator& b)
         {
-            return  a._index == b._index;
+            return a._index == b._index;
         }
 
         /**
@@ -160,7 +160,7 @@ public:
          */
         [[nodiscard]] friend bool operator!=(const iterator& a, const iterator& b)
         {
-            return ! (a == b);
+            return a._index != b._index;
         }
 
     private:
@@ -278,7 +278,7 @@ public:
          */
         [[nodiscard]] friend bool operator==(const const_iterator& a, const const_iterator& b)
         {
-            return  a._index == b._index;
+            return a._index == b._index;
         }
 
         /**
@@ -289,7 +289,7 @@ public:
          */
         [[nodiscard]] friend bool operator!=(const const_iterator& a, const const_iterator& b)
         {
-            return ! (a == b);
+            return a._index != b._index;
         }
 
     private:
@@ -1365,17 +1365,6 @@ public:
         }
 
         return true;
-    }
-
-    /**
-     * @brief Not equal operator.
-     * @param a First iunordered_map to compare.
-     * @param b Second iunordered_map to compare.
-     * @return `true` if the first iunordered_map is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] bool friend operator!=(const iunordered_map& a, const iunordered_map& b)
-    {
-        return ! (a == b);
     }
 
     /**

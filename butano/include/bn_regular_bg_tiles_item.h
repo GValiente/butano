@@ -184,17 +184,6 @@ public:
                 a._bpp == b._bpp;
     }
 
-    /**
-     * @brief Not equal operator.
-     * @param a First regular_bg_tiles_item to compare.
-     * @param b Second regular_bg_tiles_item to compare.
-     * @return `true` if the first regular_bg_tiles_item is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const regular_bg_tiles_item& a, const regular_bg_tiles_item& b)
-    {
-        return ! (a == b);
-    }
-
 private:
     span<const tile> _tiles_ref;
     bpp_mode _bpp;

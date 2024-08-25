@@ -807,17 +807,6 @@ public:
     }
 
     /**
-     * @brief Not equal operator.
-     * @param a First ilist to compare.
-     * @param b Second ilist to compare.
-     * @return `true` if the first ilist is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] friend bool operator!=(const ilist& a, const ilist& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
      * @brief Less than operator.
      * @param a First ilist to compare.
      * @param b Second ilist to compare.

@@ -748,17 +748,6 @@ public:
     }
 
     /**
-     * @brief Not equal operator.
-     * @param a First ivector to compare.
-     * @param b Second ivector to compare.
-     * @return `true` if the first ivector is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] friend bool operator!=(const ivector& a, const ivector& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
      * @brief Less than operator.
      * @param a First ivector to compare.
      * @param b Second ivector to compare.

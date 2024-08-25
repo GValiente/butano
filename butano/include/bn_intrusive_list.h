@@ -725,17 +725,6 @@ public:
     }
 
     /**
-     * @brief Not equal operator.
-     * @param a First intrusive_list to compare.
-     * @param b Second intrusive_list to compare.
-     * @return `true` if the first intrusive_list is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] friend bool operator!=(const intrusive_list& a, const intrusive_list& b)
-    {
-        return ! (a == b);
-    }
-
-    /**
      * @brief Less than operator.
      * @param a First intrusive_list to compare.
      * @param b Second intrusive_list to compare.

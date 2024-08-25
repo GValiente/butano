@@ -484,17 +484,6 @@ public:
         return equal(a_data, a_data + num_elements, b_data);
     }
 
-    /**
-     * @brief Not equal operator.
-     * @param a First ibitset to compare.
-     * @param b Second ibitset to compare.
-     * @return `true` if the first ibitset is not equal to the second one, otherwise `false`.
-     */
-    [[nodiscard]] constexpr friend bool operator!=(const ibitset& a, const ibitset& b)
-    {
-        return ! (a == b);
-    }
-
 protected:
     /// @cond DO_NOT_DOCUMENT
 

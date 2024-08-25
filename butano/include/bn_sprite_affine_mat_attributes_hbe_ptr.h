@@ -162,7 +162,7 @@ public:
     [[nodiscard]] friend bool operator!=(const sprite_affine_mat_attributes_hbe_ptr& a,
                                          const sprite_affine_mat_attributes_hbe_ptr& b)
     {
-        return ! (a == b);
+        return a._pa_hbe_ptr != b._pa_hbe_ptr;
     }
 
 private:

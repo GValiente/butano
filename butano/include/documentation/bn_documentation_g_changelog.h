@@ -20,6 +20,7 @@
  * * Construction of bn::string_view from `nullptr` is disallowed (thanks C++23).
  * * bn::string_view::starts_with with a `nullptr` char array is disallowed.
  * * bn::unique_ptr is now `constexpr`.
+ * * bn::bitset isn't `constexpr` anymore (it didn't work).
  * * bn::string_view::ends_with char array added.
  * * bn::string_view::remove_prefix and bn::string_view::remove_suffix assert fixed.
  * * `bn::is_constant_evaluated` replaced with `consteval`.

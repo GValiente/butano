@@ -546,7 +546,7 @@ public:
     /**
      * @brief Default constructor.
      */
-    constexpr bitset() :
+    bitset() :
         ibitset(_num_elements, _storage_buffer)
     {
     }
@@ -555,7 +555,7 @@ public:
      * @brief Copy constructor.
      * @param other bitset to copy.
      */
-    constexpr bitset(const bitset& other) :
+    bitset(const bitset& other) :
         ibitset(_num_elements, _storage_buffer)
     {
         copy_n(other._storage_buffer, _num_elements, _storage_buffer);
@@ -565,7 +565,7 @@ public:
      * @brief Copy constructor.
      * @param other ibitset to copy.
      */
-    constexpr bitset(const ibitset& other) :
+    bitset(const ibitset& other) :
         ibitset(_num_elements, _storage_buffer)
     {
         ibitset::operator=(other);
@@ -576,7 +576,7 @@ public:
      * @param other bitset to copy.
      * @return Reference to this.
      */
-    constexpr bitset& operator=(const bitset& other)
+    bitset& operator=(const bitset& other)
     {
         if(this != &other)
         {
@@ -591,7 +591,7 @@ public:
      * @param other ibitset to copy.
      * @return Reference to this.
      */
-    constexpr bitset& operator=(const ibitset& other)
+    bitset& operator=(const ibitset& other)
     {
         ibitset::operator=(other);
         return *this;
@@ -601,7 +601,7 @@ public:
      * @brief Sets all bits to `true`.
      * @return Reference to this.
      */
-    constexpr bitset& set()
+    bitset& set()
     {
         ibitset::set();
         return *this;
@@ -612,7 +612,7 @@ public:
      * @param index Index of the bit to set.
      * @return Reference to this.
      */
-    constexpr bitset& set(int index)
+    bitset& set(int index)
     {
         ibitset::set(index);
         return *this;
@@ -624,7 +624,7 @@ public:
      * @param value Value to set.
      * @return Reference to this.
      */
-    constexpr bitset& set(int index, bool value)
+    bitset& set(int index, bool value)
     {
         ibitset::set(index, value);
         return *this;
@@ -634,7 +634,7 @@ public:
      * @brief Sets all bits to `false`.
      * @return Reference to this.
      */
-    constexpr bitset& reset()
+    bitset& reset()
     {
         ibitset::reset();
         return *this;
@@ -645,7 +645,7 @@ public:
      * @param index Index of the bit to set.
      * @return Reference to this.
      */
-    constexpr bitset& reset(int index)
+    bitset& reset(int index)
     {
         ibitset::reset(index);
         return *this;
@@ -655,7 +655,7 @@ public:
      * @brief Flips all values (changes `true` values to `false` and vice versa).
      * @return Reference to this.
      */
-    constexpr bitset& flip()
+    bitset& flip()
     {
         ibitset::flip();
         return *this;
@@ -666,7 +666,7 @@ public:
      * @param index Index of the bit to flip.
      * @return Reference to this.
      */
-    constexpr bitset& flip(int index)
+    bitset& flip(int index)
     {
         ibitset::flip(index);
         return *this;
@@ -677,7 +677,7 @@ public:
      * @param other Another ibitset.
      * @return Reference to this.
      */
-    constexpr bitset& operator&=(const ibitset& other)
+    bitset& operator&=(const ibitset& other)
     {
         ibitset::operator&=(other);
         return *this;
@@ -688,7 +688,7 @@ public:
      * @param other Another ibitset.
      * @return Reference to this.
      */
-    constexpr bitset& operator|=(const ibitset& other)
+    bitset& operator|=(const ibitset& other)
     {
         ibitset::operator|=(other);
         return *this;
@@ -699,7 +699,7 @@ public:
      * @param other Another ibitset.
      * @return Reference to this.
      */
-    constexpr bitset& operator^=(const ibitset& other)
+    bitset& operator^=(const ibitset& other)
     {
         ibitset::operator^=(other);
         return *this;
@@ -708,7 +708,7 @@ public:
     /**
      * @brief Returns this bitset with all bits flipped (binary NOT).
      */
-    [[nodiscard]] constexpr bitset operator~() const
+    [[nodiscard]] bitset operator~() const
     {
         bitset result = *this;
         result.flip();
@@ -718,7 +718,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary AND of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator&(const bitset& a, const bitset& b)
+    [[nodiscard]] friend bitset operator&(const bitset& a, const bitset& b)
     {
         bitset result(a);
         result &= b;
@@ -728,7 +728,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary OR of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator|(const bitset& a, const bitset& b)
+    [[nodiscard]] friend bitset operator|(const bitset& a, const bitset& b)
     {
         bitset result(a);
         result |= b;
@@ -738,7 +738,7 @@ public:
     /**
      * @brief Returns a bitset containing the result of binary XOR of the given bitsets.
      */
-    [[nodiscard]] constexpr friend bitset operator^(const bitset& a, const bitset& b)
+    [[nodiscard]] friend bitset operator^(const bitset& a, const bitset& b)
     {
         bitset result(a);
         result ^= b;

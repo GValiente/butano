@@ -28,6 +28,7 @@
  * * Unnecessary `operator!=` implementations removed.
  * * bn::regular_bg_builder::release_map, bn::affine_bg_builder::release_map,
  *   bn::sprite_builder::release_tiles and bn::sprite_builder::release_palette ROM usage reduced.
+ *   bn::deque iterators order operators optimized.
  *
  *
  * @section changelog_17_9_0 17.9.0

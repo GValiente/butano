@@ -197,14 +197,6 @@ public:
     }
 
     /**
-     * @brief Returns a string_view of this istring.
-     */
-    [[nodiscard]] constexpr operator string_view() const
-    {
-        return string_view(_data, _size);
-    }
-
-    /**
      * @brief Checks if the referenced string begins with the given prefix.
      * @param value Single character.
      * @return `true` if the referenced string begins with the given prefix; `false` otherwise.

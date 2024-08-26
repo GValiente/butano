@@ -23,7 +23,6 @@
  * * bn::unique_ptr is now `constexpr`.
  * * bn::bitset and bn::string aren't `constexpr` anymore (it didn't work before).
  * * More overloads added to bn::string construction, assignment and bn::string::append.
- * * bn::string_view operator added to bn::string.
  * * bn::string::find and bn::string_view::find added.
  * * bn::string::contains and bn::string_view::contains added.
  * * bn::string::substr added.

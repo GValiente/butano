@@ -27,6 +27,7 @@
  * * bn::string::contains and bn::string_view::contains added.
  * * bn::string::substr added.
  * * bn::string_view::ends_with a char array added.
+ * * `nullptr` constructor and method overloads added to bn::unique_ptr.
  * * Non-throwing `new` and `delete` supported.
  * * bn::string_view::remove_prefix and bn::string_view::remove_suffix assert fixed.
  * * `bn::is_constant_evaluated` replaced with `consteval`.

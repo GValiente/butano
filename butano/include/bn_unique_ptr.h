@@ -35,6 +35,14 @@ public:
     constexpr unique_ptr() = default;
 
     /**
+     * @brief Nullptr constructor.
+     */
+    constexpr unique_ptr(nullptr_t) :
+        unique_ptr()
+    {
+    }
+
+    /**
      * @brief Constructor.
      * @param ptr Pointer to the object to manage.
      */
@@ -91,6 +99,14 @@ public:
         reset(other.release());
         _deleter = forward<OtherDeleter>(other.get_deleter());
         return *this;
+    }
+
+    /**
+     * @brief Effectively the same as calling reset().
+     */
+    constexpr unique_ptr& operator=(nullptr_t) noexcept
+    {
+        reset();
     }
 
     /**
@@ -226,6 +242,14 @@ public:
             reset();
             _ptr = ptr;
         }
+    }
+
+    /**
+     * @brief Disposes the managed object.
+     */
+    constexpr void reset(nullptr_t)
+    {
+        reset();
     }
 
     /**

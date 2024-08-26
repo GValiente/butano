@@ -25,6 +25,7 @@
  * * More overloads added to bn::string construction, assignment and bn::string::append.
  * * bn::string_view operator added to bn::string.
  * * bn::string::contains and bn::string_view::contains added.
+ * * bn::string::substr added.
  * * bn::string_view::ends_with a char array added.
  * * Non-throwing `new` and `delete` supported.
  * * bn::string_view::remove_prefix and bn::string_view::remove_suffix assert fixed.

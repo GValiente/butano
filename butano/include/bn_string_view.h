@@ -249,12 +249,12 @@ public:
     {
         BN_ASSERT(position >= 0, "Invalid position: ", position);
 
-        size_type sz = size();
+        size_type this_size = size();
         string_view view;
 
-        if(position < sz)
+        if(position < this_size)
         {
-            view = string_view(_begin + position, sz - position);
+            view = string_view(_begin + position, this_size - position);
         }
 
         return view;
@@ -265,16 +265,15 @@ public:
      */
     [[nodiscard]] constexpr string_view substr(size_type position, size_type count) const
     {
-        BN_ASSERT(count >= 0, "Invalid count: ", count);
         BN_ASSERT(position >= 0, "Invalid position: ", position);
+        BN_ASSERT(count >= 0, "Invalid count: ", count);
 
-        size_type sz = size();
+        size_type this_size = size();
         string_view view;
 
-        if(position < sz)
+        if(position < this_size)
         {
-            size_type n = min(count, sz - position);
-            view = string_view(_begin + position, n);
+            view = string_view(_begin + position, min(count, this_size - position));
         }
 
         return view;

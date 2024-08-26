@@ -1052,6 +1052,51 @@ public:
     string& operator=(nullptr_t) = delete;
 
     /**
+     * @brief Returns a copy of this.
+     */
+    [[nodiscard]] string substr() const
+    {
+        return *this;
+    }
+
+    /**
+     * @brief Returns the substring [position, size() - position).
+     */
+    [[nodiscard]] string substr(size_type position) const
+    {
+        BN_ASSERT(position >= 0, "Invalid position: ", position);
+
+        size_type this_size = size();
+        string result;
+
+        if(position < this_size)
+        {
+            result.assign(_buffer + position, this_size - position);
+        }
+
+        return result;
+    }
+
+    /**
+     * @brief Returns the substring [position, position + count).
+     */
+    [[nodiscard]] string substr(size_type position, size_type count) const
+    {
+        BN_ASSERT(position >= 0, "Invalid position: ", position);
+        BN_ASSERT(count >= 0, "Invalid count: ", count);
+
+        size_type this_size = size();
+        string result;
+
+        if(position < this_size)
+        {
+            result.assign(_buffer + position, min(count, this_size - position));
+        }
+
+        return result;
+    }
+
+    /**
      * @brief Concatenates a string and a istring_base.
      * @param a First string to concatenate.
      * @param b Second istring_base to concatenate.
@@ -1104,7 +1149,7 @@ public:
     }
 
 private:
-    alignas(int) char _buffer[MaxSize + 1];
+    alignas(int) value_type _buffer[MaxSize + 1];
 };
 
 

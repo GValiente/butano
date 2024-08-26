@@ -18,12 +18,14 @@
  * * Old bn::hdma::start and bn::hdma::high_priority_start API deprecated.
  * * `BN_UNREACHABLE` deprecated.
  * * Construction of bn::string and bn::string_view from `nullptr` is disallowed (thanks C++23).
- * * bn::string_view::starts_with with a `nullptr` char array is disallowed.
+ * * bn::string::starts_with, bn::string::ends_with, bn::string_view::starts_with and bn::string_view::ends_with
+ *   a `nullptr` char array is disallowed.
  * * bn::unique_ptr is now `constexpr`.
- * * bn::bitset and bn::string aren't `constexpr` anymore (it didn't work).
- * * More overloads added to bn::string construction, assignment and append method.
- * * bn::string::string_view operator added.
- * * bn::string_view::ends_with char array added.
+ * * bn::bitset and bn::string aren't `constexpr` anymore (it didn't work before).
+ * * More overloads added to bn::string construction, assignment and bn::string::append.
+ * * bn::string_view operator added to bn::string.
+ * * bn::string::contains and bn::string_view::contains added.
+ * * bn::string_view::ends_with a char array added.
  * * Non-throwing `new` and `delete` supported.
  * * bn::string_view::remove_prefix and bn::string_view::remove_suffix assert fixed.
  * * `bn::is_constant_evaluated` replaced with `consteval`.

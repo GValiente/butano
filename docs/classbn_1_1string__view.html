@@ -250,6 +250,18 @@
             </dt>
             <dd>Checks if the referenced string ends with the given prefix.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac81545eec695b26d539c0f42f75683aa" class="m-doc">contains</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1string__view.html#a7d04ae096eaabf9da3b726419b0756d7" class="m-doc">value_<wbr />type</a> value) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string contains the given character.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a81e18d851a323cf65cb207f32506e02e" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string contains the given substring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af34a829a6fa76c93d066fd040ae3be48" class="m-doc">contains</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1string__view.html#a2f338d9a2eff32c5c28aecad98cc23d2" class="m-doc">const_<wbr />pointer</a> char_array_ptr) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Checks if the referenced string contains the given substring.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a3a3458908b9672982cf7bb96d19cd1f0" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Exchanges the contents of this <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> with those of the other one.</dd>
@@ -528,6 +540,75 @@
                 <tr>
                   <th>Returns</th>
                   <td><code>true</code> if the referenced string ends with the given prefix; <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac81545eec695b26d539c0f42f75683aa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />string_view::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac81545eec695b26d539c0f42f75683aa" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1string__view.html#a7d04ae096eaabf9da3b726419b0756d7" class="m-doc">value_<wbr />type</a> value) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string contains the given character.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">value</td>
+                  <td>Single character.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string contains the given character; <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a81e18d851a323cf65cb207f32506e02e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />string_view::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a81e18d851a323cf65cb207f32506e02e" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string contains the given substring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string contains the given substring; <code>false</code> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af34a829a6fa76c93d066fd040ae3be48"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />string_view::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af34a829a6fa76c93d066fd040ae3be48" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1string__view.html#a2f338d9a2eff32c5c28aecad98cc23d2" class="m-doc">const_<wbr />pointer</a> char_array_ptr) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Checks if the referenced string contains the given substring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">char_array_ptr</td>
+                  <td>Pointer to null-terminated characters array.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the referenced string contains the given substring; <code>false</code> otherwise.</td>
                 </tr>
               </tfoot>
             </table>

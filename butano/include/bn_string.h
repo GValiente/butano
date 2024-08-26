@@ -272,6 +272,8 @@ public:
         return *char_array_ptr == 0;
     }
 
+    [[nodiscard]] constexpr bool starts_with(nullptr_t) const = delete;
+
     /**
      * @brief Checks if the referenced string ends with the given prefix.
      * @param value Single character.
@@ -299,6 +301,109 @@ public:
 
         return equal(_data + this_size - other_size, _data + this_size, other.data());
     }
+
+    /**
+     * @brief Checks if the referenced string ends with the given prefix.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return `true` if the referenced string ends with the given prefix; `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool ends_with(const_pointer char_array_ptr) const
+    {
+        return ends_with(string_view(char_array_ptr));
+    }
+
+    [[nodiscard]] constexpr bool ends_with(nullptr_t) const = delete;
+
+    /**
+     * @brief Checks if the referenced string contains the given character.
+     * @param value Single character.
+     * @return `true` if the referenced string contains the given character; `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool contains(value_type value) const
+    {
+        for(value_type character : *this)
+        {
+            if(character == value)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @brief Checks if the referenced string contains the given substring.
+     * @param other Another string_view.
+     * @return `true` if the referenced string contains the given substring; `false` otherwise.
+     */
+    [[nodiscard]] constexpr bool contains(const istring_base& other) const
+    {
+        size_type this_size = size();
+        size_type other_size = other.size();
+
+        if(other_size > this_size)
+        {
+            return false;
+        }
+
+        const_pointer this_data = data();
+        const_pointer other_data = other.data();
+
+        if(this_data == other_data)
+        {
+            return true;
+        }
+
+        for(int index = 0, limit = this_size - other_size; index <= limit; ++index)
+        {
+            if(equal(this_data, this_data + other_size, other_data))
+            {
+                return true;
+            }
+
+            ++this_data;
+        }
+
+        return false;
+    }
+
+    /**
+     * @brief Checks if the referenced string contains the given substring.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return `true` if the referenced string contains the given substring; `false` otherwise.
+     */
+    constexpr bool contains(const_pointer char_array_ptr) const
+    {
+        size_type this_size = size();
+        size_type other_size = string_view(char_array_ptr).size();
+
+        if(other_size > this_size)
+        {
+            return false;
+        }
+
+        const_pointer this_data = data();
+
+        if(this_data == char_array_ptr)
+        {
+            return true;
+        }
+
+        for(int index = 0, limit = this_size - other_size; index <= limit; ++index)
+        {
+            if(equal(this_data, this_data + other_size, char_array_ptr))
+            {
+                return true;
+            }
+
+            ++this_data;
+        }
+
+        return false;
+    }
+
+    [[nodiscard]] constexpr bool contains(nullptr_t) const = delete;
 
     /**
      * @brief Replaces the contents of the istring.

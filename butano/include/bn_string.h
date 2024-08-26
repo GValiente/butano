@@ -33,6 +33,8 @@ public:
     using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
     using const_reverse_iterator = bn::reverse_iterator<const_iterator>; //!< Const reverse iterator alias.
 
+    static constexpr size_type npos = -1; //!< Exact meaning depends on context.
+
     /**
      * @brief Copy assignment operator.
      * @param other istring_base to copy.
@@ -321,15 +323,7 @@ public:
      */
     [[nodiscard]] constexpr bool contains(value_type value) const
     {
-        for(value_type character : *this)
-        {
-            if(character == value)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return find(value) != npos;
     }
 
     /**
@@ -337,35 +331,9 @@ public:
      * @param other Another string_view.
      * @return `true` if the referenced string contains the given substring; `false` otherwise.
      */
-    [[nodiscard]] constexpr bool contains(const istring_base& other) const
+    [[nodiscard]] constexpr bool contains(const string_view& other) const
     {
-        size_type this_size = size();
-        size_type other_size = other.size();
-
-        if(other_size > this_size)
-        {
-            return false;
-        }
-
-        const_pointer this_data = data();
-        const_pointer other_data = other.data();
-
-        if(this_data == other_data)
-        {
-            return true;
-        }
-
-        for(int index = 0, limit = this_size - other_size; index <= limit; ++index)
-        {
-            if(equal(this_data, this_data + other_size, other_data))
-            {
-                return true;
-            }
-
-            ++this_data;
-        }
-
-        return false;
+        return find(other) != npos;
     }
 
     /**
@@ -373,37 +341,103 @@ public:
      * @param char_array_ptr Pointer to null-terminated characters array.
      * @return `true` if the referenced string contains the given substring; `false` otherwise.
      */
-    constexpr bool contains(const_pointer char_array_ptr) const
+    [[nodiscard]] constexpr bool contains(const_pointer char_array_ptr) const
+    {
+        return find(char_array_ptr) != npos;
+    }
+
+    [[nodiscard]] constexpr bool contains(nullptr_t) const = delete;
+
+    /**
+     * @brief Finds the first substring equal to the given character.
+     * @param value Single character.
+     * @return Position of the first character of the found substring, or npos if no such substring is found.
+     */
+    [[nodiscard]] constexpr size_type find(value_type value) const
+    {
+        for(size_type index = 0, limit = size(); index < limit; ++index)
+        {
+            if(_data[index] == value)
+            {
+                return index;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence.
+     * @param other Another string_view.
+     * @return Position of the first character of the found substring, or npos if no such substring is found.
+     */
+    [[nodiscard]] constexpr size_type find(const string_view& other) const
+    {
+        size_type this_size = size();
+        size_type other_size = other.size();
+
+        if(other_size > this_size)
+        {
+            return npos;
+        }
+
+        const_pointer this_data = data();
+        const_pointer other_data = other.data();
+
+        if(this_data == other_data)
+        {
+            return 0;
+        }
+
+        for(size_type index = 0, limit = this_size - other_size; index <= limit; ++index)
+        {
+            if(equal(this_data, this_data + other_size, other_data))
+            {
+                return index;
+            }
+
+            ++this_data;
+        }
+
+        return npos;
+    }
+
+    /**
+     * @brief Finds the first substring equal to the given character sequence.
+     * @param char_array_ptr Pointer to null-terminated characters array.
+     * @return Position of the first character of the found substring, or npos if no such substring is found.
+     */
+    [[nodiscard]] constexpr size_type find(const_pointer char_array_ptr) const
     {
         size_type this_size = size();
         size_type other_size = string_view(char_array_ptr).size();
 
         if(other_size > this_size)
         {
-            return false;
+            return npos;
         }
 
         const_pointer this_data = data();
 
         if(this_data == char_array_ptr)
         {
-            return true;
+            return 0;
         }
 
-        for(int index = 0, limit = this_size - other_size; index <= limit; ++index)
+        for(size_type index = 0, limit = this_size - other_size; index <= limit; ++index)
         {
             if(equal(this_data, this_data + other_size, char_array_ptr))
             {
-                return true;
+                return index;
             }
 
             ++this_data;
         }
 
-        return false;
+        return npos;
     }
 
-    [[nodiscard]] constexpr bool contains(nullptr_t) const = delete;
+    [[nodiscard]] constexpr size_type find(nullptr_t) const = delete;
 
     /**
      * @brief Replaces the contents of the istring.

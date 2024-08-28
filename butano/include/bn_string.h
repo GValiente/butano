@@ -208,27 +208,27 @@ public:
 
     /**
      * @brief Checks if the referenced string begins with the given prefix.
-     * @param other Another string_view.
+     * @param view string_view to check.
      * @return `true` if the referenced string begins with the given prefix; `false` otherwise.
      */
-    [[nodiscard]] constexpr bool starts_with(const string_view& other) const
+    [[nodiscard]] constexpr bool starts_with(const string_view& view) const
     {
-        size_type other_size = other.size();
+        size_type view_size = view.size();
 
-        if(size() < other_size)
+        if(size() < view_size)
         {
             return false;
         }
 
         const_pointer this_data = data();
-        const_pointer other_data = other.data();
+        const_pointer view_data = view.data();
 
-        if(this_data == other_data)
+        if(this_data == view_data)
         {
             return true;
         }
 
-        return equal(this_data, this_data + other_size, other_data);
+        return equal(this_data, this_data + view_size, view_data);
     }
 
     /**
@@ -280,20 +280,20 @@ public:
 
     /**
      * @brief Checks if the referenced string ends with the given prefix.
-     * @param other Another string_view.
+     * @param view string_view to check.
      * @return `true` if the referenced string ends with the given prefix; `false` otherwise.
      */
-    [[nodiscard]] constexpr bool ends_with(const string_view& other) const
+    [[nodiscard]] constexpr bool ends_with(const string_view& view) const
     {
         size_type this_size = size();
-        size_type other_size = other.size();
+        size_type view_size = view.size();
 
-        if(this_size < other_size)
+        if(this_size < view_size)
         {
             return false;
         }
 
-        return equal(_data + this_size - other_size, _data + this_size, other.data());
+        return equal(_data + this_size - view_size, _data + this_size, view.data());
     }
 
     /**
@@ -320,12 +320,12 @@ public:
 
     /**
      * @brief Checks if the referenced string contains the given substring.
-     * @param other Another string_view.
+     * @param view string_view to check.
      * @return `true` if the referenced string contains the given substring; `false` otherwise.
      */
-    [[nodiscard]] constexpr bool contains(const string_view& other) const
+    [[nodiscard]] constexpr bool contains(const string_view& view) const
     {
-        return find(other) != npos;
+        return find(view) != npos;
     }
 
     /**
@@ -360,30 +360,30 @@ public:
 
     /**
      * @brief Finds the first substring equal to the given character sequence.
-     * @param other Another string_view.
+     * @param view string_view to search.
      * @return Position of the first character of the found substring, or npos if no such substring is found.
      */
-    [[nodiscard]] constexpr size_type find(const string_view& other) const
+    [[nodiscard]] constexpr size_type find(const string_view& view) const
     {
         size_type this_size = size();
-        size_type other_size = other.size();
+        size_type view_size = view.size();
 
-        if(other_size > this_size)
+        if(view_size > this_size)
         {
             return npos;
         }
 
         const_pointer this_data = data();
-        const_pointer other_data = other.data();
+        const_pointer view_data = view.data();
 
-        if(this_data == other_data)
+        if(this_data == view_data)
         {
             return 0;
         }
 
-        for(size_type index = 0, limit = this_size - other_size; index <= limit; ++index)
+        for(size_type index = 0, limit = this_size - view_size; index <= limit; ++index)
         {
-            if(equal(this_data, this_data + other_size, other_data))
+            if(equal(this_data, this_data + view_size, view_data))
             {
                 return index;
             }

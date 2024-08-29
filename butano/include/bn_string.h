@@ -500,6 +500,37 @@ public:
 
     /**
      * @brief Replaces the contents of the istring.
+     * @param view string_view replacement.
+     * @param position Starting character index.
+     * @return Reference to this.
+     */
+    constexpr istring& assign(const string_view& view, size_type position)
+    {
+        size_type view_size = view.size();
+        BN_ASSERT(position >= 0 && position <= view_size, "Invalid position: ", position, " - ", view_size);
+
+        _assign(view.data() + position, view_size - position);
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents of the istring.
+     * @param view string_view replacement.
+     * @param position Starting character index.
+     * @param count Number of characters to assign.
+     * @return Reference to this.
+     */
+    constexpr istring& assign(const string_view& view, size_type position, size_type count)
+    {
+        BN_ASSERT(position >= 0 && position <= view.size(), "Invalid position: ", position, " - ", view.size());
+        BN_ASSERT(count >= 0 && count <= view.size() - position, "Invalid count: ", count, " - ", view.size());
+
+        _assign(view.data() + position, count);
+        return *this;
+    }
+
+    /**
+     * @brief Replaces the contents of the istring.
      * @param char_array_ptr Pointer to null-terminated characters array replacement.
      * @return Reference to this.
      */
@@ -637,6 +668,37 @@ public:
     constexpr istring& append(const string_view& view)
     {
         _append(view.data(), view.size());
+        return *this;
+    }
+
+    /**
+     * @brief Appends additional characters to the istring.
+     * @param view string_view to append.
+     * @param position Starting character index.
+     * @return Reference to this.
+     */
+    constexpr istring& append(const string_view& view, size_type position)
+    {
+        size_type view_size = view.size();
+        BN_ASSERT(position >= 0 && position <= view_size, "Invalid position: ", position, " - ", view_size);
+
+        _append(view.data() + position, view_size - position);
+        return *this;
+    }
+
+    /**
+     * @brief Appends additional characters to the istring.
+     * @param view string_view to append.
+     * @param position Starting character index.
+     * @param count Number of characters to append.
+     * @return Reference to this.
+     */
+    constexpr istring& append(const string_view& view, size_type position, size_type count)
+    {
+        BN_ASSERT(position >= 0 && position <= view.size(), "Invalid position: ", position, " - ", view.size());
+        BN_ASSERT(count >= 0 && count <= view.size() - position, "Invalid count: ", count, " - ", view.size());
+
+        _append(view.data() + position, count);
         return *this;
     }
 

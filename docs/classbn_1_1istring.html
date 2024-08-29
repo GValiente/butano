@@ -185,7 +185,7 @@
             </dt>
             <dd>Checks if the referenced string begins with the given prefix.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a80a29293de4cf46fa5161e6fed3ce761" class="m-doc">starts_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ae236814b4af89f67206bbaa62d18b232" class="m-doc">starts_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Checks if the referenced string begins with the given prefix.</dd>
             <dt>
@@ -197,7 +197,7 @@
             </dt>
             <dd>Checks if the referenced string ends with the given prefix.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ae332dd9509a833ef4b0f7a79ecfdbb82" class="m-doc">ends_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a712973da155f3aa602186bebf694551f" class="m-doc">ends_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Checks if the referenced string ends with the given prefix.</dd>
             <dt>
@@ -209,7 +209,7 @@
             </dt>
             <dd>Checks if the referenced string contains the given character.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ad7fa562be65cb0f2b70ca07a93fa47c0" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5f9e96f56fac94937f603d1248f3e806" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) const -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Checks if the referenced string contains the given substring.</dd>
             <dt>
@@ -221,7 +221,7 @@
             </dt>
             <dd>Finds the first substring equal to the given character.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a4e532ca7ee1fc6cfbad291612918d0d1" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const -&gt; <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a529e38a5a7805fc214559404f2346142" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) const -&gt; <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Finds the first substring equal to the given character sequence.</dd>
             <dt>
@@ -249,6 +249,17 @@
             <dd>Replaces the contents of the istring.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#acefccb9a10363af81a9f8b545d5dbdc3" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Replaces the contents of the istring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab0a0600f38fe139f77d3d66e38c2c00a" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Replaces the contents of the istring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a44a4e9afaebd7f62e36d88ef76594e06" class="m-doc">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Replaces the contents of the istring.</dd>
             <dt>
@@ -299,6 +310,17 @@
             <dd>Appends an additional character to the istring.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a7442a02b118ece47ba5dbb647bb44dc3" class="m-doc">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Appends additional characters to the istring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a38a9f70c66e416834c5f6bb11f71efb6" class="m-doc">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Appends additional characters to the istring.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a63b71792d5a5f350c2ba61f9474489f6" class="m-doc">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) -&gt; <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Appends additional characters to the istring.</dd>
             <dt>
@@ -468,9 +490,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a80a29293de4cf46fa5161e6fed3ce761"><div>
+          <section class="m-doc-details" id="ae236814b4af89f67206bbaa62d18b232"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a80a29293de4cf46fa5161e6fed3ce761" class="m-doc-self">starts_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae236814b4af89f67206bbaa62d18b232" class="m-doc-self">starts_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Checks if the referenced string begins with the given prefix.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -479,8 +501,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">other</td>
-                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to check.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -537,9 +559,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ae332dd9509a833ef4b0f7a79ecfdbb82"><div>
+          <section class="m-doc-details" id="a712973da155f3aa602186bebf694551f"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae332dd9509a833ef4b0f7a79ecfdbb82" class="m-doc-self">ends_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a712973da155f3aa602186bebf694551f" class="m-doc-self">ends_with</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Checks if the referenced string ends with the given prefix.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -548,8 +570,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">other</td>
-                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to check.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -606,9 +628,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ad7fa562be65cb0f2b70ca07a93fa47c0"><div>
+          <section class="m-doc-details" id="a5f9e96f56fac94937f603d1248f3e806"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad7fa562be65cb0f2b70ca07a93fa47c0" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5f9e96f56fac94937f603d1248f3e806" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Checks if the referenced string contains the given substring.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -617,8 +639,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">other</td>
-                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to check.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -675,9 +697,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a4e532ca7ee1fc6cfbad291612918d0d1"><div>
+          <section class="m-doc-details" id="a529e38a5a7805fc214559404f2346142"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4e532ca7ee1fc6cfbad291612918d0d1" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; other) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a529e38a5a7805fc214559404f2346142" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Finds the first substring equal to the given character sequence.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -686,8 +708,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td style="width: 1%">other</td>
-                  <td>Another <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>.</td>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to search.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -841,6 +863,67 @@
                 <tr>
                   <td style="width: 1%">view</td>
                   <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> replacement.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab0a0600f38fe139f77d3d66e38c2c00a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab0a0600f38fe139f77d3d66e38c2c00a" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Replaces the contents of the istring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> replacement.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>Starting character index.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a44a4e9afaebd7f62e36d88ef76594e06"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a44a4e9afaebd7f62e36d88ef76594e06" class="m-doc-self">assign</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Replaces the contents of the istring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> replacement.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>Starting character index.</td>
+                </tr>
+                <tr>
+                  <td>count</td>
+                  <td>Number of characters to assign.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -1095,6 +1178,67 @@
                 <tr>
                   <td style="width: 1%">view</td>
                   <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to append.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a38a9f70c66e416834c5f6bb11f71efb6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a38a9f70c66e416834c5f6bb11f71efb6" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Appends additional characters to the istring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to append.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>Starting character index.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a63b71792d5a5f350c2ba61f9474489f6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; bn::<wbr />istring::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a63b71792d5a5f350c2ba61f9474489f6" class="m-doc-self">append</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; view,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> position,
+              <a href="classbn_1_1istring__base.html#a479530ec44b522dc73b311deaa5551d8" class="m-doc">size_<wbr />type</a> count) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Appends additional characters to the istring.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">view</td>
+                  <td><a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a> to append.</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>Starting character index.</td>
+                </tr>
+                <tr>
+                  <td>count</td>
+                  <td>Number of characters to append.</td>
                 </tr>
               </tbody>
               <tfoot>

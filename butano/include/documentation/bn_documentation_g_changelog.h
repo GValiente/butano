@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_0_1 18.0.1 (next release)
+ * @section changelog_18_0_1 18.0.1
  *
  * Tools no longer crash on Windows with more than 60 logical CPU cores.
  *

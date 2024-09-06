@@ -6,9 +6,9 @@ zlib License, see LICENSE file.
 import os
 import json
 import sys
-from multiprocessing import Pool
 
 from file_info import FileInfo
+from pool import create_pool
 
 
 class DmgAudioFileInfo:
@@ -242,7 +242,7 @@ def process_dmg_audio(audio_paths, build_folder_path):
 
         sys.stdout.flush()
 
-        pool = Pool()
+        pool = create_pool()
         process_results = pool.map(DmgAudioFileInfoProcessor(build_folder_path), audio_file_infos)
         pool.close()
 

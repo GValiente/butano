@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_0_1 18.0.1 (next release)
+ *
+ * Tools no longer crash on Windows with more than 60 logical CPU cores.
+ *
+ *
  * @section changelog_18_0_0 18.0.0
  *
  * * Language standard updated to C++23.

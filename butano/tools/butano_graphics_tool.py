@@ -9,10 +9,10 @@ import re
 import string
 import subprocess
 import sys
-from multiprocessing import Pool
 
 from bmp import BMP
 from file_info import FileInfo
+from pool import create_pool
 
 
 def parse_colors_count(info, bmp, tag='colors_count'):
@@ -1764,7 +1764,7 @@ def process_graphics(grit, graphics_paths, build_folder_path):
 
         sys.stdout.flush()
 
-        pool = Pool()
+        pool = create_pool()
         process_results = pool.map(GraphicsFileInfoProcessor(grit, build_folder_path), graphics_file_infos)
         pool.close()
 

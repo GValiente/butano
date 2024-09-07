@@ -14,7 +14,7 @@
  *
  * @section changelog_18_1_0 18.1.0 (next release)
  *
- * Sprite tiles and audio management ROM usage reduced.
+ * Color palettes, sprite tiles and audio management ROM usage reduced.
  *
  *
  * @section changelog_18_0_1 18.0.1

@@ -270,6 +270,11 @@ private:
 
     [[nodiscard]] int _first_bpp_4_palette_index() const;
 
+    __attribute__((noinline)) void _erase_bpp_4_indexes_map_index(uint16_t hash)
+    {
+        _bpp_4_indexes_map.erase(hash);
+    }
+
     void _on_global_effect_updated(bool active);
 
     void _set_colors_bpp_impl(int id, const span<const color>& colors);

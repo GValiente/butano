@@ -294,7 +294,7 @@ void palettes_bank::decrease_usages(int id)
 
         if(! pal.bpp_8)
         {
-            _bpp_4_indexes_map.erase(pal.hash);
+            _erase_bpp_4_indexes_map_index(pal.hash);
         }
 
         pal = palette();
@@ -332,7 +332,7 @@ void palettes_bank::set_colors(int id, const span<const color>& colors)
 
         if(old_hash != new_hash)
         {
-            _bpp_4_indexes_map.erase(old_hash);
+            _erase_bpp_4_indexes_map_index(old_hash);
             _bpp_4_indexes_map.insert_or_assign(new_hash, int16_t(id));
             pal.hash = new_hash;
         }
@@ -364,7 +364,7 @@ void palettes_bank::set_color(int id, int color_index, color color)
 
             if(old_hash != new_hash)
             {
-                _bpp_4_indexes_map.erase(old_hash);
+                _erase_bpp_4_indexes_map_index(old_hash);
                 _bpp_4_indexes_map.insert_or_assign(new_hash, int16_t(id));
                 pal.hash = new_hash;
             }

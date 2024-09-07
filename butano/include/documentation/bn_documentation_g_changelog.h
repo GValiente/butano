@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_1_0 18.1.0 (next release)
+ *
+ * Audio management ROM usage reduced.
+ *
+ *
  * @section changelog_18_0_1 18.0.1
  *
  * Tools no longer crash on Windows with more than 60 logical CPU cores.

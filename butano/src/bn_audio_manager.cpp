@@ -1047,7 +1047,7 @@ uint16_t play_sound(int priority, bn::sound_item item, fixed volume, fixed speed
 
 void stop_sound(uint16_t handle)
 {
-    if(data.sound_map.find(handle) != data.sound_map.end())
+    if(sound_data(handle))
     {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
@@ -1060,7 +1060,7 @@ void stop_sound(uint16_t handle)
 
 void release_sound(uint16_t handle)
 {
-    if(data.sound_map.find(handle) != data.sound_map.end())
+    if(sound_data(handle))
     {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
@@ -1073,36 +1073,36 @@ void release_sound(uint16_t handle)
 
 bn::sound_item sound_item(uint16_t handle)
 {
-    auto it = data.sound_map.find(handle);
-    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+    sound_data_type* handle_sound_data = sound_data(handle);
+    BN_BASIC_ASSERT(handle_sound_data, "Sound is not active: ", handle);
 
-    return bn::sound_item(it->second.item_id);
+    return bn::sound_item(handle_sound_data->item_id);
 }
 
 fixed sound_speed(uint16_t handle)
 {
-    auto it = data.sound_map.find(handle);
-    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+    sound_data_type* handle_sound_data = sound_data(handle);
+    BN_BASIC_ASSERT(handle_sound_data, "Sound is not active: ", handle);
 
-    return it->second.speed;
+    return handle_sound_data->speed;
 }
 
 void set_sound_speed(uint16_t handle, fixed speed)
 {
-    auto it = data.sound_map.find(handle);
-    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+    sound_data_type* handle_sound_data = sound_data(handle);
+    BN_BASIC_ASSERT(handle_sound_data, "Sound is not active: ", handle);
 
-    sound_data_type& sound_data = it->second;
+    fixed handle_speed = handle_sound_data->speed;
 
-    if(speed != sound_data.speed)
+    if(speed != handle_speed)
     {
-        fixed_t<10> current_speed = bn::max(fixed_t<10>(sound_data.speed), fixed_t<10>::from_data(1));
+        fixed_t<10> current_speed = bn::max(fixed_t<10>(handle_speed), fixed_t<10>::from_data(1));
         fixed_t<10> scale = fixed_t<10>(speed).unsafe_division(current_speed);
 
         if(scale != 1)
         {
             int hw_scale = scale.data();
-            BN_BASIC_ASSERT(hw_scale < 65536, "Speed change is too high: ", sound_data.speed, " - ", speed);
+            BN_BASIC_ASSERT(hw_scale < 65536, "Speed change is too high: ", handle_speed, " - ", speed);
 
             int commands = data.commands_count;
             BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
@@ -1112,27 +1112,26 @@ void set_sound_speed(uint16_t handle, fixed speed)
             data.commands_count = commands + 1;
         }
 
-        sound_data.speed = speed;
+        handle_sound_data->speed = speed;
     }
 }
 
 fixed sound_panning(uint16_t handle)
 {
-    auto it = data.sound_map.find(handle);
-    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+    sound_data_type* handle_sound_data = sound_data(handle);
+    BN_BASIC_ASSERT(handle_sound_data, "Sound is not active: ", handle);
 
-    return it->second.panning;
+    return handle_sound_data->panning;
 }
 
 void set_sound_panning(uint16_t handle, fixed panning)
 {
-    auto it = data.sound_map.find(handle);
-    BN_BASIC_ASSERT(it != data.sound_map.end(), "Sound is not active: ", handle);
+    sound_data_type* handle_sound_data = sound_data(handle);
+    BN_BASIC_ASSERT(handle_sound_data, "Sound is not active: ", handle);
 
-    sound_data_type& sound_data = it->second;
     int hw_panning = _hw_sound_panning(panning);
 
-    if(hw_panning != _hw_sound_panning(sound_data.panning))
+    if(hw_panning != _hw_sound_panning(handle_sound_data->panning))
     {
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
@@ -1142,7 +1141,7 @@ void set_sound_panning(uint16_t handle, fixed panning)
         data.commands_count = commands + 1;
     }
 
-    sound_data.panning = panning;
+    handle_sound_data->panning = panning;
 }
 
 void stop_all_sounds()

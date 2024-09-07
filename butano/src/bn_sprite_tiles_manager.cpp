@@ -440,6 +440,16 @@ namespace
         }
     }
 
+    __attribute__((noinline)) void _insert_items_map_item(const tile* item_data, int index)
+    {
+        data.items_map.insert(item_data, index);
+    }
+
+    __attribute__((noinline)) void _erase_items_map_item(const tile* item_data)
+    {
+        data.items_map.erase(item_data);
+    }
+
     [[nodiscard]] int _find_impl(const tile* tiles_data, [[maybe_unused]] compression_type compression,
                                  [[maybe_unused]] int tiles_count)
     {
@@ -545,7 +555,7 @@ namespace
 
         case status_type::TO_REMOVE:
             item.commit_if_recovered = false;
-            data.items_map.erase(item.data);
+            _erase_items_map_item(item.data);
             data.to_remove_tiles_count -= tiles_count;
             break;
 
@@ -782,7 +792,7 @@ int create(const span<const tile>& tiles_ref, compression_type compression)
 
     if(result >= 0)
     {
-        data.items_map.insert(tiles_data, result);
+        _insert_items_map_item(tiles_data, result);
 
         BN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
         BN_SPRITE_TILES_LOG_STATUS();
@@ -854,7 +864,7 @@ int create_optional(const span<const tile>& tiles_ref, compression_type compress
 
     if(result >= 0)
     {
-        data.items_map.insert(tiles_data, result);
+        _insert_items_map_item(tiles_data, result);
 
         BN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
         BN_SPRITE_TILES_LOG_STATUS();
@@ -968,8 +978,8 @@ void set_tiles_ref(int id, const span<const tile>& tiles_ref, compression_type c
         BN_BASIC_ASSERT(data.items_map.find(new_tiles_data) == data.items_map.end(),
                         "Multiple copies of the same tiles data not supported");
 
-        data.items_map.erase(old_tiles_data);
-        data.items_map.insert(new_tiles_data, id);
+        _erase_items_map_item(old_tiles_data);
+        _insert_items_map_item(new_tiles_data, id);
 
         if(compression != item_compression)
         {
@@ -1042,7 +1052,7 @@ void update()
 
             if(item.data)
             {
-                data.items_map.erase(item.data);
+                _erase_items_map_item(item.data);
                 item.data = nullptr;
             }
 

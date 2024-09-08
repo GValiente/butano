@@ -14,7 +14,8 @@
  *
  * @section changelog_18_1_0 18.1.0 (next release)
  *
- * Color palettes, sprite tiles and audio management ROM usage reduced.
+ * * Color palettes, sprite tiles and audio management ROM usage reduced.
+ * * <a href="https://github.com/chrislewisdev/gba-pseudo-3d">GBA pseudo-3D demo</a> added to `README.md`.
  *
  *
  * @section changelog_18_0_1 18.0.1

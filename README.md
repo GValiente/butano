@@ -155,6 +155,10 @@ leveling up as you fight through the hordes, searching for some kind of answer t
 
 ![](docs_tools/images/sleep_paradox_title.png) ![](docs_tools/images/sleep_paradox_gameplay.png)
 
+* [GBA pseudo-3D demo](https://github.com/chrislewisdev/gba-pseudo-3d): Sonic Battle's pseudo-3D rendering demo.
+
+![](docs_tools/images/gba_pseudo_3d_demo_gameplay.png)
+
 * [Bridge Quest](https://fixxiefixx.itch.io/bridge-quest): find the way to the desert, but beware, 
 because enemies and an evil tree boss will try to stop you!
 

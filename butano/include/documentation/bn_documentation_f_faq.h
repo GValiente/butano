@@ -415,6 +415,11 @@
  * with all of them (in the same scene of course, sprites shown in different scenes can have different color palettes).
  *
  *
+ * @subsection faq_sprites_item_from_ptr Is there a way to get the bn::sprite_item used to create a bn::sprite_ptr?
+ *
+ * No :)
+ *
+ *
  * @subsection faq_sprites_scanline Why whenever I have too many sprites on screen, some of them get cut off?
  *
  * If you show too many sprites on screen (especially if they're rotated or scaled),

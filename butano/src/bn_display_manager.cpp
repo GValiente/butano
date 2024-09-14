@@ -437,6 +437,22 @@ void set_blending_intensity_alpha(fixed intensity_alpha)
     }
 }
 
+void set_blending_transparency_and_intensity_alpha(fixed transparency_alpha, fixed intensity_alpha)
+{
+    if(data.blending_transparency_alpha != transparency_alpha ||
+            data.blending_intensity_alpha != intensity_alpha ||
+            data.blending_transparency_top_weight != -1 ||
+            data.blending_transparency_bottom_weight != -1)
+    {
+        data.blending_transparency_alpha = transparency_alpha;
+        data.blending_intensity_alpha = intensity_alpha;
+        data.blending_transparency_top_weight = -1;
+        data.blending_transparency_bottom_weight = -1;
+        data.update_blending_transparency = true;
+        data.commit = true;
+    }
+}
+
 fixed blending_transparency_top_weight()
 {
     fixed result = data.blending_transparency_top_weight;

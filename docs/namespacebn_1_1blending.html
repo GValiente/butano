@@ -92,6 +92,11 @@
               <span class="m-doc-wrap-bumper">void <a href="#a61dcff5f9f66c2ff63c311664ab73f07" class="m-doc">set_intensity_alpha</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> intensity_alpha)</span>
             </dt>
             <dd>Sets the weight of the intensity blending, with 0 being disabled and 1 being fully applied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a157a4e086bfdd58dbca2af452f49f877" class="m-doc">set_transparency_and_intensity_alpha</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> transparency_alpha,
+              <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> intensity_alpha)</span>
+            </dt>
+            <dd>Sets the weights of the transparency and the intensity blendings.</dd>
             <dt id="a1d19b78b19ee37392fdc2319cec5094d">
               <span class="m-doc-wrap-bumper">auto <a href="#a1d19b78b19ee37392fdc2319cec5094d" class="m-doc-self">transparency_top_weight</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
             </dt>
@@ -218,6 +223,29 @@
               </tbody>
             </table>
 <p>Keep in mind that intensity and fade blendings can&#x27;t be enabled at the same time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a157a4e086bfdd58dbca2af452f49f877"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />blending::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a157a4e086bfdd58dbca2af452f49f877" class="m-doc-self">set_transparency_and_intensity_alpha</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> transparency_alpha,
+              <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> intensity_alpha)</span></span>
+            </h3>
+            <p>Sets the weights of the transparency and the intensity blendings.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">transparency_alpha</td>
+                  <td>Transparency weight in the range [0..1], with 0 being fully transparent and 1 being fully visible.</td>
+                </tr>
+                <tr>
+                  <td>intensity_alpha</td>
+                  <td>Intensity weight in the range [0..1], with 0 being disabled and 1 being fully applied.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Keep in mind that transparency and fade blendings can&#x27;t be enabled at the same time.</p>
           </div></section>
           <section class="m-doc-details" id="a0f43983f1249a284593362f89b0560dd"><div>
             <h3>

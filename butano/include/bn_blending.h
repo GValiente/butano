@@ -68,6 +68,17 @@ namespace bn::blending
     void set_intensity_alpha(fixed intensity_alpha);
 
     /**
+     * @brief Sets the weights of the transparency and the intensity blendings.
+     *
+     * Keep in mind that transparency and fade blendings can't be enabled at the same time.
+     *
+     * @param transparency_alpha Transparency weight in the range [0..1], with 0 being fully transparent
+     * and 1 being fully visible.
+     * @param intensity_alpha Intensity weight in the range [0..1], with 0 being disabled and 1 being fully applied.
+     */
+    void set_transparency_and_intensity_alpha(fixed transparency_alpha, fixed intensity_alpha);
+
+    /**
      * @brief Returns the weight of the transparency blending for the top layer,
      * with 0 being fully transparent and 1 being fully visible.
      */

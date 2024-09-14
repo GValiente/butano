@@ -14,6 +14,7 @@
  *
  * @section changelog_18_1_0 18.1.0 (next release)
  *
+ * * bn::blending::set_transparency_and_intensity_alpha added.
  * * Color palettes, sprite tiles and audio management ROM usage reduced.
  * * @ref faq_sprites_item_from_ptr question added to the @ref faq page.
  * * <a href="https://github.com/chrislewisdev/gba-pseudo-3d">GBA pseudo-3D demo</a> added to `README.md`.

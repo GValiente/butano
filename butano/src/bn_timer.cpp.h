@@ -39,8 +39,11 @@ void timer::restart()
 
 int timer::elapsed_ticks_with_restart()
 {
-    unsigned ticks = hw::timer::ticks();
     unsigned last_ticks = _last_ticks;
+
+    BN_BARRIER;
+
+    unsigned ticks = hw::timer::ticks();
     _last_ticks = ticks;
 
     if(ticks < last_ticks) [[unlikely]]

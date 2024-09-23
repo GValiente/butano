@@ -111,7 +111,7 @@
             </dt>
             <dd>Resets the GBA, going back to the start of main() after showing the BIOS intro.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc">current_cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc">current_cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the CPU usage of the current frame.</dd>
             <dt>
@@ -119,7 +119,7 @@
             </dt>
             <dd>Returns the CPU timer ticks of the current frame.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc">last_cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc">last_cpu_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the CPU usage of the last elapsed frame.</dd>
             <dt>
@@ -127,7 +127,7 @@
             </dt>
             <dd>Returns the CPU timer ticks of the last elapsed frame.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc">last_vblank_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc">last_vblank_usage</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
             </dt>
             <dd>Returns the maximum V-Blank usage of the last elapsed frame.</dd>
             <dt>
@@ -137,29 +137,29 @@
             <dt id="a98c2b2065c2694d96b695a6076df8506">
               <span class="m-doc-wrap-bumper">auto <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc-self">last_missed_frames</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
-            <dd>Returns the number of screen refreshes that were missed in the last <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</dd>
+            <dd>Returns the number of screen refreshes that were missed in the last <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</dd>
             <dt id="a3e81181a01b2ef99485eeee4d0ad8112">
-              <span class="m-doc-wrap-bumper">auto <a href="#a3e81181a01b2ef99485eeee4d0ad8112" class="m-doc-self">vblank_callback</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a29e80db4f1e61dce3b63743adca49979" class="m-doc">vblank_<wbr />callback_<wbr />type</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3e81181a01b2ef99485eeee4d0ad8112" class="m-doc-self">vblank_callback</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a97b50ccb2e2c3c21f73dedaf297a4001" class="m-doc">vblank_<wbr />callback_<wbr />type</a></span>
             </dt>
             <dd>Returns the user function called in V-Blank.</dd>
             <dt id="a3545d1f13cf70791ee4b68ed4065398a">
-              <span class="m-doc-wrap-bumper">void <a href="#a3545d1f13cf70791ee4b68ed4065398a" class="m-doc-self">set_vblank_callback</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a29e80db4f1e61dce3b63743adca49979" class="m-doc">vblank_<wbr />callback_<wbr />type</a> vblank_callback)</span>
+              <span class="m-doc-wrap-bumper">void <a href="#a3545d1f13cf70791ee4b68ed4065398a" class="m-doc-self">set_vblank_callback</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a97b50ccb2e2c3c21f73dedaf297a4001" class="m-doc">vblank_<wbr />callback_<wbr />type</a> vblank_callback)</span>
             </dt>
             <dd>Sets the user function called in V-Blank.</dd>
             <dt id="a791a1b4d387b815639bded03ed4fef59">
               <span class="m-doc-wrap-bumper">auto <a href="#a791a1b4d387b815639bded03ed4fef59" class="m-doc-self">slow_game_pak</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
             </dt>
             <dd>Indicates if a slow game pak like the SuperCard SD has been detected or not.</dd>
-            <dt id="ae1e10f40aa4a99826ff62349623b88fe">
-              <span class="m-doc-wrap-bumper">auto <a href="#ae1e10f40aa4a99826ff62349623b88fe" class="m-doc-self">system_font</a>(</span><span class="m-doc-wrap">) -&gt; const <a href="classbn_1_1system__font.html" class="m-doc">system_<wbr />font</a>&amp;</span>
+            <dt id="a9cf32740bbbf4b808f7b919edea468ad">
+              <span class="m-doc-wrap-bumper">auto <a href="#a9cf32740bbbf4b808f7b919edea468ad" class="m-doc-self">system_font</a>(</span><span class="m-doc-wrap">) -&gt; const <a href="classbn_1_1system__font.html" class="m-doc">system_<wbr />font</a>&amp;</span>
             </dt>
             <dd>Returns the font used to show assert and profiling messages.</dd>
             <dt id="a481f8fc199b3af8ea8ef4257e81e76a8">
               <span class="m-doc-wrap-bumper">void <a href="#a481f8fc199b3af8ea8ef4257e81e76a8" class="m-doc-self">set_system_font</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1system__font.html" class="m-doc">bn::<wbr />system_font</a>&amp; font)</span>
             </dt>
             <dd>Sets the font used to show assert and profiling messages.</dd>
-            <dt id="a94613244e1117161343c4cb5499ab8b9">
-              <span class="m-doc-wrap-bumper">auto <a href="#a94613244e1117161343c4cb5499ab8b9" class="m-doc-self">assert_tag</a>(</span><span class="m-doc-wrap">) -&gt; const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp;</span>
+            <dt id="aa82b675a932f6c6b40a65d9091781fce">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa82b675a932f6c6b40a65d9091781fce" class="m-doc-self">assert_tag</a>(</span><span class="m-doc-wrap">) -&gt; const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp;</span>
             </dt>
             <dd>Returns the tag displayed in assert messages.</dd>
             <dt id="a0c70920adc9c80848ccf38de9192c24d">
@@ -262,7 +262,7 @@
           </div></section>
           <section class="m-doc-details" id="aed64f380e43b831c5b6b4602a508f811"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc-self">current_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc-self">current_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Returns the CPU usage of the current frame.</p>
 <p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p>
@@ -276,21 +276,21 @@
           </div></section>
           <section class="m-doc-details" id="a5c36ceb40cf617f8ffa442bbf15126c1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc-self">last_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc-self">last_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Returns the CPU usage of the last elapsed frame.</p>
-<p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="namespacebn_1_1core.html#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
+<p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
           </div></section>
           <section class="m-doc-details" id="a836c1d35b22654721c3af7e05b397217"><div>
             <h3>
               <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a836c1d35b22654721c3af7e05b397217" class="m-doc-self">last_cpu_ticks</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Returns the CPU timer ticks of the last elapsed frame.</p>
-<p>A CPU tick count greater than <a href="namespacebn_1_1timers.html#a2b5acebc6a8c3e13df226753bd827d52" class="m-doc">timers::<wbr />ticks_per_frame()</a> means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="namespacebn_1_1core.html#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
+<p>A CPU tick count greater than <a href="namespacebn_1_1timers.html#a2b5acebc6a8c3e13df226753bd827d52" class="m-doc">timers::<wbr />ticks_per_frame()</a> means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
           </div></section>
           <section class="m-doc-details" id="aace6487154c238af8d207e0e400f6fcf"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a52b323c66c23940aafec9d4e73f513d4" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc-self">last_vblank_usage</a>(</span><span class="m-doc-wrap">)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc-self">last_vblank_usage</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Returns the maximum V-Blank usage of the last elapsed frame.</p>
 <p>A V-Blank usage greater than 1 means that the screen is being redrawn before all of GBA display components are updated.</p>
@@ -354,7 +354,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

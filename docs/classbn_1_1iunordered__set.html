@@ -48,7 +48,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unordered__set_8h.html">&lt;bn_unordered_set.h&gt;</a></div>
-          <div class="m-doc-template">template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;</div>
+          <div class="m-doc-template">template&lt;typename Key, typename KeyHash = <a href="structbn_1_1hash.html" class="m-doc">hash</a>&lt;Key&gt;, typename KeyEqual = <a href="classbn_1_1equal__to.html" class="m-doc">equal_<wbr />to</a>&lt;Key&gt;&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>iunordered_set <span class="m-thin">class</span>
         </h1>
         <p>Base class of <a href="classbn_1_1unordered__set.html" class="m-doc">bn::<wbr />unordered_set</a>.</p>
@@ -91,7 +91,7 @@
           <h2><a href="#derived-classes">Derived classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename Key, int MaxSize, typename KeyHash, typename KeyEqual&gt;</div>
+              <div class="m-doc-template">template&lt;typename Key, int MaxSize, typename KeyHash = <a href="structbn_1_1hash.html" class="m-doc">hash</a>&lt;Key&gt;, typename KeyEqual = <a href="classbn_1_1equal__to.html" class="m-doc">equal_<wbr />to</a>&lt;Key&gt;&gt;</div>
               class <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_set</a>
             </dt>
             <dd><code>std::unordered_set</code> like container with a fixed size buffer.</dd>
@@ -137,19 +137,19 @@
             </dt>
             <dd>Equality functor alias.</dd>
             <dt id="ae61cd98fd9c6409b194a4ea03e391588">
-              using <a href="#ae61cd98fd9c6409b194a4ea03e391588" class="m-doc-self">reference</a> = <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;
+              using <a href="#ae61cd98fd9c6409b194a4ea03e391588" class="m-doc-self">reference</a> = <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;
             </dt>
             <dd>Reference alias.</dd>
             <dt id="a6e809e7067d091f326d7df77136e5d84">
-              using <a href="#a6e809e7067d091f326d7df77136e5d84" class="m-doc-self">const_reference</a> = const <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;
+              using <a href="#a6e809e7067d091f326d7df77136e5d84" class="m-doc-self">const_reference</a> = const <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;
             </dt>
             <dd>Const reference alias.</dd>
             <dt id="ab29a2b49931f60018bd7fe052062e2a8">
-              using <a href="#ab29a2b49931f60018bd7fe052062e2a8" class="m-doc-self">pointer</a> = <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>*
+              using <a href="#ab29a2b49931f60018bd7fe052062e2a8" class="m-doc-self">pointer</a> = <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>*
             </dt>
             <dd>Pointer alias.</dd>
             <dt id="a016fe98033196576ccb4e7a29f10899e">
-              using <a href="#a016fe98033196576ccb4e7a29f10899e" class="m-doc-self">const_pointer</a> = const <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>*
+              using <a href="#a016fe98033196576ccb4e7a29f10899e" class="m-doc-self">const_pointer</a> = const <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>*
             </dt>
             <dd>Const pointer alias.</dd>
             <dt id="a2b9eb96d09c9e7fcffd969436f375c7a">
@@ -169,8 +169,8 @@
               <span class="m-doc-wrap-bumper"><a href="#a4e48911bab3f7e5144edd5be56d31f91" class="m-doc-self">~iunordered_set</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Destructor.</dd>
-            <dt id="a0b013ebf1cc9c87b1e4c5f157041160e">
-              <span class="m-doc-wrap-bumper"><a href="#a0b013ebf1cc9c87b1e4c5f157041160e" class="m-doc-self">~iunordered_set</a>(</span><span class="m-doc-wrap">)</span>
+            <dt id="ae26041e41b02ea43a059e86d5fcf210f">
+              <span class="m-doc-wrap-bumper"><a href="#ae26041e41b02ea43a059e86d5fcf210f" class="m-doc-self">~iunordered_set</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Destructor.</dd>
           </dl>
@@ -179,23 +179,23 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#acb5db515f6df48cf129a83fb521e7020" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; other) -&gt; <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a05d70853e7087e89cb7d33601c94263d" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; other) -&gt; <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp;</span>
             </dt>
             <dd>Copy assignment operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac0e60c05f03c15d73fc0e3629cb3e723" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp;&amp; other) -&gt; <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a361c41d8260ef672fb6e8ec0b899d7b3" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp;&amp; other) -&gt; <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Move assignment operator.</dd>
             <dt id="a1d3891eaa70c1a30da2c346daceca541">
-              <span class="m-doc-wrap-bumper">auto <a href="#a1d3891eaa70c1a30da2c346daceca541" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1d3891eaa70c1a30da2c346daceca541" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
             </dt>
             <dd>Returns the current size.</dd>
             <dt id="a3293d2aabf9688440c8d52d78c612076">
-              <span class="m-doc-wrap-bumper">auto <a href="#a3293d2aabf9688440c8d52d78c612076" class="m-doc-self">max_size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3293d2aabf9688440c8d52d78c612076" class="m-doc-self">max_size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
             </dt>
             <dd>Returns the maximum possible size.</dd>
             <dt id="a787d61788d935b20c844bdf7edbc0661">
-              <span class="m-doc-wrap-bumper">auto <a href="#a787d61788d935b20c844bdf7edbc0661" class="m-doc-self">available</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a787d61788d935b20c844bdf7edbc0661" class="m-doc-self">available</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
             </dt>
             <dd>Returns the remaining capacity.</dd>
             <dt id="ae3d585c43ef13a0f3fe99e07b3e575c8">
@@ -231,81 +231,81 @@
             </dt>
             <dd>Returns a const iterator to the end of the <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt id="a4232a33a6d8d59a808016a49c6999089">
-              <span class="m-doc-wrap-bumper">auto <a href="#a4232a33a6d8d59a808016a49c6999089" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set.html#a38a2dd8293c2289841b6fafe123e8bac" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4232a33a6d8d59a808016a49c6999089" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a38a2dd8293c2289841b6fafe123e8bac" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
             </dt>
             <dd>Returns a const reverse iterator to the end of the <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt id="a69c9e2f2f42587ceb41d2be2a658450d">
-              <span class="m-doc-wrap-bumper">auto <a href="#a69c9e2f2f42587ceb41d2be2a658450d" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1iunordered__set.html#a2b9eb96d09c9e7fcffd969436f375c7a" class="m-doc">reverse_<wbr />iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a69c9e2f2f42587ceb41d2be2a658450d" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a2b9eb96d09c9e7fcffd969436f375c7a" class="m-doc">reverse_<wbr />iterator</a></span>
             </dt>
             <dd>Returns a reverse iterator to the end of the <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt id="a46ec68f4ac7a37aec9301916ca816ed1">
-              <span class="m-doc-wrap-bumper">auto <a href="#a46ec68f4ac7a37aec9301916ca816ed1" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set.html#a38a2dd8293c2289841b6fafe123e8bac" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a46ec68f4ac7a37aec9301916ca816ed1" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a38a2dd8293c2289841b6fafe123e8bac" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
             </dt>
             <dd>Returns a const reverse iterator to the beginning of the <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt id="a90297638fa8c51c91388b1e699ed46b9">
-              <span class="m-doc-wrap-bumper">auto <a href="#a90297638fa8c51c91388b1e699ed46b9" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1iunordered__set.html#a2b9eb96d09c9e7fcffd969436f375c7a" class="m-doc">reverse_<wbr />iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a90297638fa8c51c91388b1e699ed46b9" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a2b9eb96d09c9e7fcffd969436f375c7a" class="m-doc">reverse_<wbr />iterator</a></span>
             </dt>
             <dd>Returns a reverse iterator to the beginning of the <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt id="a7b2529d28d2b7072847a1318df2aa5cd">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7b2529d28d2b7072847a1318df2aa5cd" class="m-doc-self">crbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set.html#a38a2dd8293c2289841b6fafe123e8bac" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7b2529d28d2b7072847a1318df2aa5cd" class="m-doc-self">crbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a38a2dd8293c2289841b6fafe123e8bac" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
             </dt>
             <dd>Returns a const reverse iterator to the end of the <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt id="a5389f0cc0a96b9c8db1dd7f3b045a418">
-              <span class="m-doc-wrap-bumper">auto <a href="#a5389f0cc0a96b9c8db1dd7f3b045a418" class="m-doc-self">crend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iunordered__set.html#a38a2dd8293c2289841b6fafe123e8bac" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5389f0cc0a96b9c8db1dd7f3b045a418" class="m-doc-self">crend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a38a2dd8293c2289841b6fafe123e8bac" class="m-doc">const_<wbr />reverse_<wbr />iterator</a></span>
             </dt>
             <dd>Returns a const reverse iterator to the beginning of the <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a4b9b5af581e9bda06c20cfde8e118a9e" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; bool</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4b9b5af581e9bda06c20cfde8e118a9e" class="m-doc">contains</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; bool</span>
             </dt>
             <dd>Indicates if the specified key is contained in this <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a8d6436dccbb9ff767cf8ef2d49be8184" class="m-doc">contains_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; bool</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8d6436dccbb9ff767cf8ef2d49be8184" class="m-doc">contains_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; bool</span>
             </dt>
             <dd>Indicates if the specified key is contained in this <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a7176f7474028fd6e24c36699ffaf7357" class="m-doc">count</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7176f7474028fd6e24c36699ffaf7357" class="m-doc">count</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; <a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
             </dt>
             <dd>Counts the number of keys stored in this <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> are equal to the given one.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac4198c8fbe5bf70434127c736097c342" class="m-doc">count_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac4198c8fbe5bf70434127c736097c342" class="m-doc">count_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; <a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
             </dt>
             <dd>Counts the number of keys stored in this <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> are equal to the given one.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ad207ff36b955c6e2b544e3770809c002" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad207ff36b955c6e2b544e3770809c002" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
             </dt>
             <dd>Searches for a given key.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a15b61aa55c703743af7fd7ed736090e3" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a15b61aa55c703743af7fd7ed736090e3" class="m-doc">find</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
             </dt>
             <dd>Searches for a given key.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac68cf894804cb799f5b742c977eeabf7" class="m-doc">find_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac68cf894804cb799f5b742c977eeabf7" class="m-doc">find_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const -&gt; <a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a></span>
             </dt>
             <dd>Searches for a given key.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a899a2b05384469f4a02e895ae3a63eb2" class="m-doc">find_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a899a2b05384469f4a02e895ae3a63eb2" class="m-doc">find_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
             </dt>
             <dd>Searches for a given key.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#acee1a3d4608d506e7cec9dc8611390fe" class="m-doc">insert</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp; value) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#acee1a3d4608d506e7cec9dc8611390fe" class="m-doc">insert</a>(</span><span class="m-doc-wrap">const <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp; value) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
             </dt>
             <dd>Inserts a copy of the given value.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a46dbf7dfc5c9c3bc4d33efa2e0095d35" class="m-doc">insert</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;&amp; value) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a46dbf7dfc5c9c3bc4d33efa2e0095d35" class="m-doc">insert</a>(</span><span class="m-doc-wrap"><a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;&amp; value) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
             </dt>
             <dd>Inserts a moved value.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a75466edbac551e7ecbd53f3057cfda10" class="m-doc">insert_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> value_hash,
-              const <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp; value) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a75466edbac551e7ecbd53f3057cfda10" class="m-doc">insert_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> value_hash,
+              const <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp; value) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
             </dt>
             <dd>Inserts a copy of the given value.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#af4b3429891d723b5f002e06d624ceed1" class="m-doc">insert_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> value_hash,
-              <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;&amp; value) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#af4b3429891d723b5f002e06d624ceed1" class="m-doc">insert_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> value_hash,
+              <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;&amp; value) -&gt; <a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a></span>
             </dt>
             <dd>Inserts a moved value.</dd>
             <dt>
@@ -313,17 +313,17 @@
             </dt>
             <dd>Erases an element.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a242a443023dd7bf3c6f7e54b5a92b849" class="m-doc">erase</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; bool</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a242a443023dd7bf3c6f7e54b5a92b849" class="m-doc">erase</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; bool</span>
             </dt>
             <dd>Erases an element.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a421a481b47623f3afdfb1fb7c9449811" class="m-doc">erase_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; bool</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a421a481b47623f3afdfb1fb7c9449811" class="m-doc">erase_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) -&gt; bool</span>
             </dt>
             <dd>Erases an element.</dd>
             <dt>
               <div class="m-doc-template">template&lt;class Pred&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a58a00fa35d447d154fd3bdcd2e59093b" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred) -&gt; <a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a58a00fa35d447d154fd3bdcd2e59093b" class="m-doc">erase_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred) -&gt; <a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a></span>
             </dt>
             <dd>Erases all elements that satisfy the specified predicate.</dd>
             <dt>
@@ -334,8 +334,8 @@
               <span class="m-doc-wrap-bumper">void <a href="#aa0e296b59827a8632cf0ef6544045b6b" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Removes all elements.</dd>
-            <dt id="ae199e93f37ffb4f4e2e53325be909735">
-              <span class="m-doc-wrap-bumper">void <a href="#ae199e93f37ffb4f4e2e53325be909735" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">)</span>
+            <dt id="aa4ce335cf689b2b188720b966f2b112f">
+              <span class="m-doc-wrap-bumper">void <a href="#aa4ce335cf689b2b188720b966f2b112f" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Removes all elements.</dd>
             <dt>
@@ -381,12 +381,12 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="acb5db515f6df48cf129a83fb521e7020"><div>
+          <section class="m-doc-details" id="a05d70853e7087e89cb7d33601c94263d"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acb5db515f6df48cf129a83fb521e7020" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; other)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a05d70853e7087e89cb7d33601c94263d" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; other)</span></span>
             </h3>
             <p>Copy assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -407,12 +407,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ac0e60c05f03c15d73fc0e3629cb3e723"><div>
+          <section class="m-doc-details" id="a361c41d8260ef672fb6e8ec0b899d7b3"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac0e60c05f03c15d73fc0e3629cb3e723" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp; bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a361c41d8260ef672fb6e8ec0b899d7b3" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Move assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -439,7 +439,7 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4b9b5af581e9bda06c20cfde8e118a9e" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4b9b5af581e9bda06c20cfde8e118a9e" class="m-doc-self">contains</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
             </h3>
             <p>Indicates if the specified key is contained in this <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -465,8 +465,8 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8d6436dccbb9ff767cf8ef2d49be8184" class="m-doc-self">contains_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8d6436dccbb9ff767cf8ef2d49be8184" class="m-doc-self">contains_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
             </h3>
             <p>Indicates if the specified key is contained in this <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -496,7 +496,7 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7176f7474028fd6e24c36699ffaf7357" class="m-doc-self">count</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7176f7474028fd6e24c36699ffaf7357" class="m-doc-self">count</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
             </h3>
             <p>Counts the number of keys stored in this <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> are equal to the given one.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -522,8 +522,8 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac4198c8fbe5bf70434127c736097c342" class="m-doc-self">count_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac4198c8fbe5bf70434127c736097c342" class="m-doc-self">count_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
             </h3>
             <p>Counts the number of keys stored in this <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a> are equal to the given one.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -553,7 +553,7 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad207ff36b955c6e2b544e3770809c002" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad207ff36b955c6e2b544e3770809c002" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
             </h3>
             <p>Searches for a given key.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -569,7 +569,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>Const iterator to the key if it exists, otherwise <a href="classbn_1_1iunordered__set.html#a989cf91d0072f4ccf8dabc174a449311" class="m-doc">end()</a>.</td>
+                  <td>Const iterator to the key if it exists, otherwise <a href="#a9212080b779cef1e800f8356c7a4f757" class="m-doc">end()</a>.</td>
                 </tr>
               </tfoot>
             </table>
@@ -579,7 +579,7 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a15b61aa55c703743af7fd7ed736090e3" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a15b61aa55c703743af7fd7ed736090e3" class="m-doc-self">find</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key)</span></span>
             </h3>
             <p>Searches for a given key.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -595,7 +595,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>Iterator to the key if it exists, otherwise <a href="classbn_1_1iunordered__set.html#a989cf91d0072f4ccf8dabc174a449311" class="m-doc">end()</a>.</td>
+                  <td>Iterator to the key if it exists, otherwise <a href="#a9212080b779cef1e800f8356c7a4f757" class="m-doc">end()</a>.</td>
                 </tr>
               </tfoot>
             </table>
@@ -605,8 +605,8 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac68cf894804cb799f5b742c977eeabf7" class="m-doc-self">find_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac68cf894804cb799f5b742c977eeabf7" class="m-doc-self">find_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key) const</span></span>
             </h3>
             <p>Searches for a given key.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -626,7 +626,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>Const iterator to the key if it exists, otherwise <a href="classbn_1_1iunordered__set.html#a989cf91d0072f4ccf8dabc174a449311" class="m-doc">end()</a>.</td>
+                  <td>Const iterator to the key if it exists, otherwise <a href="#a9212080b779cef1e800f8356c7a4f757" class="m-doc">end()</a>.</td>
                 </tr>
               </tfoot>
             </table>
@@ -636,8 +636,8 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a899a2b05384469f4a02e895ae3a63eb2" class="m-doc-self">find_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a899a2b05384469f4a02e895ae3a63eb2" class="m-doc-self">find_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key)</span></span>
             </h3>
             <p>Searches for a given key.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -657,7 +657,7 @@
               <tfoot>
                 <tr>
                   <th>Returns</th>
-                  <td>Iterator to the key if it exists, otherwise <a href="classbn_1_1iunordered__set.html#a989cf91d0072f4ccf8dabc174a449311" class="m-doc">end()</a>.</td>
+                  <td>Iterator to the key if it exists, otherwise <a href="#a9212080b779cef1e800f8356c7a4f757" class="m-doc">end()</a>.</td>
                 </tr>
               </tfoot>
             </table>
@@ -667,7 +667,7 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acee1a3d4608d506e7cec9dc8611390fe" class="m-doc-self">insert</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp; value)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acee1a3d4608d506e7cec9dc8611390fe" class="m-doc-self">insert</a>(</span><span class="m-doc-wrap">const <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp; value)</span></span>
             </h3>
             <p>Inserts a copy of the given value.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -693,7 +693,7 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a46dbf7dfc5c9c3bc4d33efa2e0095d35" class="m-doc-self">insert</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a46dbf7dfc5c9c3bc4d33efa2e0095d35" class="m-doc-self">insert</a>(</span><span class="m-doc-wrap"><a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
             </h3>
             <p>Inserts a moved value.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -719,8 +719,8 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a75466edbac551e7ecbd53f3057cfda10" class="m-doc-self">insert_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> value_hash,
-              const <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp; value)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a75466edbac551e7ecbd53f3057cfda10" class="m-doc-self">insert_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> value_hash,
+              const <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp; value)</span></span>
             </h3>
             <p>Inserts a copy of the given value.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -750,8 +750,8 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4b3429891d723b5f002e06d624ceed1" class="m-doc-self">insert_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> value_hash,
-              <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af4b3429891d723b5f002e06d624ceed1" class="m-doc-self">insert_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> value_hash,
+              <a href="#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;&amp; value)</span></span>
             </h3>
             <p>Inserts a moved value.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -808,7 +808,7 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a242a443023dd7bf3c6f7e54b5a92b849" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key)</span></span>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a242a443023dd7bf3c6f7e54b5a92b849" class="m-doc-self">erase</a>(</span><span class="m-doc-wrap">const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key)</span></span>
             </h3>
             <p>Erases an element.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -835,8 +835,8 @@
               <div class="m-doc-template">
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a421a481b47623f3afdfb1fb7c9449811" class="m-doc-self">erase_hash</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
-              const <a href="classbn_1_1iunordered__set.html#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key)</span></span>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a421a481b47623f3afdfb1fb7c9449811" class="m-doc-self">erase_hash</a>(</span><span class="m-doc-wrap"><a href="#a40c161a1ec60505afc6a93c85b3b7217" class="m-doc">hash_<wbr />type</a> key_hash,
+              const <a href="#ad403ce26423f55d0d1c7de9605ecaffb" class="m-doc">key_<wbr />type</a>&amp; key)</span></span>
             </h3>
             <p>Erases an element.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -868,7 +868,7 @@
                 template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;
                 template&lt;class Pred&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iunordered__set.html#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a58a00fa35d447d154fd3bdcd2e59093b" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#ac87cf4f336b93d4988f5e565742528d9" class="m-doc">size_<wbr />type</a> bn::<wbr />iunordered_set&lt;Key, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a58a00fa35d447d154fd3bdcd2e59093b" class="m-doc-self">erase_if</a>(</span><span class="m-doc-wrap">const Pred&amp; pred)</span></span>
             </h3>
             <p>Erases all elements that satisfy the specified predicate.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -1147,7 +1147,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

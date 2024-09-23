@@ -57,20 +57,20 @@
             <li><a href="#nocashgba_exception_example">Exception example</a></li>
           </ul>
         </nav>
-<p><a href="https://problemkaputt.de/gba.htm">No$gba</a> exception system allows to catch common programming errors.</p><p>When an exception is triggered, No$gba stops the execution of the ROM and shows the assembler instruction that has triggered the exception.</p><p>If you load an <code>*.elf</code> file instead of a <code>*.gba</code> file, it also shows the high level code that has triggered the exception. Please remember that <code>*.elf</code> support only works with <a href="https://devkitpro.org/">devkitARM</a>, it doesn&#x27;t work if you&#x27;re using <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>.</p><section id="nocashgba_exception_getting_started"><h2><a href="#nocashgba_exception_getting_started">Getting started</a></h2><p>Download the &quot;no$gba Windows debug version&quot; from <a href="https://problemkaputt.de/gba.htm">here</a>. The gaming versions can&#x27;t show the code that has triggered an exception, they only show the number of exceptions detected.</p></section><section id="nocashgba_exception_enable"><h2><a href="#nocashgba_exception_enable">Enable exceptions</a></h2><p>Exceptions are disabled by default. You need to enable them in the <code>Xcept</code> tab of the setup menu:</p><img class="m-image" src="nocashgba_0.png" alt="Image" /></section><section id="nocashgba_exception_example"><h2><a href="#nocashgba_exception_example">Exception example</a></h2><p>Let&#x27;s trigger an exception by dereferencing a null pointer:</p><pre class="m-code"><span class="cp">#include</span> <span class="cpf">&quot;bn_core.h&quot;</span><span class="cp"></span>
+<p><a href="https://problemkaputt.de/gba.htm">No$gba</a> exception system allows to catch common programming errors.</p><p>When an exception is triggered, No$gba stops the execution of the ROM and shows the assembler instruction that has triggered the exception.</p><p>If you load an <code>*.elf</code> file instead of a <code>*.gba</code> file, it also shows the high level code that has triggered the exception. Please remember that <code>*.elf</code> support only works with <a href="https://devkitpro.org/">devkitARM</a>, it doesn&#x27;t work if you&#x27;re using <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>.</p><section id="nocashgba_exception_getting_started"><h2><a href="#nocashgba_exception_getting_started">Getting started</a></h2><p>Download the &quot;no$gba Windows debug version&quot; from <a href="https://problemkaputt.de/gba.htm">here</a>. The gaming versions can&#x27;t show the code that has triggered an exception, they only show the number of exceptions detected.</p></section><section id="nocashgba_exception_enable"><h2><a href="#nocashgba_exception_enable">Enable exceptions</a></h2><p>Exceptions are disabled by default. You need to enable them in the <code>Xcept</code> tab of the setup menu:</p><img class="m-image" src="nocashgba_0.png" alt="Image" /></section><section id="nocashgba_exception_example"><h2><a href="#nocashgba_exception_example">Exception example</a></h2><p>Let&#x27;s trigger an exception by dereferencing a null pointer:</p><pre class="m-code"><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;bn_core.h&quot;</span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">init</span><span class="p">();</span>
-    <span class="kt">int</span> <span class="n">skip_frames</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="kt">int</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
-    <span class="n">skip_frames</span> <span class="o">+=</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
-    <span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">set_skip_frames</span><span class="p">(</span><span class="n">skip_frames</span><span class="p">);</span>
+<span class="w">    </span><span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">init</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">skip_frames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
+<span class="w">    </span><span class="n">skip_frames</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+<span class="w">    </span><span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">set_skip_frames</span><span class="p">(</span><span class="n">skip_frames</span><span class="p">);</span>
 
-    <span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">update</span><span class="p">();</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">bn</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">update</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span></pre><p>If we build the project and we run the <code>*.elf</code> file with No$gba, it should stop the execution and display the following warning:</p><img class="m-image" src="nocashgba_1.png" alt="Image" /><p>As we can see, it also shows the C++ code that has triggered the exception:</p><img class="m-image" src="nocashgba_2.png" alt="Image" /></section>
       </div>
     </div>
@@ -116,7 +116,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

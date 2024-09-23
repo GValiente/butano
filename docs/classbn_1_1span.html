@@ -118,11 +118,11 @@
             </dt>
             <dd>Const iterator alias.</dd>
             <dt id="a985e3d9fa9b05a948d7e0c9ab771dd4b">
-              using <a href="#a985e3d9fa9b05a948d7e0c9ab771dd4b" class="m-doc-self">reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1span.html#a124e9e65b7748371f02db2375f748af9" class="m-doc">iterator</a>&gt;
+              using <a href="#a985e3d9fa9b05a948d7e0c9ab771dd4b" class="m-doc-self">reverse_iterator</a> = bn::reverse_iterator&lt;<a href="#a124e9e65b7748371f02db2375f748af9" class="m-doc">iterator</a>&gt;
             </dt>
             <dd>Reverse iterator alias.</dd>
             <dt id="afc2a8ec9d7fc9fd846f77e8625c6710d">
-              using <a href="#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc-self">const_reverse_iterator</a> = bn::reverse_iterator&lt;<a href="classbn_1_1span.html#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a>&gt;
+              using <a href="#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc-self">const_reverse_iterator</a> = bn::reverse_iterator&lt;<a href="#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a>&gt;
             </dt>
             <dd>Const reverse iterator alias.</dd>
           </dl>
@@ -135,27 +135,27 @@
             </dt>
             <dd>Constructs an empty span.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#ae7010c46258454dc2edf1cf10311041f" class="m-doc">span</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> ptr,
-              <a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> size) <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#ae7010c46258454dc2edf1cf10311041f" class="m-doc">span</a>(</span><span class="m-doc-wrap"><a href="#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> ptr,
+              <a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> size) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructs a span that is a view over the range [ptr, ptr + size).</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a90c91001a8b1a42fb5e064925af1c0c7" class="m-doc">span</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> first,
-              <a href="classbn_1_1span.html#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> last) <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a90c91001a8b1a42fb5e064925af1c0c7" class="m-doc">span</a>(</span><span class="m-doc-wrap"><a href="#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> first,
+              <a href="#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> last) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructs a span that is a view over the range [first, last).</dd>
             <dt id="ab2ea6bc6151ede795f927b154f7bf2f0">
-              <div class="m-doc-template">template&lt;<a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> ArraySize&gt;</div>
-              <span class="m-doc-wrap-bumper"><a href="#ab2ea6bc6151ede795f927b154f7bf2f0" class="m-doc-self">span</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a77d91e8610a9f0e00252414caebaed8c" class="m-doc">value_<wbr />type</a>(&amp;array)[ArraySize]) <span class="m-label m-flat m-primary">constexpr</span></span>
+              <div class="m-doc-template">template&lt;<a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> ArraySize&gt;</div>
+              <span class="m-doc-wrap-bumper"><a href="#ab2ea6bc6151ede795f927b154f7bf2f0" class="m-doc-self">span</a>(</span><span class="m-doc-wrap"><a href="#a77d91e8610a9f0e00252414caebaed8c" class="m-doc">value_<wbr />type</a>(&amp;array)[ArraySize]) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructs a span that is a view over the given array.</dd>
             <dt id="a4aa6253f7a2c55843980bce854c36d2d">
-              <div class="m-doc-template">template&lt;class OtherType, <a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> ArraySize&gt;</div>
+              <div class="m-doc-template">template&lt;class OtherType, <a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> ArraySize&gt;</div>
               <span class="m-doc-wrap-bumper"><a href="#a4aa6253f7a2c55843980bce854c36d2d" class="m-doc-self">span</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1array.html" class="m-doc">array</a>&lt;OtherType, ArraySize&gt;&amp; array) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructs a span that is a const view over the given <a href="classbn_1_1array.html" class="m-doc">bn::<wbr />array</a>.</dd>
             <dt id="a0407f5fe96735da56e0afd892a8e1561">
-              <div class="m-doc-template">template&lt;class OtherType, <a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> ArraySize&gt;</div>
+              <div class="m-doc-template">template&lt;class OtherType, <a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> ArraySize&gt;</div>
               <span class="m-doc-wrap-bumper"><a href="#a0407f5fe96735da56e0afd892a8e1561" class="m-doc-self">span</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1array.html" class="m-doc">array</a>&lt;OtherType, ArraySize&gt;&amp; array) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructs a span that is a non-const view over the given <a href="classbn_1_1array.html" class="m-doc">bn::<wbr />array</a>.</dd>
@@ -170,19 +170,19 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt id="a52738031a2b4c62ee3b1692a03370f40">
-              <span class="m-doc-wrap-bumper">auto <a href="#a52738031a2b4c62ee3b1692a03370f40" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#aafbbccf36cb50f52413194e4adde349c" class="m-doc">const_<wbr />pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a52738031a2b4c62ee3b1692a03370f40" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#aafbbccf36cb50f52413194e4adde349c" class="m-doc">const_<wbr />pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const pointer to the beginning of the referenced data.</dd>
             <dt id="a2c6067947342d061d7f5b971407c00f6">
-              <span class="m-doc-wrap-bumper">auto <a href="#a2c6067947342d061d7f5b971407c00f6" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2c6067947342d061d7f5b971407c00f6" class="m-doc-self">data</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a pointer to the beginning of the referenced data.</dd>
             <dt id="aca3efd969e0490edb1ffa47d996fea2c">
-              <span class="m-doc-wrap-bumper">auto <a href="#aca3efd969e0490edb1ffa47d996fea2c" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aca3efd969e0490edb1ffa47d996fea2c" class="m-doc-self">size</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the number of referenced elements.</dd>
             <dt id="a80a618677f68c0154d0fa997cdcb93b7">
-              <span class="m-doc-wrap-bumper">auto <a href="#a80a618677f68c0154d0fa997cdcb93b7" class="m-doc-self">size_bytes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a80a618677f68c0154d0fa997cdcb93b7" class="m-doc-self">size_bytes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the number of referenced bytes.</dd>
             <dt id="adab5e462894f0e26d9812839d5dea751">
@@ -190,100 +190,100 @@
             </dt>
             <dd>Indicates if it doesn&#x27;t reference any element.</dd>
             <dt id="ac89a25d83fa6e36e4fdccb9ac0faa506">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac89a25d83fa6e36e4fdccb9ac0faa506" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac89a25d83fa6e36e4fdccb9ac0faa506" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const iterator to the beginning of the span.</dd>
             <dt id="a10de99139ef242a12e4701be5c30020b">
-              <span class="m-doc-wrap-bumper">auto <a href="#a10de99139ef242a12e4701be5c30020b" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html#a124e9e65b7748371f02db2375f748af9" class="m-doc">iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a10de99139ef242a12e4701be5c30020b" class="m-doc-self">begin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a124e9e65b7748371f02db2375f748af9" class="m-doc">iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns an iterator to the beginning of the span.</dd>
             <dt id="ab05d3129adc6e74dcaa7867b0c4822d7">
-              <span class="m-doc-wrap-bumper">auto <a href="#ab05d3129adc6e74dcaa7867b0c4822d7" class="m-doc-self">cbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab05d3129adc6e74dcaa7867b0c4822d7" class="m-doc-self">cbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const iterator to the beginning of the span.</dd>
             <dt id="a9d4b1f66c6e8cbbaa9fe15ff8fd0a797">
-              <span class="m-doc-wrap-bumper">auto <a href="#a9d4b1f66c6e8cbbaa9fe15ff8fd0a797" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9d4b1f66c6e8cbbaa9fe15ff8fd0a797" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const iterator to the end of the span.</dd>
             <dt id="a4b2cbb084a1750c0c55c04da85734a18">
-              <span class="m-doc-wrap-bumper">auto <a href="#a4b2cbb084a1750c0c55c04da85734a18" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html#a124e9e65b7748371f02db2375f748af9" class="m-doc">iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4b2cbb084a1750c0c55c04da85734a18" class="m-doc-self">end</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a124e9e65b7748371f02db2375f748af9" class="m-doc">iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns an iterator to the end of the span.</dd>
             <dt id="aa6fb0a58f49ca21c07af6a800577ba37">
-              <span class="m-doc-wrap-bumper">auto <a href="#aa6fb0a58f49ca21c07af6a800577ba37" class="m-doc-self">cend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa6fb0a58f49ca21c07af6a800577ba37" class="m-doc-self">cend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a4c5ebe75183caabcbeb150e626336a67" class="m-doc">const_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const iterator to the end of the span.</dd>
             <dt id="a01b3143fcd3351467cdc1fec58eda620">
-              <span class="m-doc-wrap-bumper">auto <a href="#a01b3143fcd3351467cdc1fec58eda620" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a01b3143fcd3351467cdc1fec58eda620" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reverse iterator to the end of the span.</dd>
             <dt id="a035240c1cce8c930d1eaf168094e2651">
-              <span class="m-doc-wrap-bumper">auto <a href="#a035240c1cce8c930d1eaf168094e2651" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html#a985e3d9fa9b05a948d7e0c9ab771dd4b" class="m-doc">reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a035240c1cce8c930d1eaf168094e2651" class="m-doc-self">rbegin</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a985e3d9fa9b05a948d7e0c9ab771dd4b" class="m-doc">reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a reverse iterator to the end of the span.</dd>
             <dt id="a58488dd7828b368b509e8a5ddc17dd2b">
-              <span class="m-doc-wrap-bumper">auto <a href="#a58488dd7828b368b509e8a5ddc17dd2b" class="m-doc-self">crbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a58488dd7828b368b509e8a5ddc17dd2b" class="m-doc-self">crbegin</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reverse iterator to the end of the span.</dd>
             <dt id="a11fc2ad5b78178d86224c9e247eb73d2">
-              <span class="m-doc-wrap-bumper">auto <a href="#a11fc2ad5b78178d86224c9e247eb73d2" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a11fc2ad5b78178d86224c9e247eb73d2" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reverse iterator to the begin of the span.</dd>
             <dt id="a1d34c91c355d051c56863b88b5e5fd9c">
-              <span class="m-doc-wrap-bumper">auto <a href="#a1d34c91c355d051c56863b88b5e5fd9c" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html#a985e3d9fa9b05a948d7e0c9ab771dd4b" class="m-doc">reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1d34c91c355d051c56863b88b5e5fd9c" class="m-doc-self">rend</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a985e3d9fa9b05a948d7e0c9ab771dd4b" class="m-doc">reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a reverse iterator to the begin of the span.</dd>
             <dt id="a6bf22c6c812bcad3201c39e8138303ad">
-              <span class="m-doc-wrap-bumper">auto <a href="#a6bf22c6c812bcad3201c39e8138303ad" class="m-doc-self">crend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6bf22c6c812bcad3201c39e8138303ad" class="m-doc-self">crend</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#afc2a8ec9d7fc9fd846f77e8625c6710d" class="m-doc">const_<wbr />reverse_<wbr />iterator</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reverse iterator to the begin of the span.</dd>
             <dt id="ab2c4f5e093c3a1d1886e7b773e89bada">
-              <span class="m-doc-wrap-bumper">auto <a href="#ab2c4f5e093c3a1d1886e7b773e89bada" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#a51eb3fa5449715348a3a63615e1f983c" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab2c4f5e093c3a1d1886e7b773e89bada" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a51eb3fa5449715348a3a63615e1f983c" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reference to the first element.</dd>
             <dt id="a45469dd130ec344e1fe75ab4aaa619bd">
-              <span class="m-doc-wrap-bumper">auto <a href="#a45469dd130ec344e1fe75ab4aaa619bd" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html#a91a2bc42d2127b2d0aefa584c5ec0f23" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a45469dd130ec344e1fe75ab4aaa619bd" class="m-doc-self">front</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a91a2bc42d2127b2d0aefa584c5ec0f23" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a reference to the first element.</dd>
             <dt id="a60b03bcd3bd925bd276292bc8232eea2">
-              <span class="m-doc-wrap-bumper">auto <a href="#a60b03bcd3bd925bd276292bc8232eea2" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html#a51eb3fa5449715348a3a63615e1f983c" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a60b03bcd3bd925bd276292bc8232eea2" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a51eb3fa5449715348a3a63615e1f983c" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reference to the last element.</dd>
             <dt id="ac94c35baa3c9c87ad501809ea9926e10">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac94c35baa3c9c87ad501809ea9926e10" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html#a91a2bc42d2127b2d0aefa584c5ec0f23" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac94c35baa3c9c87ad501809ea9926e10" class="m-doc-self">back</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a91a2bc42d2127b2d0aefa584c5ec0f23" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a reference to the last element.</dd>
             <dt id="a81fb641b8596fe125f62362ad2acd07a">
-              <span class="m-doc-wrap-bumper">auto <a href="#a81fb641b8596fe125f62362ad2acd07a" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="classbn_1_1span.html#a51eb3fa5449715348a3a63615e1f983c" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a81fb641b8596fe125f62362ad2acd07a" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="#a51eb3fa5449715348a3a63615e1f983c" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reference to the value stored at the specified index.</dd>
             <dt id="ac3378e359e379a5545cf821f8bb364a9">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac3378e359e379a5545cf821f8bb364a9" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="classbn_1_1span.html#a91a2bc42d2127b2d0aefa584c5ec0f23" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac3378e359e379a5545cf821f8bb364a9" class="m-doc-self">operator[]</a>(</span><span class="m-doc-wrap"><a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="#a91a2bc42d2127b2d0aefa584c5ec0f23" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a reference to the value stored at the specified index.</dd>
             <dt id="a520eb24487bd0becf6b8fcc4625930d6">
-              <span class="m-doc-wrap-bumper">auto <a href="#a520eb24487bd0becf6b8fcc4625930d6" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="classbn_1_1span.html#a51eb3fa5449715348a3a63615e1f983c" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a520eb24487bd0becf6b8fcc4625930d6" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> index) const -&gt; <a href="#a51eb3fa5449715348a3a63615e1f983c" class="m-doc">const_<wbr />reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reference to the value stored at the specified index.</dd>
             <dt id="a5eb0773dcb2132c7b35f8cf140bb8a0a">
-              <span class="m-doc-wrap-bumper">auto <a href="#a5eb0773dcb2132c7b35f8cf140bb8a0a" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="classbn_1_1span.html#a91a2bc42d2127b2d0aefa584c5ec0f23" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5eb0773dcb2132c7b35f8cf140bb8a0a" class="m-doc-self">at</a>(</span><span class="m-doc-wrap"><a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> index) -&gt; <a href="#a91a2bc42d2127b2d0aefa584c5ec0f23" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a reference to the value stored at the specified index.</dd>
             <dt id="a7b66d9ac6cfb0e0124b0f8095b9d0572">
-              <span class="m-doc-wrap-bumper">auto <a href="#a7b66d9ac6cfb0e0124b0f8095b9d0572" class="m-doc-self">first</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> count) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7b66d9ac6cfb0e0124b0f8095b9d0572" class="m-doc-self">first</a>(</span><span class="m-doc-wrap"><a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> count) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a span that is a view over the first count elements of this span.</dd>
             <dt id="a1e0a6849f4ba37373f72e0174690150d">
-              <span class="m-doc-wrap-bumper">auto <a href="#a1e0a6849f4ba37373f72e0174690150d" class="m-doc-self">last</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> count) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1e0a6849f4ba37373f72e0174690150d" class="m-doc-self">last</a>(</span><span class="m-doc-wrap"><a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> count) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a span that is a view over the last count elements of this span.</dd>
             <dt id="a214e7cb183ba1a4b3d0912feb2df7fe5">
-              <span class="m-doc-wrap-bumper">auto <a href="#a214e7cb183ba1a4b3d0912feb2df7fe5" class="m-doc-self">subspan</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> offset) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a214e7cb183ba1a4b3d0912feb2df7fe5" class="m-doc-self">subspan</a>(</span><span class="m-doc-wrap"><a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> offset) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a span that is a view over the elements of this span starting at offset.</dd>
             <dt id="aafbbef6ca149eeb547129cae2de68391">
-              <span class="m-doc-wrap-bumper">auto <a href="#aafbbef6ca149eeb547129cae2de68391" class="m-doc-self">subspan</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> offset,
-              <a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> count) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aafbbef6ca149eeb547129cae2de68391" class="m-doc-self">subspan</a>(</span><span class="m-doc-wrap"><a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> offset,
+              <a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> count) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Obtains a span that is a view over the count elements of this span starting at offset.</dd>
             <dt>
@@ -334,8 +334,8 @@
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />span&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae7010c46258454dc2edf1cf10311041f" class="m-doc-self">span</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> ptr,
-              <a href="classbn_1_1span.html#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> size) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />span&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae7010c46258454dc2edf1cf10311041f" class="m-doc-self">span</a>(</span><span class="m-doc-wrap"><a href="#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> ptr,
+              <a href="#a4494e29157a3b1facbd5c083fdb10353" class="m-doc">size_<wbr />type</a> size) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Constructs a span that is a view over the range [ptr, ptr + size).</p>
             <table class="m-table m-fullwidth m-flat">
@@ -359,8 +359,8 @@
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />span&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a90c91001a8b1a42fb5e064925af1c0c7" class="m-doc-self">span</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> first,
-              <a href="classbn_1_1span.html#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> last) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />span&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a90c91001a8b1a42fb5e064925af1c0c7" class="m-doc-self">span</a>(</span><span class="m-doc-wrap"><a href="#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> first,
+              <a href="#aeadd26feb301af919377519a82aa8920" class="m-doc">pointer</a> last) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Constructs a span that is a view over the range [first, last).</p>
             <table class="m-table m-fullwidth m-flat">
@@ -624,7 +624,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

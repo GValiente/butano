@@ -210,17 +210,17 @@
             </dt>
             <dd>Returns the absolute value of the given value.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga20c15f0ba7a1aa408a200dd3f7363bfe" class="m-doc">sqrt</a>(</span><span class="m-doc-wrap">int value) -&gt; <a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> int <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#gaf87b16f04d5c22fcb6dac8cdc42cdc17" class="m-doc">sqrt</a>(</span><span class="m-doc-wrap">int value) -&gt; <a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> constexpr int <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the integer square root of the given value.</dd>
             <dt>
               <div class="m-doc-template">template&lt;int Precision&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga02382ec8128ea84a4be7d7a21efb8658" class="m-doc">sqrt</a>(</span><span class="m-doc-wrap">fixed_t&lt;Precision&gt; value) -&gt; <a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> fixed_t&lt;(Precision+1)/2&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga982d6c9b1bc00c0f562d1c6508c30aea" class="m-doc">sqrt</a>(</span><span class="m-doc-wrap">fixed_t&lt;Precision&gt; value) -&gt; <a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> constexpr fixed_t&lt;(Precision+1)/2&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the fixed point square root of the given value.</dd>
             <dt>
               <div class="m-doc-template">template&lt;int Precision&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga3fd466988bc7ed945f6ee5a3cbfa5b64" class="m-doc">unsafe_sqrt</a>(</span><span class="m-doc-wrap">fixed_t&lt;Precision&gt; value) -&gt; <a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> fixed_t&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga150d06193cada537b2978edd85fd25c6" class="m-doc">unsafe_sqrt</a>(</span><span class="m-doc-wrap">fixed_t&lt;Precision&gt; value) -&gt; <a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> constexpr fixed_t&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the fixed point square root of the given value without trying to avoid overflow.</dd>
             <dt>
@@ -256,23 +256,23 @@
             </dt>
             <dd>Calculates the cosine value of an angle in degrees using a LUT.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#gaf6d272fd322b4aace3379499731ebb54" class="m-doc">sin_and_cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga0632c9572fadf8f74a7df210f23646b5" class="m-doc">sin_and_cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the sine and the cosine values of an angle.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga81fa03aeaa711ef85fc3c7bbdcc26661" class="m-doc">degrees_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#gae8837970c7a3aea466c06b8077a5d17d" class="m-doc">degrees_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the sine and the cosine values of an angle in degrees.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#gac62cc0af55285a33018b6c3a026e9dfe" class="m-doc">lut_sin_and_cos</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#gadfad2d9ce4c72e19c7fb22c4dcf269a1" class="m-doc">lut_sin_and_cos</a>(</span><span class="m-doc-wrap">int lut_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the sine and the cosine values value of an angle using a LUT.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga8f5627e48c96a57f79c7e5c4817db062" class="m-doc">degrees_lut_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga71e8b700ef0c4e7e8eb264d78defe65c" class="m-doc">degrees_lut_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the sine and the cosine values of an angle in degrees using a LUT.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#gab796b3072eee1ee8c2f0059279c44e82" class="m-doc">atan2</a>(</span><span class="m-doc-wrap">int y,
+              <span class="m-doc-wrap-bumper">auto <a href="#ga78f693fa4296294dd21c68557e916aa3" class="m-doc">atan2</a>(</span><span class="m-doc-wrap">int y,
               int x) -&gt; <a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> fixed_t&lt;16&gt;</span>
             </dt>
             <dd>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
@@ -282,7 +282,7 @@
             </dt>
             <dd>Computes the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga4cf00f5fc5faadf2c42946bc7cae58ad" class="m-doc">diamond_angle</a>(</span><span class="m-doc-wrap">int y,
+              <span class="m-doc-wrap-bumper">auto <a href="#ga85e7e6e77aa0c5e2ac9ca9ca1147cb48" class="m-doc">diamond_angle</a>(</span><span class="m-doc-wrap">int y,
               int x) -&gt; fixed_t&lt;16&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Computes an approximation of the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
@@ -292,7 +292,7 @@
             </dt>
             <dd>Computes an approximation of the arc tangent of y/x using the signs of arguments to determine the correct quadrant.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#gac253666985e4064e5c663549b6e5812d" class="m-doc">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; fixed_t&lt;20&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#gafc2a7463570f753f22185c1529bd9ee6" class="m-doc">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; fixed_t&lt;20&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the reciprocal of a value using a LUT.</dd>
             <dt>
@@ -302,7 +302,7 @@
             <dd>Indicates if the given value is a power of two or not.</dd>
             <dt>
               <div class="m-doc-template">template&lt;int Precision = 20&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#gaed12c1a0fcf4bc1baf516dc80bcefec8" class="m-doc">calculate_reciprocal_lut_value</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; fixed_t&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga439545803e369aae4f082185a303ad42" class="m-doc">calculate_reciprocal_lut_value</a>(</span><span class="m-doc-wrap">int lut_value) -&gt; fixed_t&lt;Precision&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Calculates the value to store in a reciprocal LUT for the given value.</dd>
             <dt>
@@ -352,31 +352,31 @@
             </h3>
             <p>Returns the absolute value of the given value.</p>
           </div></section>
-          <section class="m-doc-details" id="ga20c15f0ba7a1aa408a200dd3f7363bfe"><div>
+          <section class="m-doc-details" id="gaf87b16f04d5c22fcb6dac8cdc42cdc17"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> int </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga20c15f0ba7a1aa408a200dd3f7363bfe" class="m-doc-self">sqrt</a>(</span><span class="m-doc-wrap">int value) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> constexpr int </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf87b16f04d5c22fcb6dac8cdc42cdc17" class="m-doc-self">sqrt</a>(</span><span class="m-doc-wrap">int value) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
             <p>Returns the integer square root of the given value.</p>
           </div></section>
-          <section class="m-doc-details" id="ga02382ec8128ea84a4be7d7a21efb8658"><div>
+          <section class="m-doc-details" id="ga982d6c9b1bc00c0f562d1c6508c30aea"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;int Precision&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> fixed_t&lt;(Precision+1)/2&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga02382ec8128ea84a4be7d7a21efb8658" class="m-doc-self">sqrt</a>(</span><span class="m-doc-wrap">fixed_t&lt;Precision&gt; value) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> constexpr fixed_t&lt;(Precision+1)/2&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga982d6c9b1bc00c0f562d1c6508c30aea" class="m-doc-self">sqrt</a>(</span><span class="m-doc-wrap">fixed_t&lt;Precision&gt; value) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Returns the fixed point square root of the given value.</p>
 <p>See <a href="https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/fixedmath.hpp">https:/<wbr />/<wbr />github.com/<wbr />JoaoBaptMG/<wbr />gba-modern/<wbr />blob/<wbr />master/<wbr />source/<wbr />math/<wbr />fixedmath.hpp</a></p>
           </div></section>
-          <section class="m-doc-details" id="ga3fd466988bc7ed945f6ee5a3cbfa5b64"><div>
+          <section class="m-doc-details" id="ga150d06193cada537b2978edd85fd25c6"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;int Precision&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> fixed_t&lt;Precision&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3fd466988bc7ed945f6ee5a3cbfa5b64" class="m-doc-self">unsafe_sqrt</a>(</span><span class="m-doc-wrap">fixed_t&lt;Precision&gt; value) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> constexpr fixed_t&lt;Precision&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga150d06193cada537b2978edd85fd25c6" class="m-doc-self">unsafe_sqrt</a>(</span><span class="m-doc-wrap">fixed_t&lt;Precision&gt; value) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Returns the fixed point square root of the given value without trying to avoid overflow.</p>
 <p>See <a href="https://github.com/JoaoBaptMG/gba-modern/blob/master/source/math/fixedmath.hpp">https:/<wbr />/<wbr />github.com/<wbr />JoaoBaptMG/<wbr />gba-modern/<wbr />blob/<wbr />master/<wbr />source/<wbr />math/<wbr />fixedmath.hpp</a></p>
@@ -573,9 +573,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="gaf6d272fd322b4aace3379499731ebb54"><div>
+          <section class="m-doc-details" id="ga0632c9572fadf8f74a7df210f23646b5"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaf6d272fd322b4aace3379499731ebb54" class="m-doc-self">sin_and_cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0632c9572fadf8f74a7df210f23646b5" class="m-doc-self">sin_and_cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
             <p>Calculates the sine and the cosine values of an angle.</p>
@@ -597,9 +597,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga81fa03aeaa711ef85fc3c7bbdcc26661"><div>
+          <section class="m-doc-details" id="gae8837970c7a3aea466c06b8077a5d17d"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga81fa03aeaa711ef85fc3c7bbdcc26661" class="m-doc-self">degrees_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gae8837970c7a3aea466c06b8077a5d17d" class="m-doc-self">degrees_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
             <p>Calculates the sine and the cosine values of an angle in degrees.</p>
@@ -621,9 +621,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="gac62cc0af55285a33018b6c3a026e9dfe"><div>
+          <section class="m-doc-details" id="gadfad2d9ce4c72e19c7fb22c4dcf269a1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac62cc0af55285a33018b6c3a026e9dfe" class="m-doc-self">lut_sin_and_cos</a>(</span><span class="m-doc-wrap">int lut_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gadfad2d9ce4c72e19c7fb22c4dcf269a1" class="m-doc-self">lut_sin_and_cos</a>(</span><span class="m-doc-wrap">int lut_angle) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
             <p>Calculates the sine and the cosine values value of an angle using a LUT.</p>
@@ -645,9 +645,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga8f5627e48c96a57f79c7e5c4817db062"><div>
+          <section class="m-doc-details" id="ga71e8b700ef0c4e7e8eb264d78defe65c"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga8f5627e48c96a57f79c7e5c4817db062" class="m-doc-self">degrees_lut_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga71e8b700ef0c4e7e8eb264d78defe65c" class="m-doc-self">degrees_lut_sin_and_cos</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
             <p>Calculates the sine and the cosine values of an angle in degrees using a LUT.</p>
@@ -669,9 +669,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="gab796b3072eee1ee8c2f0059279c44e82"><div>
+          <section class="m-doc-details" id="ga78f693fa4296294dd21c68557e916aa3"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> fixed_t&lt;16&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gab796b3072eee1ee8c2f0059279c44e82" class="m-doc-self">atan2</a>(</span><span class="m-doc-wrap">int y,
+              <span class="m-doc-wrap-bumper"><a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> fixed_t&lt;16&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga78f693fa4296294dd21c68557e916aa3" class="m-doc-self">atan2</a>(</span><span class="m-doc-wrap">int y,
               int x)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
@@ -727,9 +727,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga4cf00f5fc5faadf2c42946bc7cae58ad"><div>
+          <section class="m-doc-details" id="ga85e7e6e77aa0c5e2ac9ca9ca1147cb48"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">fixed_t&lt;16&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4cf00f5fc5faadf2c42946bc7cae58ad" class="m-doc-self">diamond_angle</a>(</span><span class="m-doc-wrap">int y,
+              <span class="m-doc-wrap-bumper">fixed_t&lt;16&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga85e7e6e77aa0c5e2ac9ca9ca1147cb48" class="m-doc-self">diamond_angle</a>(</span><span class="m-doc-wrap">int y,
               int x) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
@@ -787,9 +787,9 @@
             </table>
 <p><a href="https://www.freesteel.co.uk/wpblog/2009/06/05/encoding-2d-angles-without-trigonometry/">https:/<wbr />/<wbr />www.freesteel.co.uk/<wbr />wpblog/<wbr />2009/<wbr />06/<wbr />05/<wbr />encoding-2d-angles-without-trigonometry/<wbr /></a></p>
           </div></section>
-          <section class="m-doc-details" id="gac253666985e4064e5c663549b6e5812d"><div>
+          <section class="m-doc-details" id="gafc2a7463570f753f22185c1529bd9ee6"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">fixed_t&lt;20&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gac253666985e4064e5c663549b6e5812d" class="m-doc-self">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">fixed_t&lt;20&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gafc2a7463570f753f22185c1529bd9ee6" class="m-doc-self">lut_reciprocal</a>(</span><span class="m-doc-wrap">int lut_value) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
             <p>Calculates the reciprocal of a value using a LUT.</p>
@@ -821,13 +821,13 @@
             </h3>
             <p>Indicates if the given value is a power of two or not.</p>
           </div></section>
-          <section class="m-doc-details" id="gaed12c1a0fcf4bc1baf516dc80bcefec8"><div>
+          <section class="m-doc-details" id="ga439545803e369aae4f082185a303ad42"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__reciprocal__lut_8h.html">&lt;bn_reciprocal_lut.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;int Precision = 20&gt;
               </div>
-              <span class="m-doc-wrap-bumper">fixed_t&lt;Precision&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gaed12c1a0fcf4bc1baf516dc80bcefec8" class="m-doc-self">calculate_reciprocal_lut_value</a>(</span><span class="m-doc-wrap">int lut_value) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">fixed_t&lt;Precision&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga439545803e369aae4f082185a303ad42" class="m-doc-self">calculate_reciprocal_lut_value</a>(</span><span class="m-doc-wrap">int lut_value) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Calculates the value to store in a reciprocal LUT for the given value.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -971,7 +971,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

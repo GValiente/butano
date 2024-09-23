@@ -37,4 +37,21 @@ void timer::restart()
     _last_ticks = hw::timer::ticks();
 }
 
+int timer::elapsed_ticks_with_restart()
+{
+    unsigned ticks = hw::timer::ticks();
+    unsigned last_ticks = _last_ticks;
+    _last_ticks = ticks;
+
+    if(ticks < last_ticks) [[unlikely]]
+    {
+        uint64_t overflow_result = ticks;
+        overflow_result += numeric_limits<unsigned>::max();
+        overflow_result -= last_ticks;
+        return int(overflow_result);
+    }
+
+    return int(ticks - last_ticks);
+}
+
 }

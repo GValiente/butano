@@ -22,6 +22,13 @@ namespace bn::hw::timers
         return 280896 / divisor();
     }
 
+    [[nodiscard]] constexpr int ticks_per_second()
+    {
+        // http://problemkaputt.de/gbatek.htm#lcddimensionsandtimings
+
+        return (16 * 1024 * 1024) / divisor();
+    }
+
     [[nodiscard]] constexpr int ticks_per_vblank()
     {
         // http://problemkaputt.de/gbatek.htm#lcddimensionsandtimings

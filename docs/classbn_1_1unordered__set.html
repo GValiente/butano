@@ -48,7 +48,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unordered__set_8h.html">&lt;bn_unordered_set.h&gt;</a></div>
-          <div class="m-doc-template">template&lt;typename Key, int MaxSize, typename KeyHash, typename KeyEqual&gt;</div>
+          <div class="m-doc-template">template&lt;typename Key, int MaxSize, typename KeyHash = <a href="structbn_1_1hash.html" class="m-doc">hash</a>&lt;Key&gt;, typename KeyEqual = <a href="classbn_1_1equal__to.html" class="m-doc">equal_<wbr />to</a>&lt;Key&gt;&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>unordered_set <span class="m-thin">class</span>
         </h1>
         <p><code>std::unordered_set</code> like container with a fixed size buffer.</p>
@@ -94,8 +94,8 @@
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename Key, typename KeyHash, typename KeyEqual&gt;</div>
-              class <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_set&lt;Key, KeyHash, KeyEqual&gt;</a>
+              <div class="m-doc-template">template&lt;typename Key, typename KeyHash = <a href="structbn_1_1hash.html" class="m-doc">hash</a>&lt;Key&gt;, typename KeyEqual = <a href="classbn_1_1equal__to.html" class="m-doc">equal_<wbr />to</a>&lt;Key&gt;&gt;</div>
+              class <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_set&lt;Key, hash&lt;Key&gt;, equal_to&lt;Key&gt;&gt;</a>
             </dt>
             <dd>Base class of <a href="classbn_1_1unordered__set.html" class="m-doc">bn::<wbr />unordered_set</a>.</dd>
           </dl>
@@ -132,19 +132,19 @@
             </dt>
             <dd>Equality functor alias.</dd>
             <dt id="ac82139db1ae78703a50132f247cb7824">
-              using <a href="#ac82139db1ae78703a50132f247cb7824" class="m-doc-self">reference</a> = <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;
+              using <a href="#ac82139db1ae78703a50132f247cb7824" class="m-doc-self">reference</a> = <a href="#a50288a48539e16c7e6a695c59cdd9083" class="m-doc">value_<wbr />type</a>&amp;
             </dt>
             <dd>Reference alias.</dd>
             <dt id="abbbba462086e0aa215737d7b6ced5df6">
-              using <a href="#abbbba462086e0aa215737d7b6ced5df6" class="m-doc-self">const_reference</a> = const <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>&amp;
+              using <a href="#abbbba462086e0aa215737d7b6ced5df6" class="m-doc-self">const_reference</a> = const <a href="#a50288a48539e16c7e6a695c59cdd9083" class="m-doc">value_<wbr />type</a>&amp;
             </dt>
             <dd>Const reference alias.</dd>
             <dt id="a436a9cca1fd56c40fb438564930be7c5">
-              using <a href="#a436a9cca1fd56c40fb438564930be7c5" class="m-doc-self">pointer</a> = <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>*
+              using <a href="#a436a9cca1fd56c40fb438564930be7c5" class="m-doc-self">pointer</a> = <a href="#a50288a48539e16c7e6a695c59cdd9083" class="m-doc">value_<wbr />type</a>*
             </dt>
             <dd>Pointer alias.</dd>
             <dt id="a17a92f6efad2d27c0b6dd35406cced72">
-              using <a href="#a17a92f6efad2d27c0b6dd35406cced72" class="m-doc-self">const_pointer</a> = const <a href="classbn_1_1iunordered__set.html#a7d7db1bdbfae2919a2fed8d1279b0e60" class="m-doc">value_<wbr />type</a>*
+              using <a href="#a17a92f6efad2d27c0b6dd35406cced72" class="m-doc-self">const_pointer</a> = const <a href="#a50288a48539e16c7e6a695c59cdd9083" class="m-doc">value_<wbr />type</a>*
             </dt>
             <dd>Const pointer alias.</dd>
           </dl>
@@ -178,19 +178,19 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aacbc4a319e39b5346a3c93262134dd7f" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; other) -&gt; <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a56fe96f272645c806293be08cc8cf3d9" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; other) -&gt; <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp;</span>
             </dt>
             <dd>Copy assignment operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a4c0eb0b143f3151db06789eefc1133b0" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp;&amp; other) -&gt; <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aea1d0e1bd68cadfa6456a6f09f47c6c0" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp;&amp; other) -&gt; <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Move assignment operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac20343651d7b46751a363cd914b814c2" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp; other) -&gt; <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7a18156963de6f6652062f64c85d0937" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp; other) -&gt; <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp;</span>
             </dt>
             <dd>Copy assignment operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a8cdb8085a99015932b60b1ffb1766f65" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp;&amp; other) -&gt; <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aaa07cd0f3e3260afcfee6fd5d631f079" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp;&amp; other) -&gt; <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Move assignment operator.</dd>
           </dl>
@@ -279,12 +279,12 @@
             </table>
 <p>Unlike <code>std::unordered_set</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
-          <section class="m-doc-details" id="aacbc4a319e39b5346a3c93262134dd7f"><div>
+          <section class="m-doc-details" id="a56fe96f272645c806293be08cc8cf3d9"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Key, int MaxSize, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; bn::<wbr />unordered_set&lt;Key, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aacbc4a319e39b5346a3c93262134dd7f" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; other)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; bn::<wbr />unordered_set&lt;Key, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a56fe96f272645c806293be08cc8cf3d9" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; other)</span></span>
             </h3>
             <p>Copy assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -305,12 +305,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a4c0eb0b143f3151db06789eefc1133b0"><div>
+          <section class="m-doc-details" id="aea1d0e1bd68cadfa6456a6f09f47c6c0"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Key, int MaxSize, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; bn::<wbr />unordered_set&lt;Key, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4c0eb0b143f3151db06789eefc1133b0" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; bn::<wbr />unordered_set&lt;Key, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aea1d0e1bd68cadfa6456a6f09f47c6c0" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Move assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -332,12 +332,12 @@
             </table>
 <p>Unlike <code>std::unordered_set</code>, it doesn&#x27;t offer pointer stability.</p>
           </div></section>
-          <section class="m-doc-details" id="ac20343651d7b46751a363cd914b814c2"><div>
+          <section class="m-doc-details" id="a7a18156963de6f6652062f64c85d0937"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Key, int MaxSize, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; bn::<wbr />unordered_set&lt;Key, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac20343651d7b46751a363cd914b814c2" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp; other)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; bn::<wbr />unordered_set&lt;Key, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7a18156963de6f6652062f64c85d0937" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp; other)</span></span>
             </h3>
             <p>Copy assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -358,12 +358,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a8cdb8085a99015932b60b1ffb1766f65"><div>
+          <section class="m-doc-details" id="aaa07cd0f3e3260afcfee6fd5d631f079"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Key, int MaxSize, typename KeyHash, typename KeyEqual&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; bn::<wbr />unordered_set&lt;Key, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8cdb8085a99015932b60b1ffb1766f65" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unordered__set.html" class="m-doc">unordered_<wbr />set</a>&amp; bn::<wbr />unordered_set&lt;Key, MaxSize, KeyHash, KeyEqual&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaa07cd0f3e3260afcfee6fd5d631f079" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iunordered__set.html" class="m-doc">iunordered_<wbr />set</a>&lt;Key, KeyHash, KeyEqual&gt;&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Move assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -430,7 +430,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

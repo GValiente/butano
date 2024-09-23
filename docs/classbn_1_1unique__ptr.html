@@ -48,7 +48,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unique__ptr_8h.html">&lt;bn_unique_ptr.h&gt;</a></div>
-          <div class="m-doc-template">template&lt;typename Type, typename Deleter&gt;</div>
+          <div class="m-doc-template">template&lt;typename Type, typename Deleter = <a href="structbn_1_1default__delete.html" class="m-doc">default_<wbr />delete</a>&lt;Type&gt;&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>unique_ptr <span class="m-thin">class</span>
         </h1>
         <p><code>std::unique_ptr</code> like container.</p>
@@ -111,7 +111,7 @@
             </dt>
             <dd>Nullptr constructor.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper"><a href="#a2e200953d6568b483111e83eea331667" class="m-doc">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a2e200953d6568b483111e83eea331667" class="m-doc">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr) <span class="m-label m-flat m-info">explicit</span>  <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructor.</dd>
             <dt>
@@ -137,52 +137,52 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a6c608941825dbc321f500edcd89d0a21" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aae51c4d24d8a8dcd5c7b9ae4a539c137" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Move assignment operator.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename OtherType, typename OtherDeleter&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a11eca52cdbf1009f40b3b702761a6c9d" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;OtherType, OtherDeleter&gt;&amp;&amp; other) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a951923b83db937c5af5a5a855b7e35ca" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;OtherType, OtherDeleter&gt;&amp;&amp; other) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Move assignment operator.</dd>
-            <dt id="a13dbef4f2596eb88e6f9e7c5e3876483">
-              <span class="m-doc-wrap-bumper">auto <a href="#a13dbef4f2596eb88e6f9e7c5e3876483" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">nullptr_t) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+            <dt id="aeca443e83a10cc9dba05c44cd9f3de64">
+              <span class="m-doc-wrap-bumper">auto <a href="#aeca443e83a10cc9dba05c44cd9f3de64" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">nullptr_t) -&gt; <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
-            <dd>Effectively the same as calling <a href="classbn_1_1unique__ptr.html#a51077d0279075ab1058b6a5ced7eaf43" class="m-doc">reset()</a>.</dd>
-            <dt id="a370c348b9c1b882d666ca454ef747a10">
-              <span class="m-doc-wrap-bumper">auto <a href="#a370c348b9c1b882d666ca454ef747a10" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">) const -&gt; const Type* <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dd>Effectively the same as calling <a href="#a51077d0279075ab1058b6a5ced7eaf43" class="m-doc">reset()</a>.</dd>
+            <dt id="a7e7e9e915ab42cd10bd4d3aa3fd5cd04">
+              <span class="m-doc-wrap-bumper">auto <a href="#a7e7e9e915ab42cd10bd4d3aa3fd5cd04" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">) const -&gt; const Type* <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const pointer to the managed object.</dd>
             <dt id="a13134d1e0e24b178fe370de3ba64a6f7">
-              <span class="m-doc-wrap-bumper">auto <a href="#a13134d1e0e24b178fe370de3ba64a6f7" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a13134d1e0e24b178fe370de3ba64a6f7" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a pointer to the managed object.</dd>
-            <dt id="aa2fbd4bf3d20053c8a8b090469f66705">
-              <span class="m-doc-wrap-bumper">auto <a href="#aa2fbd4bf3d20053c8a8b090469f66705" class="m-doc-self">get_deleter</a>(</span><span class="m-doc-wrap">) const -&gt; const Deleter&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="ac3b868c44d5c081c9768b2a922732aec">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac3b868c44d5c081c9768b2a922732aec" class="m-doc-self">get_deleter</a>(</span><span class="m-doc-wrap">) const -&gt; const Deleter&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reference to the managed object deleter.</dd>
-            <dt id="acf69b20ddce8fe947eeb027f2409292b">
-              <span class="m-doc-wrap-bumper">auto <a href="#acf69b20ddce8fe947eeb027f2409292b" class="m-doc-self">get_deleter</a>(</span><span class="m-doc-wrap">) -&gt; Deleter&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="accff2d56be728a45a6824ea5f155a654">
+              <span class="m-doc-wrap-bumper">auto <a href="#accff2d56be728a45a6824ea5f155a654" class="m-doc-self">get_deleter</a>(</span><span class="m-doc-wrap">) -&gt; Deleter&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a reference to the managed object deleter.</dd>
-            <dt id="a953c672b5034105fee9fa3a073b3e40d">
-              <span class="m-doc-wrap-bumper">auto <a href="#a953c672b5034105fee9fa3a073b3e40d" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) const -&gt; const Type&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="ad2c3f1e9740a96f73436d811e98439d2">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad2c3f1e9740a96f73436d811e98439d2" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) const -&gt; const Type&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const reference to the managed object.</dd>
             <dt id="a135c37b8306bd16e700f1178b1748280">
-              <span class="m-doc-wrap-bumper">auto <a href="#a135c37b8306bd16e700f1178b1748280" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1unique__ptr.html#ada94e89630d762b61cf6a2fe86a86462" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a135c37b8306bd16e700f1178b1748280" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#ada94e89630d762b61cf6a2fe86a86462" class="m-doc">reference</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a reference to the managed object.</dd>
-            <dt id="ade352eb4c565aebba15aaf1c066f551a">
-              <span class="m-doc-wrap-bumper">auto <a href="#ade352eb4c565aebba15aaf1c066f551a" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) const -&gt; const Type* <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt id="a53305022a6ee94dc94f4a470d7c2dbd0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a53305022a6ee94dc94f4a470d7c2dbd0" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) const -&gt; const Type* <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a const pointer to the managed object.</dd>
             <dt id="a36932dabd1e82935bd10236faafc615c">
-              <span class="m-doc-wrap-bumper">auto <a href="#a36932dabd1e82935bd10236faafc615c" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a36932dabd1e82935bd10236faafc615c" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a pointer to the managed object.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a5149aaabb94f21bdf6b9d00e41180067" class="m-doc">release</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5149aaabb94f21bdf6b9d00e41180067" class="m-doc">release</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Releases the ownership of the managed object.</dd>
             <dt id="a51077d0279075ab1058b6a5ced7eaf43">
@@ -190,7 +190,7 @@
             </dt>
             <dd>Disposes the managed object.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#afb67877c98813c6809a52e692f5a6917" class="m-doc">reset</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr) <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">void <a href="#afb67877c98813c6809a52e692f5a6917" class="m-doc">reset</a>(</span><span class="m-doc-wrap"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Disposes the managed object and replaces it with the given one.</dd>
             <dt>
@@ -247,33 +247,33 @@
             </dt>
             <dd>Greater than or equal operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac261d587adb9d051b63f56c044b4b1f4" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a366d260d88ede61d91b975d1f5f37333" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Equal operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#aa480e171bf684623b4bffc9a9e0c07d1" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8a6aab46c891ffc49a13bc9560c4b6b8" class="m-doc">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Not equal operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#adbaaab145d8427b5f1b4dbb48df59c38" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">] const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9af06035813acefa1b399c8bff103e21" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Less than operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a9aef931994c3c3990f95f6a08f2e4b28" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aae7d8cf9725b1fa9fc309501ef4a9ca9" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Greater than operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a4529788f1b4ad4b5ec52c6759858f666" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1127503536ddef9c348711b4921130f7" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Less than or equal operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a0fcb9595572f06b2101fe408ede3c998" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">] const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a62754d4e8e426abe2b30755242162b9f" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Greater than or equal than operator.</dd>
           </dl>
@@ -285,7 +285,7 @@
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper"> bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2e200953d6568b483111e83eea331667" class="m-doc-self">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2e200953d6568b483111e83eea331667" class="m-doc-self">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr) <span class="m-label m-info">explicit</span>  <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -341,12 +341,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a6c608941825dbc321f500edcd89d0a21"><div>
+          <section class="m-doc-details" id="aae51c4d24d8a8dcd5c7b9ae4a539c137"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6c608941825dbc321f500edcd89d0a21" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aae51c4d24d8a8dcd5c7b9ae4a539c137" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Move assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -367,13 +367,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a11eca52cdbf1009f40b3b702761a6c9d"><div>
+          <section class="m-doc-details" id="a951923b83db937c5af5a5a855b7e35ca"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
                 template&lt;typename OtherType, typename OtherDeleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a11eca52cdbf1009f40b3b702761a6c9d" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;OtherType, OtherDeleter&gt;&amp;&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a951923b83db937c5af5a5a855b7e35ca" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&lt;OtherType, OtherDeleter&gt;&amp;&amp; other) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Move assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -399,7 +399,7 @@
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5149aaabb94f21bdf6b9d00e41180067" class="m-doc-self">release</a>(</span><span class="m-doc-wrap">) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5149aaabb94f21bdf6b9d00e41180067" class="m-doc-self">release</a>(</span><span class="m-doc-wrap">) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Releases the ownership of the managed object.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -416,7 +416,7 @@
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afb67877c98813c6809a52e692f5a6917" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afb67877c98813c6809a52e692f5a6917" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Disposes the managed object and replaces it with the given one.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -683,13 +683,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ac261d587adb9d051b63f56c044b4b1f4"><div>
+          <section class="m-doc-details" id="a366d260d88ede61d91b975d1f5f37333"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac261d587adb9d051b63f56c044b4b1f4" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a366d260d88ede61d91b975d1f5f37333" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Equal operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -714,13 +714,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="aa480e171bf684623b4bffc9a9e0c07d1"><div>
+          <section class="m-doc-details" id="a8a6aab46c891ffc49a13bc9560c4b6b8"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa480e171bf684623b4bffc9a9e0c07d1" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8a6aab46c891ffc49a13bc9560c4b6b8" class="m-doc-self">operator!=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Not equal operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -745,13 +745,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="adbaaab145d8427b5f1b4dbb48df59c38"><div>
+          <section class="m-doc-details" id="a9af06035813acefa1b399c8bff103e21"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adbaaab145d8427b5f1b4dbb48df59c38" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">] const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9af06035813acefa1b399c8bff103e21" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Less than operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -776,13 +776,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a9aef931994c3c3990f95f6a08f2e4b28"><div>
+          <section class="m-doc-details" id="aae7d8cf9725b1fa9fc309501ef4a9ca9"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9aef931994c3c3990f95f6a08f2e4b28" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aae7d8cf9725b1fa9fc309501ef4a9ca9" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Greater than operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -807,13 +807,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a4529788f1b4ad4b5ec52c6759858f666"><div>
+          <section class="m-doc-details" id="a1127503536ddef9c348711b4921130f7"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4529788f1b4ad4b5ec52c6759858f666" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1127503536ddef9c348711b4921130f7" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Less than or equal operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -838,13 +838,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a0fcb9595572f06b2101fe408ede3c998"><div>
+          <section class="m-doc-details" id="a62754d4e8e426abe2b30755242162b9f"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename Deleter&gt;
               </div>
-              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0fcb9595572f06b2101fe408ede3c998" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">] const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
-              ] nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a62754d4e8e426abe2b30755242162b9f" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp; a,
+              nullptr_t b) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Greater than or equal than operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -914,7 +914,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

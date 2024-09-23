@@ -31,6 +31,14 @@ namespace bn::timers
     }
 
     /**
+     * @brief Returns the number of ticks elapsed in a second.
+     */
+    [[nodiscard]] constexpr int ticks_per_second()
+    {
+        return hw::timers::ticks_per_second();
+    }
+
+    /**
      * @brief Returns the number of ticks elapsed in a V-Blank period.
      */
     [[nodiscard]] constexpr int ticks_per_vblank()

@@ -81,7 +81,7 @@
             </dt>
             <dd>Base class of <a href="classbn_1_1any.html" class="m-doc">bn::<wbr />any</a>.</dd>
             <dt>
-              <div class="m-doc-template">template&lt;int MaxSize, int MaxAlignment&gt;</div>
+              <div class="m-doc-template">template&lt;int MaxSize, int MaxAlignment = alignof(int)&gt;</div>
               class <a href="classbn_1_1any.html" class="m-doc">bn::any</a>
             </dt>
             <dd><code>std::any</code> like container with a fixed size buffer.</dd>
@@ -92,30 +92,30 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga4b95cea266e56b20b483829799aef0d9" class="m-doc">any_cast</a>(</span><span class="m-doc-wrap">const iany* any) -&gt; const Type*</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga00d7cc299db12570ff7f4ee99e209aeb" class="m-doc">any_cast</a>(</span><span class="m-doc-wrap">const iany* any) -&gt; const Type*</span>
             </dt>
             <dd>Performs type-safe access to the contained object of the given iany.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga430235e09ce44a9f00b4cfe56208ae42" class="m-doc">any_cast</a>(</span><span class="m-doc-wrap">iany* any) -&gt; Type*</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga690c046bc946d08bc161d247d3c647c5" class="m-doc">any_cast</a>(</span><span class="m-doc-wrap">iany* any) -&gt; Type*</span>
             </dt>
             <dd>Performs type-safe access to the contained object of the given iany.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type, typename... Args&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ga96775ab38cb3e8a7875d47a927c623eb" class="m-doc">make_any</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; any&lt;sizeof(Type), alignof(Type)&gt;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga072b80617d856c809418ecfd6481ec02" class="m-doc">make_any</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; any&lt;sizeof(Type), alignof(Type)&gt;</span>
             </dt>
             <dd>Creates an any deducing its size and alignment from the given Type.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ga4b95cea266e56b20b483829799aef0d9"><div>
+          <section class="m-doc-details" id="ga00d7cc299db12570ff7f4ee99e209aeb"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__any_8h.html">&lt;bn_any.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper">const Type* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4b95cea266e56b20b483829799aef0d9" class="m-doc-self">any_cast</a>(</span><span class="m-doc-wrap">const iany* any)</span></span>
+              <span class="m-doc-wrap-bumper">const Type* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga00d7cc299db12570ff7f4ee99e209aeb" class="m-doc-self">any_cast</a>(</span><span class="m-doc-wrap">const iany* any)</span></span>
             </h3>
             <p>Performs type-safe access to the contained object of the given iany.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -145,13 +145,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga430235e09ce44a9f00b4cfe56208ae42"><div>
+          <section class="m-doc-details" id="ga690c046bc946d08bc161d247d3c647c5"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__any_8h.html">&lt;bn_any.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper">Type* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga430235e09ce44a9f00b4cfe56208ae42" class="m-doc-self">any_cast</a>(</span><span class="m-doc-wrap">iany* any)</span></span>
+              <span class="m-doc-wrap-bumper">Type* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga690c046bc946d08bc161d247d3c647c5" class="m-doc-self">any_cast</a>(</span><span class="m-doc-wrap">iany* any)</span></span>
             </h3>
             <p>Performs type-safe access to the contained object of the given iany.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -181,13 +181,13 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ga96775ab38cb3e8a7875d47a927c623eb"><div>
+          <section class="m-doc-details" id="ga072b80617d856c809418ecfd6481ec02"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__any_8h.html">&lt;bn_any.h&gt;</a></div>
               <div class="m-doc-template">
                 template&lt;typename Type, typename... Args&gt;
               </div>
-              <span class="m-doc-wrap-bumper">any&lt;sizeof(Type), alignof(Type)&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga96775ab38cb3e8a7875d47a927c623eb" class="m-doc-self">make_any</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
+              <span class="m-doc-wrap-bumper">any&lt;sizeof(Type), alignof(Type)&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga072b80617d856c809418ecfd6481ec02" class="m-doc-self">make_any</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
             </h3>
             <p>Creates an any deducing its size and alignment from the given Type.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -266,7 +266,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

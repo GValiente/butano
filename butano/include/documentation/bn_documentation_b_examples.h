@@ -208,7 +208,13 @@
  *
  * Showcases textured polygons rendering with sprites.
  *
- * <tr><td> @ref window
+ * <tr><td> @ref timer
+ *
+ * @image html examples_timer.png
+ *
+ * Simple timer example.
+ *
+ * <td> @ref window
  *
  * @image html examples_windows.png
  *

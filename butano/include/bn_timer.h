@@ -49,6 +49,11 @@ public:
      */
     void restart();
 
+    /**
+     * @brief Returns the number of ticks since this timer was built or restarted, restarting its internal state.
+     */
+    [[nodiscard]] int elapsed_ticks_with_restart();
+
 private:
     unsigned _last_ticks;
 };

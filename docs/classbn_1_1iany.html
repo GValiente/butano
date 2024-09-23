@@ -70,7 +70,7 @@
           <h2><a href="#derived-classes">Derived classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;int MaxSize, int MaxAlignment&gt;</div>
+              <div class="m-doc-template">template&lt;int MaxSize, int MaxAlignment = alignof(int)&gt;</div>
               class <a href="classbn_1_1any.html" class="m-doc">any</a>
             </dt>
             <dd><code>std::any</code> like container with a fixed size buffer.</dd>
@@ -93,26 +93,26 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ad8621b2418f13ef3c8315e451fddb247" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; other) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a71e86b80aa90cbd6812a9ec966beb4a6" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; other) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;</span>
             </dt>
             <dd>Copy assignment operator.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#abb6f2238465809f10f1f27f0552aaff7" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;&amp; other) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#adf5096a21de892f3dd326942f51c154b" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;&amp; other) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Move assignment operator.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a1d6d45e5a82016b49504f6bc4ceca776" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const Type&amp; value) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a770a52572e14a51227421624b69ceaaf" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const Type&amp; value) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;</span>
             </dt>
             <dd>Constructor.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ac5fd8453cebb7063385e9103a5adb48f" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">Type&amp; value) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5eb0339fcd61ff3a7ad6a747c767ab65" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">Type&amp; value) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;</span>
             </dt>
             <dd>Constructor.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#af92b06efd2b0e538c07d8f136a7f0344" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac2fd2699384a6d63306cf3dca16251fc" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value) -&gt; <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Constructor.</dd>
             <dt id="a2644fae8a9b7a2cfe825de486b47b9f6">
@@ -133,12 +133,12 @@
             <dd>Returns the maximum alignment in bytes of the managed objects.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#ae2e785e5b15abd7810bdd276af040295" class="m-doc">value</a>(</span><span class="m-doc-wrap">) const -&gt; const Type&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7230c14ff7e35c895666fa5946904f23" class="m-doc">value</a>(</span><span class="m-doc-wrap">) const -&gt; const Type&amp;</span>
             </dt>
             <dd>Returns a const reference to the contained value.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#a8d8a0dc238c5d85ea6861026f679f96a" class="m-doc">value</a>(</span><span class="m-doc-wrap">) -&gt; Type&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a239d70e3521ff62c32791016c033aaf6" class="m-doc">value</a>(</span><span class="m-doc-wrap">) -&gt; Type&amp;</span>
             </dt>
             <dd>Returns a reference to the contained value.</dd>
             <dt>
@@ -153,7 +153,7 @@
             <dd>Returns a copy of the contained value if this iany has one; otherwise it returns a moved copy of the given default value.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type, typename... Args&gt;</div>
-              <span class="m-doc-wrap-bumper">auto <a href="#abe3120caf040dba9005b4b22eff2fe3c" class="m-doc">emplace</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; Type&amp;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#adccfe7da35047e3590644bfee6a69d0c" class="m-doc">emplace</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; Type&amp;</span>
             </dt>
             <dd>Constructs the contained value in-place.</dd>
             <dt id="a006a05eeb59185387900f1e50b6f60a6">
@@ -178,9 +178,9 @@
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-doc-details" id="ad8621b2418f13ef3c8315e451fddb247"><div>
+          <section class="m-doc-details" id="a71e86b80aa90cbd6812a9ec966beb4a6"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad8621b2418f13ef3c8315e451fddb247" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; other)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a71e86b80aa90cbd6812a9ec966beb4a6" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; other)</span></span>
             </h3>
             <p>Copy assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -201,9 +201,9 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="abb6f2238465809f10f1f27f0552aaff7"><div>
+          <section class="m-doc-details" id="adf5096a21de892f3dd326942f51c154b"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abb6f2238465809f10f1f27f0552aaff7" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adf5096a21de892f3dd326942f51c154b" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Move assignment operator.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -224,12 +224,12 @@
               </tfoot>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a1d6d45e5a82016b49504f6bc4ceca776"><div>
+          <section class="m-doc-details" id="a770a52572e14a51227421624b69ceaaf"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1d6d45e5a82016b49504f6bc4ceca776" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const Type&amp; value)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a770a52572e14a51227421624b69ceaaf" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const Type&amp; value)</span></span>
             </h3>
             <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -244,12 +244,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ac5fd8453cebb7063385e9103a5adb48f"><div>
+          <section class="m-doc-details" id="a5eb0339fcd61ff3a7ad6a747c767ab65"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac5fd8453cebb7063385e9103a5adb48f" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">Type&amp; value)</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5eb0339fcd61ff3a7ad6a747c767ab65" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">Type&amp; value)</span></span>
             </h3>
             <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -264,12 +264,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="af92b06efd2b0e538c07d8f136a7f0344"><div>
+          <section class="m-doc-details" id="ac2fd2699384a6d63306cf3dca16251fc"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af92b06efd2b0e538c07d8f136a7f0344" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value) <span class="m-label m-success">noexcept</span></span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iany.html" class="m-doc">iany</a>&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac2fd2699384a6d63306cf3dca16251fc" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">Type&amp;&amp; value) <span class="m-label m-success">noexcept</span></span></span>
             </h3>
             <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -284,12 +284,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="ae2e785e5b15abd7810bdd276af040295"><div>
+          <section class="m-doc-details" id="a7230c14ff7e35c895666fa5946904f23"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper">const Type&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae2e785e5b15abd7810bdd276af040295" class="m-doc-self">value</a>(</span><span class="m-doc-wrap">) const</span></span>
+              <span class="m-doc-wrap-bumper">const Type&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7230c14ff7e35c895666fa5946904f23" class="m-doc-self">value</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <p>Returns a const reference to the contained value.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -304,12 +304,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a8d8a0dc238c5d85ea6861026f679f96a"><div>
+          <section class="m-doc-details" id="a239d70e3521ff62c32791016c033aaf6"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type&gt;
               </div>
-              <span class="m-doc-wrap-bumper">Type&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8d8a0dc238c5d85ea6861026f679f96a" class="m-doc-self">value</a>(</span><span class="m-doc-wrap">)</span></span>
+              <span class="m-doc-wrap-bumper">Type&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a239d70e3521ff62c32791016c033aaf6" class="m-doc-self">value</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Returns a reference to the contained value.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -364,12 +364,12 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="abe3120caf040dba9005b4b22eff2fe3c"><div>
+          <section class="m-doc-details" id="adccfe7da35047e3590644bfee6a69d0c"><div>
             <h3>
               <div class="m-doc-template">
                 template&lt;typename Type, typename... Args&gt;
               </div>
-              <span class="m-doc-wrap-bumper">Type&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abe3120caf040dba9005b4b22eff2fe3c" class="m-doc-self">emplace</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
+              <span class="m-doc-wrap-bumper">Type&amp; bn::<wbr />iany::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adccfe7da35047e3590644bfee6a69d0c" class="m-doc-self">emplace</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args)</span></span>
             </h3>
             <p>Constructs the contained value in-place.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -487,7 +487,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

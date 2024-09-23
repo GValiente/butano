@@ -61,7 +61,7 @@
             </li>
           </ul>
         </nav>
-<p>Butano logging system.</p><p>It allows to print information on the console of multiple emulators.</p><p>It can be enabled or disabled by overloading the definition of <a href="group__log.html#gafb323fba961f37856bac258b26fb4ed6" class="m-doc">BN_<wbr />CFG_<wbr />LOG_<wbr />ENABLED</a>.</p><p>It supports printing on only one emulator at once. The supported emulator can be changed by overloading the definition of <a href="group__log.html#gaae7d5d026c78486b342474a038913935" class="m-doc">BN_<wbr />CFG_<wbr />LOG_<wbr />BACKEND</a>.</p>
+<p>Butano logging system.</p><p>It allows to print information on the console of multiple emulators.</p><p>It can be enabled or disabled by overloading the definition of <a href="#gafb323fba961f37856bac258b26fb4ed6" class="m-doc">BN_<wbr />CFG_<wbr />LOG_<wbr />ENABLED</a>.</p><p>It supports printing on only one emulator at once. The supported emulator can be changed by overloading the definition of <a href="#gaae7d5d026c78486b342474a038913935" class="m-doc">BN_<wbr />CFG_<wbr />LOG_<wbr />BACKEND</a>.</p>
         <section id="files">
           <h2><a href="#files">Files</a></h2>
           <dl class="m-doc">
@@ -153,11 +153,11 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga9654683d4e1f8c84f296d56c38b26c21" class="m-doc-self">BN_LOG</a>(</span><span class="m-doc-wrap">...)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__log_8h.html">&lt;bn_log.h&gt;</a></div>
             </h3>
-<p>Prints in one line of text the representation of the given parameters.</p><p>Example:</p><pre class="m-code"><span class="n">BN_LOG</span><span class="p">(</span><span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span> <span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading bn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span> <span class="n">stream</span><span class="p">,</span> <span class="k">const</span> <span class="n">custom_type</span><span class="o">&amp;</span> <span class="n">custom_value</span><span class="p">)</span>
+<p>Prints in one line of text the representation of the given parameters.</p><p>Example:</p><pre class="m-code"><span class="n">BN_LOG</span><span class="p">(</span><span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading bn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">custom_type</span><span class="o">&amp;</span><span class="w"> </span><span class="n">custom_value</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;custom_type: &quot;</span><span class="p">);</span>
-    <span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">custom_value</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">stream</span><span class="p">;</span>
+<span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;custom_type: &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">custom_value</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stream</span><span class="p">;</span>
 <span class="p">}</span></pre>
           </div></section>
           <section class="m-doc-details" id="gad8da3032261c4e87005284f0c70d97cc"><div>
@@ -226,7 +226,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

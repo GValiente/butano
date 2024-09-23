@@ -69,8 +69,8 @@
         <section id="pub-static-methods">
           <h2><a href="#pub-static-methods">Public static functions</a></h2>
           <dl class="m-doc">
-            <dt id="a60fd48975d61ef83ba700e84a1183a8f">
-              <span class="m-doc-wrap-bumper">static auto <a href="#a60fd48975d61ef83ba700e84a1183a8f" class="m-doc-self">valid_tiles_count</a>(</span><span class="m-doc-wrap">int tiles_count,
+            <dt id="a69a9affd64eb36999c8290743a7a6103">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a69a9affd64eb36999c8290743a7a6103" class="m-doc-self">valid_tiles_count</a>(</span><span class="m-doc-wrap">int tiles_count,
               <a href="group__color.html#gac2f168d95746d61f442c3d3eadffc77e" class="m-doc">bpp_<wbr />mode</a> bpp) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Indicates if the specified tiles count are valid for the specified bits per pixel or not.</dd>
@@ -96,7 +96,7 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#ae6d3bf53ee1d00f02fb53ae16b78cc74" class="m-doc">tiles_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa0c898f91d477cdd5200ebcf7820b5b1" class="m-doc">tiles_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the reference to one or more background tiles.</dd>
             <dt id="ab7aab3a0cc0c2fa84e897ffe923d212a">
@@ -112,7 +112,7 @@
             </dt>
             <dd>Decompresses the stored data in the tiles referenced by decompressed_tiles_ref.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a5d000a9c0a317199e9cb8723d1fef5a8" class="m-doc">find_tiles</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a386c1756519917f87aeced5072db522e" class="m-doc">find_tiles</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Searches for a <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles.</dd>
             <dt>
@@ -120,7 +120,7 @@
             </dt>
             <dd>Searches for a <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates a <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a7d439e3fb1f1bac65025a25d3043b657" class="m-doc">create_tiles_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
+              <span class="m-doc-wrap-bumper">auto <a href="#a84035fa9349298f0deb4a71fa5b1dba2" class="m-doc">create_tiles_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Searches for a <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates a <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</dd>
           </dl>
@@ -188,9 +188,9 @@
             </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
           </div></section>
-          <section class="m-doc-details" id="ae6d3bf53ee1d00f02fb53ae16b78cc74"><div>
+          <section class="m-doc-details" id="aa0c898f91d477cdd5200ebcf7820b5b1"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae6d3bf53ee1d00f02fb53ae16b78cc74" class="m-doc-self">tiles_ref</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&amp; bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa0c898f91d477cdd5200ebcf7820b5b1" class="m-doc-self">tiles_ref</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
             <p>Returns the reference to one or more background tiles.</p>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> to avoid dangling references.</p>
@@ -219,9 +219,9 @@
             </table>
 <p>If the source and destination tiles overlap, the behavior is undefined.</p>
           </div></section>
-          <section class="m-doc-details" id="a5d000a9c0a317199e9cb8723d1fef5a8"><div>
+          <section class="m-doc-details" id="a386c1756519917f87aeced5072db522e"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5d000a9c0a317199e9cb8723d1fef5a8" class="m-doc-self">find_tiles</a>(</span><span class="m-doc-wrap">) const</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a386c1756519917f87aeced5072db522e" class="m-doc-self">find_tiles</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <p>Searches for a <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -248,9 +248,9 @@
             </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
-          <section class="m-doc-details" id="a7d439e3fb1f1bac65025a25d3043b657"><div>
+          <section class="m-doc-details" id="a84035fa9349298f0deb4a71fa5b1dba2"><div>
             <h3>
-              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7d439e3fb1f1bac65025a25d3043b657" class="m-doc-self">create_tiles_optional</a>(</span><span class="m-doc-wrap">) const</span></span>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />regular_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a84035fa9349298f0deb4a71fa5b1dba2" class="m-doc-self">create_tiles_optional</a>(</span><span class="m-doc-wrap">) const</span></span>
             </h3>
             <p>Searches for a <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates a <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -336,7 +336,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.8.20 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

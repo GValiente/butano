@@ -25,7 +25,7 @@ namespace bn
 /**
  * @brief Manages the volume of the active Direct Sound jingle.
  *
- * @ingroup jingle
+ * @ingroup music
  * @ingroup action
  */
 class jingle_volume_manager
@@ -54,7 +54,7 @@ public:
 /**
  * @brief Modifies the volume of the active Direct Sound jingle until it has a given state.
  *
- * @ingroup jingle
+ * @ingroup music
  * @ingroup action
  */
 class jingle_volume_to_action : public to_template_action<fixed, jingle_volume_manager>
@@ -89,7 +89,7 @@ public:
  * @brief Modifies the volume of the active Direct Sound jingle from a minimum to a maximum.
  * When the volume is equal to the given final state, it goes back to its initial state and vice versa.
  *
- * @ingroup jingle
+ * @ingroup music
  * @ingroup action
  */
 class jingle_volume_loop_action : public loop_template_action<fixed, jingle_volume_manager>
@@ -124,7 +124,7 @@ public:
 /**
  * @brief Changes the volume of the active Direct Sound jingle when the action is updated a given number of times.
  *
- * @ingroup jingle
+ * @ingroup music
  * @ingroup action
  */
 class jingle_volume_toggle_action : public toggle_template_action<fixed, jingle_volume_manager>

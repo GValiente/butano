@@ -21,8 +21,6 @@ namespace bn
 /**
  * @brief Provides a way to calculate elapsed times.
  *
- * One timer tick is equivalent to 64 CPU clock cycles.
- *
  * @ingroup timer
  */
 class timer

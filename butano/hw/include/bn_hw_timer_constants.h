@@ -6,13 +6,13 @@
 #ifndef BN_HW_TIMER_CONSTANTS_H
 #define BN_HW_TIMER_CONSTANTS_H
 
-#include "bn_common.h"
+#include "bn_config_timer.h"
 
 namespace bn::hw::timers
 {
     [[nodiscard]] constexpr int divisor()
     {
-        return 64;
+        return BN_CFG_TIMER_FREQUENCY;
     }
 
     [[nodiscard]] constexpr int ticks_per_frame()

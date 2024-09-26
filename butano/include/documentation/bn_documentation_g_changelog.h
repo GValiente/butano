@@ -17,6 +17,7 @@
  * * bn::blending::set_transparency_and_intensity_alpha added.
  * * bn::timer::elapsed_ticks_with_restart added.
  * * bn::timers::ticks_per_second added.
+ * * @ref BN_CFG_TIMER_FREQUENCY added.
  * * bn::timer overflow fixed.
  * * Color palettes, sprite tiles and audio management ROM usage reduced.
  * * `timer` example added.

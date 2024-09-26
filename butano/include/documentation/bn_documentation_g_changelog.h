@@ -19,6 +19,7 @@
  * * bn::timers::ticks_per_second added.
  * * @ref BN_CFG_TIMER_FREQUENCY added.
  * * bn::timer overflow fixed.
+ * * bn::degrees_lut_sin, bn::degrees_lut_cos and bn::degrees_lut_sin_and_cos optimized.
  * * Color palettes, sprite tiles and audio management ROM usage reduced.
  * * `timer` example added.
  * * @ref faq_sprites_item_from_ptr question added to the @ref faq page.

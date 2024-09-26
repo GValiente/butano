@@ -186,8 +186,9 @@ namespace bn
         BN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360,
                   "Angle must be in the range [0, 360]: ", degrees_angle);
 
-        constexpr rule_of_three_approximation rule_of_three(fixed(360).data(), sin_lut_size - 1);
-        int lut_angle = rule_of_three.calculate(degrees_angle.data());
+        using rule_of_three_fixed = bn::fixed_t<10>;
+        constexpr rule_of_three_approximation rule_of_three(rule_of_three_fixed(360).data(), sin_lut_size - 1);
+        int lut_angle = rule_of_three.unsafe_calculate(rule_of_three_fixed(degrees_angle).data());
 
         if consteval
         {
@@ -264,8 +265,9 @@ namespace bn
         BN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360,
                   "Angle must be in the range [0, 360]: ", degrees_angle);
 
-        constexpr rule_of_three_approximation rule_of_three(fixed(360).data(), sin_lut_size - 1);
-        int lut_angle = rule_of_three.calculate(degrees_angle.data());
+        using rule_of_three_fixed = bn::fixed_t<10>;
+        constexpr rule_of_three_approximation rule_of_three(rule_of_three_fixed(360).data(), sin_lut_size - 1);
+        int lut_angle = rule_of_three.unsafe_calculate(rule_of_three_fixed(degrees_angle).data());
         lut_angle = (lut_angle + ((sin_lut_size - 1) / 4)) & (sin_lut_size - 2);
 
         if consteval
@@ -353,8 +355,9 @@ namespace bn
         BN_ASSERT(degrees_angle >= 0 && degrees_angle <= 360,
                   "Angle must be in the range [0, 360]: ", degrees_angle);
 
-        constexpr rule_of_three_approximation rule_of_three(fixed(360).data(), sin_lut_size - 1);
-        int sin_lut_angle = rule_of_three.calculate(degrees_angle.data());
+        using rule_of_three_fixed = bn::fixed_t<10>;
+        constexpr rule_of_three_approximation rule_of_three(rule_of_three_fixed(360).data(), sin_lut_size - 1);
+        int sin_lut_angle = rule_of_three.unsafe_calculate(rule_of_three_fixed(degrees_angle).data());
         int cos_lut_angle = (sin_lut_angle + ((sin_lut_size - 1) / 4)) & (sin_lut_size - 2);
         int sin_lut_value;
         int cos_lut_value;

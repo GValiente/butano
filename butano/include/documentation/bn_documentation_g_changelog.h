@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_1_0 18.1.0 (next release)
+ * @section changelog_18_1_0 18.1.0
  *
  * * bn::blending::set_transparency_and_intensity_alpha added.
  * * bn::timer::elapsed_ticks_with_restart added.

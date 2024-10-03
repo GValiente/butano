@@ -449,6 +449,301 @@ public:
 };
 
 
+// top_left_position
+
+/**
+ * @brief Manages the top-left position of an affine_bg_ptr.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_top_left_position_manager
+{
+
+public:
+    /**
+     * @brief Returns the top-left position of the given affine_bg_ptr.
+     */
+    [[nodiscard]] static fixed_point get(const affine_bg_ptr& bg)
+    {
+        return bg.top_left_position();
+    }
+
+    /**
+     * @brief Sets the top-left position of the given affine_bg_ptr.
+     */
+    static void set(const fixed_point& top_left_position, affine_bg_ptr& bg)
+    {
+        bg.set_top_left_position(top_left_position);
+    }
+};
+
+
+/**
+ * @brief Modifies the top-left position of an affine_bg_ptr until it has a given state.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_top_left_move_to_action :
+        public to_value_template_action<affine_bg_ptr, fixed_point, affine_bg_top_left_position_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the top-left position of the given affine_bg_ptr is equal to (final_x, final_y).
+     * @param final_top_left_x Horizontal top-left position of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     * @param final_top_left_y Vertical top-left position of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     */
+    affine_bg_top_left_move_to_action(
+            const affine_bg_ptr& bg, int duration_updates, fixed final_top_left_x, fixed final_top_left_y) :
+        to_value_template_action(bg, duration_updates, fixed_point(final_top_left_x, final_top_left_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the top-left position of the given affine_bg_ptr is equal to (final_x, final_y).
+     * @param final_top_left_x Horizontal top-left position of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     * @param final_top_left_y Vertical top-left position of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     */
+    affine_bg_top_left_move_to_action(
+            affine_bg_ptr&& bg, int duration_updates, fixed final_top_left_x, fixed final_top_left_y) :
+        to_value_template_action(move(bg), duration_updates, fixed_point(final_top_left_x, final_top_left_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates Number of times that the action must be updated
+     * until the top-left position of the given affine_bg_ptr is equal to final_top_left_position.
+     * @param final_top_left_position Top-left position of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     */
+    affine_bg_top_left_move_to_action(
+            const affine_bg_ptr& bg, int duration_updates, const fixed_point& final_top_left_position) :
+        to_value_template_action(bg, duration_updates, final_top_left_position)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates Number of times that the action must be updated
+     * until the top-left position of the given affine_bg_ptr is equal to final_top_left_position.
+     * @param final_top_left_position Top-left position of the given affine_bg_ptr
+     * when the action is updated duration_updates times.
+     */
+    affine_bg_top_left_move_to_action(
+            affine_bg_ptr&& bg, int duration_updates, const fixed_point& final_top_left_position) :
+        to_value_template_action(move(bg), duration_updates, final_top_left_position)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the top-left position of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] const fixed_point& final_top_left_position() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Modifies the top-left position of an affine_bg_ptr from a minimum to a maximum.
+ * When the top-left position is equal to the given final state, it goes back to its initial state and vice versa.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_top_left_move_loop_action :
+        public loop_value_template_action<affine_bg_ptr, fixed_point, affine_bg_top_left_position_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the top-left position delta.
+     * @param final_top_left_x When the horizontal top-left position of the given affine_bg_ptr is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     * @param final_top_left_y When the vertical top-left position of the given affine_bg_ptr is equal to this parameter,
+     * it goes back to its initial state and vice versa.
+     */
+    affine_bg_top_left_move_loop_action(
+            const affine_bg_ptr& bg, int duration_updates, fixed final_top_left_x, fixed final_top_left_y) :
+        loop_value_template_action(bg, duration_updates, fixed_point(final_top_left_x, final_top_left_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the top-left position delta.
+     * @param final_top_left_x When the horizontal top-left position of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     * @param final_top_left_y When the vertical top-left position of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_top_left_move_loop_action(
+            affine_bg_ptr&& bg, int duration_updates, fixed final_top_left_x, fixed final_top_left_y) :
+        loop_value_template_action(move(bg), duration_updates, fixed_point(final_top_left_x, final_top_left_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the top-left position delta.
+     * @param final_top_left_position When the top-left position of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_top_left_move_loop_action(
+            const affine_bg_ptr& bg, int duration_updates, const fixed_point& final_top_left_position) :
+        loop_value_template_action(bg, duration_updates, final_top_left_position)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * before changing the direction of the top-left position delta.
+     * @param final_top_left_position When the top-left position of the given affine_bg_ptr
+     * is equal to this parameter, it goes back to its initial state and vice versa.
+     */
+    affine_bg_top_left_move_loop_action(
+        affine_bg_ptr&& bg, int duration_updates, const fixed_point& final_top_left_position) :
+            loop_value_template_action(move(bg), duration_updates, final_top_left_position)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief When the top-left position of the given affine_bg_ptr is equal to this returned parameter,
+     * it goes back to its initial state and vice versa.
+     */
+    [[nodiscard]] const fixed_point& final_top_left_position() const
+    {
+        return final_property();
+    }
+};
+
+
+/**
+ * @brief Changes the top-left position of an affine_bg_ptr when the action is updated a given number of times.
+ *
+ * @ingroup affine_bg
+ * @ingroup action
+ */
+class affine_bg_top_left_move_toggle_action :
+        public toggle_value_template_action<affine_bg_ptr, fixed_point, affine_bg_top_left_position_manager>
+{
+
+public:
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * to change the top-left position of the given affine_bg_ptr.
+     * @param new_top_left_x New horizontal top-left position when the action is updated duration_updates times.
+     * @param new_top_left_y New vertical top-left position when the action is updated duration_updates times.
+     */
+    affine_bg_top_left_move_toggle_action(
+            const affine_bg_ptr& bg, int duration_updates, fixed new_top_left_x, fixed new_top_left_y) :
+        toggle_value_template_action(bg, duration_updates, fixed_point(new_top_left_x, new_top_left_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * to change the top-left position of the given affine_bg_ptr.
+     * @param new_top_left_x New horizontal top-left position when the action is updated duration_updates times.
+     * @param new_top_left_y New vertical top-left position when the action is updated duration_updates times.
+     */
+    affine_bg_top_left_move_toggle_action(
+            affine_bg_ptr&& bg, int duration_updates, fixed new_top_left_x, fixed new_top_left_y) :
+        toggle_value_template_action(move(bg), duration_updates, fixed_point(new_top_left_x, new_top_left_y))
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to copy.
+     * @param duration_updates How much times the action has to be updated
+     * to change the top-left position of the given affine_bg_ptr.
+     * @param new_top_left_position New top-left position when the action is updated duration_updates times.
+     */
+    affine_bg_top_left_move_toggle_action(
+            const affine_bg_ptr& bg, int duration_updates, const fixed_point& new_top_left_position) :
+        toggle_value_template_action(bg, duration_updates, new_top_left_position)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param bg affine_bg_ptr to move.
+     * @param duration_updates How much times the action has to be updated
+     * to change the top-left position of the given affine_bg_ptr.
+     * @param new_top_left_position New top-left position when the action is updated duration_updates times.
+     */
+    affine_bg_top_left_move_toggle_action(
+            affine_bg_ptr&& bg, int duration_updates, const fixed_point& new_top_left_position) :
+        toggle_value_template_action(move(bg), duration_updates, new_top_left_position)
+    {
+    }
+
+    /**
+     * @brief Returns the affine_bg_ptr to modify.
+     */
+    [[nodiscard]] const affine_bg_ptr& bg() const
+    {
+        return value();
+    }
+
+    /**
+     * @brief Returns the top-left position of the given affine_bg_ptr
+     * when the action is updated the given number of times.
+     */
+    [[nodiscard]] const fixed_point& new_top_left_position() const
+    {
+        return new_property();
+    }
+};
+
+
 // rotation
 
 /**

@@ -38,7 +38,7 @@ class affine_bg_mat_attributes_hbe_ptr
 
 public:
     /**
-     * @brief Creates a affine_bg_mat_attributes_hbe_ptr which changes
+     * @brief Creates an affine_bg_mat_attributes_hbe_ptr which changes
      * the attributes which define the position and the transformation matrix of an affine_bg_ptr
      * in each screen horizontal line.
      * @param bg affine_bg_ptr to be modified.
@@ -54,7 +54,7 @@ public:
             const affine_bg_ptr& bg, const span<const affine_bg_mat_attributes>& attributes_ref);
 
     /**
-     * @brief Creates a affine_bg_mat_attributes_hbe_ptr which changes
+     * @brief Creates an affine_bg_mat_attributes_hbe_ptr which changes
      * the attributes which define the position and the transformation matrix of an affine_bg_ptr
      * in each screen horizontal line.
      * @param bg affine_bg_ptr to be modified.
@@ -132,7 +132,7 @@ public:
     void swap(affine_bg_mat_attributes_hbe_ptr& other);
 
     /**
-     * @brief Exchanges the contents of a affine_bg_mat_attributes_hbe_ptr with those of another one.
+     * @brief Exchanges the contents of an affine_bg_mat_attributes_hbe_ptr with those of another one.
      * @param a First affine_bg_mat_attributes_hbe_ptr to exchange the contents with.
      * @param b Second affine_bg_mat_attributes_hbe_ptr to exchange the contents with.
      */

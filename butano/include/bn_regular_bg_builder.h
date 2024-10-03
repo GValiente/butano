@@ -162,6 +162,57 @@ public:
     }
 
     /**
+     * @brief Returns the horizontal top-left position of the regular backgrounds to generate
+     * (relative to their camera, if they are going to have one).
+     */
+    [[nodiscard]] fixed top_left_x() const;
+
+    /**
+     * @brief Sets the horizontal top-left position of the regular backgrounds to generate
+     * (relative to their camera, if they are going to have one).
+     * @param top_left_x Horizontal top-left position of the regular backgrounds to generate.
+     * @return Reference to this.
+     */
+    regular_bg_builder& set_top_left_x(fixed top_left_x);
+
+    /**
+     * @brief Returns the vertical top-left position of the regular backgrounds to generate
+     * (relative to their camera, if they are going to have one).
+     */
+    [[nodiscard]] fixed top_left_y() const;
+
+    /**
+     * @brief Sets the vertical top-left position of the regular backgrounds to generate
+     * (relative to their camera, if they are going to have one).
+     * @param top_left_y Vertical top-left position of the regular backgrounds to generate.
+     * @return Reference to this.
+     */
+    regular_bg_builder& set_top_left_y(fixed top_left_y);
+
+    /**
+     * @brief Returns the top-left position of the regular backgrounds to generate
+     * (relative to their camera, if they are going to have one).
+     */
+    [[nodiscard]] fixed_point top_left_position() const;
+
+    /**
+     * @brief Sets the top-left position of the regular backgrounds to generate
+     * (relative to their camera, if they are going to have one).
+     * @param top_left_x Horizontal top-left position of the regular backgrounds to generate.
+     * @param top_left_y Vertical top-left position of the regular backgrounds to generate.
+     * @return Reference to this.
+     */
+    regular_bg_builder& set_top_left_position(fixed top_left_x, fixed top_left_y);
+
+    /**
+     * @brief Sets the top-left position of the regular backgrounds to generate
+     * (relative to their camera, if they are going to have one).
+     * @param top_left_position Top-left position of the regular backgrounds to generate.
+     * @return Reference to this.
+     */
+    regular_bg_builder& set_top_left_position(const fixed_point& top_left_position);
+
+    /**
      * @brief Returns the priority of the regular backgrounds to generate relative to sprites and other backgrounds.
      *
      * Backgrounds with higher priority are drawn first
@@ -444,6 +495,8 @@ private:
     bool _blending_top_enabled = false;
     bool _blending_bottom_enabled = true;
     bool _visible = true;
+
+    [[nodiscard]] size _dimensions() const;
 };
 
 }

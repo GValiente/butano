@@ -7,6 +7,7 @@
 
 #include "bn_sprites.h"
 #include "bn_sprite_ptr.h"
+#include "bn_top_left_utils.h"
 #include "bn_affine_mat_attributes.h"
 
 namespace bn
@@ -37,6 +38,42 @@ sprite_builder::sprite_builder(const sprite_shape_size& shape_size, sprite_tiles
 {
     BN_ASSERT(_tiles->tiles_count() == _shape_size.tiles_count(_palette->bpp()),
               "Invalid tiles count: ", _tiles->tiles_count(), " - ", _shape_size.tiles_count(_palette->bpp()));
+}
+
+fixed sprite_builder::top_left_x() const
+{
+    return to_top_left_x(x(), _shape_size.width());
+}
+
+sprite_builder& sprite_builder::set_top_left_x(fixed top_left_x)
+{
+    return set_x(from_top_left_x(top_left_x, _shape_size.width()));
+}
+
+fixed sprite_builder::top_left_y() const
+{
+    return to_top_left_y(y(), _shape_size.height());
+}
+
+sprite_builder& sprite_builder::set_top_left_y(fixed top_left_y)
+{
+    return set_y(from_top_left_y(top_left_y, _shape_size.height()));
+}
+
+fixed_point sprite_builder::top_left_position() const
+{
+    return to_top_left_position(position(), _shape_size.width(), _shape_size.height());
+}
+
+sprite_builder& sprite_builder::set_top_left_position(fixed top_left_x, fixed top_left_y)
+{
+    return set_position(from_top_left_position(
+            fixed_point(top_left_x, top_left_y), _shape_size.width(), _shape_size.height()));
+}
+
+sprite_builder& sprite_builder::set_top_left_position(const fixed_point& top_left_position)
+{
+    return set_position(from_top_left_position(top_left_position, _shape_size.width(), _shape_size.height()));
 }
 
 fixed sprite_builder::rotation_angle() const

@@ -120,6 +120,65 @@ public:
     }
 
     /**
+     * @brief Returns the horizontal absolute top-left position of the affine background (ignoring its camera).
+     */
+    [[nodiscard]] constexpr fixed top_left_x() const
+    {
+        return _to_top_left_x(x());
+    }
+
+    /**
+     * @brief Sets the horizontal absolute top-left position of the affine background (ignoring its camera).
+     */
+    constexpr void set_top_left_x(fixed top_left_x)
+    {
+        set_x(_from_top_left_x(top_left_x));
+    }
+
+    /**
+     * @brief Returns the absolute vertical top-left position of the affine background (ignoring its camera).
+     */
+    [[nodiscard]] constexpr fixed top_left_y() const
+    {
+        return _to_top_left_y(y());
+    }
+
+    /**
+     * @brief Sets the absolute vertical top-left position of the affine background (ignoring its camera).
+     */
+    constexpr void set_top_left_y(fixed top_left_y)
+    {
+        set_y(_from_top_left_y(top_left_y));
+    }
+
+    /**
+     * @brief Returns the absolute top-left position of the affine background (ignoring its camera).
+     */
+    [[nodiscard]] constexpr fixed_point top_left_position() const
+    {
+        return _to_top_left_position(position());
+    }
+
+    /**
+     * @brief Sets the absolute top-left position of the affine background (ignoring its camera).
+     * @param top_left_x Horizontal absolute top-left position of the affine background.
+     * @param top_left_y Vertical absolute top-left position of the affine background.
+     */
+    constexpr void set_top_left_position(fixed top_left_x, fixed top_left_y)
+    {
+        set_position(_from_top_left_position(fixed_point(top_left_x, top_left_y)));
+    }
+
+    /**
+     * @brief Sets the absolute top-left position of the affine background (ignoring its camera).
+     * @param top_left_position Absolute top-left position of the affine background.
+     */
+    constexpr void set_top_left_position(const fixed_point& top_left_position)
+    {
+        set_position(_from_top_left_position(top_left_position));
+    }
+
+    /**
      * @brief Returns the half of the affine background size.
      */
     [[nodiscard]] constexpr const fixed_size& half_dimensions() const
@@ -453,6 +512,36 @@ private:
     affine_mat_attributes _mat_attributes;
     int _dx = 0 - (256 * (display::width() / 2));
     int _dy = 0 - (256 * (display::height() / 2));
+
+    [[nodiscard]] constexpr fixed _to_top_left_x(fixed x) const
+    {
+        return x + ((display::width() / 2) - _half_dimensions.width());
+    }
+
+    [[nodiscard]] constexpr fixed _from_top_left_x(fixed top_left_x) const
+    {
+        return top_left_x - ((display::width() / 2) - _half_dimensions.width());
+    }
+
+    [[nodiscard]] constexpr fixed _to_top_left_y(fixed y) const
+    {
+        return y + ((display::height() / 2) - _half_dimensions.height());
+    }
+
+    [[nodiscard]] constexpr fixed _from_top_left_y(fixed top_left_y) const
+    {
+        return top_left_y - ((display::height() / 2) - _half_dimensions.height());
+    }
+
+    [[nodiscard]] constexpr fixed_point _to_top_left_position(const fixed_point& position) const
+    {
+        return fixed_point(_to_top_left_x(position.x()), _to_top_left_y(position.y()));
+    }
+
+    [[nodiscard]] constexpr fixed_point _from_top_left_position(const fixed_point& top_left_position) const
+    {
+        return fixed_point(_from_top_left_x(top_left_position.x()), _from_top_left_y(top_left_position.y()));
+    }
 
     constexpr void _update_dx()
     {

@@ -9,12 +9,28 @@
 #include "bn_window.h"
 #include "bn_bgs_manager.h"
 #include "bn_bg_palette_ptr.h"
+#include "bn_top_left_utils.h"
 #include "bn_affine_bg_builder.h"
 #include "bn_affine_bg_tiles_ptr.h"
 #include "bn_affine_bg_attributes.h"
 
 namespace bn
 {
+
+affine_bg_ptr affine_bg_ptr::create(const affine_bg_item& item)
+{
+    return affine_bg_ptr(bgs_manager::create(affine_bg_builder(item)));
+}
+
+affine_bg_ptr affine_bg_ptr::create(const affine_bg_item& item, int map_index)
+{
+    return affine_bg_ptr(bgs_manager::create(affine_bg_builder(item, map_index)));
+}
+
+affine_bg_ptr affine_bg_ptr::create(affine_bg_map_ptr map)
+{
+    return affine_bg_ptr(bgs_manager::create(affine_bg_builder(move(map))));
+}
 
 affine_bg_ptr affine_bg_ptr::create(fixed x, fixed y, const affine_bg_item& item)
 {
@@ -66,6 +82,42 @@ affine_bg_ptr affine_bg_ptr::create(const affine_bg_builder& builder)
 affine_bg_ptr affine_bg_ptr::create(affine_bg_builder&& builder)
 {
     return affine_bg_ptr(bgs_manager::create(move(builder)));
+}
+
+optional<affine_bg_ptr> affine_bg_ptr::create_optional(const affine_bg_item& item)
+{
+    optional<affine_bg_ptr> result;
+
+    if(handle_type handle = bgs_manager::create_optional(affine_bg_builder(item)))
+    {
+        result = affine_bg_ptr(handle);
+    }
+
+    return result;
+}
+
+optional<affine_bg_ptr> affine_bg_ptr::create_optional(const affine_bg_item& item, int map_index)
+{
+    optional<affine_bg_ptr> result;
+
+    if(handle_type handle = bgs_manager::create_optional(affine_bg_builder(item, map_index)))
+    {
+        result = affine_bg_ptr(handle);
+    }
+
+    return result;
+}
+
+optional<affine_bg_ptr> affine_bg_ptr::create_optional(affine_bg_map_ptr map)
+{
+    optional<affine_bg_ptr> result;
+
+    if(handle_type handle = bgs_manager::create_optional(affine_bg_builder(move(map))))
+    {
+        result = affine_bg_ptr(handle);
+    }
+
+    return result;
 }
 
 optional<affine_bg_ptr> affine_bg_ptr::create_optional(fixed x, fixed y, const affine_bg_item& item)
@@ -406,6 +458,41 @@ void affine_bg_ptr::set_position(fixed x, fixed y)
 void affine_bg_ptr::set_position(const fixed_point& position)
 {
     bgs_manager::set_affine_position(_handle, position);
+}
+
+fixed affine_bg_ptr::top_left_x() const
+{
+    return to_top_left_x(position().x(), dimensions().width());
+}
+
+void affine_bg_ptr::set_top_left_x(fixed top_left_x)
+{
+    set_x(from_top_left_x(top_left_x, dimensions().width()));
+}
+
+fixed affine_bg_ptr::top_left_y() const
+{
+    return to_top_left_y(position().y(), dimensions().height());
+}
+
+void affine_bg_ptr::set_top_left_y(fixed top_left_y)
+{
+    set_y(from_top_left_y(top_left_y, dimensions().height()));
+}
+
+fixed_point affine_bg_ptr::top_left_position() const
+{
+    return to_top_left_position(position(), dimensions());
+}
+
+void affine_bg_ptr::set_top_left_position(fixed top_left_x, fixed top_left_y)
+{
+    set_position(from_top_left_position(fixed_point(top_left_x, top_left_y), dimensions()));
+}
+
+void affine_bg_ptr::set_top_left_position(const fixed_point& top_left_position)
+{
+    set_position(from_top_left_position(top_left_position, dimensions()));
 }
 
 fixed affine_bg_ptr::rotation_angle() const

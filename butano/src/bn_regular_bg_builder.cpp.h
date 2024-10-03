@@ -7,6 +7,7 @@
 
 #include "bn_bgs.h"
 #include "bn_regular_bg_ptr.h"
+#include "bn_top_left_utils.h"
 
 namespace bn
 {
@@ -17,6 +18,41 @@ regular_bg_builder::regular_bg_builder(const regular_bg_item& item, int map_inde
 {
     BN_ASSERT(map_index >= 0 && map_index < item.map_item().maps_count(),
               "Invalid map index: ", map_index, " - ", item.map_item().maps_count());
+}
+
+fixed regular_bg_builder::top_left_x() const
+{
+    return to_top_left_x(x(), _dimensions().width());
+}
+
+regular_bg_builder& regular_bg_builder::set_top_left_x(fixed top_left_x)
+{
+    return set_x(from_top_left_x(top_left_x, _dimensions().width()));
+}
+
+fixed regular_bg_builder::top_left_y() const
+{
+    return to_top_left_y(y(), _dimensions().height());
+}
+
+regular_bg_builder& regular_bg_builder::set_top_left_y(fixed top_left_y)
+{
+    return set_y(from_top_left_y(top_left_y, _dimensions().height()));
+}
+
+fixed_point regular_bg_builder::top_left_position() const
+{
+    return to_top_left_position(position(), _dimensions());
+}
+
+regular_bg_builder& regular_bg_builder::set_top_left_position(fixed top_left_x, fixed top_left_y)
+{
+    return set_position(from_top_left_position(fixed_point(top_left_x, top_left_y), _dimensions()));
+}
+
+regular_bg_builder& regular_bg_builder::set_top_left_position(const fixed_point& top_left_position)
+{
+    return set_position(from_top_left_position(top_left_position, _dimensions()));
 }
 
 regular_bg_builder& regular_bg_builder::set_priority(int priority)
@@ -107,6 +143,12 @@ optional<regular_bg_map_ptr> regular_bg_builder::release_map_optional()
     }
 
     return result;
+}
+
+size regular_bg_builder::_dimensions() const
+{
+    const regular_bg_item* item = _item.get();
+    return item ? item->map_item().dimensions() : _map->dimensions();
 }
 
 }

@@ -12,6 +12,19 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_2_0 18.2.0 (next release)
+ *
+ * * bn::regular_bg_ptr, bn::regular_bg_builder, bn::affine_bg_ptr, bn::affine_bg_builder,
+ *   bn::affine_bg_mat_attributes, bn::sprite_ptr and bn::sprite_builder
+ *   support top-left coordinates for their position.
+ * * bn::regular_bg_top_left_move_to_action, bn::regular_bg_top_left_move_loop_action,
+ *   bn::regular_bg_top_left_move_toggle_action, bn::affine_bg_top_left_move_to_action,
+ *   bn::affine_bg_top_left_move_loop_action, bn::affine_bg_top_left_move_toggle_action,
+ *   bn::sprite_top_left_move_to_action, bn::sprite_top_left_move_loop_action
+ *   and bn::sprite_top_left_move_toggle_action added.
+ * * @ref faq_bg_top_left and @ref faq_sprites_top_left questions added to the @ref faq page.
+ *
+ *
  * @section changelog_18_1_0 18.1.0
  *
  * * bn::blending::set_transparency_and_intensity_alpha added.

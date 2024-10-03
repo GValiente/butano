@@ -7,6 +7,7 @@
 
 #include "bn_size.h"
 #include "bn_sprite_builder.h"
+#include "bn_top_left_utils.h"
 #include "bn_sprites_manager.h"
 #include "bn_affine_mat_attributes.h"
 #include "bn_sprite_first_attributes.h"
@@ -16,6 +17,28 @@
 
 namespace bn
 {
+
+sprite_ptr sprite_ptr::create(const sprite_item& item)
+{
+    return sprite_ptr(sprites_manager::create(
+            fixed_point(), item.shape_size(), item.tiles_item().create_tiles(),
+            item.palette_item().create_palette()));
+}
+
+sprite_ptr sprite_ptr::create(const sprite_item& item, int graphics_index)
+{
+    return sprite_ptr(sprites_manager::create(
+            fixed_point(), item.shape_size(), item.tiles_item().create_tiles(graphics_index),
+            item.palette_item().create_palette()));
+}
+
+sprite_ptr sprite_ptr::create(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette)
+{
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
+              "Invalid tiles count: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
+
+    return sprite_ptr(sprites_manager::create(fixed_point(), shape_size, move(tiles), move(palette)));
+}
 
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item)
 {
@@ -54,8 +77,8 @@ sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_shape_size& shape_s
     return sprite_ptr(sprites_manager::create(fixed_point(x, y), shape_size, move(tiles), move(palette)));
 }
 
-sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
-                              sprite_palette_ptr palette)
+sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_shape_size& shape_size,
+                              sprite_tiles_ptr tiles, sprite_palette_ptr palette)
 {
     BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
               "Invalid tiles count: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
@@ -71,6 +94,32 @@ sprite_ptr sprite_ptr::create(const sprite_builder& builder)
 sprite_ptr sprite_ptr::create(sprite_builder&& builder)
 {
     return sprite_ptr(sprites_manager::create(move(builder)));
+}
+
+optional<sprite_ptr> sprite_ptr::create_optional(const sprite_item& item)
+{
+    return create_optional(fixed_point(), item);
+}
+
+optional<sprite_ptr> sprite_ptr::create_optional(const sprite_item& item, int graphics_index)
+{
+    return create_optional(fixed_point(), item, graphics_index);
+}
+
+optional<sprite_ptr> sprite_ptr::create_optional(
+    const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette)
+{
+    BN_ASSERT(tiles.tiles_count() == shape_size.tiles_count(palette.bpp()),
+              "Invalid tiles count: ", tiles.tiles_count(), " - ", shape_size.tiles_count(palette.bpp()));
+
+    optional<sprite_ptr> result;
+
+    if(handle_type handle = sprites_manager::create_optional(fixed_point(), shape_size, move(tiles), move(palette)))
+    {
+        result = sprite_ptr(handle);
+    }
+
+    return result;
 }
 
 optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_item& item)
@@ -456,6 +505,41 @@ void sprite_ptr::set_position(fixed x, fixed y)
 void sprite_ptr::set_position(const fixed_point& position)
 {
     sprites_manager::set_position(_handle, position);
+}
+
+fixed sprite_ptr::top_left_x() const
+{
+    return to_top_left_x(position().x(), dimensions().width());
+}
+
+void sprite_ptr::set_top_left_x(fixed top_left_x)
+{
+    set_x(from_top_left_x(top_left_x, dimensions().width()));
+}
+
+fixed sprite_ptr::top_left_y() const
+{
+    return to_top_left_y(position().y(), dimensions().height());
+}
+
+void sprite_ptr::set_top_left_y(fixed top_left_y)
+{
+    set_y(from_top_left_y(top_left_y, dimensions().height()));
+}
+
+fixed_point sprite_ptr::top_left_position() const
+{
+    return to_top_left_position(position(), dimensions());
+}
+
+void sprite_ptr::set_top_left_position(fixed top_left_x, fixed top_left_y)
+{
+    set_position(from_top_left_position(fixed_point(top_left_x, top_left_y), dimensions()));
+}
+
+void sprite_ptr::set_top_left_position(const fixed_point& top_left_position)
+{
+    set_position(from_top_left_position(top_left_position, dimensions()));
 }
 
 fixed sprite_ptr::rotation_angle() const

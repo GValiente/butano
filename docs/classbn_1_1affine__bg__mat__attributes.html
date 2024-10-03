@@ -112,6 +112,35 @@
               <span class="m-doc-wrap-bumper">void <a href="#a5343c4cecd13098abae7d0ee364aef4f" class="m-doc">set_position</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; position) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Sets the absolute position of the affine background (ignoring its camera).</dd>
+            <dt id="a1068a3bbe2ef7b3641727edca64af450">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1068a3bbe2ef7b3641727edca64af450" class="m-doc-self">top_left_x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the horizontal absolute top-left position of the affine background (ignoring its camera).</dd>
+            <dt id="af905f4489104a12f881e97211bceb801">
+              <span class="m-doc-wrap-bumper">void <a href="#af905f4489104a12f881e97211bceb801" class="m-doc-self">set_top_left_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_x) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the horizontal absolute top-left position of the affine background (ignoring its camera).</dd>
+            <dt id="a6371acf175fe10574c803d3f733c474d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6371acf175fe10574c803d3f733c474d" class="m-doc-self">top_left_y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the absolute vertical top-left position of the affine background (ignoring its camera).</dd>
+            <dt id="a53f995cc5b7ef6351fd54f71cf5ca580">
+              <span class="m-doc-wrap-bumper">void <a href="#a53f995cc5b7ef6351fd54f71cf5ca580" class="m-doc-self">set_top_left_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_y) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the absolute vertical top-left position of the affine background (ignoring its camera).</dd>
+            <dt id="aafb2498dd5c2822c0d751503802ed24c">
+              <span class="m-doc-wrap-bumper">auto <a href="#aafb2498dd5c2822c0d751503802ed24c" class="m-doc-self">top_left_position</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the absolute top-left position of the affine background (ignoring its camera).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a16d614dfd04c51db7b7e6c6e06ae68c8" class="m-doc">set_top_left_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_x,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_y) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the absolute top-left position of the affine background (ignoring its camera).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a51c993d24a36062587e53ab5c60ef8b3" class="m-doc">set_top_left_position</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; top_left_position) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Sets the absolute top-left position of the affine background (ignoring its camera).</dd>
             <dt id="af124e533c4050d5bde3657d0098ac2c1">
               <span class="m-doc-wrap-bumper">auto <a href="#af124e533c4050d5bde3657d0098ac2c1" class="m-doc-self">half_dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespacebn.html#a63eda56aa6f4552d9dd5c99805ddffa4" class="m-doc">fixed_<wbr />size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -336,6 +365,45 @@
                 <tr>
                   <td style="width: 1%">position</td>
                   <td>Absolute position of the affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a16d614dfd04c51db7b7e6c6e06ae68c8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_mat_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a16d614dfd04c51db7b7e6c6e06ae68c8" class="m-doc-self">set_top_left_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_x,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_y) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the absolute top-left position of the affine background (ignoring its camera).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">top_left_x</td>
+                  <td>Horizontal absolute top-left position of the affine background.</td>
+                </tr>
+                <tr>
+                  <td>top_left_y</td>
+                  <td>Vertical absolute top-left position of the affine background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a51c993d24a36062587e53ab5c60ef8b3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />affine_bg_mat_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a51c993d24a36062587e53ab5c60ef8b3" class="m-doc-self">set_top_left_position</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; top_left_position) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Sets the absolute top-left position of the affine background (ignoring its camera).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">top_left_position</td>
+                  <td>Absolute top-left position of the affine background.</td>
                 </tr>
               </tbody>
             </table>

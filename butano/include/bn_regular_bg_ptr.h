@@ -47,6 +47,28 @@ class regular_bg_ptr
 public:
     /**
      * @brief Creates a regular_bg_ptr from the given regular_bg_item.
+     * @param item regular_bg_item containing the required information to generate the regular background.
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] static regular_bg_ptr create(const regular_bg_item& item);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_item.
+     * @param item regular_bg_item containing the required information to generate the regular background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] static regular_bg_ptr create(const regular_bg_item& item, int map_index);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_map_ptr.
+     * @param map regular_bg_map_ptr used by the regular background.
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] static regular_bg_ptr create(regular_bg_map_ptr map);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_item.
      * @param x Horizontal position of the regular background.
      * @param y Vertical position of the regular background.
      * @param item regular_bg_item containing the required information to generate the regular background.
@@ -112,6 +134,28 @@ public:
      * @return The requested regular_bg_ptr.
      */
     [[nodiscard]] static regular_bg_ptr create(regular_bg_builder&& builder);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_item.
+     * @param item regular_bg_item containing the required information to generate the regular background.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(const regular_bg_item& item);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_item.
+     * @param item regular_bg_item containing the required information to generate the regular background.
+     * @param map_index Index of the map to reference in item.map_item().
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(const regular_bg_item& item, int map_index);
+
+    /**
+     * @brief Creates a regular_bg_ptr from the given regular_bg_map_ptr.
+     * @param map regular_bg_map_ptr used by the regular background.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_ptr> create_optional(regular_bg_map_ptr map);
 
     /**
      * @brief Creates a regular_bg_ptr from the given regular_bg_item.
@@ -424,6 +468,43 @@ public:
      * @brief Sets the position of the regular background (relative to its camera, if it has one).
      */
     void set_position(const fixed_point& position);
+
+    /**
+     * @brief Returns the horizontal top-left position of the regular background (relative to its camera, if it has one).
+     */
+    [[nodiscard]] fixed top_left_x() const;
+
+    /**
+     * @brief Sets the horizontal top-left position of the regular background (relative to its camera, if it has one).
+     */
+    void set_top_left_x(fixed top_left_x);
+
+    /**
+     * @brief Returns the vertical top-left position of the regular background (relative to its camera, if it has one).
+     */
+    [[nodiscard]] fixed top_left_y() const;
+
+    /**
+     * @brief Sets the vertical top-left position of the regular background (relative to its camera, if it has one).
+     */
+    void set_top_left_y(fixed top_left_y);
+
+    /**
+     * @brief Returns the top-left position of the regular background (relative to its camera, if it has one).
+     */
+    [[nodiscard]] fixed_point top_left_position() const;
+
+    /**
+     * @brief Sets the top-left position of the regular background (relative to its camera, if it has one).
+     * @param top_left_x Horizontal top-left position of the regular background (relative to its camera, if it has one).
+     * @param top_left_y Vertical top-left position of the regular background (relative to its camera, if it has one).
+     */
+    void set_top_left_position(fixed top_left_x, fixed top_left_y);
+
+    /**
+     * @brief Sets the top-left position of the regular background (relative to its camera, if it has one).
+     */
+    void set_top_left_position(const fixed_point& top_left_position);
 
     /**
      * @brief Returns the priority of the regular background relative to sprites and other backgrounds.

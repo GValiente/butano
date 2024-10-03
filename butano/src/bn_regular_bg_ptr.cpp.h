@@ -9,12 +9,28 @@
 #include "bn_window.h"
 #include "bn_bgs_manager.h"
 #include "bn_bg_palette_ptr.h"
+#include "bn_top_left_utils.h"
 #include "bn_regular_bg_builder.h"
 #include "bn_regular_bg_tiles_ptr.h"
 #include "bn_regular_bg_attributes.h"
 
 namespace bn
 {
+
+regular_bg_ptr regular_bg_ptr::create(const regular_bg_item& item)
+{
+    return regular_bg_ptr(bgs_manager::create(regular_bg_builder(item)));
+}
+
+regular_bg_ptr regular_bg_ptr::create(const regular_bg_item& item, int map_index)
+{
+    return regular_bg_ptr(bgs_manager::create(regular_bg_builder(item, map_index)));
+}
+
+regular_bg_ptr regular_bg_ptr::create(regular_bg_map_ptr map)
+{
+    return regular_bg_ptr(bgs_manager::create(regular_bg_builder(move(map))));
+}
 
 regular_bg_ptr regular_bg_ptr::create(fixed x, fixed y, const regular_bg_item& item)
 {
@@ -66,6 +82,42 @@ regular_bg_ptr regular_bg_ptr::create(const regular_bg_builder& builder)
 regular_bg_ptr regular_bg_ptr::create(regular_bg_builder&& builder)
 {
     return regular_bg_ptr(bgs_manager::create(move(builder)));
+}
+
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(const regular_bg_item& item)
+{
+    optional<regular_bg_ptr> result;
+
+    if(handle_type handle = bgs_manager::create_optional(regular_bg_builder(item)))
+    {
+        result = regular_bg_ptr(handle);
+    }
+
+    return result;
+}
+
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(const regular_bg_item& item, int map_index)
+{
+    optional<regular_bg_ptr> result;
+
+    if(handle_type handle = bgs_manager::create_optional(regular_bg_builder(item, map_index)))
+    {
+        result = regular_bg_ptr(handle);
+    }
+
+    return result;
+}
+
+optional<regular_bg_ptr> regular_bg_ptr::create_optional(regular_bg_map_ptr map)
+{
+    optional<regular_bg_ptr> result;
+
+    if(handle_type handle = bgs_manager::create_optional(regular_bg_builder(move(map))))
+    {
+        result = regular_bg_ptr(handle);
+    }
+
+    return result;
 }
 
 optional<regular_bg_ptr> regular_bg_ptr::create_optional(fixed x, fixed y, const regular_bg_item& item)
@@ -418,6 +470,41 @@ void regular_bg_ptr::set_position(fixed x, fixed y)
 void regular_bg_ptr::set_position(const fixed_point& position)
 {
     bgs_manager::set_regular_position(_handle, position);
+}
+
+fixed regular_bg_ptr::top_left_x() const
+{
+    return to_top_left_x(position().x(), dimensions().width());
+}
+
+void regular_bg_ptr::set_top_left_x(fixed top_left_x)
+{
+    set_x(from_top_left_x(top_left_x, dimensions().width()));
+}
+
+fixed regular_bg_ptr::top_left_y() const
+{
+    return to_top_left_y(position().y(), dimensions().height());
+}
+
+void regular_bg_ptr::set_top_left_y(fixed top_left_y)
+{
+    set_y(from_top_left_y(top_left_y, dimensions().height()));
+}
+
+fixed_point regular_bg_ptr::top_left_position() const
+{
+    return to_top_left_position(position(), dimensions());
+}
+
+void regular_bg_ptr::set_top_left_position(fixed top_left_x, fixed top_left_y)
+{
+    set_position(from_top_left_position(fixed_point(top_left_x, top_left_y), dimensions()));
+}
+
+void regular_bg_ptr::set_top_left_position(const fixed_point& top_left_position)
+{
+    set_position(from_top_left_position(top_left_position, dimensions()));
 }
 
 int regular_bg_ptr::priority() const

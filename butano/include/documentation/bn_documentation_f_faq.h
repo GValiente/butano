@@ -406,6 +406,12 @@
  * @section faq_sprites Sprites
  *
  *
+ * @subsection faq_sprites_top_left Why sprite coordinates are relative to the center of the screen, instead of to its top-left corner?
+ *
+ * If you don't like it, you can always use the `top_left` methods to specify coordinates relative
+ * to the top-left corner of the screen. They're a bit slower than the regular ones, though.
+ *
+ *
  * @subsection faq_sprites_multiple_8bpp Why everything looks weird when I show two or more sprites with more than 16 colors?
  *
  * Since the GBA has only 256 colors for sprites, if you use two sprites with more than 16 colors at the same time,
@@ -452,6 +458,12 @@
  *
  *
  * @section faq_backgrounds Backgrounds
+ *
+ *
+ * @subsection faq_bg_top_left Why background coordinates are relative to the center of the screen, instead of to its top-left corner?
+ *
+ * If you don't like it, you can always use the `top_left` methods to specify coordinates relative
+ * to the top-left corner of the screen. They're a bit slower than the regular ones, though.
  *
  *
  * @subsection faq_bg_multiple_8bpp Why everything looks weird when I show two or more backgrounds with more than 16 colors?

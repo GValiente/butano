@@ -504,6 +504,11 @@ void affine_bg_ptr::set_rotation_angle(fixed rotation_angle)
     bgs_manager::set_rotation_angle(_handle, rotation_angle);
 }
 
+void affine_bg_ptr::set_rotation_angle_safe(fixed rotation_angle)
+{
+    bgs_manager::set_rotation_angle(_handle, safe_degrees_angle(rotation_angle));
+}
+
 fixed affine_bg_ptr::horizontal_scale() const
 {
     return bgs_manager::horizontal_scale(_handle);

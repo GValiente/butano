@@ -375,6 +375,10 @@
               <span class="m-doc-wrap-bumper">void <a href="#aa3f914035f5ee82b39ac21dec6354a09" class="m-doc">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle)</span>
             </dt>
             <dd>Sets the rotation angle in degrees of the sprite.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a6b75655fa1eae2f0484c951dd9a344eb" class="m-doc">set_rotation_angle_safe</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle)</span>
+            </dt>
+            <dd>Sets the rotation angle in degrees of the sprite.</dd>
             <dt id="a147ed5c241add73293f7541abcac2dc2">
               <span class="m-doc-wrap-bumper">auto <a href="#a147ed5c241add73293f7541abcac2dc2" class="m-doc-self">horizontal_scale</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
             </dt>
@@ -1766,6 +1770,24 @@
                 <tr>
                   <td style="width: 1%">rotation_angle</td>
                   <td>Rotation angle in degrees, in the range [0..360].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the rotation angle is != 0 and the sprite doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given rotation angle is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6b75655fa1eae2f0484c951dd9a344eb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6b75655fa1eae2f0484c951dd9a344eb" class="m-doc-self">set_rotation_angle_safe</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle)</span></span>
+            </h3>
+            <p>Sets the rotation angle in degrees of the sprite.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rotation_angle</td>
+                  <td>Rotation angle in degrees, in any range.</td>
                 </tr>
               </tbody>
             </table>

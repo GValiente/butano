@@ -278,6 +278,16 @@ public:
     }
 
     /**
+     * @brief Sets the rotation angle in degrees.
+     * @param rotation_angle Rotation angle in degrees, in any range.
+     */
+    constexpr void set_rotation_angle_safe(fixed rotation_angle)
+    {
+        _mat_attributes.set_rotation_angle_safe(rotation_angle);
+        _update_dx_and_dy();
+    }
+
+    /**
      * @brief Returns the horizontal scale.
      */
     [[nodiscard]] constexpr fixed horizontal_scale() const

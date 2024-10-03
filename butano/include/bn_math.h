@@ -125,7 +125,7 @@ namespace bn
     }
 
     /**
-     * @brief Returns an angle in degrees in the range [0..360) from the given angle in degrees with any range.
+     * @brief Returns an angle in degrees in the range [0..360) from the given angle in degrees in any range.
      *
      * @ingroup math
      */
@@ -213,8 +213,8 @@ namespace bn
     }
 
     /**
-     * @brief Calculates the sine value of an angle in degrees with any range using a LUT.
-     * @param degrees_angle Angle in degrees with any range.
+     * @brief Calculates the sine value of an angle in degrees in any range using a LUT.
+     * @param degrees_angle Angle in degrees in any range.
      * @return Sine value in the range [-1..1].
      *
      * @ingroup math
@@ -319,8 +319,8 @@ namespace bn
     }
 
     /**
-     * @brief Calculates the cosine value of an angle in degrees with any range using a LUT.
-     * @param degrees_angle Angle in degrees with any range.
+     * @brief Calculates the cosine value of an angle in degrees in any range using a LUT.
+     * @param degrees_angle Angle in degrees in any range.
      * @return Cosine value in the range [-1..1].
      *
      * @ingroup math
@@ -441,8 +441,8 @@ namespace bn
     }
 
     /**
-     * @brief Calculates the sine and the cosine values of an angle in degrees with any range using a LUT.
-     * @param degrees_angle Angle in degrees with any range.
+     * @brief Calculates the sine and the cosine values of an angle in degrees in any range using a LUT.
+     * @param degrees_angle Angle in degrees in any range.
      * @return Sine and cosine values in the range [-1..1].
      *
      * @ingroup math

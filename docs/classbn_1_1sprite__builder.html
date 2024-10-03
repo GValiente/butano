@@ -165,6 +165,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a93252e52f8ba6da59ec9f722e3109797" class="m-doc">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle) -&gt; <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
             </dt>
             <dd>Sets the rotation angle in degrees of the sprites to generate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6954fd12d394c99b8200f4e568ed4e5c" class="m-doc">set_rotation_angle_safe</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle) -&gt; <a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp;</span>
+            </dt>
+            <dd>Sets the rotation angle in degrees of the sprites to generate.</dd>
             <dt id="a0497c452985bde64b6feb63109e8e967">
               <span class="m-doc-wrap-bumper">auto <a href="#a0497c452985bde64b6feb63109e8e967" class="m-doc-self">horizontal_scale</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
             </dt>
@@ -676,6 +680,30 @@
                 <tr>
                   <td style="width: 1%">rotation_angle</td>
                   <td>Rotation angle in degrees, in the range [0..360].</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the rotation angle is != 0 and the builder doesn&#x27;t have an attached <a href="classbn_1_1sprite__affine__mat__ptr.html" class="m-doc">sprite_<wbr />affine_<wbr />mat_<wbr />ptr</a>, a new one with the given rotation angle is attached to it.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6954fd12d394c99b8200f4e568ed4e5c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__builder.html" class="m-doc">sprite_<wbr />builder</a>&amp; bn::<wbr />sprite_builder::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6954fd12d394c99b8200f4e568ed4e5c" class="m-doc-self">set_rotation_angle_safe</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle)</span></span>
+            </h3>
+            <p>Sets the rotation angle in degrees of the sprites to generate.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rotation_angle</td>
+                  <td>Rotation angle in degrees, in any range.</td>
                 </tr>
               </tbody>
               <tfoot>

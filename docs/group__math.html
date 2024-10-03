@@ -226,7 +226,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga3f84312f5751bc707185733a2726ed2a" class="m-doc">safe_degrees_angle</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Returns an angle in degrees in the range [0..360) from the given angle in degrees with any range.</dd>
+            <dd>Returns an angle in degrees in the range [0..360) from the given angle in degrees in any range.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga589ed853116ac004d9ecc481fc283438" class="m-doc">sin</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -246,7 +246,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga93b9aa2a691c91b85e6b2434fbd0c389" class="m-doc">degrees_lut_sin_safe</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Calculates the sine value of an angle in degrees with any range using a LUT.</dd>
+            <dd>Calculates the sine value of an angle in degrees in any range using a LUT.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#gacb83d14734a56f9da47034ce80459b34" class="m-doc">cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -266,7 +266,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga7b086f6f733857c2baae8b3ed45df802" class="m-doc">degrees_lut_cos_safe</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; fixed <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Calculates the cosine value of an angle in degrees with any range using a LUT.</dd>
+            <dd>Calculates the cosine value of an angle in degrees in any range using a LUT.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga0632c9572fadf8f74a7df210f23646b5" class="m-doc">sin_and_cos</a>(</span><span class="m-doc-wrap">fixed_t&lt;16&gt; angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -286,7 +286,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga3a6996bf0ed5a86b07c2ebfe13b5d6f4" class="m-doc">degrees_lut_sin_and_cos_safe</a>(</span><span class="m-doc-wrap">fixed degrees_angle) -&gt; pair&lt;fixed, fixed&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Calculates the sine and the cosine values of an angle in degrees with any range using a LUT.</dd>
+            <dd>Calculates the sine and the cosine values of an angle in degrees in any range using a LUT.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ga78f693fa4296294dd21c68557e916aa3" class="m-doc">atan2</a>(</span><span class="m-doc-wrap">int y,
               int x) -&gt; <a href="group__other.html#ga18012c35ef2ae80d6c102554e2150da3" class="m-doc">BN_<wbr />CONST</a> fixed_t&lt;16&gt;</span>
@@ -402,7 +402,7 @@
               <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3f84312f5751bc707185733a2726ed2a" class="m-doc-self">safe_degrees_angle</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
-            <p>Returns an angle in degrees in the range [0..360) from the given angle in degrees with any range.</p>
+            <p>Returns an angle in degrees in the range [0..360) from the given angle in degrees in any range.</p>
           </div></section>
           <section class="m-doc-details" id="ga589ed853116ac004d9ecc481fc283438"><div>
             <h3>
@@ -505,7 +505,7 @@
               <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga93b9aa2a691c91b85e6b2434fbd0c389" class="m-doc-self">degrees_lut_sin_safe</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
-            <p>Calculates the sine value of an angle in degrees with any range using a LUT.</p>
+            <p>Calculates the sine value of an angle in degrees in any range using a LUT.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -513,7 +513,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">degrees_angle</td>
-                  <td>Angle in degrees with any range.</td>
+                  <td>Angle in degrees in any range.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -625,7 +625,7 @@
               <span class="m-doc-wrap-bumper">fixed </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga7b086f6f733857c2baae8b3ed45df802" class="m-doc-self">degrees_lut_cos_safe</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
-            <p>Calculates the cosine value of an angle in degrees with any range using a LUT.</p>
+            <p>Calculates the cosine value of an angle in degrees in any range using a LUT.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -633,7 +633,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">degrees_angle</td>
-                  <td>Angle in degrees with any range.</td>
+                  <td>Angle in degrees in any range.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -745,7 +745,7 @@
               <span class="m-doc-wrap-bumper">pair&lt;fixed, fixed&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga3a6996bf0ed5a86b07c2ebfe13b5d6f4" class="m-doc-self">degrees_lut_sin_and_cos_safe</a>(</span><span class="m-doc-wrap">fixed degrees_angle) <span class="m-label m-primary">constexpr</span></span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>
             </h3>
-            <p>Calculates the sine and the cosine values of an angle in degrees with any range using a LUT.</p>
+            <p>Calculates the sine and the cosine values of an angle in degrees in any range using a LUT.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -753,7 +753,7 @@
               <tbody>
                 <tr>
                   <td style="width: 1%">degrees_angle</td>
-                  <td>Angle in degrees with any range.</td>
+                  <td>Angle in degrees in any range.</td>
                 </tr>
               </tbody>
               <tfoot>

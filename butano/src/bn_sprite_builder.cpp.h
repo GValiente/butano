@@ -100,6 +100,12 @@ sprite_builder& sprite_builder::set_rotation_angle(fixed rotation_angle)
     return *this;
 }
 
+sprite_builder& sprite_builder::set_rotation_angle_safe(fixed rotation_angle)
+{
+    set_rotation_angle(safe_degrees_angle(rotation_angle));
+    return *this;
+}
+
 fixed sprite_builder::horizontal_scale() const
 {
     const sprite_affine_mat_ptr* affine_mat = _affine_mat.get();

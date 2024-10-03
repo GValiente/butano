@@ -22,9 +22,13 @@
  *   bn::affine_bg_top_left_move_loop_action, bn::affine_bg_top_left_move_toggle_action,
  *   bn::sprite_top_left_move_to_action, bn::sprite_top_left_move_loop_action
  *   and bn::sprite_top_left_move_toggle_action added.
- * * @ref faq_bg_top_left and @ref faq_sprites_top_left questions added to the @ref faq page.
  * * bn::safe_degrees_angle, bn::degrees_lut_sin_safe, bn::degrees_lut_cos_safe
  *   and bn::degrees_lut_sin_and_cos_safe added.
+ * * bn::affine_mat_attributes::set_rotation_angle_safe, bn::affine_bg_builder::set_rotation_angle_safe,
+ *   bn::affine_bg_mat_attributes::set_rotation_angle_safe, bn::affine_bg_ptr::set_rotation_angle_safe,
+ *   bn::sprite_affine_mat_ptr::set_rotation_angle_safe, bn::sprite_builder::set_rotation_angle_safe
+ *   and bn::sprite_ptr::set_rotation_angle_safe added.
+ * * @ref faq_bg_top_left and @ref faq_sprites_top_left questions added to the @ref faq page.
  *
  *
  * @section changelog_18_1_0 18.1.0

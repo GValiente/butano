@@ -492,6 +492,12 @@ public:
     void set_rotation_angle(fixed rotation_angle);
 
     /**
+     * @brief Sets the rotation angle in degrees of the affine background.
+     * @param rotation_angle Rotation angle in degrees, in any range.
+     */
+    void set_rotation_angle_safe(fixed rotation_angle);
+
+    /**
      * @brief Returns the horizontal scale of the affine background.
      */
     [[nodiscard]] fixed horizontal_scale() const;

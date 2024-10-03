@@ -5,6 +5,7 @@
 
 #include "bn_sprite_affine_mat_ptr.h"
 
+#include "bn_math.h"
 #include "bn_sprite_affine_mats_manager.h"
 
 namespace bn
@@ -84,6 +85,11 @@ fixed sprite_affine_mat_ptr::rotation_angle() const
 void sprite_affine_mat_ptr::set_rotation_angle(fixed rotation_angle)
 {
     sprite_affine_mats_manager::set_rotation_angle(_id, rotation_angle);
+}
+
+void sprite_affine_mat_ptr::set_rotation_angle_safe(fixed rotation_angle)
+{
+    sprite_affine_mats_manager::set_rotation_angle(_id, safe_degrees_angle(rotation_angle));
 }
 
 fixed sprite_affine_mat_ptr::horizontal_scale() const

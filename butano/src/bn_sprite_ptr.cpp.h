@@ -569,6 +569,11 @@ void sprite_ptr::set_rotation_angle(fixed rotation_angle)
     }
 }
 
+void sprite_ptr::set_rotation_angle_safe(fixed rotation_angle)
+{
+    set_rotation_angle(safe_degrees_angle(rotation_angle));
+}
+
 fixed sprite_ptr::horizontal_scale() const
 {
     optional<sprite_affine_mat_ptr>& affine_mat = sprites_manager::affine_mat(_handle);

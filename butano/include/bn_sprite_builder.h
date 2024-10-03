@@ -226,6 +226,17 @@ public:
     sprite_builder& set_rotation_angle(fixed rotation_angle);
 
     /**
+     * @brief Sets the rotation angle in degrees of the sprites to generate.
+     * @param rotation_angle Rotation angle in degrees, in any range.
+     *
+     * If the rotation angle is != 0 and the builder doesn't have an attached sprite_affine_mat_ptr,
+     * a new one with the given rotation angle is attached to it.
+     *
+     * @return Reference to this.
+     */
+    sprite_builder& set_rotation_angle_safe(fixed rotation_angle);
+
+    /**
      * @brief Returns the horizontal scale of the sprites to generate.
      */
     [[nodiscard]] fixed horizontal_scale() const;

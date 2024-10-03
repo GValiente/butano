@@ -233,6 +233,17 @@ public:
     }
 
     /**
+     * @brief Sets the rotation angle in degrees of the affine backgrounds to generate.
+     * @param rotation_angle Rotation angle in degrees, in any range.
+     * @return Reference to this.
+     */
+    affine_bg_builder& set_rotation_angle_safe(fixed rotation_angle)
+    {
+        _mat_attributes.set_rotation_angle_safe(rotation_angle);
+        return *this;
+    }
+
+    /**
      * @brief Returns the horizontal scale of the affine backgrounds to generate.
      */
     [[nodiscard]] fixed horizontal_scale() const

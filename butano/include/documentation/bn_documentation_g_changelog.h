@@ -23,6 +23,8 @@
  *   bn::sprite_top_left_move_to_action, bn::sprite_top_left_move_loop_action
  *   and bn::sprite_top_left_move_toggle_action added.
  * * @ref faq_bg_top_left and @ref faq_sprites_top_left questions added to the @ref faq page.
+ * * bn::safe_degrees_angle, bn::degrees_lut_sin_safe, bn::degrees_lut_cos_safe
+ *   and bn::degrees_lut_sin_and_cos_safe added.
  *
  *
  * @section changelog_18_1_0 18.1.0
@@ -1295,7 +1297,7 @@
  * * Compressed sprites and backgrounds support (see @ref import to learn how to generate them).
  * * bn::degrees_sin and bn::degrees_cos don't use a LUT anymore,
  *   they are replaced by bn::degrees_lut_sin and bn::degrees_lut_cos.
- * * bn::lut_sin and bn::lut_cos input angle range increased to [0, 2048].
+ * * bn::lut_sin and bn::lut_cos input angle range increased to [0..2048].
  * * Enum classes size reduced.
  * * Required fields when importing assets are not defaulted anymore.
  * * bn::rule_of_three_approximation overflow fixed.

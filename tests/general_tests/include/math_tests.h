@@ -119,6 +119,20 @@ public:
                 BN_ASSERT(bn::abs(std_atan2 - diamond_angle) < 744);
             }
         }
+
+        bn::fixed safe_angle = 0;
+
+        for(int angle = -720; angle < 720; ++angle)
+        {
+            BN_ASSERT(bn::safe_degrees_angle(angle) == safe_angle, bn::safe_degrees_angle(angle), " - ", safe_angle);
+
+            safe_angle += 1;
+
+            if(safe_angle == 360)
+            {
+                safe_angle = 0;
+            }
+        }
     }
 };
 

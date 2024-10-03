@@ -5,7 +5,6 @@
 
 #include "bn_sprite_ptr.h"
 
-#include "bn_size.h"
 #include "bn_sprite_builder.h"
 #include "bn_top_left_utils.h"
 #include "bn_sprites_manager.h"

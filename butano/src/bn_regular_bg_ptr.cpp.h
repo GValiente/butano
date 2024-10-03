@@ -5,7 +5,6 @@
 
 #include "bn_regular_bg_ptr.h"
 
-#include "bn_size.h"
 #include "bn_window.h"
 #include "bn_bgs_manager.h"
 #include "bn_bg_palette_ptr.h"

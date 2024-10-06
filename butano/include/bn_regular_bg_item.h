@@ -142,6 +142,19 @@ public:
 
     /**
      * @brief Creates a regular_bg_ptr using the information contained in this item.
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] regular_bg_ptr create_bg() const;
+
+    /**
+     * @brief Creates a regular_bg_ptr using the information contained in this item.
+     * @param map_index Index of the map to reference in map_item().
+     * @return The requested regular_bg_ptr.
+     */
+    [[nodiscard]] regular_bg_ptr create_bg(int map_index) const;
+
+    /**
+     * @brief Creates a regular_bg_ptr using the information contained in this item.
      * @param x Horizontal position of the regular background.
      * @param y Vertical position of the regular background.
      * @return The requested regular_bg_ptr.
@@ -171,6 +184,19 @@ public:
      * @return The requested regular_bg_ptr.
      */
     [[nodiscard]] regular_bg_ptr create_bg(const fixed_point& position, int map_index) const;
+
+    /**
+     * @brief Creates a regular_bg_ptr using the information contained in this item.
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<regular_bg_ptr> create_bg_optional() const;
+
+    /**
+     * @brief Creates a regular_bg_ptr using the information contained in this item.
+     * @param map_index Index of the map to reference in map_item().
+     * @return The requested regular_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<regular_bg_ptr> create_bg_optional(int map_index) const;
 
     /**
      * @brief Creates a regular_bg_ptr using the information contained in this item.

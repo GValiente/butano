@@ -142,6 +142,19 @@ public:
 
     /**
      * @brief Creates an affine_bg_ptr using the information contained in this item.
+     * @return The requested affine_bg_ptr.
+     */
+    [[nodiscard]] affine_bg_ptr create_bg() const;
+
+    /**
+     * @brief Creates an affine_bg_ptr using the information contained in this item.
+     * @param map_index Index of the map to reference in map_item().
+     * @return The requested affine_bg_ptr.
+     */
+    [[nodiscard]] affine_bg_ptr create_bg(int map_index) const;
+
+    /**
+     * @brief Creates an affine_bg_ptr using the information contained in this item.
      * @param x Horizontal position of the affine background.
      * @param y Vertical position of the affine background.
      * @return The requested affine_bg_ptr.
@@ -171,6 +184,19 @@ public:
      * @return The requested affine_bg_ptr.
      */
     [[nodiscard]] affine_bg_ptr create_bg(const fixed_point& position, int map_index) const;
+
+    /**
+     * @brief Creates an affine_bg_ptr using the information contained in this item.
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<affine_bg_ptr> create_bg_optional() const;
+
+    /**
+     * @brief Creates an affine_bg_ptr using the information contained in this item.
+     * @param map_index Index of the map to reference in map_item().
+     * @return The requested affine_bg_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<affine_bg_ptr> create_bg_optional(int map_index) const;
 
     /**
      * @brief Creates an affine_bg_ptr using the information contained in this item.

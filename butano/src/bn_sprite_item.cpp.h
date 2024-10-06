@@ -18,6 +18,16 @@ sprite_item sprite_item::decompress(span<tile> decompressed_tiles_ref, span<colo
     return result;
 }
 
+sprite_ptr sprite_item::create_sprite() const
+{
+    return sprite_ptr::create(*this);
+}
+
+sprite_ptr sprite_item::create_sprite(int graphics_index) const
+{
+    return sprite_ptr::create(*this, graphics_index);
+}
+
 sprite_ptr sprite_item::create_sprite(fixed x, fixed y) const
 {
     return sprite_ptr::create(x, y, *this);
@@ -36,6 +46,16 @@ sprite_ptr sprite_item::create_sprite(const fixed_point& position) const
 sprite_ptr sprite_item::create_sprite(const fixed_point& position, int graphics_index) const
 {
     return sprite_ptr::create(position, *this, graphics_index);
+}
+
+optional<sprite_ptr> sprite_item::create_sprite_optional() const
+{
+    return sprite_ptr::create_optional(*this);
+}
+
+optional<sprite_ptr> sprite_item::create_sprite_optional(int graphics_index) const
+{
+    return sprite_ptr::create_optional(*this, graphics_index);
 }
 
 optional<sprite_ptr> sprite_item::create_sprite_optional(fixed x, fixed y) const

@@ -110,6 +110,14 @@
             </dt>
             <dd>Decompresses the stored data in the tiles referenced by decompressed_tiles_ref, the colors referenced by decompressed_colors_ref and the map cells referenced by decompressed_cells_ref.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af42ce183f9e89e37f88dc06f0215ff58" class="m-doc">create_bg</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1de8a705ab085c49cc8c84b824432ec9" class="m-doc">create_bg</a>(</span><span class="m-doc-wrap">int map_index) const -&gt; <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ae5d353cb8ae97a19306078c6e1d86d62" class="m-doc">create_bg</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x,
               <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> y) const -&gt; <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a></span>
             </dt>
@@ -127,6 +135,14 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ae0e231147afe616adacc6620cb0ba2cd" class="m-doc">create_bg</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; position,
               int map_index) const -&gt; <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a48136440a1de65c878140293a6c63749" class="m-doc">create_bg_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a830107bf4a6d6c1d380b6bd92874d1aa" class="m-doc">create_bg_optional</a>(</span><span class="m-doc-wrap">int map_index) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</dd>
             <dt>
@@ -309,6 +325,43 @@
             </table>
 <p>If the source and destination tiles, colors or map cells overlap, the behavior is undefined.</p>
           </div></section>
+          <section class="m-doc-details" id="af42ce183f9e89e37f88dc06f0215ff58"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> bn::<wbr />regular_bg_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af42ce183f9e89e37f88dc06f0215ff58" class="m-doc-self">create_bg</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The requested <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1de8a705ab085c49cc8c84b824432ec9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> bn::<wbr />regular_bg_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1de8a705ab085c49cc8c84b824432ec9" class="m-doc-self">create_bg</a>(</span><span class="m-doc-wrap">int map_index) const</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_index</td>
+                  <td>Index of the map to reference in <a href="#a208710e5d6b553c6ff8e5b5e26fb1f04" class="m-doc">map_<wbr />item()</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ae5d353cb8ae97a19306078c6e1d86d62"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> bn::<wbr />regular_bg_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae5d353cb8ae97a19306078c6e1d86d62" class="m-doc-self">create_bg</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x,
@@ -417,6 +470,43 @@
                 <tr>
                   <th>Returns</th>
                   <td>The requested <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a48136440a1de65c878140293a6c63749"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt; bn::<wbr />regular_bg_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a48136440a1de65c878140293a6c63749" class="m-doc-self">create_bg_optional</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The requested <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a830107bf4a6d6c1d380b6bd92874d1aa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a>&gt; bn::<wbr />regular_bg_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a830107bf4a6d6c1d380b6bd92874d1aa" class="m-doc-self">create_bg_optional</a>(</span><span class="m-doc-wrap">int map_index) const</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> using the information contained in this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map_index</td>
+                  <td>Index of the map to reference in <a href="#a208710e5d6b553c6ff8e5b5e26fb1f04" class="m-doc">map_<wbr />item()</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1regular__bg__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />ptr</a> if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
                 </tr>
               </tfoot>
             </table>

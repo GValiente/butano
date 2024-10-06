@@ -117,6 +117,19 @@ public:
 
     /**
      * @brief Creates a sprite_ptr using the information contained in this item.
+     * @return The requested sprite_ptr.
+     */
+    [[nodiscard]] sprite_ptr create_sprite() const;
+
+    /**
+     * @brief Creates a sprite_ptr using the information contained in this item.
+     * @param graphics_index Index of the tile set to reference in tiles_item().
+     * @return The requested sprite_ptr.
+     */
+    [[nodiscard]] sprite_ptr create_sprite(int graphics_index) const;
+
+    /**
+     * @brief Creates a sprite_ptr using the information contained in this item.
      * @param x Horizontal position of the sprite.
      * @param y Vertical position of the sprite.
      * @return The requested sprite_ptr.
@@ -146,6 +159,19 @@ public:
      * @return The requested sprite_ptr.
      */
     [[nodiscard]] sprite_ptr create_sprite(const fixed_point& position, int graphics_index) const;
+
+    /**
+     * @brief Creates a sprite_ptr using the information contained in this item.
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<sprite_ptr> create_sprite_optional() const;
+
+    /**
+     * @brief Creates a sprite_ptr using the information contained in this item.
+     * @param graphics_index Index of the tile set to reference in tiles_item().
+     * @return The requested sprite_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<sprite_ptr> create_sprite_optional(int graphics_index) const;
 
     /**
      * @brief Creates a sprite_ptr using the information contained in this item.

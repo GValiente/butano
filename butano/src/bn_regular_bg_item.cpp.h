@@ -31,6 +31,16 @@ regular_bg_item regular_bg_item::decompress(
     return decompress(decompressed_tiles_ref, decompressed_colors_ref, decompressed_cells_span);
 }
 
+regular_bg_ptr regular_bg_item::create_bg() const
+{
+    return regular_bg_ptr::create(*this);
+}
+
+regular_bg_ptr regular_bg_item::create_bg(int map_index) const
+{
+    return regular_bg_ptr::create(*this, map_index);
+}
+
 regular_bg_ptr regular_bg_item::create_bg(fixed x, fixed y) const
 {
     return regular_bg_ptr::create(x, y, *this);
@@ -49,6 +59,16 @@ regular_bg_ptr regular_bg_item::create_bg(const fixed_point& position) const
 regular_bg_ptr regular_bg_item::create_bg(const fixed_point& position, int map_index) const
 {
     return regular_bg_ptr::create(position, *this, map_index);
+}
+
+optional<regular_bg_ptr> regular_bg_item::create_bg_optional() const
+{
+    return regular_bg_ptr::create_optional(*this);
+}
+
+optional<regular_bg_ptr> regular_bg_item::create_bg_optional(int map_index) const
+{
+    return regular_bg_ptr::create_optional(*this, map_index);
 }
 
 optional<regular_bg_ptr> regular_bg_item::create_bg_optional(fixed x, fixed y) const

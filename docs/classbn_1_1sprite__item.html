@@ -105,6 +105,14 @@
             </dt>
             <dd>Decompresses the stored data in the tiles referenced by decompressed_tiles_ref and the colors referenced by decompressed_colors_ref.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9dbbd915ef8251ae8d731a264ec920c6" class="m-doc">create_sprite</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a61ac5bdde4f41e4405442651a4825b2b" class="m-doc">create_sprite</a>(</span><span class="m-doc-wrap">int graphics_index) const -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ac4ac0ab20ca70203d1afd70f6a48720e" class="m-doc">create_sprite</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x,
               <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> y) const -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
             </dt>
@@ -122,6 +130,14 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aed7452b645a66f47bfd5907ab26f0171" class="m-doc">create_sprite</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; position,
               int graphics_index) const -&gt; <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ad220fe5756d3a1763a8dfeabc2ed28c6" class="m-doc">create_sprite_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1cd3ec79cae9db27f61fec1e37da1cc3" class="m-doc">create_sprite_optional</a>(</span><span class="m-doc-wrap">int graphics_index) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</dd>
             <dt>
@@ -252,6 +268,43 @@
             </table>
 <p>If the source and destination tiles or colors overlap, the behavior is undefined.</p>
           </div></section>
+          <section class="m-doc-details" id="a9dbbd915ef8251ae8d731a264ec920c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9dbbd915ef8251ae8d731a264ec920c6" class="m-doc-self">create_sprite</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a61ac5bdde4f41e4405442651a4825b2b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a61ac5bdde4f41e4405442651a4825b2b" class="m-doc-self">create_sprite</a>(</span><span class="m-doc-wrap">int graphics_index) const</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">graphics_index</td>
+                  <td>Index of the tile set to reference in <a href="#afa1706542451ef54830d28ecd9969956" class="m-doc">tiles_<wbr />item()</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="ac4ac0ab20ca70203d1afd70f6a48720e"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> bn::<wbr />sprite_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac4ac0ab20ca70203d1afd70f6a48720e" class="m-doc-self">create_sprite</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x,
@@ -360,6 +413,43 @@
                 <tr>
                   <th>Returns</th>
                   <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad220fe5756d3a1763a8dfeabc2ed28c6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad220fe5756d3a1763a8dfeabc2ed28c6" class="m-doc-self">create_sprite_optional</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1cd3ec79cae9db27f61fec1e37da1cc3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt; bn::<wbr />sprite_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1cd3ec79cae9db27f61fec1e37da1cc3" class="m-doc-self">create_sprite_optional</a>(</span><span class="m-doc-wrap">int graphics_index) const</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> using the information contained in this item.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">graphics_index</td>
+                  <td>Index of the tile set to reference in <a href="#afa1706542451ef54830d28ecd9969956" class="m-doc">tiles_<wbr />item()</a>.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
                 </tr>
               </tfoot>
             </table>

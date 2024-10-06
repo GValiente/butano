@@ -1216,6 +1216,13 @@ int sprite_text_generator::width(const string_view& text) const
     }
 }
 
+void sprite_text_generator::generate(const string_view& text, ivector<sprite_ptr>& output_sprites) const
+{
+    bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
+    _generate<false>(*this, fixed_point(), text, _font.utf8_characters_ref(), _max_character_width,
+                     _character_height, one_sprite_per_character, output_sprites);
+}
+
 void sprite_text_generator::generate(fixed x, fixed y, const string_view& text,
                                      ivector<sprite_ptr>& output_sprites) const
 {
@@ -1230,6 +1237,13 @@ void sprite_text_generator::generate(const fixed_point& position, const string_v
     bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
     _generate<false>(*this, position, text, _font.utf8_characters_ref(), _max_character_width,
                      _character_height, one_sprite_per_character, output_sprites);
+}
+
+bool sprite_text_generator::generate_optional(const string_view& text, ivector<sprite_ptr>& output_sprites) const
+{
+    bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
+    return _generate<true>(*this, fixed_point(), text, _font.utf8_characters_ref(), _max_character_width,
+                           _character_height, one_sprite_per_character, output_sprites);
 }
 
 bool sprite_text_generator::generate_optional(fixed x, fixed y, const string_view& text,

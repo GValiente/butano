@@ -155,6 +155,11 @@
             <dd>Returns the width in pixels of the given text.</dd>
             <dt>
               <div class="m-doc-template">template&lt;int MaxSprites&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8d4b731eecdb436b2c7b6055b0c1df34" class="m-doc">generate</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text) const -&gt; <a href="classbn_1_1vector.html" class="m-doc">vector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>, MaxSprites&gt;</span>
+            </dt>
+            <dd>Generates text sprites for the given single line of text.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;int MaxSprites&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#af16f3c2f018295e9fa3cda38dbd6148a" class="m-doc">generate</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x,
               <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> y,
               const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text) const -&gt; <a href="classbn_1_1vector.html" class="m-doc">vector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>, MaxSprites&gt;</span>
@@ -164,6 +169,11 @@
               <div class="m-doc-template">template&lt;int MaxSprites&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#af79c646f83873bd7727ea97028ab616b" class="m-doc">generate</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; position,
               const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text) const -&gt; <a href="classbn_1_1vector.html" class="m-doc">vector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>, MaxSprites&gt;</span>
+            </dt>
+            <dd>Generates text sprites for the given single line of text.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a94b623efde99ea02a7313f22bfebbba7" class="m-doc">generate</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text,
+              <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;&amp; output_sprites) const</span>
             </dt>
             <dd>Generates text sprites for the given single line of text.</dd>
             <dt>
@@ -177,6 +187,11 @@
               <span class="m-doc-wrap-bumper">void <a href="#a7db456fc2875b3098d16a5124bd4934a" class="m-doc">generate</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; position,
               const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text,
               <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;&amp; output_sprites) const</span>
+            </dt>
+            <dd>Generates text sprites for the given single line of text.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1ca037e46d4108df1598c35d30b4b10e" class="m-doc">generate_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text,
+              <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;&amp; output_sprites) const -&gt; bool</span>
             </dt>
             <dd>Generates text sprites for the given single line of text.</dd>
             <dt>
@@ -317,6 +332,41 @@
             </table>
 <p>Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).</p>
           </div></section>
+          <section class="m-doc-details" id="a8d4b731eecdb436b2c7b6055b0c1df34"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int MaxSprites&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1vector.html" class="m-doc">vector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>, MaxSprites&gt; bn::<wbr />sprite_text_generator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8d4b731eecdb436b2c7b6055b0c1df34" class="m-doc-self">generate</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text) const</span></span>
+            </h3>
+            <p>Generates text sprites for the given single line of text.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">MaxSprites</td>
+                  <td>Maximum size of the returned <a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> vector.</td>
+                </tr>
+              </tbody>
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>text</td>
+                  <td>Single line of text to print.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a> vector containing the generated text sprites.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
           <section class="m-doc-details" id="af16f3c2f018295e9fa3cda38dbd6148a"><div>
             <h3>
               <div class="m-doc-template">
@@ -402,6 +452,29 @@
               </tfoot>
             </table>
           </div></section>
+          <section class="m-doc-details" id="a94b623efde99ea02a7313f22bfebbba7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_text_generator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a94b623efde99ea02a7313f22bfebbba7" class="m-doc-self">generate</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text,
+              <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;&amp; output_sprites) const</span></span>
+            </h3>
+            <p>Generates text sprites for the given single line of text.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">text</td>
+                  <td>Single line of text to print.</td>
+                </tr>
+                <tr>
+                  <td>output_sprites</td>
+                  <td>Generated text sprites are stored in this vector.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Keep in mind that this vector is not cleared before generating text.</p>
+          </div></section>
           <section class="m-doc-details" id="a94486be7627c307f473ed3e1a4f0a996"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />sprite_text_generator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a94486be7627c307f473ed3e1a4f0a996" class="m-doc-self">generate</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x,
@@ -460,6 +533,35 @@
                   <td>Generated text sprites are stored in this vector.</td>
                 </tr>
               </tbody>
+            </table>
+<p>Keep in mind that this vector is not cleared before generating text.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1ca037e46d4108df1598c35d30b4b10e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />sprite_text_generator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1ca037e46d4108df1598c35d30b4b10e" class="m-doc-self">generate_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; text,
+              <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbn_1_1sprite__ptr.html" class="m-doc">sprite_<wbr />ptr</a>&gt;&amp; output_sprites) const</span></span>
+            </h3>
+            <p>Generates text sprites for the given single line of text.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">text</td>
+                  <td>Single line of text to print.</td>
+                </tr>
+                <tr>
+                  <td>output_sprites</td>
+                  <td>Generated text sprites are stored in this vector.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the text generation finished successfully, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
             </table>
 <p>Keep in mind that this vector is not cleared before generating text.</p>
           </div></section>

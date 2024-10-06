@@ -34,6 +34,12 @@ class camera_ptr
 public:
     /**
      * @brief Creates a camera_ptr.
+     * @return The requested camera_ptr.
+     */
+    [[nodiscard]] static camera_ptr create();
+
+    /**
+     * @brief Creates a camera_ptr.
      * @param x Horizontal position of the camera.
      * @param y Vertical position of the camera.
      * @return The requested camera_ptr.
@@ -46,6 +52,12 @@ public:
      * @return The requested camera_ptr.
      */
     [[nodiscard]] static camera_ptr create(const fixed_point& position);
+
+    /**
+     * @brief Creates a camera_ptr.
+     * @return The requested camera_ptr if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<camera_ptr> create_optional();
 
     /**
      * @brief Creates a camera_ptr.

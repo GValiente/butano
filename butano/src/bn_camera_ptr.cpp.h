@@ -10,6 +10,12 @@
 namespace bn
 {
 
+camera_ptr camera_ptr::create()
+{
+    int id = cameras_manager::create(fixed_point());
+    return camera_ptr(id);
+}
+
 camera_ptr camera_ptr::create(fixed x, fixed y)
 {
     int id = cameras_manager::create(fixed_point(x, y));
@@ -20,6 +26,19 @@ camera_ptr camera_ptr::create(const fixed_point& position)
 {
     int id = cameras_manager::create(position);
     return camera_ptr(id);
+}
+
+optional<camera_ptr> camera_ptr::create_optional()
+{
+    int id = cameras_manager::create_optional(fixed_point());
+    optional<camera_ptr> result;
+
+    if(id >= 0)
+    {
+        result = camera_ptr(id);
+    }
+
+    return result;
 }
 
 optional<camera_ptr> camera_ptr::create_optional(fixed x, fixed y)

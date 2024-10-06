@@ -31,6 +31,16 @@ affine_bg_item affine_bg_item::decompress(
     return decompress(decompressed_tiles_ref, decompressed_colors_ref, decompressed_cells_span);
 }
 
+affine_bg_ptr affine_bg_item::create_bg() const
+{
+    return affine_bg_ptr::create(*this);
+}
+
+affine_bg_ptr affine_bg_item::create_bg(int map_index) const
+{
+    return affine_bg_ptr::create(*this, map_index);
+}
+
 affine_bg_ptr affine_bg_item::create_bg(fixed x, fixed y) const
 {
     return affine_bg_ptr::create(x, y, *this);
@@ -49,6 +59,16 @@ affine_bg_ptr affine_bg_item::create_bg(const fixed_point& position) const
 affine_bg_ptr affine_bg_item::create_bg(const fixed_point& position, int map_index) const
 {
     return affine_bg_ptr::create(position, *this, map_index);
+}
+
+optional<affine_bg_ptr> affine_bg_item::create_bg_optional() const
+{
+    return affine_bg_ptr::create_optional(*this);
+}
+
+optional<affine_bg_ptr> affine_bg_item::create_bg_optional(int map_index) const
+{
+    return affine_bg_ptr::create_optional(*this, map_index);
 }
 
 optional<affine_bg_ptr> affine_bg_item::create_bg_optional(fixed x, fixed y) const

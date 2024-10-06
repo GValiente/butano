@@ -36,7 +36,7 @@
  * and <a href="https://github.com/GValiente/butano/blob/master/licenses">the licenses of the third party libraries</a>
  * used by Butano, you can sell your game without issues.
  *
- * If you use assets such as the sprite font from the examples or from the `common` folder,
+ * If you use assets such as the sprite font from the @ref examples "examples" or from the `common` folder,
  * you should also comply with their license. The licenses for these assets can be found in
  * <a href="https://github.com/GValiente/butano/blob/master/credits">the credits folder</a>.
  *
@@ -453,7 +453,7 @@
  * @subsection faq_sprites_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
  *
  * bn::sprite_text_generator already supports UTF-8 characters rendering,
- * but the bn::sprite_font instances used in the examples don't provide japanese or chinese characters,
+ * but the bn::sprite_font instances used in the @ref examples "examples" don't provide japanese or chinese characters,
  * so you will have to make a new one with them.
  *
  *
@@ -600,15 +600,17 @@
  * @section faq_flash_carts Flash carts
  *
  *
- * @subsection faq_flash_carts_start Why my game runs fine on emulators but doesn't work on a real GBA with a flash cart?
+ * @subsection faq_flash_carts_sram Why my game runs fine on emulators but doesn't work on a real GBA with a flash cart?
  *
- * Some flash carts allow to improve commercial games with patches like `saver patch`, `enable restart`,
- * `enable real time save`, etc.
+ * Emulators usually initialize SRAM with zeros, while some flash carts don't.
+ * You should check if SRAM is formatted and format it if it isn't. The `sram` example shows how to do it.
  *
- * These patches can break homebrew games, so try to disable some or all of them if you run into any issues.
+ * Also, some flash carts allow to improve commercial games with patches like `saver patch`, `enable restart`,
+ * `enable real time save`, etc. These patches can break homebrew games, so try to disable some or all of them
+ * if you run into any issues.
  *
  *
- * @subsection faq_flash_carts_sram Why SRAM works on emulators but doesn't work with this old flash cart?
+ * @subsection faq_flash_carts_sram_old Why SRAM works on emulators but doesn't work with this old flash cart?
  *
  * While SRAM works out-of-the-box with most modern flash carts, it can fail with some older ones.
  *

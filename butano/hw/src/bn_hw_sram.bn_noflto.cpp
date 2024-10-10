@@ -19,14 +19,14 @@ static_assert(BN_CFG_SRAM_WAIT_STATE == BN_SRAM_WAIT_STATE_4 ||
 namespace
 {
     // https://gbadev.net/forum-archive/thread/4/2825.html
-    alignas(int) __attribute__((used)) const char save_type[] = "SRAM_V113";
+    alignas(int) const char save_string[] = "SRAM_V113";
 }
 
 const char* init()
 {
     BIT_SET(REG_WAITCNT_NV, BN_CFG_SRAM_WAIT_STATE);
 
-    return save_type;
+    return save_string;
 }
 
 }

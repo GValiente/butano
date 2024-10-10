@@ -30,6 +30,7 @@
 #include "bn_hblank_effects_manager.h"
 #include "../hw/include/bn_hw_irq.h"
 #include "../hw/include/bn_hw_core.h"
+#include "../hw/include/bn_hw_gpio.h"
 #include "../hw/include/bn_hw_sram.h"
 #include "../hw/include/bn_hw_timer.h"
 #include "../hw/include/bn_hw_memory.h"
@@ -355,7 +356,10 @@ void init(const optional<color>& transparent_color, const string_view& keypad_co
     data.slow_game_pak = hw::game_pak::init();
     hw::memory::init();
 
-    [[maybe_unused]] const char* sram_type = hw::sram::init();
+    [[maybe_unused]] const char* sram_string = hw::sram::init();
+
+    // Init gpio:
+    [[maybe_unused]] const char* rtc_string = hw::gpio::init();
 
     // Init display:
     display_manager::init();

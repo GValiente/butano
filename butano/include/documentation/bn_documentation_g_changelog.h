@@ -29,6 +29,7 @@
  *   bn::sprite_affine_mat_ptr::set_rotation_angle_safe, bn::sprite_builder::set_rotation_angle_safe
  *   and bn::sprite_ptr::set_rotation_angle_safe added.
  * * Position in `create` methods is now optional.
+ * * Real time clock (RTC) string added.
  * * SRAM string with link-time optimization fixed.
  * * @ref faq_bg_top_left and @ref faq_sprites_top_left questions added to the @ref faq page.
  * * @ref faq_flash_carts_sram question improved.

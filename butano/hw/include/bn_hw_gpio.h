@@ -22,6 +22,8 @@ namespace
     }
 }
 
+[[nodiscard]] const char* init();
+
 [[nodiscard]] inline bool init_rtc()
 {
     return __agbabi_rtc_init() == 0;

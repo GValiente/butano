@@ -75,6 +75,20 @@ public:
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
+         * @brief Default class constructor.
+         */
+        iterator() = default;
+
+        /**
+         * @brief Class constructor.
+         * @param node Intrusive list node.
+         */
+        explicit iterator(node_type* node) :
+            _node(node)
+        {
+        }
+
+        /**
          * @brief Increments the position.
          * @return Reference to this.
          */
@@ -136,11 +150,6 @@ public:
         friend class const_iterator;
 
         node_type* _node = nullptr;
-
-        explicit iterator(node_type* node) :
-            _node(node)
-        {
-        }
     };
 
     /**
@@ -158,6 +167,20 @@ public:
         using pointer = intrusive_list::pointer; //!< Pointer alias.
         using const_pointer = intrusive_list::const_pointer; //!< Const pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
+
+        /**
+         * @brief Default class constructor.
+         */
+        const_iterator() = default;
+
+        /**
+         * @brief Class constructor.
+         * @param node Intrusive list node.
+         */
+        explicit const_iterator(const node_type* node) :
+            _node(node)
+        {
+        }
 
         /**
          * @brief Public constructor.
@@ -213,11 +236,6 @@ public:
         friend class intrusive_list;
 
         const node_type* _node = nullptr;
-
-        explicit const_iterator(const node_type* node) :
-            _node(node)
-        {
-        }
     };
 
     using reverse_iterator = bn::reverse_iterator<iterator>; //!< Reverse iterator alias.
@@ -509,13 +527,7 @@ public:
      */
     iterator erase(reference value)
     {
-        BN_BASIC_ASSERT(! empty(), "List is empty");
-
-        iterator position(&value);
-        iterator next = position;
-        ++next;
-        _erase(position);
-        return next;
+        return erase(const_iterator(&value));
     }
 
     /**

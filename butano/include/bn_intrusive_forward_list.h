@@ -73,6 +73,20 @@ public:
         using iterator_category = forward_iterator_tag; //!< Iterator category alias.
 
         /**
+         * @brief Default class constructor.
+         */
+        iterator() = default;
+
+        /**
+         * @brief Class constructor.
+         * @param node Intrusive forward list node.
+         */
+        explicit iterator(node_type* node) :
+            _node(node)
+        {
+        }
+
+        /**
          * @brief Increments the position.
          * @return Reference to this.
          */
@@ -124,13 +138,6 @@ public:
         friend class const_iterator;
 
         node_type* _node = nullptr;
-
-        iterator() = default;
-
-        explicit iterator(node_type* node) :
-            _node(node)
-        {
-        }
     };
 
     /**
@@ -148,6 +155,20 @@ public:
         using pointer = intrusive_forward_list::pointer; //!< Pointer alias.
         using const_pointer = intrusive_forward_list::const_pointer; //!< Const pointer alias.
         using iterator_category = forward_iterator_tag; //!< Iterator category alias.
+
+        /**
+         * @brief Default class constructor.
+         */
+        const_iterator() = default;
+
+        /**
+         * @brief Class constructor.
+         * @param node Intrusive forward list node.
+         */
+        explicit const_iterator(const node_type* node) :
+            _node(node)
+        {
+        }
 
         /**
          * @brief Public constructor.
@@ -193,13 +214,6 @@ public:
         friend class intrusive_forward_list;
 
         const node_type* _node = nullptr;
-
-        const_iterator() = default;
-
-        explicit const_iterator(const node_type* node) :
-            _node(node)
-        {
-        }
     };
 
     /**
@@ -419,12 +433,7 @@ public:
      */
     iterator erase_after(reference value)
     {
-        BN_BASIC_ASSERT(! empty(), "List is empty");
-
-        iterator position(&value);
-        _erase_after(position);
-        ++position;
-        return position;
+        return erase_after(const_iterator(&value));
     }
 
     /**

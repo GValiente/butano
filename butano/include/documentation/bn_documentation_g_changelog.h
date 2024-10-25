@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_2_0 18.2.0 (next release)
+ * @section changelog_18_2_0 18.2.0
  *
  * * bn::regular_bg_ptr, bn::regular_bg_builder, bn::affine_bg_ptr, bn::affine_bg_builder,
  *   bn::affine_bg_mat_attributes, bn::sprite_ptr and bn::sprite_builder

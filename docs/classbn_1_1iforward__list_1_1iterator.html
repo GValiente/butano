@@ -58,6 +58,7 @@
               Reference
               <ul>
                 <li><a href="#pub-types">Public types</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
                 <li><a href="#friends">Friends</a></li>
               </ul>
@@ -93,6 +94,15 @@
             <dd>Iterator category alias.</dd>
           </dl>
         </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt id="a276d0d8eae0f2d1ae3f059c3b984dfea">
+              <span class="m-doc-wrap-bumper"><a href="#a276d0d8eae0f2d1ae3f059c3b984dfea" class="m-doc-self">iterator</a>(</span><span class="m-doc-wrap">) <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd>Default class constructor.</dd>
+          </dl>
+        </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
@@ -100,20 +110,16 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a189b94cb9334ffe79885a3d5eb8c1f77" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a>&amp;</span>
             </dt>
             <dd>Increments the position.</dd>
-            <dt id="a97ec0f7cb2b11516ae869cf6b046121e">
-              <span class="m-doc-wrap-bumper">auto <a href="#a97ec0f7cb2b11516ae869cf6b046121e" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iforward__list.html#a239629680ede6270802c0da1a34f78e7" class="m-doc">const_<wbr />reference</a></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3559ba380bd68c36db6c473b47278693" class="m-doc">operator++</a>(</span><span class="m-doc-wrap">int) -&gt; <a href="classbn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
             </dt>
-            <dd>Returns a const reference to the pointed value.</dd>
-            <dt id="a15f400afc4d1aadf84dc93b0eadf7292">
-              <span class="m-doc-wrap-bumper">auto <a href="#a15f400afc4d1aadf84dc93b0eadf7292" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#af80d8775696c5ec42a069527d79c3b85" class="m-doc">reference</a></span>
+            <dd>Increments the position.</dd>
+            <dt id="a0bf9a6470cea356b9ba043904137fdc2">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0bf9a6470cea356b9ba043904137fdc2" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#af80d8775696c5ec42a069527d79c3b85" class="m-doc">reference</a></span>
             </dt>
             <dd>Returns a reference to the pointed value.</dd>
-            <dt id="a5108b8666930956f569a7959f930fbef">
-              <span class="m-doc-wrap-bumper">auto <a href="#a5108b8666930956f569a7959f930fbef" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1iforward__list.html#a469ca431bb1dc8027ef02784db057b26" class="m-doc">const_<wbr />pointer</a></span>
-            </dt>
-            <dd>Returns a const pointer to the pointed value.</dd>
-            <dt id="a96b349b39681e61cdc0c82dd24388471">
-              <span class="m-doc-wrap-bumper">auto <a href="#a96b349b39681e61cdc0c82dd24388471" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a55d6aadc1b15d71e37976a258d3b51fa" class="m-doc">pointer</a></span>
+            <dt id="a859ea041e21f47ba544719785928b66a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a859ea041e21f47ba544719785928b66a" class="m-doc-self">operator-&gt;</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="#a55d6aadc1b15d71e37976a258d3b51fa" class="m-doc">pointer</a></span>
             </dt>
             <dd>Returns a pointer to the pointed value.</dd>
           </dl>
@@ -140,6 +146,20 @@
                 <tr>
                   <th style="width: 1%">Returns</th>
                   <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3559ba380bd68c36db6c473b47278693"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iforward_list::<wbr />iterator::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3559ba380bd68c36db6c473b47278693" class="m-doc-self">operator++</a>(</span><span class="m-doc-wrap">int)</span></span>
+            </h3>
+            <p>Increments the position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>The iterator before being incremented.</td>
                 </tr>
               </tfoot>
             </table>

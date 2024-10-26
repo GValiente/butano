@@ -14,8 +14,9 @@
  *
  * @section changelog_18_2_1 18.2.1 (next release)
  *
- * * bn::list, bn::intrusive_list, bn::unordered_map and bn::unordered_set bidirectionality fixed.
- * * bn::deque random accessibility fixed.
+ * * bn::forward_list and bn::intrusive_forward_list forward iterator requirements fixed.
+ * * bn::list, bn::intrusive_list, bn::unordered_map and bn::unordered_set bidirectional iterator requirements fixed.
+ * * bn::deque iterator random access requirements fixed.
  * * bn::deque, bn::list, bn::intrusive_list, bn::forward_list, bn::intrusive_forward_list, bn::unordered_map
  *   and bn::unordered_set iterator type aliases fixed.
  *

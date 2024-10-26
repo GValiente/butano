@@ -71,9 +71,7 @@ public:
         using size_type = ilist::size_type; //!< Size type alias.
         using difference_type = ilist::difference_type; //!< Difference type alias.
         using reference = ilist::reference; //!< Reference alias.
-        using const_reference = ilist::const_reference; //!< Const reference alias.
         using pointer = ilist::pointer; //!< Pointer alias.
-        using const_pointer = ilist::const_pointer; //!< Const pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
@@ -164,13 +162,10 @@ public:
 
     public:
         using value_type = ilist::value_type; //!< Value type alias.
-
         using size_type = ilist::size_type; //!< Size type alias.
         using difference_type = ilist::difference_type; //!< Difference type alias.
-        using reference = ilist::reference; //!< Reference type alias.
-        using const_reference = ilist::const_reference; //!< Const reference alias.
-        using pointer = ilist::pointer; //!< Pointer alias.
-        using const_pointer = ilist::const_pointer; //!< Const pointer alias.
+        using reference = ilist::const_reference; //!< Reference type alias.
+        using pointer = ilist::const_pointer; //!< Pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**

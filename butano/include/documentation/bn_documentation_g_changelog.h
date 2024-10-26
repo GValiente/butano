@@ -16,6 +16,7 @@
  *
  * * bn::list, bn::intrusive_list, bn::unordered_map and bn::unordered_set bidirectionality fixed.
  * * bn::deque random accessibility fixed.
+ * * bn::deque, bn::list, bn::intrusive_list, bn::unordered_map and bn::unordered_set iterator type aliases fixed.
  *
  *
  * @section changelog_18_2_0 18.2.0

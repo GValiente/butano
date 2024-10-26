@@ -49,9 +49,7 @@ public:
         using size_type = ideque::size_type; //!< Size type alias.
         using difference_type = ideque::difference_type; //!< Difference type alias.
         using reference = ideque::reference; //!< Reference alias.
-        using const_reference = ideque::const_reference; //!< Const reference alias.
         using pointer = ideque::pointer; //!< Pointer alias.
-        using const_pointer = ideque::const_pointer; //!< Const pointer alias.
         using iterator_category = random_access_iterator_tag; //!< Iterator category alias.
 
         /**
@@ -291,10 +289,8 @@ public:
         using value_type = ideque::value_type; //!< Value type alias.
         using size_type = ideque::size_type; //!< Size type alias.
         using difference_type = ideque::difference_type; //!< Difference type alias.
-        using reference = ideque::reference; //!< Reference alias.
-        using const_reference = ideque::const_reference; //!< Const reference alias.
-        using pointer = ideque::pointer; //!< Pointer alias.
-        using const_pointer = ideque::const_pointer; //!< Const pointer alias.
+        using reference = ideque::const_reference; //!< Reference alias.
+        using pointer = ideque::const_pointer; //!< Pointer alias.
         using iterator_category = random_access_iterator_tag; //!< Iterator category alias.
 
         /**

@@ -59,9 +59,7 @@ public:
         using hasher = iunordered_map::hasher; //!< Hash functor alias.
         using key_equal = iunordered_map::key_equal; //!< Equality functor alias.
         using reference = iunordered_map::reference; //!< (Key, Value) pair reference alias.
-        using const_reference = iunordered_map::const_reference; //!< (Key, Value) pair const reference alias.
         using pointer = iunordered_map::pointer; //!< (Key, Value) pair pointer alias.
-        using const_pointer = iunordered_map::const_pointer; //!< (Key, Value) pair const pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
@@ -204,10 +202,8 @@ public:
         using hash_type = iunordered_map::hash_type; //!< Hash type alias.
         using hasher = iunordered_map::hasher; //!< Hash functor alias.
         using key_equal = iunordered_map::key_equal; //!< Equality functor alias.
-        using reference = iunordered_map::reference; //!< (Key, Value) pair reference alias.
-        using const_reference = iunordered_map::const_reference; //!< (Key, Value) pair const reference alias.
-        using pointer = iunordered_map::pointer; //!< (Key, Value) pair pointer alias.
-        using const_pointer = iunordered_map::const_pointer; //!< (Key, Value) pair const pointer alias.
+        using reference = iunordered_map::const_reference; //!< (Key, Value) pair reference alias.
+        using pointer = iunordered_map::const_pointer; //!< (Key, Value) pair pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**

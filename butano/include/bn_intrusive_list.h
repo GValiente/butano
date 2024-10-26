@@ -69,9 +69,7 @@ public:
         using size_type = intrusive_list::size_type; //!< Size type alias.
         using difference_type = intrusive_list::difference_type; //!< Difference type alias.
         using reference = intrusive_list::reference; //!< Reference alias.
-        using const_reference = intrusive_list::const_reference; //!< Const reference alias.
         using pointer = intrusive_list::pointer; //!< Pointer alias.
-        using const_pointer = intrusive_list::const_pointer; //!< Const pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
@@ -168,9 +166,8 @@ public:
         using value_type = intrusive_list::value_type; //!< Value type alias.
         using size_type = intrusive_list::size_type; //!< Size type alias.
         using difference_type = intrusive_list::difference_type; //!< Difference type alias.
-        using reference = intrusive_list::reference; //!< Reference type alias.
-        using const_reference = intrusive_list::const_reference; //!< Const reference alias.
-        using pointer = intrusive_list::pointer; //!< Pointer alias.
+        using reference = intrusive_list::const_reference; //!< Reference type alias.
+        using pointer = intrusive_list::const_pointer; //!< Pointer alias.
         using const_pointer = intrusive_list::const_pointer; //!< Const pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 

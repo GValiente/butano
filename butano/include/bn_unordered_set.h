@@ -57,9 +57,7 @@ public:
         using hasher = iunordered_set::hasher; //!< Hash functor alias.
         using key_equal = iunordered_set::key_equal; //!< Equality functor alias.
         using reference = iunordered_set::reference; //!< Reference alias.
-        using const_reference = iunordered_set::const_reference; //!< Const reference alias.
         using pointer = iunordered_set::pointer; //!< Pointer alias.
-        using const_pointer = iunordered_set::const_pointer; //!< Const pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
@@ -201,10 +199,8 @@ public:
         using hash_type = iunordered_set::hash_type; //!< Hash type alias.
         using hasher = iunordered_set::hasher; //!< Hash functor alias.
         using key_equal = iunordered_set::key_equal; //!< Equality functor alias.
-        using reference = iunordered_set::reference; //!< Reference alias.
-        using const_reference = iunordered_set::const_reference; //!< Const reference alias.
-        using pointer = iunordered_set::pointer; //!< Pointer alias.
-        using const_pointer = iunordered_set::const_pointer; //!< Const pointer alias.
+        using reference = iunordered_set::const_reference; //!< Reference alias.
+        using pointer = iunordered_set::const_pointer; //!< Pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**

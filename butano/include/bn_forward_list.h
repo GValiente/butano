@@ -70,9 +70,7 @@ public:
         using size_type = iforward_list::size_type; //!< Size type alias.
         using difference_type = iforward_list::difference_type; //!< Difference type alias.
         using reference = iforward_list::reference; //!< Reference alias.
-        using const_reference = iforward_list::const_reference; //!< Const reference alias.
         using pointer = iforward_list::pointer; //!< Pointer alias.
-        using const_pointer = iforward_list::const_pointer; //!< Const pointer alias.
         using iterator_category = forward_iterator_tag; //!< Iterator category alias.
 
         /**
@@ -146,10 +144,8 @@ public:
         using value_type = iforward_list::value_type; //!< Value type alias.
         using size_type = iforward_list::size_type; //!< Size type alias.
         using difference_type = iforward_list::difference_type; //!< Difference type alias.
-        using reference = iforward_list::reference; //!< Reference alias.
-        using const_reference = iforward_list::const_reference; //!< Const reference alias.
-        using pointer = iforward_list::pointer; //!< Pointer alias.
-        using const_pointer = iforward_list::const_pointer; //!< Const pointer alias.
+        using reference = iforward_list::const_reference; //!< Reference alias.
+        using pointer = iforward_list::const_pointer; //!< Pointer alias.
         using iterator_category = forward_iterator_tag; //!< Iterator category alias.
 
         /**

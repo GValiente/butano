@@ -63,6 +63,11 @@ public:
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
+         * @brief Default class constructor.
+         */
+        iterator() = default;
+
+        /**
          * @brief Increments the position.
          * @return Reference to this.
          */
@@ -88,6 +93,17 @@ public:
         }
 
         /**
+         * @brief Increments the position.
+         * @return The iterator before being incremented.
+         */
+        iterator operator++(int)
+        {
+            iterator copy(*this);
+            ++this;
+            return copy;
+        }
+
+        /**
          * @brief Decrements the position.
          * @return Reference to this.
          */
@@ -108,33 +124,28 @@ public:
         }
 
         /**
-         * @brief Returns a const reference to the pointed value.
+         * @brief Decrements the position.
+         * @return The iterator before being decremented.
          */
-        [[nodiscard]] const_reference operator*() const
+        iterator operator--(int)
         {
-            return _set->_storage[_index];
+            iterator copy(*this);
+            --this;
+            return copy;
         }
 
         /**
          * @brief Returns a reference to the pointed value.
          */
-        [[nodiscard]] reference operator*()
+        [[nodiscard]] reference operator*() const
         {
             return _set->_storage[_index];
         }
 
         /**
-         * @brief Returns a const pointer to the pointed value.
-         */
-        const_pointer operator->() const
-        {
-            return _set->_storage + _index;
-        }
-
-        /**
          * @brief Returns a pointer to the pointed value.
          */
-        pointer operator->()
+        pointer operator->() const
         {
             return _set->_storage + _index;
         }
@@ -164,8 +175,8 @@ public:
     private:
         friend class iunordered_set;
 
-        size_type _index;
-        iunordered_set* _set;
+        size_type _index = 0;
+        iunordered_set* _set = nullptr;
 
         iterator(size_type index, iunordered_set& set) :
             _index(index),
@@ -195,6 +206,11 @@ public:
         using pointer = iunordered_set::pointer; //!< Pointer alias.
         using const_pointer = iunordered_set::const_pointer; //!< Const pointer alias.
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
+
+        /**
+         * @brief Default class constructor.
+         */
+        const_iterator() = default;
 
         /**
          * @brief Public constructor.
@@ -232,6 +248,17 @@ public:
         }
 
         /**
+         * @brief Increments the position.
+         * @return The iterator before being incremented.
+         */
+        const_iterator operator++(int)
+        {
+            const_iterator copy(*this);
+            ++this;
+            return copy;
+        }
+
+        /**
          * @brief Decrements the position.
          * @return Reference to this.
          */
@@ -249,6 +276,17 @@ public:
 
             _index = index;
             return *this;
+        }
+
+        /**
+         * @brief Decrements the position.
+         * @return The iterator before being decremented.
+         */
+        const_iterator operator--(int)
+        {
+            const_iterator copy(*this);
+            --this;
+            return copy;
         }
 
         /**
@@ -293,8 +331,8 @@ public:
         friend class iunordered_set;
         friend class iterator;
 
-        size_type _index;
-        const iunordered_set* _set;
+        size_type _index = 0;
+        const iunordered_set* _set = nullptr;
 
         const_iterator(size_type index, const iunordered_set& set) :
             _index(index),

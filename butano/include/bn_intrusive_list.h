@@ -99,6 +99,17 @@ public:
         }
 
         /**
+         * @brief Increments the position.
+         * @return The iterator before being incremented.
+         */
+        iterator operator++(int)
+        {
+            iterator copy(*this);
+            _node = _node->next;
+            return copy;
+        }
+
+        /**
          * @brief Decrements the position.
          * @return Reference to this.
          */
@@ -109,33 +120,28 @@ public:
         }
 
         /**
-         * @brief Returns a const reference to the pointed value.
+         * @brief Decrements the position.
+         * @return The iterator before being decremented.
          */
-        [[nodiscard]] const_reference operator*() const
+        iterator operator--(int)
         {
-            return static_cast<const_reference>(*_node);
+            iterator copy(*this);
+            _node = _node->prev;
+            return copy;
         }
 
         /**
          * @brief Returns a reference to the pointed value.
          */
-        [[nodiscard]] reference operator*()
+        [[nodiscard]] reference operator*() const
         {
             return static_cast<reference>(*_node);
         }
 
         /**
-         * @brief Returns a const pointer to the pointed value.
-         */
-        const_pointer operator->() const
-        {
-            return static_cast<const_pointer>(_node);
-        }
-
-        /**
          * @brief Returns a pointer to the pointed value.
          */
-        pointer operator->()
+        pointer operator->() const
         {
             return static_cast<pointer>(_node);
         }
@@ -202,6 +208,17 @@ public:
         }
 
         /**
+         * @brief Increments the position.
+         * @return The iterator before being incremented.
+         */
+        const_iterator operator++(int)
+        {
+            const_iterator copy(*this);
+            _node = _node->next;
+            return copy;
+        }
+
+        /**
          * @brief Decrements the position.
          * @return Reference to this.
          */
@@ -209,6 +226,17 @@ public:
         {
             _node = _node->prev;
             return *this;
+        }
+
+        /**
+         * @brief Decrements the position.
+         * @return The iterator before being decremented.
+         */
+        const_iterator operator--(int)
+        {
+            const_iterator copy(*this);
+            _node = _node->prev;
+            return copy;
         }
 
         /**

@@ -55,6 +55,11 @@ public:
         using iterator_category = random_access_iterator_tag; //!< Iterator category alias.
 
         /**
+         * @brief Default class constructor.
+         */
+        iterator() = default;
+
+        /**
          * @brief Increments the position.
          * @return Reference to this.
          */
@@ -62,6 +67,17 @@ public:
         {
             ++_index;
             return *this;
+        }
+
+        /**
+         * @brief Increments the position.
+         * @return The iterator before being incremented.
+         */
+        iterator operator++(int)
+        {
+            iterator copy(*this);
+            ++_index;
+            return copy;
         }
 
         /**
@@ -86,6 +102,17 @@ public:
         }
 
         /**
+         * @brief Decrements the position.
+         * @return The iterator before being decremented.
+         */
+        iterator operator--(int)
+        {
+            iterator copy(*this);
+            --_index;
+            return copy;
+        }
+
+        /**
          * @brief Decrements the position the given number of times.
          * @param value Number of positions to decrement.
          * @return Reference to this.
@@ -97,51 +124,61 @@ public:
         }
 
         /**
-         * @brief Returns a const reference to the pointed value.
-         */
-        [[nodiscard]] const_reference operator*() const
-        {
-            return _deque->_value(_index);
-        }
-
-        /**
          * @brief Returns a reference to the pointed value.
          */
-        [[nodiscard]] reference operator*()
+        [[nodiscard]] reference operator*() const
         {
             return _deque->_value(_index);
-        }
-
-        /**
-         * @brief Returns a const pointer to the pointed value.
-         */
-        const_pointer operator->() const
-        {
-            return &_deque->_value(_index);
         }
 
         /**
          * @brief Returns a pointer to the pointed value.
          */
-        pointer operator->()
+        pointer operator->() const
         {
             return &_deque->_value(_index);
         }
 
         /**
-         * @brief Returns a incremented b times.
+         * @brief Returns a reference to the pointed value by this iterator incremented offset times.
          */
-        [[nodiscard]] friend iterator operator+(const iterator& a, size_type b)
+        [[nodiscard]] reference operator[](size_type offset) const
         {
-            return iterator(&a._deque, a._index + b);
+            iterator result(*this);
+            result += offset;
+            return *result;
         }
 
         /**
-         * @brief Returns a decremented b times.
+         * @brief Returns the iterator it incremented offset times.
          */
-        [[nodiscard]] friend iterator operator-(const iterator& a, size_type b)
+        [[nodiscard]] friend iterator operator+(const iterator& it, size_type offset)
         {
-            return iterator(&a._deque, a._index - b);
+            return iterator(&it._deque, it._index + offset);
+        }
+
+        /**
+         * @brief Returns the iterator it incremented offset times.
+         */
+        [[nodiscard]] friend iterator operator+(size_type offset, const iterator& it)
+        {
+            return iterator(&it._deque, it._index + offset);
+        }
+
+        /**
+         * @brief Returns the iterator it decremented offset times.
+         */
+        [[nodiscard]] friend iterator operator-(const iterator& it, size_type offset)
+        {
+            return iterator(&it._deque, it._index - offset);
+        }
+
+        /**
+         * @brief Returns the iterator it decremented offset times.
+         */
+        [[nodiscard]] friend iterator operator-(size_type offset, const iterator& it)
+        {
+            return iterator(&it._deque, it._index - offset);
         }
 
         /**
@@ -234,8 +271,8 @@ public:
         friend class ideque;
         friend class const_iterator;
 
-        ideque* _deque;
-        size_type _index;
+        ideque* _deque = nullptr;
+        size_type _index = 0;
 
         iterator(ideque& deque, size_type index) :
             _deque(&deque),
@@ -261,6 +298,11 @@ public:
         using iterator_category = random_access_iterator_tag; //!< Iterator category alias.
 
         /**
+         * @brief Default class constructor.
+         */
+        const_iterator() = default;
+
+        /**
          * @brief Public constructor.
          * @param it Non const iterator.
          */
@@ -278,6 +320,17 @@ public:
         {
             ++_index;
             return *this;
+        }
+
+        /**
+         * @brief Increments the position.
+         * @return The iterator before being incremented.
+         */
+        const_iterator operator++(int)
+        {
+            const_iterator copy(*this);
+            ++_index;
+            return copy;
         }
 
         /**
@@ -299,6 +352,17 @@ public:
         {
             --_index;
             return *this;
+        }
+
+        /**
+         * @brief Decrements the position.
+         * @return The iterator before being decremented.
+         */
+        const_iterator operator--(int)
+        {
+            const_iterator copy(*this);
+            --_index;
+            return copy;
         }
 
         /**
@@ -329,19 +393,45 @@ public:
         }
 
         /**
-         * @brief Returns a incremented b times.
+         * @brief Returns a const reference to the pointed value by this iterator incremented offset times.
          */
-        [[nodiscard]] friend const_iterator operator+(const const_iterator& a, size_type b)
+        [[nodiscard]] const_reference operator[](size_type offset) const
         {
-            return const_iterator(&a._deque, a._index + b);
+            const_iterator result(*this);
+            result += offset;
+            return *result;
         }
 
         /**
-         * @brief Returns a decremented b times.
+         * @brief Returns the iterator it incremented offset times.
          */
-        [[nodiscard]] friend const_iterator operator-(const const_iterator& a, size_type b)
+        [[nodiscard]] friend const_iterator operator+(const const_iterator& it, size_type offset)
         {
-            return const_iterator(&a._deque, a._index - b);
+            return const_iterator(&it._deque, it._index + offset);
+        }
+
+        /**
+         * @brief Returns the iterator it incremented offset times.
+         */
+        [[nodiscard]] friend const_iterator operator+(size_type offset, const const_iterator& it)
+        {
+            return const_iterator(&it._deque, it._index + offset);
+        }
+
+        /**
+         * @brief Returns the iterator it decremented offset times.
+         */
+        [[nodiscard]] friend const_iterator operator-(const const_iterator& it, size_type offset)
+        {
+            return const_iterator(&it._deque, it._index - offset);
+        }
+
+        /**
+         * @brief Returns the iterator it decremented offset times.
+         */
+        [[nodiscard]] friend const_iterator operator-(size_type offset, const const_iterator& it)
+        {
+            return const_iterator(&it._deque, it._index - offset);
         }
 
         /**
@@ -433,8 +523,8 @@ public:
     private:
         friend class ideque;
 
-        const ideque* _deque;
-        size_type _index;
+        const ideque* _deque = nullptr;
+        size_type _index = 0;
 
         const_iterator(const ideque& deque, size_type index) :
             _deque(&deque),

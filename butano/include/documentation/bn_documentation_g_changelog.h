@@ -12,6 +12,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_2_1 18.2.1 (next release)
+ *
+ * * bn::list, bn::intrusive_list, bn::unordered_map and bn::unordered_set bidirectionality fixed.
+ * * bn::deque random accessibility fixed.
+ *
+ *
  * @section changelog_18_2_0 18.2.0
  *
  * * bn::regular_bg_ptr, bn::regular_bg_builder, bn::affine_bg_ptr, bn::affine_bg_builder,

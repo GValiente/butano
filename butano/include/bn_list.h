@@ -77,6 +77,11 @@ public:
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
+         * @brief Default class constructor.
+         */
+        iterator() = default;
+
+        /**
          * @brief Increments the position.
          * @return Reference to this.
          */
@@ -84,6 +89,17 @@ public:
         {
             _node = _node->next;
             return *this;
+        }
+
+        /**
+         * @brief Increments the position.
+         * @return The iterator before being incremented.
+         */
+        iterator operator++(int)
+        {
+            iterator copy(*this);
+            _node = _node->next;
+            return copy;
         }
 
         /**
@@ -97,33 +113,28 @@ public:
         }
 
         /**
-         * @brief Returns a const reference to the pointed value.
+         * @brief Decrements the position.
+         * @return The iterator before being decremented.
          */
-        [[nodiscard]] const_reference operator*() const
+        iterator operator--(int)
         {
-            return static_cast<const value_node_type*>(_node)->value;
+            iterator copy(*this);
+            _node = _node->prev;
+            return copy;
         }
 
         /**
          * @brief Returns a reference to the pointed value.
          */
-        [[nodiscard]] reference operator*()
+        [[nodiscard]] reference operator*() const
         {
             return static_cast<value_node_type*>(_node)->value;
         }
 
         /**
-         * @brief Returns a const pointer to the pointed value.
-         */
-        const_pointer operator->() const
-        {
-            return &static_cast<const value_node_type*>(_node)->value;
-        }
-
-        /**
          * @brief Returns a pointer to the pointed value.
          */
-        pointer operator->()
+        pointer operator->() const
         {
             return &static_cast<value_node_type*>(_node)->value;
         }
@@ -163,6 +174,11 @@ public:
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
+         * @brief Default class constructor.
+         */
+        const_iterator() = default;
+
+        /**
          * @brief Public constructor.
          * @param it Non const iterator.
          */
@@ -182,6 +198,17 @@ public:
         }
 
         /**
+         * @brief Increments the position.
+         * @return The iterator before being incremented.
+         */
+        const_iterator operator++(int)
+        {
+            const_iterator copy(*this);
+            _node = _node->next;
+            return copy;
+        }
+
+        /**
          * @brief Decrements the position.
          * @return Reference to this.
          */
@@ -189,6 +216,17 @@ public:
         {
             _node = _node->prev;
             return *this;
+        }
+
+        /**
+         * @brief Decrements the position.
+         * @return The iterator before being decremented.
+         */
+        const_iterator operator--(int)
+        {
+            const_iterator copy(*this);
+            _node = _node->prev;
+            return copy;
         }
 
         /**

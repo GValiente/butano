@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_2_1 18.2.1 (next release)
+ * @section changelog_18_2_1 18.2.1
  *
  * * bn::forward_list and bn::intrusive_forward_list forward iterator requirements fixed.
  * * bn::list, bn::intrusive_list, bn::unordered_map and bn::unordered_set bidirectional iterator requirements fixed.

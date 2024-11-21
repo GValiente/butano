@@ -14,6 +14,7 @@
  *
  * @section changelog_18_3_0 18.3.0 (next release)
  *
+ * * bn::sprite_text_generator::generate_top_left and bn::sprite_text_generator::generate_top_left_optional added.
  * * bn::sprite_text_generator allows to setup the mosaic, the blending, the visibility and the camera
  *   of the output sprites.
  * * bn::sprite_builder::release_affine_mat, bn::sprite_builder::release_camera,

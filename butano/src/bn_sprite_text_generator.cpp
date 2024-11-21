@@ -8,6 +8,7 @@
 #include "bn_sprites.h"
 #include "bn_sprite_ptr.h"
 #include "bn_sprite_builder.h"
+#include "bn_top_left_utils.h"
 #include "../hw/include/bn_hw_sprite_tiles.h"
 
 namespace bn
@@ -94,6 +95,21 @@ namespace
         }
 
         return _build_sprite_assert<size>(generator, palette, current_position, output_sprites);
+    }
+
+    void _fix_top_left_position(int num_old_output_sprites, ivector<sprite_ptr>& output_sprites)
+    {
+        sprite_ptr* output_sprites_data = output_sprites.data();
+
+        for(int index = num_old_output_sprites, limit = output_sprites.size(); index < limit; ++index)
+        {
+            sprite_ptr& output_sprite = output_sprites_data[index];
+            fixed_point position = output_sprite.position();
+            size dimensions = output_sprite.dimensions();
+            fixed x = from_top_left_x(position.x(), dimensions.width()) - (dimensions.width() / 2);
+            fixed y = from_top_left_y(position.y(), dimensions.height());
+            output_sprite.set_position(x, y);
+        }
     }
 
 
@@ -1252,6 +1268,14 @@ void sprite_text_generator::generate(const fixed_point& position, const string_v
                      _character_height, one_sprite_per_character, output_sprites);
 }
 
+void sprite_text_generator::generate_top_left(
+        const fixed_point& top_left_position, const string_view& text, ivector<sprite_ptr>& output_sprites) const
+{
+    int num_old_output_sprites = output_sprites.size();
+    generate(top_left_position, text, output_sprites);
+    _fix_top_left_position(num_old_output_sprites, output_sprites);
+}
+
 bool sprite_text_generator::generate_optional(const string_view& text, ivector<sprite_ptr>& output_sprites) const
 {
     bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
@@ -1273,6 +1297,20 @@ bool sprite_text_generator::generate_optional(const fixed_point& position, const
     bool one_sprite_per_character = _one_sprite_per_character || _font_one_sprite_per_character;
     return _generate<true>(*this, position, text, _font.utf8_characters_ref(), _max_character_width,
                            _character_height, one_sprite_per_character, output_sprites);
+}
+
+bool sprite_text_generator::generate_top_left_optional(
+        const fixed_point& top_left_position, const string_view& text, ivector<sprite_ptr>& output_sprites) const
+{
+    int num_old_output_sprites = output_sprites.size();
+    bool success = generate_optional(top_left_position, text, output_sprites);
+
+    if(success)
+    {
+        _fix_top_left_position(num_old_output_sprites, output_sprites);
+    }
+
+    return success;
 }
 
 void sprite_text_generator::_init()

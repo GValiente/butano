@@ -367,6 +367,65 @@ public:
 
     /**
      * @brief Generates text sprites for the given single line of text.
+     * @tparam MaxSprites Maximum size of the returned sprite_ptr vector.
+     * @param top_left_x Horizontal top-left position of the first generated sprite, considering the current alignment.
+     * @param top_left_y Vertical top-left position of the first generated sprite, considering the current alignment.
+     * @param text Single line of text to print.
+     * @return sprite_ptr vector containing the generated text sprites.
+     */
+    template<int MaxSprites>
+    [[nodiscard]] vector<sprite_ptr, MaxSprites> generate_top_left(
+            fixed top_left_x, fixed top_left_y, const string_view& text) const
+    {
+        vector<sprite_ptr, MaxSprites> output_sprites;
+        generate_top_left(top_left_x, top_left_y, text, output_sprites);
+        return output_sprites;
+    }
+
+    /**
+     * @brief Generates text sprites for the given single line of text.
+     * @tparam MaxSprites Maximum size of the returned sprite_ptr vector.
+     * @param top_left_position Top-left position of the first generated sprite, considering the current alignment.
+     * @param text Single line of text to print.
+     * @return sprite_ptr vector containing the generated text sprites.
+     */
+    template<int MaxSprites>
+    [[nodiscard]] vector<sprite_ptr, MaxSprites> generate_top_left(
+            const fixed_point& top_left_position, const string_view& text) const
+    {
+        vector<sprite_ptr, MaxSprites> output_sprites;
+        generate_top_left(top_left_position, text, output_sprites);
+        return output_sprites;
+    }
+
+    /**
+     * @brief Generates text sprites for the given single line of text.
+     * @param top_left_x Horizontal top-left position of the first generated sprite, considering the current alignment.
+     * @param top_left_y Vertical top-left position of the first generated sprite, considering the current alignment.
+     * @param text Single line of text to print.
+     * @param output_sprites Generated text sprites are stored in this vector.
+     *
+     * Keep in mind that this vector is not cleared before generating text.
+     */
+    void generate_top_left(fixed top_left_x, fixed top_left_y, const string_view& text,
+                           ivector<sprite_ptr>& output_sprites) const
+    {
+        generate_top_left(fixed_point(top_left_x, top_left_y), text, output_sprites);
+    }
+
+    /**
+     * @brief Generates text sprites for the given single line of text.
+     * @param top_left_position Top-left position of the first generated sprite, considering the current alignment.
+     * @param text Single line of text to print.
+     * @param output_sprites Generated text sprites are stored in this vector.
+     *
+     * Keep in mind that this vector is not cleared before generating text.
+     */
+    void generate_top_left(const fixed_point& top_left_position, const string_view& text,
+                           ivector<sprite_ptr>& output_sprites) const;
+
+    /**
+     * @brief Generates text sprites for the given single line of text.
      * @param text Single line of text to print.
      * @param output_sprites Generated text sprites are stored in this vector.
      *
@@ -402,6 +461,34 @@ public:
      */
     [[nodiscard]] bool generate_optional(const fixed_point& position, const string_view& text,
                                          ivector<sprite_ptr>& output_sprites) const;
+
+    /**
+     * @brief Generates text sprites for the given single line of text.
+     * @param top_left_x Horizontal top-left position of the first generated sprite, considering the current alignment.
+     * @param top_left_y Vertical top-left position of the first generated sprite, considering the current alignment.
+     * @param text Single line of text to print.
+     * @param output_sprites Generated text sprites are stored in this vector.
+     *
+     * Keep in mind that this vector is not cleared before generating text.
+     */
+    [[nodiscard]] bool generate_top_left_optional(fixed top_left_x, fixed top_left_y, const string_view& text,
+                                                  ivector<sprite_ptr>& output_sprites) const
+    {
+        return generate_top_left_optional(fixed_point(top_left_x, top_left_y), text, output_sprites);
+    }
+
+    /**
+     * @brief Generates text sprites for the given single line of text.
+     * @param top_left_position Top-left position of the first generated sprite, considering the current alignment.
+     * @param text Single line of text to print.
+     * @param output_sprites Generated text sprites are stored in this vector.
+     *
+     * Keep in mind that this vector is not cleared before generating text.
+     *
+     * @return `true` if the text generation finished successfully, otherwise `false`.
+     */
+    [[nodiscard]] bool generate_top_left_optional(const fixed_point& top_left_position, const string_view& text,
+                                                  ivector<sprite_ptr>& output_sprites) const;
 
 private:
     sprite_font _font;

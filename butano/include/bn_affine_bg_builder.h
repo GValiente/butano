@@ -724,10 +724,7 @@ public:
     /**
      * @brief Releases and returns the camera_ptr to attach to the affine backgrounds to generate (if any).
      */
-    [[nodiscard]] optional<camera_ptr> release_camera()
-    {
-        return move(_camera);
-    }
+    [[nodiscard]] optional<camera_ptr> release_camera();
 
     /**
      * @brief Generates and returns an affine_bg_ptr without releasing the acquired resources.

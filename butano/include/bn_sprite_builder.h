@@ -584,10 +584,7 @@ public:
     /**
      * @brief Releases and returns the camera_ptr to attach to the sprites to generate (if any).
      */
-    [[nodiscard]] optional<camera_ptr> release_camera()
-    {
-        return move(_camera);
-    }
+    [[nodiscard]] optional<camera_ptr> release_camera();
 
     /**
      * @brief Generates and returns a sprite_ptr without releasing the acquired resources.
@@ -730,10 +727,7 @@ public:
     /**
      * @brief Releases and returns the sprite_affine_mat_ptr to attach to the sprites to generate (if any).
      */
-    [[nodiscard]] optional<sprite_affine_mat_ptr> release_affine_mat()
-    {
-        return move(_affine_mat);
-    }
+    [[nodiscard]] optional<sprite_affine_mat_ptr> release_affine_mat();
 
     /**
      * @brief Indicates if the sprite_affine_mat_ptr attached to the sprites to generate (if any) must be removed

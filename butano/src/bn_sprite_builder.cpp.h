@@ -344,6 +344,13 @@ sprite_builder& sprite_builder::set_window_enabled(bool window_enabled)
     return *this;
 }
 
+optional<camera_ptr> sprite_builder::release_camera()
+{
+    optional<camera_ptr> result = move(_camera);
+    _camera.reset();
+    return result;
+}
+
 sprite_ptr sprite_builder::build() const
 {
     return sprite_ptr::create(*this);
@@ -498,6 +505,13 @@ sprite_builder& sprite_builder::set_affine_mat(optional<sprite_affine_mat_ptr>&&
     _remove_affine_mat_when_not_needed = affine_mat.has_value();
     _affine_mat = move(affine_mat);
     return *this;
+}
+
+optional<sprite_affine_mat_ptr> sprite_builder::release_affine_mat()
+{
+    optional<sprite_affine_mat_ptr> result = move(_affine_mat);
+    _affine_mat.reset();
+    return result;
 }
 
 }

@@ -12,6 +12,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_2_2 18.2.2 (next release)
+ *
+ * bn::sprite_builder::release_affine_mat, bn::sprite_builder::release_camera, bn::regular_bg_builder::release_camera
+ * and bn::affine_bg_builder::release_camera fixed.
+ *
+ *
  * @section changelog_18_2_1 18.2.1
  *
  * * bn::forward_list and bn::intrusive_forward_list forward iterator requirements fixed.

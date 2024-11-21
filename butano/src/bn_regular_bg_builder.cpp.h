@@ -71,6 +71,13 @@ regular_bg_builder& regular_bg_builder::set_z_order(int z_order)
     return *this;
 }
 
+optional<camera_ptr> regular_bg_builder::release_camera()
+{
+    optional<camera_ptr> result = move(_camera);
+    _camera.reset();
+    return result;
+}
+
 regular_bg_ptr regular_bg_builder::build() const
 {
     return regular_bg_ptr::create(*this);

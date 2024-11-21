@@ -71,6 +71,13 @@ affine_bg_builder& affine_bg_builder::set_z_order(int z_order)
     return *this;
 }
 
+optional<camera_ptr> affine_bg_builder::release_camera()
+{
+    optional<camera_ptr> result = move(_camera);
+    _camera.reset();
+    return result;
+}
+
 affine_bg_ptr affine_bg_builder::build() const
 {
     return affine_bg_ptr::create(*this);

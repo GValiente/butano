@@ -141,6 +141,58 @@
               <span class="m-doc-wrap-bumper">void <a href="#ab9871b3b3a52214ffd1aeefe0ff91918" class="m-doc">set_z_order</a>(</span><span class="m-doc-wrap">int z_order)</span>
             </dt>
             <dd>Sets the priority of the output sprites relative to other sprites.</dd>
+            <dt id="a3f54d2db66691ef14bc89017e2fa4122">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3f54d2db66691ef14bc89017e2fa4122" class="m-doc-self">mosaic_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the mosaic effect must be applied to the output sprites or not.</dd>
+            <dt id="a6debaf5cd4fce46d88600b2157f26005">
+              <span class="m-doc-wrap-bumper">void <a href="#a6debaf5cd4fce46d88600b2157f26005" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
+            </dt>
+            <dd>Sets if the mosaic effect must be applied to the output sprites or not.</dd>
+            <dt id="a63927d816b20e0e70ba758a833fb5ea8">
+              <span class="m-doc-wrap-bumper">auto <a href="#a63927d816b20e0e70ba758a833fb5ea8" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if blending must be applied to the output sprites or not.</dd>
+            <dt id="ae8506a18cf37d2f0441ccd20e5c2102f">
+              <span class="m-doc-wrap-bumper">void <a href="#ae8506a18cf37d2f0441ccd20e5c2102f" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
+            </dt>
+            <dd>Sets if blending must be applied to the output sprites or not.</dd>
+            <dt id="aa6908a1d4294d3d77415471afc3eb1c5">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa6908a1d4294d3d77415471afc3eb1c5" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the output sprites must be committed to the GBA or not.</dd>
+            <dt id="ac63844532a9106bbaf3d3a478cfddd11">
+              <span class="m-doc-wrap-bumper">void <a href="#ac63844532a9106bbaf3d3a478cfddd11" class="m-doc-self">set_visible</a>(</span><span class="m-doc-wrap">bool visible)</span>
+            </dt>
+            <dd>Sets if the output sprites must be committed to the GBA or not.</dd>
+            <dt id="a0528be3812ab3cea5941663806c67353">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0528be3812ab3cea5941663806c67353" class="m-doc-self">camera</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the output sprites (if any).</dd>
+            <dt id="a61deb24b9cefc3f8c4432a324d45b890">
+              <span class="m-doc-wrap-bumper">void <a href="#a61deb24b9cefc3f8c4432a324d45b890" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the output sprites.</dd>
+            <dt id="a3a46da5a73bbb169db07d9d5d598163d">
+              <span class="m-doc-wrap-bumper">void <a href="#a3a46da5a73bbb169db07d9d5d598163d" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the output sprites.</dd>
+            <dt id="aa45a6c6d74cecd9ae576b4a1d4c0be5b">
+              <span class="m-doc-wrap-bumper">void <a href="#aa45a6c6d74cecd9ae576b4a1d4c0be5b" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp; camera)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the output sprites.</dd>
+            <dt id="aa24fef8d903e31de437153879e3ee5ef">
+              <span class="m-doc-wrap-bumper">void <a href="#aa24fef8d903e31de437153879e3ee5ef" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the output sprites.</dd>
+            <dt id="af7294da831758aa7014841d4b6fbd139">
+              <span class="m-doc-wrap-bumper">void <a href="#af7294da831758aa7014841d4b6fbd139" class="m-doc-self">remove_camera</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the output sprites.</dd>
+            <dt id="a5f12e3a3ddb2674f77c07f4ce6cf1b23">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5f12e3a3ddb2674f77c07f4ce6cf1b23" class="m-doc-self">release_camera</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Releases and returns the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to attach to the output sprites (if any).</dd>
             <dt id="a1e2a6ce20fb683b0a99fa7df0c830cb2">
               <span class="m-doc-wrap-bumper">auto <a href="#a1e2a6ce20fb683b0a99fa7df0c830cb2" class="m-doc-self">one_sprite_per_character</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>

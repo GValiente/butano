@@ -15,7 +15,7 @@
  */
 
 #include "bn_vector.h"
-#include "bn_fixed_point.h"
+#include "bn_camera_ptr.h"
 #include "bn_sprite_font.h"
 #include "bn_string_view.h"
 
@@ -167,6 +167,107 @@ public:
     void set_z_order(int z_order);
 
     /**
+     * @brief Indicates if the mosaic effect must be applied to the output sprites or not.
+     */
+    [[nodiscard]] bool mosaic_enabled() const
+    {
+        return _mosaic_enabled;
+    }
+
+    /**
+     * @brief Sets if the mosaic effect must be applied to the output sprites or not.
+     */
+    void set_mosaic_enabled(bool mosaic_enabled)
+    {
+        _mosaic_enabled = mosaic_enabled;
+    }
+
+    /**
+     * @brief Indicates if blending must be applied to the output sprites or not.
+     */
+    [[nodiscard]] bool blending_enabled() const
+    {
+        return _blending_enabled;
+    }
+
+    /**
+     * @brief Sets if blending must be applied to the output sprites or not.
+     */
+    void set_blending_enabled(bool blending_enabled)
+    {
+        _blending_enabled = blending_enabled;
+    }
+
+    /**
+     * @brief Indicates if the output sprites must be committed to the GBA or not.
+     */
+    [[nodiscard]] bool visible() const
+    {
+        return _visible;
+    }
+
+    /**
+     * @brief Sets if the output sprites must be committed to the GBA or not.
+     */
+    void set_visible(bool visible)
+    {
+        _visible = visible;
+    }
+
+    /**
+     * @brief Returns the camera_ptr to attach to the output sprites (if any).
+     */
+    [[nodiscard]] const optional<camera_ptr>& camera() const
+    {
+        return _camera;
+    }
+
+    /**
+     * @brief Sets the camera_ptr to attach to the output sprites.
+     */
+    void set_camera(const camera_ptr& camera)
+    {
+        _camera = camera;
+    }
+
+    /**
+     * @brief Sets the camera_ptr to attach to the output sprites.
+     */
+    void set_camera(camera_ptr&& camera)
+    {
+        _camera = move(camera);
+    }
+
+    /**
+     * @brief Sets or removes the camera_ptr to attach to the output sprites.
+     */
+    void set_camera(const optional<camera_ptr>& camera)
+    {
+        _camera = camera;
+    }
+
+    /**
+     * @brief Sets or removes the camera_ptr to attach to the output sprites.
+     */
+    void set_camera(optional<camera_ptr>&& camera)
+    {
+        _camera = move(camera);
+    }
+
+    /**
+     * @brief Removes the camera_ptr to attach to the output sprites.
+     */
+    void remove_camera()
+    {
+        _camera.reset();
+    }
+
+    /**
+     * @brief Releases and returns the camera_ptr to attach to the output sprites (if any).
+     */
+    [[nodiscard]] optional<camera_ptr> release_camera();
+
+    /**
      * @brief Indicates if this sprite_text_generator must generate one sprite per character or
      * print multiple characters in each output sprite, generating as less sprites as possible.
      */
@@ -305,9 +406,13 @@ public:
 private:
     sprite_font _font;
     sprite_palette_item _palette_item;
+    optional<camera_ptr> _camera;
     int8_t _bg_priority = 3;
     int8_t _z_order = 0;
     alignment_type _alignment = alignment_type::LEFT;
+    bool _mosaic_enabled = false;
+    bool _blending_enabled = false;
+    bool _visible = true;
     bool _one_sprite_per_character = false;
     int8_t _max_character_width;
     int8_t _character_height;

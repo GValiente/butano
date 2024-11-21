@@ -15,6 +15,16 @@ namespace bn
 
 namespace
 {
+    void _setup_builder(const sprite_text_generator& generator, sprite_builder& builder)
+    {
+        builder.set_bg_priority(generator.bg_priority());
+        builder.set_z_order(generator.z_order());
+        builder.set_mosaic_enabled(generator.mosaic_enabled());
+        builder.set_blending_enabled(generator.blending_enabled());
+        builder.set_visible(generator.visible());
+        builder.set_camera(generator.camera());
+    }
+
     template<sprite_size size>
     [[nodiscard]] tile* _build_sprite_optional(
         const sprite_text_generator& generator, const sprite_palette_ptr& palette,
@@ -40,8 +50,7 @@ namespace
 
         sprite_builder builder(shape_size, move(*tiles_ptr), palette);
         builder.set_position(current_position);
-        builder.set_bg_priority(generator.bg_priority());
-        builder.set_z_order(generator.z_order());
+        _setup_builder(generator, builder);
 
         optional<sprite_ptr> sprite = sprite_ptr::create_optional(move(builder));
         sprite_ptr* sprite_ptr = sprite.get();
@@ -70,8 +79,7 @@ namespace
 
         sprite_builder builder(shape_size, move(tiles_ptr), palette);
         builder.set_position(current_position);
-        builder.set_bg_priority(generator.bg_priority());
-        builder.set_z_order(generator.z_order());
+        _setup_builder(generator, builder);
         output_sprites.push_back(sprite_ptr::create(move(builder)));
         return tiles_vram->data();
     }
@@ -308,8 +316,7 @@ namespace
 
             sprite_builder builder(item.shape_size(), move(*source_tiles), _palette);
             builder.set_position(_current_position);
-            builder.set_bg_priority(_generator.bg_priority());
-            builder.set_z_order(_generator.z_order());
+            _setup_builder(_generator, builder);
 
             if(allow_failure)
             {
@@ -407,8 +414,7 @@ namespace
 
                 sprite_builder builder(item.shape_size(), move(*source_tiles), _palette);
                 builder.set_position(_current_position);
-                builder.set_bg_priority(_generator.bg_priority());
-                builder.set_z_order(_generator.z_order());
+                _setup_builder(_generator, builder);
 
                 if(allow_failure)
                 {
@@ -1177,6 +1183,13 @@ void sprite_text_generator::set_z_order(int z_order)
     BN_ASSERT(z_order >= sprites::min_z_order() && z_order <= sprites::max_z_order(), "Invalid z order: ", z_order);
 
     _z_order = int8_t(z_order);
+}
+
+optional<camera_ptr> sprite_text_generator::release_camera()
+{
+    optional<camera_ptr> result = move(_camera);
+    _camera.reset();
+    return result;
 }
 
 int sprite_text_generator::width(const string_view& text) const

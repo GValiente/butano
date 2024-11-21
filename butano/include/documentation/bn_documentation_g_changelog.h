@@ -12,10 +12,12 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_2_2 18.2.2 (next release)
+ * @section changelog_18_3_0 18.3.0 (next release)
  *
- * bn::sprite_builder::release_affine_mat, bn::sprite_builder::release_camera, bn::regular_bg_builder::release_camera
- * and bn::affine_bg_builder::release_camera fixed.
+ * * bn::sprite_text_generator allows to setup the mosaic, the blending, the visibility and the camera
+ *   of the output sprites.
+ * * bn::sprite_builder::release_affine_mat, bn::sprite_builder::release_camera,
+ *   bn::regular_bg_builder::release_camera and bn::affine_bg_builder::release_camera fixed.
  *
  *
  * @section changelog_18_2_1 18.2.1

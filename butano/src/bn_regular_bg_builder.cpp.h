@@ -142,11 +142,8 @@ optional<regular_bg_map_ptr> regular_bg_builder::release_map_optional()
     }
     else
     {
-        if(regular_bg_map_ptr* map = _map.get())
-        {
-            result = move(*map);
-            _map.reset();
-        }
+        result = move(_map);
+        _map.reset();
     }
 
     return result;

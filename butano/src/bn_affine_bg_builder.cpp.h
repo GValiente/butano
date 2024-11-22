@@ -142,11 +142,8 @@ optional<affine_bg_map_ptr> affine_bg_builder::release_map_optional()
     }
     else
     {
-        if(affine_bg_map_ptr* map = _map.get())
-        {
-            result = move(*map);
-            _map.reset();
-        }
+        result = move(_map);
+        _map.reset();
     }
 
     return result;

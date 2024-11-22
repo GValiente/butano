@@ -436,7 +436,7 @@ public:
     /**
      * @brief Generates and returns a regular_bg_ptr releasing the acquired resources.
      *
-     * This method must be called once at most.
+     * regular_bg_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] regular_bg_ptr release_build();
 
@@ -450,7 +450,7 @@ public:
      * @brief Generates and returns a regular_bg_ptr releasing the acquired resources if it could be allocated;
      * bn::nullopt otherwise.
      *
-     * This method must be called once at most.
+     * regular_bg_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] optional<regular_bg_ptr> release_build_optional();
 
@@ -468,7 +468,7 @@ public:
     /**
      * @brief Generates and returns a regular_bg_map_ptr releasing the acquired resources.
      *
-     * This method must be called once at most.
+     * regular_bg_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] regular_bg_map_ptr release_map();
 
@@ -476,7 +476,7 @@ public:
      * @brief Generates and returns a regular_bg_map_ptr releasing the acquired resources
      * if it could be allocated; bn::nullopt otherwise.
      *
-     * This method must be called once at most.
+     * regular_bg_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] optional<regular_bg_map_ptr> release_map_optional();
 

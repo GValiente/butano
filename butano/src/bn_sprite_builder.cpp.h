@@ -449,11 +449,8 @@ optional<sprite_tiles_ptr> sprite_builder::release_tiles_optional()
     }
     else
     {
-        if(sprite_tiles_ptr* tiles = _tiles.get())
-        {
-            result = move(*tiles);
-            _tiles.reset();
-        }
+        result = move(_tiles);
+        _tiles.reset();
     }
 
     return result;
@@ -469,11 +466,8 @@ optional<sprite_palette_ptr> sprite_builder::release_palette_optional()
     }
     else
     {
-        if(sprite_palette_ptr* palette = _palette.get())
-        {
-            result = move(*palette);
-            _palette.reset();
-        }
+        result = move(_palette);
+        _palette.reset();
     }
 
     return result;

@@ -594,7 +594,7 @@ public:
     /**
      * @brief Generates and returns a sprite_ptr releasing the acquired resources.
      *
-     * This method must be called once at most.
+     * sprite_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] sprite_ptr release_build();
 
@@ -608,7 +608,7 @@ public:
      * @brief Generates and returns a sprite_ptr releasing the acquired resources if it could be allocated;
      * bn::nullopt otherwise.
      *
-     * This method must be called once at most.
+     * sprite_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] optional<sprite_ptr> release_build_optional();
 
@@ -637,14 +637,14 @@ public:
     /**
      * @brief Generates and returns a sprite_tiles_ptr releasing the acquired resources.
      *
-     * This method must be called once at most.
+     * sprite_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] sprite_tiles_ptr release_tiles();
 
     /**
      * @brief Generates and returns a sprite_palette_ptr releasing the acquired resources.
      *
-     * This method must be called once at most.
+     * sprite_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] sprite_palette_ptr release_palette();
 
@@ -652,7 +652,7 @@ public:
      * @brief Generates and returns a sprite_tiles_ptr releasing the acquired resources
      * if it could be allocated; bn::nullopt otherwise.
      *
-     * This method must be called once at most.
+     * sprite_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] optional<sprite_tiles_ptr> release_tiles_optional();
 
@@ -660,7 +660,7 @@ public:
      * @brief Generates and returns a sprite_palette_ptr releasing the acquired resources
      * if it could be allocated; bn::nullopt otherwise.
      *
-     * This method must be called once at most.
+     * sprite_ptr generation after calling this method may stop working.
      */
     [[nodiscard]] optional<sprite_palette_ptr> release_palette_optional();
 

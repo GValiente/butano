@@ -19,6 +19,7 @@
  *   of the output sprites.
  * * bn::sprite_builder::release_affine_mat, bn::sprite_builder::release_camera,
  *   bn::regular_bg_builder::release_camera and bn::affine_bg_builder::release_camera fixed.
+ * * bn::sprite_builder, bn::regular_bg_builder and bn::affine_bg_builder documentation improved.
  *
  *
  * @section changelog_18_2_1 18.2.1

@@ -8,7 +8,7 @@
 
 /**
  * @file
- * bn::bitset declaration header file.
+ * bn::bitset and bn::bitset_ref declaration header file.
  *
  * @ingroup bitset
  */

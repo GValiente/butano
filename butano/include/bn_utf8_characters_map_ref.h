@@ -40,12 +40,12 @@ public:
     };
 
     /**
-     * @brief Default class constructor.
+     * @brief Default constructor.
      */
     constexpr utf8_characters_map_ref() = default;
 
     /**
-     * @brief Class constructor.
+     * @brief Constructor.
      * @param items_ref Reference to a list of map items.
      *
      * Map items are not copied but referenced, so they should outlive the utf8_characters_map_ref

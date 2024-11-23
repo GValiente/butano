@@ -53,7 +53,7 @@ public:
         using iterator_category = random_access_iterator_tag; //!< Iterator category alias.
 
         /**
-         * @brief Default class constructor.
+         * @brief Default constructor.
          */
         iterator() = default;
 
@@ -294,12 +294,12 @@ public:
         using iterator_category = random_access_iterator_tag; //!< Iterator category alias.
 
         /**
-         * @brief Default class constructor.
+         * @brief Default constructor.
          */
         const_iterator() = default;
 
         /**
-         * @brief Public constructor.
+         * @brief Constructor.
          * @param it Non const iterator.
          */
         const_iterator(const iterator& it) :

@@ -32,7 +32,7 @@
 
 /**
  * @file
- * bn::bitset implementation header file.
+ * bn::bitset and bn::bitset_ref implementation header file.
  *
  * @ingroup bitset
  */
@@ -495,6 +495,11 @@ protected:
     {
     }
 
+    [[nodiscard]] constexpr element_t* data()
+    {
+        return _data;
+    }
+
     /// @endcond
 
 private:
@@ -749,7 +754,7 @@ class bitset_ref : public ibitset
 
 public:
     /**
-     * @brief Default constructor.
+     * @brief Constructor.
      * @param elements_array_ref Elements array reference.
      *
      * The elements are not copied but referenced, so they should outlive the bitset_ref
@@ -763,7 +768,7 @@ public:
     }
 
     /**
-     * @brief Default constructor.
+     * @brief Constructor.
      * @param elements_ref Elements reference.
      *
      * The elements are not copied but referenced, so they should outlive the bitset_ref
@@ -773,6 +778,15 @@ public:
         ibitset(elements_ref.size(), elements_ref.data())
     {
         BN_BASIC_ASSERT(elements_size(), "No elements");
+    }
+
+    /**
+     * @brief Move constructor.
+     * @param other bitset_ref to move.
+     */
+    constexpr bitset_ref(bitset_ref&& other) noexcept :
+        ibitset(other.elements_size(), other.data())
+    {
     }
 
     /**

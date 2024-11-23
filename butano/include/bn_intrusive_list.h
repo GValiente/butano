@@ -73,12 +73,12 @@ public:
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
-         * @brief Default class constructor.
+         * @brief Default constructor.
          */
         iterator() = default;
 
         /**
-         * @brief Class constructor.
+         * @brief Constructor.
          * @param node Intrusive list node.
          */
         explicit iterator(node_type* node) :
@@ -172,12 +172,12 @@ public:
         using iterator_category = bidirectional_iterator_tag; //!< Iterator category alias.
 
         /**
-         * @brief Default class constructor.
+         * @brief Default constructor.
          */
         const_iterator() = default;
 
         /**
-         * @brief Class constructor.
+         * @brief Constructor.
          * @param node Intrusive list node.
          */
         explicit const_iterator(const node_type* node) :
@@ -186,7 +186,7 @@ public:
         }
 
         /**
-         * @brief Public constructor.
+         * @brief Constructor.
          * @param it Non const iterator.
          */
         const_iterator(iterator it) :

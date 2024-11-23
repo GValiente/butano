@@ -15,6 +15,7 @@
  * @section changelog_18_4_0 18.4.0 (next release)
  *
  * * bn::random::get_bool and bn::seed_random::get_bool added.
+ * * bn::bitset_ref move constructor added.
  * * bn::random::get_int and bn::seed_random::get_int optimized.
  *
  *

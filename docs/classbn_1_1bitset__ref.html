@@ -80,11 +80,15 @@
               <div class="m-doc-template">template&lt;int ElementSize&gt;</div>
               <span class="m-doc-wrap-bumper"><a href="#a26d45ed40f55e83851f30071e87c855e" class="m-doc">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>(&amp;elements_array_ref)[ElementSize]) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Default constructor.</dd>
+            <dd>Constructor.</dd>
             <dt>
               <span class="m-doc-wrap-bumper"><a href="#a9cb166a3bfc7425af9a26fdea1c6ba1d" class="m-doc">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>&gt; elements_ref) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Default constructor.</dd>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a76ae148b935ec93bd3ca2bb853efb032" class="m-doc">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1bitset__ref.html" class="m-doc">bitset_<wbr />ref</a>&amp;&amp; other) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
           </dl>
         </section>
         <section id="pub-methods">
@@ -146,7 +150,7 @@
               </div>
               <span class="m-doc-wrap-bumper"> bn::<wbr />bitset_ref::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a26d45ed40f55e83851f30071e87c855e" class="m-doc-self">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>(&amp;elements_array_ref)[ElementSize]) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Default constructor.</p>
+            <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -164,7 +168,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"> bn::<wbr />bitset_ref::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9cb166a3bfc7425af9a26fdea1c6ba1d" class="m-doc-self">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1ibitset.html#a98e3410ef245fb237f8298ced4c74035" class="m-doc">element_<wbr />t</a>&gt; elements_ref) <span class="m-label m-primary">constexpr</span></span></span>
             </h3>
-            <p>Default constructor.</p>
+            <p>Constructor.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -177,6 +181,23 @@
               </tbody>
             </table>
 <p>The elements are not copied but referenced, so they should outlive the <a href="classbn_1_1bitset__ref.html" class="m-doc">bitset_<wbr />ref</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a76ae148b935ec93bd3ca2bb853efb032"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />bitset_ref::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a76ae148b935ec93bd3ca2bb853efb032" class="m-doc-self">bitset_ref</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1bitset__ref.html" class="m-doc">bitset_<wbr />ref</a>&amp;&amp; other) <span class="m-label m-primary">constexpr</span> <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1bitset__ref.html" class="m-doc">bitset_<wbr />ref</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
           <section class="m-doc-details" id="aa8555ec4a2518b035ccd200483237810"><div>
             <h3>

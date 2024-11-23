@@ -5,7 +5,7 @@
 
 #include <coroutine>
 #include "bn_core.h"
-#include "bn_math.h"
+#include "bn_limits.h"
 #include "bn_random.h"
 #include "bn_profiler.h"
 #include "bn_unique_ptr.h"

@@ -13,9 +13,7 @@
  * @ingroup random
  */
 
-#include "bn_fixed.h"
-#include "bn_assert.h"
-#include "bn_limits.h"
+#include "bn_math.h"
 
 namespace bn
 {
@@ -88,8 +86,7 @@ public:
      */
     [[nodiscard]] constexpr int get_int()
     {
-        unsigned result = get() % unsigned(numeric_limits<int>::max());
-        return int(result);
+        return bn::abs(int(get()));
     }
 
     /**

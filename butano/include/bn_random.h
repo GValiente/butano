@@ -43,6 +43,14 @@ public:
     }
 
     /**
+     * @brief Returns a random boolean, updating its internal seed in the process.
+     */
+    [[nodiscard]] constexpr bool get_bool()
+    {
+        return bool(_get_int_impl(2));
+    }
+
+    /**
      * @brief Returns a random signed integer greater or equal than 0, updating its internal seed in the process.
      */
     [[nodiscard]] constexpr int get_int()

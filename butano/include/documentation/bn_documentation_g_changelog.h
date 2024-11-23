@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_4_0 18.4.0 (next release)
+ *
+ * bn::random::get_bool and bn::seed_random::get_bool added.
+ *
+ *
  * @section changelog_18_3_0 18.3.0
  *
  * * bn::sprite_text_generator::generate_top_left and bn::sprite_text_generator::generate_top_left_optional added.

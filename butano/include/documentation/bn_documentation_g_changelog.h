@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_4_0 18.4.0 (next release)
+ * @section changelog_18_4_0 18.4.0
  *
  * * bn::random::get_bool and bn::seed_random::get_bool added.
  * * bn::bitset_ref move constructor added.

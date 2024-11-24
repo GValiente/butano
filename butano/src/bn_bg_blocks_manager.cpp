@@ -327,7 +327,7 @@ namespace
 
         [[nodiscard]] int size() const
         {
-            return _free_indices_size;
+            return max_items - _free_indices_size;
         }
 
         [[nodiscard]] bool full() const
@@ -942,6 +942,7 @@ namespace
     {
         item_type* item = &data.items.item(id);
         int blocks_count = create_data.blocks_count;
+        bool fast_blocks_count_check = true;
 
         if(padding_blocks_count)
         {
@@ -949,6 +950,25 @@ namespace
 
             int new_item_blocks_count = item->blocks_count - padding_blocks_count;
             item->blocks_count = uint8_t(padding_blocks_count);
+
+            switch(item->status())
+            {
+
+            case status_type::FREE:
+                break;
+
+            case status_type::USED:
+                BN_ERROR("Invalid item state");
+                break;
+
+            case status_type::TO_REMOVE:
+                fast_blocks_count_check = false;
+                break;
+
+            default:
+                BN_ERROR("Invalid item status: ", int(item->status()));
+                break;
+            }
 
             item_type new_item;
             new_item.start_block = item->start_block + item->blocks_count;
@@ -975,6 +995,25 @@ namespace
             {
                 item->blocks_count -= uint8_t(blocks_count);
 
+                switch(item->status())
+                {
+
+                case status_type::FREE:
+                    break;
+
+                case status_type::USED:
+                    BN_ERROR("Invalid item state");
+                    break;
+
+                case status_type::TO_REMOVE:
+                    fast_blocks_count_check = false;
+                    break;
+
+                default:
+                    BN_ERROR("Invalid item status: ", int(item->status()));
+                    break;
+                }
+
                 item_type new_item;
                 new_item.start_block = uint8_t(start_block + item->blocks_count);
 
@@ -991,27 +1030,8 @@ namespace
             }
         }
 
-        switch(item->status())
-        {
-
-        case status_type::FREE:
-            data.free_blocks_count -= blocks_count;
-            break;
-
-        case status_type::USED:
-            BN_ERROR("Invalid item state");
-            break;
-
-        case status_type::TO_REMOVE:
-            data.to_remove_blocks_count -= blocks_count;
-            break;
-
-        default:
-            BN_ERROR("Invalid item status: ", int(item->status()));
-            break;
-        }
-
         const uint16_t* data_ptr = create_data.data_ptr;
+        status_type old_status = item->status();
         item->data = data_ptr;
         item->blocks_count = uint8_t(blocks_count);
         item->set_compression(create_data.compression);
@@ -1043,6 +1063,59 @@ namespace
         }
 
         item->commit = commit_item;
+
+        if(fast_blocks_count_check)
+        {
+            switch(old_status)
+            {
+
+            case status_type::FREE:
+                data.free_blocks_count -= blocks_count;
+                break;
+
+            case status_type::USED:
+                BN_ERROR("Invalid item state");
+                break;
+
+            case status_type::TO_REMOVE:
+                data.to_remove_blocks_count -= blocks_count;
+                break;
+
+            default:
+                BN_ERROR("Invalid item status: ", int(item->status()));
+                break;
+            }
+        }
+        else
+        {
+            int free_blocks_count = 0;
+            int to_remove_blocks_count = 0;
+
+            for(const item_type& data_item : data.items)
+            {
+                switch(data_item.status())
+                {
+
+                case status_type::FREE:
+                    free_blocks_count += data_item.blocks_count;
+                    break;
+
+                case status_type::USED:
+                    break;
+
+                case status_type::TO_REMOVE:
+                    to_remove_blocks_count += data_item.blocks_count;
+                    break;
+
+                default:
+                    BN_ERROR("Invalid item status: ", int(item->status()));
+                    break;
+                }
+            }
+
+            data.free_blocks_count = free_blocks_count;
+            data.to_remove_blocks_count = to_remove_blocks_count;
+        }
 
         return id;
     }

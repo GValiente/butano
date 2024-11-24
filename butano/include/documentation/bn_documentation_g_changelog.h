@@ -17,6 +17,7 @@
  * * bn::random::get_bool and bn::seed_random::get_bool added.
  * * bn::bitset_ref move constructor added.
  * * bn::random::get_int and bn::seed_random::get_int optimized.
+ * * BG blocks manager allocation fixed.
  *
  *
  * @section changelog_18_3_0 18.3.0

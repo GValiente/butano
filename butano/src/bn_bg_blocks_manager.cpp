@@ -608,6 +608,61 @@ namespace
     };
 
 
+    #if BN_CFG_BG_BLOCKS_SANITY_CHECK_ENABLED
+        void _sanity_check()
+        {
+            int items_count = 0;
+            int free_blocks_count = 0;
+            int used_blocks_count = 0;
+            int to_remove_blocks_count = 0;
+            int next_start_block = 0;
+
+            for(const item_type& item : data.items)
+            {
+                BN_ASSERT(item.start_block == next_start_block, item.start_block, " - ", next_start_block);
+                next_start_block = item.start_block + item.blocks_count;
+                ++items_count;
+
+                switch(item.status())
+                {
+
+                case status_type::FREE:
+                    free_blocks_count += item.blocks_count;
+                    break;
+
+                case status_type::USED:
+                    used_blocks_count += item.blocks_count;
+                    break;
+
+                case status_type::TO_REMOVE:
+                    to_remove_blocks_count += item.blocks_count;
+                    break;
+
+                default:
+                    BN_ERROR("Invalid item status: ", int(item.status()));
+                    break;
+                }
+            }
+
+            BN_ASSERT(items_count == data.items.size(), items_count, " - ", data.items.size());
+            BN_ASSERT(free_blocks_count == data.free_blocks_count, free_blocks_count, " - ", data.free_blocks_count);
+            BN_ASSERT(to_remove_blocks_count == data.to_remove_blocks_count,
+                      to_remove_blocks_count, " - ", data.to_remove_blocks_count);
+            BN_ASSERT(free_blocks_count + used_blocks_count + to_remove_blocks_count == hw::bg_tiles::blocks_count(),
+                      free_blocks_count, " - ", used_blocks_count, " - ", to_remove_blocks_count, " - ",
+                      hw::bg_tiles::blocks_count());
+        }
+
+        #define BN_BG_BLOCKS_SANITY_CHECK \
+                _sanity_check
+    #else
+        #define BN_BG_BLOCKS_SANITY_CHECK(...) \
+        do \
+        { \
+        } while(false)
+    #endif
+
+
     #if BN_CFG_BG_BLOCKS_LOG_ENABLED
         void _log_status()
         {
@@ -672,17 +727,16 @@ namespace
         #define BN_BG_BLOCKS_LOG BN_LOG
 
         #define BN_BG_BLOCKS_LOG_STATUS \
-            _log_status
+            _log_status(); \
+            BN_BG_BLOCKS_SANITY_CHECK
     #else
         #define BN_BG_BLOCKS_LOG(...) \
             do \
             { \
             } while(false)
 
-        #define BN_BG_BLOCKS_LOG_STATUS(...) \
-            do \
-            { \
-            } while(false)
+        #define BN_BG_BLOCKS_LOG_STATUS \
+            BN_BG_BLOCKS_SANITY_CHECK
     #endif
 
     [[nodiscard]] int _find_tiles_impl(

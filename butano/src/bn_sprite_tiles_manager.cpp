@@ -165,7 +165,7 @@ namespace
 
         [[nodiscard]] int size() const
         {
-            return _free_indices_size;
+            return max_list_items - _free_indices_size;
         }
 
         [[nodiscard]] int available() const

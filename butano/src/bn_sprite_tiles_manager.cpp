@@ -165,7 +165,7 @@ namespace
 
         [[nodiscard]] int size() const
         {
-            return max_list_items - _free_indices_size;
+            return max_items - _free_indices_size;
         }
 
         [[nodiscard]] int available() const
@@ -270,6 +270,61 @@ namespace
     BN_DATA_EWRAM_BSS static_data data;
 
 
+    #if BN_CFG_SPRITE_TILES_SANITY_CHECK_ENABLED
+        void _sanity_check()
+        {
+            int items_count = 0;
+            int free_tiles_count = 0;
+            int used_tiles_count = 0;
+            int to_remove_tiles_count = 0;
+            int next_start_tile = 0;
+
+            for(const item_type& item : data.items)
+            {
+                BN_ASSERT(item.start_tile == next_start_tile, item.start_tile, " - ", next_start_tile);
+                next_start_tile = item.start_tile + item.tiles_count;
+                ++items_count;
+
+                switch(item.status())
+                {
+
+                case status_type::FREE:
+                    free_tiles_count += item.tiles_count;
+                    break;
+
+                case status_type::USED:
+                    used_tiles_count += item.tiles_count;
+                    break;
+
+                case status_type::TO_REMOVE:
+                    to_remove_tiles_count += item.tiles_count;
+                    break;
+
+                default:
+                    BN_ERROR("Invalid item status: ", int(item.status()));
+                    break;
+                }
+            }
+
+            BN_ASSERT(items_count == data.items.size(), items_count, " - ", data.items.size());
+            BN_ASSERT(free_tiles_count == data.free_tiles_count, free_tiles_count, " - ", data.free_tiles_count);
+            BN_ASSERT(to_remove_tiles_count == data.to_remove_tiles_count,
+                      to_remove_tiles_count, " - ", data.to_remove_tiles_count);
+            BN_ASSERT(free_tiles_count + used_tiles_count + to_remove_tiles_count == hw::sprite_tiles::tiles_count(),
+                      free_tiles_count, " - ", used_tiles_count, " - ", to_remove_tiles_count, " - ",
+                      hw::sprite_tiles::tiles_count());
+        }
+
+        #define BN_SPRITE_TILES_SANITY_CHECK \
+            _sanity_check
+    #else
+        #define BN_SPRITE_TILES_SANITY_CHECK(...) \
+            do \
+            { \
+            } while(false)
+    #endif
+
+
     #if BN_CFG_SPRITE_TILES_LOG_ENABLED
         void _log_status()
         {
@@ -341,17 +396,16 @@ namespace
         #define BN_SPRITE_TILES_LOG BN_LOG
 
         #define BN_SPRITE_TILES_LOG_STATUS \
-            _log_status
+            _log_status(); \
+            BN_SPRITE_TILES_SANITY_CHECK
     #else
         #define BN_SPRITE_TILES_LOG(...) \
             do \
             { \
             } while(false)
 
-        #define BN_SPRITE_TILES_LOG_STATUS(...) \
-            do \
-            { \
-            } while(false)
+        #define BN_SPRITE_TILES_LOG_STATUS \
+            BN_SPRITE_TILES_SANITY_CHECK
     #endif
 
 

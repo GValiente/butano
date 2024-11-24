@@ -16,7 +16,7 @@
  *
  * * bn::random::get_bool and bn::seed_random::get_bool added.
  * * bn::bitset_ref move constructor added.
- * * @ref BN_CFG_BG_BLOCKS_SANITY_CHECK_ENABLED added.
+ * * @ref BN_CFG_BG_BLOCKS_SANITY_CHECK_ENABLED and @ref BN_CFG_SPRITE_TILES_SANITY_CHECK_ENABLED added.
  * * bn::random::get_int and bn::seed_random::get_int optimized.
  * * BG blocks manager allocation fixed.
  * * bn::sprite_tiles::log_status items count fixed.

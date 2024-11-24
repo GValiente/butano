@@ -654,12 +654,12 @@ namespace
         }
 
         #define BN_BG_BLOCKS_SANITY_CHECK \
-                _sanity_check
+            _sanity_check
     #else
         #define BN_BG_BLOCKS_SANITY_CHECK(...) \
-        do \
-        { \
-        } while(false)
+            do \
+            { \
+            } while(false)
     #endif
 
 

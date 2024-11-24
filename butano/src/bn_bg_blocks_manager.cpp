@@ -992,6 +992,29 @@ namespace
         }
     }
 
+    void _fix_blocks_count(const item_type& item, int new_item_blocks_count)
+    {
+        switch(item.status())
+        {
+
+        case status_type::FREE:
+            break;
+
+        case status_type::USED:
+            BN_ERROR("Invalid item state");
+            break;
+
+        case status_type::TO_REMOVE:
+            data.free_blocks_count += new_item_blocks_count;
+            data.to_remove_blocks_count -= new_item_blocks_count;
+            break;
+
+        default:
+            BN_ERROR("Invalid item status: ", int(item.status()));
+            break;
+        }
+    }
+
     [[nodiscard]] int _create_item(int id, int padding_blocks_count, bool delay_commit, create_data&& create_data)
     {
         item_type* item = &data.items.item(id);
@@ -1003,26 +1026,7 @@ namespace
 
             int new_item_blocks_count = item->blocks_count - padding_blocks_count;
             item->blocks_count = uint8_t(padding_blocks_count);
-
-            switch(item->status())
-            {
-
-            case status_type::FREE:
-                break;
-
-            case status_type::USED:
-                BN_ERROR("Invalid item state");
-                break;
-
-            case status_type::TO_REMOVE:
-                data.free_blocks_count += new_item_blocks_count;
-                data.to_remove_blocks_count -= new_item_blocks_count;
-                break;
-
-            default:
-                BN_ERROR("Invalid item status: ", int(item->status()));
-                break;
-            }
+            _fix_blocks_count(*item, new_item_blocks_count);
 
             item_type new_item;
             new_item.start_block = item->start_block + item->blocks_count;
@@ -1048,26 +1052,7 @@ namespace
             if(create_item_at_back)
             {
                 item->blocks_count = uint8_t(new_item_blocks_count);
-
-                switch(item->status())
-                {
-
-                case status_type::FREE:
-                    break;
-
-                case status_type::USED:
-                    BN_ERROR("Invalid item state");
-                    break;
-
-                case status_type::TO_REMOVE:
-                    data.free_blocks_count += new_item_blocks_count;
-                    data.to_remove_blocks_count -= new_item_blocks_count;
-                    break;
-
-                default:
-                    BN_ERROR("Invalid item status: ", int(item->status()));
-                    break;
-                }
+                _fix_blocks_count(*item, new_item_blocks_count);
 
                 item_type new_item;
                 new_item.start_block = uint8_t(start_block + item->blocks_count);

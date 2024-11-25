@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_5_0 18.5.0 (next release)
+ *
+ * @ref faq_memory_arm_iwram question added to the @ref faq page.
+ *
+ *
  * @section changelog_18_4_0 18.4.0
  *
  * * bn::random::get_bool and bn::seed_random::get_bool added.

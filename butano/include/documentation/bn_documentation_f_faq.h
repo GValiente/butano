@@ -144,53 +144,6 @@
  * since some Butano features don't work with older devkitARM releases.
  *
  *
- * @subsection faq_containers Why there's std like containers included with Butano?
- *
- * Butano containers differ from the standard library ones in two important points:
- * * They don't use the heap, their content is always on the stack.
- * * They don't throw exceptions. @ref assert are used instead.
- *
- * Since avoiding heap usage and exceptions is usually good for GBA development,
- * use Butano containers whenever possible.
- *
- * Keep in mind that unlike most Butano containers, bn::unique_ptr uses the heap instead of the stack.
- *
- *
- * @subsection faq_heap So I shouldn't use the heap?
- *
- * Since heap usage is slow and the heap allocator included with Butano is very limited,
- * avoid heap usage whenever possible.
- *
- * Also, remember to call bn::core::init before using the heap.
- *
- *
- * @subsection faq_memory_types Why I run out of memory so often?
- *
- * Besides VRAM and such, the GBA provides two memory banks:
- * * IWRAM: 32KB fast RAM.
- * * EWRAM: 256KB slow RAM.
- *
- * Data is allocated in IWRAM by default, so it is common to run out of memory if you don't use EWRAM.
- *
- * To place data in EWRAM, you can:
- * * Allocate memory in the heap, since it is placed in EWRAM.
- * * Declare static data with the `BN_DATA_EWRAM` macro:
- * @code{.cpp}
- * BN_DATA_EWRAM static_data data;
- * @endcode
- *
- * However, if the data is read only, you can avoid wasting RAM by placing it in ROM with the `constexpr` qualifier:
- * @code{.cpp}
- * constexpr const_data data;
- * @endcode
- *
- * bn::memory provides functions to query available and used RAM, like bn::memory::used_stack_iwram
- * and bn::memory::used_static_iwram.
- *
- * To avoid running out of IWRAM, Butano Fighter and Varooom 3D place all scenes in EWRAM.
- * Check their `main.cpp` files to see how it works.
- *
- *
  * @subsection faq_destroy_ptr How to destroy sprites and backgrounds?
  *
  * bn::sprite_ptr, bn::regular_bg_ptr and all Butano classes that end with the `_ptr` suffix are
@@ -261,44 +214,6 @@
  * @endcode
  *
  *
- * @subsection faq_global_objects Does Butano allow to declare bn::sprite_ptr or bn::regular_bg_ptr objects globally?
- *
- * In general, you should not do anything with Butano before calling bn::core::init,
- * including creating global Butano objects and allocating memory in the heap.
- *
- * If you want to declare global Butano objects, you can do something like this instead:
- *
- * @code{.cpp}
- * struct global_data
- * {
- *     bn::sprite_ptr sprite;
- *     bn::regular_bg_ptr bg;
- * };
- *
- * global_data* global_ptr;
- *
- * int main()
- * {
- *     bn::core::init();
- *
- *     global_data global_instance = {
- *         bn::sprite_items::sprite_item.create_sprite(0, 0),
- *         bn::regular_bg_items::bg_item.create_bg(0, 0)
- *     };
- *
- *     global_ptr = &global_instance;
- *
- *     // ...
- * }
- * @endcode
- *
- * With that, you can access global Butano objects from anywhere in your project with this code:
- *
- * @code{.cpp}
- * global_ptr->sprite.set_position(50, 50);
- * @endcode
- *
- *
  * @subsection faq_random_seed How can I set the seed of a bn::random?
  *
  * If you want to do that, use bn::seed_random instead.
@@ -336,6 +251,113 @@
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *
  * <a href="https://gbadev.net/tonc/first.html#sec-notes">I'm glad you asked</a>.
+ *
+ *
+ * @section faq_memory Memory
+ *
+ *
+ * @subsection faq_memory_containers Why there's std like containers included with Butano?
+ *
+ * Butano containers differ from the standard library ones in two important points:
+ * * They don't use the heap, their content is always on the stack.
+ * * They don't throw exceptions. @ref assert are used instead.
+ *
+ * Since avoiding heap usage and exceptions is usually good for GBA development,
+ * use Butano containers whenever possible.
+ *
+ * Keep in mind that unlike most Butano containers, bn::unique_ptr uses the heap instead of the stack.
+ *
+ *
+ * @subsection faq_memory_heap So I shouldn't use the heap?
+ *
+ * Since heap usage is slow and the heap allocator included with Butano is very limited,
+ * avoid heap usage whenever possible.
+ *
+ * Also, remember to call bn::core::init before using the heap.
+ *
+ *
+ * @subsection faq_memory_types Why I run out of memory so often?
+ *
+ * Besides VRAM and such, the GBA provides two memory banks:
+ * * IWRAM: 32KB fast RAM.
+ * * EWRAM: 256KB slow RAM.
+ *
+ * Data is allocated in IWRAM by default, so it is common to run out of memory if you don't use EWRAM.
+ *
+ * To place data in EWRAM, you can:
+ * * Allocate memory in the heap, since it is placed in EWRAM.
+ * * Declare static data with the `BN_DATA_EWRAM` macro:
+ * @code{.cpp}
+ * BN_DATA_EWRAM static_data data;
+ * @endcode
+ *
+ * However, if the data is read only, you can avoid wasting RAM by placing it in ROM with the `constexpr` qualifier:
+ * @code{.cpp}
+ * constexpr const_data data;
+ * @endcode
+ *
+ * bn::memory provides functions to query available and used RAM, like bn::memory::used_stack_iwram
+ * and bn::memory::used_static_iwram.
+ *
+ * To avoid running out of IWRAM, Butano Fighter and Varooom 3D place all scenes in EWRAM.
+ * Check their `main.cpp` files to see how it works.
+ *
+ *
+ * @subsection faq_memory_global_objects Does Butano allow to declare bn::sprite_ptr or bn::regular_bg_ptr objects globally?
+ *
+ * In general, you should not do anything with Butano before calling bn::core::init,
+ * including creating global Butano objects and allocating memory in the heap.
+ *
+ * If you want to declare global Butano objects, you can do something like this instead:
+ *
+ * @code{.cpp}
+ * struct global_data
+ * {
+ *     bn::sprite_ptr sprite;
+ *     bn::regular_bg_ptr bg;
+ * };
+ *
+ * global_data* global_ptr;
+ *
+ * int main()
+ * {
+ *     bn::core::init();
+ *
+ *     global_data global_instance = {
+ *         bn::sprite_items::sprite_item.create_sprite(0, 0),
+ *         bn::regular_bg_items::bg_item.create_bg(0, 0)
+ *     };
+ *
+ *     global_ptr = &global_instance;
+ *
+ *     // ...
+ * }
+ * @endcode
+ *
+ * With that, you can access global Butano objects from anywhere in your project with this code:
+ *
+ * @code{.cpp}
+ * global_ptr->sprite.set_position(50, 50);
+ * @endcode
+ *
+ *
+ * @subsection faq_memory_arm_iwram How can I generate ARM code in IWRAM?
+ *
+ * By default, functions and methods are compiled to Thumb code and placed in ROM.
+ * If you want to increase the performance of a function/method, a good way is to compile it to ARM code
+ * and place it in IWRAM.
+ *
+ * To do it, you have to:
+ * * Place the `BN_CODE_IWRAM` macro before the function/method declaration to indicate its section.
+ * For example:
+ * @code{.cpp}
+ * BN_CODE_IWRAM void my_function(int arg);
+ * @endcode
+ * * Place the function/method definition in a file with extension `.bn_iwram.cpp`.
+ *
+ * For example, the `world_map` example generates ARM code in IWRAM for the `load_attributes` function.
+ *
+ * Keep in mind that IWRAM is small, so you shouldn't place too much code in it.
  *
  *
  * @section faq_images Images

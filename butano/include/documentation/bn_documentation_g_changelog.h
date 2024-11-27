@@ -14,7 +14,8 @@
  *
  * @section changelog_18_5_0 18.5.0 (next release)
  *
- * @ref faq_memory_arm_iwram question added to the @ref faq page.
+ * * bn::sprite_text_generator rendering with negative space between characters fixed.
+ * * @ref faq_memory_arm_iwram question added to the @ref faq page.
  *
  *
  * @section changelog_18_4_0 18.4.0

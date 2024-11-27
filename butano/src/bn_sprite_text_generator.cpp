@@ -1318,12 +1318,13 @@ void sprite_text_generator::_init()
     const sprite_shape_size& shape_size = _font.item().shape_size();
     int width = shape_size.width();
     int height = shape_size.height();
+    int space_between_characters = _font.space_between_characters();
     _max_character_width = int8_t(width);
     _character_height = int8_t(height);
 
     if(_font.character_widths_ref().empty())
     {
-        if(_font.space_between_characters() || height > 16)
+        if(space_between_characters || height > 16)
         {
             _font_one_sprite_per_character = true;
         }
@@ -1340,8 +1341,15 @@ void sprite_text_generator::_init()
     }
     else
     {
-        bool vwf = (width == 8 && height == 8) || (width == 8 && height == 16) || (width == 16 && height == 16);
-        _font_one_sprite_per_character = ! vwf;
+        if(space_between_characters < 0 || space_between_characters >= width)
+        {
+            _font_one_sprite_per_character = true;
+        }
+        else
+        {
+            bool vwf = (width == 8 && height == 8) || (width == 8 && height == 16) || (width == 16 && height == 16);
+            _font_one_sprite_per_character = ! vwf;
+        }
     }
 }
 

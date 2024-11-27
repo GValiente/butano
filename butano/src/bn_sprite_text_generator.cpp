@@ -1341,7 +1341,7 @@ void sprite_text_generator::_init()
     }
     else
     {
-        if(space_between_characters < 0 || space_between_characters >= width)
+        if(space_between_characters >= width)
         {
             _font_one_sprite_per_character = true;
         }

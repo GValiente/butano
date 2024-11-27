@@ -14,7 +14,7 @@
  *
  * @section changelog_18_5_0 18.5.0 (next release)
  *
- * * bn::sprite_text_generator rendering with negative space between characters fixed.
+ * * bn::sprite_text_generator uses one sprite per character if the space between characters is too big.
  * * @ref faq_memory_arm_iwram question added to the @ref faq page.
  *
  *

@@ -192,11 +192,25 @@ private:
 
         if(space_between_characters < 0)
         {
-            for(int character_width : _character_widths_ref)
+            space_between_characters = -space_between_characters;
+
+            if(_character_widths_ref.empty())
             {
-                if(character_width <= space_between_characters)
+                int max_character_width = _item.shape_size().width();
+
+                if(max_character_width <= space_between_characters)
                 {
                     return false;
+                }
+            }
+            else
+            {
+                for(int character_width : _character_widths_ref)
+                {
+                    if(character_width <= space_between_characters)
+                    {
+                        return false;
+                    }
                 }
             }
         }

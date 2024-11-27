@@ -671,7 +671,7 @@ fixed sprite_ptr::horizontal_shear() const
         return affine_mat_ptr->horizontal_shear();
     }
 
-    return 1;
+    return 0;
 }
 
 void sprite_ptr::set_horizontal_shear(fixed horizontal_shear)
@@ -699,7 +699,7 @@ fixed sprite_ptr::vertical_shear() const
         return affine_mat_ptr->vertical_shear();
     }
 
-    return 1;
+    return 0;
 }
 
 void sprite_ptr::set_vertical_shear(fixed vertical_shear)

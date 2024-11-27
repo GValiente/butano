@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_5_0 18.5.0 (next release)
+ * @section changelog_18_5_0 18.5.0
  *
  * * bn::sprite_text_generator uses one sprite per character if the space between characters is too big.
  * * bn::sprite_ptr::horizontal_shear and bn::sprite_ptr::vertical_shear fixed.

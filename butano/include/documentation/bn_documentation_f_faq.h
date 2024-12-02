@@ -48,9 +48,7 @@
  *
  * Multiboot ROMs *should be* generated when they have the suffix `_mb`:
  *
- * @code{.cpp}
- * TARGET := $(notdir $(CURDIR))_mb
- * @endcode
+ * `TARGET := $(notdir $(CURDIR))_mb`
  *
  *
  * @section faq_programming Programming
@@ -75,12 +73,12 @@
  *
  * If you get an error message like these:
  *
- * @code{.cpp}
+ * ```
  * error: variable 'bn::regular_bg_ptr bg' has initializer but incomplete type
  * error: invalid use of incomplete type 'class bn::regular_bg_ptr'
  * error: aggregate 'bn::fixed' has incomplete type and cannot be defined
  * error: static assertion failed: template argument must be a complete class or an unbounded array
- * @endcode
+ * ```
  *
  * It is almost always because of lack of included headers.
  *
@@ -120,9 +118,7 @@
  *
  * For example:
  *
- * @code{.cpp}
- * SOURCES := src src/subfolder
- * @endcode
+ * `SOURCES := src src/subfolder`
  *
  *
  * @subsection faq_stack_trace What function or method call is the source of an error message?
@@ -145,9 +141,7 @@
  *
  * If after updating Butano you get error messages like this one:
  *
- * @code{.cpp}
- * error: undefined reference to 'bn::reciprocal_lut_16'
- * @endcode
+ * `error: undefined reference to 'bn::reciprocal_lut_16'`
  *
  * They usually go away with a full rebuild of your project (`make clean` before `make`).
  *

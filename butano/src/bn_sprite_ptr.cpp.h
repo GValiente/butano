@@ -20,15 +20,15 @@ namespace bn
 sprite_ptr sprite_ptr::create(const sprite_item& item)
 {
     return sprite_ptr(sprites_manager::create(
-            fixed_point(), item.shape_size(), item.tiles_item().create_tiles(),
-            item.palette_item().create_palette()));
+            fixed_point(), item.shape_size(), sprite_tiles_ptr::create(item.tiles_item()),
+            sprite_palette_ptr::create(item.palette_item())));
 }
 
 sprite_ptr sprite_ptr::create(const sprite_item& item, int graphics_index)
 {
     return sprite_ptr(sprites_manager::create(
-            fixed_point(), item.shape_size(), item.tiles_item().create_tiles(graphics_index),
-            item.palette_item().create_palette()));
+            fixed_point(), item.shape_size(), sprite_tiles_ptr::create(item.tiles_item(), graphics_index),
+            sprite_palette_ptr::create(item.palette_item())));
 }
 
 sprite_ptr sprite_ptr::create(const sprite_shape_size& shape_size, sprite_tiles_ptr tiles, sprite_palette_ptr palette)
@@ -42,29 +42,29 @@ sprite_ptr sprite_ptr::create(const sprite_shape_size& shape_size, sprite_tiles_
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item)
 {
     return sprite_ptr(sprites_manager::create(fixed_point(x, y), item.shape_size(),
-                                              item.tiles_item().create_tiles(),
-                                              item.palette_item().create_palette()));
+                                              sprite_tiles_ptr::create(item.tiles_item()),
+                                              sprite_palette_ptr::create(item.palette_item())));
 }
 
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_item& item, int graphics_index)
 {
     return sprite_ptr(sprites_manager::create(fixed_point(x, y), item.shape_size(),
-                                              item.tiles_item().create_tiles(graphics_index),
-                                              item.palette_item().create_palette()));
+                                              sprite_tiles_ptr::create(item.tiles_item(), graphics_index),
+                                              sprite_palette_ptr::create(item.palette_item())));
 }
 
 sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& item)
 {
     return sprite_ptr(sprites_manager::create(position, item.shape_size(),
-                                              item.tiles_item().create_tiles(),
-                                              item.palette_item().create_palette()));
+                                              sprite_tiles_ptr::create(item.tiles_item()),
+                                              sprite_palette_ptr::create(item.palette_item())));
 }
 
 sprite_ptr sprite_ptr::create(const fixed_point& position, const sprite_item& item, int graphics_index)
 {
     return sprite_ptr(sprites_manager::create(position, item.shape_size(),
-                                              item.tiles_item().create_tiles(graphics_index),
-                                              item.palette_item().create_palette()));
+                                              sprite_tiles_ptr::create(item.tiles_item(), graphics_index),
+                                              sprite_palette_ptr::create(item.palette_item())));
 }
 
 sprite_ptr sprite_ptr::create(fixed x, fixed y, const sprite_shape_size& shape_size, sprite_tiles_ptr tiles,
@@ -133,12 +133,12 @@ optional<sprite_ptr> sprite_ptr::create_optional(fixed x, fixed y, const sprite_
 
 optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_item& item)
 {
-    optional<sprite_tiles_ptr> tiles = item.tiles_item().create_tiles();
+    optional<sprite_tiles_ptr> tiles = sprite_tiles_ptr::create_optional(item.tiles_item());
     optional<sprite_ptr> result;
 
     if(sprite_tiles_ptr* tiles_ptr = tiles.get())
     {
-        optional<sprite_palette_ptr> palette = item.palette_item().create_palette();
+        optional<sprite_palette_ptr> palette = sprite_palette_ptr::create_optional(item.palette_item());
 
         if(sprite_palette_ptr* palette_ptr = palette.get())
         {
@@ -156,12 +156,12 @@ optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, co
 optional<sprite_ptr> sprite_ptr::create_optional(const fixed_point& position, const sprite_item& item,
                                                  int graphics_index)
 {
-    optional<sprite_tiles_ptr> tiles = item.tiles_item().create_tiles(graphics_index);
+    optional<sprite_tiles_ptr> tiles = sprite_tiles_ptr::create_optional(item.tiles_item(), graphics_index);
     optional<sprite_ptr> result;
 
     if(sprite_tiles_ptr* tiles_ptr = tiles.get())
     {
-        optional<sprite_palette_ptr> palette = item.palette_item().create_palette();
+        optional<sprite_palette_ptr> palette = sprite_palette_ptr::create_optional(item.palette_item());
 
         if(sprite_palette_ptr* palette_ptr = palette.get())
         {
@@ -309,7 +309,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item)
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, tiles_item.create_tiles());
+        sprites_manager::set_tiles(_handle, sprite_tiles_ptr::create(tiles_item));
     }
 }
 
@@ -324,7 +324,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, int graphics_ind
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, tiles_item.create_tiles(graphics_index));
+        sprites_manager::set_tiles(_handle, sprite_tiles_ptr::create(tiles_item, graphics_index));
     }
 }
 
@@ -339,7 +339,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_sha
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, shape_size, tiles_item.create_tiles());
+        sprites_manager::set_tiles(_handle, shape_size, sprite_tiles_ptr::create(tiles_item));
     }
 }
 
@@ -355,7 +355,7 @@ void sprite_ptr::set_tiles(const sprite_tiles_item& tiles_item, const sprite_sha
     else
     {
         sprites_manager::remove_tiles(_handle);
-        sprites_manager::set_tiles(_handle, shape_size, tiles_item.create_tiles(graphics_index));
+        sprites_manager::set_tiles(_handle, shape_size, sprite_tiles_ptr::create(tiles_item, graphics_index));
     }
 }
 
@@ -389,12 +389,12 @@ void sprite_ptr::set_palette(const sprite_palette_item& palette_item)
         else
         {
             sprites_manager::remove_palette(_handle);
-            sprites_manager::set_palette(_handle, old_bpp, palette_item.create_new_palette());
+            sprites_manager::set_palette(_handle, old_bpp, sprite_palette_ptr::create_new(palette_item));
         }
     }
     else
     {
-        sprites_manager::set_palette(_handle, old_bpp, palette_item.create_palette());
+        sprites_manager::set_palette(_handle, old_bpp, sprite_palette_ptr::create(palette_item));
     }
 }
 
@@ -418,7 +418,7 @@ void sprite_ptr::set_item(const sprite_item& item)
     if(! tiles_ptr)
     {
         sprites_manager::remove_tiles(_handle);
-        tiles = tiles_item.create_tiles();
+        tiles = sprite_tiles_ptr::create(tiles_item);
         tiles_ptr = tiles.get();
     }
 
@@ -433,7 +433,7 @@ void sprite_ptr::set_item(const sprite_item& item)
             sprites_manager::remove_palette(_handle);
         }
 
-        palette = palette_item.create_new_palette();
+        palette = sprite_palette_ptr::create_new(palette_item);
         palette_ptr = palette.get();
     }
 
@@ -449,7 +449,7 @@ void sprite_ptr::set_item(const sprite_item& item, int graphics_index)
     if(! tiles_ptr)
     {
         sprites_manager::remove_tiles(_handle);
-        tiles = tiles_item.create_tiles(graphics_index);
+        tiles = sprite_tiles_ptr::create(tiles_item, graphics_index);
         tiles_ptr = tiles.get();
     }
 
@@ -464,7 +464,7 @@ void sprite_ptr::set_item(const sprite_item& item, int graphics_index)
             sprites_manager::remove_palette(_handle);
         }
 
-        palette = palette_item.create_new_palette();
+        palette = sprite_palette_ptr::create_new(palette_item);
         palette_ptr = palette.get();
     }
 

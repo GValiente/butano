@@ -114,6 +114,17 @@
  * * Do the same with the rest of the files in the `common` folder (`*.bmp`, `*.json`, etc).
  *
  *
+ * @subsection faq_subfolder Can I use subfolders for code and assets?
+ *
+ * Yes, but you need to add them to the `Makefile` of your project.
+ *
+ * For example:
+ *
+ * @code{.cpp}
+ * SOURCES := src src/subfolder
+ * @endcode
+ *
+ *
  * @subsection faq_stack_trace What function or method call is the source of an error message?
  *
  * You can enable stack trace logging in the `Makefile` of your project, so that when an error message is displayed,

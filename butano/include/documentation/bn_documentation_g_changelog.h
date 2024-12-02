@@ -18,6 +18,7 @@
  * * `create_new` map methods are deprecated.
  * * Small ROM usage reduction.
  * * bn::sprite_ptr::create_optional fixed.
+ * * @ref faq_subfolder question added to the @ref faq page.
  *
  *
  * @section changelog_18_5_0 18.5.0

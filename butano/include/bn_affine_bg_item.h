@@ -270,34 +270,16 @@ public:
      */
     [[nodiscard]] affine_bg_map_ptr create_map(int map_index) const;
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the information provided by this item.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the information provided by this item is already referenced or not,
-     * you should use the create_map method instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @return affine_bg_map_ptr which references the information provided by this item.
-     */
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create_map() method instead")]]
     [[nodiscard]] affine_bg_map_ptr create_new_map() const;
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the information provided by this item.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the information provided by this item is already referenced or not,
-     * you should use the create_map method instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param map_index Index of the referenced map to handle.
-     * @return affine_bg_map_ptr which references the information provided by this item.
-     */
+
+    [[deprecated("Call create_map() method instead")]]
     [[nodiscard]] affine_bg_map_ptr create_new_map(int map_index) const;
+
+    /// @endcond
 
     /**
      * @brief Searches for an affine_bg_map_ptr which references the information provided by this item.
@@ -326,36 +308,15 @@ public:
      */
     [[nodiscard]] optional<affine_bg_map_ptr> create_map_optional(int map_index) const;
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the information provided by this item.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the information provided by this item is already referenced or not,
-     * you should use the create_map_optional method instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @return affine_bg_map_ptr which references the information provided by this item
-     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
-     */
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create_map_optional() method instead")]]
     [[nodiscard]] optional<affine_bg_map_ptr> create_new_map_optional() const;
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the information provided by this item.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the information provided by this item is already referenced or not,
-     * you should use the create_map_optional method instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param map_index Index of the referenced map to handle.
-     * @return affine_bg_map_ptr which references the information provided by this item
-     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
-     */
+    [[deprecated("Call create_map_optional() method instead")]]
     [[nodiscard]] optional<affine_bg_map_ptr> create_new_map_optional(int map_index) const;
+
+    /// @endcond
 
     /**
      * @brief Default equal operator.

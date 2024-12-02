@@ -344,7 +344,7 @@ void affine_bg_ptr::set_map(const affine_bg_map_item& map_item)
         affine_bg_tiles_ptr tiles_copy(current_tiles);
         bg_palette_ptr palette_copy(current_palette);
         bgs_manager::remove_affine_map(_handle);
-        bgs_manager::set_affine_map(_handle, map_item.create_new_map(move(tiles_copy), move(palette_copy)));
+        bgs_manager::set_affine_map(_handle, map_item.create_map(move(tiles_copy), move(palette_copy)));
     }
 }
 
@@ -364,7 +364,7 @@ void affine_bg_ptr::set_map(const affine_bg_map_item& map_item, int map_index)
         bg_palette_ptr palette_copy(current_palette);
         bgs_manager::remove_affine_map(_handle);
         bgs_manager::set_affine_map(
-                    _handle, map_item.create_new_map(move(tiles_copy), move(palette_copy), map_index));
+                _handle, map_item.create_map(move(tiles_copy), move(palette_copy), map_index));
     }
 }
 
@@ -387,11 +387,11 @@ void affine_bg_ptr::set_item(const affine_bg_item& item)
         if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
         {
             bgs_manager::set_affine_map(
-                        _handle, map_item.create_new_map(move(*tiles_ptr), item.palette_item().create_palette()));
+                    _handle, map_item.create_map(move(*tiles_ptr), item.palette_item().create_palette()));
         }
         else
         {
-            bgs_manager::set_affine_map(_handle, item.create_new_map());
+            bgs_manager::set_affine_map(_handle, item.create_map());
         }
     }
 }
@@ -414,12 +414,12 @@ void affine_bg_ptr::set_item(const affine_bg_item& item, int map_index)
 
         if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
         {
-            bgs_manager::set_affine_map(_handle, map_item.create_new_map(
-                                            move(*tiles_ptr), item.palette_item().create_palette(), map_index));
+            bgs_manager::set_affine_map(
+                    _handle, map_item.create_map(move(*tiles_ptr), item.palette_item().create_palette(), map_index));
         }
         else
         {
-            bgs_manager::set_affine_map(_handle, item.create_new_map(map_index));
+            bgs_manager::set_affine_map(_handle, item.create_map(map_index));
         }
     }
 }

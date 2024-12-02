@@ -113,12 +113,12 @@ regular_bg_map_ptr regular_bg_item::create_map(int map_index) const
 
 regular_bg_map_ptr regular_bg_item::create_new_map() const
 {
-    return regular_bg_map_ptr::create_new(*this);
+    return create_map();
 }
 
 regular_bg_map_ptr regular_bg_item::create_new_map(int map_index) const
 {
-    return regular_bg_map_ptr::create_new(*this, map_index);
+    return create_map(map_index);
 }
 
 optional<regular_bg_map_ptr> regular_bg_item::create_map_optional() const
@@ -133,12 +133,12 @@ optional<regular_bg_map_ptr> regular_bg_item::create_map_optional(int map_index)
 
 optional<regular_bg_map_ptr> regular_bg_item::create_new_map_optional() const
 {
-    return regular_bg_map_ptr::create_new_optional(*this);
+    return create_map_optional();
 }
 
 optional<regular_bg_map_ptr> regular_bg_item::create_new_map_optional(int map_index) const
 {
-    return regular_bg_map_ptr::create_new_optional(*this, map_index);
+    return create_map_optional(map_index);
 }
 
 }

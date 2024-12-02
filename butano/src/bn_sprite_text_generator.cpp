@@ -1039,7 +1039,7 @@ namespace
 
         if(allow_failure)
         {
-            palette = generator.palette_item().create_palette_optional();
+            palette = sprite_palette_ptr::create_optional(generator.palette_item());
             palette_ptr = palette.get();
 
             if(! palette_ptr)
@@ -1049,7 +1049,7 @@ namespace
         }
         else
         {
-            palette = generator.palette_item().create_palette();
+            palette = sprite_palette_ptr::create(generator.palette_item());
             palette_ptr = palette.get();
         }
 

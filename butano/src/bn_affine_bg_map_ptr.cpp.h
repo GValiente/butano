@@ -98,8 +98,8 @@ affine_bg_map_ptr affine_bg_map_ptr::create(const affine_bg_item& item)
 {
     const affine_bg_map_item& map_item = item.map_item();
     int handle = bg_blocks_manager::create_affine_map(
-                map_item, map_item.cells_ptr(), item.tiles_item().create_tiles(),
-                item.palette_item().create_palette(), false);
+                map_item, map_item.cells_ptr(), affine_bg_tiles_ptr::create(item.tiles_item()),
+                bg_palette_ptr::create(item.palette_item()), false);
     return affine_bg_map_ptr(handle);
 }
 
@@ -107,8 +107,8 @@ affine_bg_map_ptr affine_bg_map_ptr::create(const affine_bg_item& item, int map_
 {
     const affine_bg_map_item& map_item = item.map_item();
     int handle = bg_blocks_manager::create_affine_map(
-                map_item, map_item.cells_ptr(map_index), item.tiles_item().create_tiles(),
-                item.palette_item().create_palette(), false);
+                map_item, map_item.cells_ptr(map_index), affine_bg_tiles_ptr::create(item.tiles_item()),
+                bg_palette_ptr::create(item.palette_item()), false);
     return affine_bg_map_ptr(handle);
 }
 
@@ -163,12 +163,12 @@ optional<affine_bg_map_ptr> affine_bg_map_ptr::create_optional(
 
 optional<affine_bg_map_ptr> affine_bg_map_ptr::create_optional(const affine_bg_item& item)
 {
-    optional<affine_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional();
+    optional<affine_bg_tiles_ptr> tiles = affine_bg_tiles_ptr::create_optional(item.tiles_item());
     optional<affine_bg_map_ptr> result;
 
     if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional();
+        optional<bg_palette_ptr> palette = bg_palette_ptr::create_optional(item.palette_item());
 
         if(bg_palette_ptr* palette_ptr = palette.get())
         {
@@ -188,12 +188,12 @@ optional<affine_bg_map_ptr> affine_bg_map_ptr::create_optional(const affine_bg_i
 
 optional<affine_bg_map_ptr> affine_bg_map_ptr::create_optional(const affine_bg_item& item, int map_index)
 {
-    optional<affine_bg_tiles_ptr> tiles = item.tiles_item().create_tiles_optional();
+    optional<affine_bg_tiles_ptr> tiles = affine_bg_tiles_ptr::create_optional(item.tiles_item());
     optional<affine_bg_map_ptr> result;
 
     if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
     {
-        optional<bg_palette_ptr> palette = item.palette_item().create_palette_optional();
+        optional<bg_palette_ptr> palette = bg_palette_ptr::create_optional(item.palette_item());
 
         if(bg_palette_ptr* palette_ptr = palette.get())
         {
@@ -343,7 +343,7 @@ void affine_bg_map_ptr::set_tiles(const affine_bg_tiles_item& tiles_item)
     else
     {
         bg_blocks_manager::remove_affine_map_tiles(_handle);
-        bg_blocks_manager::set_affine_map_tiles(_handle, tiles_item.create_tiles());
+        bg_blocks_manager::set_affine_map_tiles(_handle, affine_bg_tiles_ptr::create(tiles_item));
     }
 }
 
@@ -364,7 +364,7 @@ void affine_bg_map_ptr::set_palette(bg_palette_ptr&& palette)
 
 void affine_bg_map_ptr::set_palette(const bg_palette_item& palette_item)
 {
-    bg_blocks_manager::set_affine_map_palette(_handle, palette_item.create_palette());
+    bg_blocks_manager::set_affine_map_palette(_handle, bg_palette_ptr::create(palette_item));
 }
 
 optional<span<affine_bg_map_cell>> affine_bg_map_ptr::vram()

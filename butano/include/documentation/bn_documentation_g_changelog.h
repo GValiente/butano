@@ -16,6 +16,7 @@
  *
  * * Big maps maximum size is limited to 16384 pixels.
  * * `create_new` map methods are deprecated.
+ * * Small ROM usage reduction.
  * * bn::sprite_ptr::create_optional fixed.
  *
  *

@@ -1083,8 +1083,8 @@ sprite_third_attributes third_attributes(id_type id)
 
 void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes)
 {
-    set_tiles_and_palette(id, shape_size(id), bn::sprite_tiles_ptr(third_attributes.tiles()),
-                          bn::sprite_palette_ptr(third_attributes.palette()));
+    set_tiles_and_palette(id, shape_size(id), sprite_tiles_ptr(third_attributes.tiles()),
+                          sprite_palette_ptr(third_attributes.palette()));
     set_bg_priority(id, third_attributes.bg_priority());
 }
 

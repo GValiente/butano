@@ -375,7 +375,7 @@ sprite_tiles_ptr sprite_builder::tiles() const
 {
     if(const sprite_item* item = _item.get())
     {
-        return item->tiles_item().create_tiles(_graphics_index);
+        return sprite_tiles_ptr::create(item->tiles_item(), _graphics_index);
     }
 
     return *_tiles;
@@ -385,7 +385,7 @@ sprite_palette_ptr sprite_builder::palette() const
 {
     if(const sprite_item* item = _item.get())
     {
-        return item->palette_item().create_palette();
+        return sprite_palette_ptr::create(item->palette_item());
     }
 
     return *_palette;
@@ -397,7 +397,7 @@ optional<sprite_tiles_ptr> sprite_builder::tiles_optional() const
 
     if(const sprite_item* item = _item.get())
     {
-        result = item->tiles_item().create_tiles_optional(_graphics_index);
+        result = sprite_tiles_ptr::create_optional(item->tiles_item(), _graphics_index);
     }
     else
     {
@@ -413,7 +413,7 @@ optional<sprite_palette_ptr> sprite_builder::palette_optional() const
 
     if(const sprite_item* item = _item.get())
     {
-        result = item->palette_item().create_palette_optional();
+        result = sprite_palette_ptr::create_optional(item->palette_item());
     }
     else
     {
@@ -426,7 +426,7 @@ optional<sprite_palette_ptr> sprite_builder::palette_optional() const
 sprite_tiles_ptr sprite_builder::release_tiles()
 {
     const sprite_item* item = _item.get();
-    sprite_tiles_ptr result = item ? item->tiles_item().create_tiles(_graphics_index) : move(*_tiles);
+    sprite_tiles_ptr result = item ? sprite_tiles_ptr::create(item->tiles_item(), _graphics_index) : move(*_tiles);
     _tiles.reset();
     return result;
 }
@@ -434,7 +434,7 @@ sprite_tiles_ptr sprite_builder::release_tiles()
 sprite_palette_ptr sprite_builder::release_palette()
 {
     const sprite_item* item = _item.get();
-    sprite_palette_ptr result = item ? item->palette_item().create_palette() : move(*_palette);
+    sprite_palette_ptr result = item ? sprite_palette_ptr::create(item->palette_item()) : move(*_palette);
     _palette.reset();
     return result;
 }
@@ -445,7 +445,7 @@ optional<sprite_tiles_ptr> sprite_builder::release_tiles_optional()
 
     if(const sprite_item* item = _item.get())
     {
-        result = item->tiles_item().create_tiles_optional(_graphics_index);
+        result = sprite_tiles_ptr::create_optional(item->tiles_item(), _graphics_index);
     }
     else
     {
@@ -462,7 +462,7 @@ optional<sprite_palette_ptr> sprite_builder::release_palette_optional()
 
     if(const sprite_item* item = _item.get())
     {
-        result = item->palette_item().create_palette_optional();
+        result = sprite_palette_ptr::create_optional(item->palette_item());
     }
     else
     {

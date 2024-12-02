@@ -209,7 +209,7 @@ void isprite_cached_animate_action::_assign_graphics_indexes(
 
     for(int graphics_index : graphics_indexes)
     {
-        _tiles_list_ref->push_back(tiles_item.create_tiles(graphics_index));
+        _tiles_list_ref->push_back(sprite_tiles_ptr::create(tiles_item, graphics_index));
     }
 }
 

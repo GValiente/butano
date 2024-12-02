@@ -102,7 +102,7 @@ regular_bg_map_ptr regular_bg_builder::map() const
 {
     if(const regular_bg_item* item = _item.get())
     {
-        return item->create_map(_map_index);
+        return regular_bg_map_ptr::create(*item, _map_index);
     }
 
     return *_map;
@@ -114,7 +114,7 @@ optional<regular_bg_map_ptr> regular_bg_builder::map_optional() const
 
     if(const regular_bg_item* item = _item.get())
     {
-        result = item->create_map_optional(_map_index);
+        result = regular_bg_map_ptr::create_optional(*item, _map_index);
     }
     else
     {
@@ -127,7 +127,7 @@ optional<regular_bg_map_ptr> regular_bg_builder::map_optional() const
 regular_bg_map_ptr regular_bg_builder::release_map()
 {
     const regular_bg_item* item = _item.get();
-    regular_bg_map_ptr result = item ? item->create_map(_map_index) : move(*_map);
+    regular_bg_map_ptr result = item ? regular_bg_map_ptr::create(*item, _map_index) : move(*_map);
     _map.reset();
     return result;
 }
@@ -138,7 +138,7 @@ optional<regular_bg_map_ptr> regular_bg_builder::release_map_optional()
 
     if(const regular_bg_item* item = _item.get())
     {
-        result = item->create_map_optional(_map_index);
+        result = regular_bg_map_ptr::create_optional(*item, _map_index);
     }
     else
     {

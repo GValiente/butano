@@ -211,7 +211,7 @@ void iregular_bg_cached_animate_action::_assign_map_indexes(
 
     for(int map_index : map_indexes)
     {
-        _maps_ref->push_back(map_item.create_map(tiles, palette, map_index));
+        _maps_ref->push_back(regular_bg_map_ptr::create(map_item, tiles, palette, map_index));
     }
 }
 

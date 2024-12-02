@@ -503,7 +503,7 @@
  *
  * The GBA only supports some fixed sizes for background maps.
  *
- * However, Butano allows to manage background maps with any size multiple of 256 pixels.
+ * However, Butano allows to manage background maps with any size up to 16384 pixels and multiple of 256 pixels.
  * These special background maps and the backgrounds that display them are called big maps/backgrounds.
  *
  * Try to avoid big backgrounds whenever possible, because they are slower CPU wise.

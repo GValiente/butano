@@ -94,10 +94,10 @@ public:
         _big(_big_dimensions(dimensions))
     {
         BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
-                  (dimensions.width() >= 32 && dimensions.width() % 32 == 0),
+                  (dimensions.width() >= 32 && dimensions.width() <= 2048 && dimensions.width() % 32 == 0),
                   "Invalid width: ", dimensions.width());
         BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
-                  (dimensions.height() >= 32 && dimensions.height() % 32 == 0),
+                  (dimensions.height() >= 32 && dimensions.height() <= 2048 && dimensions.height() % 32 == 0),
                   "Invalid height: ", dimensions.height());
     }
 
@@ -122,10 +122,10 @@ public:
         _big(_big_dimensions(dimensions))
     {
         BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
-                  (dimensions.width() >= 32 && dimensions.width() % 32 == 0),
+                  (dimensions.width() >= 32 && dimensions.width() <= 2048 && dimensions.width() % 32 == 0),
                   "Invalid width: ", dimensions.width());
         BN_ASSERT((dimensions.width() == 16 && dimensions.height() == 16) ||
-                  (dimensions.height() >= 32 && dimensions.height() % 32 == 0),
+                  (dimensions.height() >= 32 && dimensions.height() <= 2048 && dimensions.height() % 32 == 0),
                   "Invalid height: ", dimensions.height());
         BN_ASSERT(maps_count > 0 && maps_count < 65536, "Invalid maps count: ", maps_count);
     }
@@ -154,10 +154,10 @@ public:
         _big(big)
     {
         BN_ASSERT((! big && dimensions.width() == 16 && dimensions.height() == 16) ||
-                  (dimensions.width() >= 32 && dimensions.width() % 32 == 0),
+                  (dimensions.width() >= 32 && dimensions.width() <= 2048 && dimensions.width() % 32 == 0),
                   "Invalid width: ", dimensions.width());
         BN_ASSERT((! big && dimensions.width() == 16 && dimensions.height() == 16) ||
-                  (dimensions.height() >= 32 && dimensions.height() % 32 == 0),
+                  (dimensions.height() >= 32 && dimensions.height() <= 2048 && dimensions.height() % 32 == 0),
                   "Invalid height: ", dimensions.height());
         BN_ASSERT(! big || dimensions.width() > 32 || dimensions.height() > 32,
                   "Too small for a big map: ", dimensions.width(), " - ", dimensions.height());

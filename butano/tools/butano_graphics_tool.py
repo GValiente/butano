@@ -620,6 +620,9 @@ class RegularBgItem:
             if self.__big:
                 if width == 256 and height == 256:
                     raise ValueError('Too small size for a big regular BG: ' + str(width) + ' - ' + str(height))
+
+                if width > 16384 or height > 16384:
+                    raise ValueError('Too big size for a big regular BG: ' + str(width) + ' - ' + str(height))
             else:
                 if big_dimensions:
                     raise ValueError('Too big size for a not big regular BG: ' + str(width) + ' - ' + str(height))
@@ -1134,6 +1137,9 @@ class AffineBgItem:
             if self.__big:
                 if width <= 256 and height <= 256:
                     raise ValueError('Too small size for a big affine BG: ' + str(width) + ' - ' + str(height))
+
+                if width > 16384 or height > 16384:
+                    raise ValueError('Too big size for a big affine BG: ' + str(width) + ' - ' + str(height))
             else:
                 if big_dimensions:
                     raise ValueError('Too big size for a not big affine BG: ' + str(width) + ' - ' + str(height))

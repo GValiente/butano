@@ -89,13 +89,13 @@ regular_bg_map_ptr regular_bg_map_item::create_map(
 
 regular_bg_map_ptr regular_bg_map_item::create_new_map(regular_bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::create_new(*this, move(tiles), move(palette));
+    return create_map(move(tiles), move(palette));
 }
 
 regular_bg_map_ptr regular_bg_map_item::create_new_map(
         regular_bg_tiles_ptr tiles, bg_palette_ptr palette, int map_index) const
 {
-    return regular_bg_map_ptr::create_new(*this, move(tiles), move(palette), map_index);
+    return create_map(move(tiles), move(palette), map_index);
 }
 
 optional<regular_bg_map_ptr> regular_bg_map_item::create_map_optional(
@@ -113,13 +113,13 @@ optional<regular_bg_map_ptr> regular_bg_map_item::create_map_optional(
 optional<regular_bg_map_ptr> regular_bg_map_item::create_new_map_optional(
         regular_bg_tiles_ptr tiles, bg_palette_ptr palette) const
 {
-    return regular_bg_map_ptr::create_new_optional(*this, move(tiles), move(palette));
+    return create_map_optional(move(tiles), move(palette));
 }
 
 optional<regular_bg_map_ptr> regular_bg_map_item::create_new_map_optional(
         regular_bg_tiles_ptr tiles, bg_palette_ptr palette, int map_index) const
 {
-    return regular_bg_map_ptr::create_new_optional(*this, move(tiles), move(palette), map_index);
+    return create_map_optional(move(tiles), move(palette), map_index);
 }
 
 }

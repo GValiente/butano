@@ -148,73 +148,29 @@ public:
      */
     [[nodiscard]] static affine_bg_map_ptr create(const affine_bg_item& item, int map_index);
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param map_item affine_bg_map_item which references the map cells to handle.
-     * @param tiles Referenced tiles of the map to handle.
-     * @param palette Referenced color palette of the map to handle.
-     * @return affine_bg_map_ptr which references the given information.
-     */
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create() method instead")]]
     [[nodiscard]] static affine_bg_map_ptr create_new(
             const affine_bg_map_item& map_item, affine_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param map_item affine_bg_map_item which references the map cells to handle.
-     * @param tiles Referenced tiles of the map to handle.
-     * @param palette Referenced color palette of the map to handle.
-     * @param map_index Index of the referenced map to handle.
-     * @return affine_bg_map_ptr which references the given information.
-     */
+    [[deprecated("Call create() method instead")]]
     [[nodiscard]] static affine_bg_map_ptr create_new(
             const affine_bg_map_item& map_item, affine_bg_tiles_ptr tiles, bg_palette_ptr palette, int map_index);
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param item affine_bg_item which references the tiles, the color palette and the map cells to handle.
-     * @return affine_bg_map_ptr which references the given information.
-     */
-    [[nodiscard]] static affine_bg_map_ptr create_new(const affine_bg_item& item);
+    [[deprecated("Call create() method instead")]]
+    [[nodiscard]] static affine_bg_map_ptr create_new(const affine_bg_item& item)
+    {
+        return create(item);
+    }
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param item affine_bg_item which references the tiles, the color palette and the map cells to handle.
-     * @param map_index Index of the referenced map to handle.
-     * @return affine_bg_map_ptr which references the given information.
-     */
-    [[nodiscard]] static affine_bg_map_ptr create_new(const affine_bg_item& item, int map_index);
+    [[deprecated("Call create() method instead")]]
+    [[nodiscard]] static affine_bg_map_ptr create_new(const affine_bg_item& item, int map_index)
+    {
+        return create(item, map_index);
+    }
+
+    /// @endcond
 
     /**
      * @brief Creates an affine_bg_map_ptr which references a chunk of VRAM map cells not visible on the screen.
@@ -292,77 +248,29 @@ public:
      */
     [[nodiscard]] static optional<affine_bg_map_ptr> create_optional(const affine_bg_item& item, int map_index);
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param map_item affine_bg_map_item which references the map cells to handle.
-     * @param tiles Referenced tiles of the map to handle.
-     * @param palette Referenced color palette of the map to handle.
-     * @return affine_bg_map_ptr which references the given information
-     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
-     */
+    /// @cond DO_NOT_DOCUMENT
+
+    [[deprecated("Call create_optional() method instead")]]
     [[nodiscard]] static optional<affine_bg_map_ptr> create_new_optional(
             const affine_bg_map_item& map_item, affine_bg_tiles_ptr tiles, bg_palette_ptr palette);
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param map_item affine_bg_map_item which references the map cells to handle.
-     * @param tiles Referenced tiles of the map to handle.
-     * @param palette Referenced color palette of the map to handle.
-     * @param map_index Index of the referenced map to handle.
-     * @return affine_bg_map_ptr which references the given information
-     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
-     */
+    [[deprecated("Call create_optional() method instead")]]
     [[nodiscard]] static optional<affine_bg_map_ptr> create_new_optional(
             const affine_bg_map_item& map_item, affine_bg_tiles_ptr tiles, bg_palette_ptr palette, int map_index);
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param item affine_bg_item which references the tiles, the color palette and the map cells to handle.
-     * @return affine_bg_map_ptr which references the given information
-     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
-     */
-    [[nodiscard]] static optional<affine_bg_map_ptr> create_new_optional(const affine_bg_item& item);
+    [[deprecated("Call create_optional() method instead")]]
+    [[nodiscard]] static optional<affine_bg_map_ptr> create_new_optional(const affine_bg_item& item)
+    {
+        return create_optional(item);
+    }
 
-    /**
-     * @brief Creates an affine_bg_map_ptr which references the given map cells.
-     *
-     * The map system does not support multiple affine_bg_map_ptr items referencing to the same map cells.
-     * If you are not sure if the given map cells are already referenced or not,
-     * you should use the static create methods instead.
-     *
-     * The map cells are not copied but referenced,
-     * so they should outlive the affine_bg_map_ptr to avoid dangling references.
-     *
-     * @param item affine_bg_item which references the tiles, the color palette and the map cells to handle.
-     * @param map_index Index of the referenced map to handle.
-     * @return affine_bg_map_ptr which references the given information
-     * if the affine_bg_map_ptr can be allocated; bn::nullopt otherwise.
-     */
-    [[nodiscard]] static optional<affine_bg_map_ptr> create_new_optional(const affine_bg_item& item, int map_index);
+    [[deprecated("Call create_optional() method instead")]]
+    [[nodiscard]] static optional<affine_bg_map_ptr> create_new_optional(const affine_bg_item& item, int map_index)
+    {
+        return create_optional(item, map_index);
+    }
+
+    /// @endcond
 
     /**
      * @brief Creates an affine_bg_map_ptr which references a chunk of VRAM map cells not visible on the screen.

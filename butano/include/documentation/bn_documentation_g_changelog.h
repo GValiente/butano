@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_6_0 18.6.0 (next release)
+ *
+ * `create_new` map methods are deprecated.
+ *
+ *
  * @section changelog_18_5_0 18.5.0
  *
  * * bn::sprite_text_generator uses one sprite per character if the space between characters is too big.

@@ -84,14 +84,6 @@ namespace bn::bg_blocks_manager
                 const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
                 affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional);
 
-    [[nodiscard]] int create_new_regular_map(
-                const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
-                regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional);
-
-    [[nodiscard]] int create_new_affine_map(
-                const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
-                affine_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette, bool optional);
-
     [[nodiscard]] int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional);
 
     [[nodiscard]] int allocate_affine_tiles(int tiles_count, bool optional);

@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_6_0 18.6.0 (next release)
+ * @section changelog_18_6_0 18.6.0
  *
  * * Big maps maximum size is limited to 16384 pixels.
  * * `create_new` map methods are deprecated.

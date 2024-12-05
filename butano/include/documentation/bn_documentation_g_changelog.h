@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_7_0 18.7.0 (next release)
+ *
+ * bn::utf8_character validation improved.
+ *
+ *
  * @section changelog_18_6_0 18.6.0
  *
  * * Big maps maximum size is limited to 16384 pixels.

@@ -95,7 +95,7 @@ public:
 
             _data |= (*src++ & 0x3F) <<  0;
         }
-        else if(0xF0 <= ch8 && ch8 < 0xF8)
+        else if(0xF0 <= ch8 && ch8 < 0xF5)
         {
             // 21bit
             _data  = (*src++ & 0x0F) << 18;

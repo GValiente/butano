@@ -16,6 +16,7 @@
  *
  * * bn::unique_ptr `operator<<` added.
  * * bn::ibitset `operator<<` added.
+ * * Hash support for bn::ibitset added.
  * * bn::utf8_character validation improved.
  *
  *

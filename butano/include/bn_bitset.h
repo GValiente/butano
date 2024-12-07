@@ -41,6 +41,7 @@
 #include "bn_span.h"
 #include "bn_limits.h"
 #include "bn_sstream.h"
+#include "bn_functional.h"
 #include "bn_bitset_fwd.h"
 
 namespace bn
@@ -907,6 +908,32 @@ public:
     {
         ibitset::operator^=(other);
         return *this;
+    }
+};
+
+/**
+ * @brief Hash support for ibitset.
+ *
+ * @ingroup bitset
+ * @ingroup functional
+ */
+template<>
+struct hash<ibitset>
+{
+    /**
+     * @brief Returns the hash of the given ibitset.
+     */
+    [[nodiscard]] constexpr unsigned operator()(const ibitset& value) const
+    {
+        const ibitset::element_t* data = value.data();
+        unsigned result = make_hash(data[0]);
+
+        for(int index = 1, limit = value.elements_size(); index < limit; ++index)
+        {
+            hash_combine(data[index], result);
+        }
+
+        return result;
     }
 };
 

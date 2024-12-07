@@ -14,7 +14,8 @@
  *
  * @section changelog_18_7_0 18.7.0 (next release)
  *
- * bn::utf8_character validation improved.
+ * * bn::unique_ptr `operator<<` added.
+ * * bn::utf8_character validation improved.
  *
  *
  * @section changelog_18_6_0 18.6.0

@@ -15,6 +15,7 @@
  */
 
 #include "bn_assert.h"
+#include "bn_sstream.h"
 #include "bn_utility.h"
 #include "bn_functional.h"
 #include "bn_unique_ptr_fwd.h"
@@ -451,6 +452,21 @@ struct hash<unique_ptr<Type, Deleter>>
         return make_hash(value.get());
     }
 };
+
+/**
+ * @brief Appends the character representation of the given unique_ptr to the given ostringstream.
+ *
+ * @tparam Type Type of the managed object.
+ * @tparam Deleter Type of the object which disposes the managed object when the unique_ptr goes out of scope.
+ *
+ * @ingroup unique_ptr
+ */
+template<typename Type, typename Deleter>
+ostringstream& operator<<(ostringstream& stream, const unique_ptr<Type, Deleter>& value)
+{
+    stream.append(value.get());
+    return stream;
+}
 
 }
 

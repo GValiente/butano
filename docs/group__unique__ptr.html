@@ -96,6 +96,12 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ga5e22862f8a55007272126b9fb5281e72" class="m-doc">make_unique</a>(</span><span class="m-doc-wrap">Args &amp;&amp; ... args) -&gt; unique_ptr&lt;Type&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Constructs an object and wraps it in a <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type, typename Deleter&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#gacc63a6259504262243a40090f6d063f3" class="m-doc">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const unique_ptr&lt;Type, Deleter&gt;&amp; value) -&gt; ostringstream&amp;</span>
+            </dt>
+            <dd>Appends the character representation of the given <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> to the given ostringstream.</dd>
           </dl>
         </section>
         <section>
@@ -138,6 +144,32 @@
                   <td>A <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> managing the new object.</td>
                 </tr>
               </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="gacc63a6259504262243a40090f6d063f3"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unique__ptr_8h.html">&lt;bn_unique_ptr.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type, typename Deleter&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">ostringstream&amp; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#gacc63a6259504262243a40090f6d063f3" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap">ostringstream&amp; stream,
+              const unique_ptr&lt;Type, Deleter&gt;&amp; value)</span></span>
+            </h3>
+            <p>Appends the character representation of the given <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> to the given ostringstream.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Template parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">Type</td>
+                  <td>Type of the managed object.</td>
+                </tr>
+                <tr>
+                  <td>Deleter</td>
+                  <td>Type of the object which disposes the managed object when the <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> goes out of scope.</td>
+                </tr>
+              </tbody>
             </table>
           </div></section>
         </section>

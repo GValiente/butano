@@ -40,6 +40,7 @@
 #include "bn_bit.h"
 #include "bn_span.h"
 #include "bn_limits.h"
+#include "bn_sstream.h"
 #include "bn_bitset_fwd.h"
 
 namespace bn
@@ -908,6 +909,21 @@ public:
         return *this;
     }
 };
+
+/**
+ * @brief Appends the character representation of the given ibitset to the given ostringstream.
+ *
+ * @ingroup bitset
+ */
+inline ostringstream& operator<<(ostringstream& stream, const ibitset& value)
+{
+    for(int index = 0, limit = value.size(); index < limit; ++index)
+    {
+        stream.append(char(value[index] + '0'));
+    }
+
+    return stream;
+}
 
 }
 

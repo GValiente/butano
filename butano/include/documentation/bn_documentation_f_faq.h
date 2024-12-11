@@ -231,6 +231,21 @@
  * If you need to handle odd dimensions, use bn::top_left_rect instead.
  *
  *
+ * @subsection faq_delta_time How can I get the delta time?
+ *
+ * You can usually assume than your game is running at 60FPS, so to wait one second
+ * you should call bn::core::update 60 times. In this case, the delta time (the time elapsed
+ * between two bn::core::update calls) is always one frame, or `1 / 60` seconds.
+ *
+ * However, if your game is so choppy that it has variable frame rate (it shouldn't), you can get
+ * the number of frames that were missed in the last bn::core::update call with bn::core::last_missed_frames.
+ * The delta time is the number of missed frames plus one:
+ *
+ * @code{.cpp}
+ * int elapsed_frames = bn::core::last_missed_frames() + 1;
+ * @endcode
+ *
+ *
  * @subsection faq_wait_updates Is there a way to stop running my code for a certain amount of time?
  *
  * Since you can usually assume than your game is running at 60FPS,

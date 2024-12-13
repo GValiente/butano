@@ -458,7 +458,7 @@ void sleep(keypad::key_type wake_up_key)
 
 void sleep(const span<const keypad::key_type>& wake_up_keys)
 {
-    BN_ASSERT(! wake_up_keys.empty(), "There's no wake up keys");
+    BN_BASIC_ASSERT(! wake_up_keys.empty(), "There are no keys");
 
     // Force at least one update:
     update();

@@ -42,7 +42,7 @@
  * On the GBA, both sprites and backgrounds have 256 colors organized in blocks of multiples of 16 colors
  * (512 colors in total). Each one of these blocks is called color palette.
  *
- * There's 8 bits per pixel palettes (which can refer to all colors)
+ * There are 8 bits per pixel palettes (which can refer to all colors)
  * and 4 bits per pixel palettes (which can access only to 16 consecutive colors).
  *
  * Butano color palettes system allows to manage individual 4 bits per pixel palettes for sprites and backgrounds,

@@ -276,7 +276,7 @@
  * @section faq_memory Memory
  *
  *
- * @subsection faq_memory_containers Why there's std like containers included with Butano?
+ * @subsection faq_memory_containers Why are there std like containers included with Butano?
  *
  * Butano containers differ from the standard library ones in two important points:
  * * They don't use the heap, their content is always on the stack.

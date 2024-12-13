@@ -19,6 +19,7 @@
  * * Hash support for bn::ibitset added.
  * * bn::utf8_character validation improved.
  * * @ref faq_delta_time question added to the @ref faq page.
+ * * Some spelling mistakes fixed.
  *
  *
  * @section changelog_18_6_0 18.6.0

@@ -152,7 +152,7 @@ void update()
 
 void set_interrupt(const span<const key_type>& keys)
 {
-    BN_ASSERT(! keys.empty(), "There's no keys");
+    BN_BASIC_ASSERT(! keys.empty(), "There are no keys");
 
     hw::keypad::set_interrupt(keys);
 }

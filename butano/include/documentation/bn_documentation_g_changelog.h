@@ -87,7 +87,7 @@
  * * bn::intrusive_list and bn::intrusive_forward_list iterator constructors are now public.
  * * Real time clock (RTC) string added.
  * * SRAM string with link-time optimization fixed.
- * * @ref faq_bg_top_left and @ref faq_sprites_top_left questions added to the @ref faq page.
+ * * @ref faq_backgrounds_top_left and @ref faq_sprites_top_left questions added to the @ref faq page.
  * * @ref faq_flash_carts_sram question improved.
  *
  *
@@ -235,8 +235,8 @@
  * * `profiler` example simplified.
  * * Compression algorithms added to the `profiler` test.
  * * @ref faq_stack_trace question added to the @ref faq page.
- * * @ref faq_8bpp_palette_change question added to the @ref faq page.
- * * @ref faq_sprites_hidden and @ref faq_background_hidden questions added to the @ref faq page.
+ * * @ref faq_color_8bpp_palette_change question added to the @ref faq page.
+ * * @ref faq_sprites_hidden and @ref faq_backgrounds_hidden questions added to the @ref faq page.
  * * @ref getting_started guide improved.
  * * @ref faq_memory_types question improved.
  * * <a href="https://github.com/nikku4211/wavefront2varooom3d">Wavefront To Varooom 3D</a> added to `README.md`.
@@ -420,7 +420,7 @@
  * * Import tool now allows to specify whether regular and affine backgrounds are big or not.
  *   See the @ref import_regular_bg and the @ref import_affine_bg import guides to learn how to specify it.
  * * bn::regular_bg_map_item::flat_layout added.
- * * @ref faq_sprites_multiple_8bpp and @ref faq_bg_multiple_8bpp questions added to the @ref faq page.
+ * * @ref faq_sprites_multiple_8bpp and @ref faq_backgrounds_multiple_8bpp questions added to the @ref faq page.
  * * @ref faq_images_invalid_header_size question added to the @ref faq page.
  * * @ref import_image import guide improved.
  *

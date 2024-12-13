@@ -396,7 +396,7 @@
  * @section faq_color Colors
  *
  *
- * @subsection faq_transparent_color Which color is the transparent one?
+ * @subsection faq_color_transparent Which color is the transparent one?
  *
  * Butano supports 16 or 256 color images only, so they must have a color palette.
  *
@@ -407,7 +407,7 @@
  * @image html import_usenti.png
  *
  *
- * @subsection faq_backdrop_color How can I set the backdrop color?
+ * @subsection faq_color_backdrop How can I set the backdrop color?
  *
  * The transparent or the backdrop color (displayed color when nothing else is)
  * is the first one in the backgrounds palette.
@@ -415,14 +415,14 @@
  * You can override its default value with bn::bg_palettes::set_transparent_color.
  *
  *
- * @subsection faq_share_palettes How to share the same color palette between sprites or backgrounds?
+ * @subsection faq_color_share_palettes How to share the same color palette between sprites or backgrounds?
  *
  * If two sprites or backgrounds have the same colors, by default they share the same color palette.
  *
  * Keep in mind that unused colors are also taken into account when deciding if two color palettes are equal or not.
  *
  *
- * @subsection faq_8bpp_palette_change Why changing the color palette of an 8BPP sprite or background doesn't work?
+ * @subsection faq_color_8bpp_palette_change Why changing the color palette of an 8BPP sprite or background doesn't work?
  *
  * Since the GBA has only 256 colors for sprites, if you use two sprites with more than 16 colors at the same time,
  * Butano assumes that they have the same color palette (same colors in the same order).
@@ -502,13 +502,13 @@
  * @section faq_backgrounds Backgrounds
  *
  *
- * @subsection faq_bg_top_left Why background coordinates are relative to the center of the screen, instead of to its top-left corner?
+ * @subsection faq_backgrounds_top_left Why background coordinates are relative to the center of the screen, instead of to its top-left corner?
  *
  * If you don't like it, you can always use the `top_left` methods to specify coordinates relative
  * to the top-left corner of the screen. They're a bit slower than the regular ones, though.
  *
  *
- * @subsection faq_bg_multiple_8bpp Why everything looks weird when I show two or more backgrounds with more than 16 colors?
+ * @subsection faq_backgrounds_multiple_8bpp Why everything looks weird when I show two or more backgrounds with more than 16 colors?
  *
  * Since the GBA has only 256 colors for tiled backgrounds, if you use two 8BPP backgrounds,
  * Butano assumes that they have the same color palette (same colors in the same order).
@@ -519,7 +519,7 @@
  * * Change their BPP mode to 4BPP, so each background can have its own color palette with more than 16 colors.
  *
  *
- * @subsection faq_big_background What's a big background?
+ * @subsection faq_backgrounds_big What's a big background?
  *
  * The GBA only supports some fixed sizes for background maps.
  *
@@ -529,7 +529,7 @@
  * Try to avoid big backgrounds whenever possible, because they are slower CPU wise.
  *
  *
- * @subsection faq_regular_affine_background Why there are two types of backgrounds (regular and affine)?
+ * @subsection faq_backgrounds_regular_affine Why there are two types of backgrounds (regular and affine)?
  *
  * It seems it is always better to use affine backgrounds, since they can be rotated, scaled, etc.
  * and its size can be up to 1024x1024 pixels without becoming big backgrounds.
@@ -543,7 +543,7 @@
  * Because of these limitations, you should avoid affine backgrounds whenever possible.
  *
  *
- * @subsection faq_background_error_grit Why can't I import a regular background with 1024 or less tiles?
+ * @subsection faq_backgrounds_error_grit Why can't I import a regular background with 1024 or less tiles?
  *
  * If you get this error when trying to import a regular background with 1024 or less tiles:
  *
@@ -565,7 +565,7 @@
  * the `dynamic_affine_bg` example for that.
  *
  *
- * @subsection faq_background_hidden Does hiding a background make it count towards the total number of allowed backgrounds?
+ * @subsection faq_backgrounds_hidden Does hiding a background make it count towards the total number of allowed backgrounds?
  *
  * Hidden backgrounds are not committed to the GBA, but they still take resources like color palettes and VRAM.
  *
@@ -582,7 +582,7 @@
  * @section faq_audio Audio
  *
  *
- * @subsection faq_music_crash Why the game crashes when some Direct Sound songs are played?
+ * @subsection faq_audio_music_crash Why the game crashes when some Direct Sound songs are played?
  *
  * Butano uses the excellent <a href="https://maxmod.devkitpro.org/">Maxmod</a> library
  * for Direct Sound audio support.
@@ -598,7 +598,7 @@
  * but since it seems the library was abandoned long time ago, don't get your hopes up too high.
  *
  *
- * @subsection faq_music_wav Why can't I use a long *.wav file as music?
+ * @subsection faq_audio_music_wav Why can't I use a long *.wav file as music?
  *
  * <a href="https://maxmod.devkitpro.org/">Maxmod</a> doesn't allow to play long `*.wav` files as music,
  * unfortunately.
@@ -615,7 +615,7 @@
  * a tool that generates a `*.s3m` file from a long `*.wav` automatically.
  *
  *
- * @subsection faq_music_missing_notes Why there are missing notes when playing some Direct Sound songs?
+ * @subsection faq_audio_music_missing_notes Why there are missing notes when playing some Direct Sound songs?
  *
  * If a song doesn't have more channels than the maximum number of active Direct Sound music channels
  * specified by @ref BN_CFG_AUDIO_MAX_MUSIC_CHANNELS, as before,

@@ -18,7 +18,8 @@
  * * bn::ibitset `operator<<` added.
  * * Hash support for bn::ibitset added.
  * * bn::utf8_character validation improved.
- * * @ref faq_delta_time and @ref faq_backgrounds_animated questions added to the @ref faq page.
+ * * @ref faq_delta_time, @ref faq_sprites_metasprites and @ref faq_backgrounds_animated questions
+ *   added to the @ref faq page.
  * * Some spelling mistakes fixed.
  *
  *

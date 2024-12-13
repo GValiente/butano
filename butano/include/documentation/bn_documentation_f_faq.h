@@ -478,6 +478,11 @@
  * using backgrounds instead of sprites.
  *
  *
+ * @subsection faq_sprites_metasprites Does Butano support metasprites?
+ *
+ * Metasprites (groups of regular sprites that together represent one single bigger sprite) are not supported by Butano.
+ *
+ *
  * @subsection faq_sprites_hidden Does hiding a sprite make it count towards the total number of allowed sprites?
  *
  * Hidden sprites are not committed to the GBA, but they still take resources like color palettes and VRAM.

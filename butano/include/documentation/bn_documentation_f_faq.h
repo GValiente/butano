@@ -492,10 +492,10 @@
  * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
  *
  *
- * @subsection faq_sprites_utf8_characters How can I print UTF-8 characters like japanese or chinese ones?
+ * @subsection faq_sprites_utf8_characters How can I print UTF-8 characters like Japanese or Chinese ones?
  *
  * bn::sprite_text_generator already supports UTF-8 characters rendering,
- * but the bn::sprite_font instances used in the @ref examples "examples" don't provide japanese or chinese characters,
+ * but the bn::sprite_font instances used in the @ref examples "examples" don't provide Japanese or Chinese characters,
  * so you will have to make a new one with them.
  *
  *
@@ -541,6 +541,17 @@
  * * They don't support flipped tiles.
  *
  * Because of these limitations, you should avoid affine backgrounds whenever possible.
+ *
+ *
+ * @subsection faq_backgrounds_animated How can I show a background with animated tiles?
+ *
+ * There are two ways, the easy one and the powerful one:
+ * * If you only want to show some basic tile animation, such the water or the grass tiles in top-down RPGs,
+ *   you can use one of these actions: bn::regular_bg_animate_action, bn::regular_bg_cached_animate_action,
+ *   bn::affine_bg_animate_action and bn::affine_bg_cached_animate_action.
+ *   The `regular_bgs` and `affine_bgs` examples show how to use some of them.
+ * * If you want to show something more advanced, you need to manage the background map by yourself.
+ *   The `dynamic_regular_bg` and `dynamic_affine_bg` examples show how to do it.
  *
  *
  * @subsection faq_backgrounds_error_grit Why can't I import a regular background with 1024 or less tiles?

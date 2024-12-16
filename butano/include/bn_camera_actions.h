@@ -212,7 +212,7 @@ public:
     /**
      * @brief Constructor.
      * @param camera camera_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_x When the horizontal position of the given camera_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -227,7 +227,7 @@ public:
     /**
      * @brief Constructor.
      * @param camera camera_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_x When the horizontal position of the given camera_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -242,7 +242,7 @@ public:
     /**
      * @brief Constructor.
      * @param camera camera_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_position When the position of the given camera_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -255,7 +255,7 @@ public:
     /**
      * @brief Constructor.
      * @param camera camera_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_position When the position of the given camera_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -298,7 +298,7 @@ public:
     /**
      * @brief Constructor.
      * @param camera camera_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given camera_ptr.
      * @param new_x New horizontal position when the action is updated duration_updates times.
      * @param new_y New vertical position when the action is updated duration_updates times.
@@ -311,7 +311,7 @@ public:
     /**
      * @brief Constructor.
      * @param camera camera_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given camera_ptr.
      * @param new_x New horizontal position when the action is updated duration_updates times.
      * @param new_y New vertical position when the action is updated duration_updates times.
@@ -324,7 +324,7 @@ public:
     /**
      * @brief Constructor.
      * @param camera camera_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given camera_ptr.
      * @param new_position New position when the action is updated duration_updates times.
      */
@@ -336,7 +336,7 @@ public:
     /**
      * @brief Constructor.
      * @param camera camera_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given camera_ptr.
      * @param new_position New position when the action is updated duration_updates times.
      */

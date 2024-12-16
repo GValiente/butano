@@ -70,7 +70,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param delta_rotation_angle How much degrees to add to the rotation angle of the given sprite_affine_mat_ptr
+     * @param delta_rotation_angle How many degrees to add to the rotation angle of the given sprite_affine_mat_ptr
      * when the action is updated.
      *
      * This rotation angle must be in the range [0..360].
@@ -85,7 +85,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param delta_rotation_angle How much degrees to add to the rotation angle of the given sprite_affine_mat_ptr
+     * @param delta_rotation_angle How many degrees to add to the rotation angle of the given sprite_affine_mat_ptr
      * when the action is updated.
      *
      * This rotation angle must be in the range [0..360].
@@ -106,7 +106,7 @@ public:
     }
 
     /**
-     * @brief Returns how much degrees to add to the rotation angle of the given sprite_affine_mat_ptr
+     * @brief Returns how many degrees to add to the rotation angle of the given sprite_affine_mat_ptr
      * when the action is updated.
      */
     [[nodiscard]] fixed delta_rotation_angle() const
@@ -197,7 +197,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the rotation angle delta.
      * @param final_rotation_angle When the rotation angle of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -215,7 +215,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the rotation angle delta.
      * @param final_rotation_angle When the rotation angle of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -264,7 +264,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the rotation angle
+     * @param duration_updates How many times the action has to be updated to change the rotation angle
      * of the given sprite_affine_mat_ptr.
      * @param new_rotation_angle New rotation angle when the action is updated duration_updates times.
      *
@@ -281,7 +281,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the rotation angle
+     * @param duration_updates How many times the action has to be updated to change the rotation angle
      * of the given sprite_affine_mat_ptr.
      * @param new_rotation_angle New rotation angle when the action is updated duration_updates times.
      *
@@ -420,7 +420,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the horizontal scale delta.
      * @param final_horizontal_scale When the horizontal scale of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -435,7 +435,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the horizontal scale delta.
      * @param final_horizontal_scale When the horizontal scale of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -482,7 +482,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the horizontal scale
+     * @param duration_updates How many times the action has to be updated to change the horizontal scale
      * of the given sprite_affine_mat_ptr.
      * @param new_horizontal_scale New horizontal scale when the action is updated duration_updates times.
      */
@@ -496,7 +496,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the horizontal scale
+     * @param duration_updates How many times the action has to be updated to change the horizontal scale
      * of the given sprite_affine_mat_ptr.
      * @param new_horizontal_scale New horizontal scale when the action is updated duration_updates times.
      */
@@ -632,7 +632,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the vertical scale delta.
      * @param final_vertical_scale When the vertical scale of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -647,7 +647,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the vertical scale delta.
      * @param final_vertical_scale When the vertical scale of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -694,7 +694,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the vertical scale
+     * @param duration_updates How many times the action has to be updated to change the vertical scale
      * of the given sprite_affine_mat_ptr.
      * @param new_vertical_scale New vertical scale when the action is updated duration_updates times.
      */
@@ -708,7 +708,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the vertical scale
+     * @param duration_updates How many times the action has to be updated to change the vertical scale
      * of the given sprite_affine_mat_ptr.
      * @param new_vertical_scale New vertical scale when the action is updated duration_updates times.
      */
@@ -843,7 +843,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the scale delta.
      * @param final_scale When the scale of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -858,7 +858,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the scale delta.
      * @param final_scale When the scale of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -904,7 +904,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the scale
+     * @param duration_updates How many times the action has to be updated to change the scale
      * of the given sprite_affine_mat_ptr.
      * @param new_scale New scale when the action is updated duration_updates times.
      */
@@ -918,7 +918,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the scale
+     * @param duration_updates How many times the action has to be updated to change the scale
      * of the given sprite_affine_mat_ptr.
      * @param new_scale New scale when the action is updated duration_updates times.
      */
@@ -1051,7 +1051,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the horizontal shear delta.
      * @param final_horizontal_shear When the horizontal shear of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1065,7 +1065,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the horizontal shear delta.
      * @param final_horizontal_shear When the horizontal shear of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1111,7 +1111,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the horizontal shear
+     * @param duration_updates How many times the action has to be updated to change the horizontal shear
      * of the given sprite_affine_mat_ptr.
      * @param new_horizontal_shear New horizontal shear when the action is updated duration_updates times.
      */
@@ -1124,7 +1124,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the horizontal shear
+     * @param duration_updates How many times the action has to be updated to change the horizontal shear
      * of the given sprite_affine_mat_ptr.
      * @param new_horizontal_shear New horizontal shear when the action is updated duration_updates times.
      */
@@ -1257,7 +1257,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the vertical shear delta.
      * @param final_vertical_shear When the vertical shear of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1271,7 +1271,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the vertical shear delta.
      * @param final_vertical_shear When the vertical shear of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1317,7 +1317,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the vertical shear
+     * @param duration_updates How many times the action has to be updated to change the vertical shear
      * of the given sprite_affine_mat_ptr.
      * @param new_vertical_shear New vertical shear when the action is updated duration_updates times.
      */
@@ -1330,7 +1330,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the vertical shear
+     * @param duration_updates How many times the action has to be updated to change the vertical shear
      * of the given sprite_affine_mat_ptr.
      * @param new_vertical_shear New vertical shear when the action is updated duration_updates times.
      */
@@ -1462,7 +1462,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the shear delta.
      * @param final_shear When the shear of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1476,7 +1476,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the shear delta.
      * @param final_shear When the shear of the given sprite_affine_mat_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1521,7 +1521,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the shear
+     * @param duration_updates How many times the action has to be updated to change the shear
      * of the given sprite_affine_mat_ptr.
      * @param new_shear New shear when the action is updated duration_updates times.
      */
@@ -1534,7 +1534,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the shear
+     * @param duration_updates How many times the action has to be updated to change the shear
      * of the given sprite_affine_mat_ptr.
      * @param new_shear New shear when the action is updated duration_updates times.
      */
@@ -1609,7 +1609,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given sprite_affine_mat_ptr must be flipped in the horizontal axis or not.
      */
     sprite_affine_mat_horizontal_flip_toggle_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates) :
@@ -1620,7 +1620,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given sprite_affine_mat_ptr must be flipped in the horizontal axis or not.
      */
     sprite_affine_mat_horizontal_flip_toggle_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates) :
@@ -1685,7 +1685,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given sprite_affine_mat_ptr must be flipped in the vertical axis or not.
      */
     sprite_affine_mat_vertical_flip_toggle_action(const sprite_affine_mat_ptr& affine_mat, int duration_updates) :
@@ -1696,7 +1696,7 @@ public:
     /**
      * @brief Constructor.
      * @param affine_mat sprite_affine_mat_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given sprite_affine_mat_ptr must be flipped in the vertical axis or not.
      */
     sprite_affine_mat_vertical_flip_toggle_action(sprite_affine_mat_ptr&& affine_mat, int duration_updates) :

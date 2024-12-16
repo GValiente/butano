@@ -67,7 +67,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the colors of the given bg_palette_ptr must be inverted or not.
      */
     bg_palette_inverted_toggle_action(const bg_palette_ptr& palette, int duration_updates) :
@@ -78,7 +78,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the colors of the given bg_palette_ptr must be inverted or not.
      */
     bg_palette_inverted_toggle_action(bg_palette_ptr&& palette, int duration_updates) :
@@ -207,7 +207,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -223,7 +223,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -271,7 +271,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -285,7 +285,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -425,7 +425,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -441,7 +441,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -489,7 +489,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -503,7 +503,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -642,7 +642,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -658,7 +658,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -706,7 +706,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -720,7 +720,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -800,9 +800,9 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before updating the number of colors to rotate.
-     * @param delta_count How much colors to add to the number of colors to rotate to the right
+     * @param delta_count How many colors to add to the number of colors to rotate to the right
      * when the action is updated duration_updates times.
      */
     bg_palette_rotate_by_action(const bg_palette_ptr& palette, int duration_updates, int delta_count) :
@@ -818,9 +818,9 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before updating the number of colors to rotate.
-     * @param delta_count How much colors to add to the number of colors to rotate to the right
+     * @param delta_count How many colors to add to the number of colors to rotate to the right
      * when the action is updated duration_updates times.
      */
     bg_palette_rotate_by_action(bg_palette_ptr&& palette, int duration_updates, int delta_count) :
@@ -842,7 +842,7 @@ public:
     }
 
     /**
-     * @brief Returns how much colors to add to the number of colors to rotate to the right
+     * @brief Returns how many colors to add to the number of colors to rotate to the right
      * when the action is updated the given number of times.
      */
     [[nodiscard]] int delta_count() const
@@ -933,7 +933,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the number of colors to rotate delta.
      * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -950,7 +950,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the number of colors to rotate delta.
      * @param final_count When the the number of colors to rotate to the right is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -999,7 +999,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change
+     * @param duration_updates How many times the action has to be updated to change
      * the number of colors to rotate to the right.
      * @param new_count New number of colors to rotate to the right
      * when the action is updated duration_updates times.
@@ -1016,7 +1016,7 @@ public:
     /**
      * @brief Constructor.
      * @param palette bg_palette_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change
+     * @param duration_updates How many times the action has to be updated to change
      * the number of colors to rotate to the right.
      * @param new_count New number of colors to rotate to the right
      * when the action is updated duration_updates times.

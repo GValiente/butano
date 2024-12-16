@@ -98,7 +98,7 @@ class jingle_volume_loop_action : public loop_template_action<fixed, jingle_volu
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the volume delta.
      * @param final_volume When the volume is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -133,7 +133,7 @@ class jingle_volume_toggle_action : public toggle_template_action<fixed, jingle_
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the volume.
+     * @param duration_updates How many times the action has to be updated to change the volume.
      * @param new_volume New volume when the action is updated duration_updates times.
      *
      * This volume must be in the range [0..1].

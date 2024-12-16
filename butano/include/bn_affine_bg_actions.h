@@ -65,7 +65,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr must be committed to the GBA or not.
      */
     affine_bg_visible_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
@@ -76,7 +76,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr must be committed to the GBA or not.
      */
     affine_bg_visible_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
@@ -298,7 +298,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_x When the horizontal position of the given affine_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -313,7 +313,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_x When the horizontal position of the given affine_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -328,7 +328,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_position When the position of the given affine_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -341,7 +341,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_position When the position of the given affine_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -384,7 +384,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given affine_bg_ptr.
      * @param new_x New horizontal position when the action is updated duration_updates times.
      * @param new_y New vertical position when the action is updated duration_updates times.
@@ -397,7 +397,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given affine_bg_ptr.
      * @param new_x New horizontal position when the action is updated duration_updates times.
      * @param new_y New vertical position when the action is updated duration_updates times.
@@ -410,7 +410,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given affine_bg_ptr.
      * @param new_position New position when the action is updated duration_updates times.
      */
@@ -422,7 +422,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given affine_bg_ptr.
      * @param new_position New position when the action is updated duration_updates times.
      */
@@ -584,7 +584,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the top-left position delta.
      * @param final_top_left_x When the horizontal top-left position of the given affine_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -600,7 +600,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the top-left position delta.
      * @param final_top_left_x When the horizontal top-left position of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -616,7 +616,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the top-left position delta.
      * @param final_top_left_position When the top-left position of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -630,7 +630,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the top-left position delta.
      * @param final_top_left_position When the top-left position of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -674,7 +674,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the top-left position of the given affine_bg_ptr.
      * @param new_top_left_x New horizontal top-left position when the action is updated duration_updates times.
      * @param new_top_left_y New vertical top-left position when the action is updated duration_updates times.
@@ -688,7 +688,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the top-left position of the given affine_bg_ptr.
      * @param new_top_left_x New horizontal top-left position when the action is updated duration_updates times.
      * @param new_top_left_y New vertical top-left position when the action is updated duration_updates times.
@@ -702,7 +702,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the top-left position of the given affine_bg_ptr.
      * @param new_top_left_position New top-left position when the action is updated duration_updates times.
      */
@@ -715,7 +715,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the top-left position of the given affine_bg_ptr.
      * @param new_top_left_position New top-left position when the action is updated duration_updates times.
      */
@@ -791,7 +791,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param delta_rotation_angle How much degrees to add to the rotation angle of the given affine_bg_ptr
+     * @param delta_rotation_angle How many degrees to add to the rotation angle of the given affine_bg_ptr
      * when the action is updated.
      *
      * This rotation angle must be in the range [0..360].
@@ -806,7 +806,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param delta_rotation_angle How much degrees to add to the rotation angle of the given affine_bg_ptr
+     * @param delta_rotation_angle How many degrees to add to the rotation angle of the given affine_bg_ptr
      * when the action is updated.
      *
      * This rotation angle must be in the range [0..360].
@@ -827,7 +827,7 @@ public:
     }
 
     /**
-     * @brief Returns how much degrees to add to the rotation angle of the given affine_bg_ptr
+     * @brief Returns how many degrees to add to the rotation angle of the given affine_bg_ptr
      * when the action is updated.
      */
     [[nodiscard]] fixed delta_rotation_angle() const
@@ -914,7 +914,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the rotation angle delta.
      * @param final_rotation_angle When the rotation angle of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -931,7 +931,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the rotation angle delta.
      * @param final_rotation_angle When the rotation angle of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -978,7 +978,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the rotation angle
+     * @param duration_updates How many times the action has to be updated to change the rotation angle
      * of the given affine_bg_ptr.
      * @param new_rotation_angle New rotation angle when the action is updated duration_updates times.
      *
@@ -994,7 +994,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the rotation angle
+     * @param duration_updates How many times the action has to be updated to change the rotation angle
      * of the given affine_bg_ptr.
      * @param new_rotation_angle New rotation angle when the action is updated duration_updates times.
      *
@@ -1128,7 +1128,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the horizontal scale delta.
      * @param final_horizontal_scale When the horizontal scale of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1143,7 +1143,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the horizontal scale delta.
      * @param final_horizontal_scale When the horizontal scale of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1189,7 +1189,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the horizontal scale
+     * @param duration_updates How many times the action has to be updated to change the horizontal scale
      * of the given affine_bg_ptr.
      * @param new_horizontal_scale New horizontal scale when the action is updated duration_updates times.
      */
@@ -1203,7 +1203,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the horizontal scale
+     * @param duration_updates How many times the action has to be updated to change the horizontal scale
      * of the given affine_bg_ptr.
      * @param new_horizontal_scale New horizontal scale when the action is updated duration_updates times.
      */
@@ -1335,7 +1335,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the vertical scale delta.
      * @param final_vertical_scale When the vertical scale of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1350,7 +1350,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the vertical scale delta.
      * @param final_vertical_scale When the vertical scale of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1395,7 +1395,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the vertical scale
+     * @param duration_updates How many times the action has to be updated to change the vertical scale
      * of the given affine_bg_ptr.
      * @param new_vertical_scale New vertical scale when the action is updated duration_updates times.
      */
@@ -1409,7 +1409,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the vertical scale
+     * @param duration_updates How many times the action has to be updated to change the vertical scale
      * of the given affine_bg_ptr.
      * @param new_vertical_scale New vertical scale when the action is updated duration_updates times.
      */
@@ -1538,7 +1538,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the scale delta.
      * @param final_scale When the scale of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1552,7 +1552,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the scale delta.
      * @param final_scale When the scale of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1597,7 +1597,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the scale
+     * @param duration_updates How many times the action has to be updated to change the scale
      * of the given affine_bg_ptr.
      * @param new_scale New scale when the action is updated duration_updates times.
      */
@@ -1610,7 +1610,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the scale
+     * @param duration_updates How many times the action has to be updated to change the scale
      * of the given affine_bg_ptr.
      * @param new_scale New scale when the action is updated duration_updates times.
      */
@@ -1739,7 +1739,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the horizontal shear delta.
      * @param final_horizontal_shear When the horizontal shear of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1753,7 +1753,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the horizontal shear delta.
      * @param final_horizontal_shear When the horizontal shear of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1798,7 +1798,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the horizontal shear
+     * @param duration_updates How many times the action has to be updated to change the horizontal shear
      * of the given affine_bg_ptr.
      * @param new_horizontal_shear New horizontal shear when the action is updated duration_updates times.
      */
@@ -1811,7 +1811,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the horizontal shear
+     * @param duration_updates How many times the action has to be updated to change the horizontal shear
      * of the given affine_bg_ptr.
      * @param new_horizontal_shear New horizontal shear when the action is updated duration_updates times.
      */
@@ -1940,7 +1940,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the vertical shear delta.
      * @param final_vertical_shear When the vertical shear of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1954,7 +1954,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the vertical shear delta.
      * @param final_vertical_shear When the vertical shear of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1998,7 +1998,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the vertical shear
+     * @param duration_updates How many times the action has to be updated to change the vertical shear
      * of the given affine_bg_ptr.
      * @param new_vertical_shear New vertical shear when the action is updated duration_updates times.
      */
@@ -2011,7 +2011,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the vertical shear
+     * @param duration_updates How many times the action has to be updated to change the vertical shear
      * of the given affine_bg_ptr.
      * @param new_vertical_shear New vertical shear when the action is updated duration_updates times.
      */
@@ -2136,7 +2136,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the shear delta.
      * @param final_shear When the shear of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -2149,7 +2149,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the shear delta.
      * @param final_shear When the shear of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -2192,7 +2192,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to change the shear
+     * @param duration_updates How many times the action has to be updated to change the shear
      * of the given affine_bg_ptr.
      * @param new_shear New shear when the action is updated duration_updates times.
      */
@@ -2204,7 +2204,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to change the shear
+     * @param duration_updates How many times the action has to be updated to change the shear
      * of the given affine_bg_ptr.
      * @param new_shear New shear when the action is updated duration_updates times.
      */
@@ -2277,7 +2277,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr must be flipped in the horizontal axis or not.
      */
     affine_bg_horizontal_flip_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
@@ -2288,7 +2288,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr must be flipped in the horizontal axis or not.
      */
     affine_bg_horizontal_flip_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
@@ -2351,7 +2351,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr must be flipped in the vertical axis or not.
      */
     affine_bg_vertical_flip_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
@@ -2362,7 +2362,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr must be flipped in the vertical axis or not.
      */
     affine_bg_vertical_flip_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
@@ -2590,7 +2590,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_x When the horizontal position of the pivot of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -2605,7 +2605,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_x When the horizontal position of the pivot of the given affine_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -2620,7 +2620,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_position When the position of the pivot of the given affine_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -2634,7 +2634,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_position When the position of the pivot of the given affine_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -2678,7 +2678,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the pivot of the given affine_bg_ptr.
      * @param new_x New horizontal position when the action is updated duration_updates times.
      * @param new_y New vertical position when the action is updated duration_updates times.
@@ -2691,7 +2691,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the pivot of the given affine_bg_ptr.
      * @param new_x New horizontal position when the action is updated duration_updates times.
      * @param new_y New vertical position when the action is updated duration_updates times.
@@ -2704,7 +2704,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the pivot of the given affine_bg_ptr.
      * @param new_position New position when the action is updated duration_updates times.
      */
@@ -2717,7 +2717,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the pivot of the given affine_bg_ptr.
      * @param new_position New position when the action is updated duration_updates times.
      */
@@ -2791,7 +2791,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr wraps around at the edges or not.
      */
     affine_bg_wrapping_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
@@ -2802,7 +2802,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr wraps around at the edges or not.
      */
     affine_bg_wrapping_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
@@ -2865,7 +2865,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the mosaic effect must be applied or not.
      */
     affine_bg_mosaic_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
@@ -2876,7 +2876,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the mosaic effect must be applied or not.
      */
     affine_bg_mosaic_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
@@ -2939,7 +2939,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if blending must be applied or not.
      */
     affine_bg_blending_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
@@ -2950,7 +2950,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if blending must be applied or not.
      */
     affine_bg_blending_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
@@ -3011,7 +3011,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr is part of the blending top layer or not.
      */
     affine_bg_blending_top_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
@@ -3022,7 +3022,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr is part of the blending top layer or not.
      */
     affine_bg_blending_top_toggle_action(affine_bg_ptr&& bg, int duration_updates) :
@@ -3083,7 +3083,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr is part of the blending bottom layer or not.
      */
     affine_bg_blending_bottom_toggle_action(const affine_bg_ptr& bg, int duration_updates) :
@@ -3094,7 +3094,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg affine_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given affine_bg_ptr is part of the blending bottom layer or not.
      */
     affine_bg_blending_bottom_toggle_action(affine_bg_ptr&& bg, int duration_updates) :

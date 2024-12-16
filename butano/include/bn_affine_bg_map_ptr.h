@@ -345,7 +345,7 @@ public:
     [[nodiscard]] affine_bg_big_map_canvas_size big_canvas_size() const;
 
     /**
-     * @brief Returns how much tiles to offset in the cells of this map before writing them in VRAM.
+     * @brief Returns how many tiles to offset in the cells of this map before writing them in VRAM.
      */
     [[nodiscard]] int tiles_offset() const;
 

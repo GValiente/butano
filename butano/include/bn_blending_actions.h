@@ -109,7 +109,7 @@ class blending_transparency_alpha_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the weight delta.
      * @param final_transparency_alpha When the weight of the transparency blending is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -149,7 +149,7 @@ class blending_transparency_alpha_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the weight of the transparency blending.
      * @param new_transparency_alpha New weight of the transparency blending
      * when the action is updated duration_updates times.
@@ -261,7 +261,7 @@ class blending_intensity_alpha_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the weight delta.
      * @param final_intensity_alpha When the weight of the intensity blending is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -301,7 +301,7 @@ class blending_intensity_alpha_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the weight of the intensity blending.
      * @param new_intensity_alpha New weight of the intensity blending
      * when the action is updated duration_updates times.
@@ -417,7 +417,7 @@ class blending_transparency_top_weight_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the weight delta.
      * @param final_transparency_top_weight When the weight of the transparency blending for the top layer
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -458,7 +458,7 @@ class blending_transparency_top_weight_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the weight of the transparency blending for the top layer.
      * @param new_transparency_top_weight New weight of the transparency blending for the top layer
      * when the action is updated duration_updates times.
@@ -576,7 +576,7 @@ class blending_transparency_bottom_weight_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the weight delta.
      * @param final_transparency_bottom_weight When the weight of the transparency blending for the bottom layer
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -617,7 +617,7 @@ class blending_transparency_bottom_weight_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the weight of the transparency blending for the bottom layer.
      * @param new_transparency_bottom_weight New weight of the transparency blending for the bottom layer
      * when the action is updated duration_updates times.
@@ -728,7 +728,7 @@ class blending_fade_alpha_loop_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the weight delta.
      * @param final_fade_alpha When the weight of the fade blending is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -767,7 +767,7 @@ class blending_fade_alpha_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the weight of the fade blending.
      * @param new_fade_alpha New weight of the fade blending when the action is updated duration_updates times.
      *

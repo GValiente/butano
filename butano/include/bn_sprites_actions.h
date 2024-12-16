@@ -62,7 +62,7 @@ class sprites_visible_toggle_action : public bool_toggle_template_action<sprites
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the sprite layer must be shown or not.
      */
     explicit sprites_visible_toggle_action(int duration_updates) :
@@ -116,7 +116,7 @@ class sprites_blending_bottom_enabled_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the sprite layer is part of the blending bottom layer or not.
      */
     explicit sprites_blending_bottom_enabled_toggle_action(int duration_updates) :

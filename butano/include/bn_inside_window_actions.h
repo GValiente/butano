@@ -65,7 +65,7 @@ public:
     /**
      * @brief Constructor.
      * @param window inside_window to modify.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given inside_window must be committed to the GBA or not.
      */
     inside_window_visible_toggle_action(inside_window window, int duration_updates) :

@@ -106,7 +106,7 @@ public:
     /**
      * @brief Constructor.
      * @param handle sound_handle to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the speed delta.
      * @param final_speed When the speed of the given sound_handle is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -149,7 +149,7 @@ public:
     /**
      * @brief Constructor.
      * @param handle sound_handle to modify.
-     * @param duration_updates How much times the action has to be updated to change the speed
+     * @param duration_updates How many times the action has to be updated to change the speed
      * of the given sound_handle.
      * @param new_speed New speed when the action is updated duration_updates times.
      */
@@ -262,7 +262,7 @@ public:
     /**
      * @brief Constructor.
      * @param handle sound_handle to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the panning delta.
      * @param final_panning When the panning of the given sound_handle is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -305,7 +305,7 @@ public:
     /**
      * @brief Constructor.
      * @param handle sound_handle to modify.
-     * @param duration_updates How much times the action has to be updated to change the panning
+     * @param duration_updates How many times the action has to be updated to change the panning
      * of the given sound_handle.
      * @param new_panning New panning when the action is updated duration_updates times.
      */
@@ -411,7 +411,7 @@ class sound_master_volume_loop_action : public loop_template_action<fixed, sound
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the volume delta.
      * @param final_volume When the volume is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -446,7 +446,7 @@ class sound_master_volume_toggle_action : public toggle_template_action<fixed, s
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the volume.
+     * @param duration_updates How many times the action has to be updated to change the volume.
      * @param new_volume New volume when the action is updated duration_updates times.
      *
      * This volume must be in the range [0..1].

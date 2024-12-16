@@ -147,7 +147,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_top When the position of the top boundary of the given rect_window is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -191,7 +191,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the top boundary of the given rect_window.
      * @param new_top New position of the top boundary of the given rect_window
      * when the action is updated duration_updates times.
@@ -347,7 +347,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_left When the position of the left boundary of the given rect_window is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -391,7 +391,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the left boundary of the given rect_window.
      * @param new_left New position of the left boundary of the given rect_window
      * when the action is updated duration_updates times.
@@ -549,7 +549,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_bottom When the position of the bottom boundary of the given rect_window
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -593,7 +593,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the bottom boundary of the given rect_window.
      * @param new_bottom New position of the bottom boundary of the given rect_window
      * when the action is updated duration_updates times.
@@ -751,7 +751,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_right When the position of the right boundary of the given rect_window
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -795,7 +795,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the right boundary of the given rect_window.
      * @param new_right New position of the right boundary of the given rect_window
      * when the action is updated duration_updates times.
@@ -981,7 +981,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_top When the position of the top boundary of the given rect_window is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -997,7 +997,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_top_left When the position of the top-left corner of the given rect_window
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1042,7 +1042,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the top-left corner of the given rect_window.
      * @param new_top New position of the top boundary of the given rect_window
      * when the action is updated duration_updates times.
@@ -1057,7 +1057,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the top-left corner of the given rect_window.
      * @param new_top_left New position of the top-left corner of the given rect_window
      * when the action is updated duration_updates times.
@@ -1246,7 +1246,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_bottom When the position of the bottom boundary of the given rect_window
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1262,7 +1262,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_bottom_right When the position of the bottom-right corner of the given rect_window
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -1307,7 +1307,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the bottom-right corner of the given rect_window.
      * @param new_bottom New position of the bottom boundary of the given rect_window
      * when the action is updated duration_updates times.
@@ -1323,7 +1323,7 @@ public:
     /**
      * @brief Constructor.
      * @param window rect_window to modify.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the bottom-right corner of the given rect_window.
      * @param new_bottom_right New position of the bottom-right corner of the given rect_window
      * when the action is updated duration_updates times.

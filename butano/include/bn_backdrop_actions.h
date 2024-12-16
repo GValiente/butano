@@ -62,7 +62,7 @@ class backdrop_blending_bottom_enabled_toggle_action :
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the backdrop is part of the blending bottom layer or not.
      */
     explicit backdrop_blending_bottom_enabled_toggle_action(int duration_updates) :

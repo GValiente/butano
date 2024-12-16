@@ -346,12 +346,12 @@ public:
     [[nodiscard]] bpp_mode bpp() const;
 
     /**
-     * @brief Returns how much tiles to offset in the cells of this map before writing them in VRAM.
+     * @brief Returns how many tiles to offset in the cells of this map before writing them in VRAM.
      */
     [[nodiscard]] int tiles_offset() const;
 
     /**
-     * @brief Returns how much palette banks to offset in the cells of this map before writing them in VRAM.
+     * @brief Returns how many palette banks to offset in the cells of this map before writing them in VRAM.
      */
     [[nodiscard]] int palette_banks_offset() const;
 

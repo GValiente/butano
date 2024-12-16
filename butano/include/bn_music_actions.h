@@ -98,7 +98,7 @@ class music_volume_loop_action : public loop_template_action<fixed, music_volume
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the volume delta.
      * @param final_volume When the volume is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -133,7 +133,7 @@ class music_volume_toggle_action : public toggle_template_action<fixed, music_vo
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the volume.
+     * @param duration_updates How many times the action has to be updated to change the volume.
      * @param new_volume New volume when the action is updated duration_updates times.
      *
      * This volume must be in the range [0..1].
@@ -232,7 +232,7 @@ class music_tempo_loop_action : public loop_template_action<fixed, music_tempo_m
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the tempo delta.
      * @param final_tempo When the tempo is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -267,7 +267,7 @@ class music_tempo_toggle_action : public toggle_template_action<fixed, music_tem
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the tempo.
+     * @param duration_updates How many times the action has to be updated to change the tempo.
      * @param new_tempo New tempo when the action is updated duration_updates times.
      *
      * This tempo must be in the range [0.5..2].
@@ -366,7 +366,7 @@ class music_pitch_loop_action : public loop_template_action<fixed, music_pitch_m
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the pitch delta.
      * @param final_pitch When the pitch is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -401,7 +401,7 @@ class music_pitch_toggle_action : public toggle_template_action<fixed, music_pit
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the pitch.
+     * @param duration_updates How many times the action has to be updated to change the pitch.
      * @param new_pitch New pitch when the action is updated duration_updates times.
      *
      * This pitch must be in the range [0.5..2].

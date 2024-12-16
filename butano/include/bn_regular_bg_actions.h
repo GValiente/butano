@@ -65,7 +65,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given regular_bg_ptr must be committed to the GBA or not.
      */
     regular_bg_visible_toggle_action(const regular_bg_ptr& bg, int duration_updates) :
@@ -76,7 +76,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given regular_bg_ptr must be committed to the GBA or not.
      */
     regular_bg_visible_toggle_action(regular_bg_ptr&& bg, int duration_updates) :
@@ -298,7 +298,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_x When the horizontal position of the given regular_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -313,7 +313,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_x When the horizontal position of the given regular_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -328,7 +328,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_position When the position of the given regular_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -341,7 +341,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the position delta.
      * @param final_position When the position of the given regular_bg_ptr is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -384,7 +384,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given regular_bg_ptr.
      * @param new_x New horizontal position when the action is updated duration_updates times.
      * @param new_y New vertical position when the action is updated duration_updates times.
@@ -397,7 +397,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given regular_bg_ptr.
      * @param new_x New horizontal position when the action is updated duration_updates times.
      * @param new_y New vertical position when the action is updated duration_updates times.
@@ -410,7 +410,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given regular_bg_ptr.
      * @param new_position New position when the action is updated duration_updates times.
      */
@@ -422,7 +422,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the position of the given regular_bg_ptr.
      * @param new_position New position when the action is updated duration_updates times.
      */
@@ -584,7 +584,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the top-left position delta.
      * @param final_top_left_x When the horizontal top-left position of the given regular_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -600,7 +600,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the top-left position delta.
      * @param final_top_left_x When the horizontal top-left position of the given regular_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -616,7 +616,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the top-left position delta.
      * @param final_top_left_position When the top-left position of the given regular_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -630,7 +630,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the top-left position delta.
      * @param final_top_left_position When the top-left position of the given regular_bg_ptr
      * is equal to this parameter, it goes back to its initial state and vice versa.
@@ -674,7 +674,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the top-left position of the given regular_bg_ptr.
      * @param new_top_left_x New horizontal top-left position when the action is updated duration_updates times.
      * @param new_top_left_y New vertical top-left position when the action is updated duration_updates times.
@@ -688,7 +688,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the top-left position of the given regular_bg_ptr.
      * @param new_top_left_x New horizontal top-left position when the action is updated duration_updates times.
      * @param new_top_left_y New vertical top-left position when the action is updated duration_updates times.
@@ -702,7 +702,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the top-left position of the given regular_bg_ptr.
      * @param new_top_left_position New top-left position when the action is updated duration_updates times.
      */
@@ -715,7 +715,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * to change the top-left position of the given regular_bg_ptr.
      * @param new_top_left_position New top-left position when the action is updated duration_updates times.
      */
@@ -789,7 +789,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the mosaic effect must be applied or not.
      */
     regular_bg_mosaic_toggle_action(const regular_bg_ptr& bg, int duration_updates) :
@@ -800,7 +800,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the mosaic effect must be applied or not.
      */
     regular_bg_mosaic_toggle_action(regular_bg_ptr&& bg, int duration_updates) :
@@ -863,7 +863,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if blending must be applied or not.
      */
     regular_bg_blending_toggle_action(const regular_bg_ptr& bg, int duration_updates) :
@@ -874,7 +874,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if blending must be applied or not.
      */
     regular_bg_blending_toggle_action(regular_bg_ptr&& bg, int duration_updates) :
@@ -935,7 +935,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given regular_bg_ptr is part of the blending top layer or not.
      */
     regular_bg_blending_top_toggle_action(const regular_bg_ptr& bg, int duration_updates) :
@@ -946,7 +946,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given regular_bg_ptr is part of the blending top layer or not.
      */
     regular_bg_blending_top_toggle_action(regular_bg_ptr&& bg, int duration_updates) :
@@ -1007,7 +1007,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to copy.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given regular_bg_ptr is part of the blending bottom layer or not.
      */
     regular_bg_blending_bottom_toggle_action(const regular_bg_ptr& bg, int duration_updates) :
@@ -1018,7 +1018,7 @@ public:
     /**
      * @brief Constructor.
      * @param bg regular_bg_ptr to move.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the given regular_bg_ptr is part of the blending bottom layer or not.
      */
     regular_bg_blending_bottom_toggle_action(regular_bg_ptr&& bg, int duration_updates) :

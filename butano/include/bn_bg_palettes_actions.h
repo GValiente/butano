@@ -103,7 +103,7 @@ class bg_palettes_brightness_loop_action : public loop_template_action<fixed, bg
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the brightness delta.
      * @param final_brightness When the brightness is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -141,7 +141,7 @@ class bg_palettes_brightness_toggle_action : public toggle_template_action<fixed
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the brightness.
+     * @param duration_updates How many times the action has to be updated to change the brightness.
      * @param new_brightness New brightness when the action is updated duration_updates times.
      *
      * This brightness must be in the range [0..1].
@@ -243,7 +243,7 @@ class bg_palettes_contrast_loop_action : public loop_template_action<fixed, bg_p
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the contrast delta.
      * @param final_contrast When the contrast is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -281,7 +281,7 @@ class bg_palettes_contrast_toggle_action : public toggle_template_action<fixed, 
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the contrast.
+     * @param duration_updates How many times the action has to be updated to change the contrast.
      * @param new_contrast New contrast when the action is updated duration_updates times.
      *
      * This contrast must be in the range [0..1].
@@ -383,7 +383,7 @@ class bg_palettes_intensity_loop_action : public loop_template_action<fixed, bg_
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -421,7 +421,7 @@ class bg_palettes_intensity_toggle_action : public toggle_template_action<fixed,
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -487,7 +487,7 @@ class bg_palettes_inverted_toggle_action : public bool_toggle_template_action<bg
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to toggle
+     * @param duration_updates How many times the action has to be updated to toggle
      * if the colors of all background color palettes must be inverted or not.
      */
     explicit bg_palettes_inverted_toggle_action(int duration_updates) :
@@ -580,7 +580,7 @@ class bg_palettes_grayscale_loop_action : public loop_template_action<fixed, bg_
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -618,7 +618,7 @@ class bg_palettes_grayscale_toggle_action : public toggle_template_action<fixed,
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -722,7 +722,7 @@ class bg_palettes_hue_shift_loop_action : public loop_template_action<fixed, bg_
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -760,7 +760,7 @@ class bg_palettes_hue_shift_toggle_action : public toggle_template_action<fixed,
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].
@@ -864,7 +864,7 @@ class bg_palettes_fade_loop_action : public loop_template_action<fixed, bg_palet
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the intensity delta.
      * @param final_intensity When the intensity is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -902,7 +902,7 @@ class bg_palettes_fade_toggle_action : public toggle_template_action<fixed, bg_p
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the intensity.
+     * @param duration_updates How many times the action has to be updated to change the intensity.
      * @param new_intensity New intensity when the action is updated duration_updates times.
      *
      * This intensity must be in the range [0..1].

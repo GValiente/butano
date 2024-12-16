@@ -132,7 +132,7 @@ class dmg_music_volume_loop_action : public loop_template_action<fixed_point, dm
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the volume delta.
      * @param final_volume When the volume for both speakers is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -147,7 +147,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated
+     * @param duration_updates How many times the action has to be updated
      * before changing the direction of the volume delta.
      * @param final_left_volume When the volume for the left speaker is equal to this parameter,
      * it goes back to its initial state and vice versa.
@@ -201,7 +201,7 @@ class dmg_music_volume_toggle_action : public toggle_template_action<fixed_point
 public:
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the volume.
+     * @param duration_updates How many times the action has to be updated to change the volume.
      * @param new_volume New volume for both speakers when the action is updated duration_updates times.
      *
      * This volume must be in the range [0..1].
@@ -214,7 +214,7 @@ public:
 
     /**
      * @brief Constructor.
-     * @param duration_updates How much times the action has to be updated to change the volume.
+     * @param duration_updates How many times the action has to be updated to change the volume.
      * @param new_left_volume New volume for the left speaker when the action is updated duration_updates times.
      *
      * This volume must be in the range [0..1].

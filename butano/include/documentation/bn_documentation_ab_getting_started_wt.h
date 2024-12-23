@@ -48,10 +48,11 @@
  *
  * @code{.cpp}
  * pacman -S make
+ * wf-pacman -Syu wf-tools
+ * wf-config repo enable blocksds
  * wf-pacman -Syu
- * wf-pacman -S toolchain-gcc-arm-none-eabi
- * wf-pacman -S thirdparty-blocksds-toolchain
  * wf-pacman -S target-gba
+ * wf-pacman -S blocksds-toolchain
  * @endcode
  *
  * @image html wt_pacman.png

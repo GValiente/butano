@@ -291,7 +291,7 @@
  *
  * @subsection faq_memory_heap So I shouldn't use the heap?
  *
- * Since heap usage is slow and the heap allocator included with Butano is very limited,
+ * Since heap usage is slow and the heap allocator included with Butano is not very fast,
  * avoid heap usage whenever possible.
  *
  * Also, remember to call bn::core::init before using the heap.

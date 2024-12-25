@@ -20,7 +20,7 @@
  * * bn::utf8_character validation improved.
  * * @ref faq_delta_time, @ref faq_sprites_metasprites and @ref faq_backgrounds_animated questions
  *   added to the @ref faq page.
- * * @ref faq_standard question improved.
+ * * @ref faq_standard and @ref faq_memory_heap questions improved.
  * * @ref getting_started_wt guide updated.
  * * Some spelling mistakes fixed.
  *

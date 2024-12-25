@@ -97,6 +97,7 @@
  * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
  *
  * Since you are now linking the standard system libraries, you must comply with their license.
+ * Also, don't expect all standard functions and classes to work after linking the standard system libraries.
  *
  *
  * @subsection faq_common_folder Why can't I use the content of the common folder in a new project?

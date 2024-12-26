@@ -937,6 +937,65 @@ public:
         return *this;
     }
 
+    /**
+     * @brief Equal operator.
+     * @param a istring_base to compare.
+     * @param b char array to compare.
+     * @return `true` if the istring_base is equal to the char array, otherwise `false`.
+     */
+    [[nodiscard]] constexpr friend bool operator==(const istring_base& a, const char* b)
+    {
+        return a == string_view(b);
+    }
+
+    /**
+     * @brief Less than operator.
+     * @param a istring_base to compare.
+     * @param b char array to compare.
+     * @return `true` if the istring_base is lexicographically less than the char array,
+     * otherwise `false`.
+     */
+    [[nodiscard]] constexpr friend bool operator<(const istring_base& a, const char* b)
+    {
+        return a < string_view(b);
+    }
+
+    /**
+     * @brief Greater than operator.
+     * @param a istring_base to compare.
+     * @param b char array to compare.
+     * @return `true` if the istring_base is lexicographically greater than the char array,
+     * otherwise `false`.
+     */
+    [[nodiscard]] constexpr friend bool operator>(const istring_base& a, const char* b)
+    {
+        return a > string_view(b);
+    }
+
+    /**
+     * @brief Less than or equal operator.
+     * @param a istring_base to compare.
+     * @param b char array to compare.
+     * @return `true` if the istring_base is lexicographically less than or equal to the char array,
+     * otherwise `false`.
+     */
+    [[nodiscard]] constexpr friend bool operator<=(const istring_base& a, const char* b)
+    {
+        return a <= string_view(b);
+    }
+
+    /**
+     * @brief Greater than or equal operator.
+     * @param a istring_base to compare.
+     * @param b char array to compare.
+     * @return `true` if the istring_base is lexicographically greater than or equal to the char array,
+     * otherwise `false`.
+     */
+    [[nodiscard]] constexpr friend bool operator>=(const istring_base& a, const char* b)
+    {
+        return a >= string_view(b);
+    }
+
 protected:
     /// @cond DO_NOT_DOCUMENT
 

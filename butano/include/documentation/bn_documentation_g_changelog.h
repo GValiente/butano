@@ -17,6 +17,7 @@
  * * bn::unique_ptr `operator<<` added.
  * * bn::ibitset `operator<<` added.
  * * Hash support for bn::ibitset added.
+ * * More bn::istring_base comparison operators added.
  * * bn::utf8_character validation improved.
  * * @ref faq_delta_time, @ref faq_sprites_metasprites and @ref faq_backgrounds_animated questions
  *   added to the @ref faq page.

@@ -394,6 +394,31 @@
               <a href="classbn_1_1istring.html" class="m-doc">istring</a>&amp; b) <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Exchanges the contents of a istring with those of another one.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#acc438048c06bb75723b3ced8c8ddfce1" class="m-doc">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af2e42c2919ba20326037855b92a6755b" class="m-doc">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Less than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab14ba92d8cd57a3a47ae3f4d4cfd4771" class="m-doc">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Greater than operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5bfe0e1296dd53aeec465c3a9086c8ae" class="m-doc">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Less than or equal operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a52edccc5210f5878f5f72e83d76203d0" class="m-doc">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) -&gt; bool <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Greater than or equal operator.</dd>
           </dl>
         </section>
         <section>
@@ -1593,6 +1618,146 @@
                   <td>Second istring to exchange the contents with.</td>
                 </tr>
               </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acc438048c06bb75723b3ced8c8ddfce1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acc438048c06bb75723b3ced8c8ddfce1" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>char array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> is equal to the char array, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af2e42c2919ba20326037855b92a6755b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af2e42c2919ba20326037855b92a6755b" class="m-doc-self">operator&lt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Less than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>char array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> is lexicographically less than the char array, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ab14ba92d8cd57a3a47ae3f4d4cfd4771"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab14ba92d8cd57a3a47ae3f4d4cfd4771" class="m-doc-self">operator&gt;</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Greater than operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>char array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> is lexicographically greater than the char array, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5bfe0e1296dd53aeec465c3a9086c8ae"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5bfe0e1296dd53aeec465c3a9086c8ae" class="m-doc-self">operator&lt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Less than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>char array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> is lexicographically less than or equal to the char array, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a52edccc5210f5878f5f72e83d76203d0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a52edccc5210f5878f5f72e83d76203d0" class="m-doc-self">operator&gt;=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a>&amp; a,
+              const char* b) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Greater than or equal operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td><a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> to compare.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>char array to compare.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><code>true</code> if the <a href="classbn_1_1istring__base.html" class="m-doc">istring_<wbr />base</a> is lexicographically greater than or equal to the char array, otherwise <code>false</code>.</td>
+                </tr>
+              </tfoot>
             </table>
           </div></section>
         </section>

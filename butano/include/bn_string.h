@@ -943,9 +943,18 @@ public:
      * @param b char array to compare.
      * @return `true` if the istring_base is equal to the char array, otherwise `false`.
      */
-    [[nodiscard]] constexpr friend bool operator==(const istring_base& a, const char* b)
+    [[nodiscard]] constexpr friend bool operator==(const istring_base& a, const_pointer b)
     {
-        return a == string_view(b);
+        const_pointer a_data = a.data();
+
+        if(a_data == b)
+        {
+            return true;
+        }
+
+        BN_BASIC_ASSERT(b, "Null char array ptr");
+
+        return equal(a_data, a_data + a.size() + 1, b);
     }
 
     /**
@@ -955,7 +964,7 @@ public:
      * @return `true` if the istring_base is lexicographically less than the char array,
      * otherwise `false`.
      */
-    [[nodiscard]] constexpr friend bool operator<(const istring_base& a, const char* b)
+    [[nodiscard]] constexpr friend bool operator<(const istring_base& a, const_pointer b)
     {
         return a < string_view(b);
     }
@@ -967,7 +976,7 @@ public:
      * @return `true` if the istring_base is lexicographically greater than the char array,
      * otherwise `false`.
      */
-    [[nodiscard]] constexpr friend bool operator>(const istring_base& a, const char* b)
+    [[nodiscard]] constexpr friend bool operator>(const istring_base& a, const_pointer b)
     {
         return a > string_view(b);
     }
@@ -979,7 +988,7 @@ public:
      * @return `true` if the istring_base is lexicographically less than or equal to the char array,
      * otherwise `false`.
      */
-    [[nodiscard]] constexpr friend bool operator<=(const istring_base& a, const char* b)
+    [[nodiscard]] constexpr friend bool operator<=(const istring_base& a, const_pointer b)
     {
         return a <= string_view(b);
     }
@@ -991,7 +1000,7 @@ public:
      * @return `true` if the istring_base is lexicographically greater than or equal to the char array,
      * otherwise `false`.
      */
-    [[nodiscard]] constexpr friend bool operator>=(const istring_base& a, const char* b)
+    [[nodiscard]] constexpr friend bool operator>=(const istring_base& a, const_pointer b)
     {
         return a >= string_view(b);
     }

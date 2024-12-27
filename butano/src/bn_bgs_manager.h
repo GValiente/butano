@@ -25,6 +25,7 @@ class regular_bg_attributes;
 class affine_mat_attributes;
 class affine_bg_mat_attributes;
 enum class bpp_mode : uint8_t;
+enum class green_swap_mode : uint8_t;
 
 namespace bgs_manager
 {
@@ -153,6 +154,10 @@ namespace bgs_manager
     [[nodiscard]] bool mosaic_enabled(id_type id);
 
     void set_mosaic_enabled(id_type id, bool mosaic_enabled);
+
+    [[nodiscard]] bn::green_swap_mode green_swap_mode(id_type id);
+
+    void set_green_swap_mode(id_type id, bn::green_swap_mode green_swap_mode);
 
     [[nodiscard]] regular_bg_attributes regular_attributes(id_type id);
 

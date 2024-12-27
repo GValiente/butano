@@ -75,10 +75,26 @@
             </dt>
             <dd>Constructor.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a90d4a996c7371f26aeda33f17e199113" class="m-doc">affine_bg_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map,
+              int priority,
+              bool wrapping_enabled,
+              bool mosaic_enabled,
+              <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="#aafd01a6632cbdf5b59aff44813b9d2d1" class="m-doc">affine_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
               int priority,
               bool wrapping_enabled,
               bool mosaic_enabled)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a85ee41706e07b4ec5bb0868aced4d48e" class="m-doc">affine_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
+              int priority,
+              bool wrapping_enabled,
+              bool mosaic_enabled,
+              <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span>
             </dt>
             <dd>Constructor.</dd>
           </dl>
@@ -122,6 +138,14 @@
               <span class="m-doc-wrap-bumper">void <a href="#a09f6ffa6a352e3723e09d9fa6978e5ba" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
             </dt>
             <dd>Sets if the mosaic effect must be applied to an affine background or not.</dd>
+            <dt id="a384f7e6c94cf062258f13ec2728ded12">
+              <span class="m-doc-wrap-bumper">auto <a href="#a384f7e6c94cf062258f13ec2728ded12" class="m-doc-self">green_swap_mode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a></span>
+            </dt>
+            <dd>Indicates how an affine background must be displayed when green swap is enabled.</dd>
+            <dt id="aa1ba4122a4fa6cceb665390049cd4590">
+              <span class="m-doc-wrap-bumper">void <a href="#aa1ba4122a4fa6cceb665390049cd4590" class="m-doc-self">set_green_swap_mode</a>(</span><span class="m-doc-wrap"><a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span>
+            </dt>
+            <dd>Sets how an affine background must be displayed when green swap is enabled.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -169,6 +193,44 @@
             </table>
 <p>Backgrounds with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
           </div></section>
+          <section class="m-doc-details" id="a90d4a996c7371f26aeda33f17e199113"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a90d4a996c7371f26aeda33f17e199113" class="m-doc-self">affine_bg_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map,
+              int priority,
+              bool wrapping_enabled,
+              bool mosaic_enabled,
+              <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> of an affine background to copy.</td>
+                </tr>
+                <tr>
+                  <td>priority</td>
+                  <td>Priority of an affine background relative to sprites and other backgrounds, in the range [0..3].</td>
+                </tr>
+                <tr>
+                  <td>wrapping_enabled</td>
+                  <td>Indicates if an affine background wraps around at the edges or not.</td>
+                </tr>
+                <tr>
+                  <td>mosaic_enabled</td>
+                  <td>Indicates if the mosaic effect is applied to an affine background or not.</td>
+                </tr>
+                <tr>
+                  <td>green_swap_mode</td>
+                  <td>Indicates how an affine background must be displayed when green swap is enabled.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
           <section class="m-doc-details" id="aafd01a6632cbdf5b59aff44813b9d2d1"><div>
             <h3>
               <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aafd01a6632cbdf5b59aff44813b9d2d1" class="m-doc-self">affine_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
@@ -197,6 +259,44 @@
                 <tr>
                   <td>mosaic_enabled</td>
                   <td>Indicates if the mosaic effect is applied to an affine background or not.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a85ee41706e07b4ec5bb0868aced4d48e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />affine_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a85ee41706e07b4ec5bb0868aced4d48e" class="m-doc-self">affine_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
+              int priority,
+              bool wrapping_enabled,
+              bool mosaic_enabled,
+              <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a> of an affine background to move.</td>
+                </tr>
+                <tr>
+                  <td>priority</td>
+                  <td>Priority of an affine background relative to sprites and other backgrounds, in the range [0..3].</td>
+                </tr>
+                <tr>
+                  <td>wrapping_enabled</td>
+                  <td>Indicates if an affine background wraps around at the edges or not.</td>
+                </tr>
+                <tr>
+                  <td>mosaic_enabled</td>
+                  <td>Indicates if the mosaic effect is applied to an affine background or not.</td>
+                </tr>
+                <tr>
+                  <td>green_swap_mode</td>
+                  <td>Indicates how an affine background must be displayed when green swap is enabled.</td>
                 </tr>
               </tbody>
             </table>

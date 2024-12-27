@@ -18,6 +18,8 @@
 namespace bn
 {
 
+enum class green_swap_mode : uint8_t;
+
 /**
  * @brief Manages the attributes to commit to the GBA register of an affine background.
  *
@@ -42,6 +44,21 @@ public:
 
     /**
      * @brief Constructor.
+     * @param map affine_bg_map_ptr of an affine background to copy.
+     * @param priority Priority of an affine background relative to sprites and other backgrounds,
+     * in the range [0..3].
+     *
+     * Backgrounds with higher priority are drawn first
+     * (and therefore can be covered by later sprites and backgrounds).
+     * @param wrapping_enabled Indicates if an affine background wraps around at the edges or not.
+     * @param mosaic_enabled Indicates if the mosaic effect is applied to an affine background or not.
+     * @param green_swap_mode Indicates how an affine background must be displayed when green swap is enabled.
+     */
+    affine_bg_attributes(const affine_bg_map_ptr& map, int priority, bool wrapping_enabled, bool mosaic_enabled,
+                         bn::green_swap_mode green_swap_mode);
+
+    /**
+     * @brief Constructor.
      * @param map affine_bg_map_ptr of an affine background to move.
      * @param priority Priority of an affine background relative to sprites and other backgrounds,
      * in the range [0..3].
@@ -52,6 +69,21 @@ public:
      * @param mosaic_enabled Indicates if the mosaic effect is applied to an affine background or not.
      */
     affine_bg_attributes(affine_bg_map_ptr&& map, int priority, bool wrapping_enabled, bool mosaic_enabled);
+
+    /**
+     * @brief Constructor.
+     * @param map affine_bg_map_ptr of an affine background to move.
+     * @param priority Priority of an affine background relative to sprites and other backgrounds,
+     * in the range [0..3].
+     *
+     * Backgrounds with higher priority are drawn first
+     * (and therefore can be covered by later sprites and backgrounds).
+     * @param wrapping_enabled Indicates if an affine background wraps around at the edges or not.
+     * @param mosaic_enabled Indicates if the mosaic effect is applied to an affine background or not.
+     * @param green_swap_mode Indicates how an affine background must be displayed when green swap is enabled.
+     */
+    affine_bg_attributes(affine_bg_map_ptr&& map, int priority, bool wrapping_enabled, bool mosaic_enabled,
+                         bn::green_swap_mode green_swap_mode);
 
     /**
      * @brief Returns the affine_bg_map_ptr of an affine background.
@@ -133,6 +165,22 @@ public:
     }
 
     /**
+     * @brief Indicates how an affine background must be displayed when green swap is enabled.
+     */
+    [[nodiscard]] bn::green_swap_mode green_swap_mode() const
+    {
+        return _green_swap_mode;
+    }
+
+    /**
+     * @brief Sets how an affine background must be displayed when green swap is enabled.
+     */
+    void set_green_swap_mode(bn::green_swap_mode green_swap_mode)
+    {
+        _green_swap_mode = green_swap_mode;
+    }
+
+    /**
      * @brief Default equal operator.
      */
     [[nodiscard]] friend bool operator==(const affine_bg_attributes& a, const affine_bg_attributes& b) = default;
@@ -142,6 +190,7 @@ private:
     int8_t _priority;
     bool _wrapping_enabled;
     bool _mosaic_enabled;
+    bn::green_swap_mode _green_swap_mode;
 };
 
 }

@@ -74,9 +74,23 @@
             </dt>
             <dd>Constructor.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a32fce23b7719262b6582456791d2d0ca" class="m-doc">regular_bg_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map,
+              int priority,
+              bool mosaic_enabled,
+              <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="#a2e39e26b97a013f70e2ce002af1c52d2" class="m-doc">regular_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
               int priority,
               bool mosaic_enabled)</span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a7815de4c116fba337fb9fbba6cf161b7" class="m-doc">regular_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
+              int priority,
+              bool mosaic_enabled,
+              <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span>
             </dt>
             <dd>Constructor.</dd>
           </dl>
@@ -112,6 +126,14 @@
               <span class="m-doc-wrap-bumper">void <a href="#a9e66f045fea5f2aa164c7d1668d94808" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
             </dt>
             <dd>Sets if the mosaic effect must be applied to a regular background or not.</dd>
+            <dt id="afacc67a72d26fd7ede4e0a2389affbb8">
+              <span class="m-doc-wrap-bumper">auto <a href="#afacc67a72d26fd7ede4e0a2389affbb8" class="m-doc-self">green_swap_mode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a></span>
+            </dt>
+            <dd>Indicates how a regular background must be displayed when green swap is enabled.</dd>
+            <dt id="ae90260b2a55bde292cf9e12c0c53484c">
+              <span class="m-doc-wrap-bumper">void <a href="#ae90260b2a55bde292cf9e12c0c53484c" class="m-doc-self">set_green_swap_mode</a>(</span><span class="m-doc-wrap"><a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span>
+            </dt>
+            <dd>Sets how a regular background must be displayed when green swap is enabled.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -154,6 +176,39 @@
             </table>
 <p>Backgrounds with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
           </div></section>
+          <section class="m-doc-details" id="a32fce23b7719262b6582456791d2d0ca"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />regular_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a32fce23b7719262b6582456791d2d0ca" class="m-doc-self">regular_bg_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; map,
+              int priority,
+              bool mosaic_enabled,
+              <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a> of a regular background to copy.</td>
+                </tr>
+                <tr>
+                  <td>priority</td>
+                  <td>Priority of a regular background relative to sprites and other backgrounds, in the range [0..3].</td>
+                </tr>
+                <tr>
+                  <td>mosaic_enabled</td>
+                  <td>Indicates if the mosaic effect is applied to a regular background or not.</td>
+                </tr>
+                <tr>
+                  <td>green_swap_mode</td>
+                  <td>Indicates how a regular background must be displayed when green swap is enabled.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
           <section class="m-doc-details" id="a2e39e26b97a013f70e2ce002af1c52d2"><div>
             <h3>
               <span class="m-doc-wrap-bumper"> bn::<wbr />regular_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2e39e26b97a013f70e2ce002af1c52d2" class="m-doc-self">regular_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
@@ -177,6 +232,39 @@
                 <tr>
                   <td>mosaic_enabled</td>
                   <td>Indicates if the mosaic effect is applied to a regular background or not.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a7815de4c116fba337fb9fbba6cf161b7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />regular_bg_attributes::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7815de4c116fba337fb9fbba6cf161b7" class="m-doc-self">regular_bg_attributes</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;&amp; map,
+              int priority,
+              bool mosaic_enabled,
+              <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">map</td>
+                  <td><a href="classbn_1_1regular__bg__map__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />map_<wbr />ptr</a> of a regular background to move.</td>
+                </tr>
+                <tr>
+                  <td>priority</td>
+                  <td>Priority of a regular background relative to sprites and other backgrounds, in the range [0..3].</td>
+                </tr>
+                <tr>
+                  <td>mosaic_enabled</td>
+                  <td>Indicates if the mosaic effect is applied to a regular background or not.</td>
+                </tr>
+                <tr>
+                  <td>green_swap_mode</td>
+                  <td>Indicates how a regular background must be displayed when green swap is enabled.</td>
                 </tr>
               </tbody>
             </table>

@@ -1232,14 +1232,28 @@ void set_mosaic_enabled(id_type id, bool mosaic_enabled)
     _update_item_hw_cnt(*item);
 }
 
+bn::green_swap_mode green_swap_mode(id_type id)
+{
+    auto item = static_cast<const item_type*>(id);
+    return hw::bgs::green_swap_mode(item->hw_cnt);
+}
+
+void set_green_swap_mode(id_type id, bn::green_swap_mode green_swap_mode)
+{
+    auto item = static_cast<item_type*>(id);
+    hw::bgs::set_green_swap_mode(green_swap_mode, item->hw_cnt);
+    _update_item_hw_cnt(*item);
+}
+
 regular_bg_attributes regular_attributes(id_type id)
 {
-    return regular_bg_attributes(regular_map(id), priority(id), mosaic_enabled(id));
+    return regular_bg_attributes(regular_map(id), priority(id), mosaic_enabled(id), green_swap_mode(id));
 }
 
 affine_bg_attributes affine_attributes(id_type id)
 {
-    return affine_bg_attributes(affine_map(id), priority(id), wrapping_enabled(id), mosaic_enabled(id));
+    return affine_bg_attributes(affine_map(id), priority(id), wrapping_enabled(id), mosaic_enabled(id),
+                                green_swap_mode(id));
 }
 
 void set_regular_attributes(id_type id, const regular_bg_attributes& attributes)
@@ -1247,6 +1261,7 @@ void set_regular_attributes(id_type id, const regular_bg_attributes& attributes)
     set_regular_map(id, attributes.map());
     set_priority(id, attributes.priority());
     set_mosaic_enabled(id, attributes.mosaic_enabled());
+    set_green_swap_mode(id, attributes.green_swap_mode());
 }
 
 void set_affine_attributes(id_type id, const affine_bg_attributes& attributes)
@@ -1255,6 +1270,7 @@ void set_affine_attributes(id_type id, const affine_bg_attributes& attributes)
     set_priority(id, attributes.priority());
     set_wrapping_enabled(id, attributes.wrapping_enabled());
     set_mosaic_enabled(id, attributes.mosaic_enabled());
+    set_green_swap_mode(id, attributes.green_swap_mode());
 }
 
 bool blending_top_enabled(id_type id)
@@ -1558,6 +1574,7 @@ void fill_hblank_effect_regular_attributes(id_type id, const regular_bg_attribut
         hw::bgs::set_bpp(attributes_map.bpp(), dest_hw_cnt);
         hw::bgs::set_priority(attributes.priority(), dest_hw_cnt);
         hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_hw_cnt);
+        hw::bgs::set_green_swap_mode(attributes.green_swap_mode(), dest_hw_cnt);
         dest_ptr[index] = dest_hw_cnt;
     }
 }
@@ -1580,6 +1597,7 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
         hw::bgs::set_priority(attributes.priority(), dest_hw_cnt);
         hw::bgs::set_wrapping_enabled(attributes.wrapping_enabled(), dest_hw_cnt);
         hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_hw_cnt);
+        hw::bgs::set_green_swap_mode(attributes.green_swap_mode(), dest_hw_cnt);
         dest_ptr[index] = dest_hw_cnt;
     }
 }

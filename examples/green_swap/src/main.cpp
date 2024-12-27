@@ -7,10 +7,12 @@
 #include "bn_keypad.h"
 #include "bn_display.h"
 #include "bn_regular_bg_ptr.h"
+#include "bn_green_swap_mode.h"
 #include "bn_green_swap_actions.h"
 #include "bn_green_swap_hbe_ptr.h"
 #include "bn_sprite_text_generator.h"
 
+#include "bn_regular_bg_items_blue.h"
 #include "bn_regular_bg_items_village.h"
 
 #include "common_info.h"
@@ -104,6 +106,62 @@ namespace
             bn::core::update();
         }
     }
+
+    void green_swap_mode_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "A: change blue BG green swap mode",
+            "B: toggle green swap",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Green swap mode", info_text_lines, text_generator);
+
+        bn::regular_bg_ptr blue_bg = bn::regular_bg_items::blue.create_bg(0, 0);
+        blue_bg.set_green_swap_mode(bn::green_swap_mode::HALF_TRANSPARENT_A);
+
+        bn::green_swap::set_enabled(true);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::a_pressed())
+            {
+                switch(blue_bg.green_swap_mode())
+                {
+
+                case bn::green_swap_mode::DEFAULT:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::HALF_TRANSPARENT_A);
+                    break;
+
+                case bn::green_swap_mode::HALF_TRANSPARENT_A:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::HALF_TRANSPARENT_B);
+                    break;
+
+                case bn::green_swap_mode::HALF_TRANSPARENT_B:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::DUPLICATED);
+                    break;
+
+                case bn::green_swap_mode::DUPLICATED:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::DEFAULT);
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
+            if(bn::keypad::b_pressed())
+            {
+                bn::green_swap::set_enabled(! bn::green_swap::enabled());
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::green_swap::set_enabled(false);
+    }
 }
 
 int main()
@@ -122,6 +180,9 @@ int main()
         bn::core::update();
 
         green_swap_hbe_scene(text_generator);
+        bn::core::update();
+
+        green_swap_mode_scene(text_generator);
         bn::core::update();
     }
 }

@@ -569,6 +569,16 @@ void regular_bg_ptr::set_blending_bottom_enabled(bool blending_bottom_enabled)
     bgs_manager::set_blending_bottom_enabled(_handle, blending_bottom_enabled);
 }
 
+bn::green_swap_mode regular_bg_ptr::green_swap_mode() const
+{
+    return bgs_manager::green_swap_mode(_handle);
+}
+
+void regular_bg_ptr::set_green_swap_mode(bn::green_swap_mode green_swap_mode)
+{
+    bgs_manager::set_green_swap_mode(_handle, green_swap_mode);
+}
+
 bool regular_bg_ptr::visible() const
 {
     return bgs_manager::visible(_handle);

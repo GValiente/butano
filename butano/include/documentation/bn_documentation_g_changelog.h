@@ -14,6 +14,8 @@
  *
  * @section changelog_18_7_0 18.7.0 (next release)
  *
+ * * bn::green_swap_mode added (thanks Sono!). Check the `green_swap` example to see how to set
+ *   how a background must be displayed when green swap is enabled.
  * * bn::unique_ptr `operator<<` added.
  * * bn::ibitset `operator<<` added.
  * * Hash support for bn::ibitset added.

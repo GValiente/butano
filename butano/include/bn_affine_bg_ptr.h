@@ -33,6 +33,7 @@ class affine_bg_tiles_item;
 class affine_bg_attributes;
 class affine_mat_attributes;
 class affine_bg_mat_attributes;
+enum class green_swap_mode : uint8_t;
 
 /**
  * @brief std::shared_ptr like smart pointer that retains shared ownership of an affine background.
@@ -736,6 +737,16 @@ public:
      * @brief Sets if this affine background is part of the blending bottom layer or not.
      */
     void set_blending_bottom_enabled(bool blending_bottom_enabled);
+
+    /**
+     * @brief Indicates how this affine background must be displayed when green swap is enabled.
+     */
+    [[nodiscard]] bn::green_swap_mode green_swap_mode() const;
+
+    /**
+     * @brief Sets how this affine background must be displayed when green swap is enabled.
+     */
+    void set_green_swap_mode(bn::green_swap_mode green_swap_mode);
 
     /**
      * @brief Indicates if this affine background must be committed to the GBA or not.

@@ -14,6 +14,10 @@
 
 namespace bn::hw::bgs
 {
+    #define BG_GREEN_SWAP_MODE_MASK     (16 + 32)
+    #define BG_GREEN_SWAP_MODE_SHIFT    4
+    #define BG_GREEN_SWAP_MODE(n)       ((n)<<BG_GREEN_SWAP_MODE_SHIFT)
+
     struct alignas(int) regular_offset
     {
 
@@ -62,13 +66,14 @@ namespace bn::hw::bgs
 
     inline void setup_regular(const regular_bg_builder& builder, uint16_t& cnt)
     {
-        cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6));
+        cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
+                       (builder.mosaic_enabled() << 6));
     }
 
     inline void setup_affine(const affine_bg_builder& builder, uint16_t& cnt)
     {
-        cnt = uint16_t(BG_PRIO(builder.priority()) | (builder.mosaic_enabled() << 6) |
-                       (builder.wrapping_enabled() << 13) | BG_8BPP);
+        cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
+                       (builder.mosaic_enabled() << 6) | (builder.wrapping_enabled() << 13) | BG_8BPP);
     }
 
     inline void set_tiles_cbb(int tiles_cbb, uint16_t& cnt)
@@ -148,6 +153,16 @@ namespace bn::hw::bgs
         {
             cnt &= ~BG_MOSAIC;
         }
+    }
+
+    [[nodiscard]] inline bn::green_swap_mode green_swap_mode(uint16_t cnt)
+    {
+        return bn::green_swap_mode(BN_BFN_GET(cnt, BG_GREEN_SWAP_MODE));
+    }
+
+    inline void set_green_swap_mode(bn::green_swap_mode green_swap_mode, uint16_t& cnt)
+    {
+        BN_BFN_SET(cnt, int(green_swap_mode), BG_GREEN_SWAP_MODE);
     }
 
     inline void commit(const commit_data& data, bool use_dma)

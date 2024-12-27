@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Display &raquo; Green swap module | Butano Docs</title>
+  <title>bn_green_swap_mode.h file | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,112 +47,26 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__display.html">Display</a> &raquo;</span>
-          Green swap <span class="m-thin">module</span></h1>
+          bn_green_swap_mode.h <span class="m-thin">file</span>
+        </h1>
         <nav class="m-block m-default">
           <h3>Contents</h3>
           <ul>
             <li>
               Reference
               <ul>
-                <li><a href="#files">Files</a></li>
                 <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#nested-classes">Classes</a></li>
-                <li><a href="#enum-members">Enums</a></li>
               </ul>
             </li>
           </ul>
         </nav>
-<p>When it is enabled, green intensity of each two screen pixels are exchanged.</p><p>It produces an interesting dirt effect.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
-          <dl class="m-doc">
-            <dt>file <a href="bn__green__swap_8h.html" class="m-doc">bn_green_swap.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__green__swap__actions_8h.html" class="m-doc">bn_green_swap_actions.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__green__swap__hbe__ptr_8h.html" class="m-doc">bn_green_swap_hbe_ptr.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__green__swap__mode_8h.html" class="m-doc">bn_green_swap_mode.h</a></dt>
-            <dd></dd>
-          </dl>
-        </section>
+<p><a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> header file.</p>
         <section id="namespaces">
           <h2><a href="#namespaces">Namespaces</a></h2>
           <dl class="m-doc">
             <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
             <dd>Main Butano namespace.</dd>
-            <dt>namespace <a href="namespacebn_1_1green__swap.html" class="m-doc">bn::green_swap</a></dt>
-            <dd>When it is enabled, green intensity of each two screen pixels are exchanged.</dd>
           </dl>
-        </section>
-        <section id="nested-classes">
-          <h2><a href="#nested-classes">Classes</a></h2>
-          <dl class="m-doc">
-            <dt>
-              class <a href="classbn_1_1green__swap__manager.html" class="m-doc">bn::green_swap_manager</a>
-            </dt>
-            <dd>Manages if green swap must be enabled or not.</dd>
-            <dt>
-              class <a href="classbn_1_1green__swap__toggle__action.html" class="m-doc">bn::green_swap_toggle_action</a>
-            </dt>
-            <dd>Toggles if green swap must be enabled or not when the action is updated a given number of times.</dd>
-            <dt>
-              class <a href="classbn_1_1green__swap__hbe__ptr.html" class="m-doc">bn::green_swap_hbe_ptr</a>
-            </dt>
-            <dd>std::shared_ptr like smart pointer that retains shared ownership of a H-Blank effect which changes the state of green swap in each screen horizontal line.</dd>
-          </dl>
-        </section>
-        <section id="enum-members">
-          <h2><a href="#enum-members">Enums</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">enum class <a href="#ga6ed8f658483577341079c6a880231745" class="m-doc">green_swap_mode</a>: uint8_t { </span><span class="m-doc-wrap"><a href="#gga6ed8f658483577341079c6a880231745a5b39c8b553c821e7cddc6da64b5bd2ee" class="m-doc">DEFAULT</a>,
-              <a href="#gga6ed8f658483577341079c6a880231745a2c7ac268cf1d4db1044c60cd01f329bf" class="m-doc">HALF_TRANSPARENT_A</a>,
-              <a href="#gga6ed8f658483577341079c6a880231745ae88684a24b4f9ba9900e2e738542858f" class="m-doc">HALF_TRANSPARENT_B</a>,
-              <a href="#gga6ed8f658483577341079c6a880231745a1d840e66127ec54a19244f29a07fb8b8" class="m-doc">DUPLICATED</a> }</span>
-            </dt>
-            <dd>Specifies how a layer must be displayed when green swap is enabled.</dd>
-          </dl>
-        </section>
-        <section>
-          <h2>Enum documentation</h2>
-          <section class="m-doc-details" id="ga6ed8f658483577341079c6a880231745"><div>
-            <h3>
-              enum class <a href="#ga6ed8f658483577341079c6a880231745" class="m-doc-self">green_swap_mode</a>: uint8_t
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__green__swap__mode_8h.html">&lt;bn_green_swap_mode.h&gt;</a></div>
-            </h3>
-            <p>Specifies how a layer must be displayed when green swap is enabled.</p>
-            <table class="m-table m-fullwidth m-flat m-doc">
-              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
-              <tbody>
-                <tr>
-                  <td><a href="#gga6ed8f658483577341079c6a880231745a5b39c8b553c821e7cddc6da64b5bd2ee" class="m-doc-self" id="gga6ed8f658483577341079c6a880231745a5b39c8b553c821e7cddc6da64b5bd2ee">DEFAULT</a></td>
-                  <td>
-                  <p>The default green swap dirt effect.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td><a href="#gga6ed8f658483577341079c6a880231745a2c7ac268cf1d4db1044c60cd01f329bf" class="m-doc-self" id="gga6ed8f658483577341079c6a880231745a2c7ac268cf1d4db1044c60cd01f329bf">HALF_TRANSPARENT_A</a></td>
-                  <td>
-                  <p>Half of the columns are hidden.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td><a href="#gga6ed8f658483577341079c6a880231745ae88684a24b4f9ba9900e2e738542858f" class="m-doc-self" id="gga6ed8f658483577341079c6a880231745ae88684a24b4f9ba9900e2e738542858f">HALF_TRANSPARENT_B</a></td>
-                  <td>
-                  <p>The other half of the columns are hidden.</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td><a href="#gga6ed8f658483577341079c6a880231745a1d840e66127ec54a19244f29a07fb8b8" class="m-doc-self" id="gga6ed8f658483577341079c6a880231745a1d840e66127ec54a19244f29a07fb8b8">DUPLICATED</a></td>
-                  <td>
-                  <p>Pixels are duplicated.</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div></section>
         </section>
       </div>
     </div>

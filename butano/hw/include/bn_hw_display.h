@@ -230,6 +230,7 @@ namespace bn::hw::display
     {
         REG_BLDCNT = 0;
         REG_MOSAIC_U16 = 0;
+        REG_DISPCNT_U16_2 = 0;
     }
 
     inline void set_show_mode()

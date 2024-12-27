@@ -21,6 +21,7 @@
  * * Hash support for bn::ibitset added.
  * * More bn::istring_base comparison operators added.
  * * bn::utf8_character validation improved.
+ * * Green swap disabled when the display is stopped.
  * * @ref faq_delta_time, @ref faq_sprites_metasprites and @ref faq_backgrounds_animated questions
  *   added to the @ref faq page.
  * * @ref faq_standard and @ref faq_memory_heap questions improved.

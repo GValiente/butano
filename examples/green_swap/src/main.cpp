@@ -110,8 +110,8 @@ namespace
     void green_swap_mode_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
-            "A: change blue BG green swap mode",
-            "B: toggle green swap",
+            "PAD: change blue BG green swap mode",
+            "A: toggle green swap",
             "",
             "START: go to next scene",
         };
@@ -125,7 +125,31 @@ namespace
 
         while(! bn::keypad::start_pressed())
         {
-            if(bn::keypad::a_pressed())
+            if(bn::keypad::left_pressed() || bn::keypad::up_pressed())
+            {
+                switch(blue_bg.green_swap_mode())
+                {
+
+                case bn::green_swap_mode::DEFAULT:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::DUPLICATED);
+                    break;
+
+                case bn::green_swap_mode::HALF_TRANSPARENT_A:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::DEFAULT);
+                    break;
+
+                case bn::green_swap_mode::HALF_TRANSPARENT_B:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::HALF_TRANSPARENT_A);
+                    break;
+
+                case bn::green_swap_mode::DUPLICATED:
+                default:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::HALF_TRANSPARENT_B);
+                    break;
+                }
+            }
+
+            if(bn::keypad::right_pressed() || bn::keypad::down_pressed())
             {
                 switch(blue_bg.green_swap_mode())
                 {
@@ -143,15 +167,13 @@ namespace
                     break;
 
                 case bn::green_swap_mode::DUPLICATED:
-                    blue_bg.set_green_swap_mode(bn::green_swap_mode::DEFAULT);
-                    break;
-
                 default:
+                    blue_bg.set_green_swap_mode(bn::green_swap_mode::DEFAULT);
                     break;
                 }
             }
 
-            if(bn::keypad::b_pressed())
+            if(bn::keypad::a_pressed())
             {
                 bn::green_swap::set_enabled(! bn::green_swap::enabled());
             }

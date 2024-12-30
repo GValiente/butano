@@ -27,6 +27,7 @@
  *   added to the @ref faq page.
  * * @ref faq_standard and @ref faq_memory_heap questions improved.
  * * @ref getting_started_wt guide updated.
+ * * @ref qt_creator improved.
  * * Some spelling mistakes fixed.
  *
  *

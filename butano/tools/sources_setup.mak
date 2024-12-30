@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project:
 #---------------------------------------------------------------------------------------------------------------------
-LIBS        := -lgcc $(USERLIBS)
+LIBS        := -lgcc -lstdc++ $(USERLIBS)
 
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing libraries, this must be the top level containing include and lib directories:

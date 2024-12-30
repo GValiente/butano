@@ -49,6 +49,7 @@
  * @code{.cpp}
  * pacman -S make
  * wf-pacman -Syu wf-tools
+ * wf-pacman -Syu wf-tools
  * wf-config repo enable blocksds
  * wf-pacman -Syu
  * wf-pacman -S target-gba

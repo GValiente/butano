@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_7_0 18.7.0 (next release)
+ * @section changelog_18_7_0 18.7.0
  *
  * * bn::green_swap_mode added (thanks Sono!). Check the `green_swap` example to see how to set
  *   how a background must be displayed when green swap is enabled.

@@ -111,7 +111,7 @@ namespace
 
 void init()
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     data.connection.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
     irq::set_isr(irq::id::SERIAL, _serial_intr);

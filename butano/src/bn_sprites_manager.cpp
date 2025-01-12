@@ -233,7 +233,7 @@ namespace
 
 void init()
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     for(hw::sprites::handle_type& handle : data.handles)
     {

@@ -1145,7 +1145,7 @@ namespace
 
 void init()
 {
-    new(&external_data) static_external_data();
+    ::new(static_cast<void*>(&external_data)) static_external_data();
 
     hw::hblank_effects::commit_entries(internal_data.entries_b);
 

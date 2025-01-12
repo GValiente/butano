@@ -395,7 +395,7 @@ namespace
 
 void init(void* handles)
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     data.handles_ptr = static_cast<hw::sprite_affine_mats::handle*>(handles);
 

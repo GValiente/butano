@@ -106,7 +106,7 @@ namespace
 
 void init()
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     unsigned initial_window_flags =
             unsigned(hw::display::window_flag::SPRITES) |

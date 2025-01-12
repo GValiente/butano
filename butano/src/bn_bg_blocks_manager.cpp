@@ -1289,7 +1289,7 @@ namespace
 
 void init()
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
 

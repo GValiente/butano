@@ -333,7 +333,7 @@ public:
     {
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
-        new(_data + _size) value_type(value);
+        ::new(static_cast<void*>(_data + _size)) value_type(value);
         ++_size;
     }
 
@@ -345,7 +345,7 @@ public:
     {
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
-        new(_data + _size) value_type(move(value));
+        ::new(static_cast<void*>(_data + _size)) value_type(move(value));
         ++_size;
     }
 
@@ -360,7 +360,7 @@ public:
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
         Type* result = _data + _size;
-        new(result) value_type(forward<Args>(args)...);
+        ::new(static_cast<void*>(result)) value_type(forward<Args>(args)...);
         ++_size;
         return *result;
     }
@@ -389,7 +389,7 @@ public:
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
-        new(_data + _size) value_type(value);
+        ::new(static_cast<void*>(_data + _size)) value_type(value);
         ++_size;
 
         for(iterator it = non_const_position; it != last; ++it)
@@ -413,7 +413,7 @@ public:
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
-        new(_data + _size) value_type(move(value));
+        ::new(static_cast<void*>(_data + _size)) value_type(move(value));
         ++_size;
 
         for(iterator it = non_const_position; it != last; ++it)
@@ -438,7 +438,7 @@ public:
 
         auto non_const_position = const_cast<iterator>(position);
         iterator last = end();
-        new(_data + _size) value_type(forward<Args>(args)...);
+        ::new(static_cast<void*>(_data + _size)) value_type(forward<Args>(args)...);
         ++_size;
 
         for(iterator it = non_const_position; it != last; ++it)
@@ -548,7 +548,7 @@ public:
         {
             for(size_type index = size; index < count; ++index)
             {
-                new(data + index) value_type();
+                ::new(static_cast<void*>(data + index)) value_type();
             }
         }
     }
@@ -577,7 +577,7 @@ public:
         {
             for(size_type index = size; index < count; ++index)
             {
-                new(data + index) value_type(value);
+                ::new(static_cast<void*>(data + index)) value_type(value);
             }
         }
     }
@@ -615,7 +615,7 @@ public:
 
         for(size_type index = 0; index < count; ++index)
         {
-            new(data + index) value_type(value);
+            ::new(static_cast<void*>(data + index)) value_type(value);
         }
     }
 
@@ -636,7 +636,7 @@ public:
 
         for(size_type index = 0; index < count; ++index)
         {
-            new(data + index) value_type(*first);
+            ::new(static_cast<void*>(data + index)) value_type(*first);
             ++first;
         }
     }
@@ -812,7 +812,7 @@ protected:
 
         for(size_type index = 0; index < other_size; ++index)
         {
-            new(data + index) value_type(other_data[index]);
+            ::new(static_cast<void*>(data + index)) value_type(other_data[index]);
         }
     }
 
@@ -825,7 +825,7 @@ protected:
 
         for(size_type index = 0; index < other_size; ++index)
         {
-            new(data + index) value_type(move(other_data[index]));
+            ::new(static_cast<void*>(data + index)) value_type(move(other_data[index]));
         }
 
         other.clear();
@@ -838,7 +838,7 @@ protected:
 
         for(size_type index = 0; index < count; ++index)
         {
-            new(data + index) value_type();
+            ::new(static_cast<void*>(data + index)) value_type();
         }
     }
 
@@ -849,7 +849,7 @@ protected:
 
         for(size_type index = 0; index < count; ++index)
         {
-            new(data + index) value_type(value);
+            ::new(static_cast<void*>(data + index)) value_type(value);
         }
     }
 

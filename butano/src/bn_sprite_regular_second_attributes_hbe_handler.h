@@ -20,7 +20,7 @@ class sprite_regular_second_attributes_hbe_handler
 public:
     static void setup_target(intptr_t, void* target_last_value)
     {
-        new(target_last_value) sprite_second_attributes_last_value();
+        ::new(static_cast<void*>(target_last_value)) sprite_second_attributes_last_value();
     }
 
     [[nodiscard]] static bool target_visible(intptr_t target_id)

@@ -809,7 +809,7 @@ public:
         BN_BASIC_ASSERT(! full(), "Deque is full");
 
         _push_front();
-        new(_data + _begin) value_type(value);
+        ::new(static_cast<void*>(_data + _begin)) value_type(value);
     }
 
     /**
@@ -821,7 +821,7 @@ public:
         BN_BASIC_ASSERT(! full(), "Deque is full");
 
         _push_front();
-        new(_data + _begin) value_type(move(value));
+        ::new(static_cast<void*>(_data + _begin)) value_type(move(value));
     }
 
     /**
@@ -837,7 +837,7 @@ public:
         _push_front();
 
         Type* result = _data + _begin;
-        new(result) value_type(forward<Args>(args)...);
+        ::new(static_cast<void*>(result)) value_type(forward<Args>(args)...);
         return *result;
     }
 
@@ -849,7 +849,7 @@ public:
     {
         BN_BASIC_ASSERT(! full(), "Deque is full");
 
-        new(_data + _real_index(_size)) value_type(value);
+        ::new(static_cast<void*>(_data + _real_index(_size))) value_type(value);
         ++_size;
     }
 
@@ -861,7 +861,7 @@ public:
     {
         BN_BASIC_ASSERT(! full(), "Deque is full");
 
-        new(_data + _real_index(_size)) value_type(move(value));
+        ::new(static_cast<void*>(_data + _real_index(_size))) value_type(move(value));
         ++_size;
     }
 
@@ -876,7 +876,7 @@ public:
         BN_BASIC_ASSERT(! full(), "Deque is full");
 
         Type* result = _data + _real_index(_size);
-        new(result) value_type(forward<Args>(args)...);
+        ::new(static_cast<void*>(result)) value_type(forward<Args>(args)...);
         ++_size;
         return *result;
     }
@@ -914,7 +914,7 @@ public:
 
         if(index == 0)
         {
-            new(_data + _begin) value_type(value);
+            ::new(static_cast<void*>(_data + _begin)) value_type(value);
             _push_front();
         }
         else
@@ -925,7 +925,7 @@ public:
             pointer data = _data;
             size_type last = _size;
             size_type last_real_index = _real_index(last);
-            new(data + last_real_index) value_type(value);
+            ::new(static_cast<void*>(data + last_real_index)) value_type(value);
             reference last_value = data[last_real_index];
 
             for(; index != last; ++index)
@@ -952,7 +952,7 @@ public:
         if(index == 0)
         {
             _push_front();
-            new(_data + _begin) value_type(move(value));
+            ::new(static_cast<void*>(_data + _begin)) value_type(move(value));
         }
         else
         {
@@ -962,7 +962,7 @@ public:
             pointer data = _data;
             size_type last = _size;
             size_type last_real_index = _real_index(last);
-            new(data + last_real_index) value_type(move(value));
+            ::new(static_cast<void*>(data + last_real_index)) value_type(move(value));
             reference last_value = data[last_real_index];
 
             for(; index != last; ++index)
@@ -990,7 +990,7 @@ public:
         if(index == 0)
         {
             _push_front();
-            new(_data + _begin) value_type(forward<Args>(args)...);
+            ::new(static_cast<void*>(_data + _begin)) value_type(forward<Args>(args)...);
         }
         else
         {
@@ -1000,7 +1000,7 @@ public:
             pointer data = _data;
             size_type last = _size;
             size_type last_real_index = _real_index(last);
-            new(_data + last_real_index) value_type(forward<Args>(args)...);
+            ::new(static_cast<void*>(_data + last_real_index)) value_type(forward<Args>(args)...);
             reference last_value = data[last_real_index];
 
             for(; index != last; ++index)
@@ -1135,7 +1135,7 @@ public:
         {
             for(size_type index = size; index < count; ++index)
             {
-                new(data + _real_index(index)) value_type();
+                ::new(static_cast<void*>(data + _real_index(index))) value_type();
             }
         }
     }
@@ -1164,7 +1164,7 @@ public:
         {
             for(size_type index = size; index < count; ++index)
             {
-                new(data + _real_index(index)) value_type(value);
+                ::new(static_cast<void*>(data + _real_index(index))) value_type(value);
             }
         }
     }
@@ -1202,7 +1202,7 @@ public:
 
         for(size_type index = 0; index < count; ++index)
         {
-            new(data + index) value_type(value);
+            ::new(static_cast<void*>(data + index)) value_type(value);
         }
     }
 
@@ -1223,7 +1223,7 @@ public:
 
         for(size_type index = 0; index < count; ++index)
         {
-            new(data + index) value_type(*first);
+            ::new(static_cast<void*>(data + index)) value_type(*first);
             ++first;
         }
     }
@@ -1407,7 +1407,7 @@ protected:
 
         for(size_type index = 0; index < other_size; ++index)
         {
-            new(data + index) value_type(other_data[other._real_index(index)]);
+            ::new(static_cast<void*>(data + index)) value_type(other_data[other._real_index(index)]);
         }
     }
 
@@ -1420,7 +1420,7 @@ protected:
 
         for(size_type index = 0; index < other_size; ++index)
         {
-            new(data + index) value_type(move(other_data[other._real_index(index)]));
+            ::new(static_cast<void*>(data + index)) value_type(move(other_data[other._real_index(index)]));
         }
 
         other._size = 0;
@@ -1435,7 +1435,7 @@ protected:
 
         for(size_type index = size; index < count; ++index)
         {
-            new(data + index) value_type();
+            ::new(static_cast<void*>(data + index)) value_type();
         }
     }
 
@@ -1446,7 +1446,7 @@ protected:
 
         for(size_type index = 0; index < count; ++index)
         {
-            new(data + index) value_type(value);
+            ::new(static_cast<void*>(data + index)) value_type(value);
         }
     }
 

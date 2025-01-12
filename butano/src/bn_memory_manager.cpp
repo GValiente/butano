@@ -29,7 +29,7 @@ namespace
 
 void init()
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     char* start = hw::memory::ewram_heap_start();
     char* end = hw::memory::ewram_heap_end();

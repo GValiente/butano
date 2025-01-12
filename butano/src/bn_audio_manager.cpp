@@ -575,7 +575,7 @@ namespace
 
 void init()
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     hw::audio::init();
 }
@@ -613,7 +613,8 @@ void play_music(music_item item, fixed volume, bool loop)
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
     data.command_codes[commands] = MUSIC_PLAY;
-    new(data.command_datas + commands) play_music_command(item.id(), loop, _hw_music_volume(volume));
+    ::new(static_cast<void*>(data.command_datas + commands)) play_music_command(
+            item.id(), loop, _hw_music_volume(volume));
     data.commands_count = commands + 1;
 
     data.music_item_id = item.id();
@@ -689,7 +690,7 @@ void set_music_position(int position)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_POSITION;
-        new(data.command_datas + commands) set_music_position_command(position);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_music_position_command(position);
         data.commands_count = commands + 1;
 
         data.music_position = position;
@@ -714,7 +715,7 @@ void set_music_volume(fixed volume)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_VOLUME;
-        new(data.command_datas + commands) set_music_volume_command(hw_volume);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_music_volume_command(hw_volume);
         data.commands_count = commands + 1;
     }
 
@@ -739,7 +740,7 @@ void set_music_tempo(fixed tempo)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_TEMPO;
-        new(data.command_datas + commands) set_music_tempo_command(hw_tempo);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_music_tempo_command(hw_tempo);
         data.commands_count = commands + 1;
     }
 
@@ -764,7 +765,7 @@ void set_music_pitch(fixed pitch)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_PITCH;
-        new(data.command_datas + commands) set_music_pitch_command(hw_pitch);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_music_pitch_command(hw_pitch);
         data.commands_count = commands + 1;
     }
 
@@ -794,7 +795,7 @@ void play_jingle(music_item item, fixed volume)
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
     data.command_codes[commands] = JINGLE_PLAY;
-    new(data.command_datas + commands) play_jingle_command(item.id(), _hw_music_volume(volume));
+    ::new(static_cast<void*>(data.command_datas + commands)) play_jingle_command(item.id(), _hw_music_volume(volume));
     data.commands_count = commands + 1;
 
     data.jingle_item_id = item.id();
@@ -820,7 +821,7 @@ void set_jingle_volume(fixed volume)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = JINGLE_SET_VOLUME;
-        new(data.command_datas + commands) set_jingle_volume_command(hw_volume);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_jingle_volume_command(hw_volume);
         data.commands_count = commands + 1;
     }
 
@@ -850,7 +851,8 @@ void play_dmg_music(const dmg_music_item& item, int speed, bool loop)
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
     data.command_codes[commands] = DMG_MUSIC_PLAY;
-    new(data.command_datas + commands) play_dmg_music_command(item.data_ptr(), item.type(), loop, speed);
+    ::new(static_cast<void*>(data.command_datas + commands)) play_dmg_music_command(
+            item.data_ptr(), item.type(), loop, speed);
     data.commands_count = commands + 1;
 
     data.dmg_music_position = bn::dmg_music_position();
@@ -925,7 +927,8 @@ void set_dmg_music_position(const bn::dmg_music_position& position)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = DMG_MUSIC_SET_POSITION;
-        new(data.command_datas + commands) set_dmg_music_position_command(position.pattern(), position.row());
+        ::new(static_cast<void*>(data.command_datas + commands)) set_dmg_music_position_command(
+                position.pattern(), position.row());
         data.commands_count = commands + 1;
 
         data.dmg_music_position = position;
@@ -969,7 +972,8 @@ void set_dmg_music_volume(fixed left_volume, fixed right_volume)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = DMG_MUSIC_SET_VOLUME;
-        new(data.command_datas + commands) set_dmg_music_volume_command(hw_left_volume, hw_right_volume);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_dmg_music_volume_command(
+                hw_left_volume, hw_right_volume);
         data.commands_count = commands + 1;
     }
 
@@ -990,7 +994,7 @@ void set_dmg_music_master_volume(bn::dmg_music_master_volume volume)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = DMG_MUSIC_SET_MASTER_VOLUME;
-        new(data.command_datas + commands) set_dmg_music_master_volume_command(int(volume));
+        ::new(static_cast<void*>(data.command_datas + commands)) set_dmg_music_master_volume_command(int(volume));
         data.commands_count = commands + 1;
 
         data.dmg_music_master_volume = volume;
@@ -1020,7 +1024,7 @@ uint16_t play_sound(int priority, bn::sound_item item)
     data.new_sound_handle = handle + 1;
 
     data.command_codes[commands] = SOUND_PLAY;
-    new(data.command_datas + commands) play_sound_command(priority, item.id(), handle);
+    ::new(static_cast<void*>(data.command_datas + commands)) play_sound_command(priority, item.id(), handle);
     data.commands_count = commands + 1;
 
     return handle;
@@ -1037,7 +1041,7 @@ uint16_t play_sound(int priority, bn::sound_item item, fixed volume, fixed speed
     data.new_sound_handle = handle + 1;
 
     data.command_codes[commands] = SOUND_PLAY_EX;
-    new(data.command_datas + commands) play_sound_ex_command(
+    ::new(static_cast<void*>(data.command_datas + commands)) play_sound_ex_command(
             priority, item.id(), handle, _hw_sound_volume(volume), _hw_sound_speed(speed),
             _hw_sound_panning(panning));
     data.commands_count = commands + 1;
@@ -1053,7 +1057,7 @@ void stop_sound(uint16_t handle)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = SOUND_STOP;
-        new(data.command_datas + commands) stop_sound_command(handle);
+        ::new(static_cast<void*>(data.command_datas + commands)) stop_sound_command(handle);
         data.commands_count = commands + 1;
     }
 }
@@ -1066,7 +1070,7 @@ void release_sound(uint16_t handle)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = SOUND_RELEASE;
-        new(data.command_datas + commands) release_sound_command(handle);
+        ::new(static_cast<void*>(data.command_datas + commands)) release_sound_command(handle);
         data.commands_count = commands + 1;
     }
 }
@@ -1108,7 +1112,7 @@ void set_sound_speed(uint16_t handle, fixed speed)
             BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
             data.command_codes[commands] = SOUND_SET_SPEED;
-            new(data.command_datas + commands) set_sound_speed_command(handle, hw_scale);
+            ::new(static_cast<void*>(data.command_datas + commands)) set_sound_speed_command(handle, hw_scale);
             data.commands_count = commands + 1;
         }
 
@@ -1137,7 +1141,7 @@ void set_sound_panning(uint16_t handle, fixed panning)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = SOUND_SET_PANNING;
-        new(data.command_datas + commands) set_sound_panning_command(handle, hw_panning);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_panning_command(handle, hw_panning);
         data.commands_count = commands + 1;
     }
 
@@ -1170,7 +1174,7 @@ void set_sound_master_volume(fixed volume)
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = SOUND_SET_MASTER_VOLUME;
-        new(data.command_datas + commands) set_sound_master_volume_command(hw_volume);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_master_volume_command(hw_volume);
         data.commands_count = commands + 1;
     }
 

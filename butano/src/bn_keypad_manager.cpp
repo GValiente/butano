@@ -74,7 +74,7 @@ namespace
 
 void init(const string_view& commands)
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     BN_ASSERT(commands.size() % 2 == 0, "Invalid commands size: ", commands.size());
 

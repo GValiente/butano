@@ -95,7 +95,7 @@ public:
         BN_BASIC_ASSERT(! base_type::full(), "Pool is full");
 
         auto result = reinterpret_cast<Type*>(base_type::_allocate());
-        new(result) Type(forward<Args>(args)...);
+        ::new(static_cast<void*>(result)) Type(forward<Args>(args)...);
         return *result;
     }
 

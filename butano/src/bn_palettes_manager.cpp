@@ -31,7 +31,7 @@ namespace
 
 void init(const optional<color>& transparent_color)
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     bg_palettes_bank().set_transparent_color(transparent_color);
 }

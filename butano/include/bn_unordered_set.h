@@ -718,7 +718,7 @@ public:
             BN_BASIC_ASSERT(current_index != index, "All indices are allocated");
         }
 
-        new(storage + current_index) value_type(move(value));
+        ::new(static_cast<void*>(storage + current_index)) value_type(move(value));
         allocated[current_index] = true;
         _first_valid_index = min(_first_valid_index, current_index);
         _last_valid_index = max(_last_valid_index, current_index);
@@ -951,7 +951,7 @@ public:
                     }
                     else
                     {
-                        new(storage + index) value_type(move(other_storage[index]));
+                        ::new(static_cast<void*>(storage + index)) value_type(move(other_storage[index]));
                         ++size;
                     }
                 }
@@ -1038,7 +1038,7 @@ public:
                     }
                     else
                     {
-                        new(storage + index) value_type(move(other_storage[index]));
+                        ::new(static_cast<void*>(storage + index)) value_type(move(other_storage[index]));
                         other_storage[index].~value_type();
                         other_allocated[index] = false;
                         allocated[index] = true;
@@ -1048,7 +1048,7 @@ public:
                 {
                     if(allocated[index])
                     {
-                        new(other_storage + index) value_type(move(storage[index]));
+                        ::new(static_cast<void*>(other_storage + index)) value_type(move(storage[index]));
                         storage[index].~value_type();
                         allocated[index] = false;
                         other_allocated[index] = true;
@@ -1184,7 +1184,7 @@ protected:
         {
             if(allocated[index])
             {
-                new(storage + index) value_type(other_storage[index]);
+                ::new(static_cast<void*>(storage + index)) value_type(other_storage[index]);
             }
         }
 
@@ -1207,7 +1207,7 @@ protected:
         {
             if(allocated[index])
             {
-                new(storage + index) value_type(move(other_storage[index]));
+                ::new(static_cast<void*>(storage + index)) value_type(move(other_storage[index]));
             }
         }
 

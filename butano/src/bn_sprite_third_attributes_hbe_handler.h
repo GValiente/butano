@@ -19,7 +19,7 @@ class sprite_third_attributes_hbe_handler
 public:
     static void setup_target(intptr_t, void* target_last_value)
     {
-        new(target_last_value) sprite_shape_size(sprite_shape::SQUARE, sprite_size::SMALL);
+        ::new(static_cast<void*>(target_last_value)) sprite_shape_size(sprite_shape::SQUARE, sprite_size::SMALL);
     }
 
     [[nodiscard]] static bool target_visible(intptr_t target_id)

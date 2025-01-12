@@ -757,7 +757,7 @@ namespace
 
 void init()
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     BN_SPRITE_TILES_LOG("sprite_tiles_manager - INIT");
 

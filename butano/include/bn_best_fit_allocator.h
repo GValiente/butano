@@ -150,7 +150,7 @@ public:
         auto result = reinterpret_cast<Type*>(alloc(sizeof(Type)));
         BN_BASIC_ASSERT(result, "Allocation failed");
 
-        new(result) Type(forward<Args>(args)...);
+        ::new(static_cast<void*>(result)) Type(forward<Args>(args)...);
         return *result;
     }
 

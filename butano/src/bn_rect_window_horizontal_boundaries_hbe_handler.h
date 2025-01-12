@@ -23,7 +23,7 @@ public:
 
     static void setup_target(intptr_t, void* target_last_value)
     {
-        new(target_last_value) pair<int, int>();
+        ::new(static_cast<void*>(target_last_value)) pair<int, int>();
     }
 
     [[nodiscard]] static bool target_updated(intptr_t target_id, void* target_last_value)

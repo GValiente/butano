@@ -19,7 +19,7 @@ class affine_bg_pivot_vertical_position_hbe_handler
 public:
     static void setup_target(intptr_t target_id, void* target_last_value)
     {
-        new(target_last_value) last_value_type(target_id);
+        ::new(static_cast<void*>(target_last_value)) last_value_type(target_id);
     }
 
     [[nodiscard]] static bool target_visible(intptr_t target_id)

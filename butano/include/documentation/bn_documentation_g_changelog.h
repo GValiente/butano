@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_7_1 18.7.1 (next release)
+ *
+ * Placement new calls with user-provided `operator new` overloads fixed.
+ *
+ *
  * @section changelog_18_7_0 18.7.0
  *
  * * bn::green_swap_mode added (thanks Sono!). Check the `green_swap` example to see how to set

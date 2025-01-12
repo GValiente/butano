@@ -331,7 +331,7 @@ void init(const string_view& keypad_commands)
 
 void init(const optional<color>& transparent_color, const string_view& keypad_commands)
 {
-    new(&data) static_data();
+    ::new(static_cast<void*>(&data)) static_data();
 
     // Initial wait:
     hw::core::init();

@@ -18,7 +18,7 @@ class sprite_horizontal_position_hbe_handler
 public:
     static void setup_target(intptr_t, void* target_last_value)
     {
-        new(target_last_value) int(0);
+        ::new(static_cast<void*>(target_last_value)) int(0);
     }
 
     [[nodiscard]] static bool target_visible(intptr_t target_id)

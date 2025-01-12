@@ -88,7 +88,7 @@ public:
                   alignof(Type), " - ", _max_alignment);
 
         reset();
-        new(_value_ptr<Type>()) Type(value);
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(value);
         _create_manager<Type>();
         return *this;
     }
@@ -105,7 +105,7 @@ public:
                   alignof(Type), " - ", _max_alignment);
 
         reset();
-        new(_value_ptr<Type>()) Type(value);
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(value);
         _create_manager<Type>();
         return *this;
     }
@@ -122,7 +122,7 @@ public:
                    alignof(Type), " - ", _max_alignment);
 
         reset();
-        new(_value_ptr<Type>()) Type(bn::forward<Type>(value));
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(bn::forward<Type>(value));
         _create_manager<Type>();
         return *this;
     }
@@ -229,7 +229,7 @@ public:
         reset();
 
         Type* result = _value_ptr<Type>();
-        new(result) Type(forward<Args>(args)...);
+        ::new(static_cast<void*>(result)) Type(forward<Args>(args)...);
         _create_manager<Type>();
         return *result;
     }
@@ -324,7 +324,7 @@ protected:
             if constexpr(is_copy_constructible_v<Type>)
             {
                 other_any.reset();
-                new(other_any._value_ptr<Type>()) Type(*this_any._value_ptr<Type>());
+                ::new(static_cast<void*>(other_any._value_ptr<Type>())) Type(*this_any._value_ptr<Type>());
                 other_any._create_manager<Type>();
             }
             else
@@ -343,7 +343,7 @@ protected:
             if constexpr(is_move_constructible_v<Type>)
             {
                 other_any.reset();
-                new(other_any._value_ptr<Type>()) Type(move(*this_any._value_ptr<Type>()));
+                ::new(static_cast<void*>(other_any._value_ptr<Type>())) Type(move(*this_any._value_ptr<Type>()));
                 other_any._create_manager<Type>();
                 this_any.reset();
             }
@@ -396,7 +396,7 @@ protected:
         static_assert(sizeof(type_manager<Type>) == sizeof(base_manager));
         static_assert(alignof(type_manager<Type>) == alignof(base_manager));
 
-        new(_manager_ptr()) type_manager<Type>();
+        ::new(static_cast<void*>(_manager_ptr())) type_manager<Type>();
         _manager_created = true;
     }
 
@@ -503,7 +503,7 @@ public:
         static_assert(int(sizeof(Type)) <= MaxSize);
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
-        new(_value_ptr<Type>()) Type(value);
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(value);
         _create_manager<Type>();
     }
 
@@ -518,7 +518,7 @@ public:
         static_assert(int(sizeof(Type)) <= MaxSize);
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
-        new(_value_ptr<Type>()) Type(value);
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(value);
         _create_manager<Type>();
     }
 
@@ -533,7 +533,7 @@ public:
         static_assert(int(sizeof(Type)) <= MaxSize);
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
-        new(_value_ptr<Type>()) Type(bn::forward<Type>(value));
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(bn::forward<Type>(value));
         _create_manager<Type>();
     }
 
@@ -613,7 +613,7 @@ public:
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
         reset();
-        new(_value_ptr<Type>()) Type(value);
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(value);
         _create_manager<Type>();
         return *this;
     }
@@ -630,7 +630,7 @@ public:
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
         reset();
-        new(_value_ptr<Type>()) Type(value);
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(value);
         _create_manager<Type>();
         return *this;
     }
@@ -647,7 +647,7 @@ public:
         static_assert(int(alignof(Type)) <= MaxAlignment);
 
         reset();
-        new(_value_ptr<Type>()) Type(bn::forward<Type>(value));
+        ::new(static_cast<void*>(_value_ptr<Type>())) Type(bn::forward<Type>(value));
         _create_manager<Type>();
         return *this;
     }
@@ -668,7 +668,7 @@ public:
         reset();
 
         Type* result = _value_ptr<Type>();
-        new(result) Type(forward<Args>(args)...);
+        ::new(static_cast<void*>(result)) Type(forward<Args>(args)...);
         _create_manager<Type>();
         return *result;
     }

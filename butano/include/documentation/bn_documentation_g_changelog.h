@@ -14,7 +14,8 @@
  *
  * @section changelog_18_7_1 18.7.1 (next release)
  *
- * Placement new calls with user-provided `operator new` overloads fixed.
+ * * Placement new calls with user-provided `operator new` overloads fixed.
+ * * bn::unordered_map and bn::unordered_set clangd warnings fixed.
  *
  *
  * @section changelog_18_7_0 18.7.0

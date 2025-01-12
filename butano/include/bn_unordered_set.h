@@ -97,7 +97,7 @@ public:
         iterator operator++(int)
         {
             iterator copy(*this);
-            ++this;
+            operator++();
             return copy;
         }
 
@@ -128,7 +128,7 @@ public:
         iterator operator--(int)
         {
             iterator copy(*this);
-            --this;
+            operator--();
             return copy;
         }
 
@@ -250,7 +250,7 @@ public:
         const_iterator operator++(int)
         {
             const_iterator copy(*this);
-            ++this;
+            operator++();
             return copy;
         }
 
@@ -281,7 +281,7 @@ public:
         const_iterator operator--(int)
         {
             const_iterator copy(*this);
-            --this;
+            operator--();
             return copy;
         }
 

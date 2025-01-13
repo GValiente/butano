@@ -46,7 +46,8 @@
  *   * To build a devkitARM example, open the system console, `cd` to the folder of the example you want to build
  *     and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
  *   * In particular, you should build and run the Maxmod example located in
- *     `/path/to/devkitpro/examples/gba/audio/maxmod` before going on.
+ *     `/path/to/devkitpro/examples/gba/audio/maxmod` before going on. Maybe you're going to need
+ *     to copy the example folder to another place to avoid having permission issues when building it.
  *
  * @image html devkitpro.png
  *

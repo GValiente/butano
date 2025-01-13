@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_8_0 18.8.0 (next release)
+ *
+ * @ref getting_started guide improved.
+ *
+ *
  * @section changelog_18_7_1 18.7.1
  *
  * * Placement `new` calls with user-provided `operator new` overloads fixed.

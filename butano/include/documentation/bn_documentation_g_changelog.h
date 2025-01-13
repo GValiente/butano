@@ -14,7 +14,8 @@
  *
  * @section changelog_18_8_0 18.8.0 (next release)
  *
- * @ref getting_started guide improved.
+ * * bn::best_fit_allocator::check_empty_on_destructor and bn::best_fit_allocator::set_check_empty_on_destructor added.
+ * * @ref getting_started guide improved.
  *
  *
  * @section changelog_18_7_1 18.7.1

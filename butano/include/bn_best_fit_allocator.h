@@ -90,6 +90,22 @@ public:
     }
 
     /**
+     * @brief Indicates if the allocator must check if it is empty or not on its destructor.
+     */
+    [[nodiscard]] bool check_empty_on_destructor() const
+    {
+        return ! _skip_empty_check_on_destructor;
+    }
+
+    /**
+     * @brief Sets if the allocator must check if it is empty or not on its destructor.
+     */
+    void set_check_empty_on_destructor(bool check_empty_on_destructor)
+    {
+        _skip_empty_check_on_destructor = ! check_empty_on_destructor;
+    }
+
+    /**
      * @brief Allocates uninitialized storage.
      * @param bytes Bytes to allocate.
      * @return On success, returns the pointer to the beginning of newly allocated memory.
@@ -224,6 +240,7 @@ private:
     item_type* _first_free_item = nullptr;
     size_type _total_bytes_count = 0;
     size_type _free_bytes_count = 0;
+    bool _skip_empty_check_on_destructor = false;
 
     [[nodiscard]] const item_type* _begin_item() const
     {

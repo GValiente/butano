@@ -39,12 +39,12 @@ namespace
     {
 
     public:
+        unsigned usages = 1;
         fixed_point position;
         affine_bg_mat_attributes affine_mat_attributes;
         point hw_position;
         size half_dimensions;
         hw::bgs::affine_attributes hw_affine_attributes;
-        unsigned usages = 1;
         sort_key bg_sort_key;
         bool visible_in_windows[hw::display::windows_count()];
         optional<regular_bg_map_ptr> regular_map;

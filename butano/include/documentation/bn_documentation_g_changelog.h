@@ -16,7 +16,7 @@
  *
  * * bn::best_fit_allocator::check_empty_on_destructor and bn::best_fit_allocator::set_check_empty_on_destructor added.
  * * Show the sum of the ticks of all entries in the profiler results.
- * * Backgrounds management CPU usage reduced.
+ * * Sprites and backgrounds management CPU usage reduced.
  * * @ref getting_started guide improved.
  *
  *

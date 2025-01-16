@@ -15,6 +15,7 @@
  * @section changelog_18_8_0 18.8.0 (next release)
  *
  * * bn::best_fit_allocator::check_empty_on_destructor and bn::best_fit_allocator::set_check_empty_on_destructor added.
+ * * Show the sum of the ticks of all entries in the profiler results.
  * * @ref getting_started guide improved.
  *
  *

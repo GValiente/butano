@@ -78,7 +78,7 @@ namespace
     {
         item.update_half_dimensions();
 
-        if(item.visible)
+        if(item.visible) [[likely]]
         {
             item.check_on_screen = true;
             data.check_items_on_screen = true;
@@ -96,7 +96,7 @@ namespace
             {
                 bool new_double_size = sprite_affine_mats_manager::sprite_double_size(affine_mat->id(), shape_size);
 
-                if(item.double_size != new_double_size)
+                if(item.double_size != new_double_size) [[unlikely]]
                 {
                     item.double_size = new_double_size;
 
@@ -132,7 +132,7 @@ namespace
             hw::sprites::show_affine(new_double_size, item.handle);
         }
 
-        if(item.double_size != new_double_size)
+        if(item.double_size != new_double_size) [[unlikely]]
         {
             item.double_size = new_double_size;
             _update_item_dimensions(item);
@@ -172,6 +172,8 @@ namespace
     {
         if(data.rebuild_handles)
         {
+            data.rebuild_handles = false;
+
             hw::sprites::handle_type* handles = data.handles;
             int reserved_count = data.reserved_handles_count;
             bool reload_all_handles = data.reload_all_handles;
@@ -190,7 +192,6 @@ namespace
             BN_BASIC_ASSERT(visible_items_count >= 0, "Too many on screen sprites");
 
             int last_visible_items_count = data.last_visible_items_count;
-            data.rebuild_handles = false;
             data.last_visible_items_count = visible_items_count;
 
             for(int index = visible_items_count; index < last_visible_items_count; ++index)
@@ -268,7 +269,7 @@ id_type create(const fixed_point& position, const sprite_shape_size& shape_size,
 id_type create_optional(const fixed_point& position, const sprite_shape_size& shape_size, sprite_tiles_ptr&& tiles,
                         sprite_palette_ptr&& palette)
 {
-    if(data.items_pool.full())
+    if(data.items_pool.full()) [[unlikely]]
     {
         return nullptr;
     }
@@ -298,7 +299,7 @@ id_type create(sprite_builder&& builder)
 
 id_type create_optional(sprite_builder&& builder)
 {
-    if(data.items_pool.full())
+    if(data.items_pool.full()) [[unlikely]]
     {
         return nullptr;
     }
@@ -1061,9 +1062,10 @@ void set_regular_second_attributes(id_type id, const sprite_regular_second_attri
 sprite_affine_second_attributes affine_second_attributes(id_type id)
 {
     auto item = static_cast<const item_type*>(id);
-    BN_BASIC_ASSERT(item->affine_mat, "Item is not affine");
+    const sprite_affine_mat_ptr* affine_mat = item->affine_mat.get();
+    BN_BASIC_ASSERT(affine_mat, "Item is not affine");
 
-    return sprite_affine_second_attributes(item->position.x(), *item->affine_mat);
+    return sprite_affine_second_attributes(item->position.x(), *affine_mat);
 }
 
 void set_affine_second_attributes(id_type id, const sprite_affine_second_attributes& second_attributes)
@@ -1341,7 +1343,7 @@ void update_auto_double_size(id_type id)
 {
     auto item = static_cast<item_type*>(id);
 
-    if(item->visible)
+    if(item->visible) [[likely]]
     {
         hw::sprites::show_affine(item->double_size, item->handle);
     }
@@ -1371,7 +1373,8 @@ void commit(bool use_dma)
 
     if(int count = affine_mats_commit_data.count)
     {
-        int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
+        constexpr int multiplier = hw::sprites::count() / hw::sprite_affine_mats::count();
+
         int first_mat_index_to_commit = affine_mats_commit_data.offset * multiplier;
         int last_mat_index_to_commit = first_mat_index_to_commit + (count * multiplier) - 1;
         first_index_to_commit = min(first_index_to_commit, first_mat_index_to_commit);

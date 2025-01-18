@@ -973,9 +973,9 @@ void update()
 
         if(data.update_windows_visible_bgs)
         {
-            bgs_manager::update_windows_flags(data.windows_flags);
             data.update_windows_visible_bgs = false;
             data.commit_windows_flags = true;
+            bgs_manager::update_windows_flags(data.windows_flags);
         }
 
         if(data.commit_display)
@@ -986,20 +986,21 @@ void update()
 
         if(data.update_mosaic)
         {
+            data.update_mosaic = false;
             hw::display::set_mosaic(min(fixed_t<4>(data.sprites_mosaic_horizontal_stretch).data(), 15),
                                     min(fixed_t<4>(data.sprites_mosaic_vertical_stretch).data(), 15),
                                     min(fixed_t<4>(data.bgs_mosaic_horizontal_stretch).data(), 15),
                                     min(fixed_t<4>(data.bgs_mosaic_vertical_stretch).data(), 15), data.mosaic_cnt);
-            data.update_mosaic = false;
         }
 
         if(data.update_blending_transparency)
         {
+            data.update_blending_transparency = false;
+
             pair<int, int> hw_weights = _blending_hw_weights(
                         blending_transparency_top_weight(), blending_transparency_bottom_weight());
             hw::display::set_blending_transparency(
                         hw_weights.first, hw_weights.second, data.blending_transparency_cnt);
-            data.update_blending_transparency = false;
         }
     }
 }

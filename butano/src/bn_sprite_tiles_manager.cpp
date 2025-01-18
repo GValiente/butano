@@ -680,7 +680,7 @@ namespace
 
                     int new_free_item_id = _create_item(id, tiles_data, compression, tiles_count, true);
 
-                    if(new_free_item_id >= 0)
+                    if(new_free_item_id >= 0) [[likely]]
                     {
                         _insert_free_item(new_free_item_id);
                     }
@@ -701,7 +701,7 @@ namespace
                 int id = *free_items_it;
                 int new_free_item_id = _create_item(id, tiles_data, compression, tiles_count, data.delay_commit);
 
-                if(new_free_item_id >= 0)
+                if(new_free_item_id >= 0) [[likely]]
                 {
                     _insert_free_item(new_free_item_id, free_items_it);
                     ++free_items_it;
@@ -740,7 +740,7 @@ namespace
                 int id = *free_items_it;
                 int new_free_item_id = _create_item(id, nullptr, compression_type::NONE, tiles_count, false);
 
-                if(new_free_item_id >= 0)
+                if(new_free_item_id >= 0) [[likely]]
                 {
                     _insert_free_item(new_free_item_id, free_items_it);
                     ++free_items_it;
@@ -972,7 +972,7 @@ void decrease_usages(int id)
 
     --item.usages;
 
-    if(! item.usages)
+    if(! item.usages) [[unlikely]]
     {
         item.set_status(status_type::TO_REMOVE);
         item.commit_if_recovered = item.commit;
@@ -1094,10 +1094,13 @@ void update()
 {
     if(data.to_remove_tiles_count)
     {
+        data.to_remove_tiles_count = 0;
+
         BN_SPRITE_TILES_LOG("sprite_tiles_manager - UPDATE");
 
         auto begin = data.items.begin();
         auto end = data.items.end();
+        int free_tiles_count = data.free_tiles_count;
 
         for(int to_remove_item_index : data.to_remove_items)
         {
@@ -1112,7 +1115,7 @@ void update()
 
             item.set_status(status_type::FREE);
             item.commit_if_recovered = false;
-            data.free_tiles_count += item.tiles_count;
+            free_tiles_count += item.tiles_count;
 
             auto next_iterator = iterator;
             ++next_iterator;
@@ -1150,8 +1153,8 @@ void update()
             _insert_free_item(to_remove_item_index);
         }
 
+        data.free_tiles_count = free_tiles_count;
         data.to_remove_items.clear();
-        data.to_remove_tiles_count = 0;
 
         BN_SPRITE_TILES_LOG_STATUS();
     }

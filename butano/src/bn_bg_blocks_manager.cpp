@@ -2862,6 +2862,9 @@ void update()
 {
     if(data.to_remove_blocks_count || data.check_commit)
     {
+        data.to_remove_blocks_count = 0;
+        data.check_commit = false;
+
         BN_BG_BLOCKS_LOG("bg_blocks_manager - UPDATE");
 
         auto end = data.items.end();
@@ -2872,8 +2875,6 @@ void update()
 
         int commit_uncompressed_items_count = 0;
         int commit_compressed_items_count = 0;
-        data.to_remove_blocks_count = 0;
-        data.check_commit = false;
 
         while(iterator != end)
         {

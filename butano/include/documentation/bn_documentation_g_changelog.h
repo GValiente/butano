@@ -16,7 +16,7 @@
  *
  * * bn::best_fit_allocator::check_empty_on_destructor and bn::best_fit_allocator::set_check_empty_on_destructor added.
  * * Show the sum of the ticks of all entries in the profiler results.
- * * Sprites, sprite tiles, sprite affine mats and backgrounds management CPU usage reduced.
+ * * Sprites, sprite tiles, sprite affine mats, backgrounds and palettes management CPU usage reduced.
  * * @ref getting_started guide improved.
  *
  *

@@ -287,7 +287,7 @@ void palettes_bank::decrease_usages(int id)
 
     if(! pal.usages) [[unlikely]]
     {
-        for(int slot = 0, slots_count = pal.slots_count; slot < slots_count; ++slot)
+        for(int slot = pal.slots_count - 1; slot >= 0; --slot)
         {
             _palettes[id + slot].locked = false;
         }
@@ -826,7 +826,7 @@ void palettes_bank::_update_palette(int id)
     copy_colors(initial_pal_colors_ptr, pal_colors_count, final_pal_colors_ptr);
     pal.apply_effects(pal_colors_count, final_pal_colors_ptr);
 
-    if(int rotate_count = pal.rotate_count)
+    if(int rotate_count = pal.rotate_count) [[unlikely]]
     {
         auto unsigned_final_pal_colors_ptr = reinterpret_cast<const unsigned*>(final_pal_colors_ptr);
         unsigned unsigned_temp_buffer[hw::palettes::colors() / 2];

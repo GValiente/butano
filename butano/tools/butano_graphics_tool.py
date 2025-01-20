@@ -180,18 +180,25 @@ class SpriteItem:
         self.__build_folder_path = build_folder_path
 
         try:
-            height = int(info['height'])
+            self.__width = int(info['width'])
 
-            if bmp.height % height:
-                raise ValueError('File height is not divisible by item height: ' +
-                                 str(bmp.height) + ' - ' + str(height))
-
-            self.__graphics = int(bmp.height / height)
+            if bmp.width % self.__width:
+                raise ValueError('File width is not divisible by item width: ' +
+                                 str(bmp.width) + ' - ' + str(self.__width))
         except KeyError:
-            height = bmp.height
-            self.__graphics = 1
+            self.__width = bmp.width
 
-        self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
+        try:
+            self.__height = int(info['height'])
+
+            if bmp.height % self.__height:
+                raise ValueError('File height is not divisible by item height: ' +
+                                 str(bmp.height) + ' - ' + str(self.__height))
+        except KeyError:
+            self.__height = bmp.height
+
+        self.__graphics = int(bmp.width / self.__width) * int(bmp.height / self.__height)
+        self.__shape, self.__size = SpriteItem.shape_and_size(self.__width, self.__height)
         self.__colors_count = parse_colors_count(info, bmp)
         self.__bpp_8 = parse_sprite_bpp_mode(info, self.__colors_count)
 
@@ -328,7 +335,8 @@ class SpriteItem:
         return total_size, header_file_path
 
     def __execute_command(self, grit, tiles_compression, palette_compression):
-        command = [grit, self.__file_path, '-gt', '-pe' + str(self.__colors_count)]
+        command = [grit, self.__file_path, '-gt', '-pe' + str(self.__colors_count), '-Mw', str(self.__width / 8),
+                   '-Mh', str(self.__height / 8)]
 
         if self.__bpp_8:
             command.append('-gB8')
@@ -359,18 +367,25 @@ class SpriteTilesItem:
         self.__build_folder_path = build_folder_path
 
         try:
-            height = int(info['height'])
+            self.__width = int(info['width'])
 
-            if bmp.height % height:
-                raise ValueError('File height is not divisible by item height: ' +
-                                 str(bmp.height) + ' - ' + str(height))
-
-            self.__graphics = int(bmp.height / height)
+            if bmp.width % self.__width:
+                raise ValueError('File width is not divisible by item width: ' +
+                                 str(bmp.width) + ' - ' + str(self.__width))
         except KeyError:
-            height = bmp.height
-            self.__graphics = 1
+            self.__width = bmp.width
 
-        self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
+        try:
+            self.__height = int(info['height'])
+
+            if bmp.height % self.__height:
+                raise ValueError('File height is not divisible by item height: ' +
+                                 str(bmp.height) + ' - ' + str(self.__height))
+        except KeyError:
+            self.__height = bmp.height
+
+        self.__graphics = int(bmp.width / self.__width) * int(bmp.height / self.__height)
+        self.__shape, self.__size = SpriteItem.shape_and_size(self.__width, self.__height)
         self.__colors_count = parse_colors_count(info, bmp)
         self.__bpp_8 = parse_sprite_bpp_mode(info, self.__colors_count)
 
@@ -467,7 +482,7 @@ class SpriteTilesItem:
         return total_size, header_file_path
 
     def __execute_command(self, grit, compression):
-        command = [grit, self.__file_path, '-gt', '-p!']
+        command = [grit, self.__file_path, '-gt', '-p!', '-Mw', str(self.__width / 8), '-Mh', str(self.__height / 8)]
 
         if self.__bpp_8:
             command.append('-gB8')

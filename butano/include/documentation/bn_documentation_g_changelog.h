@@ -15,6 +15,8 @@
  * @section changelog_18_8_0 18.8.0 (next release)
  *
  * * bn::best_fit_allocator::check_empty_on_destructor and bn::best_fit_allocator::set_check_empty_on_destructor added.
+ * * Import tool now allows to specify the width of sprites and sprite tiles.
+ *   See the @ref import_image import guide to learn how to specify it.
  * * Show the sum of the ticks of all entries in the profiler results.
  * * CPU usage reduced in most resource managers.
  * * @ref getting_started guide improved.

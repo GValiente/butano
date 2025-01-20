@@ -78,7 +78,8 @@
  * An image file can contain multiple sprite images.
  * If it only contains one sprite image, its size must be one of the specified by @ref bn::sprite_shape_size.
  *
- * Multiple sprite images are allowed by layering them down on the vertical axis:
+ * Multiple sprite images are allowed by layering them right on the horizontal axis
+ * and layering them down on the vertical axis:
  *
  * @image html import_sprite.png
  *
@@ -92,6 +93,8 @@
  *
  * The fields for sprites are the following:
  * * `"type"`: must be `"sprite"` for sprites.
+ * * `"width"`: optional field which specifies the width of each sprite image in pixels.
+ * For example, if the specified width is 32, an image with 128 pixels of width contains 4 sprite images.
  * * `"height"`: optional field which specifies the height of each sprite image in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite images.
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite:
@@ -155,6 +158,8 @@
  *
  * The fields for sprite tiles are the following:
  * * `"type"`: must be `"sprite_tiles"` for sprite tiles.
+ * * `"width"`: optional field which specifies the width of each sprite tile set in pixels.
+ * For example, if the specified width is 32, an image with 128 pixels of width contains 4 sprite tile sets.
  * * `"height"`: optional field which specifies the height of each sprite tile set in pixels.
  * For example, if the specified height is 32, an image with 128 pixels of height contains 4 sprite tile sets.
  * * `"bpp_mode"`: optional field which specifies the bits per pixel of the sprite tiles:

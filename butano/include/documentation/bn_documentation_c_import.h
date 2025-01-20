@@ -144,7 +144,8 @@
  * If it only contains one sprite tile set,
  * the size of the image must be one of the specified by @ref bn::sprite_shape_size.
  *
- * Multiple sprite tile sets are allowed by layering them down on the vertical axis:
+ * Multiple sprite tile sets are allowed by layering them right on the horizontal axis
+ * and layering them down on the vertical axis:
  *
  * @image html import_sprite.png
  *

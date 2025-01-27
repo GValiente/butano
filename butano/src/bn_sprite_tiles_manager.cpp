@@ -252,12 +252,21 @@ namespace
     };
 
 
+    struct hasher
+    {
+        [[nodiscard]] constexpr unsigned operator()(const tile* tile) const
+        {
+            return unsigned(tile) / 4;
+        }
+    };
+
+
     class static_data
     {
 
     public:
         items_list items;
-        unordered_map<const tile*, int, max_items * 2> items_map;
+        unordered_map<const tile*, int, max_items * 2, hasher> items_map;
         vector<uint16_t, max_items> free_items;
         vector<uint16_t, max_items> to_remove_items;
         vector<uint16_t, max_items> to_commit_uncompressed_items;

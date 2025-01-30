@@ -11,7 +11,6 @@
 #include "bn_keypad.h"
 #include "bn_memory.h"
 #include "bn_timers.h"
-#include "bn_version.h"
 #include "bn_profiler.h"
 #include "bn_system_font.h"
 #include "bn_bgs_manager.h"
@@ -19,6 +18,7 @@
 #include "bn_link_manager.h"
 #include "bn_gpio_manager.h"
 #include "bn_audio_manager.h"
+#include "bn_config_assert.h"
 #include "bn_keypad_manager.h"
 #include "bn_memory_manager.h"
 #include "bn_display_manager.h"
@@ -132,7 +132,7 @@ namespace
         timer cpu_usage_timer;
         ticks last_ticks;
         bn::system_font system_font;
-        string_view assert_tag = BN_VERSION_STRING " " BN_TOOLCHAIN_TAG;
+        string_view assert_tag = BN_CFG_ASSERT_TAG;
         int skip_frames = 0;
         int last_update_frames = 1;
         int missed_frames = 0;

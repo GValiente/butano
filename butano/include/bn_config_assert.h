@@ -13,7 +13,7 @@
  * @ingroup assert
  */
 
-#include "bn_common.h"
+#include "bn_version.h"
 
 /**
  * @def BN_CFG_ASSERT_ENABLED
@@ -37,6 +37,17 @@
  */
 #ifndef BN_CFG_ASSERT_SHOW_DIAGNOSTIC
     #define BN_CFG_ASSERT_SHOW_DIAGNOSTIC true
+#endif
+
+/**
+ * @def BN_CFG_ASSERT_TAG
+ *
+ * Specifies the default tag displayed in assert messages.
+ *
+ * @ingroup assert
+ */
+#ifndef BN_CFG_ASSERT_TAG
+    #define BN_CFG_ASSERT_TAG BN_VERSION_STRING " " BN_TOOLCHAIN_TAG
 #endif
 
 /**

@@ -498,8 +498,16 @@ namespace
 
             vector<uint16_t, max_items>& to_commit_items =
                     item.compression() == compression_type::NONE ?
-                        data.to_commit_uncompressed_items : data.to_commit_compressed_items;
-            to_commit_items.erase(bn::find(to_commit_items.begin(), to_commit_items.end(), id));
+                            data.to_commit_uncompressed_items : data.to_commit_compressed_items;
+
+            for(auto it = to_commit_items.begin(), end = to_commit_items.end(); it != end; ++it)
+            {
+                if(id == *it)
+                {
+                    to_commit_items.erase(it);
+                    return;
+                }
+            }
         }
     }
 

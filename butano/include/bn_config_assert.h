@@ -27,6 +27,19 @@
 #endif
 
 /**
+ * @def BN_CFG_ASSERT_SHOW_GENERAL_INFO
+ *
+ * Specifies if general assert information must be shown or not.
+ *
+ * Disabling general information reduces ROM size.
+ *
+ * @ingroup assert
+ */
+#ifndef BN_CFG_ASSERT_SHOW_GENERAL_INFO
+    #define BN_CFG_ASSERT_SHOW_GENERAL_INFO true
+#endif
+
+/**
  * @def BN_CFG_ASSERT_SHOW_DIAGNOSTIC
  *
  * Specifies if asserts diagnostic information must be shown or not.

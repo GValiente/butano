@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_8_0 18.8.0 (next release)
+ * @section changelog_18_8_0 18.8.0
  *
  * * bn::best_fit_allocator::check_empty_on_destructor and bn::best_fit_allocator::set_check_empty_on_destructor added.
  * * @ref BN_CFG_ASSERT_SHOW_GENERAL_INFO added.

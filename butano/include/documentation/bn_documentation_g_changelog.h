@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_18_9_0 18.9.0 (next release)
+ *
+ * Binary data folders documentation improved.
+ *
+ *
  * @section changelog_18_8_0 18.8.0
  *
  * * bn::best_fit_allocator::check_empty_on_destructor and bn::best_fit_allocator::set_check_empty_on_destructor added.

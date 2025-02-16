@@ -5,7 +5,7 @@
 # PYTHON is the path to the python interpreter.
 # SOURCES is a list of directories containing source code.
 # INCLUDES is a list of directories containing extra header files.
-# DATA is a list of directories containing binary data.
+# DATA is a list of directories containing binary data files with *.bin extension.
 # GRAPHICS is a list of files and directories containing files to be processed by grit.
 # AUDIO is a list of files and directories containing files to be processed by mmutil.
 # DMGAUDIO is a list of files and directories containing files to be processed by mod2gbt and s3m2gbt.

@@ -14,7 +14,8 @@
  *
  * @section changelog_18_9_0 18.9.0 (next release)
  *
- * Binary data folders documentation improved.
+ * * bn::fixed::modulo fixed.
+ * * Binary data folders documentation improved.
  *
  *
  * @section changelog_18_8_0 18.8.0

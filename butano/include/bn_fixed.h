@@ -367,7 +367,7 @@ public:
      */
     [[nodiscard]] constexpr fixed_t modulo(int value) const
     {
-        int n = division(value).integer();
+        int n = division(value).floor_integer();
         return *this - (n * value);
     }
 

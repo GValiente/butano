@@ -16,6 +16,7 @@
  *
  * * bn::fixed::modulo fixed.
  * * Binary data folders documentation improved.
+ * * Some 3rd party games have been forked to work with this release.
  *
  *
  * @section changelog_18_8_0 18.8.0

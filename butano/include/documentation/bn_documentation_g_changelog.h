@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_18_9_0 18.9.0 (next release)
+ * @section changelog_18_9_0 18.9.0
  *
  * * bn::fixed::modulo fixed.
  * * Binary data folders documentation improved.

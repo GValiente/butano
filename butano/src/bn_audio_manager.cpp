@@ -569,6 +569,8 @@ namespace
         bool music_paused = false;
         bool jingle_playing = false;
         bool dmg_music_paused = false;
+        bool update_on_vblank = false;
+        bool delay_commit = true;
     };
 
     BN_DATA_EWRAM_BSS static_data data;
@@ -1187,17 +1189,17 @@ void set_sound_master_volume(fixed volume)
 
 bool update_on_vblank()
 {
-    return hw::audio::update_on_vblank();
+    return data.update_on_vblank;
 }
 
 void set_update_on_vblank(bool update_on_vblank)
 {
-    hw::audio::set_update_on_vblank(update_on_vblank);
+    data.update_on_vblank = update_on_vblank;
 }
 
 void update()
 {
-    hw::audio::update();
+    data.delay_commit = ! data.update_on_vblank;
 }
 
 void execute_commands()
@@ -1420,10 +1422,24 @@ void execute_commands()
     }
 }
 
-void commit()
+void vblank_commit()
 {
-    hw::audio::commit();
-    hw::dmg_audio::check_commit_result();
+    if(! data.delay_commit)
+    {
+        hw::audio::commit();
+        hw::dmg_audio::commit();
+    }
+}
+
+void delayed_commit()
+{
+    if(data.delay_commit)
+    {
+        hw::audio::commit();
+        hw::dmg_audio::commit();
+        hw::dmg_audio::check_commit_result();
+        data.delay_commit = false;
+    }
 }
 
 void stop()

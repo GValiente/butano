@@ -32,8 +32,8 @@
 #include "../hw/include/bn_hw_core.h"
 #include "../hw/include/bn_hw_gpio.h"
 #include "../hw/include/bn_hw_sram.h"
+#include "../hw/include/bn_hw_audio.h"
 #include "../hw/include/bn_hw_timer.h"
-#include "../hw/include/bn_hw_memory.h"
 #include "../hw/include/bn_hw_game_pak.h"
 #include "../hw/include/bn_hw_hblank_effects.h"
 
@@ -305,12 +305,39 @@ namespace
         result.vblank_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commit");
-        audio_manager::commit();
+        audio_manager::delayed_commit();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
         BN_PROFILER_ENGINE_GENERAL_STOP();
 
         return result;
+    }
+
+    void _vblank_intr()
+    {
+        hw::audio::on_vblank();
+
+        if(data.waiting_for_vblank)
+        {
+            BN_PROFILER_ENGINE_DETAILED_START("eng_audio_update");
+            audio_manager::update();
+            BN_PROFILER_ENGINE_DETAILED_STOP();
+
+            BN_PROFILER_ENGINE_DETAILED_START("eng_audio_commit");
+            audio_manager::vblank_commit();
+            BN_PROFILER_ENGINE_DETAILED_STOP();
+
+            data.waiting_for_vblank = false;
+        }
+        else
+        {
+            hdma_manager::commit(false);
+            audio_manager::vblank_commit();
+
+            ++data.missed_frames;
+        }
+
+        link_manager::commit();
     }
 }
 
@@ -351,6 +378,8 @@ void init(const optional<color>& transparent_color, const string_view& keypad_co
 
     // Init audio system:
     audio_manager::init();
+    hw::irq::set_isr(hw::irq::id::VBLANK, _vblank_intr);
+    hw::irq::enable(hw::irq::id::VBLANK);
 
     // Init storage systems:
     data.slow_game_pak = hw::game_pak::init();
@@ -429,24 +458,6 @@ void update()
     BN_PROFILER_ENGINE_DETAILED_START("eng_keypad");
     keypad_manager::update();
     BN_PROFILER_ENGINE_DETAILED_STOP();
-}
-
-void on_vblank()
-{
-    if(data.waiting_for_vblank)
-    {
-        BN_PROFILER_ENGINE_DETAILED_START("eng_audio_update");
-        audio_manager::update();
-        BN_PROFILER_ENGINE_DETAILED_STOP();
-
-        data.waiting_for_vblank = false;
-    }
-    else
-    {
-        hdma_manager::commit(false);
-
-        ++data.missed_frames;
-    }
 }
 
 void sleep(keypad::key_type wake_up_key)

@@ -234,10 +234,7 @@ void _timer_intr()
 
 void commit()
 {
-    if(data.active)
-    {
-        data.connection._onVBlank();
-    }
+    data.connection._onVBlank();
 }
 
 }

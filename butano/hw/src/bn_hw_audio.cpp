@@ -8,15 +8,9 @@
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
 #include "../include/bn_hw_irq.h"
-#include "../include/bn_hw_link.h"
-#include "../include/bn_hw_dmg_audio.h"
+#include "../include/bn_hw_tonc.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
-
-namespace bn::core
-{
-    void on_vblank();
-}
 
 namespace bn::hw::audio
 {
@@ -43,8 +37,6 @@ namespace
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
         uint16_t direct_sound_control_value = 0;
         bool music_paused = false;
-        bool update_on_vblank = false;
-        bool delay_commit = true;
     };
 
     BN_DATA_EWRAM_BSS static_data data;
@@ -145,32 +137,11 @@ namespace
             }
         }
     }
-
-    void _commit()
-    {
-        mmFrame();
-        dmg_audio::commit();
-    }
-
-    void _vblank_handler()
-    {
-        core::on_vblank();
-
-        if(! data.delay_commit)
-        {
-            _commit();
-        }
-
-        hw::link::commit();
-    }
 }
 
 void init()
 {
     ::new(static_cast<void*>(&data)) static_data();
-
-    irq::set_isr(irq::id::VBLANK, mmVBlank);
-    irq::enable(irq::id::VBLANK);
 
     mm_gba_system maxmod_info;
     maxmod_info.mixing_mode = mm_mixmode(BN_CFG_AUDIO_MIXING_RATE);
@@ -185,8 +156,6 @@ void init()
             (_max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH)));
     maxmod_info.soundbank = mm_addr(_bn_audio_soundbank_bin);
     mmInit(&maxmod_info);
-
-    mmSetVBlankHandler(reinterpret_cast<void*>(_vblank_handler));
 }
 
 void enable()
@@ -281,21 +250,6 @@ void stop_all_sounds()
     data.sounds_queue.clear();
 }
 
-bool update_on_vblank()
-{
-    return data.update_on_vblank;
-}
-
-void set_update_on_vblank(bool update_on_vblank)
-{
-    data.update_on_vblank = update_on_vblank;
-}
-
-void update()
-{
-    data.delay_commit = ! data.update_on_vblank;
-}
-
 void update_sounds_queue()
 {
     auto before_it = data.sounds_queue.before_begin();
@@ -315,15 +269,6 @@ void update_sounds_queue()
         {
             it = data.sounds_queue.erase_after(before_it);
         }
-    }
-}
-
-void commit()
-{
-    if(data.delay_commit)
-    {
-        _commit();
-        data.delay_commit = false;
     }
 }
 

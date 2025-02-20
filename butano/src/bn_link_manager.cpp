@@ -76,4 +76,12 @@ void disable()
     }
 }
 
+void commit()
+{
+    if(hw::link::active())
+    {
+        hw::link::commit();
+    }
+}
+
 }

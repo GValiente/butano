@@ -103,15 +103,17 @@ namespace bn::hw::audio
         mmSetEffectsVolume(mm_word(volume));
     }
 
-    [[nodiscard]] bool update_on_vblank();
-
-    void set_update_on_vblank(bool update_on_vblank);
-
-    void update();
-
     void update_sounds_queue();
 
-    void commit();
+    inline void on_vblank()
+    {
+        mmVBlank();
+    }
+
+    inline void commit()
+    {
+        mmFrame();
+    }
 
     inline void stop()
     {

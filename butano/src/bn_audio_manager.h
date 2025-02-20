@@ -149,7 +149,9 @@ namespace bn::audio_manager
 
     void execute_commands();
 
-    void commit();
+    void vblank_commit();
+
+    void delayed_commit();
 
     void stop();
 }

@@ -230,8 +230,8 @@ def list_dmg_audio_file_infos(audio_paths, build_folder_path):
     return audio_file_infos
 
 
-def process_dmg_audio(audio_paths, build_folder_path):
-    if len(audio_paths) == 0:
+def process_dmg_audio(backend, audio_paths, build_folder_path):
+    if backend == 'null' or len(audio_paths) == 0:
         return
 
     audio_file_infos = list_dmg_audio_file_infos(audio_paths, build_folder_path)

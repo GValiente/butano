@@ -1,3 +1,4 @@
+
 #---------------------------------------------------------------------------------------------------------------------
 # Any extra libraries we wish to link with the project:
 #---------------------------------------------------------------------------------------------------------------------
@@ -22,7 +23,10 @@ BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
 				$(LIBBUTANOABS)/hw/3rd_party/agbabi/src \
 				$(LIBBUTANOABS)/hw/3rd_party/gba-modern/src \
 				$(LIBBUTANOABS)/hw/3rd_party/cult-of-gba-bios/src \
-				$(LIBBUTANOABS)/hw/3rd_party/gbt-player/src \
-				$(LIBBUTANOABS)/hw/3rd_party/vgm-player/src \
 				$(LIBBUTANOABS)/hw/3rd_party/maxmod/source \
 				$(LIBBUTANOABS)/hw/3rd_party/maxmod/source_gba
+				
+ifeq ($(strip $(DMGAUDIOBACKEND)),default)
+	BNSOURCES	+=	$(LIBBUTANOABS)/hw/3rd_party/gbt-player/src \
+					$(LIBBUTANOABS)/hw/3rd_party/vgm-player/src
+endif

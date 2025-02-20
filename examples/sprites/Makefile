@@ -8,7 +8,8 @@
 # DATA is a list of directories containing binary data files with *.bin extension.
 # GRAPHICS is a list of files and directories containing files to be processed by grit.
 # AUDIO is a list of files and directories containing files to be processed by mmutil.
-# DMGAUDIO is a list of files and directories containing files to be processed by mod2gbt and s3m2gbt.
+# DMGAUDIO is a list of files and directories containing files to be processed by the DMG audio backend.
+# DMGAUDIOBACKEND specifies the backend used for DMG audio playback. Supported backends: default, null.
 # ROMTITLE is a uppercase ASCII, max 12 characters text string containing the output ROM title.
 # ROMCODE is a uppercase ASCII, max 4 characters text string containing the output ROM code.
 # USERFLAGS is a list of additional compiler flags:
@@ -38,6 +39,7 @@ DATA        	:=
 GRAPHICS    	:=  graphics ../../common/graphics
 AUDIO       	:=  audio ../../common/audio
 DMGAUDIO    	:=  dmg_audio ../../common/dmg_audio
+DMGAUDIOBACKEND	:=  default
 ROMTITLE    	:=  BUTANO SPRTS
 ROMCODE     	:=  SBTP
 USERFLAGS   	:=  

@@ -9,12 +9,7 @@
 #include "bn_config_audio.h"
 #include "../include/bn_hw_irq.h"
 #include "../include/bn_hw_link.h"
-#include "../3rd_party/vgm-player/include/vgm.h"
-
-extern "C"
-{
-    #include "../3rd_party/gbt-player/include/gbt_player.h"
-}
+#include "../include/bn_hw_dmg_audio.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
 
@@ -46,19 +41,10 @@ namespace
 
     public:
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
-        #if BN_CFG_ASSERT_ENABLED
-            unsigned vgm_offset_play = 0;
-        #endif
         uint16_t direct_sound_control_value = 0;
-        uint16_t dmg_control_value = 0;
-        bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
         bool music_paused = false;
-        bool dmg_music_paused = false;
         bool update_on_vblank = false;
         bool delay_commit = true;
-        #if BN_CFG_ASSERT_ENABLED
-            bool vgm_commit_failed = false;
-        #endif
     };
 
     BN_DATA_EWRAM_BSS static_data data;
@@ -163,23 +149,7 @@ namespace
     void _commit()
     {
         mmFrame();
-
-        if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-        {
-            gbt_update();
-        }
-        else
-        {
-            #if BN_CFG_ASSERT_ENABLED
-                if(! data.vgm_commit_failed && ! VgmIntrVblank())
-                {
-                    data.vgm_commit_failed = true;
-                    data.vgm_offset_play = VgmGetOffsetPlay();
-                }
-            #else
-                VgmIntrVblank();
-            #endif
-        }
+        dmg_audio::commit();
     }
 
     void _vblank_handler()
@@ -221,7 +191,6 @@ void init()
 
 void enable()
 {
-    REG_SNDDMGCNT = data.dmg_control_value;
     REG_SNDDSCNT = data.direct_sound_control_value;
 
     irq::enable(irq::id::VBLANK);
@@ -232,10 +201,7 @@ void disable()
     irq::disable(irq::id::VBLANK);
 
     data.direct_sound_control_value = REG_SNDDSCNT;
-    data.dmg_control_value = REG_SNDDMGCNT;
-
     REG_SNDDSCNT = 0;
-    REG_SNDDMGCNT = 0;
 }
 
 bool music_playing()
@@ -265,127 +231,6 @@ void resume_music()
 {
     mmResume();
     data.music_paused = false;
-}
-
-bool dmg_music_playing()
-{
-    if(data.dmg_music_paused)
-    {
-        return true;
-    }
-
-    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-    {
-        return gbt_is_playing();
-    }
-    else
-    {
-        return VgmActive();
-    }
-}
-
-void play_dmg_music(const void* song, dmg_music_type type, int speed, bool loop)
-{
-    if(type != data.dmg_music_type)
-    {
-        stop_dmg_music();
-        data.dmg_music_type = type;
-    }
-
-    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-    {
-        gbt_play(song, speed);
-        gbt_loop(loop);
-    }
-    else
-    {
-        BN_ASSERT(speed == 1, "Speed change not supported by the VGM player: ", speed);
-
-        VgmPlay(static_cast<const uint8_t*>(song), loop);
-    }
-
-    data.dmg_music_paused = false;
-}
-
-void stop_dmg_music()
-{
-    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-    {
-        gbt_stop();
-    }
-    else
-    {
-        VgmStop();
-    }
-
-    data.dmg_music_paused = false;
-}
-
-void pause_dmg_music()
-{
-    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-    {
-        gbt_pause(0);
-    }
-    else
-    {
-        VgmPause();
-    }
-
-    data.dmg_music_paused = true;
-}
-
-void resume_dmg_music()
-{
-    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-    {
-        gbt_pause(1);
-    }
-    else
-    {
-        VgmResume();
-    }
-
-    data.dmg_music_paused = false;
-}
-
-void dmg_music_position(int& pattern, int& row)
-{
-    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-    {
-        gbt_get_position_unsafe(&pattern, &row, nullptr);
-    }
-    else
-    {
-        pattern = int(VgmGetOffsetPlay());
-        row = 0;
-    }
-}
-
-void set_dmg_music_position(int pattern, int row)
-{
-    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-    {
-        gbt_set_position(pattern, row);
-    }
-    else
-    {
-        BN_BASIC_ASSERT(! row, "Invalid row: ", row);
-
-        VgmSetOffsetPlay(unsigned(pattern));
-    }
-}
-
-void set_dmg_music_volume(int left_volume, int right_volume)
-{
-    if(data.dmg_music_type == dmg_music_type::GBT_PLAYER)
-    {
-        gbt_volume(unsigned(left_volume), unsigned(right_volume));
-    }
-    else
-    {
-        BN_ERROR("Volume change not supported by the VGM player");
-    }
 }
 
 mm_sfxhand play_sound(int priority, int id)
@@ -480,10 +325,6 @@ void commit()
         _commit();
         data.delay_commit = false;
     }
-
-    #if BN_CFG_ASSERT_ENABLED
-        BN_BASIC_ASSERT(! data.vgm_commit_failed, "VGM commit failed: ", data.vgm_offset_play);
-    #endif
 }
 
 }

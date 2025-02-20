@@ -22,12 +22,14 @@ SFILES          :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.s))) 
 						
 BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*))) \
 						_bn_audio_soundbank.bin
-						
-DMGMODFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.mod)))
-						
-DMGS3MFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.s3m)))
-						
-DMGVGMFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.vgm)))
+
+ifeq ($(strip $(DMGAUDIOBACKEND)),default)
+	DMGMODFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.mod)))
+							
+	DMGS3MFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.s3m)))
+							
+	DMGVGMFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.vgm)))
+endif
 						
 GRAPHICSFILES	:=	$(foreach dir,	$(GRAPHICS),	$(notdir $(wildcard $(dir)/*.bmp)))
 
@@ -76,8 +78,8 @@ all:
 	
 #---------------------------------------------------------------------------------
 $(BUILD):
-	@$(PYTHON) -B $(BN_TOOLS)/butano_assets_tool.py --grit="$(BN_GRIT)" --mmutil="$(BN_MMUTIL)" \
-			--audio="$(AUDIO)" --dmg_audio="$(DMGAUDIO)" --graphics="$(GRAPHICS)" --build=$(BUILD)
+	@$(PYTHON) -B $(BN_TOOLS)/butano_assets_tool.py --grit="$(BN_GRIT)" --mmutil="$(BN_MMUTIL)" --audio="$(AUDIO)" \
+			--dmg_audio="$(DMGAUDIO)" --dmg_audio_backend="$(DMGAUDIOBACKEND)" --graphics="$(GRAPHICS)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------

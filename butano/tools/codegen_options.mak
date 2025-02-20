@@ -1,7 +1,7 @@
 #---------------------------------------------------------------------------------------------------------------------
 # Options for code generation:
 #---------------------------------------------------------------------------------------------------------------------
-ARCH        :=	-mthumb -mthumb-interwork $(BN_TOOLCHAIN_CFLAGS)
+ARCH        :=	-mthumb -mthumb-interwork $(BN_TOOLCHAIN_CFLAGS) $(BN_AUDIO_BACKEND_CFLAGS)
 
 ifdef STACKTRACE
 	ARCH		+=	-funwind-tables -mpoke-function-name -DBN_STACKTRACE

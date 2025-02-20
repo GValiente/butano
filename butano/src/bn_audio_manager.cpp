@@ -10,6 +10,7 @@
 #include "bn_identity_hasher.h"
 #include "bn_dmg_music_position.h"
 #include "../hw/include/bn_hw_audio.h"
+#include "../hw/include/bn_hw_dmg_audio.h"
 
 #include "bn_audio.cpp.h"
 #include "bn_music.cpp.h"
@@ -248,7 +249,7 @@ namespace
 
         void execute() const
         {
-            hw::audio::play_dmg_music(_song, _type, _speed, _loop);
+            hw::dmg_audio::play_music(_song, _type, _speed, _loop);
         }
 
     private:
@@ -271,7 +272,7 @@ namespace
 
         void execute() const
         {
-            hw::audio::set_dmg_music_position(_pattern, _row);
+            hw::dmg_audio::set_music_position(_pattern, _row);
         }
 
     private:
@@ -292,7 +293,7 @@ namespace
 
         void execute() const
         {
-            hw::audio::set_dmg_music_volume(_left_volume, _right_volume);
+            hw::dmg_audio::set_music_volume(_left_volume, _right_volume);
         }
 
     private:
@@ -312,7 +313,7 @@ namespace
 
         void execute() const
         {
-            hw::audio::set_dmg_music_master_volume(bn::dmg_music_master_volume(_volume));
+            hw::dmg_audio::set_music_master_volume(bn::dmg_music_master_volume(_volume));
         }
 
     private:
@@ -577,17 +578,20 @@ void init()
 {
     ::new(static_cast<void*>(&data)) static_data();
 
+    hw::dmg_audio::init();
     hw::audio::init();
 }
 
 void enable()
 {
+    hw::dmg_audio::enable();
     hw::audio::enable();
 }
 
 void disable()
 {
     hw::audio::disable();
+    hw::dmg_audio::disable();
 }
 
 bool music_playing()
@@ -1216,7 +1220,7 @@ void execute_commands()
         jingle_playing = false;
     }
 
-    if(dmg_music_data && ! hw::audio::dmg_music_playing())
+    if(dmg_music_data && ! hw::dmg_audio::music_playing())
     {
         dmg_music_data = nullptr;
         dmg_music_paused = false;
@@ -1304,7 +1308,7 @@ void execute_commands()
             break;
 
         case DMG_MUSIC_STOP:
-            hw::audio::stop_dmg_music();
+            hw::dmg_audio::stop_music();
             dmg_music_data = nullptr;
             dmg_music_paused = false;
             break;
@@ -1312,7 +1316,7 @@ void execute_commands()
         case DMG_MUSIC_PAUSE:
             if(dmg_music_data)
             {
-                hw::audio::pause_dmg_music();
+                hw::dmg_audio::pause_music();
                 dmg_music_paused = true;
             }
             break;
@@ -1320,7 +1324,7 @@ void execute_commands()
         case DMG_MUSIC_RESUME:
             if(dmg_music_data)
             {
-                hw::audio::resume_dmg_music();
+                hw::dmg_audio::resume_music();
                 dmg_music_paused = false;
             }
             break;
@@ -1391,7 +1395,7 @@ void execute_commands()
     {
         int pattern;
         int row;
-        hw::audio::dmg_music_position(pattern, row);
+        hw::dmg_audio::music_position(pattern, row);
         data.dmg_music_position = bn::dmg_music_position(pattern, row);
     }
 
@@ -1419,6 +1423,7 @@ void execute_commands()
 void commit()
 {
     hw::audio::commit();
+    hw::dmg_audio::check_commit_result();
 }
 
 void stop()
@@ -1426,6 +1431,7 @@ void stop()
     data.commands_count = 0;
     data.sound_map.clear();
 
+    hw::dmg_audio::stop();
     hw::audio::stop();
 }
 

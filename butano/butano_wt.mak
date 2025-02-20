@@ -17,6 +17,11 @@ BN_GRIT				:=	$(WONDERFUL_TOOLCHAIN)/thirdparty/blocksds/core/tools/grit/grit
 BN_MMUTIL			:=	$(WONDERFUL_TOOLCHAIN)/thirdparty/blocksds/core/tools/mmutil/mmutil
 
 #---------------------------------------------------------------------------------------------------------------------
+# Audio backend setup:
+#---------------------------------------------------------------------------------------------------------------------
+include $(BN_TOOLS)/audio_backend_setup.mak
+
+#---------------------------------------------------------------------------------------------------------------------
 # Butano custom base rules without flto:
 #---------------------------------------------------------------------------------------------------------------------
 include $(BN_TOOLS)/custom_base_rules.mak

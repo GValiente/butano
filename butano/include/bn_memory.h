@@ -142,8 +142,6 @@ namespace bn::memory
 
     /**
      * @brief Indicates if EWRAM access time is 1+1 clock cycles for sequential accesses or not.
-     *
-     * See @ref BN_EWRAM_WAIT_STATE_1.
      */
     [[nodiscard]] bool fast_ewram();
 

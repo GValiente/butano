@@ -354,7 +354,6 @@ void init(const optional<color>& transparent_color, const string_view& keypad_co
 
     // Init storage systems:
     data.slow_game_pak = hw::game_pak::init();
-    hw::memory::init();
 
     [[maybe_unused]] const char* sram_string = hw::sram::init();
 

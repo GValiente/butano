@@ -24,8 +24,6 @@ namespace bn::hw::memory
     constexpr unsigned memctrl_address = 0x4000800;
     constexpr unsigned fast_ewram_memctrl_value = 0x0E000020;
 
-    void init();
-
     [[nodiscard]] inline int stack_address()
     {
         unsigned result = 0;

@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_19_0_0 19.0.0 (next release)
+ *
+ * EWRAM overclocking removed, as some GBA SPs crash after a few frames when enabled.
+ *
+ *
  * @section changelog_18_9_0 18.9.0
  *
  * * bn::fixed::modulo fixed.
@@ -215,7 +220,7 @@
  * * bn::random::get_unbiased_int, bn::random::get_unbiased_fixed, bn::seed_random::get_unbiased_int
  *   and bn::seed_random::get_unbiased_fixed added (thanks <a href="https://github.com/alope107">alope107</a>!).
  * * H-Blank effects management optimized.
- * * @ref BN_EWRAM_WAIT_STATE_1 crash after boot documented.
+ * * `BN_EWRAM_WAIT_STATE_1` crash after boot documented.
  * * Slow EWRAM test added.
  * * IWRAM vs EWRAM stack tests added to the `profiler` coroutine test.
  * * Slow game pak test improved.
@@ -1220,7 +1225,7 @@
  *
  * @section changelog_6_13_0 6.13.0
  *
- * * EWRAM wait states count can be specified with @ref BN_CFG_EWRAM_WAIT_STATE.
+ * * EWRAM wait states count can be specified with `BN_CFG_EWRAM_WAIT_STATE`.
  * * bn::fixed_t::floor_integer and bn::fixed_t::ceil_integer added.
  * * bn::keypad::any_held, bn::keypad::any_pressed and bn::keypad::any_released added.
  * * Unnecessary GPIO register writes avoided.

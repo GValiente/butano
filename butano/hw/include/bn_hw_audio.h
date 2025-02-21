@@ -8,6 +8,7 @@
 
 #include "maxmod.h"
 #include "bn_fixed.h"
+#include "bn_hw_tonc.h"
 
 namespace bn::hw::audio
 {
@@ -149,6 +150,19 @@ namespace bn::hw::audio
         }
 
         stop_all_sounds();
+    }
+
+    inline void start_dma(int channel, unsigned flags, const void* source, void* destination)
+    {
+        REG_DMA[channel].cnt = 0;
+        REG_DMA[channel].src = source;
+        REG_DMA[channel].dst = destination;
+        REG_DMA[channel].cnt = flags;
+    }
+
+    inline void stop_dma(int channel)
+    {
+        REG_DMA[channel].cnt = 0;
     }
 }
 

@@ -7,7 +7,6 @@
 
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
-#include "../include/bn_hw_tonc.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
 

@@ -42,8 +42,8 @@ def list_audio_files(audio_paths):
     return audio_file_names, audio_file_names_no_ext, audio_file_paths
 
 
-def process_audio_files(mmutil, audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path):
-    command = [mmutil]
+def process_audio_files(tool, audio_file_paths, soundbank_bin_path, soundbank_header_path, build_folder_path):
+    command = [tool]
 
     if not audio_file_paths:
         dummy_file_path = build_folder_path + '/_bn_dummy_audio_file.txt'
@@ -62,7 +62,7 @@ def process_audio_files(mmutil, audio_file_paths, soundbank_bin_path, soundbank_
     try:
         subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
-        raise ValueError(mmutil + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+        raise ValueError(tool + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
     return os.path.getsize(soundbank_bin_path)
 
@@ -171,7 +171,10 @@ def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_fol
                            'sound_item', build_folder_path + '/bn_sound_items_info.h')
 
 
-def process_audio(mmutil, audio_paths, build_folder_path):
+def process_audio(backend, tool, audio_paths, build_folder_path):
+    if backend != 'maxmod':
+        return
+
     audio_file_names, audio_file_names_no_ext, audio_file_paths = list_audio_files(audio_paths)
     file_info_path = build_folder_path + '/_bn_audio_files_info.txt'
     old_file_info = FileInfo.read(file_info_path)
@@ -187,7 +190,7 @@ def process_audio(mmutil, audio_paths, build_folder_path):
 
     soundbank_bin_path = build_folder_path + '/_bn_audio_soundbank.bin'
     soundbank_header_path = build_folder_path + '/_bn_audio_soundbank.h'
-    total_size = process_audio_files(mmutil, audio_file_paths, soundbank_bin_path, soundbank_header_path,
+    total_size = process_audio_files(tool, audio_file_paths, soundbank_bin_path, soundbank_header_path,
                                      build_folder_path)
     write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path)
     print('    Processed audio size: ' + str(total_size) + ' bytes')

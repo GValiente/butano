@@ -14,6 +14,7 @@
  *
  * @section changelog_19_0_0 19.0.0 (next release)
  *
+ * * `null` audio backend added. Audio backends can be specified with the `AUDIOBACKEND` makefile variable.
  * * `null` DMG audio backend added. DMG audio backends can be specified with the `DMGAUDIOBACKEND` makefile variable.
  * * EWRAM overclocking removed, as some GBA SPs crash after a few frames when enabled.
  *

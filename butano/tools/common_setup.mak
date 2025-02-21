@@ -20,8 +20,11 @@ CPPFILES        :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.cpp))
 SFILES          :=	$(foreach dir,	$(SOURCES),	$(notdir $(wildcard $(dir)/*.s))) \
 						$(foreach dir,	$(BNSOURCES),	$(notdir $(wildcard $(dir)/*.s)))
 						
-BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*))) \
-						_bn_audio_soundbank.bin
+BINFILES        :=	$(foreach dir,	$(DATA),	$(notdir $(wildcard $(dir)/*.*)))
+
+ifeq ($(strip $(AUDIOBACKEND)),maxmod)
+	BINFILES		+=	_bn_audio_soundbank.bin
+endif
 
 ifeq ($(strip $(DMGAUDIOBACKEND)),default)
 	DMGMODFILES		:=	$(foreach dir,	$(DMGAUDIO),	$(notdir $(wildcard $(dir)/*.mod)))
@@ -78,8 +81,9 @@ all:
 	
 #---------------------------------------------------------------------------------
 $(BUILD):
-	@$(PYTHON) -B $(BN_TOOLS)/butano_assets_tool.py --grit="$(BN_GRIT)" --mmutil="$(BN_MMUTIL)" --audio="$(AUDIO)" \
-			--dmg_audio="$(DMGAUDIO)" --dmg_audio_backend="$(DMGAUDIOBACKEND)" --graphics="$(GRAPHICS)" --build=$(BUILD)
+	@$(PYTHON) -B $(BN_TOOLS)/butano_assets_tool.py --grit="$(BN_GRIT)" --audio="$(AUDIO)" \
+			--audio_backend="$(AUDIOBACKEND)" --audio_tool="$(AUDIOTOOL)" --dmg_audio="$(DMGAUDIO)" \
+			--dmg_audio_backend="$(DMGAUDIOBACKEND)" --graphics="$(GRAPHICS)" --build=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------------------------------------------

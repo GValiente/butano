@@ -3,7 +3,7 @@
  * zlib License, see LICENSE file.
  */
 
-#include "../include/bn_hw_dmg_audio.h"
+#include "../include/bn_hw_dmg_audio_default.h"
 
 #include "bn_assert.h"
 #include "bn_dmg_music_type.h"
@@ -19,6 +19,11 @@ namespace bn::hw::dmg_audio
 
 namespace
 {
+    [[nodiscard]] int _hw_music_volume(fixed volume)
+    {
+        return fixed_t<3>(volume).data();
+    }
+
     class static_data
     {
 
@@ -162,11 +167,11 @@ void set_music_position(int pattern, int row)
     }
 }
 
-void set_music_volume(int left_volume, int right_volume)
+void set_music_volume(fixed left_volume, fixed right_volume)
 {
     if(data.music_type == dmg_music_type::GBT_PLAYER)
     {
-        gbt_volume(unsigned(left_volume), unsigned(right_volume));
+        gbt_volume(unsigned(_hw_music_volume(left_volume)), unsigned(_hw_music_volume(right_volume)));
     }
     else
     {

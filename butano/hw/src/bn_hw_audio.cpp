@@ -24,7 +24,7 @@ namespace
     {
 
     public:
-        mm_sfxhand handle;
+        uint16_t handle;
         int16_t priority;
     };
 
@@ -92,7 +92,7 @@ namespace
         }
     }
 
-    void _add_sound_to_queue(int priority, mm_sfxhand handle)
+    void _add_sound_to_queue(int priority, uint16_t handle)
     {
         auto before_it = data.sounds_queue.before_begin();
         auto it = data.sounds_queue.begin();
@@ -116,7 +116,7 @@ namespace
         data.sounds_queue.insert_after(before_it, sound_type{ handle, int16_t(priority) });
     }
 
-    void _erase_sound_from_queue(mm_sfxhand handle)
+    void _erase_sound_from_queue(uint16_t handle)
     {
         auto before_it = data.sounds_queue.before_begin();
         auto it = data.sounds_queue.begin();
@@ -135,6 +135,16 @@ namespace
                 return;
             }
         }
+    }
+
+    [[nodiscard]] inline int _hw_sound_volume(fixed volume)
+    {
+        return min(fixed_t<8>(volume).data(), 255);
+    }
+
+    [[nodiscard]] inline int _hw_sound_speed(fixed speed)
+    {
+        return min(fixed_t<10>(speed).data(), 65535);
     }
 }
 
@@ -197,31 +207,31 @@ void resume_music()
     data.music_paused = false;
 }
 
-mm_sfxhand play_sound(int priority, int id)
+uint16_t play_sound(int priority, int id)
 {
     _check_sounds_queue();
 
-    mm_sfxhand handle = mmEffect(mm_word(id));
+    uint16_t handle = mmEffect(mm_word(id));
     _add_sound_to_queue(priority, handle);
     return handle;
 }
 
-mm_sfxhand play_sound(int priority, int id, int volume, int speed, int panning)
+uint16_t play_sound(int priority, int id, fixed volume, fixed speed, fixed panning)
 {
     mm_sound_effect sound_effect;
     sound_effect.id = mm_word(id);
-    sound_effect.rate = mm_hword(speed);
+    sound_effect.rate = mm_hword(_hw_sound_speed(speed));
     sound_effect.handle = 0;
-    sound_effect.volume = mm_byte(volume);
-    sound_effect.panning = mm_byte(panning);
+    sound_effect.volume = mm_byte(_hw_sound_volume(volume));
+    sound_effect.panning = mm_byte(_hw_sound_panning(panning));
     _check_sounds_queue();
 
-    mm_sfxhand handle = mmEffectEx(&sound_effect);
+    uint16_t handle = mmEffectEx(&sound_effect);
     _add_sound_to_queue(priority, handle);
     return handle;
 }
 
-void stop_sound(mm_sfxhand handle)
+void stop_sound(uint16_t handle)
 {
     if(mmEffectActive(handle))
     {
@@ -230,12 +240,29 @@ void stop_sound(mm_sfxhand handle)
     }
 }
 
-void release_sound(mm_sfxhand handle)
+void release_sound(uint16_t handle)
 {
     if(mmEffectActive(handle))
     {
         mmEffectRelease(handle);
         _erase_sound_from_queue(handle);
+    }
+}
+
+void set_sound_speed(uint16_t handle, fixed current_speed, fixed new_speed)
+{
+    if(mmEffectActive(handle))
+    {
+        fixed_t<10> hw_current_speed = bn::max(fixed_t<10>(current_speed), fixed_t<10>::from_data(1));
+        fixed_t<10> scale = fixed_t<10>(new_speed).unsafe_division(hw_current_speed);
+
+        if(scale != 1)
+        {
+            int hw_scale = scale.data();
+            BN_BASIC_ASSERT(hw_scale < 65536, "Speed change is too high: ", hw_scale);
+
+            mmEffectScaleRate(handle, unsigned(hw_scale));
+        }
     }
 }
 
@@ -253,7 +280,7 @@ void update_sounds_queue()
 
     while(it != end)
     {
-        mm_sfxhand handle = it->handle;
+        uint16_t handle = it->handle;
 
         if(mmEffectActive(handle))
         {

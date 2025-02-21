@@ -6,7 +6,7 @@
 #ifndef BN_HW_DMG_AUDIO_NULL_H
 #define BN_HW_DMG_AUDIO_NULL_H
 
-#include "bn_common.h"
+#include "bn_fixed.h"
 
 namespace bn
 {
@@ -59,7 +59,7 @@ namespace bn::hw::dmg_audio
     {
     }
 
-    inline void set_music_volume(int, int)
+    inline void set_music_volume(fixed, fixed)
     {
     }
 

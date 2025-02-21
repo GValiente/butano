@@ -30,7 +30,7 @@ struct sound_data_type
     int item_id;
     fixed speed;
     fixed panning;
-    optional<mm_sfxhand> hw_handle;
+    optional<uint16_t> hw_handle;
 
     void init(bn::sound_item _item, fixed _speed, fixed _panning)
     {
@@ -51,52 +51,11 @@ namespace
     static_assert(power_of_two(max_sound_channels), "Invalid max sound channels");
 
 
-    int _hw_music_volume(fixed volume)
-    {
-        return fixed_t<10>(volume).data();
-    }
-
-    int _hw_music_tempo(fixed tempo)
-    {
-        return fixed_t<10>(tempo).data();
-    }
-
-    int _hw_music_pitch(fixed pitch)
-    {
-        return fixed_t<10>(pitch).data();
-    }
-
-    int _hw_sound_volume(fixed volume)
-    {
-        return min(fixed_t<8>(volume).data(), 255);
-    }
-
-    int _hw_sound_master_volume(fixed volume)
-    {
-        return fixed_t<10>(volume).data();
-    }
-
-    int _hw_dmg_music_volume(fixed volume)
-    {
-        return fixed_t<3>(volume).data();
-    }
-
-    int _hw_sound_speed(fixed speed)
-    {
-        return min(fixed_t<10>(speed).data(), 65535);
-    }
-
-    int _hw_sound_panning(fixed panning)
-    {
-        return min(fixed_t<7>(panning + 1).data(), 255);
-    }
-
-
     class play_music_command
     {
 
     public:
-        play_music_command(int id, bool loop, int volume) :
+        play_music_command(int id, bool loop, fixed volume) :
             _id(id),
             _volume(volume),
             _loop(loop)
@@ -107,13 +66,13 @@ namespace
         {
             hw::audio::play_music(_id, _loop);
             hw::audio::set_music_volume(_volume);
-            hw::audio::set_music_tempo(_hw_music_tempo(1));
-            hw::audio::set_music_pitch(_hw_music_pitch(1));
+            hw::audio::set_music_tempo(1);
+            hw::audio::set_music_pitch(1);
         }
 
     private:
         int _id;
-        int _volume;
+        fixed _volume;
         bool _loop;
     };
 
@@ -141,7 +100,7 @@ namespace
     {
 
     public:
-        explicit set_music_volume_command(int volume) :
+        explicit set_music_volume_command(fixed volume) :
             _volume(volume)
         {
         }
@@ -152,7 +111,7 @@ namespace
         }
 
     private:
-        int _volume;
+        fixed _volume;
     };
 
 
@@ -160,7 +119,7 @@ namespace
     {
 
     public:
-        explicit set_music_tempo_command(int tempo) :
+        explicit set_music_tempo_command(fixed tempo) :
             _tempo(tempo)
         {
         }
@@ -171,7 +130,7 @@ namespace
         }
 
     private:
-        int _tempo;
+        fixed _tempo;
     };
 
 
@@ -179,7 +138,7 @@ namespace
     {
 
     public:
-        explicit set_music_pitch_command(int pitch) :
+        explicit set_music_pitch_command(fixed pitch) :
             _pitch(pitch)
         {
         }
@@ -190,7 +149,7 @@ namespace
         }
 
     private:
-        int _pitch;
+        fixed _pitch;
     };
 
 
@@ -198,7 +157,7 @@ namespace
     {
 
     public:
-        play_jingle_command(int id, int volume) :
+        play_jingle_command(int id, fixed volume) :
             _id(id),
             _volume(volume)
         {
@@ -212,7 +171,7 @@ namespace
 
     private:
         int _id;
-        int _volume;
+        fixed _volume;
     };
 
 
@@ -220,7 +179,7 @@ namespace
     {
 
     public:
-        explicit set_jingle_volume_command(int volume) :
+        explicit set_jingle_volume_command(fixed volume) :
             _volume(volume)
         {
         }
@@ -231,7 +190,7 @@ namespace
         }
 
     private:
-        int _volume;
+        fixed _volume;
     };
 
 
@@ -285,7 +244,7 @@ namespace
     {
 
     public:
-        set_dmg_music_volume_command(int left_volume, int right_volume) :
+        set_dmg_music_volume_command(fixed left_volume, fixed right_volume) :
             _left_volume(left_volume),
             _right_volume(right_volume)
         {
@@ -297,8 +256,8 @@ namespace
         }
 
     private:
-        int _left_volume;
-        int _right_volume;
+        fixed _left_volume;
+        fixed _right_volume;
     };
 
 
@@ -306,8 +265,8 @@ namespace
     {
 
     public:
-        explicit set_dmg_music_master_volume_command(int volume) :
-            _volume(volume)
+        explicit set_dmg_music_master_volume_command(bn::dmg_music_master_volume volume) :
+            _volume(int(volume))
         {
         }
 
@@ -351,13 +310,13 @@ namespace
     {
 
     public:
-        play_sound_ex_command(int priority, int id, uint16_t handle, int volume, int speed, int panning) :
+        play_sound_ex_command(int priority, int id, uint16_t handle, fixed volume, fixed speed, fixed panning) :
             _id(id),
             _priority(int16_t(priority)),
             _handle(handle),
-            _speed(uint16_t(speed)),
-            _volume(uint8_t(volume)),
-            _panning(uint8_t(panning))
+            _speed(speed),
+            _volume(volume),
+            _panning(panning)
         {
         }
 
@@ -373,9 +332,9 @@ namespace
         int _id;
         int16_t _priority;
         uint16_t _handle;
-        uint16_t _speed;
-        uint8_t _volume;
-        uint8_t _panning;
+        fixed _speed;
+        fixed _volume;
+        fixed _panning;
     };
 
 
@@ -392,7 +351,7 @@ namespace
         {
             if(sound_data_type* data = sound_data(uint16_t(_handle)))
             {
-                if(const mm_sfxhand* hw_handle = data->hw_handle.get())
+                if(const uint16_t* hw_handle = data->hw_handle.get())
                 {
                     hw::audio::stop_sound(*hw_handle);
                 }
@@ -417,7 +376,7 @@ namespace
         {
             if(sound_data_type* data = sound_data(uint16_t(_handle)))
             {
-                if(const mm_sfxhand* hw_handle = data->hw_handle.get())
+                if(const uint16_t* hw_handle = data->hw_handle.get())
                 {
                     hw::audio::release_sound(*hw_handle);
                 }
@@ -433,8 +392,9 @@ namespace
     {
 
     public:
-        set_sound_speed_command(uint16_t handle, int speed_scale) :
-            _speed_scale(speed_scale),
+        set_sound_speed_command(uint16_t handle, fixed current_speed, fixed new_speed) :
+            _current_speed(current_speed),
+            _new_speed(new_speed),
             _handle(handle)
         {
         }
@@ -443,15 +403,16 @@ namespace
         {
             if(sound_data_type* data = sound_data(_handle))
             {
-                if(const mm_sfxhand* hw_handle = data->hw_handle.get())
+                if(const uint16_t* hw_handle = data->hw_handle.get())
                 {
-                    hw::audio::set_sound_speed(*hw_handle, _speed_scale);
+                    hw::audio::set_sound_speed(*hw_handle, _current_speed, _new_speed);
                 }
             }
         }
 
     private:
-        int _speed_scale;
+        fixed _current_speed;
+        fixed _new_speed;
         uint16_t _handle;
     };
 
@@ -460,7 +421,7 @@ namespace
     {
 
     public:
-        set_sound_panning_command(uint16_t handle, int panning) :
+        set_sound_panning_command(uint16_t handle, fixed panning) :
             _panning(panning),
             _handle(handle)
         {
@@ -470,7 +431,7 @@ namespace
         {
             if(sound_data_type* data = sound_data(_handle))
             {
-                if(const mm_sfxhand* hw_handle = data->hw_handle.get())
+                if(const uint16_t* hw_handle = data->hw_handle.get())
                 {
                     hw::audio::set_sound_panning(*hw_handle, _panning);
                 }
@@ -478,7 +439,7 @@ namespace
         }
 
     private:
-        int _panning;
+        fixed _panning;
         uint16_t _handle;
     };
 
@@ -487,7 +448,7 @@ namespace
     {
 
     public:
-        explicit set_sound_master_volume_command(int volume) :
+        explicit set_sound_master_volume_command(fixed volume) :
             _volume(volume)
         {
         }
@@ -498,7 +459,7 @@ namespace
         }
 
     private:
-        int _volume;
+        fixed _volume;
     };
 
 
@@ -534,7 +495,7 @@ namespace
 
     struct command_data
     {
-        int data[3];
+        int data[5];
     };
 
 
@@ -619,8 +580,7 @@ void play_music(music_item item, fixed volume, bool loop)
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
     data.command_codes[commands] = MUSIC_PLAY;
-    ::new(static_cast<void*>(data.command_datas + commands)) play_music_command(
-            item.id(), loop, _hw_music_volume(volume));
+    ::new(static_cast<void*>(data.command_datas + commands)) play_music_command(item.id(), loop, volume);
     data.commands_count = commands + 1;
 
     data.music_item_id = item.id();
@@ -692,14 +652,14 @@ void set_music_position(int position)
 
     if(position != data.music_position)
     {
+        data.music_position = position;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_POSITION;
         ::new(static_cast<void*>(data.command_datas + commands)) set_music_position_command(position);
         data.commands_count = commands + 1;
-
-        data.music_position = position;
     }
 }
 
@@ -712,20 +672,19 @@ fixed music_volume()
 
 void set_music_volume(fixed volume)
 {
-    int hw_volume = _hw_music_volume(volume);
     BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
 
-    if(hw_volume != _hw_music_volume(data.music_volume))
+    if(volume != data.music_volume)
     {
+        data.music_volume = volume;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_VOLUME;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_music_volume_command(hw_volume);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_music_volume_command(volume);
         data.commands_count = commands + 1;
     }
-
-    data.music_volume = volume;
 }
 
 fixed music_tempo()
@@ -737,20 +696,19 @@ fixed music_tempo()
 
 void set_music_tempo(fixed tempo)
 {
-    int hw_tempo = _hw_music_tempo(tempo);
     BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
 
-    if(hw_tempo != _hw_music_tempo(data.music_tempo))
+    if(tempo != data.music_tempo)
     {
+        data.music_tempo = tempo;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_TEMPO;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_music_tempo_command(hw_tempo);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_music_tempo_command(tempo);
         data.commands_count = commands + 1;
     }
-
-    data.music_tempo = tempo;
 }
 
 fixed music_pitch()
@@ -762,20 +720,19 @@ fixed music_pitch()
 
 void set_music_pitch(fixed pitch)
 {
-    int hw_pitch = _hw_music_pitch(pitch);
     BN_BASIC_ASSERT(data.music_playing, "There's no music playing");
 
-    if(hw_pitch != _hw_music_pitch(data.music_pitch))
+    if(pitch != data.music_pitch)
     {
+        data.music_pitch = pitch;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_SET_PITCH;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_music_pitch_command(hw_pitch);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_music_pitch_command(pitch);
         data.commands_count = commands + 1;
     }
-
-    data.music_pitch = pitch;
 }
 
 bool jingle_playing()
@@ -801,7 +758,7 @@ void play_jingle(music_item item, fixed volume)
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
     data.command_codes[commands] = JINGLE_PLAY;
-    ::new(static_cast<void*>(data.command_datas + commands)) play_jingle_command(item.id(), _hw_music_volume(volume));
+    ::new(static_cast<void*>(data.command_datas + commands)) play_jingle_command(item.id(), volume);
     data.commands_count = commands + 1;
 
     data.jingle_item_id = item.id();
@@ -818,20 +775,19 @@ fixed jingle_volume()
 
 void set_jingle_volume(fixed volume)
 {
-    int hw_volume = _hw_music_volume(volume);
     BN_BASIC_ASSERT(data.jingle_playing, "There's no jingle playing");
 
-    if(hw_volume != _hw_music_volume(data.jingle_volume))
+    if(volume != data.jingle_volume)
     {
+        data.jingle_volume = volume;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = JINGLE_SET_VOLUME;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_jingle_volume_command(hw_volume);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_jingle_volume_command(volume);
         data.commands_count = commands + 1;
     }
-
-    data.jingle_volume = volume;
 }
 
 bool dmg_music_playing()
@@ -873,14 +829,14 @@ void stop_dmg_music()
 {
     if(data.dmg_music_data)
     {
+        data.dmg_music_data = nullptr;
+        data.dmg_music_paused = false;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = DMG_MUSIC_STOP;
         data.commands_count = commands + 1;
-
-        data.dmg_music_data = nullptr;
-        data.dmg_music_paused = false;
     }
 }
 
@@ -929,6 +885,8 @@ void set_dmg_music_position(const bn::dmg_music_position& position)
 
     if(position != data.dmg_music_position)
     {
+        data.dmg_music_position = position;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
@@ -936,8 +894,6 @@ void set_dmg_music_position(const bn::dmg_music_position& position)
         ::new(static_cast<void*>(data.command_datas + commands)) set_dmg_music_position_command(
                 position.pattern(), position.row());
         data.commands_count = commands + 1;
-
-        data.dmg_music_position = position;
     }
 }
 
@@ -967,24 +923,20 @@ void set_dmg_music_right_volume(fixed right_volume)
 
 void set_dmg_music_volume(fixed left_volume, fixed right_volume)
 {
-    int hw_left_volume = _hw_dmg_music_volume(left_volume);
-    int hw_right_volume = _hw_dmg_music_volume(right_volume);
     BN_BASIC_ASSERT(data.dmg_music_data, "There's no DMG music playing");
 
-    if(hw_left_volume != _hw_dmg_music_volume(data.dmg_music_left_volume) ||
-            hw_right_volume != _hw_dmg_music_volume(data.dmg_music_right_volume))
+    if(left_volume != data.dmg_music_left_volume || right_volume != data.dmg_music_right_volume)
     {
+        data.dmg_music_left_volume = left_volume;
+        data.dmg_music_right_volume = right_volume;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = DMG_MUSIC_SET_VOLUME;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_dmg_music_volume_command(
-                hw_left_volume, hw_right_volume);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_dmg_music_volume_command(left_volume, right_volume);
         data.commands_count = commands + 1;
     }
-
-    data.dmg_music_left_volume = left_volume;
-    data.dmg_music_right_volume = right_volume;
 }
 
 bn::dmg_music_master_volume dmg_music_master_volume()
@@ -996,14 +948,14 @@ void set_dmg_music_master_volume(bn::dmg_music_master_volume volume)
 {
     if(volume != data.dmg_music_master_volume)
     {
+        data.dmg_music_master_volume = volume;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = DMG_MUSIC_SET_MASTER_VOLUME;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_dmg_music_master_volume_command(int(volume));
+        ::new(static_cast<void*>(data.command_datas + commands)) set_dmg_music_master_volume_command(volume);
         data.commands_count = commands + 1;
-
-        data.dmg_music_master_volume = volume;
     }
 }
 
@@ -1048,8 +1000,7 @@ uint16_t play_sound(int priority, bn::sound_item item, fixed volume, fixed speed
 
     data.command_codes[commands] = SOUND_PLAY_EX;
     ::new(static_cast<void*>(data.command_datas + commands)) play_sound_ex_command(
-            priority, item.id(), handle, _hw_sound_volume(volume), _hw_sound_speed(speed),
-            _hw_sound_panning(panning));
+            priority, item.id(), handle, volume, speed, panning);
     data.commands_count = commands + 1;
 
     return handle;
@@ -1106,23 +1057,14 @@ void set_sound_speed(uint16_t handle, fixed speed)
 
     if(speed != handle_speed)
     {
-        fixed_t<10> current_speed = bn::max(fixed_t<10>(handle_speed), fixed_t<10>::from_data(1));
-        fixed_t<10> scale = fixed_t<10>(speed).unsafe_division(current_speed);
-
-        if(scale != 1)
-        {
-            int hw_scale = scale.data();
-            BN_BASIC_ASSERT(hw_scale < 65536, "Speed change is too high: ", handle_speed, " - ", speed);
-
-            int commands = data.commands_count;
-            BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
-
-            data.command_codes[commands] = SOUND_SET_SPEED;
-            ::new(static_cast<void*>(data.command_datas + commands)) set_sound_speed_command(handle, hw_scale);
-            data.commands_count = commands + 1;
-        }
-
         handle_sound_data->speed = speed;
+
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = SOUND_SET_SPEED;
+        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_speed_command(handle, handle_speed, speed);
+        data.commands_count = commands + 1;
     }
 }
 
@@ -1139,19 +1081,17 @@ void set_sound_panning(uint16_t handle, fixed panning)
     sound_data_type* handle_sound_data = sound_data(handle);
     BN_BASIC_ASSERT(handle_sound_data, "Sound is not active: ", handle);
 
-    int hw_panning = _hw_sound_panning(panning);
-
-    if(hw_panning != _hw_sound_panning(handle_sound_data->panning))
+    if(panning != handle_sound_data->panning)
     {
+        handle_sound_data->panning = panning;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = SOUND_SET_PANNING;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_panning_command(handle, hw_panning);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_panning_command(handle, panning);
         data.commands_count = commands + 1;
     }
-
-    handle_sound_data->panning = panning;
 }
 
 void stop_all_sounds()
@@ -1172,19 +1112,17 @@ fixed sound_master_volume()
 
 void set_sound_master_volume(fixed volume)
 {
-    int hw_volume = _hw_sound_master_volume(volume);
-
-    if(hw_volume != _hw_sound_master_volume(data.sound_master_volume))
+    if(volume != data.sound_master_volume)
     {
+        data.sound_master_volume = volume;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = SOUND_SET_MASTER_VOLUME;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_master_volume_command(hw_volume);
+        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_master_volume_command(volume);
         data.commands_count = commands + 1;
     }
-
-    data.sound_master_volume = volume;
 }
 
 bool update_on_vblank()
@@ -1409,7 +1347,7 @@ void execute_commands()
 
     for(auto it = data.sound_map.begin(), end = data.sound_map.end(); it != end; )
     {
-        const mm_sfxhand* hw_handle = it->second.hw_handle.get();
+        const uint16_t* hw_handle = it->second.hw_handle.get();
 
         if(hw_handle && hw::audio::sound_active(*hw_handle))
         {

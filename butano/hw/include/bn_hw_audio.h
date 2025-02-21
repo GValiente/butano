@@ -7,10 +7,35 @@
 #define BN_HW_AUDIO_H
 
 #include "maxmod.h"
-#include "bn_common.h"
+#include "bn_fixed.h"
 
 namespace bn::hw::audio
 {
+    [[nodiscard]] inline int _hw_music_volume(fixed volume)
+    {
+        return fixed_t<10>(volume).data();
+    }
+
+    [[nodiscard]] inline int _hw_music_tempo(fixed tempo)
+    {
+        return fixed_t<10>(tempo).data();
+    }
+
+    [[nodiscard]] inline int _hw_music_pitch(fixed pitch)
+    {
+        return fixed_t<10>(pitch).data();
+    }
+
+    [[nodiscard]] inline int _hw_sound_panning(fixed panning)
+    {
+        return min(fixed_t<7>(panning + 1).data(), 255);
+    }
+
+    [[nodiscard]] inline int _hw_sound_master_volume(fixed volume)
+    {
+        return fixed_t<10>(volume).data();
+    }
+
     void init();
 
     void enable();
@@ -37,19 +62,19 @@ namespace bn::hw::audio
         mmSetPosition(mm_word(position));
     }
 
-    inline void set_music_volume(int volume)
+    inline void set_music_volume(fixed volume)
     {
-        mmSetModuleVolume(mm_word(volume));
+        mmSetModuleVolume(mm_word(_hw_music_volume(volume)));
     }
 
-    inline void set_music_tempo(int tempo)
+    inline void set_music_tempo(fixed tempo)
     {
-        mmSetModuleTempo(mm_word(tempo));
+        mmSetModuleTempo(mm_word(_hw_music_tempo(tempo)));
     }
 
-    inline void set_music_pitch(int pitch)
+    inline void set_music_pitch(fixed pitch)
     {
-        mmSetModulePitch(mm_word(pitch));
+        mmSetModulePitch(mm_word(_hw_music_pitch(pitch)));
     }
 
     [[nodiscard]] inline bool jingle_playing()
@@ -62,45 +87,39 @@ namespace bn::hw::audio
         mmJingle(mm_word(id));
     }
 
-    inline void set_jingle_volume(int volume)
+    inline void set_jingle_volume(fixed volume)
     {
-        mmSetJingleVolume(mm_word(volume));
+        mmSetJingleVolume(mm_word(_hw_music_volume(volume)));
     }
 
-    [[nodiscard]] inline bool sound_active(mm_sfxhand handle)
+    [[nodiscard]] inline bool sound_active(uint16_t handle)
     {
         return mmEffectActive(handle);
     }
 
-    [[nodiscard]] mm_sfxhand play_sound(int priority, int id);
+    [[nodiscard]] uint16_t play_sound(int priority, int id);
 
-    [[nodiscard]] mm_sfxhand play_sound(int priority, int id, int volume, int speed, int panning);
+    [[nodiscard]] uint16_t play_sound(int priority, int id, fixed volume, fixed speed, fixed panning);
 
-    void stop_sound(mm_sfxhand handle);
+    void stop_sound(uint16_t handle);
 
-    void release_sound(mm_sfxhand handle);
+    void release_sound(uint16_t handle);
 
-    inline void set_sound_speed(mm_sfxhand handle, int speed_scale)
+    void set_sound_speed(uint16_t handle, fixed current_speed, fixed new_speed);
+
+    inline void set_sound_panning(uint16_t handle, fixed panning)
     {
         if(mmEffectActive(handle))
         {
-            mmEffectScaleRate(handle, unsigned(speed_scale));
-        }
-    }
-
-    inline void set_sound_panning(mm_sfxhand handle, int panning)
-    {
-        if(mmEffectActive(handle))
-        {
-            mmEffectPanning(handle, uint8_t(panning));
+            mmEffectPanning(handle, uint8_t(_hw_sound_panning(panning)));
         }
     }
 
     void stop_all_sounds();
 
-    inline void set_sound_master_volume(int volume)
+    inline void set_sound_master_volume(fixed volume)
     {
-        mmSetEffectsVolume(mm_word(volume));
+        mmSetEffectsVolume(mm_word(_hw_sound_master_volume(volume)));
     }
 
     void update_sounds_queue();

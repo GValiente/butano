@@ -6,6 +6,7 @@
 #ifndef BN_HW_DMG_AUDIO_DEFAULT_H
 #define BN_HW_DMG_AUDIO_DEFAULT_H
 
+#include "bn_fixed.h"
 #include "bn_hw_tonc.h"
 
 namespace bn
@@ -36,7 +37,7 @@ namespace bn::hw::dmg_audio
 
     void set_music_position(int pattern, int row);
 
-    void set_music_volume(int left_volume, int right_volume);
+    void set_music_volume(fixed left_volume, fixed right_volume);
 
     inline void set_music_master_volume(dmg_music_master_volume volume)
     {

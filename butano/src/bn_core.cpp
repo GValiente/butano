@@ -147,7 +147,10 @@ namespace
     {
         hblank_effects_manager::enable();
         link_manager::enable();
+
         audio_manager::enable();
+        hw::irq::enable(hw::irq::id::VBLANK);
+
         hdma_manager::enable();
     }
 
@@ -157,6 +160,7 @@ namespace
 
         if(disable_vblank_irq)
         {
+            hw::irq::disable(hw::irq::id::VBLANK);
             audio_manager::disable();
         }
 

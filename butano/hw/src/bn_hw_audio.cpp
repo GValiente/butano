@@ -7,7 +7,6 @@
 
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
-#include "../include/bn_hw_irq.h"
 #include "../include/bn_hw_tonc.h"
 
 extern const uint8_t _bn_audio_soundbank_bin[];
@@ -161,14 +160,10 @@ void init()
 void enable()
 {
     REG_SNDDSCNT = data.direct_sound_control_value;
-
-    irq::enable(irq::id::VBLANK);
 }
 
 void disable()
 {
-    irq::disable(irq::id::VBLANK);
-
     data.direct_sound_control_value = REG_SNDDSCNT;
     REG_SNDDSCNT = 0;
 }

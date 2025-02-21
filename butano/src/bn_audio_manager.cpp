@@ -586,8 +586,8 @@ void init()
 
 void enable()
 {
-    hw::dmg_audio::enable();
     hw::audio::enable();
+    hw::dmg_audio::enable();
 }
 
 void disable()

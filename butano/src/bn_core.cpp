@@ -367,6 +367,9 @@ void init(const optional<color>& transparent_color, const string_view& keypad_co
     // Initial wait:
     hw::core::init();
 
+    // Init heap:
+    memory_manager::init();
+
     // Init H-Blank effects system:
     hblank_effects_manager::init();
 
@@ -397,7 +400,6 @@ void init(const optional<color>& transparent_color, const string_view& keypad_co
     display_manager::init();
 
     // Init high level systems:
-    memory_manager::init();
     cameras_manager::init();
     palettes_manager::init(transparent_color);
     sprite_tiles_manager::init();

@@ -231,7 +231,7 @@ def list_dmg_audio_file_infos(audio_paths, build_folder_path):
 
 
 def process_dmg_audio(backend, audio_paths, build_folder_path):
-    if backend == 'null' or len(audio_paths) == 0:
+    if backend != 'default' or len(audio_paths) == 0:
         return
 
     audio_file_infos = list_dmg_audio_file_infos(audio_paths, build_folder_path)

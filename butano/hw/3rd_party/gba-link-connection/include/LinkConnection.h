@@ -7,6 +7,7 @@
 
 #include "bn_deque.h"
 #include "bn_config_link.h"
+#include "../../../include/bn_hw_audio.h"
 
 static_assert(BN_CFG_LINK_BAUD_RATE == BN_LINK_BAUD_RATE_9600_BPS ||
               BN_CFG_LINK_BAUD_RATE == BN_LINK_BAUD_RATE_38400_BPS ||
@@ -28,7 +29,7 @@ static_assert(BN_CFG_LINK_MAX_MISSING_MESSAGES >= 0);
 #define LINK_DEFAULT_REMOTE_TIMEOUT LINK_DEFAULT_TIMEOUT
 #define LINK_DEFAULT_BUFFER_SIZE BN_CFG_LINK_MAX_MESSAGES
 #define LINK_DEFAULT_INTERVAL BN_CFG_LINK_SEND_WAIT
-#define LINK_DEFAULT_SEND_TIMER_ID 1
+#define LINK_DEFAULT_SEND_TIMER_ID bn::hw::audio::first_free_timer_id()
 #define LINK_BASE_FREQUENCY TM_FREQ_1024
 #define LINK_REMOTE_TIMEOUT_OFFLINE -1
 

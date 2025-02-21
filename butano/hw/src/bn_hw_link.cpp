@@ -12,6 +12,8 @@ namespace bn::hw::link
 
 namespace
 {
+    constexpr irq::id timer_id = irq::id(int(irq::id::TIMER0) + audio::first_free_timer_id());
+
     class static_data
     {
 
@@ -115,7 +117,7 @@ void init()
 
     data.connection.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
     irq::set_isr(irq::id::SERIAL, _serial_intr);
-    irq::set_isr(irq::id::TIMER1, _timer_intr);
+    irq::set_isr(timer_id, _timer_intr);
     data.connection.deactivate();
 }
 
@@ -128,12 +130,12 @@ void enable()
 {
     data.connection.activate();
     irq::enable(irq::id::SERIAL);
-    irq::enable(irq::id::TIMER1);
+    irq::enable(timer_id);
 }
 
 void disable()
 {
-    irq::disable(irq::id::TIMER1);
+    irq::disable(timer_id);
     irq::disable(irq::id::SERIAL);
     data.connection.deactivate();
 }

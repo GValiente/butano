@@ -36,6 +36,11 @@ namespace bn::hw::audio
         return fixed_t<10>(volume).data();
     }
 
+    [[nodiscard]] constexpr int first_free_timer_id()
+    {
+        return 1;
+    }
+
     void init();
 
     void enable();

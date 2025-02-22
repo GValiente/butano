@@ -126,7 +126,7 @@ namespace
 
         while(it != end)
         {
-            if(it->handle == handle)
+            if(it->handle != handle)
             {
                 before_it = it;
                 ++it;

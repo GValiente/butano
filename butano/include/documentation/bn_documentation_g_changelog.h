@@ -19,6 +19,7 @@
  * * @ref BN_CFG_AUDIO_STEREO and @ref BN_CFG_AUDIO_DYNAMIC_MIXING added.
  * * `null` DMG audio backend added. DMG audio backends can be specified with the `DMGAUDIOBACKEND` makefile variable.
  * * EWRAM overclocking removed, as some GBA SPs crash after a few frames when enabled.
+ * * Erase sound from maxmod queue fixed.
  *
  *
  * @section changelog_18_9_0 18.9.0

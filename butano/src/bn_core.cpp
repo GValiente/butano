@@ -136,7 +136,7 @@ namespace
         int skip_frames = 0;
         int last_update_frames = 1;
         int missed_frames = 0;
-        bool dma_enabled = true;
+        bool dma_enabled = hw::audio::dma_channel_3_free();
         bool slow_game_pak = false;
         volatile bool waiting_for_vblank = false;
     };
@@ -383,10 +383,12 @@ void init(const optional<color>& transparent_color, const string_view& keypad_co
     // Init link system:
     link_manager::init();
 
-    // Init audio system:
-    audio_manager::init();
+    // Init V-Blank interrupt:
     hw::irq::set_isr(hw::irq::id::VBLANK, _vblank_intr);
     hw::irq::enable(hw::irq::id::VBLANK);
+
+    // Init audio system:
+    audio_manager::init();
 
     // Init storage systems:
     data.slow_game_pak = hw::game_pak::init();
@@ -662,6 +664,8 @@ bool dma_enabled()
 
 void set_dma_enabled(bool dma_enabled)
 {
+    BN_BASIC_ASSERT(hw::audio::dma_channel_3_free() || ! dma_enabled, "Not supported by the audio backend");
+
     core::data.dma_enabled = dma_enabled;
 }
 

@@ -6,3 +6,7 @@
 #ifdef BN_AUDIO_BACKEND_MAXMOD
     #include "bn_hw_audio_maxmod.cpp.h"
 #endif
+
+#ifdef BN_AUDIO_BACKEND_AAS
+    #include "bn_hw_audio_aas.cpp.h"
+#endif

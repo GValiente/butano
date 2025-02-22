@@ -51,6 +51,34 @@
 #endif
 
 /**
+ * @def BN_CFG_AUDIO_STEREO
+ *
+ * Specifies Direct Sound mono/stereo output.
+ *
+ * Mono output reduces CPU load.
+ *
+ * @ingroup audio
+ */
+#ifndef BN_CFG_AUDIO_STEREO
+    #define BN_CFG_AUDIO_STEREO true
+#endif
+
+/**
+ * @def BN_CFG_AUDIO_DYNAMIC_MIXING
+ *
+ * Specifies if Direct Sound dynamic mixing must be enabled or not.
+ *
+ * Dynamic mixing automatically adjusts the mixing rate depending on the frequency of the sounds being played,
+ * up to a maximum of the mixing rate specified. It often yields a significant performance boost
+ * for only a very small drop in quality.
+ *
+ * @ingroup audio
+ */
+#ifndef BN_CFG_AUDIO_DYNAMIC_MIXING
+    #define BN_CFG_AUDIO_DYNAMIC_MIXING false
+#endif
+
+/**
  * @def BN_CFG_AUDIO_MAX_COMMANDS
  *
  * Specifies the size of the audio commands list.

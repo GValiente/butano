@@ -6,7 +6,7 @@
 #ifndef BN_HW_DMA_H
 #define BN_HW_DMA_H
 
-#include "bn_hw_audio.h"
+#include "bn_hw_tonc.h"
 
 namespace bn::hw::dma
 {
@@ -23,22 +23,31 @@ namespace bn::hw::dma
 
 inline void copy_half_words(const void* source, int half_words, void* destination)
 {
-    audio::start_dma(3, unsigned(half_words) | DMA_CPY16, source, destination);
+    REG_DMA[3].cnt = 0;
+    REG_DMA[3].src = source;
+    REG_DMA[3].dst = destination;
+    REG_DMA[3].cnt = unsigned(half_words) | DMA_CPY16;
 }
 
 inline void copy_words(const void* source, int words, void* destination)
 {
-    audio::start_dma(3, unsigned(words) | DMA_CPY32, source, destination);
+    REG_DMA[3].cnt = 0;
+    REG_DMA[3].src = source;
+    REG_DMA[3].dst = destination;
+    REG_DMA[3].cnt = unsigned(words) | DMA_CPY32;
 }
 
 inline void start_hdma(int channel, const uint16_t* source, int half_words, uint16_t* destination)
 {
-    audio::start_dma(channel, unsigned(half_words) | DMA_HDMA, source, destination);
+    REG_DMA[channel].cnt = 0;
+    REG_DMA[channel].src = source;
+    REG_DMA[channel].dst = destination;
+    REG_DMA[channel].cnt = unsigned(half_words) | DMA_HDMA;
 }
 
 inline void stop_hdma(int channel)
 {
-    audio::stop_dma(channel);
+    REG_DMA[channel].cnt = 0;
 }
 
 }

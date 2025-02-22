@@ -4,6 +4,10 @@
 #---------------------------------------------------------------------------------------------------------------------
 LIBS        := -lgcc -lstdc++ $(USERLIBS)
 
+ifeq ($(strip $(AUDIOBACKEND)),aas)
+	LIBS		+=	-lAAS
+endif
+
 #---------------------------------------------------------------------------------------------------------------------
 # List of directories containing libraries, this must be the top level containing include and lib directories:
 #---------------------------------------------------------------------------------------------------------------------
@@ -12,6 +16,10 @@ LIBDIRS     :=	$(LIBBUTANOABS) $(LIBBUTANOABS)/hw/3rd_party/libtonc $(LIBBUTANOA
 
 ifeq ($(strip $(AUDIOBACKEND)),maxmod)
 	LIBDIRS		+=	$(LIBBUTANOABS)/hw/3rd_party/maxmod
+endif
+
+ifeq ($(strip $(AUDIOBACKEND)),aas)
+	LIBDIRS		+=	$(LIBBUTANOABS)/hw/3rd_party/aas
 endif
 
 #---------------------------------------------------------------------------------------------------------------------

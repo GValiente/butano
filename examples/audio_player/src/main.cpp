@@ -42,6 +42,9 @@ namespace
         case BN_AUDIO_MIXING_RATE_10_KHZ:
             return 10;
 
+        case BN_AUDIO_MIXING_RATE_12_KHZ:
+            return 12;
+
         case BN_AUDIO_MIXING_RATE_13_KHZ:
             return 13;
 
@@ -51,14 +54,26 @@ namespace
         case BN_AUDIO_MIXING_RATE_18_KHZ:
             return 18;
 
+        case BN_AUDIO_MIXING_RATE_20_KHZ:
+            return 20;
+
         case BN_AUDIO_MIXING_RATE_21_KHZ:
             return 21;
+
+        case BN_AUDIO_MIXING_RATE_24_KHZ:
+            return 24;
 
         case BN_AUDIO_MIXING_RATE_27_KHZ:
             return 27;
 
+        case BN_AUDIO_MIXING_RATE_28_KHZ:
+            return 28;
+
         case BN_AUDIO_MIXING_RATE_31_KHZ:
             return 31;
+
+        case BN_AUDIO_MIXING_RATE_32_KHZ:
+            return 32;
 
         default:
             BN_ERROR("Invalid maxing rate: ", BN_CFG_AUDIO_MIXING_RATE);

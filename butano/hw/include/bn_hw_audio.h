@@ -9,7 +9,11 @@
 #ifdef BN_AUDIO_BACKEND_MAXMOD
     #include "bn_hw_audio_maxmod.h"
 #else
-    #include "bn_hw_audio_null.h"
+    #ifdef BN_AUDIO_BACKEND_AAS
+        #include "bn_hw_audio_aas.h"
+    #else
+        #include "bn_hw_audio_null.h"
+    #endif
 #endif
 
 #endif

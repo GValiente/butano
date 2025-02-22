@@ -601,7 +601,7 @@
  *
  * @subsection faq_audio_music_crash Why the game crashes when some Direct Sound songs are played?
  *
- * Butano uses the excellent <a href="https://maxmod.devkitpro.org/">Maxmod</a> library
+ * By default, Butano uses the excellent <a href="https://maxmod.devkitpro.org/">Maxmod</a> library
  * for Direct Sound audio support.
  *
  * It provides impressive performance and support for lots of module music formats,

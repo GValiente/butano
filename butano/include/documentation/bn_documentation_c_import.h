@@ -530,7 +530,7 @@
  * By default audio files played with Direct Sound channels go into the `audio` folder of your project,
  * and music files played with DMG channels go into the `dmg_audio` folder.
  *
- * Direct Sound stuff is managed by the awesome <a href="https://maxmod.devkitpro.org/">Maxmod</a>,
+ * By default, Direct Sound stuff is managed by the awesome <a href="https://maxmod.devkitpro.org/">Maxmod</a>,
  * so if you have an issue with Direct Sound music or with sound effects, well, you know.
  *
  * DMG channels are handled by the also impressive <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>

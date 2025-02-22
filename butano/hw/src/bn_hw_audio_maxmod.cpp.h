@@ -7,8 +7,9 @@
 
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
+#include "../include/bn_hw_tonc.h"
 
-extern const uint8_t _bn_audio_soundbank_bin[];
+extern const uint8_t bn_audio_soundbank_bin[];
 
 namespace bn::hw::audio
 {
@@ -17,6 +18,8 @@ namespace
 {
     static_assert(BN_CFG_AUDIO_MAX_MUSIC_CHANNELS > 0, "Invalid max music channels");
     static_assert(BN_CFG_AUDIO_MAX_SOUND_CHANNELS > 0, "Invalid max sound channels");
+    static_assert(BN_CFG_AUDIO_STEREO, "Mono output not supported");
+    static_assert(! BN_CFG_AUDIO_DYNAMIC_MIXING, "Dynamic mixing not supported");
 
 
     class sound_type
@@ -40,7 +43,7 @@ namespace
     BN_DATA_EWRAM_BSS static_data data;
 
 
-    constexpr int _mix_length()
+    constexpr int _mix_length = []()
     {
         switch(BN_CFG_AUDIO_MIXING_RATE)
         {
@@ -72,14 +75,14 @@ namespace
         default:
             BN_ERROR("Invalid maxing rate: ", BN_CFG_AUDIO_MIXING_RATE);
         }
-    }
+    }();
 
     constexpr int _max_channels = BN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BN_CFG_AUDIO_MAX_SOUND_CHANNELS;
 
     alignas(int) BN_DATA_EWRAM_BSS uint8_t maxmod_engine_buffer[
-            _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length()];
+            _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length];
 
-    alignas(int) uint8_t maxmod_mixing_buffer[_mix_length()];
+    alignas(int) uint8_t maxmod_mixing_buffer[_mix_length];
 
 
     void _check_sounds_queue()
@@ -162,7 +165,7 @@ void init()
     maxmod_info.mixing_memory = mm_addr(maxmod_mixing_buffer);
     maxmod_info.wave_memory = mm_addr(maxmod_engine_buffer +
             (_max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH)));
-    maxmod_info.soundbank = mm_addr(_bn_audio_soundbank_bin);
+    maxmod_info.soundbank = mm_addr(bn_audio_soundbank_bin);
     mmInit(&maxmod_info);
 }
 

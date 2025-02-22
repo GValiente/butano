@@ -85,7 +85,7 @@ namespace
         }
     }();
 
-    [[nodiscard]] bool _check_sound_queue(int priority)
+    [[nodiscard]] bool _check_sounds_queue(int priority)
     {
         if(! data.sounds_queue.full())
         {
@@ -107,8 +107,7 @@ namespace
             }
             else
             {
-                int handle = sound.handle;
-                AAS_SFX_Stop(handle);
+                AAS_SFX_Stop(sound.handle);
                 data.sounds_queue.erase_after(before_it);
                 return true;
             }
@@ -118,8 +117,7 @@ namespace
 
         if(first_sound.priority <= priority)
         {
-            int handle = first_sound.handle;
-            AAS_SFX_Stop(handle);
+            AAS_SFX_Stop(first_sound.handle);
             data.sounds_queue.pop_front();
             return true;
         }
@@ -267,7 +265,7 @@ namespace
 
     [[nodiscard]] int _get_sound_channel(int priority, fixed panning)
     {
-        if(! _check_sound_queue(priority))
+        if(! _check_sounds_queue(priority))
         {
             return -1;
         }

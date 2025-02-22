@@ -85,13 +85,23 @@ namespace
     alignas(int) uint8_t maxmod_mixing_buffer[_mix_length];
 
 
-    void _check_sounds_queue()
+    [[nodiscard]] bool _check_sounds_queue(int priority)
     {
-        if(data.sounds_queue.full())
+        if(! data.sounds_queue.full())
         {
-            mmEffectRelease(data.sounds_queue.front().handle);
-            data.sounds_queue.pop_front();
+            return true;
         }
+
+        const sound_type& first_sound = data.sounds_queue.front();
+
+        if(first_sound.priority <= priority)
+        {
+            mmEffectRelease(first_sound.handle);
+            data.sounds_queue.pop_front();
+            return true;
+        }
+
+        return false;
     }
 
     void _add_sound_to_queue(int priority, uint16_t handle)
@@ -211,26 +221,37 @@ void resume_music()
 
 optional<uint16_t> play_sound(int priority, int id)
 {
-    _check_sounds_queue();
+    optional<uint16_t> result;
 
-    uint16_t handle = mmEffect(mm_word(id));
-    _add_sound_to_queue(priority, handle);
-    return handle;
+    if(_check_sounds_queue(priority))
+    {
+        uint16_t handle = mmEffect(mm_word(id));
+        _add_sound_to_queue(priority, handle);
+        result = handle;
+    }
+
+    return result;
 }
 
 optional<uint16_t> play_sound(int priority, int id, fixed volume, fixed speed, fixed panning)
 {
-    mm_sound_effect sound_effect;
-    sound_effect.id = mm_word(id);
-    sound_effect.rate = mm_hword(_hw_sound_speed(speed));
-    sound_effect.handle = 0;
-    sound_effect.volume = mm_byte(_hw_sound_volume(volume));
-    sound_effect.panning = mm_byte(_hw_sound_panning(panning));
-    _check_sounds_queue();
+    optional<uint16_t> result;
 
-    uint16_t handle = mmEffectEx(&sound_effect);
-    _add_sound_to_queue(priority, handle);
-    return handle;
+    if(_check_sounds_queue(priority))
+    {
+        mm_sound_effect sound_effect;
+        sound_effect.id = mm_word(id);
+        sound_effect.rate = mm_hword(_hw_sound_speed(speed));
+        sound_effect.handle = 0;
+        sound_effect.volume = mm_byte(_hw_sound_volume(volume));
+        sound_effect.panning = mm_byte(_hw_sound_panning(panning));
+
+        uint16_t handle = mmEffectEx(&sound_effect);
+        _add_sound_to_queue(priority, handle);
+        result = handle;
+    }
+
+    return result;
 }
 
 void stop_sound(uint16_t handle)

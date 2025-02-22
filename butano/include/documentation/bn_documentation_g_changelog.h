@@ -14,7 +14,7 @@
  *
  * @section changelog_19_0_0 19.0.0 (next release)
  *
- * * <a href="https://github.com/stuij/apex-audio-system">`Apex Audio System (`aas`)`</a> and `null` audio backends added.
+ * * `aas` (<a href="https://github.com/stuij/apex-audio-system">Apex Audio System</a>) and `null` audio backends added.
  *   Audio backends can be specified with the `AUDIOBACKEND` makefile variable.
  * * @ref BN_CFG_AUDIO_STEREO and @ref BN_CFG_AUDIO_DYNAMIC_MIXING added.
  * * `null` DMG audio backend added. DMG audio backends can be specified with the `DMGAUDIOBACKEND` makefile variable.

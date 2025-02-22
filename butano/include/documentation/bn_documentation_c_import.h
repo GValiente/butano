@@ -544,11 +544,14 @@
  * @subsection import_direct_sound_music Direct Sound music
  *
  * The required format for Direct Sound music is module files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions.
+ * If you're using <a href="https://github.com/stuij/apex-audio-system">Apex Audio System</a>
+ * instead of the default audio backend (<a href="https://maxmod.devkitpro.org/">Maxmod</a>),
+ * only module files with `*.mod` extension are allowed.
  *
  * By default Butano supports up to 16 music channels,
  * but this limit can be increased by overloading the definition of @ref BN_CFG_AUDIO_MAX_MUSIC_CHANNELS.
  *
- * However, if it is possible don't do this, don't make the poor GBA suffer.
+ * However, don't do it if you can, don't make the poor GBA suffer.
  *
  * If the conversion process has finished successfully,
  * a bunch of bn::music_item objects under the `bn::music_items` namespace

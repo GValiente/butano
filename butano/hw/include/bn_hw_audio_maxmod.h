@@ -37,9 +37,9 @@ namespace bn::hw::audio
         return fixed_t<10>(volume).data();
     }
 
-    [[nodiscard]] constexpr int first_free_timer_id()
+    [[nodiscard]] constexpr bool timer_free(int timer_id)
     {
-        return 1;
+        return timer_id > 0;
     }
 
     [[nodiscard]] constexpr bool dma_channel_3_free()

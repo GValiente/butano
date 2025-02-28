@@ -11,9 +11,9 @@
 
 namespace bn::hw::audio
 {
-    [[nodiscard]] constexpr int first_free_timer_id()
+    [[nodiscard]] constexpr bool timer_free(int)
     {
-        return 0;
+        return true;
     }
 
     [[nodiscard]] constexpr bool dma_channel_3_free()

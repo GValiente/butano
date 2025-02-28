@@ -12,7 +12,8 @@ namespace bn::hw::link
 
 namespace
 {
-    constexpr irq::id timer_id = irq::id(int(irq::id::TIMER0) + audio::first_free_timer_id());
+    constexpr irq::id timer_id = audio::timer_free(1) ? irq::id::TIMER1 : irq::id::TIMER0;
+    constexpr bool free_timers = audio::timer_free(0) || audio::timer_free(1);
 
     class static_data
     {
@@ -35,6 +36,8 @@ namespace
     {
         if(! data.active)
         {
+            BN_BASIC_ASSERT(free_timers, "There's no free timers");
+
             enable();
             data.active = true;
         }
@@ -115,10 +118,13 @@ void init()
 {
     ::new(static_cast<void*>(&data)) static_data();
 
-    data.connection.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
-    irq::set_isr(irq::id::SERIAL, _serial_intr);
-    irq::set_isr(timer_id, _timer_intr);
-    data.connection.deactivate();
+    if(free_timers)
+    {
+        data.connection.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
+        irq::set_isr(irq::id::SERIAL, _serial_intr);
+        irq::set_isr(timer_id, _timer_intr);
+        data.connection.deactivate();
+    }
 }
 
 bool active()
@@ -128,16 +134,22 @@ bool active()
 
 void enable()
 {
-    data.connection.activate();
-    irq::enable(irq::id::SERIAL);
-    irq::enable(timer_id);
+    if(free_timers)
+    {
+        data.connection.activate();
+        irq::enable(irq::id::SERIAL);
+        irq::enable(timer_id);
+    }
 }
 
 void disable()
 {
-    irq::disable(timer_id);
-    irq::disable(irq::id::SERIAL);
-    data.connection.deactivate();
+    if(free_timers)
+    {
+        irq::disable(timer_id);
+        irq::disable(irq::id::SERIAL);
+        data.connection.deactivate();
+    }
 }
 
 void deactivate()
@@ -226,17 +238,26 @@ bool receive(lc::LinkResponse& response)
 
 void _serial_intr()
 {
-    data.connection._onSerial();
+    if(free_timers)
+    {
+        data.connection._onSerial();
+    }
 }
 
 void _timer_intr()
 {
-    data.connection._onTimer();
+    if(free_timers)
+    {
+        data.connection._onTimer();
+    }
 }
 
 void commit()
 {
-    data.connection._onVBlank();
+    if(free_timers)
+    {
+        data.connection._onVBlank();
+    }
 }
 
 }

@@ -12,9 +12,9 @@
 
 namespace bn::hw::audio
 {
-    [[nodiscard]] constexpr int first_free_timer_id()
+    [[nodiscard]] constexpr bool timer_free(int timer_id)
     {
-        return 0;
+        return timer_id > 1;
     }
 
     [[nodiscard]] constexpr bool dma_channel_3_free()

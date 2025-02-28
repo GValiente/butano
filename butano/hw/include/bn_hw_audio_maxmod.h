@@ -42,9 +42,9 @@ namespace bn::hw::audio
         return timer_id > 0;
     }
 
-    [[nodiscard]] constexpr bool dma_channel_3_free()
+    [[nodiscard]] constexpr bool dma_channel_free(int dma_channel_id)
     {
-        return true;
+        return dma_channel_id == 0 || dma_channel_id == 3;
     }
 
     void init();

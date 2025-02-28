@@ -136,7 +136,7 @@ namespace
         int skip_frames = 0;
         int last_update_frames = 1;
         int missed_frames = 0;
-        bool dma_enabled = hw::audio::dma_channel_3_free();
+        bool dma_enabled = hw::audio::dma_channel_free(3);
         bool slow_game_pak = false;
         volatile bool waiting_for_vblank = false;
     };
@@ -664,7 +664,7 @@ bool dma_enabled()
 
 void set_dma_enabled(bool dma_enabled)
 {
-    BN_BASIC_ASSERT(hw::audio::dma_channel_3_free() || ! dma_enabled, "Not supported by the audio backend");
+    BN_BASIC_ASSERT(hw::audio::dma_channel_free(3) || ! dma_enabled, "Not supported by the audio backend");
 
     core::data.dma_enabled = dma_enabled;
 }

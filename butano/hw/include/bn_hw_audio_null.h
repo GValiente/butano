@@ -16,7 +16,7 @@ namespace bn::hw::audio
         return true;
     }
 
-    [[nodiscard]] constexpr bool dma_channel_3_free()
+    [[nodiscard]] constexpr bool dma_channel_free(int)
     {
         return true;
     }

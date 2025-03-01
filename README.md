@@ -241,6 +241,11 @@ to your opponent's base, then place tiles on their base to damage them.
 ![](docs_tools/images/gba-niccc_1.png) ![](docs_tools/images/gba-niccc_2.png)
 
 
+* [Panelix](https://panelix.itch.io/panelix) : Match 3 Puzzle Game
+  
+![](https://img.itch.zone/aW1nLzE5NzU0OTk1LmdpZg==/original/999BbA.gif) ![](https://img.itch.zone/aW1nLzE5NzU0ODYzLmdpZg==/original/yYYSrF.gif)
+
+
 ## More Butano related stuff
 
 * [gba-free-fonts](https://github.com/laqieer/gba-free-fonts): free fonts for GBA development. 

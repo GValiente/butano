@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_19_0_0 19.0.0 (next release)
+ * @section changelog_19_0_0 19.0.0
  *
  * * `aas` (<a href="https://github.com/stuij/apex-audio-system">Apex Audio System</a>) and `null` audio backends added.
  *   Audio backends can be specified with the `AUDIOBACKEND` makefile variable.

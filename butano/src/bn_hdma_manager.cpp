@@ -8,6 +8,7 @@
 #include <new>
 #include "bn_display.h"
 #include "../hw/include/bn_hw_dma.h"
+#include "../hw/include/bn_hw_audio.h"
 #include "../hw/include/bn_hw_memory.h"
 
 #include "bn_hdma.cpp.h"
@@ -177,6 +178,8 @@ bool low_priority_running()
 
 void low_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
 {
+    BN_BASIC_ASSERT(hw::audio::dma_channel_free(3), "Not supported by the audio backend");
+
     data.low_priority_entry.start(source_ref, elements, destination_ref);
 }
 
@@ -192,6 +195,8 @@ bool high_priority_running()
 
 void high_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
 {
+    BN_BASIC_ASSERT(hw::audio::dma_channel_free(0), "Not supported by the audio backend");
+
     data.high_priority_entry.start(source_ref, elements, destination_ref);
 }
 

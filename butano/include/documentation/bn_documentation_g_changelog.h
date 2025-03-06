@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_19_1_0 19.1.0 (next release)
+ *
+ * bn::hdma::start and bn::hdma::high_priority_start check if the DMA channel is available.
+ *
+ *
  * @section changelog_19_0_0 19.0.0
  *
  * * `aas` (<a href="https://github.com/stuij/apex-audio-system">Apex Audio System</a>) and `null` audio backends added.

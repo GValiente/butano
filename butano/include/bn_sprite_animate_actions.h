@@ -110,6 +110,11 @@ public:
     }
 
     /**
+     * @brief Sets the number of times the action must be updated before the next tiles change.
+     */
+    void set_next_change_updates(int next_change_updates);
+
+    /**
      * @brief Returns the sprite_tiles_item used to create the new sprite tiles to use by the given sprite_ptr.
      */
     [[nodiscard]] const sprite_tiles_item& tiles_item() const
@@ -538,6 +543,11 @@ public:
     {
         return _current_wait_updates;
     }
+
+    /**
+     * @brief Sets the number of times the action must be updated before the next tiles change.
+     */
+    void set_next_change_updates(int next_change_updates);
 
     /**
      * @brief Returns the tile sets to use by the given sprite_ptr.

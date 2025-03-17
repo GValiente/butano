@@ -85,6 +85,14 @@ void isprite_animate_action::set_wait_updates(int wait_updates)
     }
 }
 
+void isprite_animate_action::set_next_change_updates(int next_change_updates)
+{
+    BN_ASSERT(next_change_updates >= 0 && next_change_updates <= _wait_updates,
+              "Invalid next change updates: ", next_change_updates, " - ", _wait_updates);
+
+    _current_wait_updates = next_change_updates;
+}
+
 void isprite_animate_action::_set_refs(
         sprite_ptr& sprite, sprite_tiles_item& tiles_item, ivector<uint16_t>& graphics_indexes)
 {
@@ -104,7 +112,7 @@ void isprite_animate_action::_assign(const isprite_animate_action& other)
 void isprite_animate_action::_assign_graphics_indexes(const span<const uint16_t>& graphics_indexes)
 {
     BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= _graphics_indexes_ref->max_size(),
-              "Invalid graphics indexes count: ", graphics_indexes.size());
+              "Invalid graphics indexes count: ", graphics_indexes.size(), " - ", _graphics_indexes_ref->max_size());
 
     for(uint16_t graphics_index : graphics_indexes)
     {
@@ -115,7 +123,7 @@ void isprite_animate_action::_assign_graphics_indexes(const span<const uint16_t>
 void isprite_animate_action::_assign_graphics_indexes(const ivector<uint16_t>& graphics_indexes)
 {
     BN_ASSERT(graphics_indexes.size() > 1 && graphics_indexes.size() <= _graphics_indexes_ref->max_size(),
-              "Invalid graphics indexes count: ", graphics_indexes.size());
+              "Invalid graphics indexes count: ", graphics_indexes.size(), " - ", _graphics_indexes_ref->max_size());
 
     *_graphics_indexes_ref = graphics_indexes;
 }
@@ -185,6 +193,14 @@ void isprite_cached_animate_action::set_wait_updates(int wait_updates)
     {
         _current_wait_updates = uint16_t(wait_updates);
     }
+}
+
+void isprite_cached_animate_action::set_next_change_updates(int next_change_updates)
+{
+    BN_ASSERT(next_change_updates >= 0 && next_change_updates <= _wait_updates,
+              "Invalid next change updates: ", next_change_updates, " - ", _wait_updates);
+
+    _current_wait_updates = next_change_updates;
 }
 
 void isprite_cached_animate_action::_set_refs(sprite_ptr& sprite, ivector<sprite_tiles_ptr>& tiles_list)

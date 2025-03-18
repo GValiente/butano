@@ -14,6 +14,8 @@
  *
  * @section changelog_19_1_0 19.1.0 (next release)
  *
+ * * bn::sprite_animate_action::set_current_index and
+ *   bn::sprite_cached_animate_action::set_current_index added.
  * * bn::sprite_animate_action::set_next_change_updates and
  *   bn::sprite_cached_animate_action::set_next_change_updates added.
  * * bn::hdma::start and bn::hdma::high_priority_start check if the DMA channel is available.

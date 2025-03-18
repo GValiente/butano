@@ -93,6 +93,23 @@ void isprite_animate_action::set_next_change_updates(int next_change_updates)
     _current_wait_updates = next_change_updates;
 }
 
+void isprite_animate_action::set_current_index(int current_index)
+{
+    const ivector<uint16_t>& graphics_indexes = this->graphics_indexes();
+    int num_graphics_indexes = graphics_indexes.size();
+    BN_ASSERT(current_index >= 0 && current_index <= num_graphics_indexes,
+              "Invalid current index: ", current_index, " - ", num_graphics_indexes);
+
+    _current_graphics_indexes_index = current_index;
+
+    if(current_index == num_graphics_indexes)
+    {
+        --current_index;
+    }
+
+    _sprite_ref->set_tiles(*_tiles_item_ref, graphics_indexes[current_index]);
+}
+
 void isprite_animate_action::_set_refs(
         sprite_ptr& sprite, sprite_tiles_item& tiles_item, ivector<uint16_t>& graphics_indexes)
 {
@@ -171,7 +188,7 @@ void isprite_cached_animate_action::update()
     else
     {
         _current_wait_updates = _wait_updates;
-        _sprite_ref->set_tiles((*_tiles_list_ref)[_current_tiles_list_index]);
+        _sprite_ref->set_tiles(tiles_list()[_current_tiles_list_index]);
         ++_current_tiles_list_index;
 
         if(_forever && _current_tiles_list_index == _tiles_list_ref->size())
@@ -201,6 +218,23 @@ void isprite_cached_animate_action::set_next_change_updates(int next_change_upda
               "Invalid next change updates: ", next_change_updates, " - ", _wait_updates);
 
     _current_wait_updates = next_change_updates;
+}
+
+void isprite_cached_animate_action::set_current_index(int current_index)
+{
+    const ivector<sprite_tiles_ptr>& tiles_list = this->tiles_list();
+    int tiles_list_size = tiles_list.size();
+    BN_ASSERT(current_index >= 0 && current_index <= tiles_list_size,
+              "Invalid current index: ", current_index, " - ", tiles_list_size);
+
+    _current_tiles_list_index = current_index;
+
+    if(current_index == tiles_list_size)
+    {
+        --current_index;
+    }
+
+    _sprite_ref->set_tiles(tiles_list[current_index]);
 }
 
 void isprite_cached_animate_action::_set_refs(sprite_ptr& sprite, ivector<sprite_tiles_ptr>& tiles_list)

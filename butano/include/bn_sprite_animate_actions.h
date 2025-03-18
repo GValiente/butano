@@ -148,6 +148,12 @@ public:
     }
 
     /**
+     * @brief Sets the current index of the given graphics_indexes
+     * (not the current index of the tile set to reference in the given tiles_item).
+     */
+    void set_current_index(int current_index);
+
+    /**
      * @brief Returns the current index of the tile set to reference in the given tiles_item.
      */
     [[nodiscard]] int current_graphics_index() const
@@ -572,6 +578,11 @@ public:
     {
         return _current_tiles_list_index;
     }
+
+    /**
+     * @brief Sets the current index of the given tile sets.
+     */
+    void set_current_index(int current_index);
 
     /**
      * @brief Returns the current tile set.

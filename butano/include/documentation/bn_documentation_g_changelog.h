@@ -19,6 +19,7 @@
  * * bn::sprite_animate_action::set_next_change_updates and
  *   bn::sprite_cached_animate_action::set_next_change_updates added.
  * * bn::hdma::start and bn::hdma::high_priority_start check if the DMA channel is available.
+ * * Link-time optimization builds fixed.
  *
  *
  * @section changelog_19_0_0 19.0.0

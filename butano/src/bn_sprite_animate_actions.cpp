@@ -97,14 +97,25 @@ void isprite_animate_action::set_current_index(int current_index)
 {
     const ivector<uint16_t>& graphics_indexes = this->graphics_indexes();
     int num_graphics_indexes = graphics_indexes.size();
-    BN_ASSERT(current_index >= 0 && current_index <= num_graphics_indexes,
-              "Invalid current index: ", current_index, " - ", num_graphics_indexes);
 
-    _current_graphics_indexes_index = current_index;
-
-    if(current_index == num_graphics_indexes)
+    if(_forever)
     {
-        --current_index;
+        BN_ASSERT(current_index >= 0 && current_index < num_graphics_indexes,
+                  "Invalid current index: ", current_index, " - ", num_graphics_indexes);
+
+        _current_graphics_indexes_index = current_index;
+    }
+    else
+    {
+        BN_ASSERT(current_index >= 0 && current_index <= num_graphics_indexes,
+                  "Invalid current index: ", current_index, " - ", num_graphics_indexes);
+
+        _current_graphics_indexes_index = current_index;
+
+        if(current_index == num_graphics_indexes)
+        {
+            --current_index;
+        }
     }
 
     _sprite_ref->set_tiles(*_tiles_item_ref, graphics_indexes[current_index]);
@@ -224,14 +235,25 @@ void isprite_cached_animate_action::set_current_index(int current_index)
 {
     const ivector<sprite_tiles_ptr>& tiles_list = this->tiles_list();
     int tiles_list_size = tiles_list.size();
-    BN_ASSERT(current_index >= 0 && current_index <= tiles_list_size,
-              "Invalid current index: ", current_index, " - ", tiles_list_size);
 
-    _current_tiles_list_index = current_index;
-
-    if(current_index == tiles_list_size)
+    if(_forever)
     {
-        --current_index;
+        BN_ASSERT(current_index >= 0 && current_index < tiles_list_size,
+                  "Invalid current index: ", current_index, " - ", tiles_list_size);
+
+        _current_tiles_list_index = current_index;
+    }
+    else
+    {
+        BN_ASSERT(current_index >= 0 && current_index <= tiles_list_size,
+                  "Invalid current index: ", current_index, " - ", tiles_list_size);
+
+        _current_tiles_list_index = current_index;
+
+        if(current_index == tiles_list_size)
+        {
+            --current_index;
+        }
     }
 
     _sprite_ref->set_tiles(tiles_list[current_index]);

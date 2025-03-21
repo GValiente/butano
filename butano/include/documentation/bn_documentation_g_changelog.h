@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_19_1_0 19.1.0 (next release)
+ * @section changelog_19_1_0 19.1.0
  *
  * * bn::sprite_animate_action::set_current_index and
  *   bn::sprite_cached_animate_action::set_current_index added.

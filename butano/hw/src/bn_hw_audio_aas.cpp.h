@@ -29,6 +29,9 @@ namespace
     static_assert(BN_CFG_AUDIO_MAX_MUSIC_CHANNELS > 0, "Invalid max music channels");
     static_assert(BN_CFG_AUDIO_MAX_SOUND_CHANNELS > 0, "Invalid max sound channels");
 
+    constexpr unsigned sound_channel_bits = 4;
+    constexpr unsigned sound_counter_bits = 16 - 1 - sound_channel_bits;
+
 
     class sound_type
     {
@@ -36,8 +39,10 @@ namespace
     public:
         int id;
         int16_t priority;
-        uint8_t handle;
-        bool released;
+
+        uint16_t handle: sound_counter_bits;
+        uint8_t channel: sound_channel_bits;
+        bool released: 1;
     };
 
 
@@ -47,6 +52,7 @@ namespace
     public:
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
         fixed sound_master_volume = 1;
+        unsigned sound_counter = 0;
         uint16_t direct_sound_control_value = 0;
         bool music_paused = false;
     };
@@ -107,7 +113,7 @@ namespace
             }
             else
             {
-                AAS_SFX_Stop(sound.handle);
+                AAS_SFX_Stop(sound.channel);
                 data.sounds_queue.erase_after(before_it);
                 return true;
             }
@@ -117,7 +123,7 @@ namespace
 
         if(first_sound.priority <= priority)
         {
-            AAS_SFX_Stop(first_sound.handle);
+            AAS_SFX_Stop(first_sound.channel);
             data.sounds_queue.pop_front();
             return true;
         }
@@ -182,7 +188,7 @@ namespace
 
             if(sound.released)
             {
-                int channel = sound.handle;
+                int channel = sound.channel;
 
                 if(_is_left_channel(channel) == left_panning)
                 {
@@ -202,7 +208,7 @@ namespace
         while(it != end)
         {
             const sound_type& sound = *it;
-            int channel = sound.handle;
+            int channel = sound.channel;
 
             if(_is_left_channel(channel) == left_panning)
             {
@@ -240,7 +246,7 @@ namespace
 
             if(sound.released)
             {
-                int channel = sound.handle;
+                int channel = sound.channel;
                 AAS_SFX_Stop(channel);
                 data.sounds_queue.erase_after(before_it);
                 return channel;
@@ -254,7 +260,7 @@ namespace
 
         if(first_sound.priority <= priority)
         {
-            int channel = first_sound.handle;
+            int channel = first_sound.channel;
             AAS_SFX_Stop(channel);
             data.sounds_queue.pop_front();
             return channel;
@@ -298,7 +304,7 @@ namespace
         return _free_sound_channel(priority);
     }
 
-    void _add_sound_to_queue(int id, int priority, uint16_t handle)
+    [[nodiscard]] uint16_t _add_sound_to_queue(int id, int priority, int channel)
     {
         auto before_it = data.sounds_queue.before_begin();
         auto it = data.sounds_queue.begin();
@@ -319,7 +325,17 @@ namespace
             }
         }
 
-        data.sounds_queue.insert_after(before_it, sound_type{ id, int16_t(priority), uint8_t(handle), false });
+        unsigned sound_counter = data.sound_counter + 1;
+
+        if(sound_counter == 1 << sound_counter_bits)
+        {
+            sound_counter = 0;
+        }
+
+        sound_type sound{ id, int16_t(priority), uint16_t(sound_counter), uint8_t(channel), false };
+        data.sounds_queue.insert_after(before_it, sound);
+        data.sound_counter = sound_counter;
+        return sound_counter;
     }
 
     [[nodiscard]] inline int _hw_music_volume(fixed volume)
@@ -409,6 +425,19 @@ void set_music_volume(fixed volume)
     BN_BASIC_ASSERT(! error_code, "AAS_MOD_SetVolume call failed: ", error_code);
 }
 
+bool sound_active(uint16_t handle)
+{
+    for(const sound_type& sound : data.sounds_queue)
+    {
+        if(sound.handle == handle)
+        {
+            return AAS_SFX_IsActive(sound.channel);
+        }
+    }
+
+    return false;
+}
+
 optional<uint16_t> play_sound(int priority, int id)
 {
     int channel = _get_sound_channel(priority, 0);
@@ -419,9 +448,7 @@ optional<uint16_t> play_sound(int priority, int id)
         if(! AAS_SFX_Play(channel, _hw_sound_volume(1), bn_aas_sound_frequencies[id], *bn_aas_sound_starts[id],
                           *bn_aas_sound_ends[id], nullptr))
         {
-            uint16_t handle = channel;
-            _add_sound_to_queue(id, priority, handle);
-            result = handle;
+            result = _add_sound_to_queue(id, priority, channel);
         }
     }
 
@@ -440,9 +467,7 @@ optional<uint16_t> play_sound(int priority, int id, fixed volume, fixed speed, f
         if(! AAS_SFX_Play(channel, _hw_sound_volume(volume), frequency, *bn_aas_sound_starts[id],
                           *bn_aas_sound_ends[id], nullptr))
         {
-            uint16_t handle = channel;
-            _add_sound_to_queue(id, priority, handle);
-            result = handle;
+            result = _add_sound_to_queue(id, priority, channel);
         }
     }
 
@@ -457,14 +482,16 @@ void stop_sound(uint16_t handle)
 
     while(it != end)
     {
-        if(it->handle != handle)
+        const sound_type& sound = *it;
+
+        if(sound.handle != handle)
         {
             before_it = it;
             ++it;
         }
         else
         {
-            AAS_SFX_Stop(handle);
+            AAS_SFX_Stop(sound.channel);
             data.sounds_queue.erase_after(before_it);
             return;
         }
@@ -473,18 +500,9 @@ void stop_sound(uint16_t handle)
 
 void release_sound(uint16_t handle)
 {
-    auto it = data.sounds_queue.begin();
-    auto end = data.sounds_queue.end();
-
-    while(it != end)
+    for(sound_type& sound : data.sounds_queue)
     {
-        sound_type& sound = *it;
-
-        if(sound.handle != handle)
-        {
-            ++it;
-        }
-        else
+        if(sound.handle == handle)
         {
             sound.released = true;
             return;
@@ -494,23 +512,16 @@ void release_sound(uint16_t handle)
 
 void set_sound_speed(uint16_t handle, fixed, fixed new_speed)
 {
-    auto it = data.sounds_queue.begin();
-    auto end = data.sounds_queue.end();
-
-    while(it != end)
+    for(const sound_type& sound : data.sounds_queue)
     {
-        const sound_type& sound = *it;
+        if(sound.handle == handle)
+        {
+            int channel = sound.channel;
 
-        if(sound.handle != handle)
-        {
-            ++it;
-        }
-        else
-        {
-            if(AAS_SFX_IsActive(handle))
+            if(AAS_SFX_IsActive(channel))
             {
                 int frequency = (new_speed * bn_aas_sound_frequencies[sound.id]).right_shift_integer();
-                AAS_SFX_SetFrequency(handle, frequency);
+                AAS_SFX_SetFrequency(channel, frequency);
             }
 
             return;
@@ -520,13 +531,9 @@ void set_sound_speed(uint16_t handle, fixed, fixed new_speed)
 
 void stop_all_sounds()
 {
-    auto it = data.sounds_queue.begin();
-    auto end = data.sounds_queue.end();
-
-    while(it != end)
+    for(const sound_type& sound : data.sounds_queue)
     {
-        AAS_SFX_Stop(it->handle);
-        ++it;
+        AAS_SFX_Stop(sound.channel);
     }
 
     data.sounds_queue.clear();
@@ -545,9 +552,7 @@ void update_sounds_queue()
 
     while(it != end)
     {
-        uint16_t handle = it->handle;
-
-        if(AAS_SFX_IsActive(handle))
+        if(AAS_SFX_IsActive(it->channel))
         {
             before_it = it;
             ++it;

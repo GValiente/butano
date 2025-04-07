@@ -71,10 +71,7 @@ namespace bn::hw::audio
     {
     }
 
-    [[nodiscard]] inline bool sound_active(uint16_t handle)
-    {
-        return AAS_SFX_IsActive(handle);
-    }
+    [[nodiscard]] bool sound_active(uint16_t handle);
 
     [[nodiscard]] optional<uint16_t> play_sound(int priority, int id);
 

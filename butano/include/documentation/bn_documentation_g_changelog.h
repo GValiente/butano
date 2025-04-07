@@ -14,7 +14,8 @@
  *
  * @section changelog_19_2_0 19.2.0 (next release)
  *
- * Import tool now checks if all input audio files have been imported or not.
+ * * Import tool now checks if all input audio files have been imported or not.
+ * * Release sounds from aas queue fixed.
  *
  *
  * @section changelog_19_1_0 19.1.0
@@ -35,7 +36,7 @@
  * * `null` DMG audio backend added. DMG audio backends can be specified with the `DMGAUDIOBACKEND` makefile variable.
  * * EWRAM overclocking removed, as some GBA SPs crash after a few frames when enabled.
  * * Sounds with higher priority are not discarded on the maxmod queue when playing a new one.
- * * Erase sound from maxmod queue fixed.
+ * * Erase sounds from maxmod queue fixed.
  *
  *
  * @section changelog_18_9_0 18.9.0

@@ -25,11 +25,11 @@ def process_audio_files(tool, audio_file_paths, soundbank_bin_path, soundbank_he
     command = ' '.join(command)
 
     try:
-        subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        tool_output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         raise ValueError(tool + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
-    return os.path.getsize(soundbank_bin_path)
+    return tool_output
 
 
 def write_output_file(items, include_guard, include_file, namespace, item_class, output_file_path):
@@ -92,7 +92,8 @@ def write_output_info_file(items, include_guard, include_file, namespace, item_c
     print('    ' + item_class + 's_info file written in ' + output_file_path)
 
 
-def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path):
+def write_output_files(audio_file_paths, audio_file_names_no_ext, tool_output, soundbank_header_path,
+                       build_folder_path):
     music_items_list = []
     sound_items_list = []
     music_final_names_set = set()
@@ -123,6 +124,15 @@ def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_fol
                     sound_final_names_set.add(final_name)
                     sound_items_list.append([final_name, soundbank_words[2]])
 
+    audio_file_index = 0
+
+    for audio_file_name_no_ext in audio_file_names_no_ext:
+        if audio_file_name_no_ext not in music_final_names_set and audio_file_name_no_ext not in sound_final_names_set:
+            audio_file_path = audio_file_paths[audio_file_index]
+            raise ValueError(audio_file_path + ' import failed. Tool output: ' + tool_output.decode())
+
+        audio_file_index += 1
+
     write_output_file(music_items_list, 'BN_MUSIC_ITEMS_H', 'bn_music_item.h', 'bn::music_items', 'music_item',
                       build_folder_path + '/bn_music_items.h')
 
@@ -139,8 +149,9 @@ def write_output_files(audio_file_names_no_ext, soundbank_header_path, build_fol
 def process_maxmod_audio(tool, audio_file_paths, audio_file_names_no_ext, build_folder_path):
     soundbank_bin_path = build_folder_path + '/bn_audio_soundbank.bin'
     soundbank_header_path = build_folder_path + '/bn_audio_soundbank.h'
-    total_size = process_audio_files(tool, audio_file_paths, soundbank_bin_path, soundbank_header_path,
-                                     build_folder_path)
-    write_output_files(audio_file_names_no_ext, soundbank_header_path, build_folder_path)
-    print('    Processed audio size: ' + str(total_size) + ' bytes')
+    tool_output = process_audio_files(tool, audio_file_paths, soundbank_bin_path, soundbank_header_path,
+                                      build_folder_path)
+    write_output_files(audio_file_paths, audio_file_names_no_ext, tool_output, soundbank_header_path,
+                       build_folder_path)
+    print('    Processed audio size: ' + str(os.path.getsize(soundbank_bin_path)) + ' bytes')
     os.remove(soundbank_header_path)

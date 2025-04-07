@@ -34,12 +34,13 @@ def process_audio_files(tool, temp_folder_path, soundbank_header_path, soundbank
     command = ' '.join(command)
 
     try:
-        subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        tool_output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         raise ValueError(tool + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
     shutil.move('AAS_Data.h', soundbank_header_path)
     shutil.move('AAS_Data.s', soundbank_bin_path)
+    return tool_output
 
 
 def write_info_table_file(music_items, sound_items, sound_item_frequencies, output_file_path):
@@ -164,7 +165,8 @@ def write_output_info_file(items, include_guard, include_file, namespace, item_c
     print('    ' + item_class + 's_info file written in ' + output_file_path)
 
 
-def write_output_files(audio_file_names_no_ext, soundbank_header_path, temp_folder_path, build_folder_path):
+def write_output_files(audio_file_paths, audio_file_names_no_ext, tool_output, soundbank_header_path, temp_folder_path,
+                       build_folder_path):
     music_items_list = []
     sound_items_list = []
     sound_item_frequencies = []
@@ -198,6 +200,15 @@ def write_output_files(audio_file_names_no_ext, soundbank_header_path, temp_fold
                         sound_items_list.append(final_name)
                         sound_item_frequencies.append(wav_file.getframerate())
 
+    audio_file_index = 0
+
+    for audio_file_name_no_ext in audio_file_names_no_ext:
+        if audio_file_name_no_ext not in music_final_names_set and audio_file_name_no_ext not in sound_final_names_set:
+            audio_file_path = audio_file_paths[audio_file_index]
+            raise ValueError(audio_file_path + ' import failed. Tool output: ' + tool_output.decode())
+
+        audio_file_index += 1
+
     write_info_table_file(music_items_list, sound_items_list, sound_item_frequencies,
                           build_folder_path + '/bn_aas_info.c')
 
@@ -218,7 +229,8 @@ def process_aas_audio(tool, audio_file_paths, audio_file_names_no_ext, build_fol
     soundbank_header_path = build_folder_path + '/AAS_Data.h'
     soundbank_bin_path = build_folder_path + '/AAS_Data.s'
     temp_folder_path = generate_temp_folder(audio_file_paths, build_folder_path)
-    process_audio_files(tool, temp_folder_path, soundbank_header_path, soundbank_bin_path)
-    write_output_files(audio_file_names_no_ext, soundbank_header_path, temp_folder_path, build_folder_path)
+    tool_output = process_audio_files(tool, temp_folder_path, soundbank_header_path, soundbank_bin_path)
+    write_output_files(audio_file_paths, audio_file_names_no_ext, tool_output, soundbank_header_path, temp_folder_path,
+                       build_folder_path)
     os.remove(soundbank_header_path)
     print('    Processed audio size: ' + str(os.path.getsize(soundbank_bin_path)) + ' bytes')

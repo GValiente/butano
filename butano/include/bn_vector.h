@@ -333,7 +333,7 @@ public:
     {
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
-        ::new(static_cast<void*>(_data + _size)) value_type(value);
+        ::new(static_cast<void*>(end())) value_type(value);
         ++_size;
     }
 
@@ -345,7 +345,7 @@ public:
     {
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
-        ::new(static_cast<void*>(_data + _size)) value_type(move(value));
+        ::new(static_cast<void*>(end())) value_type(move(value));
         ++_size;
     }
 
@@ -359,7 +359,7 @@ public:
     {
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
-        Type* result = _data + _size;
+        iterator result = end();
         ::new(static_cast<void*>(result)) value_type(forward<Args>(args)...);
         ++_size;
         return *result;
@@ -384,12 +384,13 @@ public:
      */
     iterator insert(const_iterator position, const_reference value)
     {
-        BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        iterator end = this->end();
+        BN_ASSERT(position >= begin() && position <= end, "Invalid position");
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
-        iterator last = end();
-        ::new(static_cast<void*>(_data + _size)) value_type(value);
+        iterator last = end;
+        ::new(static_cast<void*>(end)) value_type(value);
         ++_size;
 
         for(iterator it = non_const_position; it != last; ++it)
@@ -408,12 +409,13 @@ public:
      */
     iterator insert(const_iterator position, value_type&& value)
     {
-        BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        iterator end = this->end();
+        BN_ASSERT(position >= begin() && position <= end, "Invalid position");
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
-        iterator last = end();
-        ::new(static_cast<void*>(_data + _size)) value_type(move(value));
+        iterator last = end;
+        ::new(static_cast<void*>(end)) value_type(move(value));
         ++_size;
 
         for(iterator it = non_const_position; it != last; ++it)
@@ -425,6 +427,102 @@ public:
     }
 
     /**
+     * @brief Inserts values at the specified position.
+     * @param position The given value is inserted before this position.
+     * @param count Number of times to insert the given value.
+     * @param value Value to insert.
+     * @return Iterator pointing to the first inserted value.
+     */
+    iterator insert(const_iterator position, size_type count, const_reference value)
+    {
+        iterator end = this->end();
+        BN_ASSERT(position >= begin() && position <= end, "Invalid position");
+        BN_ASSERT(count >= 0 && _size + count <= _max_size, "Invalid count: ", count, " - ", _size, " - ", _max_size);
+
+        if(position == end)
+        {
+            pointer data = end;
+
+            for(size_type index = 0; index < count; ++index)
+            {
+                ::new(static_cast<void*>(data + index)) value_type(value);
+            }
+        }
+        else
+        {
+            iterator it = end - 1;
+
+            for(size_type index = 0, limit = end - position; index < limit; ++index)
+            {
+                ::new(static_cast<void*>(it + count)) value_type(move(*it));
+                --it;
+            }
+
+            it = const_cast<iterator>(position);
+
+            for(size_type index = 0; index < count; ++index)
+            {
+                *it = value;
+                ++it;
+            }
+        }
+
+        _size += count;
+
+        return const_cast<iterator>(position);
+    }
+
+    /**
+     * @brief Inserts values at the specified position.
+     * @param position The given values are inserted before this position.
+     * @param first Iterator to the first element to insert.
+     * @param last Iterator to the last element to insert.
+     * @return Iterator pointing to the first inserted value.
+     */
+    template<typename Iterator>
+    iterator insert(const_iterator position, const Iterator& first, const Iterator& last)
+    {
+        iterator end = this->end();
+        BN_ASSERT(position >= begin() && position <= end, "Invalid position");
+
+        size_type count = last - first;
+        BN_ASSERT(count >= 0 && _size + count <= _max_size, "Invalid count: ", count, " - ", _size, " - ", _max_size);
+
+        if(position == end)
+        {
+            pointer data = end;
+
+            for(Iterator it = first; it != last; ++it)
+            {
+                ::new(static_cast<void*>(data)) value_type(*it);
+                ++data;
+            }
+        }
+        else
+        {
+            iterator it = end - 1;
+
+            for(size_type index = 0, limit = end - position; index < limit; ++index)
+            {
+                ::new(static_cast<void*>(it + count)) value_type(move(*it));
+                --it;
+            }
+
+            it = const_cast<iterator>(position);
+
+            for(Iterator other_it = first; other_it != last; ++other_it)
+            {
+                *it = *other_it;
+                ++it;
+            }
+        }
+
+        _size += count;
+
+        return const_cast<iterator>(position);
+    }
+
+    /**
      * @brief Constructs and inserts a value at the specified position.
      * @param position The new value is inserted before this position.
      * @param args Parameters of the value to insert.
@@ -433,12 +531,13 @@ public:
     template<typename... Args>
     iterator emplace(const_iterator position, Args&&... args)
     {
-        BN_ASSERT(position >= begin() && position <= end(), "Invalid position");
+        iterator end = this->end();
+        BN_ASSERT(position >= begin() && position <= end, "Invalid position");
         BN_BASIC_ASSERT(! full(), "Vector is full");
 
         auto non_const_position = const_cast<iterator>(position);
-        iterator last = end();
-        ::new(static_cast<void*>(_data + _size)) value_type(forward<Args>(args)...);
+        iterator last = end;
+        ::new(static_cast<void*>(end)) value_type(forward<Args>(args)...);
         ++_size;
 
         for(iterator it = non_const_position; it != last; ++it)

@@ -11,6 +11,10 @@
 #include "bn_sorted_sprites.h"
 #include "../hw/include/bn_hw_sprite_affine_mats_constants.h"
 
+#if ! BN_CFG_SPRITES_USE_IWRAM
+    #include "bn_sprites_manager_hot.h"
+#endif
+
 #include "bn_sprites.cpp.h"
 #include "bn_sprite_ptr.cpp.h"
 #include "bn_sprite_item.cpp.h"
@@ -188,7 +192,12 @@ namespace
                 }
             }
 
-            int visible_items_count = _rebuild_handles_impl(reserved_count, handles, data.sorter.layers());
+            #if BN_CFG_SPRITES_USE_IWRAM
+                int visible_items_count = _rebuild_handles_impl(reserved_count, handles, data.sorter.layers());
+            #else
+                int visible_items_count = hot::rebuild_handles(reserved_count, handles, data.sorter.layers());
+            #endif
+
             BN_BASIC_ASSERT(visible_items_count >= 0, "Too many on screen sprites");
 
             int last_visible_items_count = data.last_visible_items_count;
@@ -1326,7 +1335,13 @@ void fill_hblank_effect_third_attributes([[maybe_unused]] sprite_shape_size shap
 
 void update_cameras()
 {
-    if(_update_cameras_impl(data.sorter.layers()))
+    #if BN_CFG_SPRITES_USE_IWRAM
+        bool check_items_on_screen = _update_cameras_impl(data.sorter.layers());
+    #else
+        bool check_items_on_screen = hot::update_cameras(data.sorter.layers());
+    #endif
+
+    if(check_items_on_screen)
     {
         data.check_items_on_screen = true;
         data.rebuild_handles = true;
@@ -1358,7 +1373,12 @@ void update()
     if(data.check_items_on_screen)
     {
         data.check_items_on_screen = false;
-        _check_items_on_screen(data.sorter.layers());
+
+        #if BN_CFG_SPRITES_USE_IWRAM
+            _check_items_on_screen(data.sorter.layers());
+        #else
+            hot::check_items_on_screen(data.sorter.layers());
+        #endif
     }
 
     _rebuild_handles();

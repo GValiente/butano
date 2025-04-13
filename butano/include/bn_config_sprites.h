@@ -43,4 +43,15 @@
     #define BN_CFG_SPRITES_MAX_SORT_LAYERS 16
 #endif
 
+/**
+ * @def BN_CFG_SPRITES_USE_IWRAM
+ *
+ * Indicates if the sprites manager should use IWRAM to improve performance or not.
+ *
+ * @ingroup sprite
+ */
+#ifndef BN_CFG_SPRITES_USE_IWRAM
+    #define BN_CFG_SPRITES_USE_IWRAM true
+#endif
+
 #endif

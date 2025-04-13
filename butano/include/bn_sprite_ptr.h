@@ -672,7 +672,7 @@ public:
      * Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).
      *
      * Sprites are grouped in layers depending of their background priority and z order,
-     * so to reduce memory usage and improve performance, please use as less unique z orders as possible.
+     * so to reduce memory usage and improve performance, please use as few unique z orders as possible.
      */
     [[nodiscard]] int z_order() const;
 
@@ -682,7 +682,7 @@ public:
      * Sprites with higher z orders are drawn first (and therefore can be covered by later sprites).
      *
      * Sprites are grouped in layers depending of their background priority and z order,
-     * so to reduce memory usage and improve performance, please use as less unique z orders as possible.
+     * so to reduce memory usage and improve performance, please use as few unique z orders as possible.
      *
      * @param z_order Priority relative to other sprites in the range [-32767..32767].
      */

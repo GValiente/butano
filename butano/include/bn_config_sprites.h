@@ -35,7 +35,7 @@
  * Specifies the maximum number of used sprite sort layers.
  *
  * Sprites are grouped in layers depending of their background priority and z order,
- * so to reduce memory usage and improve performance, please use as less unique z orders as possible.
+ * so to reduce memory usage and improve performance, please use as few unique z orders as possible.
  *
  * @ingroup sprite
  */

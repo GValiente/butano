@@ -17,6 +17,7 @@
  * * @ref BN_CFG_SPRITES_USE_IWRAM added.
  * * Import tool now checks if all input audio files have been imported or not.
  * * Release sounds from aas queue fixed.
+ * * @ref faq_sprites_sort_layers question added to the @ref faq page.
  *
  *
  * @section changelog_19_1_0 19.1.0

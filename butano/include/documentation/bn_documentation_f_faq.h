@@ -69,7 +69,7 @@
  * Take a look at the @ref qt_creator.
  *
  *
- * @subsection faq_incomplete_type Why I get an incomplete type error when trying to use a Butano class?
+ * @subsection faq_incomplete_type Why do I get an incomplete type error when trying to use a Butano class?
  *
  * If you get an error message like these:
  *
@@ -138,7 +138,7 @@
  * To demangle it, you can use <a href="http://demangler.com/">demangler.com</a> for example.
  *
  *
- * @subsection faq_error_after_update Why I get undefined reference errors after updating Butano?
+ * @subsection faq_error_after_update Why do I get undefined reference errors after updating Butano?
  *
  * If after updating Butano you get error messages like this one:
  *
@@ -297,7 +297,7 @@
  * Also, remember to call bn::core::init before using the heap.
  *
  *
- * @subsection faq_memory_types Why I run out of memory so often?
+ * @subsection faq_memory_types Why do I run out of memory so often?
  *
  * Besides VRAM and such, the GBA provides two memory banks:
  * * IWRAM: 32KB fast RAM.
@@ -384,7 +384,7 @@
  * @section faq_images Images
  *
  *
- * @subsection faq_images_invalid_header_size Why I get an "invalid header size" error when I try to import a *.bmp file?
+ * @subsection faq_images_invalid_header_size Why do I get an "invalid header size" error when I try to import a *.bmp file?
  *
  * If you get that error when importing a `*.bmp` file, it probably means that it contains unsupported features, such as:
  * * Compression.
@@ -488,12 +488,27 @@
  *
  * Hidden sprites are not committed to the GBA, but they still take resources like color palettes and VRAM.
  *
- * The easiest way to increase the maximum number of hidden sprites allowed for a specific project is
- * to define it in the `USERFLAGS` of its `Makefile`.
+ * The easiest way to increase the maximum number of hidden sprites allowed for a particular project is
+ * to set it in the `USERFLAGS` of its `Makefile`.
  *
  * For example, to set the maximum number of hidden sprites to 256:
  *
  * `USERFLAGS := -DBN_CFG_SPRITES_MAX_ITEMS=256`
+ *
+ * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
+ *
+ *
+ * @subsection faq_sprites_sort_layers Why do I get "no more sprite sort layers available" errors?
+ *
+ * Sprites are grouped in layers depending of their background priority and z order, so to reduce memory usage
+ * and improve performance, please use as few unique z orders as possible.
+ *
+ * If you still need to increase the maximum number of sprite sort layers available for a particular project,
+ * the easiest way to do it is to set it in the `USERFLAGS` of its `Makefile`.
+ *
+ * For example, to set the maximum number of sprite sort layers to 32:
+ *
+ * `USERFLAGS := -DBN_CFG_SPRITES_MAX_SORT_LAYERS=32`
  *
  * Remember to rebuild your project from scratch after modifying a `Makefile` (`make clean` before `make`).
  *
@@ -586,8 +601,8 @@
  *
  * Hidden backgrounds are not committed to the GBA, but they still take resources like color palettes and VRAM.
  *
- * The easiest way to increase the maximum number of hidden backgrounds allowed for a specific project is
- * to define it in the `USERFLAGS` of its `Makefile`.
+ * The easiest way to increase the maximum number of hidden backgrounds allowed for a particular project is
+ * to set it in the `USERFLAGS` of its `Makefile`.
  *
  * For example, to set the maximum number of hidden backgrounds to 8:
  *
@@ -644,8 +659,8 @@
  *
  * If you have some free CPU left, you can increase Direct Sound audio mixing rate to improve its quality.
  *
- * The easiest way to specify Direct Sound audio mixing rate for a specific project is
- * to define it in the `USERFLAGS` of its `Makefile`.
+ * The easiest way to specify Direct Sound audio mixing rate for a particular project is
+ * to set it in the `USERFLAGS` of its `Makefile`.
  *
  * For example, to set Direct Sound audio mixing rate to 21KHz:
  *

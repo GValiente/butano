@@ -232,6 +232,19 @@
             </dt>
             <dd>Inserts a moved value at the specified position.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9f053573d347e9d3dc405eea03853c71" class="m-doc">insert_after</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="#a79ddb6f0f44ab26a211efb2675e1fd22" class="m-doc">size_<wbr />type</a> count,
+              <a href="#a239629680ede6270802c0da1a34f78e7" class="m-doc">const_<wbr />reference</a> value) -&gt; <a href="classbn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Inserts values at the specified position.</dd>
+            <dt>
+              <div class="m-doc-template">template&lt;typename Iterator&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#aaf8290d88966db0c624a050af69eb7bf" class="m-doc">insert_after</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              const Iterator&amp; first,
+              const Iterator&amp; last) -&gt; <a href="classbn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
+            </dt>
+            <dd>Inserts values at the specified position.</dd>
+            <dt>
               <div class="m-doc-template">template&lt;typename... Args&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ab82b2ad35f80a86929767b382a020f99" class="m-doc">emplace_after</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
               Args &amp;&amp; ... args) -&gt; <a href="classbn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a></span>
@@ -490,6 +503,79 @@
                 <tr>
                   <th>Returns</th>
                   <td>Iterator pointing to the inserted value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a9f053573d347e9d3dc405eea03853c71"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9f053573d347e9d3dc405eea03853c71" class="m-doc-self">insert_after</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              <a href="#a79ddb6f0f44ab26a211efb2675e1fd22" class="m-doc">size_<wbr />type</a> count,
+              <a href="#a239629680ede6270802c0da1a34f78e7" class="m-doc">const_<wbr />reference</a> value)</span></span>
+            </h3>
+            <p>Inserts values at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The given value is inserted after this position.</td>
+                </tr>
+                <tr>
+                  <td>count</td>
+                  <td>Number of times to insert the given value.</td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td>Value to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the last inserted value.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaf8290d88966db0c624a050af69eb7bf"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+                template&lt;typename Iterator&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1iforward__list_1_1iterator.html" class="m-doc">iterator</a> bn::<wbr />iforward_list&lt;Type&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaf8290d88966db0c624a050af69eb7bf" class="m-doc-self">insert_after</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1iforward__list_1_1const__iterator.html" class="m-doc">const_<wbr />iterator</a> position,
+              const Iterator&amp; first,
+              const Iterator&amp; last)</span></span>
+            </h3>
+            <p>Inserts values at the specified position.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>The given values are inserted after this position.</td>
+                </tr>
+                <tr>
+                  <td>first</td>
+                  <td>Iterator to the first element to insert.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Iterator to the last element to insert.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Iterator pointing to the last inserted value.</td>
                 </tr>
               </tfoot>
             </table>

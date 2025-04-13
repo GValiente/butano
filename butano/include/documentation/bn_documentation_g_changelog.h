@@ -14,7 +14,7 @@
  *
  * @section changelog_19_2_0 19.2.0 (next release)
  *
- * * bn::ivector::insert overloads added.
+ * * bn::ivector::insert, bn::ilist::insert and bn::iforward_list::insert overloads added.
  * * @ref BN_CFG_SPRITES_USE_IWRAM added.
  * * Import tool now checks if all input audio files have been imported or not.
  * * Release sounds from aas queue fixed.

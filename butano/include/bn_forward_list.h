@@ -453,6 +453,49 @@ public:
     }
 
     /**
+     * @brief Inserts values at the specified position.
+     * @param position The given value is inserted after this position.
+     * @param count Number of times to insert the given value.
+     * @param value Value to insert.
+     * @return Iterator pointing to the last inserted value.
+     */
+    iterator insert_after(const_iterator position, size_type count, const_reference value)
+    {
+        BN_ASSERT(count >= 0 && size() + count <= max_size(),
+                  "Invalid count: ", count, " - ", size(), " - ", max_size());
+
+        iterator result;
+
+        for(size_type index = 0; index < count; ++index)
+        {
+            result = insert_after(position, value);
+        }
+
+        return result;
+    }
+
+    /**
+     * @brief Inserts values at the specified position.
+     * @param position The given values are inserted after this position.
+     * @param first Iterator to the first element to insert.
+     * @param last Iterator to the last element to insert.
+     * @return Iterator pointing to the last inserted value.
+     */
+    template<typename Iterator>
+    iterator insert_after(const_iterator position, const Iterator& first, const Iterator& last)
+    {
+        iterator result;
+
+        for(Iterator other_it = first; other_it != last; ++other_it)
+        {
+            result = insert_after(position, *other_it);
+            ++position;
+        }
+
+        return result;
+    }
+
+    /**
      * @brief Constructs and inserts a value at the specified position.
      * @param position The new value is inserted after this position.
      * @param args Parameters of the value to insert.

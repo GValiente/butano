@@ -87,7 +87,7 @@ namespace
             return AAS_CONFIG_MIX_32KHZ;
 
         default:
-            BN_ERROR("Invalid maxing rate: ", BN_CFG_AUDIO_MIXING_RATE);
+            BN_ERROR("Invalid mixing rate: ", BN_CFG_AUDIO_MIXING_RATE);
         }
     }();
 

@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_19_2_0 19.2.0 (next release)
+ * @section changelog_19_2_0 19.2.0
  *
  * * bn::ivector::insert, bn::ilist::insert and bn::iforward_list::insert_after overloads added.
  * * @ref BN_CFG_SPRITES_USE_IWRAM added.

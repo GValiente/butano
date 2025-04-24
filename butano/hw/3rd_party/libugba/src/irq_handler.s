@@ -2,6 +2,8 @@
 //
 // Copyright (c) 2020-2022 Antonio Niño Díaz
 
+#include "../../../../include/bn_config_hdma.h"
+
     .section .iwram, "ax", %progbits
     .code 32
 
@@ -33,7 +35,17 @@ IRQ_GlobalInterruptHandler:
     //   are both triggered at the same time when VBL starts, and VBL is much
     //   longer.
 
-    ldr     r3, =IRQ_VectorTable + 4
+    #if BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED != 0
+        ldr     r3, =IRQ_VectorTable + 32
+
+        mov     r2, #(1 << 8) // DMA0
+        tst     r1, r2
+        bne     interrupt_found
+
+        sub     r3, r3, #28
+    #else
+        ldr     r3, =IRQ_VectorTable + 4
+    #endif
 
     mov     r2, #(1 << 1) // HBLANK
     tst     r1, r2

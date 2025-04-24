@@ -6,8 +6,8 @@
 #include "bn_hdma.h"
 
 #include "bn_span.h"
-#include "bn_assert.h"
 #include "bn_display.h"
+#include "bn_config_hdma.h"
 #include "bn_hdma_manager.h"
 
 namespace bn::hdma
@@ -67,6 +67,20 @@ void high_priority_start(const uint16_t& source_ref, int elements, uint16_t& des
 void high_priority_stop()
 {
     hdma_manager::high_priority_stop();
+}
+
+interrupt_handler_type high_priority_interrupt_handler()
+{
+    return hdma_manager::high_priority_interrupt_handler();
+}
+
+void set_high_priority_interrupt_handler(interrupt_handler_type interrupt_handler)
+{
+    #if ! BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED
+        BN_BASIC_ASSERT(! interrupt_handler, "High priority HDMA IRQ is disabled.");
+    #endif
+
+    hdma_manager::set_high_priority_interrupt_handler(interrupt_handler);
 }
 
 }

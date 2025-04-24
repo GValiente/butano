@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Display &raquo; H-Blank direct memory access module | Butano Docs</title>
+  <title>bn_config_hdma.h file | Butano Docs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -47,59 +47,9 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="group__display.html">Display</a> &raquo;</span>
-          H-Blank direct memory access <span class="m-thin">module</span></h1>
-        <nav class="m-block m-default">
-          <h3>Contents</h3>
-          <ul>
-            <li>
-              Reference
-              <ul>
-                <li><a href="#files">Files</a></li>
-                <li><a href="#namespaces">Namespaces</a></li>
-                <li><a href="#define-members">Defines</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-<p>It allows to change how things are drawn in each screen horizontal line, since they transfer data to the GBA during each horizontal blanking (H-Blank) period.</p><p>For example, with HDMA you can change the transparent color every screen horizontal line, which is how games like Chrono Trigger fills their menus with a color gradient.</p><p>It differs from H-Blank effects in that multiple registers can be written by HDMA in each screen horizontal line, but since there&#x27;s only one DMA channel available, written registers must be consecutive.</p><p>It is also lower level than H-Blank effects, so you should try with H-Blank effects first.</p>
-        <section id="files">
-          <h2><a href="#files">Files</a></h2>
-          <dl class="m-doc">
-            <dt>file <a href="bn__config__hdma_8h.html" class="m-doc">bn_config_hdma.h</a></dt>
-            <dd></dd>
-            <dt>file <a href="bn__hdma_8h.html" class="m-doc">bn_hdma.h</a></dt>
-            <dd></dd>
-          </dl>
-        </section>
-        <section id="namespaces">
-          <h2><a href="#namespaces">Namespaces</a></h2>
-          <dl class="m-doc">
-            <dt>namespace <a href="namespacebn.html" class="m-doc">bn</a></dt>
-            <dd>Main Butano namespace.</dd>
-            <dt>namespace <a href="namespacebn_1_1hdma.html" class="m-doc">bn::hdma</a></dt>
-            <dd>H-Blank direct memory access related functions.</dd>
-          </dl>
-        </section>
-        <section id="define-members">
-          <h2><a href="#define-members">Defines</a></h2>
-          <dl class="m-doc">
-            <dt>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga583f458ddd91dff99e74d8653f00c961" class="m-doc">BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED</a></span>
-            </dt>
-            <dd></dd>
-          </dl>
-        </section>
-        <section>
-          <h2>Define documentation</h2>
-          <section class="m-doc-details" id="ga583f458ddd91dff99e74d8653f00c961"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper">#define <a href="#ga583f458ddd91dff99e74d8653f00c961" class="m-doc-self">BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED</a></span>
-              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__config__hdma_8h.html">&lt;bn_config_hdma.h&gt;</a></div>
-            </h3>
-<p>Specifies if the high priority HDMA IRQ is enabled or not.</p>
-          </div></section>
-        </section>
+          bn_config_hdma.h <span class="m-thin">file</span>
+        </h1>
+<p>H-Blank direct memory access configuration header file.</p>
       </div>
     </div>
   </div>

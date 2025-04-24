@@ -12,6 +12,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_19_3_0 19.3.0 (next release)
+ *
+ * bn::hdma::high_priority_interrupt_handler, bn::hdma::set_high_priority_interrupt_handler and
+ * @ref BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED added.
+ *
+ *
  * @section changelog_19_2_0 19.2.0
  *
  * * bn::ivector::insert, bn::ilist::insert and bn::iforward_list::insert_after overloads added.

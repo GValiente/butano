@@ -57,11 +57,21 @@
             <li>
               Reference
               <ul>
+                <li><a href="#typedef-members">Typedefs</a></li>
                 <li><a href="#func-members">Functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt id="a2dc691a91e4fc8b47dbe0cc5966ee608">
+              using <a href="#a2dc691a91e4fc8b47dbe0cc5966ee608" class="m-doc-self">interrupt_handler_type</a> = void(*)()
+            </dt>
+            <dd>Interrupt handler type alias.</dd>
+          </dl>
+        </section>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
@@ -91,6 +101,14 @@
               <span class="m-doc-wrap-bumper">void <a href="#ad02fcb488caae5edd2633e5dbc7e72d8" class="m-doc">high_priority_stop</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Stops copying elements each frame with high priority.</dd>
+            <dt id="a64f7ad53d6f3e7b526c80b20282981c1">
+              <span class="m-doc-wrap-bumper">auto <a href="#a64f7ad53d6f3e7b526c80b20282981c1" class="m-doc-self">high_priority_interrupt_handler</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#a2dc691a91e4fc8b47dbe0cc5966ee608" class="m-doc">interrupt_<wbr />handler_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the handler of the high priority HDMA interrupt.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a4bb45b70af3dd43b80247df403cf09bf" class="m-doc">set_high_priority_interrupt_handler</a>(</span><span class="m-doc-wrap"><a href="#a2dc691a91e4fc8b47dbe0cc5966ee608" class="m-doc">interrupt_<wbr />handler_<wbr />type</a> interrupt_handler)</span>
+            </dt>
+            <dd>Sets the handler of the high priority HDMA interrupt.</dd>
           </dl>
         </section>
         <section>
@@ -154,6 +172,13 @@
             </h3>
             <p>Stops copying elements each frame with high priority.</p>
 <p>High priority HDMA can cause issues with audio, so avoid it unless necessary.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4bb45b70af3dd43b80247df403cf09bf"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />hdma::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4bb45b70af3dd43b80247df403cf09bf" class="m-doc-self">set_high_priority_interrupt_handler</a>(</span><span class="m-doc-wrap"><a href="#a2dc691a91e4fc8b47dbe0cc5966ee608" class="m-doc">interrupt_<wbr />handler_<wbr />type</a> interrupt_handler)</span></span>
+            </h3>
+            <p>Sets the handler of the high priority HDMA interrupt.</p>
+<p><a href="group__hdma.html#ga583f458ddd91dff99e74d8653f00c961" class="m-doc">BN_<wbr />CFG_<wbr />HDMA_<wbr />HIGH_<wbr />PRIORITY_<wbr />IRQ_<wbr />ENABLED</a> must be active for the handler to be called.</p>
           </div></section>
         </section>
       </div>

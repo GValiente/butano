@@ -8,6 +8,7 @@
 #include <new>
 #include "bn_display.h"
 #include "../hw/include/bn_hw_dma.h"
+#include "../hw/include/bn_hw_irq.h"
 #include "../hw/include/bn_hw_audio.h"
 #include "../hw/include/bn_hw_memory.h"
 
@@ -67,7 +68,6 @@ namespace
             _states[0].elements = 0;
             _states[1].elements = 0;
             _updated = false;
-            disable();
         }
 
         void update()
@@ -89,7 +89,7 @@ namespace
             }
         }
 
-        bool commit(bool use_dma)
+        bool commit(bool use_dma, bool raise_irq)
         {
             const state& current_state = _current_state();
 
@@ -108,7 +108,15 @@ namespace
                     hw::memory::copy_half_words(initial_copy_source_ptr, elements, destination_ptr);
                 }
 
-                hw::dma::start_hdma(_channel, source_ptr, elements, destination_ptr);
+                if(raise_irq)
+                {
+                    hw::dma::start_hdma_irq(_channel, source_ptr, elements, destination_ptr);
+                }
+                else
+                {
+                    hw::dma::start_hdma(_channel, source_ptr, elements, destination_ptr);
+                }
+
                 return true;
             }
 
@@ -144,6 +152,9 @@ namespace
     public:
         entry low_priority_entry = entry(hw::dma::low_priority_channel());
         entry high_priority_entry = entry(hw::dma::high_priority_channel());
+        hdma::interrupt_handler_type current_high_priority_interrupt_handler = nullptr;
+        hdma::interrupt_handler_type new_high_priority_interrupt_handler = nullptr;
+        bool high_priority_irq_enabled = false;
     };
 
     BN_DATA_EWRAM_BSS static_data data;
@@ -156,19 +167,31 @@ void init()
 
 void enable()
 {
-    commit(false);
+    commit_interrupt_handler();
+    commit_entries(false);
 }
 
 void force_stop()
 {
     data.low_priority_entry.force_stop();
     data.high_priority_entry.force_stop();
+
+    disable();
+
+    data.current_high_priority_interrupt_handler = nullptr;
+    data.new_high_priority_interrupt_handler = nullptr;
 }
 
 void disable()
 {
     data.low_priority_entry.disable();
     data.high_priority_entry.disable();
+
+    if(data.high_priority_irq_enabled)
+    {
+        data.high_priority_irq_enabled = false;
+        hw::irq::disable(hw::irq::id::DMA0);
+    }
 }
 
 bool low_priority_running()
@@ -205,16 +228,56 @@ void high_priority_stop()
     data.high_priority_entry.stop();
 }
 
+hdma::interrupt_handler_type high_priority_interrupt_handler()
+{
+    return data.new_high_priority_interrupt_handler;
+}
+
+void set_high_priority_interrupt_handler(hdma::interrupt_handler_type interrupt_handler)
+{
+    data.new_high_priority_interrupt_handler = interrupt_handler;
+}
+
 void update()
 {
     data.high_priority_entry.update();
     data.low_priority_entry.update();
 }
 
-bool commit(bool use_dma)
+void commit_interrupt_handler()
 {
-    bool running = data.high_priority_entry.commit(use_dma);
-    running |= data.low_priority_entry.commit(use_dma);
+    hdma::interrupt_handler_type new_high_priority_interrupt_handler = data.new_high_priority_interrupt_handler;
+
+    if(data.current_high_priority_interrupt_handler != new_high_priority_interrupt_handler)
+    {
+        data.current_high_priority_interrupt_handler = new_high_priority_interrupt_handler;
+        bn::hw::irq::set_isr(bn::hw::irq::id::DMA0, new_high_priority_interrupt_handler);
+    }
+}
+
+bool commit_entries(bool use_dma)
+{
+    hdma::interrupt_handler_type high_priority_interrupt_handler = data.current_high_priority_interrupt_handler;
+    bool running = data.high_priority_entry.commit(use_dma, high_priority_interrupt_handler);
+
+    if(running && high_priority_interrupt_handler)
+    {
+        if(! data.high_priority_irq_enabled)
+        {
+            data.high_priority_irq_enabled = true;
+            hw::irq::enable(hw::irq::id::DMA0);
+        }
+    }
+    else
+    {
+        if(data.high_priority_irq_enabled)
+        {
+            data.high_priority_irq_enabled = false;
+            hw::irq::disable(hw::irq::id::DMA0);
+        }
+    }
+
+    running |= data.low_priority_entry.commit(use_dma, false);
     return running;
 }
 

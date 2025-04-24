@@ -275,7 +275,9 @@ namespace
         hdma_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
-        bool hdma_running = hdma_manager::commit(use_dma);
+        hdma_manager::commit_interrupt_handler();
+
+        bool hdma_running = hdma_manager::commit_entries(use_dma);
 
         BN_PROFILER_ENGINE_DETAILED_START("eng_hblank_fx_commit");
         bool hblank_effects_running = hblank_effects_manager::commit();
@@ -335,7 +337,7 @@ namespace
         }
         else
         {
-            hdma_manager::commit(false);
+            hdma_manager::commit_entries(false);
             audio_manager::vblank_commit();
 
             ++data.missed_frames;

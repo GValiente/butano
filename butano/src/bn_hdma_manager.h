@@ -6,7 +6,7 @@
 #ifndef BN_HDMA_MANAGER_H
 #define BN_HDMA_MANAGER_H
 
-#include "bn_common.h"
+#include "bn_hdma.h"
 
 namespace bn::hdma_manager
 {
@@ -30,9 +30,15 @@ namespace bn::hdma_manager
 
     void high_priority_stop();
 
+    [[nodiscard]] hdma::interrupt_handler_type high_priority_interrupt_handler();
+
+    void set_high_priority_interrupt_handler(hdma::interrupt_handler_type interrupt_handler);
+
     void update();
 
-    bool commit(bool use_dma);
+    void commit_interrupt_handler();
+
+    bool commit_entries(bool use_dma);
 }
 
 #endif

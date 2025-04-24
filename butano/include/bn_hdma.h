@@ -22,6 +22,8 @@
  */
 namespace bn::hdma
 {
+    using interrupt_handler_type = void(*)(); //!< Interrupt handler type alias.
+
     /**
      * @brief Indicates if HDMA is active or not.
      */
@@ -91,6 +93,18 @@ namespace bn::hdma
      * High priority HDMA can cause issues with audio, so avoid it unless necessary.
      */
     void high_priority_stop();
+
+    /**
+     * @brief Returns the handler of the high priority HDMA interrupt.
+     */
+    [[nodiscard]] interrupt_handler_type high_priority_interrupt_handler();
+
+    /**
+     * @brief Sets the handler of the high priority HDMA interrupt.
+     *
+     * @ref BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED must be active for the handler to be called.
+     */
+    void set_high_priority_interrupt_handler(interrupt_handler_type interrupt_handler);
 }
 
 #endif

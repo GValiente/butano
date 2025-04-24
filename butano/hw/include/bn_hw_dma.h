@@ -45,6 +45,14 @@ inline void start_hdma(int channel, const uint16_t* source, int half_words, uint
     REG_DMA[channel].cnt = unsigned(half_words) | DMA_HDMA;
 }
 
+inline void start_hdma_irq(int channel, const uint16_t* source, int half_words, uint16_t* destination)
+{
+    REG_DMA[channel].cnt = 0;
+    REG_DMA[channel].src = source;
+    REG_DMA[channel].dst = destination;
+    REG_DMA[channel].cnt = unsigned(half_words) | DMA_HDMA | DMA_IRQ;
+}
+
 inline void stop_hdma(int channel)
 {
     REG_DMA[channel].cnt = 0;

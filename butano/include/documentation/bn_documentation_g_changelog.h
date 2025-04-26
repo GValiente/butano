@@ -14,8 +14,9 @@
  *
  * @section changelog_19_3_0 19.3.0 (next release)
  *
- * bn::hdma::high_priority_interrupt_handler, bn::hdma::set_high_priority_interrupt_handler and
- * @ref BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED added.
+ * * bn::hdma::high_priority_interrupt_handler, bn::hdma::set_high_priority_interrupt_handler and
+ *   @ref BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED added.
+ * * GCC 15 build fixed (thanks asie!).
  *
  *
  * @section changelog_19_2_0 19.2.0
@@ -255,7 +256,7 @@
  * * Slow EWRAM test added.
  * * IWRAM vs EWRAM stack tests added to the `profiler` coroutine test.
  * * Slow game pak test improved.
- * * GCC14 false build warnings in Butano Fighter fixed.
+ * * GCC 14 false build warnings in Butano Fighter fixed.
  *
  *
  * @section changelog_17_5_0 17.5.0
@@ -1282,7 +1283,7 @@
  * * 64bit integer division by 0 assert added.
  * * Big maps maximum valid position fixed.
  * * Compressed tiles warning fixed.
- * * GCC11 warning fixed.
+ * * GCC 11 build warning fixed.
  * * Some 8x8 sprite text characters fixed.
  * * @ref qt_creator added.
  * * More questions added to @ref faq page.

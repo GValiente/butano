@@ -551,20 +551,11 @@ void huff_decomp_test()
     bn::unique_ptr<bn::array<uint8_t, 64 * 1024>> buffer_ptr(new bn::array<uint8_t, 64 * 1024>());
     uint8_t* buffer = buffer_ptr->data();
 
-    BN_PROFILER_START("huff_regular");
+    BN_PROFILER_START("huff");
 
     bn::hw::decompress::huff(tiles, buffer);
 
     BN_PROFILER_STOP();
-
-    if(check_bios)
-    {
-        BN_PROFILER_START("huff_bios");
-
-        HuffUnComp(tiles, buffer);
-
-        BN_PROFILER_STOP();
-    }
 }
 
 }

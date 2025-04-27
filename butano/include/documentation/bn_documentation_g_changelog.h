@@ -17,6 +17,7 @@
  * * bn::hdma::high_priority_interrupt_handler, bn::hdma::set_high_priority_interrupt_handler and
  *   @ref BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED added.
  * * GCC 15 build fixed (thanks asie!).
+ * * Huffman decompression is implemented by the BIOS to avoid relying on decompiled code.
  *
  *
  * @section changelog_19_2_0 19.2.0

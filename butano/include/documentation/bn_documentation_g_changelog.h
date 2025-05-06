@@ -18,6 +18,7 @@
  *   @ref BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED added.
  * * GCC 15 build fixed (thanks asie!).
  * * Huffman decompression is implemented by the BIOS to avoid relying on decompiled code.
+ * * bn::time::set_minute and bn::time::set_second documentation fixed.
  *
  *
  * @section changelog_19_2_0 19.2.0

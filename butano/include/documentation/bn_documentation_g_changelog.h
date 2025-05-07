@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_19_3_0 19.3.0 (next release)
+ * @section changelog_19_3_0 19.3.0
  *
  * * bn::hdma::high_priority_interrupt_handler, bn::hdma::set_high_priority_interrupt_handler and
  *   @ref BN_CFG_HDMA_HIGH_PRIORITY_IRQ_ENABLED added.

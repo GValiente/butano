@@ -25,13 +25,16 @@
 #ifndef MM_TYPES_H
 #define MM_TYPES_H
 
-typedef unsigned int	mm_word;	// 32 bits
-typedef unsigned short	mm_hword;	// 16 bits
-typedef unsigned char	mm_byte;	// 8 bits
+#include <stdint.h>
+#include <stdbool.h>
 
-typedef unsigned short	mm_sfxhand;	// sound effect handle
+typedef uint32_t		mm_word;	// 32 bits
+typedef uint16_t		mm_hword;	// 16 bits
+typedef  uint8_t		mm_byte;	// 8 bits
 
-typedef unsigned char	mm_bool;	// boolean value
+typedef uint16_t		mm_sfxhand;	// sound effect handle
+
+typedef bool			mm_bool;	// boolean value
 
 typedef void*			mm_addr;	// pointer
 typedef void*			mm_reg;		// hardware register
@@ -97,7 +100,6 @@ typedef enum
 } mm_reverbch;
 //-----------------------------------------------------------------------------
 
-
 typedef struct mmreverbcfg
 {
 	mm_word				flags;
@@ -130,17 +132,6 @@ typedef enum
 	MM_MIX_31KHZ
 //-----------------------------------------------------------------------------
 } mm_mixmode;
-//-----------------------------------------------------------------------------
-
-typedef enum
-{
-	MM_TIMER0,	// hardware timer 0
-	MM_TIMER1,	// hardware timer 1
-	MM_TIMER2,	// hardware timer 2
-	MM_TIMER3	// hardware timer 3
-
-//-----------------------------------------------------------------------------
-} mm_stream_timer;
 //-----------------------------------------------------------------------------
 
 typedef struct t_mmdssample
@@ -210,7 +201,7 @@ typedef struct t_mmdssystem
 	
 // pass pointer to memory buffer
 // (mm_word mem_bank[MSL_BANKSIZE])
-	mm_word*	mem_bank;
+	mm_addr		mem_bank;
 	
 // fifo channel to use (usually 7)
 	mm_word		fifo_channel;
@@ -218,6 +209,12 @@ typedef struct t_mmdssystem
 //-----------------------------------------------------------------------------	
 } mm_ds_system;
 //-----------------------------------------------------------------------------
+
+// Compatibility
+#define MM_TIMER0 0
+#define MM_TIMER1 0
+#define MM_TIMER2 0
+#define MM_TIMER3 0
 
 typedef struct t_mmstream
 {	
@@ -232,13 +229,22 @@ typedef struct t_mmstream
 
 // stream format (mm_stream_formats)
 	mm_word format;
-	
-// hardware timer selection (mm_stream_timers)
-	mm_word timer;
 
-// if set, user must call mmStreamUpdate manually
-	mm_bool manual;
-	
+// thread stack size (0 = default)
+union {
+	mm_word thread_stack_size;
+	mm_word timer; // for compatibility
+};
+
+// if positive, no thread is created and user must call mmStreamUpdate manually
+// if zero or negative, maxmod creates a thread that calls it automatically
+//   if zero: thread priority is default
+//   if negative: thread priority is user-specified (absolute value)
+union {
+	mm_bool manual; // for compatibility
+	int8_t minus_thread_prio;
+};
+
 //-----------------------------------------------------------------------------
 } mm_stream;
 //-----------------------------------------------------------------------------

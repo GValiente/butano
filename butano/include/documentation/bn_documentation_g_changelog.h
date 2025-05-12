@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_19_4_0 19.4.0 (next release)
+ *
+ * maxmod updated to 2.1.0.
+ *
+ *
  * @section changelog_19_3_0 19.3.0
  *
  * * bn::hdma::high_priority_interrupt_handler, bn::hdma::set_high_priority_interrupt_handler and

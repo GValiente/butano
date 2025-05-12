@@ -41,14 +41,14 @@ extern "C" {
 //----------------------------------------------------------------
 
 /*****************************************************************
- * mmInstall( channel )
+ * mmInstall( thread_prio )
  *
  * Install Maxmod.
  *
- * channel : IPC/FIFO channel to use, usually 7.
+ * thread_prio : Thread priority to use for Maxmod's server thread.
  *****************************************************************/
  
-void mmInstall( int fifo_channel );
+void mmInstall( int thread_prio );
 
 /*****************************************************************
  * mmLockChannels( mm_word bitmask )
@@ -71,6 +71,16 @@ void mmLockChannels( mm_word bitmask );
  *****************************************************************/
  
 void mmUnlockChannels( mm_word bitmask );
+
+/*****************************************************************
+ * mmSetEventHandler( mm_callback handler )
+ *
+ * Setup handler to receive playback events.
+ *
+ * handler : Pointer to your function.
+ *****************************************************************/
+
+void mmSetEventHandler( mm_callback handler );
 
 /*****************************************************************
  * mmIsInitialize()
@@ -200,6 +210,27 @@ void mmSetModuleVolume( mm_word volume );
 void mmSetJingleVolume( mm_word volume );
 
 /*****************************************************************
+ * mmSetModuleTempo( mm_word tempo )
+ *
+ * Set tempo of playback.
+ *
+ * tempo : Fixed point (Q10) value representing tempo.
+ *         Range = 0x200 -> 0x800 = 0.5 -> 2.0
+ *****************************************************************/
+
+void mmSetModuleTempo( mm_word tempo );
+
+/*****************************************************************
+ * mmSetModulePitch( mm_word pitch )
+ *
+ * Set pitch of playback.
+ *
+ * pitch : Range = 0x200 -> 0x800 = 0.5 -> 2.0
+ *****************************************************************/
+ 
+void mmSetModulePitch( mm_word pitch );
+
+/*****************************************************************
  * mmPlayModule( mm_word address, mm_word mode, mm_word layer )
  *
  * Play direct MAS file
@@ -230,25 +261,25 @@ void mmPlayModule( mm_word address, mm_word mode, mm_word layer );
 mm_sfxhand mmEffect( mm_word sample_ID );
 
 /*****************************************************************
- * mmEffectEx( mm_sound_effect* sound )
+ * mmEffectEx( const mm_sound_effect* sound )
  *
  * Play a sound effect with the parameters supplied.
  *
  * sound : Sound effect attributes.
  *****************************************************************/
 
-mm_sfxhand mmEffectEx( mm_sound_effect* sound );
+mm_sfxhand mmEffectEx( const mm_sound_effect* sound );
 
 /*****************************************************************
- * mmEffectVolume( mm_sfxhand handle, mm_word volume )
+ * mmEffectVolume( mm_sfxhand handle, mm_byte volume )
  *
  * Set the volume of a sound effect.
  *
  * handle : Sound effect handle.
- * volume : 0->65535
+ * volume : 0->255
  *****************************************************************/
  
-void mmEffectVolume( mm_sfxhand handle, mm_word volume );
+void mmEffectVolume( mm_sfxhand handle, mm_byte volume );
 
 /*****************************************************************
  * mmEffectPanning( mm_sfxhand handle, mm_word panning )
@@ -319,132 +350,7 @@ void mmSetEffectsVolume( mm_word volume );
  * Stop all sound effects
  *****************************************************************/
  
-void mmEffectCancelAll();
-
-
-
-/*****************************************************************
- *
- * Streaming
- *
- *****************************************************************/
-
-
-/*****************************************************************
- * mmStreamOpen( mm_stream* stream, mm_addr wavebuffer, mm_addr workbuffer )
- *
- * Open audio stream.
- *
- * stream : Configuration struct
- * wavebuffer : wave memory, must be aligned
- * workbuffer : work memory, must be aligned
- *****************************************************************/
-
-void mmStreamOpen( mm_stream* stream, mm_addr wavebuffer, mm_addr workbuffer );
-
-/*****************************************************************
- * mmStreamUpdate()
- *
- * Fills the stream with wave data.
- * This only needs to be called in 'manual' mode. It
- * is called automatically in 'auto' mode.
- *****************************************************************/
-
-void mmStreamUpdate( void );
-
-/*****************************************************************
- * mmStreamClose()
- *
- * Close audio stream.
- *****************************************************************/
-
-void mmStreamClose( void );
-
-/*****************************************************************
- * mmStreamGetPosition()
- *
- * Get number of samples elapsed since the stream was opened.
- * The 32-bit value will wrap every 36 hours or so (at 32khz)
- *****************************************************************/
- 
-mm_word mmStreamGetPosition();
-
-
-
-/*****************************************************************
- *
- * Reverb
- *
- *****************************************************************/
- 
- 
-
-/*****************************************************************
- * mmReverbEnable()
- *
- * Enable reverb system. (use before configuring!)
- *****************************************************************/
- 
-void mmReverbEnable( void );
- 
-/*****************************************************************
- * mmReverbConfigure( mm_reverb_cfg* config )
- *
- * Configure reverb parameters.
- * config : Configuration data.
- *****************************************************************/
- 
-void mmReverbConfigure( mm_reverb_cfg* config );
-
-/*****************************************************************
- * mmReverbStart( mm_reverbch channels )
- *
- * Start reverb output.
- *****************************************************************/
-
-void mmReverbStart( mm_reverbch channels );
-
-/*****************************************************************
- * mmReverbStop( mm_reverch channels )
- *
- * Stop reverb output.
- *****************************************************************/
-
-void mmReverbStop( mm_reverbch channels );
-
-/*****************************************************************
- * mmReverbBufferSize( mm_word bit_depth, mm_word sampling_rate,
- *                     mm_word delay )
- *
- * Calculate reverb buffer size based on bit depth, delay
- * and sampling rate.
- *
- * bit_depth : Pass 8 or 16 for 8-bit/16-bit
- * sampling_rate :
- * delay : In milliseconds
- *
- * Returns size in WORDS.
- *****************************************************************/
-
-static inline mm_word mmReverbBufferSize( mm_word bit_depth, mm_word sampling_rate, mm_word delay )
-{
-	if( bit_depth == 16 )
-	{
-		return ((((sampling_rate * delay * 2) / 1000) + 3) & (~3)) / 4;
-	}
-	else
-	{
-		return ((((sampling_rate * delay) / 1000) + 3) & (~3)) / 4;
-	}
-}
-
-/*****************************************************************
- * mmReverbDisable()
- *
- * Disable reverb system.
- *****************************************************************/
-
-void mmReverbDisable( void );
+void mmEffectCancelAll( void );
 
 
 

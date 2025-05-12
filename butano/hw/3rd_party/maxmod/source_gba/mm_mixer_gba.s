@@ -1228,7 +1228,7 @@ mmMixerInit:
 	str	r1, [r2,#0]
 	ldr	r1, [r0,#MM_GBA_SYSTEM_WAVEMEM]
 	str	r1, [r2,#8]
-	ldr	r1, [r0,#MM_GBA_SYSTEM_MODE]
+	ldrb	r1, [r0,#MM_GBA_SYSTEM_MODE]
 	lsl	r1, #1
 	adr	r3, mp_mixing_lengths
 	ldrh	r3, [r3,r1]

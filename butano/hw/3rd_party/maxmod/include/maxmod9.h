@@ -41,17 +41,17 @@ extern "C" {
 //----------------------------------------------------------------
 
 /*****************************************************************
- * mmInitDefault( char* soundbank_file )
+ * mmInitDefault( const char* soundbank_file )
  *
  * Initialize Maxmod using default settings.
  *
  * soundbank_file : Filename of the soundbank to use.
  *****************************************************************/
  
-void mmInitDefault( char* soundbank_file );
+void mmInitDefault( const char* soundbank_file );
 
 /*****************************************************************
- * mmInitDefaultMem( mm_addr soundbank )
+ * mmInitDefaultMem( const void* soundbank )
  *
  * Initialize Maxmod using default settings.
  * Use this when you have the entire soundbank loaded into memory.
@@ -59,17 +59,17 @@ void mmInitDefault( char* soundbank_file );
  * soundbank : Address of soundbank data.
  *****************************************************************/
  
-void mmInitDefaultMem( mm_addr soundbank );
+void mmInitDefaultMem( const void* soundbank );
 
 /*****************************************************************
- * mmInit( mm_ds_system* system )
+ * mmInit( const mm_ds_system* system )
  *
  * Initialize Maxmod
  *
  * system : Configuration info.
  *****************************************************************/
  
-void mmInit( mm_ds_system* system );
+void mmInit( const mm_ds_system* system );
 
 /*****************************************************************
  * mmSelectMode( mm_mode_enum mode )
@@ -158,16 +158,16 @@ void mmUnlockChannels( mm_word bitmask );
 void mmSetEventHandler( mm_callback handler );
 
 /*****************************************************************
- * mmSoundBankInMemory( mm_addr address )
- * mmSoundBankInFiles( char* filename )
+ * mmSoundBankInMemory( const void* address )
+ * mmSoundBankInFiles( const char* filename )
  * mmSetCustomSoundBankHandler( mm_callback p_loader )
  *
  * Setup soundbank interface.
  * This is automatically done by mmInitDefault/mmInitDefaultMem.
  *****************************************************************/
 
-void mmSoundBankInMemory( mm_addr address );
-void mmSoundBankInFiles( char* filename );
+void mmSoundBankInMemory( const void* address );
+void mmSoundBankInFiles( const char* filename );
 void mmSetCustomSoundBankHandler( mm_callback p_loader );
 
 
@@ -304,7 +304,7 @@ mm_bool mmActive( void );
 mm_sfxhand mmEffect( mm_word sample_ID );
 
 /*****************************************************************
- * mmEffectEx( mm_sound_effect* sound )
+ * mmEffectEx( const mm_sound_effect* sound )
  *
  * Play a sound effect with rate/volume/panning specified.
  * Remember to load the effect via mmLoadEffect first.
@@ -312,7 +312,7 @@ mm_sfxhand mmEffect( mm_word sample_ID );
  * sound : sound effect info
  *****************************************************************/
  
-mm_sfxhand mmEffectEx( mm_sound_effect* sound );
+mm_sfxhand mmEffectEx( const mm_sound_effect* sound );
 
 /*****************************************************************
  * mmEffectVolume( mm_sfxhand handle, mm_byte volume )
@@ -323,7 +323,7 @@ mm_sfxhand mmEffectEx( mm_sound_effect* sound );
  * volume : 0..255 = silent..normal
  *****************************************************************/
 
-void mmEffectVolume( mm_sfxhand handle, mm_word volume );
+void mmEffectVolume( mm_sfxhand handle, mm_byte volume );
 
 /*****************************************************************
  * mmEffectPanning( mm_sfxhand handle, mm_byte panning )
@@ -380,17 +380,6 @@ void mmEffectCancel( mm_sfxhand handle );
 void mmEffectRelease( mm_sfxhand handle );
 
 /*****************************************************************
- * mmEffectExt( mm_sound_effect* sound, mm_sample* sample )
- *
- * Play external sound.
- *
- * sound : Pointer to sound effect info
- * sample : Pointer to external sample
- *****************************************************************/
-
-mm_sfxhand mmEffectExt( mm_sound_effect* sound, mm_ds_sample* sample );
-
-/*****************************************************************
  * mmSetEffectsVolume( mm_word volume )
  *
  * Set master volume scale for effect playback.
@@ -406,7 +395,7 @@ void mmSetEffectsVolume( mm_word volume );
  * Stop all sound effects
  *****************************************************************/
  
-void mmEffectCancelAll();
+void mmEffectCancelAll( void );
 
 
 
@@ -419,14 +408,14 @@ void mmEffectCancelAll();
 
 
 /*****************************************************************
- * mmStreamOpen( mm_stream_info* info )
+ * mmStreamOpen( const mm_stream* info )
  *
  * Open audio stream.
  *
  * stream : Configuration struct
  *****************************************************************/
 
-void mmStreamOpen( mm_stream* stream );
+void mmStreamOpen( const mm_stream* stream );
 
 /*****************************************************************
  * mmStreamUpdate()
@@ -452,7 +441,7 @@ void mmStreamClose( void );
  * The 32-bit value will wrap every 36 hours or so (at 32khz)
  *****************************************************************/
  
-mm_word mmStreamGetPosition();
+mm_word mmStreamGetPosition( void );
 
 
 
@@ -473,13 +462,13 @@ mm_word mmStreamGetPosition();
 void mmReverbEnable( void );
  
 /*****************************************************************
- * mmReverbConfigure( mm_reverb_cfg* config )
+ * mmReverbConfigure( const mm_reverb_cfg* config )
  *
  * Configure reverb parameters.
  * config : Configuration data.
  *****************************************************************/
  
-void mmReverbConfigure( mm_reverb_cfg* config );
+void mmReverbConfigure( const mm_reverb_cfg* config );
 
 /*****************************************************************
  * mmReverbStart( mm_reverbch channels )

@@ -55,12 +55,12 @@ extern "C" {
 void mmInitDefault( mm_addr soundbank, mm_word number_of_channels );
 
 /****************************************************************************
- * mmInit( mm_gba_system* setup )
+ * mmInit( const mm_gba_system* setup )
  *
  * Initialize system. Call once at startup.
  ****************************************************************************/
  
-void mmInit( mm_gba_system* setup );
+void mmInit( const mm_gba_system* setup );
 
 /****************************************************************************
  * mmVBlank()
@@ -277,14 +277,14 @@ void mmPlayModule( mm_word address, mm_word mode, mm_word layer );
 mm_sfxhand mmEffect( mm_word sample_ID );
 
 /****************************************************************************
- * mmEffectEx( mm_sound_effect* sound )
+ * mmEffectEx( const mm_sound_effect* sound )
  *
  * Play a sound effect with all parameters.
  *
  * sound : Sound effect attributes.
  ****************************************************************************/
 
-mm_sfxhand mmEffectEx( mm_sound_effect* sound );
+mm_sfxhand mmEffectEx( const mm_sound_effect* sound );
 
 /****************************************************************************
  * mmEffectVolume( mm_sfxhand handle, mm_word volume )

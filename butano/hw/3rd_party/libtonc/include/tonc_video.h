@@ -141,9 +141,9 @@ u16 *vid_flip(void);
 
 
 void clr_blend(const COLOR *srca, const COLOR *srcb, COLOR *dst, 
-		u32 nclrs, u32 alpha);
+		uint nclrs, u32 alpha);
 void clr_fade(const COLOR *src, COLOR clr, COLOR *dst, 
-		u32 nclrs, u32 alpha);
+		uint nclrs, u32 alpha);
 
 void clr_grayscale(COLOR *dst, const COLOR *src, uint nclrs);
 

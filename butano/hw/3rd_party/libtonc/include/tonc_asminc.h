@@ -28,8 +28,8 @@
 //\{
 
 #define CSEC_TEXT	.text								//!< Standard code section directive.
-#define CSEC_EWRAM	.ewram	//!< EWRAM code section directive.
-#define CSEC_IWRAM	.iwram	//!< IWRAM code section directive.
+#define CSEC_EWRAM	.section .ewram , "ax", %progbits	//!< EWRAM code section directive.
+#define CSEC_IWRAM	.section .iwram, "ax", %progbits	//!< IWRAM code section directive.
 
 #define DSEC_DATA	.data						//<! Standard data section directive.
 #define DSEC_ROM	.section .rodata			//!< ROM data section directive.
@@ -38,6 +38,22 @@
 
 #define ARM_FUNC	.arm						//!< Indicates an ARM function.
 #define THUMB_FUNC	.thumb_func					//!< Indicates a Thumb function.
+
+//# NOTE: because these use commas, I can't pass them through CPP macros.
+//# Yes, this is stupid, but do you have a better idea?
+
+#undef CSEC_EWRAM
+	.macro CSEC_EWRAM
+	.section .ewram , "ax", %progbits
+	.endm
+
+#undef CSEC_IWRAM
+	.macro CSEC_IWRAM
+	.section .iwram , "ax", %progbits
+	.endm
+
+//\}
+
 
 //! \name Function definition macros.
 //\{
@@ -48,7 +64,7 @@
 	\param _section	Section to place function in (like .text)
 */
 #define BEGIN_FUNC(_name, _section, _iset)	\
-	.section _section._name , "ax", %progbits;				\
+	_section;								\
 	_iset;									\
 	.align 2;								\
 	.global _name;							\

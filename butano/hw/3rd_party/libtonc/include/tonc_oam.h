@@ -43,7 +43,7 @@ INLINE int obj_get_width(const OBJ_ATTR *obj);
 INLINE int obj_get_height(const OBJ_ATTR *obj);
 
 void obj_copy(OBJ_ATTR *dst, const OBJ_ATTR *src, uint count);
-void obj_hide_multi(OBJ_ATTR *obj, u32 count);
+void obj_hide_multi(OBJ_ATTR *obj, uint count);
 void obj_unhide_multi(OBJ_ATTR *obj, u16 mode, uint count);
 
 // --- Obj affine only ---
@@ -149,7 +149,7 @@ INLINE void obj_aff_identity(OBJ_AFFINE *oaff)
 INLINE void obj_aff_scale(OBJ_AFFINE *oaff, FIXED sx, FIXED sy)
 {
 	oaff->pa= sx;	oaff->pb= 0;
-        oaff->pc= 0;	oaff->pd= sy;
+	oaff->pc= 0;	oaff->pd= sy;
 }
 
 INLINE void obj_aff_shearx(OBJ_AFFINE *oaff, FIXED hx)

@@ -38,7 +38,7 @@ public:
     {
         auto handle = reinterpret_cast<void*>(target_id);
         int hw_id = bgs_manager::hw_id(handle);
-        int* result = &hw::bgs::affine_mat_register(hw_id)->dx;
+        int32_t* result = &hw::bgs::affine_mat_register(hw_id)->dx;
         return reinterpret_cast<uint16_t*>(result);
     }
 
@@ -90,7 +90,7 @@ public:
     {
         auto handle = reinterpret_cast<void*>(target_id);
         int hw_id = bgs_manager::hw_id(handle);
-        int* result = &hw::bgs::affine_mat_register(hw_id)->dx;
+        int32_t* result = &hw::bgs::affine_mat_register(hw_id)->dx;
         return reinterpret_cast<uint16_t*>(result);
     }
 

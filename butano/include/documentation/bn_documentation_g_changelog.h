@@ -14,7 +14,8 @@
  *
  * @section changelog_19_4_0 19.4.0 (next release)
  *
- * maxmod updated to 2.1.0.
+ * * <a href="https://www.coranac.com/man/tonclib">Tonclib</a> updated to 1.4.5.
+ * * <a href="https://maxmod.org">Maxmod</a> updated to 2.1.0.
  *
  *
  * @section changelog_19_3_0 19.3.0
@@ -52,8 +53,9 @@
  * * @ref BN_CFG_AUDIO_STEREO and @ref BN_CFG_AUDIO_DYNAMIC_MIXING added.
  * * `null` DMG audio backend added. DMG audio backends can be specified with the `DMGAUDIOBACKEND` makefile variable.
  * * EWRAM overclocking removed, as some GBA SPs crash after a few frames when enabled.
- * * Sounds with higher priority are not discarded on the maxmod queue when playing a new one.
- * * Erase sounds from maxmod queue fixed.
+ * * Sounds with higher priority are not discarded on the <a href="https://maxmod.org">Maxmod</a> queue
+ *   when playing a new one.
+ * * Erase sounds from <a href="https://maxmod.org">Maxmod</a> queue fixed.
  *
  *
  * @section changelog_18_9_0 18.9.0
@@ -310,7 +312,7 @@
  *   bn::iregular_bg_animate_action::next_change_updates, bn::iregular_bg_cached_animate_action::next_change_updates,
  *   bn::iaffine_bg_animate_action::next_change_updates and bn::iaffine_bg_cached_animate_action::next_change_updates added.
  * * `bn::pair` is now a `std::pair` alias.
- * * <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> ASM ROM usage reduced.
+ * * <a href="https://www.coranac.com/man/tonclib">Tonclib</a> ASM ROM usage reduced.
  * * `profiler` example simplified.
  * * Compression algorithms added to the `profiler` test.
  * * @ref faq_stack_trace question added to the @ref faq page.
@@ -334,7 +336,7 @@
  * * Regular big maps canvas height increased.
  * * Force at least one update before sleeping in bn::core::sleep.
  * * bn::span::size_bytes implicit conversion warning fixed.
- * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> binary files build time reduced.
+ * * <a href="https://wonderful.asie.pl">Wonderful Toolchain</a> binary files build time reduced.
  * * Scale can be changed in the `world_map` example.
  *
  *
@@ -385,7 +387,7 @@
  *
  * @section changelog_16_4_0 16.4.0
  *
- * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> experimental support!
+ * * <a href="https://wonderful.asie.pl">Wonderful Toolchain</a> experimental support!
  *   See the @ref getting_started_wt guide to learn how to build Butano games with it.
  * * Real time clock (RTC) support thanks to <a href="https://github.com/felixjones/agbabi">agbabi</a>.
  *   See bn::date, bn::time and the `date_time` example to learn how to deal with the RTC.
@@ -482,8 +484,8 @@
  * * `BN_DATA_EWRAM_BSS` added.
  * * bn::memory::used_static_ewram fixed.
  * * Butano subsystems ROM usage reduced.
- * * <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> tiled surface functions added.
- * * Unused <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> functions and data removed.
+ * * <a href="https://www.coranac.com/man/tonclib">Tonclib</a> tiled surface functions added.
+ * * Unused <a href="https://www.coranac.com/man/tonclib">Tonclib</a> functions and data removed.
  *
  *
  * @section changelog_15_4_1 15.4.1
@@ -630,7 +632,7 @@
  *
  * @section changelog_13_12_1 13.12.1
  *
- * <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> linking error fixed.
+ * <a href="https://www.coranac.com/man/tonclib">Tonclib</a> linking error fixed.
  *
  *
  * @section changelog_13_12_0 13.12.0
@@ -752,7 +754,7 @@
  * * bn::best_fit_allocator (used by the heap manager) CPU usage reduced.
  * * bn::best_fit_allocator sanity check can be enabled with @ref BN_CFG_BEST_FIT_ALLOCATOR_SANITY_CHECK_ENABLED.
  * * bn::best_fit_allocator::free calls can be validated with @ref BN_CFG_BEST_FIT_ALLOCATOR_FREE_CHECK_ENABLED.
- * * <a href="https://www.coranac.com/man/tonclib/">Tonclib</a> unused components removed
+ * * <a href="https://www.coranac.com/man/tonclib">Tonclib</a> unused components removed
  *   (EWRAM and ROM usage reduced).
  * * bn::best_fit_allocator::realloc can shrink allocations.
  * * BPP mode can be specified when importing sprites and sprite palettes.
@@ -827,7 +829,7 @@
  * @section changelog_11_0_0 11.0.0
  *
  * Huffman images compression support
- * (make sure to update <a href="https://devkitpro.org/">devkitARM</a> before using it).
+ * (make sure to update <a href="https://devkitpro.org">devkitARM</a> before using it).
  *
  *
  * @section changelog_10_7_0 10.7.0

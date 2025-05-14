@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: ISC
+//
+// Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
+
 /****************************************************************************
  *                                                          __              *
  *                ____ ___  ____ __  ______ ___  ____  ____/ /              *
@@ -5,250 +9,411 @@
  *              / / / / / / /_/ />  </ / / / / / /_/ / /_/ /                *
  *             /_/ /_/ /_/\__,_/_/|_/_/ /_/ /_/\____/\__,_/                 *
  *                                                                          *
- *         Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)         *
+ *               Nintendo DS & Gameboy Advance Sound System                 *
  *                                                                          *
- * Permission to use, copy, modify, and/or distribute this software for any *
- * purpose with or without fee is hereby granted, provided that the above   *
- * copyright notice and this permission notice appear in all copies.        *
- *                                                                          *
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES *
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF         *
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR  *
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES   *
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN    *
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF  *
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.           *
  ****************************************************************************/
 
-// TYPE DEFINITIONS
+/// @file mm_types.h
+///
+/// @brief Type definitions for Maxmod.
 
 #ifndef MM_TYPES_H
 #define MM_TYPES_H
 
-#include <stdint.h>
-#include <stdbool.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-typedef uint32_t		mm_word;	// 32 bits
-typedef uint16_t		mm_hword;	// 16 bits
-typedef  uint8_t		mm_byte;	// 8 bits
+// ***************************************************************************
+/// @defgroup maxmod_types Maxmod Definitions and Types
+/// @{
+// ***************************************************************************
 
-typedef uint16_t		mm_sfxhand;	// sound effect handle
+typedef unsigned int	mm_word;	///< Generic unsigned 32-bit value
+typedef signed int		mm_sword;	///< Generic signed 32-bit value
+typedef unsigned short	mm_hword;	///< Generic unsigned 16-bit value
+typedef unsigned char	mm_byte;	///< Generic unsigned 8-bit value
+typedef signed char	    mm_sbyte;	///< Generic signed 8-bit value
 
-typedef bool			mm_bool;	// boolean value
+/// Sound effect handle.
+///
+/// Returned by mmEffect() and mmEffectEx(). May be used to modify a sound
+/// effect while it is playing.
+typedef unsigned short	mm_sfxhand;
 
-typedef void*			mm_addr;	// pointer
-typedef void*			mm_reg;		// hardware register
+typedef unsigned char	mm_bool;	///< Boolean. Non-zero = true, zero = false.
 
+typedef void*			mm_addr;	///< Memory address (pointer)
+typedef void*			mm_reg;		///< Hardware register (pointer)
+
+/// Audio modes for the DS system. Pass to mmSelectMode().
 typedef enum
 {
-	MM_MODE_A,
-	MM_MODE_B,
-	MM_MODE_C
+	MM_MODE_A, ///< Selects the full-hardware audio mode.
+	MM_MODE_B, ///< Selects the interpolated audio mode.
+	MM_MODE_C  ///< Selects the extended mixing audio mode.
 } mm_mode_enum;
 
+/// Formats for software streaming.
+///
+/// ADPCM streaming is not supported by the DS hardware. The loop point data
+/// gets recorded so ring buffers are not possible.
 typedef enum
 {
+	/// 8-bit single channel output.
 	MM_STREAM_8BIT_MONO					= 0x0,	// 000b
+	/// 8-bit dual channel output (interleaved data).
 	MM_STREAM_8BIT_STEREO				= 0x1,	// 001b
-	
+
+	/// 16-bit single channel output.
 	MM_STREAM_16BIT_MONO				= 0x2,	// 010b
+	/// 16-bit dual channel output (interleaved data).
 	MM_STREAM_16BIT_STEREO				= 0x3,	// 011b
-	
-//	MM_STREAM_ADPCM_MONO				= 0x4,	// 100b
-//	MM_STREAM_ADPCM_STEREO				= 0x5,	// 101b
 
-//	adpcm streaming is not supported by the ds hardware
-//	(the loop point data gets recorded so ring buffers are not possible)
+#ifdef MM_SUPPORT_4BIT_STREAM
+	MM_STREAM_4BIT_MONO					= 0x4,	// 100b
+	MM_STREAM_4BIT_STEREO				= 0x5,	// 101b
+#endif
 
-//-----------------------------------------------------------------------------
 } mm_stream_formats;
-//-----------------------------------------------------------------------------
 
+/// Function pointer definition for handling song events.
+///
+/// @param msg   Message type.
+/// @param param Additional data about the message.
 typedef mm_word (*mm_callback)( mm_word msg, mm_word param );
+
+/// Void function pointer.
+typedef void (*mm_voidfunc)( void );
+
+/// Function pointer definition for handling stream fill requests (DS mode).
+///
+/// @param length Number of samples to write to the output.
+/// @param dest   Output address.
+/// @param format Stream format.
 typedef mm_word (*mm_stream_func)( mm_word length, mm_addr dest, mm_stream_formats format );
 
+/// Reverb configuration flags.
+///
+/// The first few flags enable the values in the mm_reverb_cfg struct (to be
+/// applied to the channels select with MMRF_LEFT/RIGHT). The rest of the flags
+/// are actually commands.
 typedef enum
 {
-	MMRF_MEMORY		=0x01,
-	MMRF_DELAY		=0x02,
-	MMRF_RATE		=0x04,
-	MMRF_FEEDBACK	=0x08,
-	MMRF_PANNING	=0x10,
-	MMRF_LEFT		=0x20,
-	MMRF_RIGHT		=0x40,
-	MMRF_BOTH		=0x60,
-	
-	MMRF_INVERSEPAN	=0x80,
-	MMRF_NODRYLEFT	=0x100,
-	MMRF_NODRYRIGHT	=0x200,
-	MMRF_8BITLEFT	=0x400,
-	MMRF_16BITLEFT	=0x800,
-	MMRF_8BITRIGHT	=0x1000,
-	MMRF_16BITRIGHT	=0x2000,
-	MMRF_DRYLEFT	=0x4000,
-	MMRF_DRYRIGHT	=0x8000
-//-----------------------------------------------------------------------------
+	MMRF_MEMORY		=0x01, ///< Set memory setting.
+	MMRF_DELAY		=0x02, ///< Set delay setting.
+	MMRF_RATE		=0x04, ///< Set rate setting.
+	MMRF_FEEDBACK	=0x08, ///< Set feedback setting.
+	MMRF_PANNING	=0x10, ///< Set panning setting.
+	MMRF_LEFT		=0x20, ///< Affect left output.
+	MMRF_RIGHT		=0x40, ///< Affect right output.
+	MMRF_BOTH		=0x60, ///< Affect both outputs.
+
+	MMRF_INVERSEPAN	=0x80,   ///< Inverse panning level for right output.
+	MMRF_NODRYLEFT	=0x100,  ///< Disable dry output for the left channel.
+	MMRF_NODRYRIGHT	=0x200,  ///< Disable dry output for the right channel.
+	MMRF_8BITLEFT	=0x400,  ///< Set 8-bit format for the left channel.
+	MMRF_16BITLEFT	=0x800,  ///< Set 16-bit format for the left channel.
+	MMRF_8BITRIGHT	=0x1000, ///< Set 8-bit format for the right channel.
+	MMRF_16BITRIGHT	=0x2000, ///< Set 16-bit format for the right channel.
+	MMRF_DRYLEFT	=0x4000, ///< Enable dry output for the left channel.
+	MMRF_DRYRIGHT	=0x8000  ///< Enable dry output for the right channel.
 } mm_reverbflags;
-//-----------------------------------------------------------------------------
 
+/// Selection of reverb channels to start/stop.
 typedef enum
 {
-	MMRC_LEFT = 1,
-	MMRC_RIGHT = 2,
-	MMRC_BOTH = 3
-//-----------------------------------------------------------------------------
+	MMRC_LEFT = 1,  ///< Select left reverb channel.
+	MMRC_RIGHT = 2, ///< Select right reverb channel.
+	MMRC_BOTH = MMRC_LEFT | MMRC_RIGHT ///< Select both reverb channels.
 } mm_reverbch;
-//-----------------------------------------------------------------------------
 
+/// Reverb configuration settings.
+///
+/// The flags entry selects which data in the struct is valid. It also selects
+/// which reverb channels to apply the settings to, and also some other
+/// commands.
 typedef struct mmreverbcfg
 {
-	mm_word				flags;
-	mm_addr				memory;
-	mm_hword			delay;
-	mm_hword			rate;
-	mm_hword			feedback;
-	mm_byte				panning;
-//-----------------------------------------------------------------------------
+	mm_word		flags;    ///< Configuration flags (mm_reverbflags).
+	mm_addr		memory;   ///< Memory address of reverb buffer.
+	mm_hword	delay;    ///< Reverb buffer size, measured in words.
+	mm_hword	rate;     ///< Reverb sampling rate.
+	mm_hword	feedback; ///< Reverb feedback level. Range = 0..2047
+	mm_byte		panning;  ///< Reverb panning level. Range = 0..127
 } mm_reverb_cfg;
-//-----------------------------------------------------------------------------
 
+/// Module looping modes for mmStart().
 typedef enum
 {
-	MM_PLAY_LOOP,
-	MM_PLAY_ONCE
-//-----------------------------------------------------------------------------
+	MM_PLAY_LOOP, ///< Loop module forever (until stopped).
+	MM_PLAY_ONCE  ///< Stop module after playing the last pattern.
 } mm_pmode;
-//-----------------------------------------------------------------------------
 
+/// Software mixing rates for GBA system.
 typedef enum
 {
-	MM_MIX_8KHZ,
-	MM_MIX_10KHZ,
-	MM_MIX_13KHZ,
-	MM_MIX_16KHZ,
-	MM_MIX_18KHZ,
-	MM_MIX_21KHZ,
-	MM_MIX_27KHZ,
-	MM_MIX_31KHZ
-//-----------------------------------------------------------------------------
+	MM_MIX_8KHZ,  ///< 8 KHz, provides poor quality.
+	MM_MIX_10KHZ, ///< 10 Khz, provides low quality.
+	MM_MIX_13KHZ, ///< 13 Khz, provides almost OK quality.
+	MM_MIX_16KHZ, ///< 16 Khz, provides OK quality, **standard setting**.
+	MM_MIX_18KHZ, ///< 18 Khz, provies good quality, higher CPU load.
+	MM_MIX_21KHZ, ///< 21 Khz, provies better quality, high CPU load.
+	MM_MIX_27KHZ, ///< 27 KHz, provides even better quality, very high CPU load.
+	MM_MIX_31KHZ  ///< 31 KHz, provides maximum quality, highest CPU load.
 } mm_mixmode;
-//-----------------------------------------------------------------------------
 
+/// Timer selection for counting samples during streaming.
+typedef enum
+{
+	MM_TIMER0,	// Hardware timer 0
+	MM_TIMER1,	// Hardware timer 1
+	MM_TIMER2,	// Hardware timer 2
+	MM_TIMER3	// Hardware timer 3
+} mm_stream_timer;
+
+/// Sample structure.
+///
+/// If the sample loops, then loop_start should be set to the position of the
+/// loop starting point, and loop_length should be set to the length of the
+/// loop. Otherwise, loop_start should be set to zero, and length should be set
+/// to the length of the sample.
+///
+/// The length and position values are measured in words. That is, samples/4 for
+/// 8-bit, and samples/2 for 16-bit (and samples/8 for 4-bit compressed). The
+/// sample data must be aligned and maybe resampled or padded to fit along the
+/// boundaries.
 typedef struct t_mmdssample
 {
+	/// Start of sample loop. Measured in words.
 	mm_word		loop_start;
-	union {
-	mm_word		loop_length;
-	mm_word		length;
-	};
-	mm_byte		format;
-	mm_byte		repeat_mode;
-	mm_hword	base_rate;
-	mm_addr		data;
-//-----------------------------------------------------------------------------
-} mm_ds_sample;
-//-----------------------------------------------------------------------------
 
+	union {
+		/// Length of sample loop. Measured in words.
+		mm_word		loop_length;
+		/// Length of sample. Measured in words.
+		mm_word		length;
+	};
+
+	/// Sample format. 0 = 8-bit PCM, 1 = 16-bit PCM, 2 = IMA-ADPCM
+	mm_byte		format;
+	/// Looping mode. 1 = Forward Loop, 2 = One-Shot
+	mm_byte		repeat_mode;
+	/// Center playback rate. Value = Hz * 1024 / 32768.
+	mm_hword	base_rate;
+	/// Pointer to sample data.
+	mm_addr		data;
+
+} mm_ds_sample;
+
+/// Information for playing a sound effect.
+///
+/// The sample entry is only supported on DS and may be used to play an external
+/// sample source.
 typedef struct t_mmsoundeffect
 {
 	union {
-// sample ID (defined in soundbank header)
-	mm_word id;
-	
-// external sample address, not valid on GBA system
-	mm_ds_sample* sample;
+		/// ID of sample to be played. Values are defined in the soundbank
+		/// header.
+		mm_word id;
+
+		/// Address of external sample, must be in main RAM. The ID is ignored
+		/// if this entry is used. This field isn't valid in GBA systems.
+		mm_ds_sample* sample;
 	};
-	
-// playback rate
+
+	/// Playback rate. 6.10 fixed point number. (1024 = original sound)
 	mm_hword rate;
-	
-// sound handle
+
+	/// Handle of previous sound effect. If a valid handle is given, it will be
+	/// recycled.
 	mm_sfxhand handle;
-	
-// volume, 0..255
-	mm_byte	volume;
-	
-// panning, 0..255
-	mm_byte	panning;
-	
-//-----------------------------------------------------------------------------
+
+	/// Volume level. Ranges from 0 (silent) to 255 (normal).
+	mm_byte volume;
+
+	/// Panning level. Ranges from 0 (far-left) to 255 (far-right).
+	mm_byte panning;
+
 } mm_sound_effect;
-//-----------------------------------------------------------------------------
 
-typedef struct t_mmgbasystem 
+/// GBA setup information, passed to mmInit().
+///
+/// About mixing_memory: The mixing memory is a heavily used area of memory and
+/// should most definitely be located in the fast IWRAM. By default, most GBA
+/// toolchains place any global variables in IWRAM. The size of this buffer
+/// depeds on the mixing rate selected.
+///
+/// Check the mm_mixlen_enum values. These values contain the size of the mixing
+/// buffer in bytes. If you're using 16KHz mixing rate, your mixing buffer
+/// should be defined like this (as a global array):
+///
+/// ```c
+/// u8 my_mixing_buffer[ MM_MIXEN_16KHZ ] __attribute__((aligned(4)));
+/// ```
+///
+/// Notice also that the mixing buffer should be aligned by 4 bytes.
+///
+/// About the wave buffer: The wave buffer is a not-so-heavily used area of
+/// memory and can be placed in EWRAM. The wave buffer contains the final
+/// waveform data that is DMA copied to the sound FIFO. The size of the waveform
+/// buffer must be equal to the size of the mixing buffer. By default, in most
+/// GBA toolchains, the malloc function can be used to allocate the wave buffer
+/// in EWRAM. The wave buffer must be aligned by 4 bytes too (malloc returns
+/// pointers aligned to 4 bytes).
+typedef struct t_mmgbasystem
 {
+	/// Software mixing rate. May be 8, 10, 13, 16, 18, or 21 KHz (select value
+	/// from enum). Higher values offer better quality at expense of a larger
+	/// CPU and memory load.
 	mm_mixmode	mixing_mode;
-	mm_word		mod_channel_count;
-	mm_word		mix_channel_count;
-	mm_addr		module_channels;
-	mm_addr		active_channels;
-	mm_addr		mixing_channels;
-	mm_addr		mixing_memory;
-	mm_addr		wave_memory;
-	mm_addr		soundbank;
-//-----------------------------------------------------------------------------
-} mm_gba_system;
-//-----------------------------------------------------------------------------
 
+	/// This is the amount of module channels there will be. It must be greater
+	/// or equal to the largest channel number used by your modules (notice: NOT
+	/// virtual channel number).
+	mm_word		mod_channel_count;
+
+	/// Number of mixing channels. Higher numbers offer better polyphony at
+	/// expense of larger memory footprint and CPU load.
+	mm_word		mix_channel_count;
+
+	/// Pointer to module channel buffer, this can be placed in EWRAM. Size of
+	/// buffer must be ``MM_SIZEOF_MODCH * mod_channel_count`` bytes.
+	mm_addr		module_channels;
+
+	/// Pointer to active channel buffer, this can be placed in EWRAM. Size of
+	/// buffer must be ``MM_SIZEOF_ACTCH * mix_channel_count`` bytes.
+	mm_addr		active_channels;
+
+	/// Pointer to mixing channel buffer, this can be placed in EWRAM. Size of
+	/// buffer must be ``MM_SIZEOF_MIXCH * mix_channel_count`` bytes.
+	mm_addr		mixing_channels;
+
+	/// Pointer to mixing buffer, should be placed in IWRAM. Placing this buffer
+	/// in EWRAM will cause a *much* higher CPU load. See description for size
+	/// specification.
+	mm_addr		mixing_memory;
+
+	/// Pointer to wave output buffer, this can be placed in EWRAM. see
+	/// description for size specification.
+	mm_addr		wave_memory;
+
+	/// Pointer to your soundbank file. (Most likely somewhere in the cartridge
+	/// space).
+	mm_addr		soundbank;
+
+} mm_gba_system;
+
+/// DS setup information.
+///
+/// More about mem_bank: Maxmod needs some memory to manage samples and modules
+/// that are loaded/unloaded into/from memory. This pointer should reference an
+/// area of memory that is mod_count+samp_count WORDS in size:
+///
+/// ```c
+/// #include "my_soundbank.h"
+/// u32 my_mem_bank[ MSL_BANKSIZE ];
+/// ```
+///
+/// MSL_BANKSIZE is defined as the sum of the module and sample count in the
+/// soundbank.
+///
+/// The mmInitDefault()/mmInitDefaultMem() functions may be used to quickly
+/// initialize maxmod default settings. Using these functions, mod_count and
+/// samp_count will be automatically filled using data from the soundbank, and
+/// mem_bank will be allocated with malloc().
 typedef struct t_mmdssystem
 {
-
-// give MSL_NSONGS
+	/// Number of modules in the soundbank file. Write MSL_NSONGS here.
 	mm_word		mod_count;
 
-// pass MSL_NSAMPS
+	/// Number of samples in the soundbank file. Write MSL_NSAMPS here.
 	mm_word		samp_count;
-	
-// pass pointer to memory buffer
-// (mm_word mem_bank[MSL_BANKSIZE])
-	mm_addr		mem_bank;
-	
-// fifo channel to use (usually 7)
+
+	/// Pointer to a memory region to be used for managing modules/samples:
+	/// ```c
+	/// mm_word mem_bank[MSL_BANKSIZE];
+	/// ```
+	mm_word*	mem_bank;
+
+	/// FIFO channel to use for communicating with ARM7. Usually FIFO_MAXMOD.
 	mm_word		fifo_channel;
 
-//-----------------------------------------------------------------------------	
 } mm_ds_system;
-//-----------------------------------------------------------------------------
 
-// Compatibility
-#define MM_TIMER0 0
-#define MM_TIMER1 0
-#define MM_TIMER2 0
-#define MM_TIMER3 0
-
+/// Information about a stream to be opened.
+///
+/// More about manual mode: If this is set, then you must call mmStreamUpdate()
+/// periodically to push data into the stream buffer (mmStreamUpdate makes
+/// requests to your callback function to fill the stream). Manual mode can be
+/// used to have control over when the stream is filled.
 typedef struct t_mmstream
-{	
-// sampling rate. 1024->32768 (HZ)
+{
+	/// Sampling rate of the stream, measured in Hertz. (1024->32768)
 	mm_word sampling_rate;
-	
-// number of samples to buffer
+	/// Amount of samples to buffer. Should be a multiple of 16.
 	mm_word buffer_length;
-	
-// pointer to filling routine
+	/// Function pointer to your routine to fill the stream.
 	mm_stream_func callback;
-
-// stream format (mm_stream_formats)
+	/// Sample data format (mm_stream_formats).
 	mm_word format;
+	/// Hardware timer selection. (will be used for timing the data requests)
+	/// (mm_stream_timers).
+	mm_word timer;
+	/// Disable automatic fill requests. If set, user must call mmStreamUpdate()
+	/// manually.
+	mm_bool manual;
 
-// thread stack size (0 = default)
-union {
-	mm_word thread_stack_size;
-	mm_word timer; // for compatibility
-};
-
-// if positive, no thread is created and user must call mmStreamUpdate manually
-// if zero or negative, maxmod creates a thread that calls it automatically
-//   if zero: thread priority is default
-//   if negative: thread priority is user-specified (absolute value)
-union {
-	mm_bool manual; // for compatibility
-	int8_t minus_thread_prio;
-};
-
-//-----------------------------------------------------------------------------
 } mm_stream;
+
+typedef struct t_mmstreamdata
+{
+	mm_bool is_active;
+	mm_stream_formats format;
+	mm_bool is_auto;
+	mm_byte hw_timer_num;
+	mm_hword clocks;
+	mm_hword timer;
+	mm_hword length_cut;
+	mm_hword length_words;
+	mm_hword position;
+	mm_hword reserved2;
+	volatile mm_hword* hw_timer;
+	mm_addr wave_memory;
+	mm_addr work_memory;
+	mm_stream_func callback;
+	mm_word remainder;
+	
+//-----------------------------------------------------------------------------
+} mm_stream_data;
 //-----------------------------------------------------------------------------
 
+/*
+typedef struct t_mmsoundcnt_ds
+{
+	mm_word volume_mul : 7;
+	mm_word unused : 1;
+	mm_word volume_div : 2;
+	mm_word unused2 : 5;
+	mm_word hold : 1;
+	mm_word panning : 7;
+	mm_word unused3 : 1;
+	mm_word wave_duty : 3;
+	mm_word repeat_mode : 2;
+	mm_word format : 2;
+	mm_word status : 1;
+	mm_word src : 27;
+	mm_word unused4 : 5;
+	mm_hword timer;
+	mm_hword loop_start;
+	mm_word word_length : 22;
+	mm_word unused5 : 10;
+//-----------------------------------------------------------------------------
+} __attribute__((packed)) mmsoundcnt_ds;
+//-----------------------------------------------------------------------------
+*/
+
+/*
 typedef struct t_mmlayer
 {
 
@@ -257,10 +422,10 @@ typedef struct t_mmlayer
 
 // current row being played
 	mm_byte	row;
-	
+
 // module sequence position
 	mm_byte	position;
-	
+
 // number of rows in current pattern
 	mm_byte	nrows;
 
@@ -277,8 +442,9 @@ typedef struct t_mmlayer
 	mm_byte	bpm;
 
 //-----------------------------------------------------------------------------
-} mm_modlayer;
+} mm_modlayer; // mpl_layer_information is more complete
 //-----------------------------------------------------------------------------
+*/
 
 typedef struct tmm_voice
 {
@@ -330,4 +496,12 @@ enum {
 
 //-----------------------------------------------------------------------------
 
+// ***************************************************************************
+/// @}
+// ***************************************************************************
+
+#ifdef __cplusplus
+}
 #endif
+
+#endif // MM_TYPES_H

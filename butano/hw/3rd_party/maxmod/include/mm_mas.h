@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: ISC
+//
+// Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
+
 /****************************************************************************
  *                                                          __              *
  *                ____ ___  ____ __  ______ ___  ____  ____/ /              *
@@ -5,19 +9,8 @@
  *              / / / / / / /_/ />  </ / / / / / /_/ / /_/ /                *
  *             /_/ /_/ /_/\__,_/_/|_/_/ /_/ /_/\____/\__,_/                 *
  *                                                                          *
- *         Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)         *
+ *               Nintendo DS & Gameboy Advance Sound System                 *
  *                                                                          *
- * Permission to use, copy, modify, and/or distribute this software for any *
- * purpose with or without fee is hereby granted, provided that the above   *
- * copyright notice and this permission notice appear in all copies.        *
- *                                                                          *
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES *
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF         *
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR  *
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES   *
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN    *
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF  *
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.           *
  ****************************************************************************/
 
 // MAXMOD MODULE FORMAT DEFINITIONS
@@ -25,7 +18,13 @@
 #ifndef MM_MAS_H
 #define MM_MAS_H
 
-#include "mm_types.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#define _____badbear_____
+
+#include <mm_types.h>
 
 // prefix comes first
 
@@ -53,7 +52,9 @@ typedef struct tmm_mas_head
 	mm_byte		channel_panning[32];
 	mm_byte		sequence[200];
 
-	mm_word		tables[];
+#ifdef _____badbear_____
+	mm_addr		tables[];
+#endif
 	// ::instrument table
 	// ::sample info table
 	// ::pattern table
@@ -64,14 +65,18 @@ typedef struct tmm_mas_instrument
 	mm_byte		global_volume;
 	mm_byte		fadeout;
 	mm_byte		random_volume;
-	mm_byte		nna;
 	mm_byte		dct;
-	mm_byte		dca;
+	mm_byte		nna;
 	mm_byte		env_flags;
 	mm_byte		panning;
-	mm_hword	note_map[120];
+	mm_byte		dca;
+	mm_hword	note_map_offset : 15;
+	mm_hword	is_note_map_invalid : 1;
+	mm_hword	note_map[119];
 
+#ifdef _____badbear_____
 	mm_byte		envelopes[];
+#endif
 	// ::envelopes
 } mm_mas_instrument;
 
@@ -86,23 +91,29 @@ typedef struct tmm_mas_envelope
 	mm_byte		is_filter; // (maybe supported someday :)
 	mm_byte		wasted;
 
+#ifdef _____badbear_____
 	mm_byte		env_nodes[];
+#endif
+
 	// ::envelope nodes
 } mm_mas_envelope;
 
 typedef struct tmm_mas_sample_info
 {
-	mm_byte		global_volume;
 	mm_byte		default_volume;
-	mm_hword	frequency;
-	mm_byte		av_type; // (auto vibrato)
-	mm_byte		av_depth;
-	mm_byte		av_speed;
 	mm_byte		panning;
-	mm_hword	av_rate;
+	mm_hword	frequency;
+	mm_byte		av_type; // VIT (auto vibrato)
+	mm_byte		av_depth; // VID
+	mm_byte		av_speed; // VIS
+	mm_byte		global_volume; // GV
+	mm_hword	av_rate; // VIR
 	mm_hword	msl_id;
 
+#ifdef _____badbear_____
 	mm_byte		data[];
+#endif
+
 	// ::sample may follow
 } mm_mas_sample_info;
 
@@ -110,7 +121,10 @@ typedef struct tmm_mas_pattern
 {
 	mm_byte		row_count;
 
+#ifdef _____badbear_____
 	mm_byte		pattern_data[];
+#endif
+
 	// ::pattern data
 } mm_mas_pattern;
 
@@ -121,7 +135,10 @@ typedef struct tmm_mas_gba_sample
 	mm_hword	reserved;
 	mm_hword	default_frequency;
 
+#ifdef _____badbear_____
 	mm_byte		data[];
+#endif
+
 	// ::8-bit sample data
 } mm_mas_gba_sample;
 
@@ -136,7 +153,10 @@ typedef struct tmm_mas_ds_sample
 	mm_byte		repeat_mode;
 	mm_hword	default_frequency;
 
+#ifdef _____badbear_____
 	mm_byte		data[];
+#endif
+
 	// ::sample data
 } mm_mas_ds_sample;
 
@@ -146,5 +166,37 @@ typedef struct tmm_mas_ds_sample
 
 #define MM_SREPEAT_FORWARD	1
 #define MM_SREPEAT_OFF		2
+
+// -----------------------------------------------------------
+
+#include "mp_mas_structs.h"
+
+extern mpl_layer_information mmLayerMain;
+extern mpl_layer_information mmLayerSub;
+
+extern mpl_layer_information *mpp_layerp;
+extern mpv_active_information mpp_vars;
+extern mm_addr mpp_channels;
+extern mm_word mpp_resolution;
+
+extern mm_word mm_mastertempo;
+extern mm_word mm_masterpitch;
+
+extern mm_byte mpp_nchannels;
+extern mm_byte mpp_clayer;
+extern mm_active_channel *mm_achannels;
+extern mm_addr mm_pchannels;
+extern mm_word mm_num_mch;
+extern mm_word mm_num_ach;
+extern mm_module_channel mm_schannels[]; // [MP_SCHANNELS]
+
+void mmSetResolution(mm_word);
+void mmPulse(void);
+void mppUpdateSub(void);
+void mppProcessTick(void); // TODO: Mark this as IWRAM in GBA?
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

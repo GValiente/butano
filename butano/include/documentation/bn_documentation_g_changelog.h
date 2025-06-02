@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_19_4_0 19.4.0 (next release)
+ * @section changelog_19_4_0 19.4.0
  *
  * * <a href="https://www.coranac.com/man/tonclib">Tonclib</a> updated to 1.4.5.
  * * <a href="https://maxmod.org">Maxmod</a> updated to 2.1.0.

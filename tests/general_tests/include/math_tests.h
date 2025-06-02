@@ -134,12 +134,20 @@ public:
             }
         }
 
-        bn::fixed angle = -0.01;
-        safe_angle = 360 + angle;
-        BN_ASSERT(bn::safe_degrees_angle(angle) == safe_angle, bn::safe_degrees_angle(angle), " - ", safe_angle);
+        bn::fixed angle = -0.2;
+        BN_ASSERT(bn::safe_degrees_angle(angle) == 360 + angle, bn::safe_degrees_angle(angle));
+
+        angle = -0.1;
+        BN_ASSERT(bn::safe_degrees_angle(angle) == 360 + angle, bn::safe_degrees_angle(angle));
+
+        angle = -0.01;
+        BN_ASSERT(bn::safe_degrees_angle(angle) == 360 + angle, bn::safe_degrees_angle(angle));
+
+        angle = -0.001;
+        BN_ASSERT(bn::safe_degrees_angle(angle) == 360 + angle, bn::safe_degrees_angle(angle));
 
         angle -= 360;
-        BN_ASSERT(bn::safe_degrees_angle(angle) == safe_angle, bn::safe_degrees_angle(angle), " - ", safe_angle);
+        BN_ASSERT(bn::safe_degrees_angle(angle) == 720 + angle, bn::safe_degrees_angle(angle));
     }
 };
 

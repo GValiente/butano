@@ -133,6 +133,13 @@ public:
                 safe_angle = 0;
             }
         }
+
+        bn::fixed angle = -0.01;
+        safe_angle = 360 + angle;
+        BN_ASSERT(bn::safe_degrees_angle(angle) == safe_angle, bn::safe_degrees_angle(angle), " - ", safe_angle);
+
+        angle -= 360;
+        BN_ASSERT(bn::safe_degrees_angle(angle) == safe_angle, bn::safe_degrees_angle(angle), " - ", safe_angle);
     }
 };
 

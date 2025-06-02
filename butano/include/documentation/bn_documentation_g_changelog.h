@@ -16,6 +16,7 @@
  *
  * * <a href="https://www.coranac.com/man/tonclib">Tonclib</a> updated to 1.4.5.
  * * <a href="https://maxmod.org">Maxmod</a> updated to 2.1.0.
+ * * bn::safe_degrees_angle fixed.
  *
  *
  * @section changelog_19_3_0 19.3.0

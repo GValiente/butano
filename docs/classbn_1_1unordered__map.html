@@ -48,7 +48,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__unordered__map_8h.html">&lt;bn_unordered_map.h&gt;</a></div>
-          <div class="m-doc-template">template&lt;typename Key, typename Value, int MaxSize, typename KeyHash = <a href="structbn_1_1hash.html" class="m-doc">hash</a>&lt;Key&gt;, typename KeyEqual = <a href="classbn_1_1equal__to.html" class="m-doc">equal_<wbr />to</a>&lt;Key&gt;&gt;</div>
+          <div class="m-doc-template">template&lt;typename Key, typename Value, int MaxSize, typename KeyHash, typename KeyEqual&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>unordered_map <span class="m-thin">class</span>
         </h1>
         <p><code>std::unordered_map</code> like container with a fixed size buffer.</p>
@@ -98,8 +98,8 @@
           <h2><a href="#base-classes">Base classes</a></h2>
           <dl class="m-doc">
             <dt>
-              <div class="m-doc-template">template&lt;typename Key, typename Value, typename KeyHash = <a href="structbn_1_1hash.html" class="m-doc">hash</a>&lt;Key&gt;, typename KeyEqual = <a href="classbn_1_1equal__to.html" class="m-doc">equal_<wbr />to</a>&lt;Key&gt;&gt;</div>
-              class <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_map&lt;Key, Value, hash&lt;Key&gt;, equal_to&lt;Key&gt;&gt;</a>
+              <div class="m-doc-template">template&lt;typename Key, typename Value, typename KeyHash, typename KeyEqual&gt;</div>
+              class <a href="classbn_1_1iunordered__map.html" class="m-doc">iunordered_map&lt;Key, Value, KeyHash, KeyEqual&gt;</a>
             </dt>
             <dd>Base class of <a href="classbn_1_1unordered__map.html" class="m-doc">bn::<wbr />unordered_map</a>.</dd>
           </dl>
@@ -438,7 +438,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.12.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.14.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

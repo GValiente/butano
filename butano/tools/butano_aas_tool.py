@@ -17,14 +17,7 @@ def generate_temp_folder(audio_file_paths, build_folder_path):
     os.mkdir(temp_folder_path)
 
     for audio_file_path in audio_file_paths:
-        audio_file_name = os.path.basename(audio_file_path)
-        audio_file_name_split = os.path.splitext(audio_file_name)
-        audio_file_name_ext = audio_file_name_split[1]
-
-        if audio_file_name_ext == '.raw':
-            print('    *.raw files not supported. Skipped: ' + audio_file_path)
-        else:
-            shutil.copy(audio_file_path, temp_folder_path)
+        shutil.copy(audio_file_path, temp_folder_path)
 
     return temp_folder_path
 
@@ -223,6 +216,10 @@ def write_output_files(audio_file_paths, audio_file_names_no_ext, tool_output, s
 
     write_output_info_file(sound_items_list, 'BN_SOUND_ITEMS_INFO_H', 'bn_sound_item.h', 'bn::sound_items_info',
                            'sound_item', build_folder_path + '/bn_sound_items_info.h')
+
+
+def aas_audio_file_name_exts():
+    return ['.mod', '.wav']
 
 
 def process_aas_audio(tool, audio_file_paths, audio_file_names_no_ext, build_folder_path):

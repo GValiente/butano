@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_19_4_1 19.4.1 (next release)
+ *
+ * Files in audio folders with unknown extensions are ignored.
+ *
+ *
  * @section changelog_19_4_0 19.4.0
  *
  * * <a href="https://www.coranac.com/man/tonclib">Tonclib</a> updated to 1.4.5.

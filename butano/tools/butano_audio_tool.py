@@ -9,7 +9,7 @@ import sys
 from file_info import FileInfo
 
 
-def list_audio_files(audio_paths):
+def list_audio_files(audio_paths, audio_file_name_exts):
     temp_audio_file_paths = []
 
     for audio_path in audio_paths.split(' '):
@@ -33,10 +33,13 @@ def list_audio_files(audio_paths):
 
         if FileInfo.validate(audio_file_name):
             audio_file_name_split = os.path.splitext(audio_file_name)
-            audio_file_name_no_ext = audio_file_name_split[0]
-            audio_file_names.append(audio_file_name)
-            audio_file_names_no_ext.append(audio_file_name_no_ext)
-            audio_file_paths.append(audio_file_path)
+            audio_file_name_ext = audio_file_name_split[1]
+
+            if audio_file_name_ext in audio_file_name_exts:
+                audio_file_name_no_ext = audio_file_name_split[0]
+                audio_file_names.append(audio_file_name)
+                audio_file_names_no_ext.append(audio_file_name_no_ext)
+                audio_file_paths.append(audio_file_path)
 
     return audio_file_names, audio_file_names_no_ext, audio_file_paths
 
@@ -46,13 +49,17 @@ def process_audio(backend, tool, audio_paths, build_folder_path):
     aas = False
 
     if backend == 'maxmod':
+        from butano_maxmod_tool import maxmod_audio_file_name_exts
+        audio_file_name_exts = maxmod_audio_file_name_exts()
         maxmod = True
     elif backend == 'aas':
+        from butano_aas_tool import aas_audio_file_name_exts
+        audio_file_name_exts = aas_audio_file_name_exts()
         aas = True
     else:
         return
 
-    audio_file_names, audio_file_names_no_ext, audio_file_paths = list_audio_files(audio_paths)
+    audio_file_names, audio_file_names_no_ext, audio_file_paths = list_audio_files(audio_paths, audio_file_name_exts)
     file_info_path = build_folder_path + '/_bn_' + backend + '_audio_files_info.txt'
     old_file_info = FileInfo.read(file_info_path)
     new_file_info = FileInfo.build_from_files(audio_file_paths)

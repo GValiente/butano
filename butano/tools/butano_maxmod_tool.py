@@ -146,6 +146,10 @@ def write_output_files(audio_file_paths, audio_file_names_no_ext, tool_output, s
                            'sound_item', build_folder_path + '/bn_sound_items_info.h')
 
 
+def maxmod_audio_file_name_exts():
+    return ['.mod', '.s3m', '.xm', '.it', '.wav']
+
+
 def process_maxmod_audio(tool, audio_file_paths, audio_file_names_no_ext, build_folder_path):
     soundbank_bin_path = build_folder_path + '/bn_audio_soundbank.bin'
     soundbank_header_path = build_folder_path + '/bn_audio_soundbank.h'

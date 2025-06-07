@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_19_4_1 19.4.1 (next release)
+ * @section changelog_19_4_1 19.4.1
  *
  * Files in audio folders with unknown extensions are ignored.
  *

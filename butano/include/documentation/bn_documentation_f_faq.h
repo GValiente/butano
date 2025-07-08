@@ -269,6 +269,11 @@
  * As always, you also can remove code until the crash goes away.
  *
  *
+ * @subsection faq_screen_pixels Can I directly manipulate screen pixels?
+ *
+ * Butano doesn't support bitmap video modes for now, so there's no easy way to do that.
+ *
+ *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
  *
  * <a href="https://gbadev.net/tonc/first.html#sec-notes">I'm glad you asked</a>.

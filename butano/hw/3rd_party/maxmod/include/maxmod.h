@@ -62,16 +62,16 @@ typedef enum
 /// @param number_of_channels
 ///     Number of module/mixing channels to allocate. Must be greater or equal
 ///     to the channel count in your modules.
-void mmInitDefault(mm_addr soundbank, mm_word number_of_channels);
+///
+/// @return
+///     It returns true on success, false on error.
+bool mmInitDefault(mm_addr soundbank, mm_word number_of_channels);
 
 /// Initializes Maxmod with the settings specified.
 ///
 /// Initialize system. Call once at startup.
 ///
 /// For GBA projects, irqInit() should be called before this function.
-///
-/// @param setup
-///     Maxmod setup configuration.
 ///
 /// Example:
 ///
@@ -120,7 +120,25 @@ void mmInitDefault(mm_addr soundbank, mm_word number_of_channels);
 ///     mmInit(&mySystem);
 /// }
 /// ```
-void mmInit(mm_gba_system* setup);
+///
+/// @param setup
+///     Maxmod setup configuration.
+///
+/// @return
+///     It returns true on success, false on error.
+bool mmInit(mm_gba_system* setup);
+
+/// Deinitializes Maxmod.
+///
+/// If Maxmod was initialized with mmInitDefault(), it also frees the memory
+/// allocated by it.
+///
+/// If Maxmod was initialized with mmInit(), the user is responsible for freeing
+/// the memory passed to it when Maxmod was initialized.
+///
+/// @return
+///     It returns true on success, false on error.
+bool mmEnd(void);
 
 /// This function must be linked directly to the VBlank IRQ.
 ///
@@ -174,6 +192,22 @@ void mmSetEventHandler(mm_callback handler);
 /// For GBA, this function must be called every frame. If a call is missed,
 /// garbage will be heard in the output and module processing will be delayed.
 void mmFrame(void) __attribute((long_call));
+
+/// Returns the number of modules available in the soundbank.
+///
+/// @return
+///     The number of modules.
+mm_word mmGetModuleCount(void);
+
+/// Returns the number of samples available in the soundbank.
+///
+/// @note
+///     This number includes the samples used by all the songs in the soundbank,
+///     not just the sound effects in WAV format.
+///
+/// @return
+///     The number of samples.
+mm_word mmGetSampleCount(void);
 
 // ***************************************************************************
 /// @}

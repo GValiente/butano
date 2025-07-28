@@ -57,6 +57,13 @@ typedef struct tmm_mas_head
     // ::pattern table
 } mm_mas_head;
 
+#define MAS_HEADER_FLAG_LINK_GXX    (1 << 0) // Shared Gxx
+#define MAS_HEADER_FLAG_OLD_EFFECTS (1 << 1) // TODO: Unused flag
+#define MAS_HEADER_FLAG_FREQ_MODE   (1 << 2) // 1 = Linear freqs, 0 = Amiga freqs
+#define MAS_HEADER_FLAG_XM_MODE     (1 << 3) // 1 = XM mode, 0 = Other/IT mode?
+#define MAS_HEADER_FLAG_MSL_DEP     (1 << 4) // TODO: Unused flag
+#define MAS_HEADER_FLAG_OLD_MODE    (1 << 5) // 1 = MOD/S3M, 0 = Other
+
 typedef struct tmm_mas_instrument
 {
     mm_byte     global_volume;
@@ -69,12 +76,19 @@ typedef struct tmm_mas_instrument
     mm_byte     dca;
     mm_hword    note_map_offset : 15;
     mm_hword    is_note_map_invalid : 1;
-    mm_hword    note_map[119];
+    mm_hword    note_map[121]; // TODO: note_map[0] is reserved (should be zero)
 
     mm_byte     envelopes[];
 
     // ::envelopes
 } mm_mas_instrument;
+
+#define MAS_INSTR_FLAG_VOL_ENV_EXISTS   (1 << 0) // Volume envelope exists
+#define MAS_INSTR_FLAG_PAN_ENV_EXISTS   (1 << 1) // Panning envelope exists
+#define MAS_INSTR_FLAG_PITCH_ENV_EXISTS (1 << 2) // Pitch envelope exists
+#define MAS_INSTR_FLAG_VOL_ENV_ENABLED  (1 << 3) // Volume envelope enabled
+// In XM, bits 0 and 3 are always set together. In IT, they can be set
+// independently. Other formats don't use them.
 
 typedef struct tmm_mas_envelope
 {
@@ -111,7 +125,7 @@ typedef struct tmm_mas_sample_info
 
 typedef struct tmm_mas_pattern
 {
-    mm_byte     row_count;
+    mm_byte     row_count; // Number of rows of the pattern
 
     mm_byte     pattern_data[];
 
@@ -121,8 +135,9 @@ typedef struct tmm_mas_pattern
 typedef struct tmm_mas_gba_sample
 {
     mm_word     length;
-    mm_word     loop_length;
-    mm_hword    reserved;
+    mm_word     loop_length; // Loop lenght (0xFFFFFFFF if sample doesn't loop)
+    mm_byte     format;
+    mm_byte     reserved;
     mm_hword    default_frequency;
 
     mm_byte     data[];
@@ -138,11 +153,12 @@ typedef struct tmm_mas_ds_sample
         mm_word     loop_length;
         mm_word     length;
     };
-    mm_byte     format;
-    mm_byte     repeat_mode;
+    mm_byte     format;             // 0 = 8 bit, 1 = 16 bit, 2 = ADPCM/other (invalid)
+    mm_byte     repeat_mode;        // 1 = forward loop, 2 = no loop
     mm_hword    default_frequency;
+    mm_word     point;              // Always zero in mmutil
 
-    mm_byte     data[];
+    mm_byte     data[];             // Sample data
 
     // ::sample data
 } mm_mas_ds_sample;

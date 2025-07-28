@@ -24,6 +24,8 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
+
 // ***************************************************************************
 /// @defgroup maxmod_types Maxmod Definitions and Types
 /// @{
@@ -32,6 +34,7 @@ extern "C" {
 typedef unsigned int    mm_word;    ///< Generic unsigned 32-bit value
 typedef signed int      mm_sword;   ///< Generic signed 32-bit value
 typedef unsigned short  mm_hword;   ///< Generic unsigned 16-bit value
+typedef signed short    mm_shword;  ///< Generic signed 16-bit value
 typedef unsigned char   mm_byte;    ///< Generic unsigned 8-bit value
 typedef signed char     mm_sbyte;   ///< Generic signed 8-bit value
 

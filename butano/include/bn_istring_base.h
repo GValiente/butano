@@ -45,6 +45,9 @@ public:
      * @brief Constructor.
      * @param char_array_ref Non empty const characters array.
      *
+     * The characters are not conserved: the first character of the array is set to null and the output size is 0.
+     * If you want to conserve the characters, you should use istring::from_char_array instead.
+     *
      * The characters are not copied but referenced, so they should outlive the istring_base
      * to avoid dangling references.
      */

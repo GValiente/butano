@@ -15,6 +15,7 @@
  * @section changelog_19_5_0 19.5.0 (next release)
  *
  * * bn::istring::from_char_array added.
+ * * bn::istring_base public constructor documentation improved.
  * * @ref faq_screen_pixels question added to the @ref faq page.
  *
  *

@@ -14,7 +14,8 @@
  *
  * @section changelog_19_5_0 19.5.0 (next release)
  *
- * @ref faq_screen_pixels question added to the @ref faq page.
+ * * bn::istring::from_char_array added.
+ * * @ref faq_screen_pixels question added to the @ref faq page.
  *
  *
  * @section changelog_19_4_1 19.4.1

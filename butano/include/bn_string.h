@@ -36,6 +36,31 @@ public:
     static constexpr size_type npos = -1; //!< Exact meaning depends on context.
 
     /**
+     * @brief Returns an istring pointing to the given null-terminated characters array.
+     *
+     * The characters are not copied but referenced, so they should outlive the istring
+     * to avoid dangling references.
+     */
+    template<int MaxSize>
+    [[nodiscard]] static constexpr istring from_char_array(char (&char_array_ref)[MaxSize])
+    {
+        static_assert(MaxSize > 1);
+
+        const_pointer char_array_ptr = char_array_ref;
+        int size = 0;
+
+        while(*char_array_ptr)
+        {
+            ++char_array_ptr;
+            ++size;
+
+            BN_BASIC_ASSERT(size < MaxSize, "Non null-terminated char array");
+        }
+
+        return istring(char_array_ref, size, MaxSize - 1);
+    }
+
+    /**
      * @brief Copy assignment operator.
      * @param other istring_base to copy.
      * @return Reference to this.

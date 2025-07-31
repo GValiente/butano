@@ -108,4 +108,19 @@ void set_pitch(fixed pitch)
     audio_manager::set_music_pitch(pitch);
 }
 
+bool event_handler_enabled()
+{
+    return audio_manager::music_event_handler_enabled();
+}
+
+void set_event_handler_enabled(bool enabled)
+{
+    audio_manager::set_music_event_handler_enabled(enabled);
+}
+
+span<uint8_t> event_ids()
+{
+    return audio_manager::music_event_ids();
+}
+
 }

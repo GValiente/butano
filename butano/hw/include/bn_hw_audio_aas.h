@@ -7,6 +7,7 @@
 #define BN_HW_AUDIO_AAS_H
 
 #include "AAS.h"
+#include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_optional.h"
 
@@ -57,6 +58,11 @@ namespace bn::hw::audio
         BN_BASIC_ASSERT(pitch == 1, "Music pitch not supported");
     }
 
+    [[nodiscard]] inline span<uint8_t> music_event_ids()
+    {
+        return span<uint8_t>();
+    }
+
     [[nodiscard]] inline bool jingle_playing()
     {
         return false;
@@ -91,6 +97,10 @@ namespace bn::hw::audio
     void stop_all_sounds();
 
     void set_sound_master_volume(fixed volume);
+
+    inline void update_music_events(bool)
+    {
+    }
 
     void update_sounds_queue();
 

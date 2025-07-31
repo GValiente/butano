@@ -7,6 +7,7 @@
 #define BN_HW_AUDIO_MAXMOD_H
 
 #include "maxmod.h"
+#include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_optional.h"
 
@@ -88,6 +89,8 @@ namespace bn::hw::audio
         mmSetModulePitch(mm_word(_hw_music_pitch(pitch)));
     }
 
+    [[nodiscard]] span<uint8_t> music_event_ids();
+
     [[nodiscard]] inline bool jingle_playing()
     {
         return mmActiveSub();
@@ -132,6 +135,8 @@ namespace bn::hw::audio
     {
         mmSetEffectsVolume(mm_word(_hw_sound_master_volume(volume)));
     }
+
+    void update_music_events(bool enabled);
 
     void update_sounds_queue();
 

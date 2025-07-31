@@ -528,6 +528,7 @@ namespace
         bn::dmg_music_master_volume dmg_music_master_volume = dmg_music_master_volume::QUARTER;
         bool music_playing = false;
         bool music_paused = false;
+        bool music_event_handler_enabled = false;
         bool jingle_playing = false;
         bool dmg_music_paused = false;
         bool update_on_vblank = false;
@@ -733,6 +734,23 @@ void set_music_pitch(fixed pitch)
         ::new(static_cast<void*>(data.command_datas + commands)) set_music_pitch_command(pitch);
         data.commands_count = commands + 1;
     }
+}
+
+bool music_event_handler_enabled()
+{
+    return data.music_event_handler_enabled;
+}
+
+void set_music_event_handler_enabled(bool enabled)
+{
+    data.music_event_handler_enabled = enabled;
+}
+
+span<uint8_t> music_event_ids()
+{
+    BN_BASIC_ASSERT(data.music_event_handler_enabled, "Music event handler is disabled");
+
+    return hw::audio::music_event_ids();
 }
 
 bool jingle_playing()
@@ -1358,6 +1376,8 @@ void execute_commands()
             it = data.sound_map.erase(it);
         }
     }
+
+    hw::audio::update_music_events(data.music_event_handler_enabled);
 }
 
 void vblank_commit()

@@ -6,6 +6,7 @@
 #ifndef BN_HW_AUDIO_NULL_H
 #define BN_HW_AUDIO_NULL_H
 
+#include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_optional.h"
 
@@ -75,6 +76,11 @@ namespace bn::hw::audio
     {
     }
 
+    [[nodiscard]] inline span<uint8_t> music_event_ids()
+    {
+        return span<uint8_t>();
+    }
+
     [[nodiscard]] inline bool jingle_playing()
     {
         return false;
@@ -124,6 +130,10 @@ namespace bn::hw::audio
     }
 
     inline void set_sound_master_volume(fixed)
+    {
+    }
+
+    inline void update_music_events(bool)
     {
     }
 

@@ -91,4 +91,17 @@
     #define BN_CFG_AUDIO_MAX_COMMANDS (((BN_CFG_AUDIO_MAX_SOUND_CHANNELS) * 2) + 1)
 #endif
 
+/**
+ * @def BN_CFG_AUDIO_MAX_MUSIC_EVENTS
+ *
+ * Specifies the maximum number of active Direct Sound music events per update.
+ *
+ * See https://maxmod.org/ref/tut/songevents.html for more information about music events.
+ *
+ * @ingroup music
+ */
+#ifndef BN_CFG_AUDIO_MAX_MUSIC_EVENTS
+    #define BN_CFG_AUDIO_MAX_MUSIC_EVENTS 8
+#endif
+
 #endif

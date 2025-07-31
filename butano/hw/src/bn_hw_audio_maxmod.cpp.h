@@ -18,6 +18,8 @@ namespace
 {
     static_assert(BN_CFG_AUDIO_MAX_MUSIC_CHANNELS > 0, "Invalid max music channels");
     static_assert(BN_CFG_AUDIO_MAX_SOUND_CHANNELS > 0, "Invalid max sound channels");
+    static_assert(BN_CFG_AUDIO_MAX_MUSIC_EVENTS > 0 && BN_CFG_AUDIO_MAX_MUSIC_EVENTS < 256,
+                  "Invalid max music events");
     static_assert(BN_CFG_AUDIO_STEREO, "Mono output not supported");
     static_assert(! BN_CFG_AUDIO_DYNAMIC_MIXING, "Dynamic mixing not supported");
 
@@ -36,8 +38,13 @@ namespace
 
     public:
         forward_list<sound_type, BN_CFG_AUDIO_MAX_SOUND_CHANNELS> sounds_queue;
+        uint8_t last_music_event_ids[BN_CFG_AUDIO_MAX_MUSIC_EVENTS];
+        uint8_t current_music_event_ids[BN_CFG_AUDIO_MAX_MUSIC_EVENTS];
         uint16_t direct_sound_control_value = 0;
+        uint8_t last_music_event_count = 0;
+        uint8_t current_music_event_count = 0;
         bool music_paused = false;
+        bool music_event_handler_enabled = false;
     };
 
     BN_DATA_EWRAM_BSS static_data data;
@@ -149,6 +156,22 @@ namespace
         }
     }
 
+    mm_word _maxmod_event_handler(mm_word msg, mm_word param)
+    {
+        if(msg == MMCB_SONGMESSAGE)
+        {
+            int event_count = data.current_music_event_count;
+
+            if(event_count < BN_CFG_AUDIO_MAX_MUSIC_EVENTS)
+            {
+                data.current_music_event_ids[event_count] = uint8_t(param);
+                data.current_music_event_count = uint8_t(event_count + 1);
+            }
+        }
+
+        return 0;
+    }
+
     [[nodiscard]] inline int _hw_sound_volume(fixed volume)
     {
         return min(fixed_t<8>(volume).data(), 255);
@@ -217,6 +240,11 @@ void resume_music()
 {
     mmResume();
     data.music_paused = false;
+}
+
+span<uint8_t> music_event_ids()
+{
+    return span<uint8_t>(data.last_music_event_ids, data.last_music_event_count);
 }
 
 optional<uint16_t> play_sound(int priority, int id)
@@ -293,6 +321,36 @@ void stop_all_sounds()
 {
     mmEffectCancelAll();
     data.sounds_queue.clear();
+}
+
+void update_music_events(bool enabled)
+{
+    if(data.music_event_handler_enabled)
+    {
+        uint8_t event_count = data.current_music_event_count;
+        data.current_music_event_count = 0;
+
+        if(enabled)
+        {
+            data.last_music_event_count = event_count;
+            bn::copy(data.current_music_event_ids, data.current_music_event_ids + event_count,
+                     data.last_music_event_ids);
+        }
+        else
+        {
+            data.last_music_event_count = 0;
+            data.music_event_handler_enabled = false;
+            mmSetEventHandler(nullptr);
+        }
+    }
+    else
+    {
+        if(enabled)
+        {
+            data.music_event_handler_enabled = true;
+            mmSetEventHandler(_maxmod_event_handler);
+        }
+    }
 }
 
 void update_sounds_queue()

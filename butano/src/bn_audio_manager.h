@@ -6,6 +6,7 @@
 #ifndef BN_AUDIO_MANAGER_H
 #define BN_AUDIO_MANAGER_H
 
+#include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_optional.h"
 #include "bn_dmg_music_master_volume.h"
@@ -58,6 +59,12 @@ namespace bn::audio_manager
     [[nodiscard]] fixed music_pitch();
 
     void set_music_pitch(fixed pitch);
+
+    [[nodiscard]] bool music_event_handler_enabled();
+
+    void set_music_event_handler_enabled(bool enabled);
+
+    [[nodiscard]] span<uint8_t> music_event_ids();
 
 
     // jingle

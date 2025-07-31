@@ -12,6 +12,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_19_6_0 19.6.0 (next release)
+ *
+ * Music events support added. Check <a href="https://maxmod.org/ref/tut/songevents.html">Maxmod documentation</a>
+ * and the `audio` example to see how to insert and read music events.
+ *
+ *
  * @section changelog_19_5_0 19.5.0
  *
  * * bn::istring::from_char_array added.

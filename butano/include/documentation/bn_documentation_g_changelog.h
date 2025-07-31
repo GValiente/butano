@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_19_5_0 19.5.0 (next release)
+ * @section changelog_19_5_0 19.5.0
  *
  * * bn::istring::from_char_array added.
  * * bn::istring_base public constructor documentation improved.

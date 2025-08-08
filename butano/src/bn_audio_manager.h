@@ -61,12 +61,6 @@ namespace bn::audio_manager
 
     void set_music_pitch(fixed pitch);
 
-    [[nodiscard]] bool music_event_handler_enabled();
-
-    void set_music_event_handler_enabled(bool enabled);
-
-    [[nodiscard]] span<uint8_t> music_event_ids();
-
 
     // jingle
 
@@ -158,6 +152,12 @@ namespace bn::audio_manager
     [[nodiscard]] bool update_on_vblank();
 
     void set_update_on_vblank(bool update_on_vblank);
+
+    [[nodiscard]] bool event_handler_enabled();
+
+    void set_event_handler_enabled(bool enabled);
+
+    [[nodiscard]] span<uint8_t> event_ids();
 
     void update();
 

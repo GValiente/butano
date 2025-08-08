@@ -85,6 +85,18 @@
               <span class="m-doc-wrap-bumper">void <a href="#a8e8e0f8ecfeb2e8d7f5d3f6d091fc4b3" class="m-doc">set_update_on_vblank</a>(</span><span class="m-doc-wrap">bool update_on_vblank)</span>
             </dt>
             <dd>Sets if audio must be updated on the V-Blank interrupt or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2482345a235aab4830c56aa22657f58d" class="m-doc">event_handler_enabled</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            </dt>
+            <dd>Indicates if audio events are registered or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aab5f576703e17b881e70e9947d53402e" class="m-doc">set_event_handler_enabled</a>(</span><span class="m-doc-wrap">bool enabled)</span>
+            </dt>
+            <dd>Sets if audio events must be registered or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a38674b273ebea3f9a058b5bf18d8abec" class="m-doc">event_ids</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;uint8_t&gt;</span>
+            </dt>
+            <dd>Returns the ID of the audio events registered since the last <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</dd>
           </dl>
         </section>
         <section>
@@ -109,6 +121,27 @@
             </h3>
             <p>Sets if audio must be updated on the V-Blank interrupt or not.</p>
 <p>Updating audio on the V-Blank interrupt helps to reduce audio noise but increases the possibility of visual bugs because of lack of V-Blank time.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2482345a235aab4830c56aa22657f58d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />audio::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2482345a235aab4830c56aa22657f58d" class="m-doc-self">event_handler_enabled</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Indicates if audio events are registered or not.</p>
+<p>See <a href="https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html">https://blocksds.skylyrac.net/docs/maxmod/md_<wbr />documentation_<wbr />2using_<wbr />_<wbr />song_<wbr />_<wbr />events.html</a> for more information about audio events.</p>
+          </div></section>
+          <section class="m-doc-details" id="aab5f576703e17b881e70e9947d53402e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />audio::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aab5f576703e17b881e70e9947d53402e" class="m-doc-self">set_event_handler_enabled</a>(</span><span class="m-doc-wrap">bool enabled)</span></span>
+            </h3>
+            <p>Sets if audio events must be registered or not.</p>
+<p>See <a href="https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html">https://blocksds.skylyrac.net/docs/maxmod/md_<wbr />documentation_<wbr />2using_<wbr />_<wbr />song_<wbr />_<wbr />events.html</a> for more information about audio events.</p>
+          </div></section>
+          <section class="m-doc-details" id="a38674b273ebea3f9a058b5bf18d8abec"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;uint8_t&gt; bn::<wbr />audio::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a38674b273ebea3f9a058b5bf18d8abec" class="m-doc-self">event_ids</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Returns the ID of the audio events registered since the last <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</p>
+<p>To register audio events, the event handler must be enabled with <a href="#aab5f576703e17b881e70e9947d53402e" class="m-doc">audio::<wbr />set_event_handler_enabled</a>.</p><p>See <a href="https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html">https://blocksds.skylyrac.net/docs/maxmod/md_<wbr />documentation_<wbr />2using_<wbr />_<wbr />song_<wbr />_<wbr />events.html</a> for more information about audio events.</p>
           </div></section>
         </section>
       </div>

@@ -35,4 +35,19 @@ void set_update_on_vblank(bool update_on_vblank)
     audio_manager::set_update_on_vblank(update_on_vblank);
 }
 
+bool event_handler_enabled()
+{
+    return audio_manager::event_handler_enabled();
+}
+
+void set_event_handler_enabled(bool enabled)
+{
+    audio_manager::set_event_handler_enabled(enabled);
+}
+
+span<uint8_t> event_ids()
+{
+    return audio_manager::event_ids();
+}
+
 }

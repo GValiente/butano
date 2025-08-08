@@ -92,17 +92,17 @@
 #endif
 
 /**
- * @def BN_CFG_AUDIO_MAX_MUSIC_EVENTS
+ * @def BN_CFG_AUDIO_MAX_EVENTS
  *
- * Specifies the maximum number of active Direct Sound music events per update.
+ * Specifies the maximum number of active audio events per update.
  *
  * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
- * for more information about music events.
+ * for more information about audio events.
  *
  * @ingroup music
  */
-#ifndef BN_CFG_AUDIO_MAX_MUSIC_EVENTS
-    #define BN_CFG_AUDIO_MAX_MUSIC_EVENTS 8
+#ifndef BN_CFG_AUDIO_MAX_EVENTS
+    #define BN_CFG_AUDIO_MAX_EVENTS 8
 #endif
 
 #endif

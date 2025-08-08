@@ -13,7 +13,6 @@
  * @ingroup music
  */
 
-#include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_optional.h"
 
@@ -123,32 +122,6 @@ namespace bn::music
      * @param pitch Pitch level, in the range [0.5..2].
      */
     void set_pitch(fixed pitch);
-
-    /**
-     * @brief Indicates if music events are registered or not.
-     *
-     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
-     * for more information about music events.
-     */
-    [[nodiscard]] bool event_handler_enabled();
-
-    /**
-     * @brief Sets if music events must be registered or not.
-     *
-     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
-     * for more information about music events.
-     */
-    void set_event_handler_enabled(bool enabled);
-
-    /**
-     * @brief Returns the ID of the music events registered since the last core::update call.
-     *
-     * To register music events, the event handler must be enabled with music::set_event_handler_enabled.
-     *
-     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
-     * for more information about music events.
-     */
-    [[nodiscard]] span<uint8_t> event_ids();
 }
 
 #endif

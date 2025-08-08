@@ -38,6 +38,15 @@ namespace bn::hw::audio
 
     void set_mixing_rate(audio_mixing_rate mixing_rate);
 
+    [[nodiscard]] inline span<uint8_t> event_ids()
+    {
+        return span<uint8_t>();
+    }
+
+    inline void update_events(bool)
+    {
+    }
+
     [[nodiscard]] bool music_playing();
 
     void play_music(int id, bool loop);
@@ -65,11 +74,6 @@ namespace bn::hw::audio
     inline void set_music_pitch(fixed pitch)
     {
         BN_BASIC_ASSERT(pitch == 1, "Music pitch not supported");
-    }
-
-    [[nodiscard]] inline span<uint8_t> music_event_ids()
-    {
-        return span<uint8_t>();
     }
 
     [[nodiscard]] inline bool jingle_playing()
@@ -106,10 +110,6 @@ namespace bn::hw::audio
     void stop_all_sounds();
 
     void set_sound_master_volume(fixed volume);
-
-    inline void update_music_events(bool)
-    {
-    }
 
     void update_sounds_queue();
 

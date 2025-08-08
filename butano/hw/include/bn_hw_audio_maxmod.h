@@ -63,6 +63,10 @@ namespace bn::hw::audio
 
     void set_mixing_rate(audio_mixing_rate mixing_rate);
 
+    [[nodiscard]] span<uint8_t> event_ids();
+
+    void update_events(bool enabled);
+
     [[nodiscard]] bool music_playing();
 
     void play_music(int id, bool loop);
@@ -97,8 +101,6 @@ namespace bn::hw::audio
     {
         mmSetModulePitch(mm_word(_hw_music_pitch(pitch)));
     }
-
-    [[nodiscard]] span<uint8_t> music_event_ids();
 
     [[nodiscard]] inline bool jingle_playing()
     {
@@ -144,8 +146,6 @@ namespace bn::hw::audio
     {
         mmSetEffectsVolume(mm_word(_hw_sound_master_volume(volume)));
     }
-
-    void update_music_events(bool enabled);
 
     void update_sounds_queue();
 

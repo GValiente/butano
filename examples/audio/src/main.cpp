@@ -4,6 +4,7 @@
  */
 
 #include "bn_core.h"
+#include "bn_audio.h"
 #include "bn_keypad.h"
 #include "bn_string.h"
 #include "bn_bg_palettes.h"
@@ -173,24 +174,24 @@ namespace
         bn::music::stop();
     }
 
-    void music_events_scene(bn::sprite_text_generator& text_generator)
+    void audio_events_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
             "START: go to next scene",
         };
 
-        common::info info("Music events", info_text_lines, text_generator);
+        common::info info("Audio events", info_text_lines, text_generator);
         info.set_show_always(true);
 
         bn::music::play(bn::music_items::mj_totsnuk01_event, 0.6);
-        bn::music::set_event_handler_enabled(true);
+        bn::audio::set_event_handler_enabled(true);
 
         bn::string<32> event_text;
         bn::vector<bn::sprite_ptr, 8> event_text_sprites;
 
         while(! bn::keypad::start_pressed())
         {
-            bn::span<uint8_t> event_ids = bn::music::event_ids();
+            bn::span<uint8_t> event_ids = bn::audio::event_ids();
 
             if(! event_ids.empty())
             {
@@ -206,7 +207,7 @@ namespace
         }
 
         bn::music::stop();
-        bn::music::set_event_handler_enabled(false);
+        bn::audio::set_event_handler_enabled(false);
     }
 
     void jingle_scene(bn::sprite_text_generator& text_generator)
@@ -545,7 +546,7 @@ int main()
         music_actions_scene(text_generator);
         bn::core::update();
 
-        music_events_scene(text_generator);
+        audio_events_scene(text_generator);
         bn::core::update();
 
         jingle_scene(text_generator);

@@ -549,10 +549,10 @@ namespace
         audio_mixing_rate mixing_rate = audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE);
         bool music_playing = false;
         bool music_paused = false;
-        bool music_event_handler_enabled = false;
         bool jingle_playing = false;
         bool dmg_music_paused = false;
         bool update_on_vblank = false;
+        bool event_handler_enabled = false;
         bool delay_commit = true;
     };
 
@@ -755,23 +755,6 @@ void set_music_pitch(fixed pitch)
         ::new(static_cast<void*>(data.command_datas + commands)) set_music_pitch_command(pitch);
         data.commands_count = commands + 1;
     }
-}
-
-bool music_event_handler_enabled()
-{
-    return data.music_event_handler_enabled;
-}
-
-void set_music_event_handler_enabled(bool enabled)
-{
-    data.music_event_handler_enabled = enabled;
-}
-
-span<uint8_t> music_event_ids()
-{
-    BN_BASIC_ASSERT(data.music_event_handler_enabled, "Music event handler is disabled");
-
-    return hw::audio::music_event_ids();
 }
 
 bool jingle_playing()
@@ -1203,6 +1186,23 @@ void set_update_on_vblank(bool update_on_vblank)
     data.update_on_vblank = update_on_vblank;
 }
 
+bool event_handler_enabled()
+{
+    return data.event_handler_enabled;
+}
+
+void set_event_handler_enabled(bool enabled)
+{
+    data.event_handler_enabled = enabled;
+}
+
+span<uint8_t> event_ids()
+{
+    BN_BASIC_ASSERT(data.event_handler_enabled, "Event handler is disabled");
+
+    return hw::audio::event_ids();
+}
+
 void update()
 {
     data.delay_commit = ! data.update_on_vblank;
@@ -1431,7 +1431,7 @@ void execute_commands()
         }
     }
 
-    hw::audio::update_music_events(data.music_event_handler_enabled);
+    hw::audio::update_events(data.event_handler_enabled);
 }
 
 void vblank_commit()

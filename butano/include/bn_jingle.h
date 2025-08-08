@@ -63,6 +63,21 @@ namespace bn::jingle
     void stop();
 
     /**
+     * @brief Indicates if the active Direct Sound jingle has been paused or not.
+     */
+    [[nodiscard]] bool paused();
+
+    /**
+     * @brief Pauses playback of the active Direct Sound jingle.
+     */
+    void pause();
+
+    /**
+     * @brief Resumes playback of the paused Direct Sound jingle.
+     */
+    void resume();
+
+    /**
      * @brief Returns the volume of the active Direct Sound jingle.
      */
     [[nodiscard]] fixed volume();

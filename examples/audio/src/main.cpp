@@ -213,7 +213,7 @@ namespace
     void jingle_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
-            "A: play jingle",
+            "A: pause/resume jingle",
             "LEFT: decrease jingle volume",
             "RIGHT: increase jingle volume",
             "",
@@ -241,6 +241,18 @@ namespace
                 else if(bn::keypad::right_held())
                 {
                     bn::jingle::set_volume(bn::min(volume + 0.01, bn::fixed(1)));
+                }
+
+                if(bn::keypad::a_pressed())
+                {
+                    if(bn::jingle::paused())
+                    {
+                        bn::jingle::resume();
+                    }
+                    else
+                    {
+                        bn::jingle::pause();
+                    }
                 }
             }
             else

@@ -495,6 +495,8 @@ namespace
         MUSIC_SET_PITCH,
         JINGLE_PLAY,
         JINGLE_STOP,
+        JINGLE_PAUSE,
+        JINGLE_RESUME,
         JINGLE_SET_VOLUME,
         DMG_MUSIC_PLAY,
         DMG_MUSIC_STOP,
@@ -551,6 +553,7 @@ namespace
         bool music_playing = false;
         bool music_paused = false;
         bool jingle_playing = false;
+        bool jingle_paused = false;
         bool dmg_music_paused = false;
         bool update_on_vblank = false;
         bool event_handler_enabled = false;
@@ -787,6 +790,7 @@ void play_jingle(music_item item, fixed volume)
     data.jingle_item_id = item.id();
     data.jingle_volume = volume;
     data.jingle_playing = true;
+    data.jingle_paused = false;
 }
 
 void stop_jingle()
@@ -794,6 +798,7 @@ void stop_jingle()
     if(data.jingle_playing)
     {
         data.jingle_playing = false;
+        data.jingle_paused = false;
 
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
@@ -801,6 +806,38 @@ void stop_jingle()
         data.command_codes[commands] = JINGLE_STOP;
         data.commands_count = commands + 1;
     }
+}
+
+bool jingle_paused()
+{
+    return data.jingle_paused;
+}
+
+void pause_jingle()
+{
+    BN_BASIC_ASSERT(data.jingle_playing, "There's no jingle playing");
+    BN_BASIC_ASSERT(! data.jingle_paused, "Jingle is already paused");
+
+    int commands = data.commands_count;
+    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+    data.command_codes[commands] = JINGLE_PAUSE;
+    data.commands_count = commands + 1;
+
+    data.jingle_paused = true;
+}
+
+void resume_jingle()
+{
+    BN_BASIC_ASSERT(data.jingle_paused, "Jingle is not paused");
+
+    int commands = data.commands_count;
+    BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+    data.command_codes[commands] = JINGLE_RESUME;
+    data.commands_count = commands + 1;
+
+    data.jingle_paused = false;
 }
 
 fixed jingle_volume()
@@ -1231,6 +1268,7 @@ void execute_commands()
     bool music_playing = data.music_playing;
     bool music_paused = data.music_paused;
     bool jingle_playing = data.jingle_playing;
+    bool jingle_paused = data.jingle_paused;
 
     if(music_playing && ! hw::audio::music_playing())
     {
@@ -1241,6 +1279,7 @@ void execute_commands()
     if(jingle_playing && ! hw::audio::jingle_playing())
     {
         jingle_playing = false;
+        jingle_paused = false;
     }
 
     if(dmg_music_data && ! hw::dmg_audio::music_playing())
@@ -1319,11 +1358,29 @@ void execute_commands()
         case JINGLE_PLAY:
             reinterpret_cast<const play_jingle_command&>(data.command_datas[index].data).execute();
             jingle_playing = true;
+            jingle_paused = false;
             break;
 
         case JINGLE_STOP:
             hw::audio::stop_jingle();
             jingle_playing = false;
+            jingle_paused = false;
+            break;
+
+        case JINGLE_PAUSE:
+            if(jingle_playing)
+            {
+                hw::audio::pause_jingle();
+                jingle_paused = true;
+            }
+            break;
+
+        case JINGLE_RESUME:
+            if(jingle_playing)
+            {
+                hw::audio::resume_jingle();
+                jingle_paused = false;
+            }
             break;
 
         case JINGLE_SET_VOLUME:
@@ -1434,6 +1491,7 @@ void execute_commands()
     data.music_playing = music_playing;
     data.music_paused = music_paused;
     data.jingle_playing = jingle_playing;
+    data.jingle_paused = jingle_paused;
     data.dmg_music_data = dmg_music_data;
     data.dmg_music_paused = dmg_music_paused;
 

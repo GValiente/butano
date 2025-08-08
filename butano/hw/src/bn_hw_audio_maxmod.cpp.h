@@ -57,6 +57,7 @@ namespace
         uint8_t last_event_count = 0;
         uint8_t current_event_count = 0;
         bool music_paused = false;
+        bool jingle_paused = false;
         bool event_handler_enabled = false;
     };
 
@@ -325,6 +326,35 @@ void resume_music()
 {
     mmResume();
     data.music_paused = false;
+}
+
+bool jingle_playing()
+{
+    return data.jingle_paused || mmJingleActive();
+}
+
+void play_jingle(int id)
+{
+    mmJingleStart(mm_word(id), MM_PLAY_ONCE);
+    data.jingle_paused = false;
+}
+
+void stop_jingle()
+{
+    mmJingleStop();
+    data.jingle_paused = false;
+}
+
+void pause_jingle()
+{
+    mmJinglePause();
+    data.jingle_paused = true;
+}
+
+void resume_jingle()
+{
+    mmJingleResume();
+    data.jingle_paused = false;
 }
 
 optional<uint16_t> play_sound(int priority, int id)

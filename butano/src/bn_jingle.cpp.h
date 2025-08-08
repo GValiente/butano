@@ -38,6 +38,21 @@ void stop()
     audio_manager::stop_jingle();
 }
 
+bool paused()
+{
+    return audio_manager::jingle_paused();
+}
+
+void pause()
+{
+    audio_manager::pause_jingle();
+}
+
+void resume()
+{
+    audio_manager::resume_jingle();
+}
+
 fixed volume()
 {
     return audio_manager::jingle_volume();

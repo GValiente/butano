@@ -21,7 +21,7 @@
  *   <a href="https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html">Maxmod documentation</a>
  *   and the `audio` example to see how to insert and read audio events.
  * * bn::audio_mixing_rate, bn::audio::available_mixing_rates, bn::audio::mixing_rate and bn::audio::set_mixing_rate added.
- * * bn::jingle::stop added.
+ * * bn::jingle::pause, bn::jingle::resume and bn::jingle::stop added.
  * * bn::memory::copy and bn::memory::clear array overloads added.
  * * Mixing rate can be changed in the `audio_player` example.
  *
@@ -431,8 +431,8 @@
  * @section changelog_16_3_0 16.3.0
  *
  * * bn::music::stop, bn::dmg_music::stop, bn::sound_handle::stop and bn::sound_handle::release can be called
- *   without triggering an assert if the music/sound in question isn't playing.
- * * Target `*.gba` file is rebuilt when the target `*.elf` file isn't present.
+ *   without triggering an assert if the music/sound in question is not playing.
+ * * Target `*.gba` file is rebuilt when the target `*.elf` file is not present.
  * * Sprite affine mats management CPU usage reduced.
  * * Sound handles management CPU usage reduced.
  * * Backgrounds management CPU usage reduced.

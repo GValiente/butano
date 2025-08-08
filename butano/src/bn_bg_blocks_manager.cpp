@@ -1919,7 +1919,7 @@ bool big_map(int id)
 affine_bg_big_map_canvas_size affine_big_map_canvas_size(int id)
 {
     const item_type& item = data.items.item(id);
-    BN_BASIC_ASSERT(item.is_big, "Map isn't big");
+    BN_BASIC_ASSERT(item.is_big, "Map is not big");
 
     return item.big_map_canvas_size();
 }

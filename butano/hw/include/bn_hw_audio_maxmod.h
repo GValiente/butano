@@ -101,21 +101,16 @@ namespace bn::hw::audio
     {
         mmSetModulePitch(mm_word(_hw_music_pitch(pitch)));
     }
+    
+    [[nodiscard]] bool jingle_playing();
 
-    [[nodiscard]] inline bool jingle_playing()
-    {
-        return mmJingleActive();
-    }
+    void play_jingle(int id);
 
-    inline void play_jingle(int id)
-    {
-        mmJingleStart(mm_word(id), MM_PLAY_ONCE);
-    }
+    void stop_jingle();
 
-    inline void stop_jingle()
-    {
-        mmJingleStop();
-    }
+    void pause_jingle();
+
+    void resume_jingle();
 
     inline void set_jingle_volume(fixed volume)
     {

@@ -72,6 +72,12 @@ namespace bn::audio_manager
 
     void stop_jingle();
 
+    [[nodiscard]] bool jingle_paused();
+
+    void pause_jingle();
+
+    void resume_jingle();
+
     [[nodiscard]] fixed jingle_volume();
 
     void set_jingle_volume(fixed volume);

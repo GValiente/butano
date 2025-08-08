@@ -90,6 +90,14 @@ namespace bn::hw::audio
     {
     }
 
+    inline void pause_jingle()
+    {
+    }
+
+    inline void resume_jingle()
+    {
+    }
+
     inline void set_jingle_volume(fixed)
     {
     }

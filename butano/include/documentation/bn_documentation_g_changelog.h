@@ -21,6 +21,7 @@
  *   <a href="https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html">Maxmod documentation</a>
  *   and the `audio` example to see how to insert and read music events.
  * * bn::audio_mixing_rate, bn::audio::available_mixing_rates, bn::audio::mixing_rate and bn::audio::set_mixing_rate added.
+ * * Mixing rate can be changed in the `audio_player` example.
  *
  *
  * @section changelog_19_5_0 19.5.0

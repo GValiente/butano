@@ -4,9 +4,11 @@
  */
 
 #include "bn_core.h"
+#include "bn_audio.h"
 #include "bn_music.h"
-#include "bn_keypad.h"
+#include "bn_sound.h"
 #include "bn_format.h"
+#include "bn_keypad.h"
 #include "bn_sprite_ptr.h"
 #include "bn_bg_palettes.h"
 #include "bn_config_audio.h"
@@ -30,55 +32,6 @@ namespace
     constexpr bn::fixed sound_y = sound_title_y + 14;
 
     constexpr bn::fixed info_y = 67;
-
-    [[nodiscard]] int mixing_rate()
-    {
-        switch(BN_CFG_AUDIO_MIXING_RATE)
-        {
-
-        case BN_AUDIO_MIXING_RATE_8_KHZ:
-            return 8;
-
-        case BN_AUDIO_MIXING_RATE_10_KHZ:
-            return 10;
-
-        case BN_AUDIO_MIXING_RATE_12_KHZ:
-            return 12;
-
-        case BN_AUDIO_MIXING_RATE_13_KHZ:
-            return 13;
-
-        case BN_AUDIO_MIXING_RATE_16_KHZ:
-            return 16;
-
-        case BN_AUDIO_MIXING_RATE_18_KHZ:
-            return 18;
-
-        case BN_AUDIO_MIXING_RATE_20_KHZ:
-            return 20;
-
-        case BN_AUDIO_MIXING_RATE_21_KHZ:
-            return 21;
-
-        case BN_AUDIO_MIXING_RATE_24_KHZ:
-            return 24;
-
-        case BN_AUDIO_MIXING_RATE_27_KHZ:
-            return 27;
-
-        case BN_AUDIO_MIXING_RATE_28_KHZ:
-            return 28;
-
-        case BN_AUDIO_MIXING_RATE_31_KHZ:
-            return 31;
-
-        case BN_AUDIO_MIXING_RATE_32_KHZ:
-            return 32;
-
-        default:
-            BN_ERROR("Invalid mixing rate: ", BN_CFG_AUDIO_MIXING_RATE);
-        }
-    }
 
     [[nodiscard]] int max_channels()
     {
@@ -175,6 +128,75 @@ namespace
         {
             text_generator.generate(0, sound_y, bn::format<16>("{} --- {}", prefix, suffix), sound_sprites);
         }
+    }
+
+    void update_mixing_rate_text(bn::sprite_text_generator& text_generator,
+                                 bn::ivector<bn::sprite_ptr>& mixing_rate_sprites)
+    {
+        int khz = 0;
+
+        switch(bn::audio_mixing_rate mixing_rate = bn::audio::mixing_rate())
+        {
+
+        case bn::audio_mixing_rate::KHZ_8:
+            khz = 8;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_10:
+            khz = 10;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_12:
+            khz = 12;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_13:
+            khz = 13;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_16:
+            khz = 16;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_18:
+            khz = 18;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_20:
+            khz = 20;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_21:
+            khz = 21;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_24:
+            khz = 24;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_27:
+            khz = 27;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_28:
+            khz = 28;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_31:
+            khz = 31;
+            break;
+
+        case bn::audio_mixing_rate::KHZ_32:
+            khz = 32;
+            break;
+
+        default:
+            break;
+        }
+
+        mixing_rate_sprites.clear();
+        text_generator.set_left_alignment();
+        text_generator.generate(-112, info_y, bn::format<16>("{} KHZ", khz), mixing_rate_sprites);
     }
 
     void update_cpu_usage_text(int frame_counter, bn::fixed& max_cpu_usage,
@@ -369,6 +391,58 @@ namespace
             }
         }
     }
+
+    void update_mixing_rate(int& playing_music_item_index, bn::sprite_text_generator& text_generator,
+                            bn::ivector<bn::sprite_ptr>& mixing_rate_sprites)
+    {
+        if(bn::keypad::l_pressed() || bn::keypad::r_pressed())
+        {
+            bn::span<const bn::audio_mixing_rate> available_mixing_rates = bn::audio::available_mixing_rates();
+            bn::audio_mixing_rate mixing_rate = bn::audio::mixing_rate();
+            int mixing_rate_index = 0;
+
+            for(bn::audio_mixing_rate available_mixing_rate : available_mixing_rates)
+            {
+                if(mixing_rate != available_mixing_rate)
+                {
+                    ++mixing_rate_index;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if(bn::keypad::l_pressed())
+            {
+                --mixing_rate_index;
+
+                if(mixing_rate_index == -1)
+                {
+                    mixing_rate_index = available_mixing_rates.size() - 1;
+                }
+            }
+            else
+            {
+                ++mixing_rate_index;
+
+                if(mixing_rate_index == available_mixing_rates.size())
+                {
+                    mixing_rate_index = 0;
+                }
+            }
+
+            if(playing_music_item_index >= 0)
+            {
+                bn::music::stop();
+                playing_music_item_index = -1;
+            }
+
+            bn::sound::stop_all();
+            bn::audio::set_mixing_rate(available_mixing_rates[mixing_rate_index]);
+            update_mixing_rate_text(text_generator, mixing_rate_sprites);
+        }
+    }
 }
 
 int main()
@@ -383,9 +457,6 @@ int main()
     text_generator.generate(0, title_y, "AUDIO PLAYER", static_sprites);
     text_generator.generate(0, music_title_y, "MUSIC", static_sprites);
     text_generator.generate(0, sound_title_y, "SOUND", static_sprites);
-
-    text_generator.set_left_alignment();
-    text_generator.generate(-112, info_y, bn::format<16>("{} KHZ", mixing_rate()), static_sprites);
 
     text_generator.set_center_alignment();
     text_generator.generate(0, info_y, bn::format<16>("{} max ch", max_channels()), static_sprites);
@@ -409,6 +480,9 @@ int main()
     bn::vector<bn::sprite_ptr, 32> sound_sprites;
     int sound_item_index = 0;
     update_sound_text(false, sound_item_index, text_generator, sound_sprites);
+
+    bn::vector<bn::sprite_ptr, 8> mixing_rate_sprites;
+    update_mixing_rate_text(text_generator, mixing_rate_sprites);
 
     bn::vector<bn::sprite_ptr, 8> cpu_sprites;
     bn::fixed max_cpu_usage;
@@ -492,6 +566,8 @@ int main()
             BN_ERROR("Invalid option index: ", option_index);
             break;
         }
+
+        update_mixing_rate(playing_music_item_index, text_generator, mixing_rate_sprites);
 
         update_music_position(option_index == 2, last_music_position, last_music_position_selected,
                               text_generator, music_position_sprites);

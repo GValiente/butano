@@ -197,6 +197,20 @@ namespace bn::memory
     }
 
     /**
+     * @brief Copies the memory of the given array to the object referenced by destination_ref.
+     *
+     * If the source and destination objects overlap, the behavior is undefined.
+     *
+     * @param source_array Array to copy from.
+     * @param destination_ref Reference to the memory location to copy to.
+     */
+    template<typename Type, int SourceSize>
+    void copy(const Type (&source_array)[SourceSize], Type& destination_ref)
+    {
+        copy(source_array[0], SourceSize, destination_ref);
+    }
+
+    /**
      * @brief Clears (fills with zero) the memory of the given amount of elements
      * from the object referenced by destination_ref.
      * @param elements Number of elements to clear (not bytes).
@@ -241,6 +255,15 @@ namespace bn::memory
                 _bn::memory::unsafe_clear_bytes(int(bytes), &destination_ref);
             }
         }
+    }
+
+    /**
+     * @brief Clears (fills with zero) the memory of the given array.
+     */
+    template<typename Type, int Size>
+    void clear(Type (&array)[Size])
+    {
+        clear(Size, array[0]);
     }
 
     /**

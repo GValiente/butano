@@ -123,11 +123,22 @@
             </dt>
             <dd>Copies the given amount of elements from the object referenced by source_ref to the object referenced by destination_ref.</dd>
             <dt>
+              <div class="m-doc-template">template&lt;typename Type, int SourceSize&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#aac81d6575da8b672f754181230a5f7de" class="m-doc">copy</a>(</span><span class="m-doc-wrap">const Type(&amp;source_array)[SourceSize],
+              Type&amp; destination_ref)</span>
+            </dt>
+            <dd>Copies the memory of the given array to the object referenced by destination_ref.</dd>
+            <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
               <span class="m-doc-wrap-bumper">void <a href="#a035feaf6d2f14313185724e54f168424" class="m-doc">clear</a>(</span><span class="m-doc-wrap">int elements,
               Type&amp; destination_ref)</span>
             </dt>
             <dd>Clears (fills with zero) the memory of the given amount of elements from the object referenced by destination_ref.</dd>
+            <dt id="a1033abdf4ab05c747cb629ccbe1e4e36">
+              <div class="m-doc-template">template&lt;typename Type, int Size&gt;</div>
+              <span class="m-doc-wrap-bumper">void <a href="#a1033abdf4ab05c747cb629ccbe1e4e36" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">Type(&amp;array)[Size])</span>
+            </dt>
+            <dd>Clears (fills with zero) the memory of the given array.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a34aa79c1304c93263598983351264f80" class="m-doc">set_bytes</a>(</span><span class="m-doc-wrap">uint8_t value,
               int bytes,
@@ -287,6 +298,32 @@
                 <tr>
                   <td>elements</td>
                   <td>Number of elements to copy (not bytes).</td>
+                </tr>
+                <tr>
+                  <td>destination_ref</td>
+                  <td>Reference to the memory location to copy to.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the source and destination objects overlap, the behavior is undefined.</p>
+          </div></section>
+          <section class="m-doc-details" id="aac81d6575da8b672f754181230a5f7de"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, int SourceSize&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aac81d6575da8b672f754181230a5f7de" class="m-doc-self">copy</a>(</span><span class="m-doc-wrap">const Type(&amp;source_array)[SourceSize],
+              Type&amp; destination_ref)</span></span>
+            </h3>
+            <p>Copies the memory of the given array to the object referenced by destination_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">source_array</td>
+                  <td>Array to copy from.</td>
                 </tr>
                 <tr>
                   <td>destination_ref</td>

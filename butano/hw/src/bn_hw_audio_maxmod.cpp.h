@@ -102,10 +102,8 @@ namespace
 
     constexpr int _initial_mix_length = mix_length(audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE));
 
-    constexpr int _maxmod_engine_buffer_size =
-            _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _initial_mix_length;
-
-    alignas(int) BN_DATA_EWRAM_BSS uint8_t maxmod_engine_buffer[_maxmod_engine_buffer_size];
+    alignas(int) BN_DATA_EWRAM_BSS uint8_t maxmod_engine_buffer[
+            _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _initial_mix_length];
 
     alignas(int) uint8_t maxmod_mixing_buffer[_initial_mix_length];
 
@@ -261,8 +259,8 @@ void set_mixing_rate(audio_mixing_rate mixing_rate)
     BN_ASSERT(mix_length(mixing_rate) <= _initial_mix_length, "Mixing rate is higher than the initial one");
 
     mmEnd();
-    memory::clear(_maxmod_engine_buffer_size, maxmod_engine_buffer[0]);
-    memory::clear(_initial_mix_length, maxmod_mixing_buffer[0]);
+    memory::clear(maxmod_engine_buffer);
+    memory::clear(maxmod_mixing_buffer);
     _init_impl(mixing_rate);
 }
 

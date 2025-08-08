@@ -17,6 +17,7 @@ namespace bn
     class sound_item;
     class dmg_music_item;
     class dmg_music_position;
+    enum class audio_mixing_rate : uint8_t;
 }
 
 namespace bn::audio_manager
@@ -147,6 +148,12 @@ namespace bn::audio_manager
 
 
     // other
+
+    [[nodiscard]] span<const audio_mixing_rate> available_mixing_rates();
+
+    [[nodiscard]] audio_mixing_rate mixing_rate();
+
+    void set_mixing_rate(audio_mixing_rate mixing_rate);
 
     [[nodiscard]] bool update_on_vblank();
 

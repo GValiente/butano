@@ -51,6 +51,25 @@ namespace
     static_assert(power_of_two(max_sound_channels), "Invalid max sound channels");
 
 
+    class set_audio_mixing_rate
+    {
+
+    public:
+        explicit set_audio_mixing_rate(audio_mixing_rate mixing_rate) :
+            _mixing_rate(int(mixing_rate))
+        {
+        }
+
+        void execute() const
+        {
+            hw::audio::set_mixing_rate(audio_mixing_rate(_mixing_rate));
+        }
+
+    private:
+        int _mixing_rate;
+    };
+
+
     class play_music_command
     {
 
@@ -465,6 +484,7 @@ namespace
 
     enum command_code : uint8_t
     {
+        AUDIO_SET_MIXING_RATE,
         MUSIC_PLAY,
         MUSIC_STOP,
         MUSIC_PAUSE,
@@ -526,6 +546,7 @@ namespace
         command_code command_codes[max_commands];
         bn::dmg_music_type dmg_music_type = dmg_music_type::GBT_PLAYER;
         bn::dmg_music_master_volume dmg_music_master_volume = dmg_music_master_volume::QUARTER;
+        audio_mixing_rate mixing_rate = audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE);
         bool music_playing = false;
         bool music_paused = false;
         bool music_event_handler_enabled = false;
@@ -1143,6 +1164,35 @@ void set_sound_master_volume(fixed volume)
     }
 }
 
+span<const audio_mixing_rate> available_mixing_rates()
+{
+    return hw::audio::available_mixing_rates();
+}
+
+audio_mixing_rate mixing_rate()
+{
+    return data.mixing_rate;
+}
+
+void set_mixing_rate(audio_mixing_rate mixing_rate)
+{
+    if(mixing_rate != data.mixing_rate)
+    {
+        data.mixing_rate = mixing_rate;
+
+        BN_BASIC_ASSERT(! data.music_playing, "There's music playing");
+        BN_BASIC_ASSERT(! data.jingle_playing, "There's a jingle playing");
+        BN_BASIC_ASSERT(data.sound_map.empty(), "There are sounds playing");
+
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = AUDIO_SET_MIXING_RATE;
+        ::new(static_cast<void*>(data.command_datas + commands)) set_audio_mixing_rate(mixing_rate);
+        data.commands_count = commands + 1;
+    }
+}
+
 bool update_on_vblank()
 {
     return data.update_on_vblank;
@@ -1190,6 +1240,10 @@ void execute_commands()
     {
         switch(data.command_codes[index])
         {
+
+        case AUDIO_SET_MIXING_RATE:
+            reinterpret_cast<const set_audio_mixing_rate&>(data.command_datas[index].data).execute();
+            break;
 
         case MUSIC_PLAY:
             reinterpret_cast<const play_music_command&>(data.command_datas[index].data).execute();

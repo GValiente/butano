@@ -32,6 +32,17 @@ namespace
     constexpr unsigned sound_channel_bits = 4;
     constexpr unsigned sound_counter_bits = 16 - 1 - sound_channel_bits;
 
+    constexpr audio_mixing_rate mixing_rates[] =
+    {
+        audio_mixing_rate::KHZ_8,
+        audio_mixing_rate::KHZ_12,
+        audio_mixing_rate::KHZ_16,
+        audio_mixing_rate::KHZ_20,
+        audio_mixing_rate::KHZ_24,
+        audio_mixing_rate::KHZ_28,
+        audio_mixing_rate::KHZ_32
+    };
+
 
     class sound_type
     {
@@ -60,36 +71,46 @@ namespace
     BN_DATA_EWRAM_BSS static_data data;
 
 
-    constexpr int _mix_length = []()
+    [[nodiscard]] constexpr int _mix_length(audio_mixing_rate mixing_rate)
     {
-        switch(BN_CFG_AUDIO_MIXING_RATE)
+        switch(mixing_rate)
         {
 
-        case BN_AUDIO_MIXING_RATE_8_KHZ:
+        case audio_mixing_rate::KHZ_8:
             return AAS_CONFIG_MIX_8KHZ;
 
-        case BN_AUDIO_MIXING_RATE_12_KHZ:
+        case audio_mixing_rate::KHZ_12:
             return AAS_CONFIG_MIX_12KHZ;
 
-        case BN_AUDIO_MIXING_RATE_16_KHZ:
+        case audio_mixing_rate::KHZ_16:
             return AAS_CONFIG_MIX_16KHZ;
 
-        case BN_AUDIO_MIXING_RATE_20_KHZ:
+        case audio_mixing_rate::KHZ_20:
             return AAS_CONFIG_MIX_20KHZ;
 
-        case BN_AUDIO_MIXING_RATE_24_KHZ:
+        case audio_mixing_rate::KHZ_24:
             return AAS_CONFIG_MIX_24KHZ;
 
-        case BN_AUDIO_MIXING_RATE_28_KHZ:
+        case audio_mixing_rate::KHZ_28:
             return AAS_CONFIG_MIX_28KHZ;
 
-        case BN_AUDIO_MIXING_RATE_32_KHZ:
+        case audio_mixing_rate::KHZ_32:
             return AAS_CONFIG_MIX_32KHZ;
 
         default:
-            BN_ERROR("Invalid mixing rate: ", BN_CFG_AUDIO_MIXING_RATE);
+            BN_ERROR("Invalid mixing rate: ", int(mixing_rate));
+            return AAS_CONFIG_MIX_8KHZ;
         }
-    }();
+    };
+
+    void _init_impl(int mix_length)
+    {
+        constexpr int spatial = BN_CFG_AUDIO_STEREO ? AAS_CONFIG_SPATIAL_STEREO : AAS_CONFIG_SPATIAL_MONO;
+        constexpr int dynamic = BN_CFG_AUDIO_DYNAMIC_MIXING ? AAS_CONFIG_DYNAMIC_ON : AAS_CONFIG_DYNAMIC_OFF;
+
+        [[maybe_unused]] int error_code = AAS_SetConfig(mix_length, AAS_CONFIG_CHANS_8, spatial, dynamic);
+        BN_BASIC_ASSERT(! error_code, "AAS_SetConfig call failed: ", error_code);
+    }
 
     [[nodiscard]] bool _check_sounds_queue(int priority)
     {
@@ -352,13 +373,11 @@ namespace
 
 void init()
 {
+    constexpr int mix_length = _mix_length(audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE));
+
     ::new(static_cast<void*>(&data)) static_data();
 
-    constexpr int spatial = BN_CFG_AUDIO_STEREO ? AAS_CONFIG_SPATIAL_STEREO : AAS_CONFIG_SPATIAL_MONO;
-    constexpr int dynamic = BN_CFG_AUDIO_DYNAMIC_MIXING ? AAS_CONFIG_DYNAMIC_ON : AAS_CONFIG_DYNAMIC_OFF;
-
-    [[maybe_unused]] int error_code = AAS_SetConfig(_mix_length, AAS_CONFIG_CHANS_8, spatial, dynamic);
-    BN_BASIC_ASSERT(! error_code, "AAS_SetConfig call failed: ", error_code);
+    _init_impl(mix_length);
 
     irq::set_isr(irq::id::TIMER1, AAS_FastTimer1InterruptHandler);
     hw::irq::enable(hw::irq::id::TIMER1);
@@ -377,6 +396,16 @@ void disable()
 
     data.direct_sound_control_value = REG_SNDDSCNT;
     REG_SNDDSCNT = 0;
+}
+
+span<const audio_mixing_rate> available_mixing_rates()
+{
+    return mixing_rates;
+}
+
+void set_mixing_rate(audio_mixing_rate mixing_rate)
+{
+    _init_impl(_mix_length(mixing_rate));
 }
 
 bool music_playing()

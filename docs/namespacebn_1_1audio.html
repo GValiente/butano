@@ -65,6 +65,18 @@
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
+            <dt id="abee85fe01be066ae68f589f86f1e2f4a">
+              <span class="m-doc-wrap-bumper">auto <a href="#abee85fe01be066ae68f589f86f1e2f4a" class="m-doc-self">available_mixing_rates</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="group__audio.html#ga83a83c1efc0dec2d02ad0e430680bb8c" class="m-doc">audio_<wbr />mixing_<wbr />rate</a>&gt;</span>
+            </dt>
+            <dd>Returns the available Direct Sound mixing rates.</dd>
+            <dt id="a001fe2849e79922449b586d92f056508">
+              <span class="m-doc-wrap-bumper">auto <a href="#a001fe2849e79922449b586d92f056508" class="m-doc-self">mixing_rate</a>(</span><span class="m-doc-wrap">) -&gt; <a href="group__audio.html#ga83a83c1efc0dec2d02ad0e430680bb8c" class="m-doc">audio_<wbr />mixing_<wbr />rate</a></span>
+            </dt>
+            <dd>Returns the current Direct Sound mixing rate.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a821b50744cb5cea0f14407df0beb4b10" class="m-doc">set_mixing_rate</a>(</span><span class="m-doc-wrap"><a href="group__audio.html#ga83a83c1efc0dec2d02ad0e430680bb8c" class="m-doc">audio_<wbr />mixing_<wbr />rate</a> mixing_rate)</span>
+            </dt>
+            <dd>Specifies the current Direct Sound mixing rate.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a9d49b03c820bb9caa74417f705416524" class="m-doc">update_on_vblank</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
             </dt>
@@ -77,6 +89,13 @@
         </section>
         <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a821b50744cb5cea0f14407df0beb4b10"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />audio::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a821b50744cb5cea0f14407df0beb4b10" class="m-doc-self">set_mixing_rate</a>(</span><span class="m-doc-wrap"><a href="group__audio.html#ga83a83c1efc0dec2d02ad0e430680bb8c" class="m-doc">audio_<wbr />mixing_<wbr />rate</a> mixing_rate)</span></span>
+            </h3>
+            <p>Specifies the current Direct Sound mixing rate.</p>
+<p>All Direct Sound audio playback must be stopped before changing the mixing rate.</p>
+          </div></section>
           <section class="m-doc-details" id="a9d49b03c820bb9caa74417f705416524"><div>
             <h3>
               <span class="m-doc-wrap-bumper">bool bn::<wbr />audio::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9d49b03c820bb9caa74417f705416524" class="m-doc-self">update_on_vblank</a>(</span><span class="m-doc-wrap">)</span></span>

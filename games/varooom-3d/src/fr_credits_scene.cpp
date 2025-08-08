@@ -149,7 +149,7 @@ namespace
         "",
         "Music and sound",
         "Maxmod",
-        "maxmod.devkitpro.org",
+        "github.com/blocksds/maxmod",
         "",
         "",
         "",

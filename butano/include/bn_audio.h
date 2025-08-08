@@ -13,7 +13,12 @@
  * @ingroup audio
  */
 
-#include "bn_common.h"
+#include "bn_span.h"
+
+namespace bn
+{
+    enum class audio_mixing_rate : uint8_t;
+}
 
 /**
  * @brief Audio related functions.
@@ -22,6 +27,23 @@
  */
 namespace bn::audio
 {
+    /**
+     * @brief Returns the available Direct Sound mixing rates.
+     */
+    [[nodiscard]] span<const audio_mixing_rate> available_mixing_rates();
+
+    /**
+     * @brief Returns the current Direct Sound mixing rate.
+     */
+    [[nodiscard]] audio_mixing_rate mixing_rate();
+
+    /**
+     * @brief Specifies the current Direct Sound mixing rate.
+     *
+     * All Direct Sound audio playback must be stopped before changing the mixing rate.
+     */
+    void set_mixing_rate(audio_mixing_rate mixing_rate);
+
     /**
      * @brief Indicates if audio is updated on the V-Blank interrupt or not.
      *

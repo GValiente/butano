@@ -18,7 +18,7 @@
 /**
  * @def BN_CFG_AUDIO_MIXING_RATE
  *
- * Specifies Direct Sound mixing rate in KHz.
+ * Specifies the initial Direct Sound mixing rate.
  *
  * Values not specified in BN_AUDIO_MIXING_RATE_* macros are not allowed.
  *
@@ -96,7 +96,8 @@
  *
  * Specifies the maximum number of active Direct Sound music events per update.
  *
- * See https://maxmod.org/ref/tut/songevents.html for more information about music events.
+ * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
+ * for more information about music events.
  *
  * @ingroup music
  */

@@ -172,7 +172,7 @@
  * @defgroup music Music
  *
  * Module files (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions) played with Direct Sound channels
- * thanks to <a href="https://maxmod.devkitpro.org/">Maxmod</a>.
+ * thanks to <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>.
  *
  * @ingroup audio
  */
@@ -192,7 +192,7 @@
  * @defgroup sound Sound effects
  *
  * Waveform audio files (files with `*.wav` extension) sound effects played with Direct Sound channels
- * thanks to <a href="https://maxmod.devkitpro.org/">Maxmod</a>.
+ * thanks to <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>.
  *
  * @ingroup audio
  */

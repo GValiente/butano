@@ -127,14 +127,16 @@ namespace bn::music
     /**
      * @brief Indicates if music events are registered or not.
      *
-     * See https://maxmod.org/ref/tut/songevents.html for more information about music events.
+     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
+     * for more information about music events.
      */
     [[nodiscard]] bool event_handler_enabled();
 
     /**
      * @brief Sets if music events must be registered or not.
      *
-     * See https://maxmod.org/ref/tut/songevents.html for more information about music events.
+     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
+     * for more information about music events.
      */
     void set_event_handler_enabled(bool enabled);
 
@@ -143,7 +145,8 @@ namespace bn::music
      *
      * To register music events, the event handler must be enabled with music::set_event_handler_enabled.
      *
-     * See https://maxmod.org/ref/tut/songevents.html for more information about music events.
+     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
+     * for more information about music events.
      */
     [[nodiscard]] span<uint8_t> event_ids();
 }

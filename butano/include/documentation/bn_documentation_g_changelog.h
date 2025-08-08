@@ -12,10 +12,15 @@
  * @tableofcontents
  *
  *
- * @section changelog_19_6_0 19.6.0 (next release)
+ * @section changelog_20_0_0 20.0.0 (next release)
  *
- * Music events support added. Check <a href="https://maxmod.org/ref/tut/songevents.html">Maxmod documentation</a>
- * and the `audio` example to see how to insert and read music events.
+ * * Butano now uses <a href="https://blocksds.skylyrac.net">BlocksDS's</a>
+ *   <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod fork</a> for Direct Sound audio playback:
+ *   it provides new features and bug fixes.
+ * * Music events support added. Check
+ *   <a href="https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html">Maxmod documentation</a>
+ *   and the `audio` example to see how to insert and read music events.
+ * * bn::audio_mixing_rate, bn::audio::available_mixing_rates, bn::audio::mixing_rate and bn::audio::set_mixing_rate added.
  *
  *
  * @section changelog_19_5_0 19.5.0

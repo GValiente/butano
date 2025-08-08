@@ -11,6 +11,11 @@
 #include "bn_fixed.h"
 #include "bn_optional.h"
 
+namespace bn
+{
+    enum class audio_mixing_rate : uint8_t;
+}
+
 namespace bn::hw::audio
 {
     [[nodiscard]] constexpr bool timer_free(int timer_id)
@@ -28,6 +33,10 @@ namespace bn::hw::audio
     void enable();
 
     void disable();
+
+    [[nodiscard]] span<const audio_mixing_rate> available_mixing_rates();
+
+    void set_mixing_rate(audio_mixing_rate mixing_rate);
 
     [[nodiscard]] bool music_playing();
 

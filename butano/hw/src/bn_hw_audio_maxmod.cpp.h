@@ -5,6 +5,7 @@
 
 #include "../include/bn_hw_audio_maxmod.h"
 
+#include "bn_memory.h"
 #include "bn_forward_list.h"
 #include "bn_config_audio.h"
 #include "../include/bn_hw_tonc.h"
@@ -22,6 +23,19 @@ namespace
                   "Invalid max music events");
     static_assert(BN_CFG_AUDIO_STEREO, "Mono output not supported");
     static_assert(! BN_CFG_AUDIO_DYNAMIC_MIXING, "Dynamic mixing not supported");
+
+
+    constexpr audio_mixing_rate mixing_rates[] =
+        {
+            audio_mixing_rate::KHZ_8,
+            audio_mixing_rate::KHZ_10,
+            audio_mixing_rate::KHZ_13,
+            audio_mixing_rate::KHZ_16,
+            audio_mixing_rate::KHZ_18,
+            audio_mixing_rate::KHZ_21,
+            audio_mixing_rate::KHZ_27,
+            audio_mixing_rate::KHZ_31,
+    };
 
 
     class sound_type
@@ -50,46 +64,69 @@ namespace
     BN_DATA_EWRAM_BSS static_data data;
 
 
-    constexpr int _mix_length = []()
+    [[nodiscard]] constexpr int mix_length(audio_mixing_rate mixing_rate)
     {
-        switch(BN_CFG_AUDIO_MIXING_RATE)
+        switch(mixing_rate)
         {
 
-        case BN_AUDIO_MIXING_RATE_8_KHZ:
+        case audio_mixing_rate::KHZ_8:
             return MM_MIXLEN_8KHZ;
 
-        case BN_AUDIO_MIXING_RATE_10_KHZ:
+        case audio_mixing_rate::KHZ_10:
             return MM_MIXLEN_10KHZ;
 
-        case BN_AUDIO_MIXING_RATE_13_KHZ:
+        case audio_mixing_rate::KHZ_13:
             return MM_MIXLEN_13KHZ;
 
-        case BN_AUDIO_MIXING_RATE_16_KHZ:
+        case audio_mixing_rate::KHZ_16:
             return MM_MIXLEN_16KHZ;
 
-        case BN_AUDIO_MIXING_RATE_18_KHZ:
+        case audio_mixing_rate::KHZ_18:
             return MM_MIXLEN_18KHZ;
 
-        case BN_AUDIO_MIXING_RATE_21_KHZ:
+        case audio_mixing_rate::KHZ_21:
             return MM_MIXLEN_21KHZ;
 
-        case BN_AUDIO_MIXING_RATE_27_KHZ:
+        case audio_mixing_rate::KHZ_27:
             return MM_MIXLEN_27KHZ;
 
-        case BN_AUDIO_MIXING_RATE_31_KHZ:
+        case audio_mixing_rate::KHZ_31:
             return MM_MIXLEN_31KHZ;
 
         default:
-            BN_ERROR("Invalid mixing rate: ", BN_CFG_AUDIO_MIXING_RATE);
+            BN_ERROR("Invalid mixing rate: ", int(mixing_rate));
+            return MM_MIXLEN_8KHZ;
         }
-    }();
+    }
 
     constexpr int _max_channels = BN_CFG_AUDIO_MAX_MUSIC_CHANNELS + BN_CFG_AUDIO_MAX_SOUND_CHANNELS;
 
-    alignas(int) BN_DATA_EWRAM_BSS uint8_t maxmod_engine_buffer[
-            _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _mix_length];
+    constexpr int _initial_mix_length = mix_length(audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE));
 
-    alignas(int) uint8_t maxmod_mixing_buffer[_mix_length];
+    constexpr int _maxmod_engine_buffer_size =
+            _max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH) + _initial_mix_length;
+
+    alignas(int) BN_DATA_EWRAM_BSS uint8_t maxmod_engine_buffer[_maxmod_engine_buffer_size];
+
+    alignas(int) uint8_t maxmod_mixing_buffer[_initial_mix_length];
+
+
+    void _init_impl(audio_mixing_rate mixing_rate)
+    {
+        mm_gba_system maxmod_info;
+        maxmod_info.mixing_mode = mm_mixmode(mixing_rate);
+        maxmod_info.mod_channel_count = _max_channels;
+        maxmod_info.mix_channel_count = _max_channels;
+        maxmod_info.module_channels = mm_addr(maxmod_engine_buffer);
+        maxmod_info.active_channels = mm_addr(maxmod_engine_buffer + (_max_channels * MM_SIZEOF_MODCH));
+        maxmod_info.mixing_channels = mm_addr(maxmod_engine_buffer +
+                                              (_max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH)));
+        maxmod_info.mixing_memory = mm_addr(maxmod_mixing_buffer);
+        maxmod_info.wave_memory = mm_addr(maxmod_engine_buffer +
+                                          (_max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH)));
+        maxmod_info.soundbank = mm_addr(bn_audio_soundbank_bin);
+        mmInit(&maxmod_info);
+    }
 
 
     [[nodiscard]] bool _check_sounds_queue(int priority)
@@ -187,19 +224,7 @@ void init()
 {
     ::new(static_cast<void*>(&data)) static_data();
 
-    mm_gba_system maxmod_info;
-    maxmod_info.mixing_mode = mm_mixmode(BN_CFG_AUDIO_MIXING_RATE);
-    maxmod_info.mod_channel_count = _max_channels;
-    maxmod_info.mix_channel_count = _max_channels;
-    maxmod_info.module_channels = mm_addr(maxmod_engine_buffer);
-    maxmod_info.active_channels = mm_addr(maxmod_engine_buffer + (_max_channels * MM_SIZEOF_MODCH));
-    maxmod_info.mixing_channels = mm_addr(maxmod_engine_buffer +
-            (_max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH)));
-    maxmod_info.mixing_memory = mm_addr(maxmod_mixing_buffer);
-    maxmod_info.wave_memory = mm_addr(maxmod_engine_buffer +
-            (_max_channels * (MM_SIZEOF_MODCH + MM_SIZEOF_ACTCH + MM_SIZEOF_MIXCH)));
-    maxmod_info.soundbank = mm_addr(bn_audio_soundbank_bin);
-    mmInit(&maxmod_info);
+    _init_impl(audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE));
 }
 
 void enable()
@@ -211,6 +236,35 @@ void disable()
 {
     data.direct_sound_control_value = REG_SNDDSCNT;
     REG_SNDDSCNT = 0;
+}
+
+span<const audio_mixing_rate> available_mixing_rates()
+{
+    int size = 0;
+
+    for(audio_mixing_rate mixing_rate : mixing_rates)
+    {
+        if(int(mixing_rate) <= BN_CFG_AUDIO_MIXING_RATE)
+        {
+            ++size;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return span<const audio_mixing_rate>(mixing_rates, size);
+}
+
+void set_mixing_rate(audio_mixing_rate mixing_rate)
+{
+    BN_ASSERT(mix_length(mixing_rate) <= _initial_mix_length, "Mixing rate is higher than the initial one");
+
+    mmEnd();
+    memory::clear(_maxmod_engine_buffer_size, maxmod_engine_buffer[0]);
+    memory::clear(_initial_mix_length, maxmod_mixing_buffer[0]);
+    _init_impl(mixing_rate);
 }
 
 bool music_playing()

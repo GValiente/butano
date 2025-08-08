@@ -11,6 +11,11 @@
 #include "bn_fixed.h"
 #include "bn_optional.h"
 
+namespace bn
+{
+    enum class audio_mixing_rate : uint8_t;
+}
+
 namespace bn::hw::audio
 {
     [[nodiscard]] inline int _hw_music_volume(fixed volume)
@@ -54,6 +59,10 @@ namespace bn::hw::audio
 
     void disable();
 
+    [[nodiscard]] span<const audio_mixing_rate> available_mixing_rates();
+
+    void set_mixing_rate(audio_mixing_rate mixing_rate);
+
     [[nodiscard]] bool music_playing();
 
     void play_music(int id, bool loop);
@@ -93,12 +102,12 @@ namespace bn::hw::audio
 
     [[nodiscard]] inline bool jingle_playing()
     {
-        return mmActiveSub();
+        return mmJingleActive();
     }
 
     inline void play_jingle(int id)
     {
-        mmJingle(mm_word(id));
+        mmJingleStart(mm_word(id), MM_PLAY_ONCE);
     }
 
     inline void set_jingle_volume(fixed volume)

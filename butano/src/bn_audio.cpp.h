@@ -10,6 +10,21 @@
 namespace bn::audio
 {
 
+span<const audio_mixing_rate> available_mixing_rates()
+{
+    return audio_manager::available_mixing_rates();
+}
+
+audio_mixing_rate mixing_rate()
+{
+    return audio_manager::mixing_rate();
+}
+
+void set_mixing_rate(audio_mixing_rate mixing_rate)
+{
+    audio_manager::set_mixing_rate(mixing_rate);
+}
+
 bool update_on_vblank()
 {
     return audio_manager::update_on_vblank();

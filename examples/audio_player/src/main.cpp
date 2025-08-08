@@ -135,7 +135,7 @@ namespace
     {
         int khz = 0;
 
-        switch(bn::audio_mixing_rate mixing_rate = bn::audio::mixing_rate())
+        switch(bn::audio::mixing_rate())
         {
 
         case bn::audio_mixing_rate::KHZ_8:

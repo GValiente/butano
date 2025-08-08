@@ -70,6 +70,8 @@ namespace bn::audio_manager
 
     void play_jingle(music_item item, fixed volume);
 
+    void stop_jingle();
+
     [[nodiscard]] fixed jingle_volume();
 
     void set_jingle_volume(fixed volume);

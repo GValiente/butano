@@ -494,6 +494,7 @@ namespace
         MUSIC_SET_TEMPO,
         MUSIC_SET_PITCH,
         JINGLE_PLAY,
+        JINGLE_STOP,
         JINGLE_SET_VOLUME,
         DMG_MUSIC_PLAY,
         DMG_MUSIC_STOP,
@@ -618,14 +619,14 @@ void stop_music()
 {
     if(data.music_playing)
     {
+        data.music_playing = false;
+        data.music_paused = false;
+
         int commands = data.commands_count;
         BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
         data.command_codes[commands] = MUSIC_STOP;
         data.commands_count = commands + 1;
-
-        data.music_playing = false;
-        data.music_paused = false;
     }
 }
 
@@ -786,6 +787,20 @@ void play_jingle(music_item item, fixed volume)
     data.jingle_item_id = item.id();
     data.jingle_volume = volume;
     data.jingle_playing = true;
+}
+
+void stop_jingle()
+{
+    if(data.jingle_playing)
+    {
+        data.jingle_playing = false;
+
+        int commands = data.commands_count;
+        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+        data.command_codes[commands] = JINGLE_STOP;
+        data.commands_count = commands + 1;
+    }
 }
 
 fixed jingle_volume()
@@ -1304,6 +1319,11 @@ void execute_commands()
         case JINGLE_PLAY:
             reinterpret_cast<const play_jingle_command&>(data.command_datas[index].data).execute();
             jingle_playing = true;
+            break;
+
+        case JINGLE_STOP:
+            hw::audio::stop_jingle();
+            jingle_playing = false;
             break;
 
         case JINGLE_SET_VOLUME:

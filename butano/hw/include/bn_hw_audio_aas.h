@@ -86,6 +86,10 @@ namespace bn::hw::audio
         BN_ERROR("Jingles not supported");
     }
 
+    inline void stop_jingle()
+    {
+    }
+
     inline void set_jingle_volume(fixed)
     {
     }

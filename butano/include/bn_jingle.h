@@ -58,6 +58,11 @@ namespace bn::jingle
     void play(music_item item, fixed volume);
 
     /**
+     * @brief Stops playback of the active Direct Sound jingle.
+     */
+    void stop();
+
+    /**
      * @brief Returns the volume of the active Direct Sound jingle.
      */
     [[nodiscard]] fixed volume();

@@ -112,6 +112,11 @@ namespace bn::hw::audio
         mmJingleStart(mm_word(id), MM_PLAY_ONCE);
     }
 
+    inline void stop_jingle()
+    {
+        mmJingleStop();
+    }
+
     inline void set_jingle_volume(fixed volume)
     {
         mmSetJingleVolume(mm_word(_hw_music_volume(volume)));

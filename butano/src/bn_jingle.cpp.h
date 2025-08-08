@@ -33,6 +33,11 @@ void play(music_item item, fixed volume)
     audio_manager::play_jingle(item, volume);
 }
 
+void stop()
+{
+    audio_manager::stop_jingle();
+}
+
 fixed volume()
 {
     return audio_manager::jingle_volume();

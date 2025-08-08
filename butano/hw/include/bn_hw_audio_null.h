@@ -108,6 +108,10 @@ namespace bn::hw::audio
     {
     }
 
+    inline void stop_jingle()
+    {
+    }
+
     inline void set_jingle_volume(fixed)
     {
     }

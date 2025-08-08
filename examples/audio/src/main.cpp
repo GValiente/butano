@@ -183,7 +183,7 @@ namespace
         common::info info("Audio events", info_text_lines, text_generator);
         info.set_show_always(true);
 
-        bn::music::play(bn::music_items::mj_totsnuk01_event, 0.6);
+        bn::music::play(bn::music_items::mj_totsnuk01, 0.6);
         bn::audio::set_event_handler_enabled(true);
 
         bn::string<32> event_text;
@@ -256,11 +256,7 @@ namespace
         }
 
         bn::music::stop();
-
-        if(bn::jingle::playing())
-        {
-            bn::jingle::set_volume(0);
-        }
+        bn::jingle::stop();
     }
 
     void jingle_actions_scene(bn::sprite_text_generator& text_generator)
@@ -294,11 +290,7 @@ namespace
         }
 
         bn::music::stop();
-
-        if(bn::jingle::playing())
-        {
-            bn::jingle::set_volume(0);
-        }
+        bn::jingle::stop();
     }
 
     void sound_scene(bn::sprite_text_generator& text_generator)

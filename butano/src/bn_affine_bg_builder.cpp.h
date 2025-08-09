@@ -152,7 +152,8 @@ optional<affine_bg_map_ptr> affine_bg_builder::release_map_optional()
 size affine_bg_builder::_dimensions() const
 {
     const affine_bg_item* item = _item.get();
-    return item ? item->map_item().dimensions() : _map->dimensions();
+    size cell_dimensions = item ? item->map_item().dimensions() : _map->dimensions();
+    return cell_dimensions * 8;
 }
 
 }

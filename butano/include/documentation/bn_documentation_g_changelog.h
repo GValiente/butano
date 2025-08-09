@@ -23,6 +23,7 @@
  * * bn::audio_mixing_rate, bn::audio::available_mixing_rates, bn::audio::mixing_rate and bn::audio::set_mixing_rate added.
  * * bn::jingle::pause, bn::jingle::resume and bn::jingle::stop added.
  * * bn::memory::copy and bn::memory::clear array overloads added.
+ * * bn::regular_bg_builder and bn::affine_bg_builder top-left coordinates fixed.
  * * Mixing rate can be changed in the `audio_player` example.
  *
  *

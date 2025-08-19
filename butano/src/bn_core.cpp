@@ -125,6 +125,7 @@ namespace
     {
 
     public:
+        update_callback_type update_callback = nullptr;
         vblank_callback_type vblank_callback = nullptr;
         #if BN_CFG_ASSERT_ENABLED
             assert::callback_type assert_callback = nullptr;
@@ -441,6 +442,11 @@ void set_skip_frames(int skip_frames)
 
 void update()
 {
+    if(update_callback_type update_callback = data.update_callback)
+    {
+        update_callback();
+    }
+
     int update_frames = data.skip_frames + 1;
     data.last_update_frames = update_frames;
 
@@ -567,6 +573,16 @@ int last_vblank_ticks()
 int last_missed_frames()
 {
     return data.last_ticks.missed_frames;
+}
+
+update_callback_type update_callback()
+{
+    return data.update_callback;
+}
+
+void set_update_callback(update_callback_type update_callback)
+{
+    data.update_callback = update_callback;
 }
 
 vblank_callback_type vblank_callback()

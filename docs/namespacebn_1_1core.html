@@ -48,7 +48,6 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>core <span class="m-thin">namespace</span>
-          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
         </h1>
         <p>Core related functions.</p>
         <nav class="m-block m-default">
@@ -57,16 +56,26 @@
             <li>
               Reference
               <ul>
+                <li><a href="#typedef-members">Typedefs</a></li>
                 <li><a href="#func-members">Functions</a></li>
               </ul>
             </li>
           </ul>
         </nav>
+        <section id="typedef-members">
+          <h2><a href="#typedef-members">Typedefs</a></h2>
+          <dl class="m-doc">
+            <dt>
+              using <a href="#afb6a6a066bf7e7d9381dfdec5115a881" class="m-doc">update_callback_type</a> = void(*)()
+            </dt>
+            <dd>Core update callback type alias.</dd>
+          </dl>
+        </section>
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
-            <dt id="ae44eeedf2d7cadbe8d8d6990e209f46d">
-              <span class="m-doc-wrap-bumper">void <a href="#ae44eeedf2d7cadbe8d8d6990e209f46d" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae44eeedf2d7cadbe8d8d6990e209f46d" class="m-doc">init</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>This function must be called before using Butano, and it must be called only once.</dd>
             <dt>
@@ -90,16 +99,16 @@
               <span class="m-doc-wrap-bumper">void <a href="#a4f662445a2e8ff6d2b370cb0a27b2ff0" class="m-doc">set_skip_frames</a>(</span><span class="m-doc-wrap">int skip_frames)</span>
             </dt>
             <dd>Sets the number of frames to skip.</dd>
-            <dt id="aa849bfe482eb6964e3a29f9eba78f7b6">
-              <span class="m-doc-wrap-bumper">void <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc-self">update</a>(</span><span class="m-doc-wrap">)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">update</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Updates the screen and all Butano subsystems.</dd>
-            <dt id="a32ee163633d553f5ce2fda884539f0f6">
-              <span class="m-doc-wrap-bumper">void <a href="#a32ee163633d553f5ce2fda884539f0f6" class="m-doc-self">sleep</a>(</span><span class="m-doc-wrap"><a href="namespacebn_1_1keypad.html#a93f0ded2da50f8d4383b6f7a686ec284" class="m-doc">keypad::<wbr />key_type</a> wake_up_key)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a32ee163633d553f5ce2fda884539f0f6" class="m-doc">sleep</a>(</span><span class="m-doc-wrap"><a href="namespacebn_1_1keypad.html#a93f0ded2da50f8d4383b6f7a686ec284" class="m-doc">keypad::<wbr />key_type</a> wake_up_key)</span>
             </dt>
             <dd>Sleeps the GBA until the given keypad key is pressed.</dd>
-            <dt id="aa7eedd4db9311f3ee1fadac052bc9cd6">
-              <span class="m-doc-wrap-bumper">void <a href="#aa7eedd4db9311f3ee1fadac052bc9cd6" class="m-doc-self">sleep</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="namespacebn_1_1keypad.html#a93f0ded2da50f8d4383b6f7a686ec284" class="m-doc">keypad::<wbr />key_type</a>&gt;&amp; wake_up_keys)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa7eedd4db9311f3ee1fadac052bc9cd6" class="m-doc">sleep</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="namespacebn_1_1keypad.html#a93f0ded2da50f8d4383b6f7a686ec284" class="m-doc">keypad::<wbr />key_type</a>&gt;&amp; wake_up_keys)</span>
             </dt>
             <dd>Sleeps the GBA until the given keypad keys are pressed.</dd>
             <dt>
@@ -134,36 +143,44 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a15afc3dfa39d1ad455e0e4bfd6fecac3" class="m-doc">last_vblank_ticks</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
             <dd>Returns the maximum V-Blank timer ticks of the last elapsed frame.</dd>
-            <dt id="a98c2b2065c2694d96b695a6076df8506">
-              <span class="m-doc-wrap-bumper">auto <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc-self">last_missed_frames</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc">last_missed_frames</a>(</span><span class="m-doc-wrap">) -&gt; int</span>
             </dt>
             <dd>Returns the number of screen refreshes that were missed in the last <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</dd>
-            <dt id="a3e81181a01b2ef99485eeee4d0ad8112">
-              <span class="m-doc-wrap-bumper">auto <a href="#a3e81181a01b2ef99485eeee4d0ad8112" class="m-doc-self">vblank_callback</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a97b50ccb2e2c3c21f73dedaf297a4001" class="m-doc">vblank_<wbr />callback_<wbr />type</a></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a2e0b0db4d5d5fce0c70e0b0c5b5accae" class="m-doc">update_callback</a>(</span><span class="m-doc-wrap">) -&gt; <a href="#afb6a6a066bf7e7d9381dfdec5115a881" class="m-doc">update_<wbr />callback_<wbr />type</a></span>
+            </dt>
+            <dd>Returns the user function called in <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#acdd2125c5251b572b576288471783ed7" class="m-doc">set_update_callback</a>(</span><span class="m-doc-wrap"><a href="#afb6a6a066bf7e7d9381dfdec5115a881" class="m-doc">update_<wbr />callback_<wbr />type</a> update_callback)</span>
+            </dt>
+            <dd>Sets the user function called in <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3e81181a01b2ef99485eeee4d0ad8112" class="m-doc">vblank_callback</a>(</span><span class="m-doc-wrap">) -&gt; <a href="namespacebn.html#a97b50ccb2e2c3c21f73dedaf297a4001" class="m-doc">vblank_<wbr />callback_<wbr />type</a></span>
             </dt>
             <dd>Returns the user function called in V-Blank.</dd>
-            <dt id="a3545d1f13cf70791ee4b68ed4065398a">
-              <span class="m-doc-wrap-bumper">void <a href="#a3545d1f13cf70791ee4b68ed4065398a" class="m-doc-self">set_vblank_callback</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a97b50ccb2e2c3c21f73dedaf297a4001" class="m-doc">vblank_<wbr />callback_<wbr />type</a> vblank_callback)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a3545d1f13cf70791ee4b68ed4065398a" class="m-doc">set_vblank_callback</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a97b50ccb2e2c3c21f73dedaf297a4001" class="m-doc">vblank_<wbr />callback_<wbr />type</a> vblank_callback)</span>
             </dt>
             <dd>Sets the user function called in V-Blank.</dd>
-            <dt id="a791a1b4d387b815639bded03ed4fef59">
-              <span class="m-doc-wrap-bumper">auto <a href="#a791a1b4d387b815639bded03ed4fef59" class="m-doc-self">slow_game_pak</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a791a1b4d387b815639bded03ed4fef59" class="m-doc">slow_game_pak</a>(</span><span class="m-doc-wrap">) -&gt; bool</span>
             </dt>
             <dd>Indicates if a slow game pak like the SuperCard SD has been detected or not.</dd>
-            <dt id="a9cf32740bbbf4b808f7b919edea468ad">
-              <span class="m-doc-wrap-bumper">auto <a href="#a9cf32740bbbf4b808f7b919edea468ad" class="m-doc-self">system_font</a>(</span><span class="m-doc-wrap">) -&gt; const <a href="classbn_1_1system__font.html" class="m-doc">system_<wbr />font</a>&amp;</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9cf32740bbbf4b808f7b919edea468ad" class="m-doc">system_font</a>(</span><span class="m-doc-wrap">) -&gt; const <a href="classbn_1_1system__font.html" class="m-doc">system_<wbr />font</a>&amp;</span>
             </dt>
             <dd>Returns the font used to show assert and profiling messages.</dd>
-            <dt id="a481f8fc199b3af8ea8ef4257e81e76a8">
-              <span class="m-doc-wrap-bumper">void <a href="#a481f8fc199b3af8ea8ef4257e81e76a8" class="m-doc-self">set_system_font</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1system__font.html" class="m-doc">bn::<wbr />system_font</a>&amp; font)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a481f8fc199b3af8ea8ef4257e81e76a8" class="m-doc">set_system_font</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1system__font.html" class="m-doc">bn::<wbr />system_font</a>&amp; font)</span>
             </dt>
             <dd>Sets the font used to show assert and profiling messages.</dd>
-            <dt id="aa82b675a932f6c6b40a65d9091781fce">
-              <span class="m-doc-wrap-bumper">auto <a href="#aa82b675a932f6c6b40a65d9091781fce" class="m-doc-self">assert_tag</a>(</span><span class="m-doc-wrap">) -&gt; const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp;</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa82b675a932f6c6b40a65d9091781fce" class="m-doc">assert_tag</a>(</span><span class="m-doc-wrap">) -&gt; const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp;</span>
             </dt>
             <dd>Returns the tag displayed in assert messages.</dd>
-            <dt id="a0c70920adc9c80848ccf38de9192c24d">
-              <span class="m-doc-wrap-bumper">void <a href="#a0c70920adc9c80848ccf38de9192c24d" class="m-doc-self">set_assert_tag</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; assert_tag)</span>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0c70920adc9c80848ccf38de9192c24d" class="m-doc">set_assert_tag</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; assert_tag)</span>
             </dt>
             <dd>Sets the tag displayed in assert messages.</dd>
             <dt>
@@ -173,10 +190,28 @@
           </dl>
         </section>
         <section>
+          <h2>Typedef documentation</h2>
+          <section class="m-doc-details" id="afb6a6a066bf7e7d9381dfdec5115a881"><div>
+            <h3>
+              using bn::<wbr />core::<wbr /><a href="#afb6a6a066bf7e7d9381dfdec5115a881" class="m-doc-self">update_callback_type</a> = void(*)()
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core__update__callback__type_8h.html">&lt;bn_core_update_callback_type.h&gt;</a></div>
+            </h3>
+            <p>Core update callback type alias.</p>
+          </div></section>
+        </section>
+        <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ae44eeedf2d7cadbe8d8d6990e209f46d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae44eeedf2d7cadbe8d8d6990e209f46d" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>This function must be called before using Butano, and it must be called only once.</p>
+          </div></section>
           <section class="m-doc-details" id="a244f1bdfb1bc19f614fcdd18d27d3d9c"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a244f1bdfb1bc19f614fcdd18d27d3d9c" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; transparent_color)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>This function must be called before using Butano, and it must be called only once.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -194,6 +229,7 @@
           <section class="m-doc-details" id="a5af341bebc6d65fcf821c8109c3b474c"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5af341bebc6d65fcf821c8109c3b474c" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; keypad_commands)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>This function must be called before using Butano, and it must be called only once.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -213,6 +249,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abaf51e6d112cc8df2c3e938044344012" class="m-doc-self">init</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;&amp; transparent_color,
               const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; keypad_commands)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>This function must be called before using Butano, and it must be called only once.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -235,6 +272,7 @@
           <section class="m-doc-details" id="ac8686039150e9c214ff65d1d5cfbdedf"><div>
             <h3>
               <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac8686039150e9c214ff65d1d5cfbdedf" class="m-doc-self">skip_frames</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Returns the number of frames to skip.</p>
 <p>0 skip frames means ~60 frames per second, 1 skip frame means ~30 frames per second, and so on.</p>
@@ -242,13 +280,36 @@
           <section class="m-doc-details" id="a4f662445a2e8ff6d2b370cb0a27b2ff0"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4f662445a2e8ff6d2b370cb0a27b2ff0" class="m-doc-self">set_skip_frames</a>(</span><span class="m-doc-wrap">int skip_frames)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Sets the number of frames to skip.</p>
 <p>0 skip frames means ~60 frames per second, 1 skip frame means ~30 frames per second, and so on.</p>
           </div></section>
+          <section class="m-doc-details" id="aa849bfe482eb6964e3a29f9eba78f7b6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc-self">update</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Updates the screen and all Butano subsystems.</p>
+          </div></section>
+          <section class="m-doc-details" id="a32ee163633d553f5ce2fda884539f0f6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a32ee163633d553f5ce2fda884539f0f6" class="m-doc-self">sleep</a>(</span><span class="m-doc-wrap"><a href="namespacebn_1_1keypad.html#a93f0ded2da50f8d4383b6f7a686ec284" class="m-doc">keypad::<wbr />key_type</a> wake_up_key)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Sleeps the GBA until the given keypad key is pressed.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa7eedd4db9311f3ee1fadac052bc9cd6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa7eedd4db9311f3ee1fadac052bc9cd6" class="m-doc-self">sleep</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="namespacebn_1_1keypad.html#a93f0ded2da50f8d4383b6f7a686ec284" class="m-doc">keypad::<wbr />key_type</a>&gt;&amp; wake_up_keys)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Sleeps the GBA until the given keypad keys are pressed.</p>
+          </div></section>
           <section class="m-doc-details" id="adab0aa2898c9c07fe9e8cfb75ab820ec"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adab0aa2898c9c07fe9e8cfb75ab820ec" class="m-doc-self">reset</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Resets the GBA, going back to the start of main().</p>
 <p>Keep in mind that it doesn&#x27;t rewind the stack, so alive objects are not destroyed.</p>
@@ -256,6 +317,7 @@
           <section class="m-doc-details" id="a601c5cc430d5772238e879e97ef214b3"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a601c5cc430d5772238e879e97ef214b3" class="m-doc-self">hard_reset</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Resets the GBA, going back to the start of main() after showing the BIOS intro.</p>
 <p>Keep in mind that it doesn&#x27;t rewind the stack, so alive objects are not destroyed.</p>
@@ -263,6 +325,7 @@
           <section class="m-doc-details" id="aed64f380e43b831c5b6b4602a508f811"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aed64f380e43b831c5b6b4602a508f811" class="m-doc-self">current_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Returns the CPU usage of the current frame.</p>
 <p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p>
@@ -270,6 +333,7 @@
           <section class="m-doc-details" id="ac399daa5263756c037b34f14729e8a7a"><div>
             <h3>
               <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac399daa5263756c037b34f14729e8a7a" class="m-doc-self">current_cpu_ticks</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Returns the CPU timer ticks of the current frame.</p>
 <p>A CPU tick count greater than <a href="namespacebn_1_1timers.html#a2b5acebc6a8c3e13df226753bd827d52" class="m-doc">timers::<wbr />ticks_per_frame()</a> means that at least one screen refresh should have been missed.</p>
@@ -277,6 +341,7 @@
           <section class="m-doc-details" id="a5c36ceb40cf617f8ffa442bbf15126c1"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c36ceb40cf617f8ffa442bbf15126c1" class="m-doc-self">last_cpu_usage</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Returns the CPU usage of the last elapsed frame.</p>
 <p>A CPU usage greater than 1 means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
@@ -284,6 +349,7 @@
           <section class="m-doc-details" id="a836c1d35b22654721c3af7e05b397217"><div>
             <h3>
               <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a836c1d35b22654721c3af7e05b397217" class="m-doc-self">last_cpu_ticks</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Returns the CPU timer ticks of the last elapsed frame.</p>
 <p>A CPU tick count greater than <a href="namespacebn_1_1timers.html#a2b5acebc6a8c3e13df226753bd827d52" class="m-doc">timers::<wbr />ticks_per_frame()</a> means that at least one screen refresh should have been missed.</p><p>If you only want to retrieve the number of missed screen refreshes, <a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc">core::<wbr />last_missed_frames</a> is more accurate.</p>
@@ -291,6 +357,7 @@
           <section class="m-doc-details" id="aace6487154c238af8d207e0e400f6fcf"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aace6487154c238af8d207e0e400f6fcf" class="m-doc-self">last_vblank_usage</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Returns the maximum V-Blank usage of the last elapsed frame.</p>
 <p>A V-Blank usage greater than 1 means that the screen is being redrawn before all of GBA display components are updated.</p>
@@ -298,13 +365,85 @@
           <section class="m-doc-details" id="a15afc3dfa39d1ad455e0e4bfd6fecac3"><div>
             <h3>
               <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a15afc3dfa39d1ad455e0e4bfd6fecac3" class="m-doc-self">last_vblank_ticks</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Returns the maximum V-Blank timer ticks of the last elapsed frame.</p>
 <p>A V-Blank tick count greater than <a href="namespacebn_1_1timers.html#a1d3f3ae79d73235127a2396b67033477" class="m-doc">timers::<wbr />ticks_per_vblank()</a> means that the screen is being redrawn before all of GBA display components are updated.</p>
           </div></section>
+          <section class="m-doc-details" id="a98c2b2065c2694d96b695a6076df8506"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a98c2b2065c2694d96b695a6076df8506" class="m-doc-self">last_missed_frames</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Returns the number of screen refreshes that were missed in the last <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</p>
+          </div></section>
+          <section class="m-doc-details" id="a2e0b0db4d5d5fce0c70e0b0c5b5accae"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="#afb6a6a066bf7e7d9381dfdec5115a881" class="m-doc">update_<wbr />callback_<wbr />type</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a2e0b0db4d5d5fce0c70e0b0c5b5accae" class="m-doc-self">update_callback</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Returns the user function called in <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="acdd2125c5251b572b576288471783ed7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acdd2125c5251b572b576288471783ed7" class="m-doc-self">set_update_callback</a>(</span><span class="m-doc-wrap"><a href="#afb6a6a066bf7e7d9381dfdec5115a881" class="m-doc">update_<wbr />callback_<wbr />type</a> update_callback)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Sets the user function called in <a href="#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3e81181a01b2ef99485eeee4d0ad8112"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="namespacebn.html#a97b50ccb2e2c3c21f73dedaf297a4001" class="m-doc">vblank_<wbr />callback_<wbr />type</a> bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3e81181a01b2ef99485eeee4d0ad8112" class="m-doc-self">vblank_callback</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Returns the user function called in V-Blank.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3545d1f13cf70791ee4b68ed4065398a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3545d1f13cf70791ee4b68ed4065398a" class="m-doc-self">set_vblank_callback</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a97b50ccb2e2c3c21f73dedaf297a4001" class="m-doc">vblank_<wbr />callback_<wbr />type</a> vblank_callback)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Sets the user function called in V-Blank.</p>
+          </div></section>
+          <section class="m-doc-details" id="a791a1b4d387b815639bded03ed4fef59"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a791a1b4d387b815639bded03ed4fef59" class="m-doc-self">slow_game_pak</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Indicates if a slow game pak like the SuperCard SD has been detected or not.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9cf32740bbbf4b808f7b919edea468ad"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1system__font.html" class="m-doc">system_<wbr />font</a>&amp; bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9cf32740bbbf4b808f7b919edea468ad" class="m-doc-self">system_font</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Returns the font used to show assert and profiling messages.</p>
+          </div></section>
+          <section class="m-doc-details" id="a481f8fc199b3af8ea8ef4257e81e76a8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a481f8fc199b3af8ea8ef4257e81e76a8" class="m-doc-self">set_system_font</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1system__font.html" class="m-doc">bn::<wbr />system_font</a>&amp; font)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Sets the font used to show assert and profiling messages.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa82b675a932f6c6b40a65d9091781fce"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa82b675a932f6c6b40a65d9091781fce" class="m-doc-self">assert_tag</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Returns the tag displayed in assert messages.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0c70920adc9c80848ccf38de9192c24d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0c70920adc9c80848ccf38de9192c24d" class="m-doc-self">set_assert_tag</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1string__view.html" class="m-doc">string_<wbr />view</a>&amp; assert_tag)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
+            </h3>
+            <p>Sets the tag displayed in assert messages.</p>
+          </div></section>
           <section class="m-doc-details" id="a70441922960e810dd149a7849c7bd047"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void bn::<wbr />core::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a70441922960e810dd149a7849c7bd047" class="m-doc-self">log_stacktrace</a>(</span><span class="m-doc-wrap">)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__core_8h.html">&lt;bn_core.h&gt;</a></div>
             </h3>
             <p>Logs the current stack trace.</p>
 <p>The stack trace is mangled, you can demangle it with <a href="http://demangler.com/">demangler.com</a> for example.</p>

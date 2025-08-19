@@ -18,6 +18,7 @@
 #include "bn_optional.h"
 #include "bn_string_view.h"
 #include "bn_vblank_callback_type.h"
+#include "bn_core_update_callback_type.h"
 
 namespace bn
 {
@@ -164,6 +165,16 @@ namespace bn::core
      * @brief Returns the number of screen refreshes that were missed in the last core::update call.
      */
     [[nodiscard]] int last_missed_frames();
+
+    /**
+     * @brief Returns the user function called in core::update.
+     */
+    [[nodiscard]] update_callback_type update_callback();
+
+    /**
+     * @brief Sets the user function called in core::update.
+     */
+    void set_update_callback(update_callback_type update_callback);
 
     /**
      * @brief Returns the user function called in V-Blank.

@@ -34,13 +34,7 @@ namespace
 
     constexpr audio_mixing_rate mixing_rates[] =
     {
-        audio_mixing_rate::KHZ_8,
-        audio_mixing_rate::KHZ_12,
-        audio_mixing_rate::KHZ_16,
-        audio_mixing_rate::KHZ_20,
-        audio_mixing_rate::KHZ_24,
-        audio_mixing_rate::KHZ_28,
-        audio_mixing_rate::KHZ_32
+        audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE)
     };
 
 
@@ -401,11 +395,6 @@ void disable()
 span<const audio_mixing_rate> available_mixing_rates()
 {
     return mixing_rates;
-}
-
-void set_mixing_rate(audio_mixing_rate mixing_rate)
-{
-    _init_impl(_mix_length(mixing_rate));
 }
 
 bool music_playing()

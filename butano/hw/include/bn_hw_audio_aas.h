@@ -36,7 +36,10 @@ namespace bn::hw::audio
 
     [[nodiscard]] span<const audio_mixing_rate> available_mixing_rates();
 
-    void set_mixing_rate(audio_mixing_rate mixing_rate);
+    inline void set_mixing_rate(audio_mixing_rate)
+    {
+        BN_ERROR("Mixing rate change not supported");
+    }
 
     [[nodiscard]] inline span<uint8_t> event_ids()
     {

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
+// Copyright (c) 2025, Antonio Niño Díaz (antonio_nd@outlook.com)
 
 /****************************************************************************
  *                                                          __              *
@@ -25,6 +26,7 @@ extern "C" {
 #endif
 
 #include <stdbool.h>
+#include <stdint.h>
 
 // ***************************************************************************
 /// @defgroup maxmod_types Maxmod Definitions and Types

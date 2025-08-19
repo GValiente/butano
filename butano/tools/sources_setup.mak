@@ -4,10 +4,6 @@
 #---------------------------------------------------------------------------------------------------------------------
 LIBS        := -lgcc -lstdc++ $(USERLIBS)
 
-ifeq ($(strip $(AUDIOBACKEND)),maxmod)
-	LIBS		+=	-lmm
-endif
-
 ifeq ($(strip $(AUDIOBACKEND)),aas)
 	LIBS		+=	-lAAS
 endif
@@ -39,6 +35,11 @@ BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
 				$(LIBBUTANOABS)/hw/3rd_party/agbabi/src \
 				$(LIBBUTANOABS)/hw/3rd_party/gba-modern/src \
 				$(LIBBUTANOABS)/hw/3rd_party/cult-of-gba-bios/src
+
+ifeq ($(strip $(AUDIOBACKEND)),maxmod)
+	BNSOURCES	+=	$(LIBBUTANOABS)/hw/3rd_party/maxmod/src/core \
+					$(LIBBUTANOABS)/hw/3rd_party/maxmod/src/gba
+endif
 
 ifeq ($(strip $(DMGAUDIOBACKEND)),default)
 	BNSOURCES	+=	$(LIBBUTANOABS)/hw/3rd_party/gbt-player/src \

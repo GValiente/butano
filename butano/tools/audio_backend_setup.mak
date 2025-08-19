@@ -12,7 +12,7 @@ ifeq ($(strip $(AUDIOBACKEND)),null)
 else
 ifeq ($(strip $(AUDIOBACKEND)),maxmod)
 #---------------------------------------------------------------------------------------------------------------------
-    BN_AUDIO_BACKEND_CFLAGS	:=	-DBN_AUDIO_BACKEND_MAXMOD
+    BN_AUDIO_BACKEND_CFLAGS	:=	-DBN_AUDIO_BACKEND_MAXMOD -D__GBA__
 	
 ifeq ($(strip $(AUDIOTOOL)),)
     AUDIOTOOL = $(BN_MMUTIL)

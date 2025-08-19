@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
+// Copyright (c) 2025, Antonio Niño Díaz (antonio_nd@outlook.com)
 
 /****************************************************************************
  *                                                          __              *
@@ -105,6 +106,14 @@ typedef struct tmm_mas_instrument
 // In XM, bits 0 and 3 are always set together. In IT, they can be set
 // independently. Other formats don't use them.
 
+typedef struct
+{
+    mm_shword   delta;
+    mm_hword    base : 7;  // node_y. (0->64 for vol, -32->+32 for panning or pitch)
+    mm_hword    range : 9; // 1 to 511
+}
+mm_mas_envelope_node;
+
 typedef struct tmm_mas_envelope
 {
     mm_byte     size;
@@ -116,7 +125,7 @@ typedef struct tmm_mas_envelope
     mm_byte     is_filter; // (maybe supported someday :)
     mm_byte     wasted;
 
-    mm_byte     env_nodes[];
+    mm_mas_envelope_node env_nodes[];
 
     // ::envelope nodes
 } mm_mas_envelope;

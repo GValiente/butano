@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_20_0_0 20.0.0 (next release)
+ * @section changelog_20_0_0 20.0.0
  *
  * * Butano now uses <a href="https://blocksds.skylyrac.net">BlocksDS's</a>
  *   <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod fork</a> for Direct Sound audio playback:

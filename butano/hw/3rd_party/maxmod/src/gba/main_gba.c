@@ -88,9 +88,9 @@ bool mmInitDefault(mm_addr soundbank, mm_word number_of_channels)
     mm_addr wave_memory, module_channels, active_channels, mixing_channels;
 
     wave_memory = mm_init_default_buffer;
-    module_channels = (mm_addr)(((mm_word)wave_memory) + mixlen);
-    active_channels = (mm_addr)(((mm_word)module_channels) + (number_of_channels * sizeof(mm_module_channel)));
-    mixing_channels = (mm_addr)(((mm_word)active_channels) + (number_of_channels * sizeof(mm_active_channel)));
+    module_channels = (mm_addr)(((uintptr_t)wave_memory) + mixlen);
+    active_channels = (mm_addr)(((uintptr_t)module_channels) + (number_of_channels * sizeof(mm_module_channel)));
+    mixing_channels = (mm_addr)(((uintptr_t)active_channels) + (number_of_channels * sizeof(mm_active_channel)));
 
     mm_gba_system setup =
     {

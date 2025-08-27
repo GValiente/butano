@@ -162,7 +162,7 @@ typedef struct {
 
     mm_hword    freq;           // unsigned 3.10, top 3 cleared
     mm_hword    vol;            // target volume   0..65535
-    mm_word     read;           // unsigned 22.10
+    mm_word     read;           // unsigned 22.10. See MP_SAMPFRAC
     mm_hword    cvol;           // current volume  0..65535
     mm_hword    cpan;           // current panning 0..65535
 } mm_mixer_channel;
@@ -170,7 +170,8 @@ typedef struct {
 // Make sure that the size matches the assembly code
 static_assert(sizeof(mm_mixer_channel) == 16);
 
-#define C_READ_FRAC 10
+// Fractionary part of the sample read offset
+#define MP_SAMPFRAC         10
 
 // scale = 65536*1024*2 / mixrate
 #define MIXER_SCALE         4096 //6151
@@ -182,7 +183,7 @@ static_assert(sizeof(mm_mixer_channel) == 16);
 // A GBA mixer channel is active if "src & (1 << 31)" is zero.
 typedef struct {
     uintptr_t   src;
-    mm_word     read;
+    mm_word     read; // Fixed point 20.12. See MP_SAMPFRAC
     mm_byte     vol;
     mm_byte     pan;
     mm_byte     unused_0;
@@ -190,7 +191,10 @@ typedef struct {
     mm_word     freq;
 } mm_mixer_channel;
 
-#define MIXCH_GBA_SRC_STOPPED (1u << ((sizeof(uintptr_t) * 8) - 1))
+// Fractionary part of the sample read offset
+#define MP_SAMPFRAC             12
+
+#define MIXCH_GBA_SRC_STOPPED   (1u << ((sizeof(uintptr_t) * 8) - 1))
 
 // Make sure that the size matches the assembly code
 static_assert(sizeof(mm_mixer_channel) == 16);

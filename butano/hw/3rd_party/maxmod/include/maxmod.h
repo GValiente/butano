@@ -340,16 +340,16 @@ void mmSetModulePitch(mm_word pitch);
 
 /// Play individual MAS file from RAM.
 ///
-/// A soundbank is a MSL file that contains one or more MAS files. Each MAS file
-/// can contain a sample or a module. This function allows you to play samples
-/// or modules without the need for a soundbank.
-///
-/// Normally, Maxmod plays MAS files from the sound bank provided to mmInit().
-/// This function lets you play MAS files outside of that soundbank.
+/// @deprecated
+///     This function expects the user to pass a pointer to the MAS file
+///     skipping the MAS file prefix, which isn't very intuitive. Use
+///     mmPlayMAS() instead.
 ///
 /// @warning
 ///     You need to initialize Maxmod with mmInit() and provide it a valid
 ///     soundbank even if you plan to use mmPlayModule() to play everything.
+///     You can initialize mmInit() passing 0 as the number of modules and sound
+///     effects.
 ///
 /// @param address
 ///     Address of the MAS file, skipping the first few bytes of the prefix.
@@ -358,7 +358,29 @@ void mmSetModulePitch(mm_word pitch);
 ///     Playback mode: MM_PLAY_ONCE or MM_PLAY_LOOP.
 /// @param layer
 ///     MM_MAIN (main module layer) or MM_JINGLE (sub/jingle layer).
+__attribute__((deprecated))
 void mmPlayModule(uintptr_t address, mm_word mode, mm_word layer);
+
+/// Play individual MAS file from RAM.
+///
+/// A soundbank is a MSL file that contains one or more MAS files. Each MAS file
+/// can contain a sample or a module. This function allows you to play samples
+/// or modules without the need for a soundbank.
+///
+/// Normally, Maxmod plays MAS files from the sound bank provided to mmInit().
+/// This function lets you play MAS files outside of that soundbank.
+///
+/// @warning
+///     You need to initialize Maxmod with a valid soundbank, or with
+///     mmInitNoSoundbank() if you don't plan on using any soundbank at all.
+///
+/// @param address
+///     Address of the MAS file.
+/// @param mode
+///     Playback mode: MM_PLAY_ONCE or MM_PLAY_LOOP.
+/// @param layer
+///     MM_MAIN (main module layer) or MM_JINGLE (sub/jingle layer).
+void mmPlayMAS(uintptr_t address, mm_word mode, mm_word layer);
 
 // ***************************************************************************
 /// @}

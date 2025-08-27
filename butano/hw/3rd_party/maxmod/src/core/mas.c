@@ -254,18 +254,17 @@ static void mpps_backdoor(mm_word id, mm_pmode mode, mm_layer_type layer)
 
     // Calculate the address of the module now that we have the module table. It
     // represents offsets inside the soundbank.
-    uintptr_t moduleAddress = (uintptr_t)mp_solution + sizeof(mm_mas_prefix) + moduleTable[id];
+    uintptr_t moduleAddress = (uintptr_t)mp_solution + moduleTable[id];
 
     // Play this module
-    mmPlayModule(moduleAddress, mode, layer);
+    mmPlayMAS(moduleAddress, mode, layer);
 #elif defined(__NDS__)
     mm_word address = (mm_word)mmModuleBank[id];
     if (address == 0)
         return;
 
     // This address is a pointer to a MAS file that contains the module data.
-    // Pass it to mmPlayModule skipping the file prefix.
-    mmPlayModule(address + sizeof(mm_mas_prefix), mode, layer);
+    mmPlayMAS(address, mode, layer);
 #endif
 }
 
@@ -479,9 +478,10 @@ static void mpp_resetvars(mpl_layer_information *layer_info)
 }
 
 // Start playing module.
-void mmPlayModule(uintptr_t address, mm_word mode, mm_word layer)
+void mmPlayMAS(uintptr_t address, mm_word mode, mm_word layer)
 {
-    mm_mas_head *header = (mm_mas_head *)address;
+    // Skip the MAS prefix
+    mm_mas_head *header = (mm_mas_head *)(address + sizeof(mm_mas_prefix));
 
     mpp_clayer = layer;
 
@@ -546,6 +546,14 @@ void mmPlayModule(uintptr_t address, mm_word mode, mm_word layer)
     // Setup channel pannings
     for (mm_word i = 0; i < num_ch; i++)
         channels[i].panning = header->channel_panning[i];
+}
+
+// Function kept here for backwards compatibility only
+void mmPlayModule(uintptr_t address, mm_word mode, mm_word layer)
+{
+    // mmPlayModule() expects the user to skip the MAS file prefix, but that
+    // isn't very intuitive. mmPlayMAS() skips the prefix internally.
+    mmPlayMAS(address - sizeof(mm_mas_prefix), mode, layer);
 }
 
 // Set master pitch
@@ -1602,11 +1610,14 @@ void mmSetPositionEx(mm_word position, mm_word row)
         mpph_FastForward(&mmLayerMain, row);
 }
 
-// An effect of 0 means custom behaviour, or disabled
 static mm_word mpp_Channel_ExchangeMemory(mm_byte effect, mm_byte param,
                                           mm_module_channel *channel,
                                           mpl_layer_information *layer)
 {
+    // An effect of 0 means custom behaviour, or disabled
+    if (effect == 0)
+        return param;
+
     mm_sbyte table_entry;
 
     // Check flags for XM mode
@@ -1619,7 +1630,6 @@ static mm_word mpp_Channel_ExchangeMemory(mm_byte effect, mm_byte param,
         const mm_sbyte mpp_effect_memmap_xm[] = {
             // Legend | IT effect number (XM effect number): Description
 
-            -1,                 // No effect
             -1,                 // A (F): Set speed
             -1,                 // B (B): Position jump
             -1,                 // C (D): Pattern break
@@ -1660,13 +1670,13 @@ static mm_word mpp_Channel_ExchangeMemory(mm_byte effect, mm_byte param,
             // when converting from XM to IT.
         };
 
-        table_entry = mpp_effect_memmap_xm[effect];
+        table_entry = mpp_effect_memmap_xm[effect - 1];
     }
     else // IT Effects
     {
         // https://wiki.openmpt.org/Manual:_Effect_Reference#IT_Effect_Commands
         const mm_sbyte mpp_effect_memmap_it[] = {
-            -1,                 // No effect
+
             -1,                 // A: Set Speed
             -1,                 // B: Jump to order
             -1,                 // C: Break to row
@@ -1703,7 +1713,7 @@ static mm_word mpp_Channel_ExchangeMemory(mm_byte effect, mm_byte param,
             -1,                 // Z: Midi macro
         };
 
-        table_entry = mpp_effect_memmap_it[effect];
+        table_entry = mpp_effect_memmap_it[effect - 1];
     }
 
     // If the effect doesn't use the memory table there's nothing left to do
@@ -3292,6 +3302,13 @@ static mm_mixer_channel *mpp_Update_ACHN_notest_update_mix(mpl_layer_information
 #endif
     }
 
+    // "sampoff" is the sample offset specified as an effect in the module. It
+    // expects the player to skip "256 * xx" samples, where "xx" is the value
+    // passed in the effect.
+    //
+    // The GBA only supports 8-bit samples, so we can do the final calculation
+    // here. The DS supports 8 and 16-bit samples, so we need to do the final
+    // calculation in mmMix() when the note starts.
 #ifdef __GBA__
     mix_ch->read = ((mm_word)mpp_vars.sampoff) << (MP_SAMPFRAC + 8);
 #else

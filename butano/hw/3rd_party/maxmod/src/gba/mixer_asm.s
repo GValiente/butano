@@ -20,7 +20,8 @@
 // more definitions
 //===============================================
 
-    .equ    SAMPFRAC, 12 @ Number of bits used in fractional part of sample reading
+    // Number of bits used in fractional part of sample reading (CHN_READ)
+    .equ    MP_SAMPFRAC, 12
 
     // Sample structure : mm_mas_gba_sample
 
@@ -30,8 +31,6 @@
 
     // Mixer channel : mm_mixer_channel
 
-    .equ    CHN_SIZE, 24
-
     .equ    CHN_SRC,  0
     .equ    CHN_READ, 4
     .equ    CHN_VOL,  8
@@ -39,6 +38,7 @@
     // 10
     // 11
     .equ    CHN_FREQ, 12
+
     .equ    CHN_SIZE, 16
 
 //-------------------------------------
@@ -211,16 +211,15 @@ mmMixerMix: // params = { samples_count }
     cmp     rfreq, #FETCH_THRESHOLD
     bge     1f
 
-    cmp     r1, #FETCH_SIZE << 12       // check if its > fetch size
-    movhi   r1, #FETCH_SIZE << 12       // if so: clamp to fetch size and set flag
+    cmp     r1, #FETCH_SIZE << MP_SAMPFRAC // check if its > fetch size
+    movhi   r1, #FETCH_SIZE << MP_SAMPFRAC // if so: clamp to fetch size and set flag
     movhi   r2, #1
 
 1:
-//    ldr     r0, [rchan, #CHN_LEN]     // now subtract length - read to get # samples remaining
+    // now subtract length - read to get # samples remaining
     ldr     r0, [rsrc, #-C_SAMPLE_DATA + C_SAMPLE_LEN]
-    rsb     r0, rread, r0, lsl #SAMPFRAC
-//    sub    r0, r0, rread              // in the source
-    cmp     r1, r0                      // clamp mix count
+    rsb     r0, rread, r0, lsl #MP_SAMPFRAC // in the source
+    cmp     r1, r0                          // clamp mix count
     movhi   r1, r0
     bhi     .calc_mix
     cmp     r2, #0
@@ -300,54 +299,54 @@ mmMixerMix: // params = { samples_count }
     push    {r3-r12}
     // r10 is SRC!
     ldr     r0,=mm_fetch                        // destination
-    add     r10, r10, rread, lsr #12            // add read offset to source
+    add     r10, r10, rread, lsr #MP_SAMPFRAC   // add read offset to source
     bic     r10, #0b11                          // align to 32 bits
-    add     r1, #4 << 12                        // add safety threshold
-    subs    r1, #40 << 12                       // subtract 36
+    add     r1, #4 << MP_SAMPFRAC               // add safety threshold
+    subs    r1, #40 << MP_SAMPFRAC              // subtract 36
 
     bcc     .exit_fetch                         // skip large fetch if negative
 .fetch:     ldmia    r10!, {r2-r9, r11, r14}    // read 40 samples      [44 cycles]
     stmia   r0!, {r2-r9,r11,r14}                // write 40 samples     [11 cycles]
-    subs    r1, #40 << 12                       // count                [1  cycle ]
+    subs    r1, #40 << MP_SAMPFRAC              // count                [1  cycle ]
     bcc     .exit_fetch                         // exit if done         [1  cycle ]
     ldmia   r10!, {r2-r9, r11, r14}             // read 40 samples      [44 cycles]
     stmia   r0!, {r2-r9, r11, r14}              // write 40 samples     [11 cycles]
-    subs    r1, #40 << 12                       // count                [1  cycle ]
+    subs    r1, #40 << MP_SAMPFRAC              // count                [1  cycle ]
     bcc     .exit_fetch                         // exit if done         [1  cycle ]
     ldmia   r10!, {r2-r9, r11, r14}             // read 40 samples      [44 cycles]
     stmia   r0!, {r2-r9, r11, r14}              // write 40 samples     [11 cycles]
-    subs    r1, #40 << 12                       // count                [1  cycle ]
+    subs    r1, #40 << MP_SAMPFRAC              // count                [1  cycle ]
     bcs     .fetch                              // loop if remaining    [3  cycles]
                                                 //                      [173 cycles/120 samples]
 .exit_fetch:
 
-    adds    r1, #(40 << 12) - (24 << 12)
+    adds    r1, #(40 << MP_SAMPFRAC) - (24 << MP_SAMPFRAC)
     bmi     .end_medfetch
 .medfetch:
     ldmia   r10!, {r2-r7}                       // read 24 samples      [26]
     stmia   r0!, {r2-r7}                        // write 24 samples     [7 ]
-    subs    r1, #24 << 12                       // count                [1 ]
+    subs    r1, #24 << MP_SAMPFRAC              // count                [1 ]
     bcc     .end_medfetch                       // exit if done         [1 ]
     ldmia   r10!, {r2-r7}                       // read 24 samples      [26]
     stmia   r0!, {r2-r7}                        // write 24 samples     [7 ]
-    subs    r1, #24 << 12                       // count                [1 ]
+    subs    r1, #24 << MP_SAMPFRAC              // count                [1 ]
     bcc     .end_medfetch                       // exit if done         [1 ]
     ldmia   r10!, {r2-r7}                       // read 24 samples      [26]
     stmia   r0!, {r2-r7}                        // write 24 samples     [7 ]
-    subs    r1, #24 << 12                       // count                [1 ]
+    subs    r1, #24 << MP_SAMPFRAC              // count                [1 ]
     bcs     .medfetch                           // loop                 [3 ]
 .end_medfetch:                                  //                      [107]
 
-    adds    r1, #24 << 12                       // add 24 back
+    adds    r1, #24 << MP_SAMPFRAC              // add 24 back
     bmi     .end_fetch                          // exit if <= 0
 .fetchsmall:
     ldr     r2, [r10], #4                       // read 4 samples       [8]
     str     r2, [r0], #4                        // write 4 samples      [2]
-    subs    r1, #4 << 12                        // count                [1]
+    subs    r1, #4 << MP_SAMPFRAC               // count                [1]
     ble     .end_fetch                          // exit maybe           [1]
     ldr     r2, [r10], #4                       // read 4 samples       [8]
     str     r2, [r0], #4                        // write 4 samples      [2]
-    subs    r1, #4 << 12                        // count                [1]
+    subs    r1, #4 << MP_SAMPFRAC               // count                [1]
     bgt    .fetchsmall                          // exit maybe           [3]
 .end_fetch:
 
@@ -355,9 +354,9 @@ mmMixerMix: // params = { samples_count }
 
 fooo:
 
-    mov     r0, rread, lsr #12                  // get read integer
+    mov     r0, rread, lsr #MP_SAMPFRAC         // get read integer
     push    {r0, rsrc}                          // preserve regs
-    bic     rread, rread, r0, lsl #12           // clear integer
+    bic     rread, rread, r0, lsl #MP_SAMPFRAC  // clear integer
     and     r0, #0b11                           // mask low bits
     ldr     rsrc, =mm_fetch                     //
     add     rsrc, rsrc, r0                      // offset source (fetch is word aligned!)
@@ -371,7 +370,7 @@ fooo:
 #define rsampa  r0
 #define rsampb  r2
                                                     // routine to WORD align mixing sector
-    ldrb    rsampa, [rsrc, rread, lsr #SAMPFRAC]    // load sample
+    ldrb    rsampa, [rsrc, rread, lsr #MP_SAMPFRAC] // load sample
     add     rread, rread, rfreq                     // add frequency
     mul     rsampb, rsampa, rvolL                   // multiply by left volume
     ldrh    rsamp1, [rmixb]                         // add to mixing buffer (left)
@@ -410,13 +409,12 @@ fooo:
 
     cmp     rfreq, #FETCH_THRESHOLD
     poplt   {r0, rsrc}                          // restore regs
-    addlt   rread, rread, r0, lsl #12           // add old integer to read
+    addlt   rread, rread, r0, lsl #MP_SAMPFRAC  // add old integer to read
     ldmfd   sp!, {rmixc,rvolA,rchan}            // restore more regs
 
     ldr     r1, [rsrc, #-C_SAMPLE_DATA + C_SAMPLE_LEN]
-    lsl     r1, #SAMPFRAC
-    //ldr     r1, [rchan, #CHN_LEN]               // check length against position
-    cmp     r1, rread
+    lsl     r1, #MP_SAMPFRAC
+    cmp     r1, rread                           // check length against position
     bgt     .mpm_channelfinished
 
 //    ldr     r1, [rchan, #CHN_LOOP]              // read channel loop
@@ -427,7 +425,7 @@ fooo:
     bmi    .mpm_channel_stop                    // MSB = no loop, stop channel ->
 
 
-    sub     rread, rread, r1, lsl #(SAMPFRAC)   // subtract loop length (<<SAMPFRAC) from position
+    sub     rread, rread, r1, lsl #MP_SAMPFRAC  // subtract loop length from position
 
     cmp     rmixc, #0                           // mix more samples?
     ble     .mpm_channelfinished                // no ->
@@ -585,7 +583,7 @@ fooo:
 //================================================================================
 
 .macro READ_AND_INCREMENT reg
-    ldrb    \reg, [rsrc, rread, lsr #SAMPFRAC]
+    ldrb    \reg, [rsrc, rread, lsr #MP_SAMPFRAC]
     add     rread, rread, rfreq
 .endm
 
@@ -807,20 +805,8 @@ mmMix_Remainder:
     orr     rvol, rvolL, rvolR, lsl #16
 
 .mix_remaining:
-/*
-    ldrb    rsampa, [rsrc, rread, lsr #SAMPFRAC]    // 3 load sample
-    add     rread, rread, rfreq                     // 1 add frequency
-    mul     rsampb, rsampa, rvolL                   // 2 multiply by volume
-    ldrh    rsamp1, [rmixb]                         // 3 load mix buffer entry
-    add     rsamp1, rsamp1, rsampb, lsr #5          // 1 add
-    strh    rsamp1, [rmixb], #2                     // 2 store
-    ldrh    rsamp1, [rmixb, #2]                     // 3
-    mul     rsampb, rsampa, rvolR                   // 2
-    add     rsamp1, rsamp1, rsampb, lsr #5          // 1
-    strh    rsamp1, [rmixb, #2]                     // 2
-*/
 
-    ldrb    rsampa, [rsrc, rread, lsr #SAMPFRAC]    // 3 load sample
+    ldrb    rsampa, [rsrc, rread, lsr #MP_SAMPFRAC] // 3 load sample
     add     rread, rread, rfreq                     // 1 add frequency
     mul     rsampb, rvol, rsampa                    // 2 multiply by volume
     ldrh    rsamp1, [rmixb]                         // 3 load mix buffer entry (left)
@@ -834,20 +820,7 @@ mmMix_Remainder:
     subs    rmixcc, rmixcc, #2                      // 2
     blt     .end_mix_remaining                      // 1 / exit
 
-/*
-    ldrb    rsampa, [rsrc, rread, lsr #SAMPFRAC]    // load sample
-    add     rread, rread, rfreq                     // add frequency
-    mul     rsampb, rsampa, rvolL                   // multiply by volume
-    ldrh    rsamp1, [rmixb]                         // load mix buffer entry
-    add     rsamp1, rsamp1, rsampb, lsr #5          // add
-    strh    rsamp1, [rmixb], #4                     // store
-    ldrh    rsamp1, [rmixb]
-    mul     rsampb, rsampa, rvolR
-    add     rsamp1, rsamp1, rsampb, lsr #5
-    strh    rsamp1, [rmixb], #2
-*/
-
-    ldrb    rsampa, [rsrc, rread, lsr #SAMPFRAC]    // 3 load sample
+    ldrb    rsampa, [rsrc, rread, lsr #MP_SAMPFRAC] // 3 load sample
     add     rread, rread, rfreq                     // 1 add frequency
     mul     rsampb, rvol, rsampa                    // 2 multiply by volume
     ldrh    rsamp1, [rmixb]                         // 3 load mix buffer entry (left)

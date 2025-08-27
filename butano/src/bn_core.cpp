@@ -142,7 +142,12 @@ namespace
         volatile bool waiting_for_vblank = false;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 
     void enable()
     {
@@ -223,6 +228,7 @@ namespace
         hblank_effects_manager::update();
         BN_PROFILER_ENGINE_DETAILED_STOP();
 
+        static_data& data = data_ref();
         bool use_dma = data.dma_enabled && ! link_manager::active();
 
         BN_PROFILER_ENGINE_GENERAL_STOP();
@@ -322,6 +328,7 @@ namespace
 
     void _vblank_intr()
     {
+        static_data& data = data_ref();
         hw::audio::on_vblank();
 
         if(data.waiting_for_vblank)
@@ -365,7 +372,7 @@ void init(const string_view& keypad_commands)
 
 void init(const optional<color>& transparent_color, const string_view& keypad_commands)
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 
     // Initial wait:
     hw::core::init();
@@ -394,6 +401,7 @@ void init(const optional<color>& transparent_color, const string_view& keypad_co
     audio_manager::init();
 
     // Init storage systems:
+    static_data& data = data_ref();
     data.slow_game_pak = hw::game_pak::init();
 
     [[maybe_unused]] const char* sram_string = hw::sram::init();
@@ -430,18 +438,20 @@ void init(const optional<color>& transparent_color, const string_view& keypad_co
 
 int skip_frames()
 {
-    return data.skip_frames;
+    return data_ref().skip_frames;
 }
 
 void set_skip_frames(int skip_frames)
 {
     BN_ASSERT(skip_frames >= 0, "Invalid skip frames: ", skip_frames);
 
-    data.skip_frames = skip_frames;
+    data_ref().skip_frames = skip_frames;
 }
 
 void update()
 {
+    static_data& data = data_ref();
+
     if(update_callback_type update_callback = data.update_callback)
     {
         update_callback();
@@ -540,6 +550,7 @@ void hard_reset()
 
 fixed current_cpu_usage()
 {
+    static_data& data = data_ref();
     int current_cpu_usage_ticks = data.cpu_usage_timer.elapsed_ticks();
     int current_update_frames = data.skip_frames + 1;
     return fixed(current_cpu_usage_ticks) / (timers::ticks_per_frame() * current_update_frames);
@@ -547,77 +558,79 @@ fixed current_cpu_usage()
 
 int current_cpu_ticks()
 {
-    return data.cpu_usage_timer.elapsed_ticks();
+    return data_ref().cpu_usage_timer.elapsed_ticks();
 }
 
 fixed last_cpu_usage()
 {
+    static_data& data = data_ref();
     return fixed(data.last_ticks.cpu_usage_ticks) / (timers::ticks_per_frame() * data.last_update_frames);
 }
 
 int last_cpu_ticks()
 {
-    return data.last_ticks.cpu_usage_ticks;
+    return data_ref().last_ticks.cpu_usage_ticks;
 }
 
 fixed last_vblank_usage()
 {
+    static_data& data = data_ref();
     return fixed(data.last_ticks.vblank_usage_ticks) / timers::ticks_per_vblank();
 }
 
 int last_vblank_ticks()
 {
-    return data.last_ticks.vblank_usage_ticks;
+    return data_ref().last_ticks.vblank_usage_ticks;
 }
 
 int last_missed_frames()
 {
-    return data.last_ticks.missed_frames;
+    return data_ref().last_ticks.missed_frames;
 }
 
 update_callback_type update_callback()
 {
-    return data.update_callback;
+    return data_ref().update_callback;
 }
 
 void set_update_callback(update_callback_type update_callback)
 {
-    data.update_callback = update_callback;
+    data_ref().update_callback = update_callback;
 }
 
 vblank_callback_type vblank_callback()
 {
-    return data.vblank_callback;
+    return data_ref().vblank_callback;
 }
 
 void set_vblank_callback(vblank_callback_type vblank_callback)
 {
-    data.vblank_callback = vblank_callback;
+    data_ref().vblank_callback = vblank_callback;
 }
 
 bool slow_game_pak()
 {
-    return data.slow_game_pak;
+    return data_ref().slow_game_pak;
 }
 
 const bn::system_font& system_font()
 {
-    return data.system_font;
+    return data_ref().system_font;
 }
 
 void set_system_font(const bn::system_font& font)
 {
-    data.system_font = font;
+    data_ref().system_font = font;
 }
 
 const string_view& assert_tag()
 {
-    return data.assert_tag;
+    return data_ref().assert_tag;
 }
 
 void set_assert_tag(const string_view& assert_tag)
 {
-    data.assert_tag = assert_tag;
+    data_ref().assert_tag = assert_tag;
 }
 
 void log_stacktrace()
@@ -660,7 +673,7 @@ core_lock::~core_lock()
     hw::core::wait_for_vblank();
 
     // Restart CPU usage timer:
-    core::data.cpu_usage_timer.restart();
+    core::data_ref().cpu_usage_timer.restart();
 
     // Wake up display (maybe display_manager::sleep() has not been called):
     display_manager::wake_up();
@@ -677,14 +690,14 @@ namespace bn::memory
 
 bool dma_enabled()
 {
-    return core::data.dma_enabled;
+    return core::data_ref().dma_enabled;
 }
 
 void set_dma_enabled(bool dma_enabled)
 {
     BN_BASIC_ASSERT(hw::audio::dma_channel_free(3) || ! dma_enabled, "Not supported by the audio backend");
 
-    core::data.dma_enabled = dma_enabled;
+    core::data_ref().dma_enabled = dma_enabled;
 }
 
 }
@@ -694,12 +707,12 @@ void set_dma_enabled(bool dma_enabled)
     {
         callback_type callback()
         {
-            return core::data.assert_callback;
+            return core::data_ref().assert_callback;
         }
 
         void set_callback(callback_type callback)
         {
-            core::data.assert_callback = callback;
+            core::data_ref().assert_callback = callback;
         }
     }
 
@@ -711,7 +724,7 @@ void set_dma_enabled(bool dma_enabled)
                     const char* condition, const char* file_name, const char* function, int line,
                     const bn::string_view& message)
             {
-                if(bn::assert::callback_type assert_callback = bn::core::data.assert_callback)
+                if(bn::assert::callback_type assert_callback = bn::core::data_ref().assert_callback)
                 {
                     assert_callback();
                 }

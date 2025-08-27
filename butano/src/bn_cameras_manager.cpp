@@ -43,12 +43,19 @@ namespace
         bool update = false;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 }
 
 void init()
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
+
+    static_data& data = data_ref();
 
     for(int index = 0; index < max_items; ++index)
     {
@@ -58,16 +65,17 @@ void init()
 
 int used_items_count()
 {
-    return max_items - data.free_item_indexes_size;
+    return max_items - data_ref().free_item_indexes_size;
 }
 
 int available_items_count()
 {
-    return data.free_item_indexes_size;
+    return data_ref().free_item_indexes_size;
 }
 
 int create(const fixed_point& position)
 {
+    static_data& data = data_ref();
     BN_BASIC_ASSERT(data.free_item_indexes_size, "No more cameras available");
 
     --data.free_item_indexes_size;
@@ -81,6 +89,8 @@ int create(const fixed_point& position)
 
 int create_optional(const fixed_point& position)
 {
+    static_data& data = data_ref();
+
     if(! data.free_item_indexes_size)
     {
         return -1;
@@ -97,12 +107,13 @@ int create_optional(const fixed_point& position)
 
 void increase_usages(int id)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
     ++item.usages;
 }
 
 void decrease_usages(int id)
 {
+    static_data& data = data_ref();
     item_type& item = data.items[id];
     --item.usages;
 
@@ -115,12 +126,13 @@ void decrease_usages(int id)
 
 const fixed_point& position(int id)
 {
-    const item_type& item = data.items[id];
+    const item_type& item = data_ref().items[id];
     return item.position;
 }
 
 void set_x(int id, fixed x)
 {
+    static_data& data = data_ref();
     item_type& item = data.items[id];
 
     if(item.position.x() != x)
@@ -132,6 +144,7 @@ void set_x(int id, fixed x)
 
 void set_y(int id, fixed y)
 {
+    static_data& data = data_ref();
     item_type& item = data.items[id];
 
     if(item.position.y() != y)
@@ -143,6 +156,7 @@ void set_y(int id, fixed y)
 
 void set_position(int id, const fixed_point& position)
 {
+    static_data& data = data_ref();
     item_type& item = data.items[id];
 
     if(item.position != position)
@@ -154,6 +168,8 @@ void set_position(int id, const fixed_point& position)
 
 void update()
 {
+    static_data& data = data_ref();
+
     if(data.update)
     {
         data.update = false;

@@ -61,7 +61,12 @@ namespace
         bool event_handler_enabled = false;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 
 
     [[nodiscard]] constexpr int mix_length(audio_mixing_rate mixing_rate)
@@ -129,6 +134,8 @@ namespace
 
     [[nodiscard]] bool _check_sounds_queue(int priority)
     {
+        static_data& data = data_ref();
+
         if(! data.sounds_queue.full())
         {
             return true;
@@ -148,6 +155,7 @@ namespace
 
     void _add_sound_to_queue(int priority, uint16_t handle)
     {
+        static_data& data = data_ref();
         auto before_it = data.sounds_queue.before_begin();
         auto it = data.sounds_queue.begin();
         auto end = data.sounds_queue.end();
@@ -172,6 +180,7 @@ namespace
 
     void _erase_sound_from_queue(uint16_t handle)
     {
+        static_data& data = data_ref();
         auto before_it = data.sounds_queue.before_begin();
         auto it = data.sounds_queue.begin();
         auto end = data.sounds_queue.end();
@@ -195,6 +204,7 @@ namespace
     {
         if(msg == MMCB_SONGMESSAGE)
         {
+            static_data& data = data_ref();
             int event_count = data.current_event_count;
 
             if(event_count < BN_CFG_AUDIO_MAX_EVENTS)
@@ -220,19 +230,19 @@ namespace
 
 void init()
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 
     _init_impl(audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE));
 }
 
 void enable()
 {
-    REG_SNDDSCNT = data.direct_sound_control_value;
+    REG_SNDDSCNT = data_ref().direct_sound_control_value;
 }
 
 void disable()
 {
-    data.direct_sound_control_value = REG_SNDDSCNT;
+    data_ref().direct_sound_control_value = REG_SNDDSCNT;
     REG_SNDDSCNT = 0;
 }
 
@@ -267,11 +277,14 @@ void set_mixing_rate(audio_mixing_rate mixing_rate)
 
 span<uint8_t> event_ids()
 {
+    static_data& data = data_ref();
     return span<uint8_t>(data.last_event_ids, data.last_event_count);
 }
 
 void update_events(bool enabled)
 {
+    static_data& data = data_ref();
+
     if(data.event_handler_enabled)
     {
         uint8_t event_count = data.current_event_count;
@@ -301,60 +314,60 @@ void update_events(bool enabled)
 
 bool music_playing()
 {
-    return data.music_paused || mmActive();
+    return data_ref().music_paused || mmActive();
 }
 
 void play_music(int id, bool loop)
 {
     mmStart(mm_word(id), loop ? MM_PLAY_LOOP : MM_PLAY_ONCE);
-    data.music_paused = false;
+    data_ref().music_paused = false;
 }
 
 void stop_music()
 {
     mmStop();
-    data.music_paused = false;
+    data_ref().music_paused = false;
 }
 
 void pause_music()
 {
     mmPause();
-    data.music_paused = true;
+    data_ref().music_paused = true;
 }
 
 void resume_music()
 {
     mmResume();
-    data.music_paused = false;
+    data_ref().music_paused = false;
 }
 
 bool jingle_playing()
 {
-    return data.jingle_paused || mmJingleActive();
+    return data_ref().jingle_paused || mmJingleActive();
 }
 
 void play_jingle(int id)
 {
     mmJingleStart(mm_word(id), MM_PLAY_ONCE);
-    data.jingle_paused = false;
+    data_ref().jingle_paused = false;
 }
 
 void stop_jingle()
 {
     mmJingleStop();
-    data.jingle_paused = false;
+    data_ref().jingle_paused = false;
 }
 
 void pause_jingle()
 {
     mmJinglePause();
-    data.jingle_paused = true;
+    data_ref().jingle_paused = true;
 }
 
 void resume_jingle()
 {
     mmJingleResume();
-    data.jingle_paused = false;
+    data_ref().jingle_paused = false;
 }
 
 optional<uint16_t> play_sound(int priority, int id)
@@ -430,11 +443,12 @@ void set_sound_speed(uint16_t handle, fixed current_speed, fixed new_speed)
 void stop_all_sounds()
 {
     mmEffectCancelAll();
-    data.sounds_queue.clear();
+    data_ref().sounds_queue.clear();
 }
 
 void update_sounds_queue()
 {
+    static_data& data = data_ref();
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
     auto end = data.sounds_queue.end();

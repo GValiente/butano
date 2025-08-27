@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_20_1_0 20.1.0 (next release)
+ *
+ * ROM usage reduced (thanks yeon!).
+ *
+ *
  * @section changelog_20_0_0 20.0.0
  *
  * * Butano now uses <a href="https://blocksds.skylyrac.net">BlocksDS's</a>

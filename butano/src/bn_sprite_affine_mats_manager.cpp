@@ -173,11 +173,17 @@ namespace
         int last_index_to_commit = 0;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 
 
     void _update_flipped_identity(int index)
     {
+        static_data& data = data_ref();
         item_type& item = data.items[index];
         const affine_mat_attributes& item_attributes = item.attributes;
 
@@ -205,12 +211,14 @@ namespace
 
     void _update_indexes_to_commit(int index)
     {
+        static_data& data = data_ref();
         data.first_index_to_commit = min(data.first_index_to_commit, index);
         data.last_index_to_commit = max(data.last_index_to_commit, index);
     }
 
     void _update(int index)
     {
+        static_data& data = data_ref();
         item_type& item = data.items[index];
         item.update = true;
         data.first_index_to_update = min(data.first_index_to_update, index);
@@ -219,6 +227,8 @@ namespace
 
     [[nodiscard]] int _new_item_index()
     {
+        static_data& data = data_ref();
+
         if(int free_items_count = data.free_item_indexes.size())
         {
             auto free_item_indexes_data = data.free_item_indexes.data();
@@ -250,6 +260,7 @@ namespace
 
     void _update_remove_if_not_needed()
     {
+        static_data& data = data_ref();
         int first_index_to_remove = data.first_index_to_remove_if_not_needed;
 
         if(first_index_to_remove < max_items)
@@ -291,6 +302,7 @@ namespace
 
     void _update_impl()
     {
+        static_data& data = data_ref();
         int first_index_to_update = data.first_index_to_update;
 
         if(first_index_to_update < max_items)
@@ -398,8 +410,9 @@ namespace
 
 void init(void* handles)
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 
+    static_data& data = data_ref();
     data.handles_ptr = static_cast<hw::sprite_affine_mats::handle*>(handles);
 
     for(int index = max_items - 1; index >= 0; --index)
@@ -410,12 +423,12 @@ void init(void* handles)
 
 int used_count()
 {
-    return data.free_item_indexes.available();
+    return data_ref().free_item_indexes.available();
 }
 
 int available_count()
 {
-    return data.free_item_indexes.size();
+    return data_ref().free_item_indexes.size();
 }
 
 int create()
@@ -440,7 +453,7 @@ int create_optional()
 
     if(item_index >= 0)
     {
-        data.items[item_index].init();
+        data_ref().items[item_index].init();
         _update(item_index);
     }
 
@@ -453,7 +466,7 @@ int create_optional(const affine_mat_attributes& attributes)
 
     if(item_index >= 0)
     {
-        data.items[item_index].init(attributes);
+        data_ref().items[item_index].init(attributes);
         _update(item_index);
     }
 
@@ -462,12 +475,13 @@ int create_optional(const affine_mat_attributes& attributes)
 
 void increase_usages(int id)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
     ++item.usages;
 }
 
 void decrease_usages(int id)
 {
+    static_data& data = data_ref();
     item_type& item = data.items[id];
     --item.usages;
 
@@ -481,24 +495,24 @@ void decrease_usages(int id)
 
 void attach_sprite(int id, sprite_affine_mat_attach_node_type& attach_node)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
     item.attached_nodes.push_back(attach_node);
 }
 
 void dettach_sprite(int id, sprite_affine_mat_attach_node_type& attach_node)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
     item.attached_nodes.erase(attach_node);
 }
 
 fixed rotation_angle(int id)
 {
-    return data.items[id].attributes.rotation_angle();
+    return data_ref().items[id].attributes.rotation_angle();
 }
 
 void set_rotation_angle(int id, fixed rotation_angle)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(rotation_angle != item.attributes.rotation_angle())
     {
@@ -517,12 +531,12 @@ void set_rotation_angle(int id, fixed rotation_angle)
 
 fixed horizontal_scale(int id)
 {
-    return data.items[id].attributes.horizontal_scale();
+    return data_ref().items[id].attributes.horizontal_scale();
 }
 
 void set_horizontal_scale(int id, fixed horizontal_scale)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(horizontal_scale != item.attributes.horizontal_scale())
     {
@@ -540,12 +554,12 @@ void set_horizontal_scale(int id, fixed horizontal_scale)
 
 fixed vertical_scale(int id)
 {
-    return data.items[id].attributes.vertical_scale();
+    return data_ref().items[id].attributes.vertical_scale();
 }
 
 void set_vertical_scale(int id, fixed vertical_scale)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(vertical_scale != item.attributes.vertical_scale())
     {
@@ -563,7 +577,7 @@ void set_vertical_scale(int id, fixed vertical_scale)
 
 void set_scale(int id, fixed scale)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(scale != item.attributes.horizontal_scale() || scale != item.attributes.vertical_scale())
     {
@@ -582,7 +596,7 @@ void set_scale(int id, fixed scale)
 
 void set_scale(int id, fixed horizontal_scale, fixed vertical_scale)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(horizontal_scale != item.attributes.horizontal_scale() || vertical_scale != item.attributes.vertical_scale())
     {
@@ -601,12 +615,12 @@ void set_scale(int id, fixed horizontal_scale, fixed vertical_scale)
 
 fixed horizontal_shear(int id)
 {
-    return data.items[id].attributes.horizontal_shear();
+    return data_ref().items[id].attributes.horizontal_shear();
 }
 
 void set_horizontal_shear(int id, fixed horizontal_shear)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(horizontal_shear != item.attributes.horizontal_shear())
     {
@@ -623,12 +637,12 @@ void set_horizontal_shear(int id, fixed horizontal_shear)
 
 fixed vertical_shear(int id)
 {
-    return data.items[id].attributes.vertical_shear();
+    return data_ref().items[id].attributes.vertical_shear();
 }
 
 void set_vertical_shear(int id, fixed vertical_shear)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(vertical_shear != item.attributes.vertical_shear())
     {
@@ -645,7 +659,7 @@ void set_vertical_shear(int id, fixed vertical_shear)
 
 void set_shear(int id, fixed shear)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(shear != item.attributes.horizontal_shear() || shear != item.attributes.vertical_shear())
     {
@@ -663,7 +677,7 @@ void set_shear(int id, fixed shear)
 
 void set_shear(int id, fixed horizontal_shear, fixed vertical_shear)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(horizontal_shear != item.attributes.horizontal_shear() || vertical_shear != item.attributes.vertical_shear())
     {
@@ -681,12 +695,12 @@ void set_shear(int id, fixed horizontal_shear, fixed vertical_shear)
 
 bool horizontal_flip(int id)
 {
-    return data.items[id].attributes.horizontal_flip();
+    return data_ref().items[id].attributes.horizontal_flip();
 }
 
 void set_horizontal_flip(int id, bool horizontal_flip)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(horizontal_flip != item.attributes.horizontal_flip())
     {
@@ -697,12 +711,12 @@ void set_horizontal_flip(int id, bool horizontal_flip)
 
 bool vertical_flip(int id)
 {
-    return data.items[id].attributes.vertical_flip();
+    return data_ref().items[id].attributes.vertical_flip();
 }
 
 void set_vertical_flip(int id, bool vertical_flip)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(vertical_flip != item.attributes.vertical_flip())
     {
@@ -713,12 +727,12 @@ void set_vertical_flip(int id, bool vertical_flip)
 
 const affine_mat_attributes& attributes(int id)
 {
-    return data.items[id].attributes;
+    return data_ref().items[id].attributes;
 }
 
 void set_attributes(int id, const affine_mat_attributes& attributes)
 {
-    item_type& item = data.items[id];
+    item_type& item = data_ref().items[id];
 
     if(item.attributes != attributes)
     {
@@ -739,20 +753,20 @@ void set_attributes(int id, const affine_mat_attributes& attributes)
 
 bool identity(int id)
 {
-    const item_type& item = data.items[id];
+    const item_type& item = data_ref().items[id];
     return item.flipped_identity && ! item.attributes.horizontal_flip() && ! item.attributes.vertical_flip() &&
            item.attributes.pa_register_value() == 256 && item.attributes.pd_register_value() == 256;
 }
 
 bool flipped_identity(int id)
 {
-    const item_type& item = data.items[id];
+    const item_type& item = data_ref().items[id];
     return item.flipped_identity;
 }
 
 bool sprite_double_size(int id, const sprite_shape_size& shape_size)
 {
-    const item_type& item = data.items[id];
+    const item_type& item = data_ref().items[id];
 
     if(item.flipped_identity) [[unlikely]]
     {
@@ -776,6 +790,8 @@ bool sprite_double_size(int id, const sprite_shape_size& shape_size)
 
 void reserve_sprite_handles([[maybe_unused]] int sprite_handles_count)
 {
+    static_data& data = data_ref();
+
     if(used_count())
     {
         int first_active_index = max_items;
@@ -819,6 +835,7 @@ void update()
 
 commit_data retrieve_commit_data()
 {
+    static_data& data = data_ref();
     commit_data result;
     int first_index_to_commit = data.first_index_to_commit;
 

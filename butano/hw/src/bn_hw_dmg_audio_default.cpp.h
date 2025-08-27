@@ -39,27 +39,34 @@ namespace
         #endif
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 }
 
 void init()
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 }
 
 void enable()
 {
-    REG_SNDDMGCNT = data.control_value;
+    REG_SNDDMGCNT = data_ref().control_value;
 }
 
 void disable()
 {
-    data.control_value = REG_SNDDMGCNT;
+    data_ref().control_value = REG_SNDDMGCNT;
     REG_SNDDMGCNT = 0;
 }
 
 [[nodiscard]] bool music_playing()
 {
+    static_data& data = data_ref();
+
     if(data.music_paused)
     {
         return true;
@@ -77,6 +84,8 @@ void disable()
 
 void stop_music()
 {
+    static_data& data = data_ref();
+
     if(data.music_type == dmg_music_type::GBT_PLAYER)
     {
         gbt_stop();
@@ -91,6 +100,8 @@ void stop_music()
 
 void play_music(const void* song, dmg_music_type type, int speed, bool loop)
 {
+    static_data& data = data_ref();
+
     if(type != data.music_type)
     {
         stop_music();
@@ -114,6 +125,8 @@ void play_music(const void* song, dmg_music_type type, int speed, bool loop)
 
 void pause_music()
 {
+    static_data& data = data_ref();
+
     if(data.music_type == dmg_music_type::GBT_PLAYER)
     {
         gbt_pause(0);
@@ -128,6 +141,8 @@ void pause_music()
 
 void resume_music()
 {
+    static_data& data = data_ref();
+
     if(data.music_type == dmg_music_type::GBT_PLAYER)
     {
         gbt_pause(1);
@@ -142,7 +157,7 @@ void resume_music()
 
 void music_position(int& pattern, int& row)
 {
-    if(data.music_type == dmg_music_type::GBT_PLAYER)
+    if(data_ref().music_type == dmg_music_type::GBT_PLAYER)
     {
         gbt_get_position_unsafe(&pattern, &row, nullptr);
     }
@@ -155,7 +170,7 @@ void music_position(int& pattern, int& row)
 
 void set_music_position(int pattern, int row)
 {
-    if(data.music_type == dmg_music_type::GBT_PLAYER)
+    if(data_ref().music_type == dmg_music_type::GBT_PLAYER)
     {
         gbt_set_position(pattern, row);
     }
@@ -169,7 +184,7 @@ void set_music_position(int pattern, int row)
 
 void set_music_volume(fixed left_volume, fixed right_volume)
 {
-    if(data.music_type == dmg_music_type::GBT_PLAYER)
+    if(data_ref().music_type == dmg_music_type::GBT_PLAYER)
     {
         gbt_volume(unsigned(_hw_music_volume(left_volume)), unsigned(_hw_music_volume(right_volume)));
     }
@@ -181,6 +196,8 @@ void set_music_volume(fixed left_volume, fixed right_volume)
 
 void commit()
 {
+    static_data& data = data_ref();
+
     if(data.music_type == dmg_music_type::GBT_PLAYER)
     {
         gbt_update();
@@ -202,7 +219,7 @@ void commit()
 void check_commit_result()
 {
     #if BN_CFG_ASSERT_ENABLED
-        BN_BASIC_ASSERT(! data.vgm_commit_failed, "VGM commit failed: ", data.vgm_offset_play);
+        BN_BASIC_ASSERT(! data_ref().vgm_commit_failed, "VGM commit failed: ", data_ref().vgm_offset_play);
     #endif
 }
 

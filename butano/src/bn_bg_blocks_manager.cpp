@@ -478,7 +478,12 @@ namespace
         bool delay_commit = false;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 
 
     [[nodiscard]] constexpr int _new_regular_map_blocks_count(int width, int height, bool big)
@@ -495,7 +500,7 @@ namespace
     {
         if(big)
         {
-            return _ceil_half_words_to_blocks(data.new_affine_big_map_canvas_info.cells() / 2);
+            return _ceil_half_words_to_blocks(data_ref().new_affine_big_map_canvas_info.cells() / 2);
         }
 
         return _ceil_half_words_to_blocks((width * height) / 2);
@@ -521,7 +526,7 @@ namespace
                                               compression_type compression)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
-            create_type create_type = data.allow_tiles_offset ?
+            create_type create_type = data_ref().allow_tiles_offset ?
                         create_type::REGULAR_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
 
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
@@ -531,7 +536,7 @@ namespace
         static create_data from_affine_tiles(const uint16_t* data_ptr, int half_words, compression_type compression)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
-            create_type create_type = data.allow_tiles_offset ?
+            create_type create_type = data_ref().allow_tiles_offset ?
                         create_type::AFFINE_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
 
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
@@ -611,6 +616,7 @@ namespace
     #if BN_CFG_BG_BLOCKS_SANITY_CHECK_ENABLED
         void _sanity_check()
         {
+            static_data& data = data_ref();
             int items_count = 0;
             int free_blocks_count = 0;
             int used_blocks_count = 0;
@@ -666,6 +672,7 @@ namespace
     #if BN_CFG_BG_BLOCKS_LOG_ENABLED
         void _log_status()
         {
+            static_data& data = data_ref();
             BN_LOG("items: ", data.items.size());
             BN_LOG('[');
 
@@ -742,6 +749,8 @@ namespace
     [[nodiscard]] int _find_tiles_impl(
             const uint16_t* tiles_data, compression_type compression, int half_words, bool affine)
     {
+        static_data& data = data_ref();
+
         for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
         {
             item_type& item = *iterator;
@@ -786,6 +795,8 @@ namespace
             const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr,
             const regular_bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
     {
+        static_data& data = data_ref();
+
         for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
         {
             item_type& item = *iterator;
@@ -856,6 +867,8 @@ namespace
             const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr,
             const affine_bg_tiles_ptr& tiles, const bg_palette_ptr& palette)
     {
+        static_data& data = data_ref();
+
         for(auto iterator = data.items.begin(), end = data.items.end(); iterator != end; ++iterator)
         {
             item_type& item = *iterator;
@@ -994,6 +1007,8 @@ namespace
 
     void _fix_blocks_count(const item_type& item, int new_item_blocks_count)
     {
+        static_data& data = data_ref();
+
         switch(item.status())
         {
 
@@ -1017,6 +1032,7 @@ namespace
 
     [[nodiscard]] int _create_item(int id, int padding_blocks_count, bool delay_commit, create_data&& create_data)
     {
+        static_data& data = data_ref();
         item_type* item = &data.items.item(id);
         int blocks_count = create_data.blocks_count;
 
@@ -1128,6 +1144,7 @@ namespace
 
     [[nodiscard]] int _create_impl(create_data&& create_data)
     {
+        static_data& data = data_ref();
         auto begin = data.items.begin();
         auto end = data.items.end();
         int blocks_count = create_data.blocks_count;
@@ -1202,6 +1219,8 @@ namespace
 
     [[nodiscard]] int _allocate_impl(create_data&& create_data)
     {
+        static_data& data = data_ref();
+
         if(data.delay_commit)
         {
             return -1;
@@ -1252,6 +1271,7 @@ namespace
 
     [[nodiscard]] bool _remove_adjacent_item(int adjacent_id, item_type& current_item)
     {
+        static_data& data = data_ref();
         const item_type& adjacent_item = data.items.item(adjacent_id);
         status_type adjacent_item_status = adjacent_item.status();
         bool remove = adjacent_item_status != status_type::USED;
@@ -1289,12 +1309,14 @@ namespace
 
 void init()
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - INIT");
 
     item_type new_item;
     new_item.blocks_count = hw::bg_tiles::blocks_count();
+
+    static_data& data = data_ref();
     data.items.push_front(new_item);
     data.free_blocks_count = new_item.blocks_count;
 
@@ -1315,7 +1337,7 @@ int used_tile_blocks_count()
 {
     int result = 0;
 
-    for(const item_type& item : data.items)
+    for(const item_type& item : data_ref().items)
     {
         if(item.status() != status_type::FREE && item.is_tiles)
         {
@@ -1328,7 +1350,7 @@ int used_tile_blocks_count()
 
 int available_tile_blocks_count()
 {
-    return data.free_blocks_count;
+    return data_ref().free_blocks_count;
 }
 
 int used_map_cells_count()
@@ -1345,7 +1367,7 @@ int used_map_blocks_count()
 {
     int result = 0;
 
-    for(const item_type& item : data.items)
+    for(const item_type& item : data_ref().items)
     {
         if(item.status() != status_type::FREE && ! item.is_tiles)
         {
@@ -1358,27 +1380,27 @@ int used_map_blocks_count()
 
 int available_map_blocks_count()
 {
-    return data.free_blocks_count;
+    return data_ref().free_blocks_count;
 }
 
 affine_bg_big_map_canvas_size new_affine_big_map_canvas_size()
 {
-    return data.new_affine_big_map_canvas_info.canvas_size();
+    return data_ref().new_affine_big_map_canvas_info.canvas_size();
 }
 
 void set_new_affine_big_map_canvas_size(affine_bg_big_map_canvas_size affine_big_map_canvas_size)
 {
-    data.new_affine_big_map_canvas_info = affine_bg_big_map_canvas_info(affine_big_map_canvas_size);
+    data_ref().new_affine_big_map_canvas_info = affine_bg_big_map_canvas_info(affine_big_map_canvas_size);
 }
 
 bool allow_tiles_offset()
 {
-    return data.allow_tiles_offset;
+    return data_ref().allow_tiles_offset;
 }
 
 void set_allow_tiles_offset(bool allow_tiles_offset)
 {
-    data.allow_tiles_offset = allow_tiles_offset;
+    data_ref().allow_tiles_offset = allow_tiles_offset;
 }
 
 #if BN_CFG_LOG_ENABLED
@@ -1387,6 +1409,7 @@ void set_allow_tiles_offset(bool allow_tiles_offset)
         #if BN_CFG_BG_BLOCKS_LOG_ENABLED
             BN_BG_BLOCKS_LOG_STATUS();
         #else
+            static_data& data = data_ref();
             BN_LOG("items: ", data.items.size());
             BN_LOG('[');
 
@@ -1654,6 +1677,8 @@ int create_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_ce
     BN_ASSERT(aligned<4>(data_ptr), "Map cells are not aligned");
     BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP affine maps not supported");
     BN_BASIC_ASSERT(compression == compression_type::NONE || ! big, "Compressed big maps are not supported");
+
+    static_data& data = data_ref();
     BN_BASIC_ASSERT(! big || dimensions.width() % data.new_affine_big_map_canvas_info.size() == 0,
                     "Big maps width must be divisible by canvas width: ",
                     dimensions.width(), " - ", data.new_affine_big_map_canvas_info.size());
@@ -1860,7 +1885,7 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
 
 void increase_usages(int id)
 {
-    item_type& item = data.items.item(id);
+    item_type& item = data_ref().items.item(id);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - INCREASE USAGES: ", id, " - ", item.start_block);
 
@@ -1871,6 +1896,7 @@ void increase_usages(int id)
 
 void decrease_usages(int id)
 {
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - DECREASE USAGES: ", id, " - ", item.start_block);
@@ -1892,7 +1918,7 @@ void decrease_usages(int id)
 
 int hw_id(int id)
 {
-    return data.items.item(id).start_block;
+    return data_ref().items.item(id).start_block;
 }
 
 int hw_tiles_cbb(int id)
@@ -1902,23 +1928,23 @@ int hw_tiles_cbb(int id)
 
 int tiles_count(int id)
 {
-    return data.items.item(id).tiles_count();
+    return data_ref().items.item(id).tiles_count();
 }
 
 size map_dimensions(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     return size(item.width, item.height);
 }
 
 bool big_map(int id)
 {
-    return data.items.item(id).is_big;
+    return data_ref().items.item(id).is_big;
 }
 
 affine_bg_big_map_canvas_size affine_big_map_canvas_size(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     BN_BASIC_ASSERT(item.is_big, "Map is not big");
 
     return item.big_map_canvas_size();
@@ -1926,27 +1952,27 @@ affine_bg_big_map_canvas_size affine_big_map_canvas_size(int id)
 
 int regular_tiles_offset(int id)
 {
-    return data.items.item(id).regular_tiles_offset();
+    return data_ref().items.item(id).regular_tiles_offset();
 }
 
 int affine_tiles_offset(int id)
 {
-    return data.items.item(id).affine_tiles_offset();
+    return data_ref().items.item(id).affine_tiles_offset();
 }
 
 int palette_offset(int id)
 {
-    return data.items.item(id).palette_offset();
+    return data_ref().items.item(id).palette_offset();
 }
 
 compression_type compression(int id)
 {
-    return data.items.item(id).compression();
+    return data_ref().items.item(id).compression();
 }
 
 [[nodiscard]] optional<span<const tile>> tiles_ref(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     optional<span<const tile>> result;
 
     if(const uint16_t* data_ptr = item.data)
@@ -1960,7 +1986,7 @@ compression_type compression(int id)
 
 optional<span<const regular_bg_map_cell>> regular_map_cells_ref(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     optional<span<const regular_bg_map_cell>> result;
 
     if(const uint16_t* item_data = item.data)
@@ -1973,7 +1999,7 @@ optional<span<const regular_bg_map_cell>> regular_map_cells_ref(int id)
 
 optional<span<const affine_bg_map_cell>> affine_map_cells_ref(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     optional<span<const affine_bg_map_cell>> result;
 
     if(const uint16_t* item_data = item.data)
@@ -1989,6 +2015,7 @@ void set_regular_tiles_ref(int id, const regular_bg_tiles_item& tiles_item)
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     compression_type compression = tiles_item.compression();
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR TILES REF: ", id, " - ", item.start_block, " - ",
@@ -2024,6 +2051,7 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto data_ptr = reinterpret_cast<const uint16_t*>(tiles_ref.data());
     compression_type compression = tiles_item.compression();
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE TILES REF: ", id, " - ", item.start_block, " - ",
@@ -2057,6 +2085,7 @@ void set_affine_tiles_ref(int id, const affine_bg_tiles_item& tiles_item)
 void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, const regular_bg_map_cell* data_ptr)
 {
     compression_type compression = map_item.compression();
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET REGULAR MAP CELLS REF: ", id, " - ", item.start_block, " - ",
@@ -2098,6 +2127,7 @@ void set_regular_map_cells_ref(int id, const regular_bg_map_item& map_item, cons
 void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const affine_bg_map_cell* data_ptr)
 {
     compression_type compression = map_item.compression();
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - SET AFFINE MAP CELLS REF: ", id, " - ", item.start_block, " - ",
@@ -2140,6 +2170,7 @@ void set_affine_map_cells_ref(int id, const affine_bg_map_item& map_item, const 
 
 void reload(int id)
 {
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - RELOAD: ", id, " - ", item.start_block);
@@ -2154,18 +2185,19 @@ void reload(int id)
 
 const regular_bg_tiles_ptr& regular_map_tiles(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     return *item.regular_tiles;
 }
 
 const affine_bg_tiles_ptr& affine_map_tiles(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     return *item.affine_tiles;
 }
 
 void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
 {
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     if(tiles != item.regular_tiles)
@@ -2206,6 +2238,7 @@ void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
 
 void set_affine_map_tiles(int id, affine_bg_tiles_ptr&& tiles)
 {
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     if(tiles != item.affine_tiles)
@@ -2243,24 +2276,25 @@ void set_affine_map_tiles(int id, affine_bg_tiles_ptr&& tiles)
 
 void remove_regular_map_tiles(int id)
 {
-    item_type& item = data.items.item(id);
+    item_type& item = data_ref().items.item(id);
     item.regular_tiles.reset();
 }
 
 void remove_affine_map_tiles(int id)
 {
-    item_type& item = data.items.item(id);
+    item_type& item = data_ref().items.item(id);
     item.affine_tiles.reset();
 }
 
 const bg_palette_ptr& map_palette(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     return *item.palette;
 }
 
 void set_regular_map_palette(int id, bg_palette_ptr&& palette)
 {
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
 
     if(palette != item.palette)
@@ -2303,7 +2337,7 @@ void set_regular_map_palette(int id, bg_palette_ptr&& palette)
 
 void set_affine_map_palette(int id, bg_palette_ptr&& palette)
 {
-    item_type& item = data.items.item(id);
+    item_type& item = data_ref().items.item(id);
 
     if(palette != item.palette)
     {
@@ -2315,12 +2349,13 @@ void set_affine_map_palette(int id, bg_palette_ptr&& palette)
 
 void remove_map_palette(int id)
 {
-    item_type& item = data.items.item(id);
+    item_type& item = data_ref().items.item(id);
     item.palette.reset();
 }
 
 void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_palette_ptr&& palette)
 {
+    static_data& data = data_ref();
     item_type& item = data.items.item(id);
     bpp_mode new_palette_bpp = palette.bpp();
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles.tiles_count(), new_palette_bpp),
@@ -2376,7 +2411,7 @@ void set_regular_map_tiles_and_palette(int id, regular_bg_tiles_ptr&& tiles, bg_
 
 optional<span<tile>> tiles_vram(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     optional<span<tile>> result;
 
     if(! item.data)
@@ -2390,7 +2425,7 @@ optional<span<tile>> tiles_vram(int id)
 
 optional<span<regular_bg_map_cell>> regular_map_vram(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     optional<span<regular_bg_map_cell>> result;
 
     if(! item.data)
@@ -2404,7 +2439,7 @@ optional<span<regular_bg_map_cell>> regular_map_vram(int id)
 
 optional<span<affine_bg_map_cell>> affine_map_vram(int id)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     optional<span<affine_bg_map_cell>> result;
 
     if(! item.data)
@@ -2418,12 +2453,12 @@ optional<span<affine_bg_map_cell>> affine_map_vram(int id)
 
 bool must_commit(int id)
 {
-    return data.items.item(id).commit;
+    return data_ref().items.item(id).commit;
 }
 
 void update_regular_map_col(int id, int x, int y)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     const uint16_t* item_data = item.data;
 
     if(! item_data)
@@ -2487,7 +2522,7 @@ void update_regular_map_col(int id, int x, int y)
 
 void update_affine_map_col(int id, int x, int y)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     auto item_data = reinterpret_cast<const uint8_t*>(item.data);
 
     if(! item_data)
@@ -2615,14 +2650,14 @@ void update_affine_map_col(int id, int x, int y)
 
 void update_affine_map_right_col(int id, int x, int y)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     affine_bg_big_map_canvas_info canvas_info(item.big_map_canvas_size());
     update_affine_map_col(id, x + canvas_info.viewport_size(), y);
 }
 
 void update_regular_map_row(int id, int x, int y)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     const uint16_t* item_data = item.data;
 
     if(! item_data)
@@ -2664,7 +2699,7 @@ void update_affine_map_row(int id, int x, int y)
 {
     // BN_ASSERT(x % 2 == 0, "Invalid x: ", x);
 
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     auto item_data = reinterpret_cast<const uint8_t*>(item.data);
 
     if(! item_data)
@@ -2712,14 +2747,14 @@ void update_affine_map_row(int id, int x, int y)
 
 void update_affine_map_bottom_row(int id, int x, int y)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     affine_bg_big_map_canvas_info canvas_info(item.big_map_canvas_size());
     update_affine_map_row(id, x, y + canvas_info.viewport_size());
 }
 
 void set_regular_map_position(int id, int x, int y)
 {
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     const uint16_t* item_data = item.data;
 
     if(! item_data)
@@ -2787,7 +2822,7 @@ void set_affine_map_position(int id, int x, int y)
 {
     // BN_ASSERT(x % 2 == 0, "Invalid x: ", x);
 
-    const item_type& item = data.items.item(id);
+    const item_type& item = data_ref().items.item(id);
     auto item_data = reinterpret_cast<const uint8_t*>(item.data);
 
     if(! item_data)
@@ -2860,6 +2895,8 @@ void set_affine_map_position(int id, int x, int y)
 
 void update()
 {
+    static_data& data = data_ref();
+
     if(data.to_remove_blocks_count || data.check_commit)
     {
         data.to_remove_blocks_count = 0;
@@ -2945,6 +2982,8 @@ void update()
 
 void commit_uncompressed(bool use_dma)
 {
+    static_data& data = data_ref();
+
     if(int commit_items_count = data.to_commit_uncompressed_items_count)
     {
         BN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT UNCOMPRESSED");
@@ -2965,6 +3004,8 @@ void commit_uncompressed(bool use_dma)
 
 void commit_compressed()
 {
+    static_data& data = data_ref();
+
     if(int commit_items_count = data.to_commit_compressed_items_count)
     {
         BN_BG_BLOCKS_LOG("bg_blocks_manager - COMMIT COMPRESSED");

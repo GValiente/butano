@@ -157,12 +157,17 @@ namespace
         bool high_priority_irq_enabled = false;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 }
 
 void init()
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 }
 
 void enable()
@@ -173,6 +178,7 @@ void enable()
 
 void force_stop()
 {
+    static_data& data = data_ref();
     data.low_priority_entry.force_stop();
     data.high_priority_entry.force_stop();
 
@@ -184,6 +190,7 @@ void force_stop()
 
 void disable()
 {
+    static_data& data = data_ref();
     data.low_priority_entry.disable();
     data.high_priority_entry.disable();
 
@@ -196,56 +203,58 @@ void disable()
 
 bool low_priority_running()
 {
-    return data.low_priority_entry.running();
+    return data_ref().low_priority_entry.running();
 }
 
 void low_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
 {
     BN_BASIC_ASSERT(hw::audio::dma_channel_free(3), "Not supported by the audio backend");
 
-    data.low_priority_entry.start(source_ref, elements, destination_ref);
+    data_ref().low_priority_entry.start(source_ref, elements, destination_ref);
 }
 
 void low_priority_stop()
 {
-    data.low_priority_entry.stop();
+    data_ref().low_priority_entry.stop();
 }
 
 bool high_priority_running()
 {
-    return data.high_priority_entry.running();
+    return data_ref().high_priority_entry.running();
 }
 
 void high_priority_start(const uint16_t& source_ref, int elements, uint16_t& destination_ref)
 {
     BN_BASIC_ASSERT(hw::audio::dma_channel_free(0), "Not supported by the audio backend");
 
-    data.high_priority_entry.start(source_ref, elements, destination_ref);
+    data_ref().high_priority_entry.start(source_ref, elements, destination_ref);
 }
 
 void high_priority_stop()
 {
-    data.high_priority_entry.stop();
+    data_ref().high_priority_entry.stop();
 }
 
 hdma::interrupt_handler_type high_priority_interrupt_handler()
 {
-    return data.new_high_priority_interrupt_handler;
+    return data_ref().new_high_priority_interrupt_handler;
 }
 
 void set_high_priority_interrupt_handler(hdma::interrupt_handler_type interrupt_handler)
 {
-    data.new_high_priority_interrupt_handler = interrupt_handler;
+    data_ref().new_high_priority_interrupt_handler = interrupt_handler;
 }
 
 void update()
 {
+    static_data& data = data_ref();
     data.high_priority_entry.update();
     data.low_priority_entry.update();
 }
 
 void commit_interrupt_handler()
 {
+    static_data& data = data_ref();
     hdma::interrupt_handler_type new_high_priority_interrupt_handler = data.new_high_priority_interrupt_handler;
 
     if(data.current_high_priority_interrupt_handler != new_high_priority_interrupt_handler)
@@ -257,6 +266,7 @@ void commit_interrupt_handler()
 
 bool commit_entries(bool use_dma)
 {
+    static_data& data = data_ref();
     hdma::interrupt_handler_type high_priority_interrupt_handler = data.current_high_priority_interrupt_handler;
     bool running = data.high_priority_entry.commit(use_dma, high_priority_interrupt_handler);
 

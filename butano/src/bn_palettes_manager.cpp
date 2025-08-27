@@ -26,34 +26,41 @@ namespace
         palettes_bank bg_palettes_bank;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 }
 
 void init(const optional<color>& transparent_color)
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 
     bg_palettes_bank().set_transparent_color(transparent_color);
 }
 
 palettes_bank& sprite_palettes_bank()
 {
-    return data.sprite_palettes_bank;
+    return data_ref().sprite_palettes_bank;
 }
 
 palettes_bank& bg_palettes_bank()
 {
-    return data.bg_palettes_bank;
+    return data_ref().bg_palettes_bank;
 }
 
 void update()
 {
+    static_data& data = data_ref();
     data.sprite_palettes_bank.update();
     data.bg_palettes_bank.update();
 }
 
 void commit(bool use_dma)
 {
+    static_data& data = data_ref();
     palettes_bank::commit_data sprite_commit_data = data.sprite_palettes_bank.retrieve_commit_data();
 
     if(const color* sprite_colors_ptr = sprite_commit_data.colors_ptr)
@@ -73,6 +80,7 @@ void commit(bool use_dma)
 
 void stop()
 {
+    static_data& data = data_ref();
     data.sprite_palettes_bank.stop();
     data.bg_palettes_bank.stop();
     *hw::palettes::bg_transparent_color_register() = 0;

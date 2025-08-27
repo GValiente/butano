@@ -62,7 +62,12 @@ namespace
         bool music_paused = false;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 
 
     [[nodiscard]] constexpr int _mix_length(audio_mixing_rate mixing_rate)
@@ -108,6 +113,8 @@ namespace
 
     [[nodiscard]] bool _check_sounds_queue(int priority)
     {
+        static_data& data = data_ref();
+
         if(! data.sounds_queue.full())
         {
             return true;
@@ -188,6 +195,8 @@ namespace
 
     [[nodiscard]] int _free_panned_sound_channel(int priority, bool left_panning)
     {
+        static_data& data = data_ref();
+
         if(data.sounds_queue.empty())
         {
             return -1;
@@ -246,6 +255,8 @@ namespace
 
     [[nodiscard]] int _free_sound_channel(int priority)
     {
+        static_data& data = data_ref();
+
         if(data.sounds_queue.empty())
         {
             return -1;
@@ -321,6 +332,7 @@ namespace
 
     [[nodiscard]] uint16_t _add_sound_to_queue(int id, int priority, int channel)
     {
+        static_data& data = data_ref();
         auto before_it = data.sounds_queue.before_begin();
         auto it = data.sounds_queue.begin();
         auto end = data.sounds_queue.end();
@@ -360,7 +372,7 @@ namespace
 
     [[nodiscard]] inline int _hw_sound_volume(fixed volume)
     {
-        volume = volume.unsafe_multiplication(data.sound_master_volume);
+        volume = volume.unsafe_multiplication(data_ref().sound_master_volume);
         return fixed_t<6>(volume).data();
     }
 }
@@ -369,7 +381,7 @@ void init()
 {
     constexpr int mix_length = _mix_length(audio_mixing_rate(BN_CFG_AUDIO_MIXING_RATE));
 
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 
     _init_impl(mix_length);
 
@@ -379,7 +391,7 @@ void init()
 
 void enable()
 {
-    REG_SNDDSCNT = data.direct_sound_control_value;
+    REG_SNDDSCNT = data_ref().direct_sound_control_value;
 
     hw::irq::enable(hw::irq::id::TIMER1);
 }
@@ -388,7 +400,7 @@ void disable()
 {
     hw::irq::disable(hw::irq::id::TIMER1);
 
-    data.direct_sound_control_value = REG_SNDDSCNT;
+    data_ref().direct_sound_control_value = REG_SNDDSCNT;
     REG_SNDDSCNT = 0;
 }
 
@@ -399,7 +411,7 @@ span<const audio_mixing_rate> available_mixing_rates()
 
 bool music_playing()
 {
-    return data.music_paused || AAS_MOD_IsPlaying();
+    return data_ref().music_paused || AAS_MOD_IsPlaying();
 }
 
 void play_music(int id, bool loop)
@@ -410,25 +422,25 @@ void play_music(int id, bool loop)
     error_code = AAS_MOD_SetLoop(loop);
     BN_BASIC_ASSERT(! error_code, "AAS_MOD_SetLoop call failed: ", error_code);
 
-    data.music_paused = false;
+    data_ref().music_paused = false;
 }
 
 void stop_music()
 {
     AAS_MOD_Stop();
-    data.music_paused = false;
+    data_ref().music_paused = false;
 }
 
 void pause_music()
 {
     AAS_MOD_Pause();
-    data.music_paused = true;
+    data_ref().music_paused = true;
 }
 
 void resume_music()
 {
     AAS_MOD_Resume();
-    data.music_paused = false;
+    data_ref().music_paused = false;
 }
 
 void set_music_position(int position)
@@ -445,7 +457,7 @@ void set_music_volume(fixed volume)
 
 bool sound_active(uint16_t handle)
 {
-    for(const sound_type& sound : data.sounds_queue)
+    for(const sound_type& sound : data_ref().sounds_queue)
     {
         if(sound.handle == handle)
         {
@@ -494,6 +506,7 @@ optional<uint16_t> play_sound(int priority, int id, fixed volume, fixed speed, f
 
 void stop_sound(uint16_t handle)
 {
+    static_data& data = data_ref();
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
     auto end = data.sounds_queue.end();
@@ -518,7 +531,7 @@ void stop_sound(uint16_t handle)
 
 void release_sound(uint16_t handle)
 {
-    for(sound_type& sound : data.sounds_queue)
+    for(sound_type& sound : data_ref().sounds_queue)
     {
         if(sound.handle == handle)
         {
@@ -530,7 +543,7 @@ void release_sound(uint16_t handle)
 
 void set_sound_speed(uint16_t handle, fixed, fixed new_speed)
 {
-    for(const sound_type& sound : data.sounds_queue)
+    for(const sound_type& sound : data_ref().sounds_queue)
     {
         if(sound.handle == handle)
         {
@@ -549,6 +562,8 @@ void set_sound_speed(uint16_t handle, fixed, fixed new_speed)
 
 void stop_all_sounds()
 {
+    static_data& data = data_ref();
+
     for(const sound_type& sound : data.sounds_queue)
     {
         AAS_SFX_Stop(sound.channel);
@@ -559,11 +574,12 @@ void stop_all_sounds()
 
 void set_sound_master_volume(fixed volume)
 {
-    data.sound_master_volume = volume;
+    data_ref().sound_master_volume = volume;
 }
 
 void update_sounds_queue()
 {
+    static_data& data = data_ref();
     auto before_it = data.sounds_queue.before_begin();
     auto it = data.sounds_queue.begin();
     auto end = data.sounds_queue.end();

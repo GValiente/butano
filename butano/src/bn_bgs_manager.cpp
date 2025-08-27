@@ -311,14 +311,19 @@ namespace
         bool commit = false;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 
 
     [[nodiscard]] bool _check_unique_regular_big_map(item_type& item)
     {
         if(item.big_map)
         {
-            for(item_type* other_item : data.items_vector)
+            for(item_type* other_item : data_ref().items_vector)
             {
                 if(other_item != &item && other_item->regular_map == item.regular_map)
                 {
@@ -334,7 +339,7 @@ namespace
     {
         if(item.big_map)
         {
-            for(item_type* other_item : data.items_vector)
+            for(item_type* other_item : data_ref().items_vector)
             {
                 if(other_item != &item && other_item->affine_map == item.affine_map)
                 {
@@ -348,6 +353,7 @@ namespace
 
     void _insert_item(item_type& new_item)
     {
+        static_data& data = data_ref();
         sort_key bg_sort_key = new_item.bg_sort_key;
         bool affine_new_item = new_item.affine_map.has_value();
 
@@ -372,6 +378,8 @@ namespace
 
     void _update_item_hw_cnt(const item_type& item)
     {
+        static_data& data = data_ref();
+
         if(! data.rebuild_handles && item.visible)
         {
             data.commit_data.cnts[item.handles_index] = item.hw_cnt;
@@ -381,6 +389,8 @@ namespace
 
     void _update_item_hw_regular_offset(const item_type& item)
     {
+        static_data& data = data_ref();
+
         if(! data.rebuild_handles && item.visible)
         {
             data.commit_data.regular_offsets[item.handles_index] = item.regular_hw_offset();
@@ -390,6 +400,8 @@ namespace
 
     void _update_item_hw_affine_attributes(const item_type& item)
     {
+        static_data& data = data_ref();
+
         if(! data.rebuild_handles && item.visible)
         {
             data.commit_data.affine_attribute_sets[item.handles_index - 2] = item.hw_affine_attributes;
@@ -399,7 +411,7 @@ namespace
 
     void _update_big_maps()
     {
-        for(item_type* item : data.items_vector)
+        for(item_type* item : data_ref().items_vector)
         {
             if(item->big_map)
             {
@@ -450,21 +462,22 @@ namespace
 
 void init()
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 }
 
 int used_count()
 {
-    return data.items_vector.size();
+    return data_ref().items_vector.size();
 }
 
 int available_count()
 {
-    return data.items_vector.available();
+    return data_ref().items_vector.available();
 }
 
 id_type create(regular_bg_builder&& builder)
 {
+    static_data& data = data_ref();
     BN_BASIC_ASSERT(! data.items_vector.full(), "No more BG items available");
 
     regular_bg_map_ptr map = builder.release_map();
@@ -477,6 +490,7 @@ id_type create(regular_bg_builder&& builder)
 
 id_type create(affine_bg_builder&& builder)
 {
+    static_data& data = data_ref();
     BN_BASIC_ASSERT(! data.items_vector.full(), "No more BG items available");
 
     affine_bg_map_ptr map = builder.release_map();
@@ -489,6 +503,8 @@ id_type create(affine_bg_builder&& builder)
 
 id_type create_optional(regular_bg_builder&& builder)
 {
+    static_data& data = data_ref();
+
     if(data.items_vector.full())
     {
         return nullptr;
@@ -511,6 +527,8 @@ id_type create_optional(regular_bg_builder&& builder)
 
 id_type create_optional(affine_bg_builder&& builder)
 {
+    static_data& data = data_ref();
+
     if(data.items_vector.full())
     {
         return nullptr;
@@ -544,6 +562,8 @@ void decrease_usages(id_type id)
 
     if(! item->usages) [[likely]]
     {
+        static_data& data = data_ref();
+
         if(! data.rebuild_handles && item->visible)
         {
             data.rebuild_handles = true;
@@ -1115,7 +1135,7 @@ void set_priority(id_type id, int priority)
 
         item->bg_sort_key.set_priority(priority);
         hw::bgs::set_priority(priority, item->hw_cnt);
-        erase(data.items_vector, item);
+        erase(data_ref().items_vector, item);
         _insert_item(*item);
     }
 }
@@ -1135,13 +1155,14 @@ void set_z_order(id_type id, int z_order)
         BN_ASSERT(z_order >= bgs::min_z_order() && z_order <= bgs::max_z_order(), "Invalid z order: ", z_order);
 
         item->bg_sort_key.set_z_order(z_order);
-        erase(data.items_vector, item);
+        erase(data_ref().items_vector, item);
         _insert_item(*item);
     }
 }
 
 void put_above(id_type id)
 {
+    static_data& data = data_ref();
     const auto items_vector_data = data.items_vector.data();
     auto item = static_cast<item_type*>(id);
     sort_key this_sort_key = item->bg_sort_key;
@@ -1175,6 +1196,7 @@ void put_above(id_type id)
 
 void put_below(id_type id)
 {
+    static_data& data = data_ref();
     const auto items_vector_data = data.items_vector.data();
     auto item = static_cast<item_type*>(id);
     sort_key this_sort_key = item->bg_sort_key;
@@ -1284,7 +1306,7 @@ void set_blending_top_enabled(id_type id, bool blending_top_enabled)
     auto item = static_cast<item_type*>(id);
     item->blending_top_enabled = blending_top_enabled;
 
-    if(! data.rebuild_handles && item->visible)
+    if(! data_ref().rebuild_handles && item->visible)
     {
         display_manager::set_blending_top_bg_enabled(item->handles_index, blending_top_enabled);
     }
@@ -1301,7 +1323,7 @@ void set_blending_bottom_enabled(id_type id, bool blending_bottom_enabled)
     auto item = static_cast<item_type*>(id);
     item->blending_bottom_enabled = blending_bottom_enabled;
 
-    if(! data.rebuild_handles && item->visible)
+    if(! data_ref().rebuild_handles && item->visible)
     {
         display_manager::set_blending_bottom_bg_enabled(item->handles_index, blending_bottom_enabled);
     }
@@ -1320,7 +1342,7 @@ void set_visible(id_type id, bool visible)
     if(visible != item->visible)
     {
         item->visible = visible;
-        data.rebuild_handles = true;
+        data_ref().rebuild_handles = true;
     }
 }
 
@@ -1345,7 +1367,7 @@ void set_show_all_in_window(int window, bool show)
 {
     bool update = false;
 
-    for(item_type* item : data.items_vector)
+    for(item_type* item : data_ref().items_vector)
     {
         if(item->visible_in_windows[window] != show)
         {
@@ -1374,7 +1396,7 @@ void update_windows_flags(unsigned* windows_flags)
         windows_flags[window] = window_flags;
     }
 
-    for(item_type* item : data.items_vector)
+    for(item_type* item : data_ref().items_vector)
     {
         int handles_index = item->handles_index;
 
@@ -1441,7 +1463,7 @@ void remove_camera(id_type id)
 
 void update_cameras()
 {
-    for(item_type* item : data.items_vector)
+    for(item_type* item : data_ref().items_vector)
     {
         if(item->camera)
         {
@@ -1461,7 +1483,7 @@ void update_cameras()
 
 void update_regular_map_tiles_cbb(int map_id, int tiles_cbb)
 {
-    for(item_type* item : data.items_vector)
+    for(item_type* item : data_ref().items_vector)
     {
         regular_bg_map_ptr* item_regular_map = item->regular_map.get();
 
@@ -1475,7 +1497,7 @@ void update_regular_map_tiles_cbb(int map_id, int tiles_cbb)
 
 void update_affine_map_tiles_cbb(int map_id, int tiles_cbb)
 {
-    for(item_type* item : data.items_vector)
+    for(item_type* item : data_ref().items_vector)
     {
         affine_bg_map_ptr* item_affine_map = item->affine_map.get();
 
@@ -1489,7 +1511,7 @@ void update_affine_map_tiles_cbb(int map_id, int tiles_cbb)
 
 void update_regular_map_palette_bpp(int map_id, bpp_mode bpp)
 {
-    for(item_type* item : data.items_vector)
+    for(item_type* item : data_ref().items_vector)
     {
         regular_bg_map_ptr* item_regular_map = item->regular_map.get();
 
@@ -1503,7 +1525,7 @@ void update_regular_map_palette_bpp(int map_id, bpp_mode bpp)
 
 void reload()
 {
-    data.commit = true;
+    data_ref().commit = true;
 }
 
 void fill_hblank_effect_regular_positions(int base_position, const fixed* positions_ptr, uint16_t* dest_ptr)
@@ -1604,6 +1626,8 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
 
 void rebuild_handles()
 {
+    static_data& data = data_ref();
+
     if(data.rebuild_handles)
     {
         int affine_bgs_count = 0;
@@ -1688,6 +1712,8 @@ void update()
 
 void commit(bool use_dma)
 {
+    static_data& data = data_ref();
+
     if(data.commit)
     {
         hw::bgs::commit(data.commit_data, use_dma);
@@ -1697,7 +1723,7 @@ void commit(bool use_dma)
 
 void commit_big_maps()
 {
-    for(item_type* item : data.items_vector)
+    for(item_type* item : data_ref().items_vector)
     {
         if(item->commit_big_map)
         {
@@ -1785,6 +1811,7 @@ void commit_big_maps()
 
 void stop()
 {
+    static_data& data = data_ref();
     data.rebuild_handles = false;
     data.commit = false;
     hw::bgs::stop();

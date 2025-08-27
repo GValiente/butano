@@ -30,10 +30,17 @@ namespace
         bool active = false;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 
     void _check_active()
     {
+        static_data& data = data_ref();
+
         if(! data.active)
         {
             BN_BASIC_ASSERT(free_timers, "There's no free timers");
@@ -45,6 +52,8 @@ namespace
 
     void _sendDataCallback()
     {
+        static_data& data = data_ref();
+
         if(! data.blockSendMessages)
         {
             for(uint16_t message : data.sendMessages)
@@ -58,6 +67,8 @@ namespace
 
     void _receiveResponseCallback(const lc::LinkResponse& response)
     {
+        static_data& data = data_ref();
+
         if(data.blockReceivedMessages)
         {
             if(data.secondReceivedMessages.full())
@@ -92,6 +103,8 @@ namespace
 
     void _resetStateCallback()
     {
+        static_data& data = data_ref();
+
         if(data.blockSendMessages)
         {
             data.clearSendMessages = true;
@@ -116,10 +129,11 @@ namespace
 
 void init()
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 
     if(free_timers)
     {
+        static_data& data = data_ref();
         data.connection.init(_sendDataCallback, _receiveResponseCallback, _resetStateCallback);
         irq::set_isr(irq::id::SERIAL, _serial_intr);
         irq::set_isr(timer_id, _timer_intr);
@@ -129,14 +143,14 @@ void init()
 
 bool active()
 {
-    return data.active;
+    return data_ref().active;
 }
 
 void enable()
 {
     if(free_timers)
     {
-        data.connection.activate();
+        data_ref().connection.activate();
         irq::enable(irq::id::SERIAL);
         irq::enable(timer_id);
     }
@@ -148,12 +162,14 @@ void disable()
     {
         irq::disable(timer_id);
         irq::disable(irq::id::SERIAL);
-        data.connection.deactivate();
+        data_ref().connection.deactivate();
     }
 }
 
 void deactivate()
 {
+    static_data& data = data_ref();
+
     if(data.active)
     {
         data.active = false;
@@ -163,6 +179,7 @@ void deactivate()
 
 void send(int data_to_send)
 {
+    static_data& data = data_ref();
     _check_active();
 
     BN_BARRIER;
@@ -198,6 +215,7 @@ void send(int data_to_send)
 
 bool receive(lc::LinkResponse& response)
 {
+    static_data& data = data_ref();
     _check_active();
 
     BN_BARRIER;
@@ -240,7 +258,7 @@ void _serial_intr()
 {
     if(free_timers)
     {
-        data.connection._onSerial();
+        data_ref().connection._onSerial();
     }
 }
 
@@ -248,7 +266,7 @@ void _timer_intr()
 {
     if(free_timers)
     {
-        data.connection._onTimer();
+        data_ref().connection._onTimer();
     }
 }
 
@@ -256,7 +274,7 @@ void commit()
 {
     if(free_timers)
     {
-        data.connection._onVBlank();
+        data_ref().connection._onVBlank();
     }
 }
 

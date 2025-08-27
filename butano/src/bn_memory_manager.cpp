@@ -24,52 +24,57 @@ namespace
         best_fit_allocator allocator;
     };
 
-    BN_DATA_EWRAM_BSS static_data data;
+    alignas(static_data) BN_DATA_EWRAM_BSS char data_buffer[sizeof(static_data)];
+
+    [[nodiscard]] static_data& data_ref()
+    {
+        return *reinterpret_cast<static_data*>(data_buffer);
+    }
 }
 
 void init()
 {
-    ::new(static_cast<void*>(&data)) static_data();
+    ::new(static_cast<void*>(data_buffer)) static_data();
 
     char* start = hw::memory::ewram_heap_start();
     char* end = hw::memory::ewram_heap_end();
-    data.allocator.reset(static_cast<void*>(start), end - start);
+    data_ref().allocator.reset(static_cast<void*>(start), end - start);
 }
 
 void* ewram_alloc(int bytes)
 {
-    return data.allocator.alloc(bytes);
+    return data_ref().allocator.alloc(bytes);
 }
 
 void* ewram_calloc(int num, int bytes)
 {
-    return data.allocator.calloc(num, bytes);
+    return data_ref().allocator.calloc(num, bytes);
 }
 
 void* ewram_realloc(void* ptr, int new_bytes)
 {
-    return data.allocator.realloc(ptr, new_bytes);
+    return data_ref().allocator.realloc(ptr, new_bytes);
 }
 
 void ewram_free(void* ptr)
 {
-    return data.allocator.free(ptr);
+    return data_ref().allocator.free(ptr);
 }
 
 int used_alloc_ewram()
 {
-    return data.allocator.used_bytes();
+    return data_ref().allocator.used_bytes();
 }
 
 int available_alloc_ewram()
 {
-    return data.allocator.available_bytes();
+    return data_ref().allocator.available_bytes();
 }
 
 #if BN_CFG_LOG_ENABLED
     void log_alloc_ewram_status()
     {
-        data.allocator.log_status();
+        data_ref().allocator.log_status();
     }
 #endif
 

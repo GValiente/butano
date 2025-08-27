@@ -630,7 +630,13 @@
  * Sometimes it helps to change song's file format (for example, from `*.xm` to `*.it`).
  * You can use <a href="https://openmpt.org/">OpenMPT</a> to do that.
  *
- * You can also try to create a new issue in its <a href="https://github.com/blocksds/sdk/issues">GitHub issues</a> page.
+ * Keep in mind that the Maxmod's conversion tool provided by <a href="https://blocksds.skylyrac.net">BlocksDS</a>
+ * is more robust than the one provided by <a href="https://devkitpro.org/">devkitARM</a>, so using Butano with
+ * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> could make your song work.
+ *
+ * If your song still crashes after trying <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>,
+ * you can try to create a new issue in the <a href="https://github.com/blocksds/sdk/issues">Maxmod's GitHub issues</a>
+ * page.
  *
  *
  * @subsection faq_audio_music_wav Why can't I use a long *.wav file as music?

@@ -167,7 +167,7 @@ void set_interrupt(const span<const key_type>& keys)
 void stop()
 {
     #if BN_CFG_KEYPAD_LOG_ENABLED
-        data.logger.flush();
+        data_ref().logger.flush();
     #endif
 }
 

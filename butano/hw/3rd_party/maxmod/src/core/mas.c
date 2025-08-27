@@ -1745,7 +1745,7 @@ IWRAM_CODE void mppProcessTick(void)
 
     // Read pattern data
 
-    if ((layer->pattdelay == 0) && (layer->tick == 0))
+    if ((layer->tick == 0) && (layer->pattdelay == 0))
     {
         mm_bool ok = mmReadPattern(layer);
 
@@ -3021,11 +3021,11 @@ mm_word mpp_Process_Effect(mpl_layer_information *layer, mm_active_channel *act_
 
 // Processes the provided envelope. It updates the values pointed by "count_",
 // "node_" and "value_mul_64".
-static
+static IWRAM_CODE
 mm_word mpph_ProcessEnvelope(mm_hword *count_, mm_byte *node_, mm_mas_envelope *envelope,
                              mm_active_channel *act_ch, mm_word *value_mul_64)
 {
-    mm_hword count = *count_;
+    mm_word count = *count_;
     mm_byte node = *node_;
 
     // Get node and base
@@ -3046,9 +3046,9 @@ mm_word mpph_ProcessEnvelope(mm_hword *count_, mm_byte *node_, mm_mas_envelope *
 
         // Process envelope sustain loop
 
-        if (act_ch->flags & MCAF_KEYON)
+        if (node == envelope->sus_end)
         {
-            if (node == envelope->sus_end)
+            if (act_ch->flags & MCAF_KEYON)
             {
                 *count_ = count;
                 *node_ = envelope->sus_start;
@@ -3058,7 +3058,7 @@ mm_word mpph_ProcessEnvelope(mm_hword *count_, mm_byte *node_, mm_mas_envelope *
 
         // Check for end
 
-        mm_hword last_node = (mm_hword)envelope->node_count - 1;
+        mm_word last_node = (mm_word)envelope->node_count - 1;
         if (node == last_node)
         {
             *count_ = count;

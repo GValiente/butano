@@ -14,7 +14,7 @@
  *
  * @section changelog_20_1_0 20.1.0 (next release)
  *
- * * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a> updated.
+ * * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a> updated and optimized.
  * * ROM usage reduced (thanks yeon!).
  * * @ref faq_audio_music_crash question improved.
  *

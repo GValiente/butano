@@ -3025,7 +3025,7 @@ static IWRAM_CODE
 mm_word mpph_ProcessEnvelope(mm_hword *count_, mm_byte *node_, mm_mas_envelope *envelope,
                              mm_active_channel *act_ch, mm_word *value_mul_64)
 {
-    mm_word count = *count_;
+    mm_hword count = *count_;
     mm_byte node = *node_;
 
     // Get node and base
@@ -3058,7 +3058,7 @@ mm_word mpph_ProcessEnvelope(mm_hword *count_, mm_byte *node_, mm_mas_envelope *
 
         // Check for end
 
-        mm_word last_node = (mm_word)envelope->node_count - 1;
+        mm_hword last_node = (mm_hword)envelope->node_count - 1;
         if (node == last_node)
         {
             *count_ = count;

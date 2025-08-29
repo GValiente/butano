@@ -9,7 +9,7 @@ from butano_graphics_tool import process_graphics
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Butano assets tool.')
-    parser.add_argument('--grit', required=True, help='git executable path')
+    parser.add_argument('--grit', required=True, help='grit executable path')
     parser.add_argument('--audio', required=True, help='audio folder and file paths')
     parser.add_argument('--audio_backend', required=True, help='audio playback backend')
     parser.add_argument('--audio_tool', required=True, help='audio tool executable path')
@@ -27,3 +27,4 @@ if __name__ == "__main__":
         sys.stderr.write('Error: ' + str(ex) + '\n')
         traceback.print_exc()
         exit(-1)
+

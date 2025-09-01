@@ -454,9 +454,11 @@
  * @section faq_sprites Sprites
  *
  *
- * @subsection faq_sprites_top_left Why sprite coordinates are relative to the center of the screen, instead of to its top-left corner?
+ * @subsection faq_sprites_top_left Why are sprite coordinates relative to the center of the screen instead of the top-left corner?
  *
- * If you don't like it, you can always use the `top_left` methods to specify coordinates relative
+ * There's no way to make sprite coordinates relative to the top-left corner of the screen by default.
+ *
+ * However, if you don't like it, you can always use the `top_left` methods to specify coordinates relative
  * to the top-left corner of the screen. They're a bit slower than the regular ones, though.
  *
  *
@@ -528,7 +530,9 @@
  * @section faq_backgrounds Backgrounds
  *
  *
- * @subsection faq_backgrounds_top_left Why background coordinates are relative to the center of the screen, instead of to its top-left corner?
+ * @subsection faq_backgrounds_top_left Why are background coordinates relative to the center of the screen instead of the top-left corner?
+ *
+ * There's no way to make background coordinates relative to the top-left corner of the screen by default.
  *
  * If you don't like it, you can always use the `top_left` methods to specify coordinates relative
  * to the top-left corner of the screen. They're a bit slower than the regular ones, though.

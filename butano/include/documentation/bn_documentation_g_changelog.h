@@ -17,7 +17,7 @@
  * * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a> updated and optimized.
  * * ROM usage reduced (thanks yeon!).
  * * Assets tool typo fixed (thanks alope107!).
- * * @ref faq_audio_music_crash question improved.
+ * * @ref faq_sprites_top_left, @ref faq_backgrounds_top_left and @ref faq_audio_music_crash questions improved.
  *
  *
  * @section changelog_20_0_0 20.0.0

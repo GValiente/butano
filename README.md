@@ -242,6 +242,11 @@ to your opponent's base, then place tiles on their base to damage them.
 
 ## More Butano related stuff
 
+* [butano-ldtk](https://github.com/copyrat90/butano-ldtk): [LDtk](https://ldtk.io/) level importer for Butano.
+Provides [usage examples](https://github.com/copyrat90/butano-ldtk/tree/main/examples) and [API documentation](https://copyrat90.github.io/butano-ldtk/).
+
+![](docs_tools/images/butano_ldtk_1.png) ![](docs_tools/images/butano_ldtk_2.png)
+
 * [gba-free-fonts](https://github.com/laqieer/gba-free-fonts): free fonts for GBA development. 
 It comes with tools and examples to import them into a Butano project.
 

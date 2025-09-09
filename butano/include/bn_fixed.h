@@ -145,9 +145,17 @@ public:
     /**
      * @brief Returns the integer part using a right shift.
      */
-    [[nodiscard]] constexpr int right_shift_integer() const
+    [[nodiscard]] constexpr int shift_integer() const
     {
         return _data >> Precision;
+    }
+
+    /**
+     * @brief Returns the integer part using a right shift.
+     */
+    [[nodiscard]] constexpr int right_shift_integer() const
+    {
+        return shift_integer();
     }
 
     /**
@@ -274,6 +282,30 @@ public:
     /**
      * @brief Returns the multiplication of this value by the given integer value.
      */
+    [[nodiscard]] constexpr fixed_t shift_multiplication(int value) const
+    {
+        return multiplication(value);
+    }
+
+    /**
+     * @brief Returns the multiplication of this value by the given fixed point value,
+     * using half precision to try to avoid overflow and right shifts instead of divisions for the precision handling.
+     */
+    [[nodiscard]] constexpr fixed_t shift_multiplication(fixed_t other) const
+    {
+        if constexpr(Precision % 2 == 0)
+        {
+            int data = _data >> (Precision / 2);
+            int other_data = other._data >> (Precision / 2);
+            return from_data(data * other_data);
+        }
+
+        return safe_multiplication(other);
+    }
+
+    /**
+     * @brief Returns the multiplication of this value by the given integer value.
+     */
     [[nodiscard]] constexpr fixed_t safe_multiplication(int value) const
     {
         return multiplication(value);
@@ -306,6 +338,23 @@ public:
     }
 
     /**
+     * @brief Returns the multiplication of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t unsafe_shift_multiplication(int value) const
+    {
+        return unsafe_multiplication(value);
+    }
+
+    /**
+     * @brief Returns the multiplication of this value by the given fixed point value
+     * without trying to avoid overflow, using a right shift instead of a division for the precision handling.
+     */
+    [[nodiscard]] constexpr fixed_t unsafe_shift_multiplication(fixed_t other) const
+    {
+        return from_data((_data * other._data) >> Precision);
+    }
+
+    /**
      * @brief Returns the division of this value by the given integer value.
      */
     [[nodiscard]] constexpr fixed_t division(int value) const
@@ -323,6 +372,30 @@ public:
         {
             int data = _data * half_scale();
             int other_data = other._data / half_scale();
+            return from_data(data / other_data);
+        }
+
+        return safe_division(other);
+    }
+
+    /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t shift_division(int value) const
+    {
+        return division(value);
+    }
+
+    /**
+     * @brief Returns the division of this value by the given fixed point value,
+     * using half precision to try to avoid overflow and shifts for the precision handling.
+     */
+    [[nodiscard]] constexpr fixed_t shift_division(fixed_t other) const
+    {
+        if constexpr(Precision % 2 == 0)
+        {
+            int data = _data << (Precision / 2);
+            int other_data = other._data >> (Precision / 2);
             return from_data(data / other_data);
         }
 
@@ -363,12 +436,45 @@ public:
     }
 
     /**
+     * @brief Returns the division of this value by the given integer value.
+     */
+    [[nodiscard]] constexpr fixed_t unsafe_shift_division(int value) const
+    {
+        return unsafe_division(value);
+    }
+
+    /**
+     * @brief Returns the division of this value by the given fixed point value without trying to avoid overflow,
+     * using a left shift instead of a multiplication for the precision handling.
+     */
+    [[nodiscard]] constexpr fixed_t unsafe_shift_division(fixed_t other) const
+    {
+        return from_data((_data << Precision) / other._data);
+    }
+
+    /**
      * @brief Returns the remainder of the division of this value by the given integer value.
      */
     [[nodiscard]] constexpr fixed_t modulo(int value) const
     {
         int n = division(value).floor_integer();
         return *this - (n * value);
+    }
+
+    /**
+     * @brief Returns this value shifted to the left by the given bits.
+     */
+    [[nodiscard]] constexpr fixed_t left_shift(int bits) const
+    {
+        return fixed_t::from_data(_data << bits);
+    }
+
+    /**
+     * @brief Returns this value shifted to the right by the given bits.
+     */
+    [[nodiscard]] constexpr fixed_t right_shift(int bits) const
+    {
+        return fixed_t::from_data(_data >> bits);
     }
 
     /**
@@ -453,6 +559,28 @@ public:
     constexpr fixed_t& operator%=(int other)
     {
         *this = modulo(other);
+        return *this;
+    }
+
+    /**
+     * @brief Shifts to the left this fixed_t by the given bits.
+     * @param bits Number of bits to shift to the left.
+     * @return Reference to this.
+     */
+    constexpr fixed_t& operator<<=(int bits)
+    {
+        *this = left_shift(bits);
+        return *this;
+    }
+
+    /**
+     * @brief Shifts to the right this fixed_t by the given bits.
+     * @param bits Number of bits to shift to the right.
+     * @return Reference to this.
+     */
+    constexpr fixed_t& operator>>=(int bits)
+    {
+        *this = right_shift(bits);
         return *this;
     }
 
@@ -558,6 +686,22 @@ public:
     [[nodiscard]] constexpr friend fixed_t operator%(fixed_t a, int b)
     {
         return a.modulo(b);
+    }
+
+    /**
+     * @brief Returns a shifted to the left by b.
+     */
+    [[nodiscard]] constexpr friend fixed_t operator<<(fixed_t a, int b)
+    {
+        return a.left_shift(b);
+    }
+
+    /**
+     * @brief Returns a shifted to the right by b.
+     */
+    [[nodiscard]] constexpr friend fixed_t operator>>(fixed_t a, int b)
+    {
+        return a.right_shift(b);
     }
 
     /**

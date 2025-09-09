@@ -428,7 +428,7 @@ void set_sound_speed(uint16_t handle, fixed current_speed, fixed new_speed)
     if(mmEffectActive(handle))
     {
         fixed_t<10> hw_current_speed = bn::max(fixed_t<10>(current_speed), fixed_t<10>::from_data(1));
-        fixed_t<10> scale = fixed_t<10>(new_speed).unsafe_division(hw_current_speed);
+        fixed_t<10> scale = fixed_t<10>(new_speed).unsafe_shift_division(hw_current_speed);
 
         if(scale != 1)
         {

@@ -14,10 +14,14 @@
  *
  * @section changelog_20_1_0 20.1.0 (next release)
  *
+ * * bn::fixed::shift_integer, bn::fixed::shift_multiplication, bn::fixed::unsafe_shift_multiplication,
+ *   bn::fixed::unsafe_shift_multiplication, bn::fixed::shift_division and bn::fixed::unsafe_shift_division added.
+ * * bn::fixed::left_shift and bn::fixed::right_shift added.
  * * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a> updated and optimized.
  * * ROM usage reduced (thanks yeon!).
  * * Assets tool typo fixed (thanks alope107!).
  * * @ref faq_sprites_top_left, @ref faq_backgrounds_top_left and @ref faq_audio_music_crash questions improved.
+ * * <a href="https://github.com/copyrat90/butano-ldtk">butano-ldtk</a> added to `README.md`.
  *
  *
  * @section changelog_20_0_0 20.0.0

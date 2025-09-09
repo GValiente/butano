@@ -152,6 +152,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a7a067c5265df9c4dae8782d1b3604027" class="m-doc-self">integer</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the integer part using a division.</dd>
+            <dt id="aefdd40656c22ef601f0066c57e19eb0b">
+              <span class="m-doc-wrap-bumper">auto <a href="#aefdd40656c22ef601f0066c57e19eb0b" class="m-doc-self">shift_integer</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the integer part using a right shift.</dd>
             <dt id="a0d7724f715a8566bf69237319115750b">
               <span class="m-doc-wrap-bumper">auto <a href="#a0d7724f715a8566bf69237319115750b" class="m-doc-self">right_shift_integer</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -192,6 +196,14 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a05029ce0d8b7a5ff7f5028035f45522e" class="m-doc-self">multiplication</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the multiplication of this value by the given fixed point value, using half precision to try to avoid overflow.</dd>
+            <dt id="ac08d8ecdb3da9d247188b2ced1244e0e">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac08d8ecdb3da9d247188b2ced1244e0e" class="m-doc-self">shift_multiplication</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this value by the given integer value.</dd>
+            <dt id="a89db6d0ea2016fc420f74966b641d338">
+              <span class="m-doc-wrap-bumper">auto <a href="#a89db6d0ea2016fc420f74966b641d338" class="m-doc-self">shift_multiplication</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this value by the given fixed point value, using half precision to try to avoid overflow and right shifts instead of divisions for the precision handling.</dd>
             <dt id="a46dcc7435abfc718c96269f84967a2cf">
               <span class="m-doc-wrap-bumper">auto <a href="#a46dcc7435abfc718c96269f84967a2cf" class="m-doc-self">safe_multiplication</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -208,6 +220,14 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a9bd3130aae11e2dc8c06d16070496a0a" class="m-doc-self">unsafe_multiplication</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the multiplication of this value by the given fixed point value without trying to avoid overflow.</dd>
+            <dt id="aab70d33814ea7325336c8a7c977ea893">
+              <span class="m-doc-wrap-bumper">auto <a href="#aab70d33814ea7325336c8a7c977ea893" class="m-doc-self">unsafe_shift_multiplication</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this value by the given integer value.</dd>
+            <dt id="aff0c280ae6f95977d26c123641b90e15">
+              <span class="m-doc-wrap-bumper">auto <a href="#aff0c280ae6f95977d26c123641b90e15" class="m-doc-self">unsafe_shift_multiplication</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the multiplication of this value by the given fixed point value without trying to avoid overflow, using a right shift instead of a division for the precision handling.</dd>
             <dt id="ac4aa344a4083225b8a2664df930f03e8">
               <span class="m-doc-wrap-bumper">auto <a href="#ac4aa344a4083225b8a2664df930f03e8" class="m-doc-self">division</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -216,6 +236,14 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a8471af742b118ca018332c1023104c5e" class="m-doc-self">division</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the division of this value by the given fixed point value, using half precision to try to avoid overflow.</dd>
+            <dt id="a94cd60cb5a22656bbac78b411c5fbafa">
+              <span class="m-doc-wrap-bumper">auto <a href="#a94cd60cb5a22656bbac78b411c5fbafa" class="m-doc-self">shift_division</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this value by the given integer value.</dd>
+            <dt id="acfe3cd5d9f59f19ab8a50d0f1f47167c">
+              <span class="m-doc-wrap-bumper">auto <a href="#acfe3cd5d9f59f19ab8a50d0f1f47167c" class="m-doc-self">shift_division</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this value by the given fixed point value, using half precision to try to avoid overflow and shifts for the precision handling.</dd>
             <dt id="a67da4d424dbb0d9d4501d88bf6cc41d6">
               <span class="m-doc-wrap-bumper">auto <a href="#a67da4d424dbb0d9d4501d88bf6cc41d6" class="m-doc-self">safe_division</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -232,10 +260,26 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a631ef5845bdc1309302c809e6bd9ca1b" class="m-doc-self">unsafe_division</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the division of this value by the given fixed point value without trying to avoid overflow.</dd>
+            <dt id="ad627b9513b1dc43f0e8afe3b7d201133">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad627b9513b1dc43f0e8afe3b7d201133" class="m-doc-self">unsafe_shift_division</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this value by the given integer value.</dd>
+            <dt id="af5dde8ca036b86b4dab31f37687cd4cb">
+              <span class="m-doc-wrap-bumper">auto <a href="#af5dde8ca036b86b4dab31f37687cd4cb" class="m-doc-self">unsafe_shift_division</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> other) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the division of this value by the given fixed point value without trying to avoid overflow, using a left shift instead of a multiplication for the precision handling.</dd>
             <dt id="ab1a836f2529dc5b641dbd4e43e9d2e53">
               <span class="m-doc-wrap-bumper">auto <a href="#ab1a836f2529dc5b641dbd4e43e9d2e53" class="m-doc-self">modulo</a>(</span><span class="m-doc-wrap">int value) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the remainder of the division of this value by the given integer value.</dd>
+            <dt id="a0686578f6f6b29667688eea523ea364a">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0686578f6f6b29667688eea523ea364a" class="m-doc-self">left_shift</a>(</span><span class="m-doc-wrap">int bits) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns this value shifted to the left by the given bits.</dd>
+            <dt id="ae92711484324c5f04b32c6d4dfbaef77">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae92711484324c5f04b32c6d4dfbaef77" class="m-doc-self">right_shift</a>(</span><span class="m-doc-wrap">int bits) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns this value shifted to the right by the given bits.</dd>
             <dt id="a12b0e8495d5d4caf389aa74a9895acff">
               <span class="m-doc-wrap-bumper">auto <a href="#a12b0e8495d5d4caf389aa74a9895acff" class="m-doc-self">operator-</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -268,6 +312,14 @@
               <span class="m-doc-wrap-bumper">auto <a href="#acbd50391765534d856fe9666a2d1e053" class="m-doc">operator%=</a>(</span><span class="m-doc-wrap">int other) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Assigns the remainder of the division of this <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> by the given divisor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a65763776edbe679e7d8dfb2b77ded3cc" class="m-doc">operator&lt;&lt;=</a>(</span><span class="m-doc-wrap">int bits) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Shifts to the left this <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> by the given bits.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3e0cdedbfbe1ab66a68de19abf24c222" class="m-doc">operator&gt;&gt;=</a>(</span><span class="m-doc-wrap">int bits) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Shifts to the right this <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> by the given bits.</dd>
           </dl>
         </section>
         <section id="friends">
@@ -332,6 +384,16 @@
               int b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the remainder of the division of a by b.</dd>
+            <dt id="af6e2ba243bdc119ac8f043b13a566e7d">
+              <span class="m-doc-wrap-bumper">auto <a href="#af6e2ba243bdc119ac8f043b13a566e7d" class="m-doc-self">operator&lt;&lt;</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
+              int b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a shifted to the left by b.</dd>
+            <dt id="af4c07e053f6f6d3f31287c2c4d329576">
+              <span class="m-doc-wrap-bumper">auto <a href="#af4c07e053f6f6d3f31287c2c4d329576" class="m-doc-self">operator&gt;&gt;</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
+              int b) -&gt; <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a shifted to the right by b.</dd>
             <dt id="a40b885fe63178ff9609523d8cefe24fa">
               <span class="m-doc-wrap-bumper">auto <a href="#a40b885fe63178ff9609523d8cefe24fa" class="m-doc-self">operator&lt;=&gt;</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> a,
               <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> b) -&gt; auto <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -624,6 +686,58 @@
                 <tr>
                   <td style="width: 1%">other</td>
                   <td>Valid integer divisor (!= 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a65763776edbe679e7d8dfb2b77ded3cc"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&amp; bn::<wbr />fixed_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a65763776edbe679e7d8dfb2b77ded3cc" class="m-doc-self">operator&lt;&lt;=</a>(</span><span class="m-doc-wrap">int bits) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Shifts to the left this <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> by the given bits.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bits</td>
+                  <td>Number of bits to shift to the left.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3e0cdedbfbe1ab66a68de19abf24c222"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;int Precision&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a>&amp; bn::<wbr />fixed_t&lt;Precision&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3e0cdedbfbe1ab66a68de19abf24c222" class="m-doc-self">operator&gt;&gt;=</a>(</span><span class="m-doc-wrap">int bits) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Shifts to the right this <a href="classbn_1_1fixed__t.html" class="m-doc">fixed_<wbr />t</a> by the given bits.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bits</td>
+                  <td>Number of bits to shift to the right.</td>
                 </tr>
               </tbody>
               <tfoot>

@@ -372,7 +372,7 @@ namespace
 
     [[nodiscard]] inline int _hw_sound_volume(fixed volume)
     {
-        volume = volume.unsafe_multiplication(data_ref().sound_master_volume);
+        volume = volume.unsafe_shift_multiplication(data_ref().sound_master_volume);
         return fixed_t<6>(volume).data();
     }
 }

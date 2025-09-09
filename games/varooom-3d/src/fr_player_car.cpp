@@ -329,8 +329,8 @@ void player_car::update(const stage& stage, const race_state& state, bool read_k
         bn::rumble::set_enabled(false);
     }
 
-    // BN_LOG("checkpoint(", car_position.x().right_shift_integer(), ", ",
-    //        car_position.z().right_shift_integer(), ", ", angle, "),");
+    // BN_LOG("checkpoint(", car_position.x().shift_integer(), ", ",
+    //        car_position.z().shift_integer(), ", ", angle, "),");
 }
 
 void player_car::update_camera(const stage& stage, bool add_delay, camera_3d& camera)

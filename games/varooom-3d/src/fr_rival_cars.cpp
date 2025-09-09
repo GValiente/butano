@@ -20,7 +20,7 @@ namespace fr
 namespace
 {
     constexpr bn::fixed car_y = 4;
-    constexpr int bump_distance_squared = bn::fixed(17.5 * 17.5).right_shift_integer();
+    constexpr int bump_distance_squared = bn::fixed(17.5 * 17.5).shift_integer();
 
     constexpr bn::fixed pi_2(3.14159265358979 + 3.14159265358979);
 
@@ -123,8 +123,8 @@ void rival_cars::_select_active_car(const stage& stage, const race_state& race_s
     if(player_car.can_bump())
     {
         const point_3d& player_position = player_car.position();
-        int player_x = player_position.x().right_shift_integer();
-        int player_y = player_position.z().right_shift_integer();
+        int player_x = player_position.x().shift_integer();
+        int player_y = player_position.z().shift_integer();
 
         int16_t closest_checkpoint_index = _checkpoint_indexes[closest_index];
         const checkpoint& closest_checkpoint = stage.rival_checkpoints().data()[closest_checkpoint_index];

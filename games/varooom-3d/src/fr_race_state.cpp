@@ -29,7 +29,7 @@ namespace
     [[nodiscard]] bool _car_above_checkpoint(const point_3d& car_position, const checkpoint& checkpoint,
                                              const bn::point& checkpoint_vector)
     {
-        return _car_above_checkpoint(car_position.x().right_shift_integer(), car_position.z().right_shift_integer(),
+        return _car_above_checkpoint(car_position.x().shift_integer(), car_position.z().shift_integer(),
                                      checkpoint, checkpoint_vector);
     }
 
@@ -128,8 +128,8 @@ void race_state::_update_player_checkpoint(const stage& stage, const player_car&
     const bn::span<const checkpoint>& checkpoints = stage.player_checkpoints();
     const checkpoint* checkpoints_data = checkpoints.data();
     const bn::point* checkpoint_vectors_data = stage.player_checkpoint_vectors().data();
-    int car_x = car_position.x().right_shift_integer();
-    int car_y = car_position.z().right_shift_integer();
+    int car_x = car_position.x().shift_integer();
+    int car_y = car_position.z().shift_integer();
     int next_checkpoint_index = _next_checkpoint_index;
     bool above = _car_above_checkpoint(car_x, car_y, checkpoints_data[next_checkpoint_index],
                                        checkpoint_vectors_data[next_checkpoint_index]);
@@ -289,8 +289,8 @@ void race_state::_update_player_position(const stage& stage, const player_car& p
                 int next_y = next_checkpoint.y();
 
                 const point_3d& player_car_position = player_car.position();
-                int player_x = player_car_position.x().right_shift_integer();
-                int player_y = player_car_position.z().right_shift_integer();
+                int player_x = player_car_position.x().shift_integer();
+                int player_y = player_car_position.z().shift_integer();
                 int player_distance = _squared_distance(player_x, player_y, next_x, next_y);
 
                 const checkpoint& rival_checkpoint = rival_checkpoints_data[rival_checkpoint_indexes[previous_rival_index]];
@@ -343,8 +343,8 @@ void race_state::_update_player_position(const stage& stage, const player_car& p
                 int next_y = next_checkpoint.y();
 
                 const point_3d& player_car_position = player_car.position();
-                int player_x = player_car_position.x().right_shift_integer();
-                int player_y = player_car_position.z().right_shift_integer();
+                int player_x = player_car_position.x().shift_integer();
+                int player_y = player_car_position.z().shift_integer();
                 int player_distance = _squared_distance(player_x, player_y, next_x, next_y);
 
                 const checkpoint& rival_checkpoint = rival_checkpoints_data[rival_checkpoint_indexes[next_rival_index]];

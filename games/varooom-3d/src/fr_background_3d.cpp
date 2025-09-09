@@ -52,7 +52,7 @@ void background_3d::update(const stage& stage, const camera_3d& camera)
     bn::fixed scale = bn::fixed::from_data(div_lut_ptr[camera_position.y().data() >> 10] >> 2);
     _ground_bg.set_scale(scale);
 
-    int degrees = camera.phi().right_shift_integer() * 360;
+    int degrees = camera.phi().shift_integer() * 360;
     bn::fixed rotation_angle = bn::fixed::from_data(degrees >> 4);
     _ground_bg.set_rotation_angle(rotation_angle);
 

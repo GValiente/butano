@@ -492,7 +492,7 @@ optional<uint16_t> play_sound(int priority, int id, fixed volume, fixed speed, f
 
     if(channel >= 0)
     {
-        int frequency = (speed * bn_aas_sound_frequencies[id]).right_shift_integer();
+        int frequency = (speed * bn_aas_sound_frequencies[id]).shift_integer();
 
         if(! AAS_SFX_Play(channel, _hw_sound_volume(volume), frequency, *bn_aas_sound_starts[id],
                           *bn_aas_sound_ends[id], nullptr))
@@ -551,7 +551,7 @@ void set_sound_speed(uint16_t handle, fixed, fixed new_speed)
 
             if(AAS_SFX_IsActive(channel))
             {
-                int frequency = (new_speed * bn_aas_sound_frequencies[sound.id]).right_shift_integer();
+                int frequency = (new_speed * bn_aas_sound_frequencies[sound.id]).shift_integer();
                 AAS_SFX_SetFrequency(channel, frequency);
             }
 

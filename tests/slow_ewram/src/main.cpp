@@ -44,8 +44,8 @@ int main()
         if(frame_counter == 60)
         {
             bn::fixed max_cpu_usage_pct = max_cpu_usage * 100;
-            int max_cpu_usage_pct_int = max_cpu_usage_pct.right_shift_integer();
-            int max_cpu_usage_pct_dec = ((max_cpu_usage_pct - max_cpu_usage_pct_int) * 100).right_shift_integer();
+            int max_cpu_usage_pct_int = max_cpu_usage_pct.shift_integer();
+            int max_cpu_usage_pct_dec = ((max_cpu_usage_pct - max_cpu_usage_pct_int) * 100).shift_integer();
             cpu_sprites.clear();
             text_generator.set_right_alignment();
             text_generator.generate(

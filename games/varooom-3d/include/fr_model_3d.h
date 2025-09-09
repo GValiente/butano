@@ -68,8 +68,8 @@ public:
 
         BN_ASSERT(phi >= 0 && phi <= 0xFFFF, "Invalid phi: ", phi);
 
-        int old_angle = _phi.right_shift_integer();
-        int new_angle = phi.right_shift_integer();
+        int old_angle = _phi.shift_integer();
+        int new_angle = phi.shift_integer();
         _phi = phi;
 
         if(old_angle != new_angle)
@@ -98,8 +98,8 @@ public:
 
         BN_ASSERT(theta >= 0 && theta <= 0xFFFF, "Invalid theta: ", theta);
 
-        int old_angle = _theta.right_shift_integer();
-        int new_angle = theta.right_shift_integer();
+        int old_angle = _theta.shift_integer();
+        int new_angle = theta.shift_integer();
         _theta = theta;
 
         if(old_angle != new_angle)
@@ -128,8 +128,8 @@ public:
 
         BN_ASSERT(psi >= 0 && psi <= 0xFFFF, "Invalid psi: ", psi);
 
-        int old_angle = _psi.right_shift_integer();
-        int new_angle = psi.right_shift_integer();
+        int old_angle = _psi.shift_integer();
+        int new_angle = psi.shift_integer();
         _psi = psi;
 
         if(old_angle != new_angle)

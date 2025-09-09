@@ -101,7 +101,7 @@ void title_flag::update()
                 ++vertex_index;
             }
 
-            int face_shading = ((wave_sin + 1) * 4).right_shift_integer();
+            int face_shading = ((wave_sin + 1) * 4).shift_integer();
 
             if(face_shading > 7)
             {

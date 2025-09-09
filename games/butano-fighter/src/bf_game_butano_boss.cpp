@@ -341,8 +341,8 @@ bool butano_boss::_update_dead(const bn::fixed_point&, const bn::camera_ptr& cam
 
     if(_sprites.size() > 2)
     {
-        bn::fixed x = _butano_position.x().right_shift_integer();
-        bn::fixed y = _butano_position.y().right_shift_integer();
+        bn::fixed x = _butano_position.x().shift_integer();
+        bn::fixed y = _butano_position.y().shift_integer();
         _movement_counter = 1;
         _sprites.pop_back();
         _butano_position.set_x(x);

@@ -614,8 +614,8 @@ void set_x(id_type id, fixed x)
     fixed old_x = item->position.x();
     item->position.set_x(x);
 
-    int old_integer_x = old_x.right_shift_integer();
-    int new_integer_x = x.right_shift_integer();
+    int old_integer_x = old_x.shift_integer();
+    int new_integer_x = x.shift_integer();
     int diff = new_integer_x - old_integer_x;
 
     if(diff)
@@ -640,8 +640,8 @@ void set_y(id_type id, fixed y)
     fixed old_y = item->position.y();
     item->position.set_y(y);
 
-    int old_integer_y = old_y.right_shift_integer();
-    int new_integer_y = y.right_shift_integer();
+    int old_integer_y = old_y.shift_integer();
+    int new_integer_y = y.shift_integer();
     int diff = new_integer_y - old_integer_y;
 
     if(diff)
@@ -666,8 +666,8 @@ void set_position(id_type id, const fixed_point& position)
     fixed_point old_position = item->position;
     item->position = position;
 
-    point old_integer_position(old_position.x().right_shift_integer(), old_position.y().right_shift_integer());
-    point new_integer_position(position.x().right_shift_integer(), position.y().right_shift_integer());
+    point old_integer_position(old_position.x().shift_integer(), old_position.y().shift_integer());
+    point new_integer_position(position.x().shift_integer(), position.y().shift_integer());
     point diff = new_integer_position - old_integer_position;
 
     if(diff != point())
@@ -1213,7 +1213,7 @@ void fill_hblank_effect_horizontal_positions(id_type id, int hw_x, const fixed* 
         {
             uint16_t& dest_value = dest_ptr[index];
             dest_value = attr1;
-            hw::sprites::set_x(positions_ptr[index].right_shift_integer(), dest_value);
+            hw::sprites::set_x(positions_ptr[index].shift_integer(), dest_value);
         }
     }
     else
@@ -1222,7 +1222,7 @@ void fill_hblank_effect_horizontal_positions(id_type id, int hw_x, const fixed* 
         {
             uint16_t& dest_value = dest_ptr[index];
             dest_value = attr1;
-            hw::sprites::set_x(hw_x + positions_ptr[index].right_shift_integer(), dest_value);
+            hw::sprites::set_x(hw_x + positions_ptr[index].shift_integer(), dest_value);
         }
     }
 }
@@ -1238,7 +1238,7 @@ void fill_hblank_effect_vertical_positions(id_type id, int hw_y, const fixed* po
         {
             uint16_t& dest_value = dest_ptr[index];
             dest_value = attr0;
-            hw::sprites::set_y(positions_ptr[index].right_shift_integer(), dest_value);
+            hw::sprites::set_y(positions_ptr[index].shift_integer(), dest_value);
         }
     }
     else
@@ -1247,7 +1247,7 @@ void fill_hblank_effect_vertical_positions(id_type id, int hw_y, const fixed* po
         {
             uint16_t& dest_value = dest_ptr[index];
             dest_value = attr0;
-            hw::sprites::set_y(hw_y + positions_ptr[index].right_shift_integer(), dest_value);
+            hw::sprites::set_y(hw_y + positions_ptr[index].shift_integer(), dest_value);
         }
     }
 }
@@ -1265,7 +1265,7 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode 
 
             if(attributes.visible())
             {
-                int y = attributes.y().right_shift_integer();
+                int y = attributes.y().shift_integer();
                 int dest_value = hw::sprites::first_attributes(
                             y, shape, bpp, view_mode, attributes.mosaic_enabled(), attributes.blending_enabled(),
                             attributes.window_enabled(), fade_enabled);
@@ -1285,7 +1285,7 @@ void fill_hblank_effect_first_attributes(int hw_y, sprite_shape shape, bpp_mode 
 
             if(attributes.visible())
             {
-                int y = hw_y + attributes.y().right_shift_integer();
+                int y = hw_y + attributes.y().shift_integer();
                 int dest_value = hw::sprites::first_attributes(
                             y, shape, bpp, view_mode, attributes.mosaic_enabled(), attributes.blending_enabled(),
                             attributes.window_enabled(), fade_enabled);
@@ -1307,7 +1307,7 @@ void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, i
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
             const sprite_regular_second_attributes& second_attributes = second_attributes_ptr[index];
-            int x = second_attributes.x().right_shift_integer();
+            int x = second_attributes.x().shift_integer();
             dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
                                                                       second_attributes.vertical_flip()));
         }
@@ -1317,7 +1317,7 @@ void fill_hblank_effect_regular_second_attributes([[maybe_unused]] id_type id, i
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
             const sprite_regular_second_attributes& second_attributes = second_attributes_ptr[index];
-            int x = hw_x + second_attributes.x().right_shift_integer();
+            int x = hw_x + second_attributes.x().shift_integer();
             dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.horizontal_flip(),
                                                                       second_attributes.vertical_flip()));
         }
@@ -1332,7 +1332,7 @@ void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, in
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
             const sprite_affine_second_attributes& second_attributes = second_attributes_ptr[index];
-            int x = second_attributes.x().right_shift_integer();
+            int x = second_attributes.x().shift_integer();
             dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.affine_mat().id()));
         }
     }
@@ -1341,7 +1341,7 @@ void fill_hblank_effect_affine_second_attributes([[maybe_unused]] id_type id, in
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
             const sprite_affine_second_attributes& second_attributes = second_attributes_ptr[index];
-            int x = hw_x + second_attributes.x().right_shift_integer();
+            int x = hw_x + second_attributes.x().shift_integer();
             dest_ptr[index] = uint16_t(hw::sprites::second_attributes(x, size, second_attributes.affine_mat().id()));
         }
     }

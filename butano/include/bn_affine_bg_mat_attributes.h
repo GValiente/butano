@@ -556,16 +556,16 @@ private:
     constexpr void _update_dx()
     {
         int tex_x = (_pivot_position.x() + _half_dimensions.width()).data() >> _right_shift;
-        int scr_x = _position.x().right_shift_integer() + (display::width() / 2);
-        int scr_y = _position.y().right_shift_integer() + (display::height() / 2);
+        int scr_x = _position.x().shift_integer() + (display::width() / 2);
+        int scr_y = _position.y().shift_integer() + (display::height() / 2);
         _dx = tex_x - ((_mat_attributes.pa_register_value() * scr_x) + (_mat_attributes.pb_register_value() * scr_y));
     }
 
     constexpr void _update_dy()
     {
         int tex_y = (_pivot_position.y() + _half_dimensions.height()).data() >> _right_shift;
-        int scr_x = _position.x().right_shift_integer() + (display::width() / 2);
-        int scr_y = _position.y().right_shift_integer() + (display::height() / 2);
+        int scr_x = _position.x().shift_integer() + (display::width() / 2);
+        int scr_y = _position.y().shift_integer() + (display::height() / 2);
         _dy = tex_y - ((_mat_attributes.pc_register_value() * scr_x) + (_mat_attributes.pd_register_value() * scr_y));
     }
 
@@ -573,8 +573,8 @@ private:
     {
         int tex_x = (_pivot_position.x() + _half_dimensions.width()).data() >> _right_shift;
         int tex_y = (_pivot_position.y() + _half_dimensions.height()).data() >> _right_shift;
-        int scr_x = _position.x().right_shift_integer() + (display::width() / 2);
-        int scr_y = _position.y().right_shift_integer() + (display::height() / 2);
+        int scr_x = _position.x().shift_integer() + (display::width() / 2);
+        int scr_y = _position.y().shift_integer() + (display::height() / 2);
         _dx = tex_x - ((_mat_attributes.pa_register_value() * scr_x) + (_mat_attributes.pb_register_value() * scr_y));
         _dy = tex_y - ((_mat_attributes.pc_register_value() * scr_x) + (_mat_attributes.pd_register_value() * scr_y));
     }

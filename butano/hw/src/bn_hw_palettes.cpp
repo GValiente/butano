@@ -129,9 +129,8 @@ void hue_shift(const color* source_colors_ptr, int value, int count, color* dest
         fixed out_g = in_r * lut[3] + in_g * lut[4] + in_b * lut[5];
         fixed out_b = in_r * lut[6] + in_g * lut[7] + in_b * lut[8];
         tonc_dst_ptr[index] = RGB15(
-                    clamp(out_r.right_shift_integer(), 0, 31),
-                    clamp(out_g.right_shift_integer(), 0, 31),
-                    clamp(out_b.right_shift_integer(), 0, 31));
+                clamp(out_r.shift_integer(), 0, 31), clamp(out_g.shift_integer(), 0, 31),
+                clamp(out_b.shift_integer(), 0, 31));
     }
 }
 

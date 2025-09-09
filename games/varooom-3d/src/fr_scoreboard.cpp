@@ -152,7 +152,7 @@ void scoreboard::update(const stage& stage, const race_state& state, bn::fixed t
                 _cpu_usage = bn::max(_cpu_usage, bn::core::last_cpu_usage());
 
                 bn::fixed max_cpu_pct = _cpu_usage * 100;
-                _cpu_number.show(max_cpu_pct.right_shift_integer());
+                _cpu_number.show(max_cpu_pct.shift_integer());
             }
         #elif FR_SHOW_CPU_USAGE_MIN
             static_assert(! FR_SHOW_CPU_USAGE_CURRENT);
@@ -167,11 +167,11 @@ void scoreboard::update(const stage& stage, const race_state& state, bn::fixed t
                 _cpu_usage = bn::min(_cpu_usage, bn::core::last_cpu_usage());
 
                 bn::fixed min_cpu_pct = _cpu_usage * 100;
-                _cpu_number.show(min_cpu_pct.right_shift_integer());
+                _cpu_number.show(min_cpu_pct.shift_integer());
             }
         #elif FR_SHOW_CPU_USAGE_CURRENT
             bn::fixed cpu_pct = bn::core::last_cpu_usage() * 100;
-            _cpu_number.show(cpu_pct.right_shift_integer());
+            _cpu_number.show(cpu_pct.shift_integer());
         #else
             _cpu_usage = bn::max(_cpu_usage, bn::core::last_cpu_usage());
 
@@ -182,7 +182,7 @@ void scoreboard::update(const stage& stage, const race_state& state, bn::fixed t
             else
             {
                 bn::fixed max_cpu_pct = _cpu_usage * 100;
-                _cpu_number.show(max_cpu_pct.right_shift_integer());
+                _cpu_number.show(max_cpu_pct.shift_integer());
                 _cpu_usage = 0;
                 _cpu_counter = 30;
             }
@@ -241,7 +241,7 @@ void scoreboard::_update_pending_time(const race_state& state)
 void scoreboard::_update_turbo_bar(bn::fixed turbo_energy)
 {
     constexpr int last_graphics_index = 22;
-    int graphics_index = (turbo_energy * last_graphics_index).right_shift_integer();
+    int graphics_index = (turbo_energy * last_graphics_index).shift_integer();
 
     if(_turbo_graphics_index < graphics_index)
     {

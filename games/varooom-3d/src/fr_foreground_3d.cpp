@@ -20,7 +20,7 @@ namespace
 {
     [[nodiscard]] int _column(const point_3d& camera_position)
     {
-        int column = camera_position.x().right_shift_integer() / model_3d_grid::cell_size;
+        int column = camera_position.x().shift_integer() / model_3d_grid::cell_size;
         BN_ASSERT(column >= 0 && column < model_3d_grid::columns,
                   "Invalid column: ", column, " - ", camera_position.x());
 
@@ -29,7 +29,7 @@ namespace
 
     [[nodiscard]] int _row(const point_3d& camera_position)
     {
-        int row = camera_position.z().right_shift_integer() / model_3d_grid::cell_size;
+        int row = camera_position.z().shift_integer() / model_3d_grid::cell_size;
         BN_ASSERT(row >= 0 && row < model_3d_grid::rows, "Invalid row: ", row, " - ", camera_position.z());
 
         return row;
@@ -84,8 +84,7 @@ void foreground_3d::check_collision(const stage& stage, player_car& player_car, 
 
     for(const point_3d& collision_point : player_car.collision_points())
     {
-        bn::point collision_point_2d(collision_point.x().right_shift_integer(),
-                                     collision_point.z().right_shift_integer());
+        bn::point collision_point_2d(collision_point.x().shift_integer(), collision_point.z().shift_integer());
         int row = _row(collision_point);
         int column = _column(collision_point);
         const model_3d_grid::cell* grid_cells_row = grid_cells + (row * model_3d_grid::columns);
@@ -102,9 +101,9 @@ void foreground_3d::check_collision(const stage& stage, player_car& player_car, 
                 const point_3d& v0 = vertices[collision_face->first_vertex_index()].point();
                 const point_3d& v1 = vertices[collision_face->second_vertex_index()].point();
                 const point_3d& v2 = vertices[collision_face->third_vertex_index()].point();
-                bn::point v0_point(v0.x().right_shift_integer(), v0.z().right_shift_integer());
-                bn::point v1_point(v1.x().right_shift_integer(), v1.z().right_shift_integer());
-                bn::point v2_point(v2.x().right_shift_integer(), v2.z().right_shift_integer());
+                bn::point v0_point(v0.x().shift_integer(), v0.z().shift_integer());
+                bn::point v1_point(v1.x().shift_integer(), v1.z().shift_integer());
+                bn::point v2_point(v2.x().shift_integer(), v2.z().shift_integer());
                 int winding_number = _winding_number(v0_point, v1_point, collision_point_2d);
                 winding_number += _winding_number(v1_point, v2_point, collision_point_2d);
 
@@ -115,7 +114,7 @@ void foreground_3d::check_collision(const stage& stage, player_car& player_car, 
                 else
                 {
                     const point_3d& v3 = vertices[collision_face->fourth_vertex_index()].point();
-                    bn::point v3_point(v3.x().right_shift_integer(), v3.z().right_shift_integer());
+                    bn::point v3_point(v3.x().shift_integer(), v3.z().shift_integer());
                     winding_number += _winding_number(v2_point, v3_point, collision_point_2d);
                     winding_number += _winding_number(v3_point, v0_point, collision_point_2d);
                 }

@@ -67,8 +67,8 @@ enemy::enemy(const enemy_event& event, const bn::sprite_palette_ptr& damage_pale
     _bullet_event_counter(0),
     _move_event_index(0),
     _bullet_event_index(0),
-    _grid_columns(int8_t(bn::max(event.enemy.dimensions.width().right_shift_integer() / constants::enemies_grid_size, 1))),
-    _grid_rows(int8_t(bn::max(event.enemy.dimensions.height().right_shift_integer() / constants::enemies_grid_size, 1))),
+    _grid_columns(int8_t(bn::max(event.enemy.dimensions.width().shift_integer() / constants::enemies_grid_size, 1))),
+    _grid_rows(int8_t(bn::max(event.enemy.dimensions.height().shift_integer() / constants::enemies_grid_size, 1))),
     _last_grid_column(0),
     _last_grid_row(0),
     _damage_palette_counter(0),
@@ -150,8 +150,8 @@ void enemy::check_hero_bomb(const bn::point& bomb_center, int bomb_squared_radiu
     if(_life)
     {
         bn::fixed_point enemy_position = _sprite.position();
-        int distance_x = enemy_position.x().right_shift_integer() - bomb_center.x();
-        int distance_y = enemy_position.y().right_shift_integer() - bomb_center.y();
+        int distance_x = enemy_position.x().shift_integer() - bomb_center.x();
+        int distance_y = enemy_position.y().shift_integer() - bomb_center.y();
         int squared_distance = (distance_x * distance_x) + (distance_y * distance_y);
 
         if(squared_distance < bomb_squared_radius)

@@ -235,7 +235,7 @@ bn::span<const hero_bullet_level> hero_bullet_level::all_levels()
 
 int hero_bullet_level::gem_experience(int level, bn::fixed y)
 {
-    int height = y.right_shift_integer() + constants::play_height;
+    int height = y.shift_integer() + constants::play_height;
     int height_level = bn::clamp(height / 16, 0, 4);
     height_level = 4 + 1 - height_level;
     return height_level * _multiplier(level);

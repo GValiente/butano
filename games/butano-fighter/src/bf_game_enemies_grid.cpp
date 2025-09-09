@@ -173,31 +173,31 @@ bool enemies_grid::check_hero_bullet(const check_hero_bullet_data& data)
 
 int enemies_grid::_column(const bn::fixed_point& top_left)
 {
-    int column = (top_left.x().right_shift_integer() / constants::enemies_grid_size) + (columns / 2);
+    int column = (top_left.x().shift_integer() / constants::enemies_grid_size) + (columns / 2);
     BN_ASSERT(column >= 1 && column < columns - max_cell_increment,
-               "Invalid column: ", column, " - ", top_left.x().right_shift_integer());
+               "Invalid column: ", column, " - ", top_left.x().shift_integer());
 
     return column;
 }
 
 int enemies_grid::_row(const bn::fixed_point& top_left)
 {
-    int row = (top_left.y().right_shift_integer() / constants::enemies_grid_size) + (rows / 2);
+    int row = (top_left.y().shift_integer() / constants::enemies_grid_size) + (rows / 2);
     BN_ASSERT(row >= 1 && row < rows - max_cell_increment,
-               "Invalid row: ", row, " - ", top_left.y().right_shift_integer());
+               "Invalid row: ", row, " - ", top_left.y().shift_integer());
 
     return row;
 }
 
 int enemies_grid::_safe_column(const bn::fixed_point& top_left)
 {
-    int column = (top_left.x().right_shift_integer() / constants::enemies_grid_size) + (columns / 2);
+    int column = (top_left.x().shift_integer() / constants::enemies_grid_size) + (columns / 2);
     return bn::clamp(column, 0, columns - 1);
 }
 
 int enemies_grid::_safe_row(const bn::fixed_point& top_left)
 {
-    int row = (top_left.y().right_shift_integer() / constants::enemies_grid_size) + (rows / 2);
+    int row = (top_left.y().shift_integer() / constants::enemies_grid_size) + (rows / 2);
     return bn::clamp(row, 0, rows - 1);
 }
 

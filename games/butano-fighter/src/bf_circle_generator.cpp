@@ -39,8 +39,8 @@ void circle_generator::generate(bn::span<bn::pair<bn::fixed, bn::fixed>> values)
 
     while(y >= x)
     {
-        int top = (y0 - x).right_shift_integer();
-        int bottom = (y0 + x).right_shift_integer();
+        int top = (y0 - x).shift_integer();
+        int bottom = (y0 + x).shift_integer();
 
         if(top >= 0 && top < values_count)
         {
@@ -54,8 +54,8 @@ void circle_generator::generate(bn::span<bn::pair<bn::fixed, bn::fixed>> values)
 
         if(d >= 0)
         {
-            top = (y0 - y).right_shift_integer();
-            bottom = (y0 + y).right_shift_integer();
+            top = (y0 - y).shift_integer();
+            bottom = (y0 + y).shift_integer();
 
             if(top >= 0 && top < values_count)
             {

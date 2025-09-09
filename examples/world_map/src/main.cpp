@@ -121,26 +121,26 @@ int main()
 
         if(bn::keypad::left_held())
         {
-            land_bg.set_pivot_x(bn::max(land_bg.pivot_x().right_shift_integer() - inc, 0 - x_limit));
+            land_bg.set_pivot_x(bn::max(land_bg.pivot_x().shift_integer() - inc, 0 - x_limit));
             new_direction.keys.left = true;
             key_held = true;
         }
         else if(bn::keypad::right_held())
         {
-            land_bg.set_pivot_x(bn::min(land_bg.pivot_x().right_shift_integer() + inc, x_limit - 1));
+            land_bg.set_pivot_x(bn::min(land_bg.pivot_x().shift_integer() + inc, x_limit - 1));
             new_direction.keys.right = true;
             key_held = true;
         }
 
         if(bn::keypad::up_held())
         {
-            land_bg.set_pivot_y(bn::max(land_bg.pivot_y().right_shift_integer() - inc, 0 - y_limit));
+            land_bg.set_pivot_y(bn::max(land_bg.pivot_y().shift_integer() - inc, 0 - y_limit));
             new_direction.keys.up = true;
             key_held = true;
         }
         else if(bn::keypad::down_held())
         {
-            land_bg.set_pivot_y(bn::min(land_bg.pivot_y().right_shift_integer() + inc, y_limit - 1));
+            land_bg.set_pivot_y(bn::min(land_bg.pivot_y().shift_integer() + inc, y_limit - 1));
             new_direction.keys.down = true;
             key_held = true;
         }

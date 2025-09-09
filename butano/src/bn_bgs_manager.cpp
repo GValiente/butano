@@ -214,14 +214,14 @@ namespace
 
         void update_regular_hw_position()
         {
-            int real_x = position.x().right_shift_integer();
-            int real_y = position.y().right_shift_integer();
+            int real_x = position.x().shift_integer();
+            int real_y = position.y().shift_integer();
 
             if(camera_ptr* camera_ptr = camera.get())
             {
                 const fixed_point& camera_position = camera_ptr->position();
-                real_x -= camera_position.x().right_shift_integer();
-                real_y -= camera_position.y().right_shift_integer();
+                real_x -= camera_position.x().shift_integer();
+                real_y -= camera_position.y().shift_integer();
             }
 
             int hw_x = -real_x - (display::width() / 2) + half_dimensions.width();
@@ -264,12 +264,12 @@ namespace
         [[nodiscard]] point affine_map_position() const
         {
             int map_x2 = (half_dimensions.width() - (bn::display::width() / 2) -
-                          affine_mat_attributes.x().right_shift_integer() +
-                          affine_mat_attributes.pivot_x().right_shift_integer()) >> 3;
+                          affine_mat_attributes.x().shift_integer() +
+                          affine_mat_attributes.pivot_x().shift_integer()) >> 3;
 
             int map_y2 = (half_dimensions.height() - (bn::display::height() / 2) -
-                          affine_mat_attributes.y().right_shift_integer() +
-                          affine_mat_attributes.pivot_y().right_shift_integer()) >> 3;
+                          affine_mat_attributes.y().shift_integer() +
+                          affine_mat_attributes.pivot_y().shift_integer()) >> 3;
 
             return point(map_x2, map_y2);
         }
@@ -704,8 +704,8 @@ void set_regular_x(id_type id, fixed x)
     fixed old_x = item->position.x();
     item->position.set_x(x);
 
-    int old_integer_x = old_x.right_shift_integer();
-    int new_integer_x = x.right_shift_integer();
+    int old_integer_x = old_x.shift_integer();
+    int new_integer_x = x.shift_integer();
     int diff = new_integer_x - old_integer_x;
 
     if(diff)
@@ -722,7 +722,7 @@ void set_affine_x(id_type id, fixed x)
     fixed old_x = item->position.x();
     item->position.set_x(x);
 
-    if(old_x.right_shift_integer() != x.right_shift_integer())
+    if(old_x.shift_integer() != x.shift_integer())
     {
         if(camera_ptr* item_camera = item->camera.get())
         {
@@ -741,8 +741,8 @@ void set_regular_y(id_type id, fixed y)
     fixed old_y = item->position.y();
     item->position.set_y(y);
 
-    int old_integer_y = old_y.right_shift_integer();
-    int new_integer_y = y.right_shift_integer();
+    int old_integer_y = old_y.shift_integer();
+    int new_integer_y = y.shift_integer();
     int diff = new_integer_y - old_integer_y;
 
     if(diff)
@@ -759,7 +759,7 @@ void set_affine_y(id_type id, fixed y)
     fixed old_y = item->position.y();
     item->position.set_y(y);
 
-    if(old_y.right_shift_integer() != y.right_shift_integer())
+    if(old_y.shift_integer() != y.shift_integer())
     {
         if(camera_ptr* item_camera = item->camera.get())
         {
@@ -778,8 +778,8 @@ void set_regular_position(id_type id, const fixed_point& position)
     fixed_point old_position = item->position;
     item->position = position;
 
-    point old_integer_position(old_position.x().right_shift_integer(), old_position.y().right_shift_integer());
-    point new_integer_position(position.x().right_shift_integer(), position.y().right_shift_integer());
+    point old_integer_position(old_position.x().shift_integer(), old_position.y().shift_integer());
+    point new_integer_position(position.x().shift_integer(), position.y().shift_integer());
     point diff = new_integer_position - old_integer_position;
 
     if(diff != point())
@@ -796,8 +796,8 @@ void set_affine_position(id_type id, const fixed_point& position)
     fixed_point old_position = item->position;
     item->position = position;
 
-    point old_integer_position(old_position.x().right_shift_integer(), old_position.y().right_shift_integer());
-    point new_integer_position(position.x().right_shift_integer(), position.y().right_shift_integer());
+    point old_integer_position(old_position.x().shift_integer(), old_position.y().shift_integer());
+    point new_integer_position(position.x().shift_integer(), position.y().shift_integer());
 
     if(old_integer_position != new_integer_position)
     {
@@ -1534,14 +1534,14 @@ void fill_hblank_effect_regular_positions(int base_position, const fixed* positi
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            dest_ptr[index] = uint16_t(positions_ptr[index].right_shift_integer());
+            dest_ptr[index] = uint16_t(positions_ptr[index].shift_integer());
         }
     }
     else
     {
         for(int index = 0, limit = display::height(); index < limit; ++index)
         {
-            dest_ptr[index] = uint16_t(base_position + positions_ptr[index].right_shift_integer());
+            dest_ptr[index] = uint16_t(base_position + positions_ptr[index].shift_integer());
         }
     }
 }

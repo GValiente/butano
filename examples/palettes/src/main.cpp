@@ -501,7 +501,7 @@ namespace
         for(int index = 0, amplitude = bn::display::height() / 2; index < amplitude; ++index)
         {
             bn::fixed red_inc = max_red_inc - ((index * max_red_inc) / amplitude);
-            bn::color color(bn::min(16 + red_inc.right_shift_integer(), 31), 0, 16);
+            bn::color color(bn::min(16 + red_inc.shift_integer(), 31), 0, 16);
             colors[(bn::display::height() / 2) + index] = color;
             colors[(bn::display::height() / 2) - index - 1] = color;
         }
@@ -531,7 +531,7 @@ namespace
         for(int index = 0, amplitude = bn::display::height() / 2; index < amplitude; ++index)
         {
             bn::fixed green_dec = (index * max_green_dec) / amplitude;
-            bn::color color(31, 21 - green_dec.right_shift_integer(), 11);
+            bn::color color(31, 21 - green_dec.shift_integer(), 11);
             colors[(bn::display::height() / 2) + index] = color;
             colors[(bn::display::height() / 2) - index - 1] = color;
         }

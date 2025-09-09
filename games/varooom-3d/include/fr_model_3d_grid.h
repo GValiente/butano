@@ -35,16 +35,16 @@ public:
         {
             const model_3d_item& model_item = model_items[model_index];
             const bn::span<const vertex_3d>& vertices = model_item.vertices();
-            int min_x = vertices[0].point().x().right_shift_integer();
-            int min_y = vertices[0].point().z().right_shift_integer();
+            int min_x = vertices[0].point().x().shift_integer();
+            int min_y = vertices[0].point().z().shift_integer();
             int max_x = min_x;
             int max_y = min_y;
 
             for(int vertex_index = 1, vertex_limit = vertices.size(); vertex_index < vertex_limit; ++vertex_index)
             {
                 const point_3d& point = vertices[vertex_index].point();
-                int x = point.x().right_shift_integer();
-                int y = point.z().right_shift_integer();
+                int x = point.x().shift_integer();
+                int y = point.z().shift_integer();
 
                 if(x < min_x)
                 {

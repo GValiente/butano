@@ -76,8 +76,8 @@ public:
 
         BN_ASSERT(theta >= 0 && theta <= 0xFFFF, "Invalid theta: ", theta);
 
-        int old_angle = _theta.right_shift_integer();
-        int new_angle = theta.right_shift_integer();
+        int old_angle = _theta.shift_integer();
+        int new_angle = theta.shift_integer();
         _theta = theta;
 
         if(old_angle != new_angle)

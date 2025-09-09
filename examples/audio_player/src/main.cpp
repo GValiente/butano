@@ -206,7 +206,7 @@ namespace
 
         if(frame_counter % 64 == 0)
         {
-            int max_cpu_usage_pct = (max_cpu_usage * 100).right_shift_integer();
+            int max_cpu_usage_pct = (max_cpu_usage * 100).shift_integer();
             cpu_sprites.clear();
             text_generator.set_right_alignment();
             text_generator.generate(112, info_y, bn::format<16>("CPU: {}%", max_cpu_usage_pct), cpu_sprites);

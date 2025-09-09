@@ -37,20 +37,20 @@ namespace
 
             if(bn::keypad::left_held())
             {
-                bg.set_x(bg.x().right_shift_integer() - inc);
+                bg.set_x(bg.x().shift_integer() - inc);
             }
             else if(bn::keypad::right_held())
             {
-                bg.set_x(bg.x().right_shift_integer() + inc);
+                bg.set_x(bg.x().shift_integer() + inc);
             }
 
             if(bn::keypad::up_held())
             {
-                bg.set_y(bg.y().right_shift_integer() - inc);
+                bg.set_y(bg.y().shift_integer() - inc);
             }
             else if(bn::keypad::down_held())
             {
-                bg.set_y(bg.y().right_shift_integer() + inc);
+                bg.set_y(bg.y().shift_integer() + inc);
             }
 
             info.update();

@@ -278,7 +278,7 @@ void wizard_boss::_update_alive(const bn::fixed_point& hero_position, const hero
 
             case 2:
                 _movement_index = 0;
-                _movement_counter = (bn::abs((*_target_x - _wizard_position.x())) / bn::fixed(0.75)).right_shift_integer();
+                _movement_counter = (bn::abs((*_target_x - _wizard_position.x())) / bn::fixed(0.75)).shift_integer();
                 _movement_counter = bn::max(_movement_counter, 1);
 
                 _delta_position = (bn::fixed_point(*_target_x, -limit_y) - _wizard_position) / _movement_counter;

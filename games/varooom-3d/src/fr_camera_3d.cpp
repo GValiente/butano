@@ -38,7 +38,7 @@ void camera_3d::set_phi(bn::fixed phi)
 
     BN_ASSERT(phi >= 0 && phi <= 0xFFFF, "Invalid phi: ", phi);
 
-    int angle = phi.right_shift_integer();
+    int angle = phi.shift_integer();
     bn::fixed sf = sin(angle);
     bn::fixed cf = cos(angle);
     _phi = phi;

@@ -39,7 +39,7 @@ namespace
             {
                 bn::string<32> text;
                 bn::ostringstream text_stream(text);
-                text_stream.append((max_cpu_usage * 100).right_shift_integer());
+                text_stream.append((max_cpu_usage * 100).shift_integer());
                 text_stream.append("%");
                 text_sprites.clear();
                 text_generator.generate(0, 0, text, text_sprites);

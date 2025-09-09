@@ -308,7 +308,7 @@ void models_3d::_process_models(const camera_3d& camera)
 
                     if(affine_scale > 0) [[likely]]
                     {
-                        int degrees = (camera_phi + sprite.theta()).right_shift_integer() * 360;
+                        int degrees = (camera_phi + sprite.theta()).shift_integer() * 360;
                         bn::fixed rotation_angle = bn::fixed::from_data(degrees >> 4);
 
                         if(rotation_angle >= 360)
@@ -505,7 +505,7 @@ void models_3d::_process_models(const camera_3d& camera)
 
                     while(y <= bottom_y)
                     {
-                        hlines[y] = { xl.right_shift_integer(), xr.right_shift_integer() };
+                        hlines[y] = { xl.shift_integer(), xr.shift_integer() };
                         xl += left_delta;
                         xr += right_delta;
                         ++y;

@@ -40,7 +40,7 @@ namespace
     constexpr bn::fixed menu_x = -98;
     constexpr bn::fixed half_menu_width = 60;
     constexpr bn::fixed menu_x_inc = 4;
-    constexpr int animation_frames = (half_menu_width / menu_x_inc).right_shift_integer();
+    constexpr int animation_frames = (half_menu_width / menu_x_inc).shift_integer();
 
     constexpr bn::fixed initial_y = -65;
     constexpr bn::fixed menu_y_inc = 12;

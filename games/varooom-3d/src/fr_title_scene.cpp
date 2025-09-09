@@ -354,7 +354,7 @@ void title_scene::_update_intro_0()
 {
     auto set_car_position = [](model_3d& car_model) {
         bn::fixed car_angle = car_model.phi();
-        int angle = car_angle.right_shift_integer();
+        int angle = car_angle.shift_integer();
         bn::fixed sf = sin(angle);
         bn::fixed cf = cos(angle);
         car_model.set_position(point_3d((cf * 128) - 92, (sf * 128) + 224, 8));
@@ -393,7 +393,7 @@ void title_scene::_update_intro_1()
 {
     auto set_car_position = [](model_3d& car_model) {
         bn::fixed car_angle = car_model.phi() + 8192;
-        int angle = car_angle.right_shift_integer();
+        int angle = car_angle.shift_integer();
         bn::fixed sf = sin(angle);
         bn::fixed cf = cos(angle);
         car_model.set_position(point_3d((sf * 16) - 16, 192, (-cf * 128) - 128));

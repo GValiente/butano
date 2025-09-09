@@ -41,7 +41,7 @@ typedef struct tmm_mas_prefix
 
 typedef struct tmm_mas_head
 {
-    mm_byte     order_count;
+    mm_byte     order_count; // TODO: mmutil always exports 200. This is unused.
     mm_byte     instr_count;
     mm_byte     sampl_count;
     mm_byte     pattn_count;
@@ -55,7 +55,7 @@ typedef struct tmm_mas_head
     mm_byte     channel_panning[32];
     mm_byte     sequence[200];
 
-    mm_addr     tables[];
+    mm_word     tables[];
 
     // ::instrument table
     // ::sample info table

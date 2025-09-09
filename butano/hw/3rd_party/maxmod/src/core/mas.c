@@ -512,9 +512,9 @@ void mmPlayMAS(uintptr_t address, mm_word mode, mm_word layer)
     mm_word sampn_size = header->sampl_count;
 
     // Setup instrument, sample and pattern tables
-    layer_info->insttable = (mm_word *)&header->tables[0];
-    layer_info->samptable = (mm_word *)&header->tables[instn_size];
-    layer_info->patttable = (mm_word *)&header->tables[instn_size + sampn_size];
+    layer_info->insttable = &header->tables[0];
+    layer_info->samptable = &header->tables[instn_size];
+    layer_info->patttable = &header->tables[instn_size + sampn_size];
 
     // Set pattern to 0
     mpp_setposition(layer_info, 0);

@@ -23,7 +23,7 @@ namespace bn
 
 namespace
 {
-    constexpr best_fit_allocator::size_type alignment_bytes = sizeof(int);
+    constexpr best_fit_allocator::size_type alignment_bytes = sizeof(uint64_t);
 
     [[nodiscard]] best_fit_allocator::size_type _aligned_bytes(best_fit_allocator::size_type bytes)
     {
@@ -303,7 +303,18 @@ void best_fit_allocator::reset(void* start, size_type bytes)
     if(bytes >= _sizeof_free_item)
     {
         BN_BASIC_ASSERT(start, "Start is null");
-        BN_ASSERT(aligned<alignment_bytes>(start), "Start is not aligned");
+
+        if(! aligned<alignment_bytes>(start))
+        {
+            if(aligned<alignment_bytes / 2>(start))
+            {
+                uint32_t* new_start = reinterpret_cast<uint32_t*>(start) + 1;
+                reset(new_start, bytes - 4);
+                return;
+            }
+
+            BN_ERROR("Start is not aligned");
+        }
 
         auto first_item = reinterpret_cast<item_type*>(start);
         first_item->previous = nullptr;

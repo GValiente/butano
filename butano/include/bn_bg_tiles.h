@@ -25,26 +25,22 @@
 namespace bn::bg_tiles
 {
     /**
-     * @brief Returns the number of used background tiles managed with
-     * regular_bg_tiles_ptr and affine_bg_tiles_ptr objects.
+     * @brief Returns the number of used background tiles.
      */
     [[nodiscard]] int used_tiles_count();
 
     /**
-     * @brief Returns the number of available background tiles that can be managed with
-     * regular_bg_tiles_ptr and affine_bg_tiles_ptr objects.
+     * @brief Returns the number of available background tiles.
      */
     [[nodiscard]] int available_tiles_count();
 
     /**
-     * @brief Returns the number of used background tile sets created with
-     * regular_bg_tiles_ptr and affine_bg_tiles_ptr static constructors.
+     * @brief Returns the number of used background VRAM blocks by background tiles.
      */
     [[nodiscard]] int used_blocks_count();
 
     /**
-     * @brief Returns the number of available background tile sets that can be created with
-     * regular_bg_tiles_ptr and affine_bg_tiles_ptr static constructors.
+     * @brief Returns the number of available background VRAM blocks.
      */
     [[nodiscard]] int available_blocks_count();
 

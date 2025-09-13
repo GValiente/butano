@@ -38,12 +38,12 @@ namespace bn::bg_maps
     [[nodiscard]] int available_cells_count();
 
     /**
-     * @brief Returns the number of used background map cell blocks.
+     * @brief Returns the number of used background VRAM blocks by background maps.
      */
     [[nodiscard]] int used_blocks_count();
 
     /**
-     * @brief Returns the number of available background map cell blocks.
+     * @brief Returns the number of available background VRAM blocks.
      */
     [[nodiscard]] int available_blocks_count();
 

@@ -19,6 +19,7 @@
  * * bn::fixed::left_shift and bn::fixed::right_shift added.
  * * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a> updated to 1.14.0.
  * * ROM usage reduced (thanks yeon!).
+ * * bn::bg_maps and bn::bg_tiles documentation improved.
  * * Assets tool typo fixed (thanks alope107!).
  * * @ref faq_sprites_top_left, @ref faq_backgrounds_top_left and @ref faq_audio_music_crash questions improved.
  * * <a href="https://github.com/copyrat90/butano-ldtk">butano-ldtk</a> added to `README.md`.

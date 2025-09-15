@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_20_1_0 20.1.0 (next release)
+ * @section changelog_20_1_0 20.1.0
  *
  * * bn::fixed::shift_integer, bn::fixed::shift_multiplication, bn::fixed::unsafe_shift_multiplication,
  *   bn::fixed::unsafe_shift_multiplication, bn::fixed::shift_division and bn::fixed::unsafe_shift_division added.

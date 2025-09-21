@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_20_2_0 20.2.0 (next release)
+ *
+ * bn::log_level and @ref BN_LOG_LEVEL added.
+ *
+ *
  * @section changelog_20_1_0 20.1.0
  *
  * * bn::fixed::shift_integer, bn::fixed::shift_multiplication, bn::fixed::unsafe_shift_multiplication,

@@ -5,7 +5,7 @@
 
 #include "bn_log.h"
 #include "bn_core.h"
-#include "bn_keypad.h"
+#include "bn_log_level.h"
 #include "bn_bg_palettes.h"
 #include "bn_sprite_text_generator.h"
 
@@ -88,6 +88,8 @@ int main()
     BN_LOG("Custom types too: ", custom_type());
 
     log_example_a_function();
+
+    BN_LOG_LEVEL(bn::log_level::ERROR, "Message with error level");
 
     while(true)
     {

@@ -19,10 +19,15 @@
     #else
     #endif
 
+    namespace bn
+    {
+        enum class log_level : uint8_t;
+    }
+
     namespace bn::hw
     {
         #if BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_MGBA
-            inline void log(const istring_base& message)
+            inline void log(log_level level, const istring_base& message)
             {
                 // https://github.com/mgba-emu/mgba/blob/master/opt/libgba/mgba.c
 
@@ -40,19 +45,19 @@
                     memory::copy_bytes(message_data, characters_to_write, debug_string_register);
 
                     volatile uint16_t& debug_flags_register = *reinterpret_cast<uint16_t*>(0x4FFF700);
-                    debug_flags_register = 2 | 0x100;
+                    debug_flags_register = unsigned(level) | 0x100;
 
                     message_data += characters_to_write;
                     characters_left -= characters_to_write;
                 }
             }
         #elif BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_NOCASHGBA
-            inline void log(const istring_base& message)
+            inline void log(log_level, const istring_base& message)
             {
                 nocash_puts(message.data());
             }
         #elif BN_CFG_LOG_BACKEND == BN_LOG_BACKEND_VBA
-            inline void log(const istring_base& message)
+            inline void log(log_level, const istring_base& message)
             {
                 asm volatile
                     (

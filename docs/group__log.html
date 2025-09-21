@@ -55,6 +55,7 @@
               Reference
               <ul>
                 <li><a href="#files">Files</a></li>
+                <li><a href="#enum-members">Enums</a></li>
                 <li><a href="#func-members">Functions</a></li>
                 <li><a href="#define-members">Defines</a></li>
               </ul>
@@ -71,6 +72,21 @@
             <dd></dd>
             <dt>file <a href="bn__log__backend_8h.html" class="m-doc">bn_log_backend.h</a></dt>
             <dd></dd>
+            <dt>file <a href="bn__log__level_8h.html" class="m-doc">bn_log_level.h</a></dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="enum-members">
+          <h2><a href="#enum-members">Enums</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">enum class <a href="#gaa81f7287c79c0bfbbd80ee59f6f67f37" class="m-doc">log_level</a>: uint8_t { </span><span class="m-doc-wrap"><a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a19da7170bea36556dde582519795f3fc" class="m-doc">FATAL</a>,
+              <a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37abb1ca97ec761fc37101737ba0aa2e7c5" class="m-doc">ERROR</a>,
+              <a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a32bd8a1db2275458673903bdb84cb277" class="m-doc">WARN</a>,
+              <a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a551b723eafd6a31d444fcb2f5920fbd3" class="m-doc">INFO</a>,
+              <a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37adc30ec20708ef7b0f641ef78b7880a15" class="m-doc">DEBUG</a> }</span>
+            </dt>
+            <dd>Specifies the level of a log message.</dd>
           </dl>
         </section>
         <section id="func-members">
@@ -78,6 +94,11 @@
           <dl class="m-doc">
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#ga4ad167aa65958b66b5b26d413c500fe3" class="m-doc">log</a>(</span><span class="m-doc-wrap">const istring_base&amp; message)</span>
+            </dt>
+            <dd>Prints in one line of text the given message with the default log level (<a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a32bd8a1db2275458673903bdb84cb277" class="m-doc">bn::<wbr />log_level::<wbr />WARN</a>).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ga0fc519a00d4cfa64be1799707b8f54a0" class="m-doc">log</a>(</span><span class="m-doc-wrap">log_level level,
+              const istring_base&amp; message)</span>
             </dt>
             <dd>Prints in one line of text the given message.</dd>
           </dl>
@@ -102,6 +123,11 @@
             </dt>
             <dd></dd>
             <dt>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafb81f496895690e1178e5567d8ff34df" class="m-doc">BN_LOG_LEVEL</a>(</span><span class="m-doc-wrap">level,
+              ...)</span>
+            </dt>
+            <dd></dd>
+            <dt>
               <span class="m-doc-wrap-bumper">#define <a href="#gad8da3032261c4e87005284f0c70d97cc" class="m-doc">BN_LOG_BACKEND_MGBA</a></span>
             </dt>
             <dd></dd>
@@ -116,13 +142,82 @@
           </dl>
         </section>
         <section>
+          <h2>Enum documentation</h2>
+          <section class="m-doc-details" id="gaa81f7287c79c0bfbbd80ee59f6f67f37"><div>
+            <h3>
+              enum class <a href="#gaa81f7287c79c0bfbbd80ee59f6f67f37" class="m-doc-self">log_level</a>: uint8_t
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__log__level_8h.html">&lt;bn_log_level.h&gt;</a></div>
+            </h3>
+            <p>Specifies the level of a log message.</p>
+<p>Most emulators ignore this log level.</p>
+            <table class="m-table m-fullwidth m-flat m-doc">
+              <thead><tr><th style="width: 1%">Enumerators</th><th></th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a19da7170bea36556dde582519795f3fc" class="m-doc-self" id="ggaa81f7287c79c0bfbbd80ee59f6f67f37a19da7170bea36556dde582519795f3fc">FATAL</a></td>
+                  <td>
+                  <p>Fatal. A message with this level stops the execution.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37abb1ca97ec761fc37101737ba0aa2e7c5" class="m-doc-self" id="ggaa81f7287c79c0bfbbd80ee59f6f67f37abb1ca97ec761fc37101737ba0aa2e7c5">ERROR</a></td>
+                  <td>
+                  <p>Error.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a32bd8a1db2275458673903bdb84cb277" class="m-doc-self" id="ggaa81f7287c79c0bfbbd80ee59f6f67f37a32bd8a1db2275458673903bdb84cb277">WARN</a></td>
+                  <td>
+                  <p>Warn (default).</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a551b723eafd6a31d444fcb2f5920fbd3" class="m-doc-self" id="ggaa81f7287c79c0bfbbd80ee59f6f67f37a551b723eafd6a31d444fcb2f5920fbd3">INFO</a></td>
+                  <td>
+                  <p>Info.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37adc30ec20708ef7b0f641ef78b7880a15" class="m-doc-self" id="ggaa81f7287c79c0bfbbd80ee59f6f67f37adc30ec20708ef7b0f641ef78b7880a15">DEBUG</a></td>
+                  <td>
+                  <p>Debug.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+        <section>
           <h2>Function documentation</h2>
           <section class="m-doc-details" id="ga4ad167aa65958b66b5b26d413c500fe3"><div>
             <h3>
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga4ad167aa65958b66b5b26d413c500fe3" class="m-doc-self">log</a>(</span><span class="m-doc-wrap">const istring_base&amp; message)</span></span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__log_8h.html">&lt;bn_log.h&gt;</a></div>
             </h3>
+            <p>Prints in one line of text the given message with the default log level (<a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a32bd8a1db2275458673903bdb84cb277" class="m-doc">bn::<wbr />log_level::<wbr />WARN</a>).</p>
+          </div></section>
+          <section class="m-doc-details" id="ga0fc519a00d4cfa64be1799707b8f54a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga0fc519a00d4cfa64be1799707b8f54a0" class="m-doc-self">log</a>(</span><span class="m-doc-wrap">log_level level,
+              const istring_base&amp; message)</span></span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__log_8h.html">&lt;bn_log.h&gt;</a></div>
+            </h3>
             <p>Prints in one line of text the given message.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">level</td>
+                  <td>Message level.</td>
+                </tr>
+                <tr>
+                  <td>message</td>
+                  <td>Message to print.</td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
         </section>
         <section>
@@ -153,7 +248,20 @@
               <span class="m-doc-wrap-bumper">#define <a href="#ga9654683d4e1f8c84f296d56c38b26c21" class="m-doc-self">BN_LOG</a>(</span><span class="m-doc-wrap">...)</span>
               <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__log_8h.html">&lt;bn_log.h&gt;</a></div>
             </h3>
-<p>Prints in one line of text the representation of the given parameters.</p><p>Example:</p><pre class="m-code"><span class="n">BN_LOG</span><span class="p">(</span><span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading bn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">custom_type</span><span class="o">&amp;</span><span class="w"> </span><span class="n">custom_value</span><span class="p">)</span>
+<p>Prints in one line of text the representation of the given parameters with the default log level (<a href="#ggaa81f7287c79c0bfbbd80ee59f6f67f37a32bd8a1db2275458673903bdb84cb277" class="m-doc">bn::<wbr />log_level::<wbr />WARN</a>).</p><p>Example:</p><pre class="m-code"><span class="n">BN_LOG</span><span class="p">(</span><span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading bn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">custom_type</span><span class="o">&amp;</span><span class="w"> </span><span class="n">custom_value</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;custom_type: &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">custom_value</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">stream</span><span class="p">;</span>
+<span class="p">}</span></pre>
+          </div></section>
+          <section class="m-doc-details" id="gafb81f496895690e1178e5567d8ff34df"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">#define <a href="#gafb81f496895690e1178e5567d8ff34df" class="m-doc-self">BN_LOG_LEVEL</a>(</span><span class="m-doc-wrap">level,
+              ...)</span>
+              <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__log_8h.html">&lt;bn_log.h&gt;</a></div>
+            </h3>
+<p>Prints in one line of text the representation of the given parameters with the specified log level.</p><p>Example:</p><pre class="m-code"><span class="n">BN_LOG_LEVEL</span><span class="p">(</span><span class="n">bn</span><span class="o">::</span><span class="n">log_level</span><span class="o">::</span><span class="n">ERROR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Invalid integer: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">integer</span><span class="p">);</span></pre><p>Custom parameter types are supported by overloading bn::ostringstream::operator&lt;&lt;.</p><p>Example:</p><pre class="m-code"><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">bn</span><span class="o">::</span><span class="n">ostringstream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">custom_type</span><span class="o">&amp;</span><span class="w"> </span><span class="n">custom_value</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;custom_type: &quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">custom_value</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>

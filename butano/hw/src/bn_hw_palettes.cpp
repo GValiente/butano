@@ -100,6 +100,45 @@ namespace
 
         return lut;
     }();
+
+    constexpr array<fixed, hue_shift_lut_size> colorblind_lut = []{
+        array<fixed, hue_shift_lut_size> lut;
+
+        // Deuteranopia
+        lut[0] = fixed(0.43);
+        lut[1] = fixed(0.72);
+        lut[2] = fixed(-0.15);
+        lut[3] = fixed(0.34);
+        lut[4] = fixed(0.57);
+        lut[5] = fixed(0.09);
+        lut[6] = fixed(-0.02);
+        lut[7] = fixed(0.03);
+        lut[8] = fixed(1.00);
+
+        // Protanopia
+        lut[9] = fixed(0.20);
+        lut[10] = fixed(0.99);
+        lut[11] = fixed(-0.19);
+        lut[12] = fixed(0.16);
+        lut[13] = fixed(0.79);
+        lut[14] = fixed(0.04);
+        lut[15] = fixed(0.01);
+        lut[16] = fixed(-0.01);
+        lut[17] = fixed(1.00);
+
+        // Tritanopia
+        lut[18] = fixed(0.97);
+        lut[19] = fixed(0.11);
+        lut[20] = fixed(-0.08);
+        lut[21] = fixed(0.02);
+        lut[22] = fixed(0.82);
+        lut[23] = fixed(0.16);
+        lut[24] = fixed(-0.06);
+        lut[25] = fixed(0.88);
+        lut[26] = fixed(0.18);
+
+        return lut;
+    }();
 }
 
 void contrast(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr)
@@ -131,6 +170,26 @@ void hue_shift(const color* source_colors_ptr, int value, int count, color* dest
         tonc_dst_ptr[index] = RGB15(
                 clamp(out_r.shift_integer(), 0, 31), clamp(out_g.shift_integer(), 0, 31),
                 clamp(out_b.shift_integer(), 0, 31));
+    }
+}
+
+void colorblind(const color* source_colors_ptr, int mode, int count, color* destination_colors_ptr) {
+    const fixed* lut = colorblind_lut.data() + (mode * 9);
+    auto tonc_dst_ptr = reinterpret_cast<COLOR*>(destination_colors_ptr);
+
+    for(int index = 0; index < count; ++index)
+    {
+        color color = source_colors_ptr[index];
+        int in_r = color.red();
+        int in_g = color.green();
+        int in_b = color.blue();
+        fixed out_r = in_r * lut[0] + in_g * lut[1] + in_b * lut[2];
+        fixed out_g = in_r * lut[3] + in_g * lut[4] + in_b * lut[5];
+        fixed out_b = in_r * lut[6] + in_g * lut[7] + in_b * lut[8];
+        tonc_dst_ptr[index] = RGB15(
+                    clamp(out_r.right_shift_integer(), 0, 31),
+                    clamp(out_g.right_shift_integer(), 0, 31),
+                    clamp(out_b.right_shift_integer(), 0, 31));
     }
 }
 

@@ -563,6 +563,16 @@ void palettes_bank::set_inverted(bool inverted)
     }
 }
 
+inline void palettes_bank::set_colorblind_mode(int mode) {
+    bool update = _color_blind_mode != mode;
+    _color_blind_mode = mode;
+
+    if(update)
+    {
+        _on_global_effect_updated(_color_blind_mode != -1);
+    }
+}
+
 void palettes_bank::set_grayscale_intensity(fixed intensity)
 {
     BN_ASSERT(intensity >= 0 && intensity <= 1, "Invalid intensity: ", intensity);
@@ -806,7 +816,7 @@ void palettes_bank::_on_global_effect_updated(bool active)
     _global_effects_enabled = active || _inverted || fixed_t<5>(_brightness).data() ||
             fixed_t<5>(_contrast).data() || fixed_t<5>(_intensity).data() ||
             fixed_t<5>(_grayscale_intensity).data() || fixed_t<5>(_hue_shift_intensity).data() ||
-            fixed_t<5>(_fade_intensity).data();
+            fixed_t<5>(_fade_intensity).data() || _color_blind_mode != -1;
 }
 
 void palettes_bank::_set_colors_bpp_impl(int id, const span<const color>& colors)
@@ -874,6 +884,11 @@ void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_col
     if(int fade_intensity = fixed_t<5>(_fade_intensity).data())
     {
         hw::palettes::fade(dest_colors_ptr, _fade_color, fade_intensity, dest_colors_count, dest_colors_ptr);
+    }
+
+    if (_color_blind_mode != -1)
+    {
+        hw::palettes::colorblind(dest_colors_ptr, _color_blind_mode, dest_colors_count, dest_colors_ptr);
     }
 }
 

@@ -171,6 +171,13 @@ public:
 
     void set_inverted(bool inverted);
 
+    [[nodiscard]] int colorblind_mode() const
+    {
+        return _color_blind_mode;
+    }
+
+    void set_colorblind_mode(int mode);
+
     [[nodiscard]] fixed grayscale_intensity() const
     {
         return _grayscale_intensity;
@@ -236,6 +243,7 @@ private:
         int8_t slots_count = 1;
         int8_t rotate_range_start = 1;
         int8_t rotate_range_size = 0;
+        int color_blind_mode = -1;
         bool bpp_8: 1 = false;
         bool inverted: 1 = false;
         bool update: 1 = false;
@@ -258,6 +266,7 @@ private:
     int _first_index_to_commit = numeric_limits<int>::max();
     int _last_index_to_commit = 0;
     color _fade_color;
+    int _color_blind_mode = -1;
     bool _inverted = false;
     bool _update = false;
     bool _update_global_effects = false;

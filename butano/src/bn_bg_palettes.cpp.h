@@ -81,6 +81,14 @@ void set_inverted(bool inverted)
     palettes_manager::bg_palettes_bank().set_inverted(inverted);
 }
 
+int color_blind_mode() {
+    return palettes_manager::bg_palettes_bank().colorblind_mode();
+}
+
+void set_color_blind_mode(int mode) {
+    palettes_manager::bg_palettes_bank().set_colorblind_mode(mode);
+}
+
 fixed grayscale_intensity()
 {
     return palettes_manager::bg_palettes_bank().grayscale_intensity();

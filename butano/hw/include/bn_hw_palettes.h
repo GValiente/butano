@@ -105,6 +105,8 @@ namespace bn::hw::palettes
 
     void hue_shift(const color* source_colors_ptr, int value, int count, color* destination_colors_ptr);
 
+    void colorblind(const color* source_colors_ptr, int mode, int count, color* destination_colors_ptr);
+
     inline void blend(const color* first_source_colors_ptr, const color* second_source_colors_ptr,
                       int intensity, int count, color* destination_colors_ptr)
     {

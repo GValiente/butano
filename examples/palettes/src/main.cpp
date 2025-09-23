@@ -487,6 +487,48 @@ namespace
         bn::sprite_palettes::set_intensity(0);
     }
 
+    void global_colorblind_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "LEFT: None",
+            "RIGHT: Deuteranopia",
+            "UP: Protanopia",
+            "DOWN: Tritanopia",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Global colorblind", info_text_lines, text_generator);
+
+        bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
+        bn::bg_palettes::set_color_blind_mode(-1);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::left_pressed())
+            {
+                bn::bg_palettes::set_color_blind_mode(-1);
+            }
+            else if(bn::keypad::right_pressed())
+            {
+                bn::bg_palettes::set_color_blind_mode(0);
+            }
+            else if(bn::keypad::up_pressed())
+            {
+                bn::bg_palettes::set_color_blind_mode(1);
+            }
+            else if(bn::keypad::down_pressed())
+            {
+                bn::bg_palettes::set_color_blind_mode(2);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::bg_palettes::set_color_blind_mode(-1);
+    }
+
     void transparent_color_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
@@ -647,6 +689,9 @@ int main()
         bn::core::update();
 
         global_intensity_actions_scene(text_generator);
+        bn::core::update();
+
+        global_colorblind_scene(text_generator);
         bn::core::update();
 
         transparent_color_hbe_scene(text_generator);

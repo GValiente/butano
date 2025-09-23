@@ -104,6 +104,23 @@ namespace bn::bg_palettes
     void set_inverted(bool inverted);
 
     /**
+     * @brief Returns the color blind mode applied to all background color palettes.
+     *
+     * @retval -1 No color blind mode applied.
+     * @retval 0 Deuteranopia (red-green).
+     * @retval 1 Protanopia (red-green).
+     * @retval 2 Tritanopia (blue-yellow).
+     */
+    [[nodiscard]] int color_blind_mode();
+
+    /**
+     * @brief Sets the color blind mode applied to all background color palettes.
+     *
+     * @param mode New color blind mode.
+     */
+    void set_color_blind_mode(int mode);
+
+    /**
      * @brief Returns the intensity of the grayscale effect applied to all background color palettes.
      */
     [[nodiscard]] fixed grayscale_intensity();

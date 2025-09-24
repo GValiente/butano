@@ -128,6 +128,21 @@ void set_fade(color color, fixed intensity)
     palettes_manager::bg_palettes_bank().set_fade(color, intensity);
 }
 
+palette_effect_type custom_effect()
+{
+    return palettes_manager::bg_palettes_bank().custom_effect();
+}
+
+void set_custom_effect(palette_effect_type effect)
+{
+    palettes_manager::bg_palettes_bank().set_custom_effect(effect);
+}
+
+void reload_custom_effect()
+{
+    palettes_manager::bg_palettes_bank().reload_custom_effect();
+}
+
 void log_status()
 {
     #if BN_CFG_LOG_ENABLED

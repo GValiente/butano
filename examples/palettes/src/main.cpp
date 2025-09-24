@@ -587,6 +587,48 @@ namespace
             bn::core::update();
         }
     }
+
+    void custom_effect(bn::span<bn::color> colors)
+    {
+        for(bn::color& color : colors)
+        {
+            color.set_blue(color.green());
+        }
+    }
+
+    void palette_custom_effect_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "A: toggle custom effect",
+            "",
+            "START: go to next scene",
+        };
+
+        common::info info("Palette custom effect", info_text_lines, text_generator);
+
+        bn::regular_bg_ptr village_bg = bn::regular_bg_items::village.create_bg(0, 0);
+        bn::bg_palettes::set_custom_effect(custom_effect);
+
+        while(! bn::keypad::start_pressed())
+        {
+            if(bn::keypad::a_pressed())
+            {
+                if(bn::bg_palettes::custom_effect())
+                {
+                    bn::bg_palettes::set_custom_effect(nullptr);
+                }
+                else
+                {
+                    bn::bg_palettes::set_custom_effect(custom_effect);
+                }
+            }
+
+            info.update();
+            bn::core::update();
+        }
+
+        bn::bg_palettes::set_custom_effect(nullptr);
+    }
 }
 
 int main()
@@ -656,6 +698,9 @@ int main()
         bn::core::update();
 
         palette_blend_scene(text_generator);
+        bn::core::update();
+
+        palette_custom_effect_scene(text_generator);
         bn::core::update();
     }
 }

@@ -632,6 +632,23 @@ void palettes_bank::set_fade(color color, fixed intensity)
     }
 }
 
+void palettes_bank::set_custom_effect(palette_effect_type effect)
+{
+    if(_custom_effect != effect)
+    {
+        _custom_effect = effect;
+        _on_global_effect_updated(effect);
+    }
+}
+
+void palettes_bank::reload_custom_effect()
+{
+    BN_BASIC_ASSERT(_custom_effect, "There's no custom effect");
+
+    _update = true;
+    _update_global_effects = true;
+}
+
 void palettes_bank::update()
 {
     int first_index = numeric_limits<int>::max();
@@ -803,7 +820,7 @@ void palettes_bank::_on_global_effect_updated(bool active)
     _update = true;
     _update_global_effects = true;
 
-    _global_effects_enabled = active || _inverted || fixed_t<5>(_brightness).data() ||
+    _global_effects_enabled = active || _inverted || _custom_effect || fixed_t<5>(_brightness).data() ||
             fixed_t<5>(_contrast).data() || fixed_t<5>(_intensity).data() ||
             fixed_t<5>(_grayscale_intensity).data() || fixed_t<5>(_hue_shift_intensity).data() ||
             fixed_t<5>(_fade_intensity).data();
@@ -874,6 +891,11 @@ void palettes_bank::_apply_global_effects(int dest_colors_count, color* dest_col
     if(int fade_intensity = fixed_t<5>(_fade_intensity).data())
     {
         hw::palettes::fade(dest_colors_ptr, _fade_color, fade_intensity, dest_colors_count, dest_colors_ptr);
+    }
+
+    if(palette_effect_type effect = _custom_effect)
+    {
+        effect(span<color>(dest_colors_ptr, dest_colors_count));
     }
 }
 

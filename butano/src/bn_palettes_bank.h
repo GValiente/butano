@@ -6,7 +6,6 @@
 #ifndef BN_PALETTES_BANK_H
 #define BN_PALETTES_BANK_H
 
-#include "bn_span.h"
 #include "bn_fixed.h"
 #include "bn_color.h"
 #include "bn_limits.h"
@@ -14,6 +13,7 @@
 #include "bn_config_log.h"
 #include "bn_unordered_map.h"
 #include "bn_identity_hasher.h"
+#include "bn_palette_effect_type.h"
 #include "../hw/include/bn_hw_palettes.h"
 
 namespace bn
@@ -201,6 +201,15 @@ public:
 
     void set_fade(color color, fixed intensity);
 
+    [[nodiscard]] palette_effect_type custom_effect() const
+    {
+        return _custom_effect;
+    }
+
+    void set_custom_effect(palette_effect_type effect);
+
+    void reload_custom_effect();
+
     void update();
 
     [[nodiscard]] commit_data retrieve_commit_data() const;
@@ -254,6 +263,7 @@ private:
     fixed _grayscale_intensity;
     fixed _hue_shift_intensity;
     fixed _fade_intensity;
+    palette_effect_type _custom_effect = nullptr;
     unordered_map<uint16_t, int16_t, hw::palettes::count() * 2, identity_hasher> _bpp_4_indexes_map;
     int _first_index_to_commit = numeric_limits<int>::max();
     int _last_index_to_commit = 0;

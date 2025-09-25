@@ -125,12 +125,13 @@ with discrete movement.
 
 ![](docs_tools/images/discrete_orange_title.png) ![](docs_tools/images/discrete_orange_gameplay.png)
 
-* [Feline](https://foopod.itch.io/feline) ([working source code](https://github.com/GValiente/gbaGamejam2021)): explore the world as a cat, meet new people, learn new languages, 
-face difficult foes and save your family!
+* [Feline](https://foopod.itch.io/feline) ([working source code](https://github.com/GValiente/gbaGamejam2021)): explore 
+the world as a cat, meet new people, learn new languages, face difficult foes and save your family!
 
 ![](docs_tools/images/feline_title.png) ![](docs_tools/images/feline_gameplay.png)
 
-* [Symbol★Merged](https://copyrat90.itch.io/sym-merged): a puzzle platformer game where you can merge items (symbols) in hands, and use the superpower of the merged symbol.
+* [Symbol★Merged](https://copyrat90.itch.io/sym-merged): a puzzle platformer game where you can merge 
+items (symbols) in hands, and use the superpower of the merged symbol.
 
 ![](docs_tools/images/symbol_merged_title.png) ![](docs_tools/images/symbol_merged_gameplay.png)
 
@@ -144,9 +145,9 @@ with story and create modes.
 
 ![](docs_tools/images/notenogram_title.png) ![](docs_tools/images/notenogram_gameplay.png)
 
-* [LRO - Luggage Retrieval Officer](https://foopod.itch.io/lro) ([working source code](https://github.com/GValiente/lro)): you will work your way to being a highly ranked
-member off staff, retrieving important missing luggage for the likes of the Natural History Museum, 
-NASA and even the FBI!
+* [LRO - Luggage Retrieval Officer](https://foopod.itch.io/lro) ([working source code](https://github.com/GValiente/lro)): 
+you will work your way to being a highly ranked member off staff, retrieving important missing luggage
+for the likes of the Natural History Museum, NASA and even the FBI!
 
 ![](docs_tools/images/lro_title.png) ![](docs_tools/images/lro_gameplay.png)
 
@@ -158,6 +159,11 @@ leveling up as you fight through the hordes, searching for some kind of answer t
 * [GBA pseudo-3D demo](https://github.com/chrislewisdev/gba-pseudo-3d): Sonic Battle's pseudo-3D rendering demo.
 
 ![](docs_tools/images/gba_pseudo_3d_demo_gameplay.png)
+
+* [Heartwrench Advance](https://michaelchase.itch.io/heartwrench-advance): crank, twist, leap and smash your way 
+through challenging platforming scenarios.
+
+![](docs_tools/images/heartwrench_advance_title.png) ![](docs_tools/images/heartwrench_advance_gameplay.png)
 
 * [Bridge Quest](https://fixxiefixx.itch.io/bridge-quest): find the way to the desert, but beware, 
 because enemies and an evil tree boss will try to stop you!
@@ -182,8 +188,9 @@ a boy who wakes up on a new, happy day to go to school.
 
 ![](docs_tools/images/space_evangelion_title.png) ![](docs_tools/images/space_evangelion_gameplay.png)
 
-* [Knight Owls](https://blaise-rascal.itch.io/knight-owls) ([working source code](https://github.com/GValiente/KnightOwls)): build up a powerful spellbook and take on many enemies, 
-gather owls and upgrades while managing your health and money and defeat the final boss to win!
+* [Knight Owls](https://blaise-rascal.itch.io/knight-owls) ([working source code](https://github.com/GValiente/KnightOwls)): 
+build up a powerful spellbook and take on many enemies, gather owls and upgrades while managing your health 
+and money and defeat the final boss to win!
 
 ![](docs_tools/images/knight_owls_title.png) ![](docs_tools/images/knight_owls_gameplay.png)
 
@@ -243,7 +250,8 @@ to your opponent's base, then place tiles on their base to damage them.
 ## More Butano related stuff
 
 * [butano-ldtk](https://github.com/copyrat90/butano-ldtk): [LDtk](https://ldtk.io/) level importer for Butano.
-Provides [usage examples](https://github.com/copyrat90/butano-ldtk/tree/main/examples) and [API documentation](https://copyrat90.github.io/butano-ldtk/).
+Provides [usage examples](https://github.com/copyrat90/butano-ldtk/tree/main/examples) 
+and [API documentation](https://copyrat90.github.io/butano-ldtk/).
 
 ![](docs_tools/images/butano_ldtk_1.png) ![](docs_tools/images/butano_ldtk_2.png)
 

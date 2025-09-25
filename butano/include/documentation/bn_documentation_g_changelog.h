@@ -16,6 +16,7 @@
  *
  * * Custom palette effects added. Check the `palettes` example to see how to apply them.
  * * bn::log_level and @ref BN_LOG_LEVEL added.
+ * * <a href="https://michaelchase.itch.io/heartwrench-advance">Heartwrench Advance</a> added to `README.md`.
  *
  *
  * @section changelog_20_1_0 20.1.0

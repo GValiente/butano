@@ -48,7 +48,7 @@
       <div class="m-col-l-10 m-push-l-1">
         <h1>
           <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__generic__pool_8h.html">&lt;bn_generic_pool.h&gt;</a></div>
-          <div class="m-doc-template">template&lt;int MaxElementSize, int MaxSize&gt;</div>
+          <div class="m-doc-template">template&lt;int MaxElementSize, int MaxSize, int MaxElementAlignment = alignof(char*)&gt;</div>
           <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>generic_pool <span class="m-thin">class</span>
         </h1>
         <p><a href="classbn_1_1igeneric__pool.html" class="m-doc">igeneric_<wbr />pool</a> implementation that uses a fixed size buffer.</p>
@@ -59,11 +59,15 @@
           <tbody>
             <tr>
               <td style="width: 1%">MaxElementSize</td>
-              <td>Element size.</td>
+              <td>Maximum element size in bytes.</td>
             </tr>
             <tr>
               <td>MaxSize</td>
               <td>Maximum number of elements that can be stored.</td>
+            </tr>
+            <tr>
+              <td>MaxElementAlignment</td>
+              <td>Maximum element alignment in bytes.</td>
             </tr>
           </tbody>
         </table>
@@ -85,7 +89,7 @@
           <dl class="m-doc">
             <dt>
               <div class="m-doc-template">template&lt;int MaxElementSize&gt;</div>
-              class <a href="classbn_1_1igeneric__pool.html" class="m-doc">igeneric_pool&lt;sizeof(generic_pool_element&lt;MaxElementSize&gt;)&gt;</a>
+              class <a href="classbn_1_1igeneric__pool.html" class="m-doc">igeneric_pool&lt;sizeof(generic_pool_element&lt;MaxElementSize, alignof(char*)&gt;)&gt;</a>
             </dt>
             <dd>Base class of <a href="classbn_1_1generic__pool.html" class="m-doc">generic_<wbr />pool</a>.</dd>
           </dl>
@@ -93,8 +97,8 @@
         <section id="pub-types">
           <h2><a href="#pub-types">Public types</a></h2>
           <dl class="m-doc">
-            <dt id="a9c3c2e31f6e11543dfac3c4a4050e9b1">
-              using <a href="#a9c3c2e31f6e11543dfac3c4a4050e9b1" class="m-doc-self">size_type</a> = typename <a href="classbn_1_1igeneric__pool.html#a2560b64d347da73692085de32b45446a" class="m-doc">base_type::<wbr />size_type</a>
+            <dt id="af5968e7bed4e57bd87760a2e460962ce">
+              using <a href="#af5968e7bed4e57bd87760a2e460962ce" class="m-doc-self">size_type</a> = typename <a href="classbn_1_1igeneric__pool.html#a2560b64d347da73692085de32b45446a" class="m-doc">base_type::<wbr />size_type</a>
             </dt>
             <dd>Size type alias.</dd>
           </dl>
@@ -102,8 +106,8 @@
         <section id="typeless-methods">
           <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
           <dl class="m-doc">
-            <dt id="acdf267b15540d84159a2f1d169d4c1f9">
-              <span class="m-doc-wrap-bumper"><a href="#acdf267b15540d84159a2f1d169d4c1f9" class="m-doc-self">generic_pool</a>(</span><span class="m-doc-wrap">)</span>
+            <dt id="af4f41c68e71ef53080a55bf92855f3e6">
+              <span class="m-doc-wrap-bumper"><a href="#af4f41c68e71ef53080a55bf92855f3e6" class="m-doc-self">generic_pool</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Default constructor.</dd>
           </dl>

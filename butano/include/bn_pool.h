@@ -45,13 +45,13 @@ namespace bn
 {
 
 template<typename Type>
-class ipool : public igeneric_pool<sizeof(generic_pool_element<sizeof(Type)>)>
+class ipool : public igeneric_pool<sizeof(generic_pool_element<sizeof(Type), alignof(Type)>)>
 {
 
 protected:
     /// @cond DO_NOT_DOCUMENT
 
-    using element = generic_pool_element<sizeof(Type)>;
+    using element = generic_pool_element<sizeof(Type), alignof(Type)>;
 
     /// @endcond
 

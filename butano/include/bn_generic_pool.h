@@ -239,22 +239,22 @@ protected:
 
 /// @cond DO_NOT_DOCUMENT
 
-template<int MaxElementSize>
+template<int MaxElementSize, int MaxElementAlignment = alignof(char*)>
 union generic_pool_element
 {
     char* next;
-    char buffer[MaxElementSize];
+    alignas(MaxElementAlignment) char buffer[MaxElementSize];
 };
 
 /// @endcond
 
 
-template<int MaxElementSize, int MaxSize>
-class generic_pool : public igeneric_pool<sizeof(generic_pool_element<MaxElementSize>)>
+template<int MaxElementSize, int MaxSize, int MaxElementAlignment = alignof(char*)>
+class generic_pool : public igeneric_pool<sizeof(generic_pool_element<MaxElementSize, MaxElementAlignment>)>
 {
 
 private:
-    using element = generic_pool_element<MaxElementSize>;
+    using element = generic_pool_element<MaxElementSize, MaxElementAlignment>;
     using base_type = igeneric_pool<sizeof(element)>;
 
 public:

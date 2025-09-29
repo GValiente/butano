@@ -56,12 +56,13 @@ namespace bn
     /**
      * @brief igeneric_pool implementation that uses a fixed size buffer.
      *
-     * @tparam MaxElementSize Element size.
+     * @tparam MaxElementSize Maximum element size in bytes.
      * @tparam MaxSize Maximum number of elements that can be stored.
+     * @tparam MaxElementAlignment Maximum element alignment in bytes.
      *
      * @ingroup pool
      */
-    template<int MaxElementSize, int MaxSize>
+    template<int MaxElementSize, int MaxSize, int MaxElementAlignment>
     class generic_pool;
 }
 

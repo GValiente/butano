@@ -115,6 +115,16 @@
             </dt>
             <dd>Constructor.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a717c247d2b5fb787ee7f7c4bfd0126ed" class="m-doc">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr,
+              const Deleter&amp; deleter) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a15c23b1cd0bbaed047418bcf10801601" class="m-doc">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr,
+              Deleter&amp;&amp; deleter) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper"><a href="#af32835db80150a1c749fe3f33c81f682" class="m-doc">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-flat m-primary">constexpr</span> <span class="m-label m-flat m-success">noexcept</span></span>
             </dt>
             <dd>Move constructor.</dd>
@@ -160,11 +170,11 @@
             <dt id="ac3b868c44d5c081c9768b2a922732aec">
               <span class="m-doc-wrap-bumper">auto <a href="#ac3b868c44d5c081c9768b2a922732aec" class="m-doc-self">get_deleter</a>(</span><span class="m-doc-wrap">) const -&gt; const Deleter&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Returns a const reference to the managed object deleter.</dd>
+            <dd>Returns a const reference to the object which disposes the managed object when the <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> goes out of scope.</dd>
             <dt id="accff2d56be728a45a6824ea5f155a654">
               <span class="m-doc-wrap-bumper">auto <a href="#accff2d56be728a45a6824ea5f155a654" class="m-doc-self">get_deleter</a>(</span><span class="m-doc-wrap">) -&gt; Deleter&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
-            <dd>Returns a reference to the managed object deleter.</dd>
+            <dd>Returns a reference to the object which disposes the managed object when the <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> goes out of scope.</dd>
             <dt id="ad2c3f1e9740a96f73436d811e98439d2">
               <span class="m-doc-wrap-bumper">auto <a href="#ad2c3f1e9740a96f73436d811e98439d2" class="m-doc-self">operator*</a>(</span><span class="m-doc-wrap">) const -&gt; const Type&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
@@ -296,6 +306,56 @@
                 <tr>
                   <td style="width: 1%">ptr</td>
                   <td>Pointer to the object to manage.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a717c247d2b5fb787ee7f7c4bfd0126ed"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, typename Deleter&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a717c247d2b5fb787ee7f7c4bfd0126ed" class="m-doc-self">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr,
+              const Deleter&amp; deleter) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Pointer to the object to manage.</td>
+                </tr>
+                <tr>
+                  <td>deleter</td>
+                  <td>Object which disposes the object to manage when the <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> goes out of scope.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a15c23b1cd0bbaed047418bcf10801601"><div>
+            <h3>
+              <div class="m-doc-template">
+                template&lt;typename Type, typename Deleter&gt;
+              </div>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />unique_ptr&lt;Type, Deleter&gt;::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a15c23b1cd0bbaed047418bcf10801601" class="m-doc-self">unique_ptr</a>(</span><span class="m-doc-wrap"><a href="#a8247db8c03ec88146795173cea090d41" class="m-doc">pointer</a> ptr,
+              Deleter&amp;&amp; deleter) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">ptr</td>
+                  <td>Pointer to the object to manage.</td>
+                </tr>
+                <tr>
+                  <td>deleter</td>
+                  <td>Object which disposes the object to manage when the <a href="classbn_1_1unique__ptr.html" class="m-doc">unique_<wbr />ptr</a> goes out of scope.</td>
                 </tr>
               </tbody>
             </table>

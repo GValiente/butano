@@ -52,6 +52,28 @@ public:
     {
     }
 
+    /**
+     * @brief Constructor.
+     * @param ptr Pointer to the object to manage.
+     * @param deleter Object which disposes the object to manage when the unique_ptr goes out of scope.
+     */
+    constexpr unique_ptr(pointer ptr, const Deleter& deleter) :
+        _ptr(ptr),
+        _deleter(deleter)
+    {
+    }
+
+    /**
+     * @brief Constructor.
+     * @param ptr Pointer to the object to manage.
+     * @param deleter Object which disposes the object to manage when the unique_ptr goes out of scope.
+     */
+    constexpr unique_ptr(pointer ptr, Deleter&& deleter) :
+        _ptr(ptr),
+        _deleter(move(deleter))
+    {
+    }
+
     constexpr unique_ptr(const unique_ptr& other) = delete;
 
     /**
@@ -143,7 +165,8 @@ public:
     }
 
     /**
-     * @brief Returns a const reference to the managed object deleter.
+     * @brief Returns a const reference to the object which disposes the managed object
+     * when the unique_ptr goes out of scope.
      */
     [[nodiscard]] constexpr const Deleter& get_deleter() const
     {
@@ -151,7 +174,8 @@ public:
     }
 
     /**
-     * @brief Returns a reference to the managed object deleter.
+     * @brief Returns a reference to the object which disposes the managed object
+     * when the unique_ptr goes out of scope.
      */
     [[nodiscard]] constexpr Deleter& get_deleter()
     {

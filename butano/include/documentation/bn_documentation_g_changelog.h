@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_20_2_0 20.2.0 (next release)
+ * @section changelog_20_2_0 20.2.0
  *
  * * Custom palette effects added. Check the `palettes` example to see how to apply them.
  * * bn::log_level and @ref BN_LOG_LEVEL added.

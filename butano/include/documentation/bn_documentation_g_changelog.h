@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_20_3_0 20.3.0 (next release)
+ *
+ * bn::unique_ptr doesn't call the deleter if it doesn't contain a managed object.
+ *
+ *
  * @section changelog_20_2_0 20.2.0
  *
  * * Custom palette effects added. Check the `palettes` example to see how to apply them.

@@ -214,8 +214,11 @@ public:
      */
     constexpr void reset()
     {
-        _deleter(_ptr);
-        _ptr = nullptr;
+        if(_ptr)
+        {
+            _deleter(_ptr);
+            _ptr = nullptr;
+        }
     }
 
     /**

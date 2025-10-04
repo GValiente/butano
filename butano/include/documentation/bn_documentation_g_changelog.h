@@ -16,6 +16,7 @@
  *
  * * bn::unique_ptr constructors with a deleter added.
  * * bn::unique_ptr doesn't call the deleter if it doesn't contain a managed object.
+ * * bn::unordered_map and bn::unordered_set documentation improved.
  *
  *
  * @section changelog_20_2_0 20.2.0

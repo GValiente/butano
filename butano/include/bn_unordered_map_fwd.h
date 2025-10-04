@@ -22,7 +22,7 @@ namespace bn
      *
      * Can be used as a reference type for all bn::unordered_map containers containing a specific type.
      *
-     * Unlike `std::unordered_map`, it doesn't offer pointer stability when moving or erasing elements.
+     * Unlike `std::unordered_map`, it doesn't offer pointer stability when inserting, assigning or erasing elements.
      *
      * @tparam Key Key type.
      * @tparam Value Value type.
@@ -39,7 +39,7 @@ namespace bn
      *
      * It doesn't throw exceptions. Instead, asserts are used to ensure valid usage.
      *
-     * Unlike `std::unordered_map`, it doesn't offer pointer stability when moving or erasing elements.
+     * Unlike `std::unordered_map`, it doesn't offer pointer stability when inserting, assigning or erasing elements.
      *
      * @tparam Key Key type.
      * @tparam Value Value type.

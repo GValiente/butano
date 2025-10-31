@@ -51,6 +51,16 @@
  * `TARGET := $(notdir $(CURDIR))_mb`
  *
  *
+ * @subsection faq_donate Is there any way to donate to Butano?
+ *
+ * Yes, you can make cool games with it and share them with your friends :)
+ *
+ * You also can:
+ * * Make good bug reports.
+ * * Help newbies.
+ * * Show cool splash screens in your games to say they were made with Butano.
+ *
+ *
  * @section faq_programming Programming
  *
  *

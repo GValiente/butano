@@ -53,7 +53,7 @@
  *
  * @subsection faq_donate Is there any way to donate to Butano?
  *
- * Yes, you can make cool games with it and share them with your friends :)
+ * Yes, you can make games with it and share them with your friends :)
  *
  * You also can:
  * * Make good bug reports.

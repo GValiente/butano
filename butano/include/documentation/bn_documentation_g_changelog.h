@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_20_3_0 20.3.0 (next release)
+ * @section changelog_20_3_0 20.3.0
  *
  * * bn::unique_ptr constructors with a deleter added.
  * * bn::unique_ptr doesn't call the deleter if it doesn't contain a managed object.

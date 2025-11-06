@@ -230,4 +230,3 @@ def process_aas_audio(tool, audio_file_paths, audio_file_names_no_ext, build_fol
     write_output_files(audio_file_paths, audio_file_names_no_ext, tool_output, soundbank_header_path, temp_folder_path,
                        build_folder_path)
     os.remove(soundbank_header_path)
-    print('    Processed audio size: ' + str(os.path.getsize(soundbank_bin_path)) + ' bytes')

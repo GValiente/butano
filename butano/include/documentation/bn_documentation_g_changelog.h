@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_20_3_1 20.3.1 (next release)
+ *
+ * <a href="https://github.com/stuij/apex-audio-system">AAS</a> processed audio size log removed since it was broken.
+ *
+ *
  * @section changelog_20_3_0 20.3.0
  *
  * * bn::unique_ptr constructors with a deleter added.
@@ -91,7 +96,7 @@
  * * bn::ivector::insert, bn::ilist::insert and bn::iforward_list::insert_after overloads added.
  * * @ref BN_CFG_SPRITES_USE_IWRAM added.
  * * Import tool now checks if all input audio files have been imported or not.
- * * Release sounds from aas queue fixed.
+ * * Release sounds from <a href="https://github.com/stuij/apex-audio-system">AAS</a> queue fixed.
  * * @ref faq_sprites_sort_layers question added to the @ref faq page.
  *
  *

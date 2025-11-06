@@ -246,6 +246,10 @@ to your opponent's base, then place tiles on their base to damage them.
 
 ![](docs_tools/images/gba-niccc_1.png) ![](docs_tools/images/gba-niccc_2.png)
 
+* [RR Project](https://gvaliente.itch.io/rr-project): WIP 3D racing game using flat shading.
+
+![](docs_tools/images/rr_project_1.png) ![](docs_tools/images/rr_project_2.png)
+
 
 ## More Butano related stuff
 

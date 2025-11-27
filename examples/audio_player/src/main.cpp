@@ -454,7 +454,17 @@ int main()
 
     bn::vector<bn::sprite_ptr, 16> static_sprites;
     text_generator.set_center_alignment();
-    text_generator.generate(0, title_y, "AUDIO PLAYER", static_sprites);
+
+    #ifdef BN_AUDIO_BACKEND_MAXMOD
+        text_generator.generate(0, title_y, "MAXMOD AUDIO PLAYER", static_sprites);
+    #else
+        #ifdef BN_AUDIO_BACKEND_AAS
+            text_generator.generate(0, title_y, "AAS AUDIO PLAYER", static_sprites);
+        #else
+            text_generator.generate(0, title_y, "AUDIO PLAYER", static_sprites);
+        #endif
+    #endif
+
     text_generator.generate(0, music_title_y, "MUSIC", static_sprites);
     text_generator.generate(0, sound_title_y, "SOUND", static_sprites);
 

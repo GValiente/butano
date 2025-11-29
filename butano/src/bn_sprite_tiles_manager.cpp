@@ -885,7 +885,7 @@ int create(const span<const tile>& tiles_ref, compression_type compression)
     {
         _insert_items_map_item(tiles_data, result);
 
-        BN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
+        BN_SPRITE_TILES_LOG("CREATED. start_tile: ", data_ref().items.item(result).start_tile);
         BN_SPRITE_TILES_LOG_STATUS();
     }
     else
@@ -917,7 +917,7 @@ int allocate(int tiles_count, bpp_mode bpp)
 
     if(result >= 0)
     {
-        BN_SPRITE_TILES_LOG("ALLOCATED. start_tile: ", data.items.item(result).start_tile);
+        BN_SPRITE_TILES_LOG("ALLOCATED. start_tile: ", data_ref().items.item(result).start_tile);
         BN_SPRITE_TILES_LOG_STATUS();
     }
     else
@@ -957,7 +957,7 @@ int create_optional(const span<const tile>& tiles_ref, compression_type compress
     {
         _insert_items_map_item(tiles_data, result);
 
-        BN_SPRITE_TILES_LOG("CREATED. start_tile: ", data.items.item(result).start_tile);
+        BN_SPRITE_TILES_LOG("CREATED. start_tile: ", data_ref().items.item(result).start_tile);
         BN_SPRITE_TILES_LOG_STATUS();
     }
     else
@@ -979,7 +979,7 @@ int allocate_optional(int tiles_count, bpp_mode bpp)
 
     if(result >= 0)
     {
-        BN_SPRITE_TILES_LOG("ALLOCATED. start_tile: ", data.items.item(result).start_tile);
+        BN_SPRITE_TILES_LOG("ALLOCATED. start_tile: ", data_ref().items.item(result).start_tile);
         BN_SPRITE_TILES_LOG_STATUS();
     }
     else

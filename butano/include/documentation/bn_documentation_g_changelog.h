@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_20_3_2 20.3.2 (next release)
+ *
+ * @ref BN_CFG_SPRITE_TILES_LOG_ENABLED and @ref BN_CFG_BG_BLOCKS_LOG_ENABLED fixed.
+ *
+ *
  * @section changelog_20_3_1 20.3.1
  *
  * * <a href="https://github.com/stuij/apex-audio-system">AAS</a> processed audio size log removed since it was broken.

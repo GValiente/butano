@@ -1529,7 +1529,7 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
 
     if(result >= 0)
     {
-        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data_ref().items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -1577,7 +1577,7 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
 
     if(result >= 0)
     {
-        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data_ref().items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -1630,7 +1630,7 @@ int create_regular_map(const regular_bg_map_item& map_item, const regular_bg_map
 
     if(result >= 0)
     {
-        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG("CREATED. start_block: ", data_ref().items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -1732,7 +1732,7 @@ int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
 
     if(result >= 0)
     {
-        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data_ref().items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -1769,7 +1769,7 @@ int allocate_affine_tiles(int tiles_count, bool optional)
 
     if(result >= 0)
     {
-        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data_ref().items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -1812,7 +1812,7 @@ int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tile
 
     if(result >= 0)
     {
-        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data_ref().items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else
@@ -1857,7 +1857,7 @@ int allocate_affine_map(const size& map_dimensions, affine_bg_tiles_ptr&& tiles,
 
     if(result >= 0)
     {
-        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data.items.item(result).start_block);
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data_ref().items.item(result).start_block);
         BN_BG_BLOCKS_LOG_STATUS();
     }
     else

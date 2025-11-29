@@ -12,10 +12,10 @@
  * @tableofcontents
  *
  *
- * @section changelog_20_3_1 20.3.1 (next release)
+ * @section changelog_20_3_1 20.3.1
  *
  * * <a href="https://github.com/stuij/apex-audio-system">AAS</a> processed audio size log removed since it was broken.
- * * The `audio_player` example shows the audio backend.
+ * * `audio_player` example shows the audio backend.
  * * <a href="https://gvaliente.itch.io/rr-project">RR Project</a> added to `README.md`.
  *
  *

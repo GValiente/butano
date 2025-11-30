@@ -968,6 +968,71 @@ int allocate_optional(int tiles_count, bpp_mode bpp)
     return result;
 }
 
+int allocate_first_half()
+{
+    BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE FIRST HALF");
+
+    static_data& data = data_ref();
+    int id = -1;
+
+    if(! data.delay_commit)
+    {
+        auto item_it = data.items.begin();
+        item_type& item = *item_it;
+
+        if(item.status() == status_type::FREE)
+        {
+            int tiles_count = hw::sprite_tiles::tiles_count() / 2;
+            int new_item_tiles_count = int(item.tiles_count) - tiles_count;
+
+            if(new_item_tiles_count >= 0)
+            {
+                id = item_it.id();
+
+                for(auto free_items_it = data.free_items.begin(), free_items_end = data.free_items.end();
+                        free_items_it != free_items_end; ++free_items_it)
+                {
+                    if(*free_items_it == id)
+                    {
+                        data.free_items.erase(free_items_it);
+                        break;
+                    }
+                }
+
+                data.free_tiles_count -= tiles_count;
+
+                item.data = nullptr;
+                item.set_compression(compression_type::NONE);
+                item.tiles_count = uint16_t(tiles_count);
+                item.usages = 1;
+                item.set_status(status_type::USED);
+
+                if(new_item_tiles_count)
+                {
+                    item_type new_item;
+                    new_item.start_tile = item.tiles_count;
+                    new_item.tiles_count = uint16_t(new_item_tiles_count);
+
+                    auto new_item_iterator = data.items.insert(item.next_index, new_item);
+                    _insert_free_item(new_item_iterator.id());
+                }
+            }
+        }
+    }
+
+    if(id >= 0)
+    {
+        BN_SPRITE_TILES_LOG("ALLOCATED: ", data.items.item(id).start_tile);
+        BN_SPRITE_TILES_LOG_STATUS();
+    }
+    else
+    {
+        BN_SPRITE_TILES_LOG("NOT ALLOCATED");
+    }
+
+    return id;
+}
+
 void increase_usages(int id)
 {
     item_type& item = data_ref().items.item(id);

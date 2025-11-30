@@ -715,10 +715,11 @@ namespace
             {
                 int id = *free_items_it;
                 int new_item_id = _create_item(id, tiles_data, compression, tiles_count, data.delay_commit);
+                data.free_items.erase(free_items_it);
 
-                if(id == new_item_id)
+                if(id != new_item_id) [[likely]]
                 {
-                    data.free_items.erase(free_items_it);
+                    _insert_free_item(id);
                 }
 
                 return new_item_id;
@@ -754,10 +755,11 @@ namespace
             {
                 int id = *free_items_it;
                 int new_item_id = _create_item(id, nullptr, compression_type::NONE, tiles_count, false);
+                data.free_items.erase(free_items_it);
 
-                if(id == new_item_id)
+                if(id != new_item_id) [[likely]]
                 {
-                    data.free_items.erase(free_items_it);
+                    _insert_free_item(id);
                 }
 
                 return new_item_id;

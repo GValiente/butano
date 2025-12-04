@@ -14,7 +14,8 @@
  *
  * @section changelog_21_0_0 21.0.0 (next release)
  *
- * Sprite tiles are allocated at the end of VRAM.
+ * * Palette bitmap backgrounds support.
+ * * Sprite tiles are allocated at the end of VRAM.
  *
  *
  * @section changelog_20_3_2 20.3.2

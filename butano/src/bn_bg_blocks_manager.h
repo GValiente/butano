@@ -88,6 +88,8 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] int allocate_affine_tiles(int tiles_count, bool optional);
 
+    [[nodiscard]] int allocate_all_affine_tiles(bool optional);
+
     [[nodiscard]] int allocate_regular_map(const size& map_dimensions, regular_bg_tiles_ptr&& tiles,
                                            bg_palette_ptr&& palette, bool optional);
 

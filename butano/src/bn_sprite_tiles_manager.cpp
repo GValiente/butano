@@ -970,9 +970,16 @@ int allocate_optional(int tiles_count, bpp_mode bpp)
     return result;
 }
 
-int allocate_first_half()
+int allocate_first_half(bool optional)
 {
-    BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE FIRST HALF");
+    if(optional)
+    {
+        BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE FIRST HALF OPTIONAL");
+    }
+    else
+    {
+        BN_SPRITE_TILES_LOG("sprite_tiles_manager - ALLOCATE FIRST HALF");
+    }
 
     static_data& data = data_ref();
     int id = -1;
@@ -1030,6 +1037,17 @@ int allocate_first_half()
     else
     {
         BN_SPRITE_TILES_LOG("NOT ALLOCATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+            #endif
+
+            BN_ERROR("Sprite tiles first half allocate failed.",
+                     "\n\nThere's no more available VRAM.",
+                     _status_log_message);
+        }
     }
 
     return id;

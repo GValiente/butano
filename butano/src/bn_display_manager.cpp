@@ -9,7 +9,6 @@
 #include "bn_mosaic_attributes.h"
 #include "bn_bgs_manager.h"
 #include "bn_sprites_manager.h"
-#include "../hw/include/bn_hw_bgs.h"
 #include "../hw/include/bn_hw_display.h"
 
 #include "bn_window.cpp.h"
@@ -51,6 +50,7 @@ namespace
         uint8_t mode = 0;
         bool commit = true;
         bool commit_display = true;
+        bool bitmap_page_flipped = false;
         bool sprites_visible = true;
         bool green_swap_enabled = false;
         bool update_mosaic = true;
@@ -145,6 +145,25 @@ void set_mode(int mode)
         data.commit_display = true;
         data.commit = true;
     }
+}
+
+uint16_t* bitmap_page()
+{
+    return hw::display::hidden_bitmap_page();
+}
+
+void flip_bitmap_page()
+{
+    static_data& data = data_ref();
+    data.bitmap_page_flipped = ! data.bitmap_page_flipped;
+    data.commit_display = true;
+    data.commit = true;
+}
+
+void flip_bitmap_page_now()
+{
+    flip_bitmap_page();
+    hw::display::flip_bitmap_page();
 }
 
 bool sprites_visible()
@@ -1049,8 +1068,8 @@ void update()
 
         if(data.commit_display)
         {
-            hw::display::set_display(
-                    data.mode, data.sprites_visible, data.enabled_bgs, data.inside_windows_enabled, data.display_cnt);
+            hw::display::set_display(data.mode, data.bitmap_page_flipped, data.sprites_visible, data.enabled_bgs,
+                                     data.inside_windows_enabled, data.display_cnt);
         }
 
         if(data.update_mosaic)

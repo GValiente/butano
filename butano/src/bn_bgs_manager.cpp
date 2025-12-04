@@ -13,6 +13,7 @@
 #include "bn_config_bgs.h"
 #include "bn_display_manager.h"
 #include "bn_bg_blocks_manager.h"
+#include "bn_sprite_tiles_manager.h"
 #include "bn_affine_bg_mat_attributes.h"
 #include "bn_affine_mat_attributes_reader.h"
 #include "../hw/include/bn_hw_bgs.h"
@@ -27,6 +28,9 @@
 #include "bn_regular_bg_item.cpp.h"
 #include "bn_regular_bg_builder.cpp.h"
 #include "bn_regular_bg_attributes.cpp.h"
+#include "bn_bitmap_bg_attributes.cpp.h"
+#include "bn_palette_bitmap_bg_ptr.cpp.h"
+#include "bn_palette_bitmap_bg_builder.cpp.h"
 
 namespace bn::bgs_manager
 {
@@ -102,6 +106,31 @@ namespace
             [[maybe_unused]] bool affine_mat_attributes_updated = update_affine_map(true);
         }
 
+        explicit item_type(palette_bitmap_bg_builder&& builder) :
+            position(builder.position()),
+            affine_mat_attributes(
+                    (builder.camera() ? position - builder.camera()->position() : position),
+                    palette_bitmap_bg_ptr::dimensions() / 2, builder.pivot_position(), builder.mat_attributes()),
+            half_dimensions(palette_bitmap_bg_ptr::dimensions() / 2),
+            bg_sort_key(builder.priority(), 0),
+            camera(builder.release_camera()),
+            blending_top_enabled(builder.blending_top_enabled()),
+            blending_bottom_enabled(builder.blending_bottom_enabled()),
+            visible(builder.visible()),
+            big_map(false),
+            commit_big_map(false),
+            full_commit_big_map(false)
+        {
+            for(bool& visible_in_window : visible_in_windows)
+            {
+                visible_in_window = true;
+            }
+
+            hw::bgs::setup_palette_bitmap(builder, hw_cnt);
+
+            [[maybe_unused]] bool affine_mat_attributes_updated = update_affine_map(true);
+        }
+
         void update_regular_map()
         {
             const regular_bg_map_ptr& map_ref = *regular_map;
@@ -138,50 +167,53 @@ namespace
 
         [[nodiscard]] bool update_affine_map(bool force_affine_mat_attributes_update)
         {
-            const affine_bg_map_ptr& map_ref = *affine_map;
-            uint16_t new_hw_cnt = hw_cnt;
-            hw::bgs::set_tiles_cbb(map_ref.tiles().cbb(), new_hw_cnt);
-            hw::bgs::set_map_sbb(map_ref.id(), new_hw_cnt);
-
-            size map_dimensions = map_ref.dimensions();
-            int map_size;
-            big_map = map_ref.big();
-
-            if(big_map)
+            if(const affine_bg_map_ptr* map_ptr = affine_map.get())
             {
-                map_size = int(map_ref.big_canvas_size()) + 1;
-            }
-            else
-            {
-                switch(map_dimensions.width())
+                uint16_t new_hw_cnt = hw_cnt;
+                hw::bgs::set_tiles_cbb(map_ptr->tiles().cbb(), new_hw_cnt);
+                hw::bgs::set_map_sbb(map_ptr->id(), new_hw_cnt);
+                size map_dimensions = map_ptr->dimensions();
+                big_map = map_ptr->big();
+
+                int map_size;
+
+                if(big_map)
                 {
-
-                case 16:
-                    map_size = 0;
-                    break;
-
-                case 32:
-                    map_size = 1;
-                    break;
-
-                case 64:
-                    map_size = 2;
-                    break;
-
-                case 128:
-                default:
-                    map_size = 3;
-                    break;
+                    map_size = int(map_ptr->big_canvas_size()) + 1;
                 }
-            }
+                else
+                {
+                    switch(map_dimensions.width())
+                    {
 
-            commit_big_map = big_map;
-            full_commit_big_map = big_map;
+                    case 16:
+                        map_size = 0;
+                        break;
+
+                    case 32:
+                        map_size = 1;
+                        break;
+
+                    case 64:
+                        map_size = 2;
+                        break;
+
+                    case 128:
+                    default:
+                        map_size = 3;
+                        break;
+                    }
+                }
+
+                commit_big_map = big_map;
+                full_commit_big_map = big_map;
+
+                hw::bgs::set_map_dimensions(map_size, new_hw_cnt);
+                half_dimensions = map_dimensions * 4;
+                hw_cnt = new_hw_cnt;
+            }
 
             bool affine_mat_attributes_updated;
-            hw::bgs::set_map_dimensions(map_size, new_hw_cnt);
-            hw_cnt = new_hw_cnt;
-            half_dimensions = map_dimensions * 4;
 
             if(force_affine_mat_attributes_update)
             {
@@ -307,6 +339,9 @@ namespace
         pool<item_type, BN_CFG_BGS_MAX_ITEMS> items_pool;
         vector<item_type*, BN_CFG_BGS_MAX_ITEMS> items_vector;
         hw::bgs::commit_data commit_data;
+        int bitmap_affine_bg_tiles_handle = -1;
+        int bitmap_sprite_tiles_handle = -1;
+        optional<bg_palette_ptr> bitmap_palette;
         bool rebuild_handles = false;
         bool commit = false;
     };
@@ -354,22 +389,26 @@ namespace
     void _insert_item(item_type& new_item)
     {
         static_data& data = data_ref();
-        sort_key bg_sort_key = new_item.bg_sort_key;
-        bool affine_new_item = new_item.affine_map.has_value();
 
         if(new_item.visible)
         {
             data.rebuild_handles = true;
         }
 
-        for(auto it = data.items_vector.begin(), end = data.items_vector.end(); it != end; ++it)
+        if(! data.items_vector.empty())
         {
-            const item_type* item = *it;
+            sort_key bg_sort_key = new_item.bg_sort_key;
+            bool affine_new_item = new_item.affine_map.has_value();
 
-            if((affine_new_item && ! item->affine_map) || bg_sort_key > item->bg_sort_key)
+            for(auto it = data.items_vector.begin(), end = data.items_vector.end(); it != end; ++it)
             {
-                data.items_vector.insert(it, &new_item);
-                return;
+                const item_type* item = *it;
+
+                if((affine_new_item && ! item->affine_map) || bg_sort_key > item->bg_sort_key)
+                {
+                    data.items_vector.insert(it, &new_item);
+                    return;
+                }
             }
         }
 
@@ -501,6 +540,20 @@ id_type create(affine_bg_builder&& builder)
     return &item;
 }
 
+id_type create(palette_bitmap_bg_builder&& builder)
+{
+    static_data& data = data_ref();
+    BN_BASIC_ASSERT(data.items_vector.empty(), "There are other BG items");
+
+    data.bitmap_affine_bg_tiles_handle = bg_blocks_manager::allocate_all_affine_tiles(false);
+    data.bitmap_sprite_tiles_handle = sprite_tiles_manager::allocate_first_half(false);
+    data.bitmap_palette = builder.release_palette();
+
+    item_type& item = data.items_pool.create(move(builder));
+    _insert_item(item);
+    return &item;
+}
+
 id_type create_optional(regular_bg_builder&& builder)
 {
     static_data& data = data_ref();
@@ -549,6 +602,48 @@ id_type create_optional(affine_bg_builder&& builder)
     return &item;
 }
 
+id_type create_optional(palette_bitmap_bg_builder&& builder)
+{
+    static_data& data = data_ref();
+
+    if(! data.items_vector.empty())
+    {
+        return nullptr;
+    }
+
+    int affine_bg_tiles_handle = bg_blocks_manager::allocate_all_affine_tiles(true);
+
+    if(affine_bg_tiles_handle == -1)
+    {
+        return nullptr;
+    }
+
+    int sprite_tiles_handle = sprite_tiles_manager::allocate_first_half(true);
+
+    if(sprite_tiles_handle == -1)
+    {
+        bg_blocks_manager::decrease_usages(affine_bg_tiles_handle);
+        return nullptr;
+    }
+
+    optional<bg_palette_ptr> palette = builder.release_palette_optional();
+
+    if(! palette)
+    {
+        bg_blocks_manager::decrease_usages(affine_bg_tiles_handle);
+        sprite_tiles_manager::decrease_usages(sprite_tiles_handle);
+        return nullptr;
+    }
+
+    data.bitmap_affine_bg_tiles_handle = affine_bg_tiles_handle;
+    data.bitmap_sprite_tiles_handle = sprite_tiles_handle;
+    data.bitmap_palette = move(palette);
+
+    item_type& item = data.items_pool.create(move(builder));
+    _insert_item(item);
+    return &item;
+}
+
 void increase_usages(id_type id)
 {
     auto item = static_cast<item_type*>(id);
@@ -571,6 +666,17 @@ void decrease_usages(id_type id)
 
         erase(data.items_vector, item);
         data.items_pool.destroy(*item);
+
+        if(data.bitmap_affine_bg_tiles_handle != -1)
+        {
+            bg_blocks_manager::decrease_usages(data.bitmap_affine_bg_tiles_handle);
+            data.bitmap_affine_bg_tiles_handle = -1;
+
+            sprite_tiles_manager::decrease_usages(data.bitmap_sprite_tiles_handle);
+            data.bitmap_sprite_tiles_handle = -1;
+
+            data.bitmap_palette.reset();
+        }
     }
 }
 
@@ -684,6 +790,21 @@ void remove_affine_map(id_type id)
 {
     auto item = static_cast<item_type*>(id);
     item->affine_map.reset();
+}
+
+const bg_palette_ptr& bitmap_palette()
+{
+    return *data_ref().bitmap_palette;
+}
+
+void set_bitmap_palette(const bg_palette_ptr& palette)
+{
+    data_ref().bitmap_palette = palette;
+}
+
+void set_bitmap_palette(bg_palette_ptr&& palette)
+{
+    data_ref().bitmap_palette = move(palette);
 }
 
 const fixed_point& position(id_type id)
@@ -1278,6 +1399,11 @@ affine_bg_attributes affine_attributes(id_type id)
                                 green_swap_mode(id));
 }
 
+bitmap_bg_attributes bitmap_attributes(id_type id)
+{
+    return bitmap_bg_attributes(priority(id), mosaic_enabled(id), green_swap_mode(id));
+}
+
 void set_regular_attributes(id_type id, const regular_bg_attributes& attributes)
 {
     set_regular_map(id, attributes.map());
@@ -1291,6 +1417,13 @@ void set_affine_attributes(id_type id, const affine_bg_attributes& attributes)
     set_affine_map(id, attributes.map());
     set_priority(id, attributes.priority());
     set_wrapping_enabled(id, attributes.wrapping_enabled());
+    set_mosaic_enabled(id, attributes.mosaic_enabled());
+    set_green_swap_mode(id, attributes.green_swap_mode());
+}
+
+void set_bitmap_attributes(id_type id, const bitmap_bg_attributes& attributes)
+{
+    set_priority(id, attributes.priority());
     set_mosaic_enabled(id, attributes.mosaic_enabled());
     set_green_swap_mode(id, attributes.green_swap_mode());
 }
@@ -1630,23 +1763,35 @@ void rebuild_handles()
 
     if(data.rebuild_handles)
     {
-        int affine_bgs_count = 0;
+        bool bitmap_palette = data.bitmap_palette.has_value();
+        int affine_bgs_count;
         data.rebuild_handles = false;
         data.commit = true;
 
-        for(item_type* item : data.items_vector)
+        if(bitmap_palette)
         {
-            if(item->affine_map && item->visible)
-            {
-                ++affine_bgs_count;
-            }
+            affine_bgs_count = 1;
+            display_manager::set_mode(4);
         }
+        else
+        {
+            affine_bgs_count = 0;
 
-        BN_BASIC_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too many affine BGs on screen");
+            for(item_type* item : data.items_vector)
+            {
+                if(item->affine_map && item->visible)
+                {
+                    ++affine_bgs_count;
+                }
+            }
+
+            BN_BASIC_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too many affine BGs on screen");
+
+            display_manager::set_mode(affine_bgs_count);
+        }
 
         int regular_id;
         int affine_id;
-        display_manager::set_mode(affine_bgs_count);
         display_manager::disable_all_bgs();
         display_manager::update_windows_visible_bgs();
 
@@ -1675,7 +1820,7 @@ void rebuild_handles()
             {
                 int id;
 
-                if(item->affine_map)
+                if(bitmap_palette || item->affine_map)
                 {
                     id = affine_id;
                     --affine_id;

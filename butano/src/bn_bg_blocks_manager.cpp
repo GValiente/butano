@@ -521,6 +521,7 @@ namespace
         compression_type compression;
         bool is_big;
         bool is_affine;
+        bool check_padding;
 
         static create_data from_regular_tiles(const uint16_t* data_ptr, int half_words, bpp_mode bpp,
                                               compression_type compression)
@@ -530,7 +531,7 @@ namespace
                         create_type::REGULAR_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
 
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
-                        create_type, bpp, compression, false, false };
+                        create_type, bpp, compression, false, false, true };
         }
 
         static create_data from_affine_tiles(const uint16_t* data_ptr, int half_words, compression_type compression)
@@ -540,7 +541,17 @@ namespace
                         create_type::AFFINE_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
 
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
-                        create_type, bpp_mode::BPP_8, compression, false, true };
+                        create_type, bpp_mode::BPP_8, compression, false, true, true };
+        }
+
+        static create_data from_all_affine_tiles(int half_words)
+        {
+            int blocks_count = _ceil_half_words_to_blocks(half_words);
+            create_type create_type = create_type::TILES_WITHOUT_OFFSET;
+            compression_type compression = compression_type::NONE;
+
+            return create_data{ nullptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
+                        create_type, bpp_mode::BPP_8, compression, false, true, false };
         }
 
         static create_data from_regular_map(
@@ -553,7 +564,7 @@ namespace
             bpp_mode bpp = palette.bpp();
 
             return create_data{ data_ptr, blocks_count, width, height, move(tiles), nullopt, move(palette),
-                        create_type::MAP, bpp, compression, big, false };
+                        create_type::MAP, bpp, compression, big, false, false };
         }
 
         static create_data from_affine_map(
@@ -566,16 +577,16 @@ namespace
             bpp_mode bpp = palette.bpp();
 
             return create_data{ data_ptr, blocks_count, width, height, nullopt, move(tiles), move(palette),
-                        create_type::MAP, bpp, compression, big, true };
+                        create_type::MAP, bpp, compression, big, true, false };
         }
 
         [[nodiscard]] int padding_blocks_count(int start_block) const
         {
-            create_type create_type = _create_type;
             int result = 0;
 
-            if(create_type != create_type::MAP)
+            if(check_padding)
             {
+                create_type create_type = _create_type;
                 int alignment_blocks_count = hw::bg_blocks::tiles_alignment_blocks_count();
                 int extra_blocks_count = start_block % alignment_blocks_count;
 
@@ -1784,6 +1795,40 @@ int allocate_affine_tiles(int tiles_count, bool optional)
 
             BN_ERROR("Affine BG tiles allocate failed:"
                      "\n\tTiles count: ", tiles_count,
+                     "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
+                     "\n\nThere's no more available VRAM.",
+                     _status_log_message);
+        }
+    }
+
+    return result;
+}
+
+int allocate_all_affine_tiles(bool optional)
+{
+    int half_words = _blocks_to_half_words(hw::bg_maps::blocks_count());
+
+    BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE ALL AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
+                     _ceil_half_words_to_blocks(half_words));
+
+    int result = _allocate_impl(create_data::from_all_affine_tiles(half_words));
+
+    if(result >= 0)
+    {
+        BN_BG_BLOCKS_LOG("ALLOCATED. start_block: ", data_ref().items.item(result).start_block);
+        BN_BG_BLOCKS_LOG_STATUS();
+    }
+    else
+    {
+        BN_BG_BLOCKS_LOG("NOT ALLOCATED");
+
+        if(! optional)
+        {
+            #if BN_CFG_LOG_ENABLED
+                log_status();
+            #endif
+
+            BN_ERROR("All affine BG tiles allocate failed:"
                      "\n\tBlocks count: ", _ceil_half_words_to_blocks(half_words),
                      "\n\nThere's no more available VRAM.",
                      _status_log_message);

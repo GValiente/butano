@@ -24,10 +24,7 @@ namespace bn
 class regular_bg_ptr;
 
 /**
- * @brief Creates regular_bg_map_ptr objects with custom attributes.
- *
- * If some of the attributes of the regular background to create differs from the default ones,
- * using this class improves performance.
+ * @brief Creates regular_bg_ptr objects with custom attributes.
  *
  * @ingroup regular_bg
  */
@@ -520,4 +517,3 @@ private:
 }
 
 #endif
-

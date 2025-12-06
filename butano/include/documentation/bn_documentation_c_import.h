@@ -531,7 +531,7 @@
  * and music files played with DMG channels go into the `dmg_audio` folder.
  *
  * By default, Direct Sound stuff is managed by the awesome
- * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>, so if you have an issue
+ * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>, so if you have an issue
  * with Direct Sound music or with sound effects, well, you know.
  *
  * DMG channels are handled by the also impressive <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>
@@ -546,7 +546,7 @@
  *
  * The required format for Direct Sound music is module files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions.
  * If you're using <a href="https://github.com/stuij/apex-audio-system">Apex Audio System</a>
- * instead of the default audio backend (<a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>),
+ * instead of the default audio backend (<a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>),
  * only module files with `*.mod` extension are allowed.
  *
  * By default Butano supports up to 16 music channels,

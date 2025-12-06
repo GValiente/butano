@@ -635,7 +635,7 @@
  *
  * @subsection faq_audio_music_crash Why the game crashes when some Direct Sound songs are played?
  *
- * By default, Butano uses the excellent <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>
+ * By default, Butano uses the excellent <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>
  * library for Direct Sound audio support.
  *
  * It provides impressive performance and support for lots of module music formats,
@@ -655,7 +655,7 @@
  *
  * @subsection faq_audio_music_wav Why can't I use a long *.wav file as music?
  *
- * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a> doesn't allow to play
+ * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> doesn't allow to play
  * long `*.wav` files as music, unfortunately.
  *
  * The maximum length of sound samples is also small, so if you try to play a long `*.wav` file as a sound effect,

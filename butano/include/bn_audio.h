@@ -63,7 +63,7 @@ namespace bn::audio
     /**
      * @brief Indicates if audio events are registered or not.
      *
-     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
+     * See https://blocksds.skylyrac.net/maxmod/md_documentation_2using__song__events.html
      * for more information about audio events.
      */
     [[nodiscard]] bool event_handler_enabled();
@@ -71,7 +71,7 @@ namespace bn::audio
     /**
      * @brief Sets if audio events must be registered or not.
      *
-     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
+     * See https://blocksds.skylyrac.net/maxmod/md_documentation_2using__song__events.html
      * for more information about audio events.
      */
     void set_event_handler_enabled(bool enabled);
@@ -81,7 +81,7 @@ namespace bn::audio
      *
      * To register audio events, the event handler must be enabled with audio::set_event_handler_enabled.
      *
-     * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
+     * See https://blocksds.skylyrac.net/maxmod/md_documentation_2using__song__events.html
      * for more information about audio events.
      */
     [[nodiscard]] span<uint8_t> event_ids();

@@ -16,6 +16,7 @@
  *
  * * Palette bitmap backgrounds support.
  * * Sprite tiles are allocated at the end of VRAM.
+ * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> links updated.
  *
  *
  * @section changelog_20_3_2 20.3.2
@@ -51,7 +52,7 @@
  * * bn::fixed::shift_integer, bn::fixed::shift_multiplication, bn::fixed::unsafe_shift_multiplication,
  *   bn::fixed::unsafe_shift_multiplication, bn::fixed::shift_division and bn::fixed::unsafe_shift_division added.
  * * bn::fixed::left_shift and bn::fixed::right_shift added.
- * * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a> updated to 1.14.0.
+ * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> updated to 1.14.0.
  * * bn::best_fit_allocator alignment increased from 4 to 8 bytes.
  * * ROM usage reduced (thanks yeon!).
  * * bn::bg_maps and bn::bg_tiles documentation improved.
@@ -63,10 +64,10 @@
  * @section changelog_20_0_0 20.0.0
  *
  * * Butano now uses <a href="https://blocksds.skylyrac.net">BlocksDS's</a>
- *   <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod fork</a> for Direct Sound audio playback:
+ *   <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod fork</a> for Direct Sound audio playback:
  *   it provides new features, bug fixes and reduced IWRAM usage.
  * * Audio events support added. Check
- *   <a href="https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html">Maxmod documentation</a>
+ *   <a href="https://blocksds.skylyrac.net/maxmod/md_documentation_2using__song__events.html">Maxmod documentation</a>
  *   and the `audio` example to see how to insert and read audio events.
  * * bn::audio_mixing_rate, bn::audio::available_mixing_rates, bn::audio::mixing_rate and bn::audio::set_mixing_rate added.
  * * bn::jingle::pause, bn::jingle::resume and bn::jingle::stop added.

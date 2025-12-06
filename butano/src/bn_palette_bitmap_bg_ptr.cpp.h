@@ -6,19 +6,19 @@
 #include "bn_palette_bitmap_bg_ptr.h"
 
 #include "bn_window.h"
+#include "bn_bitmap_bg.h"
 #include "bn_bgs_manager.h"
 #include "bn_top_left_utils.h"
 #include "bn_display_manager.h"
 #include "bn_bitmap_bg_attributes.h"
 #include "bn_palette_bitmap_bg_builder.h"
-#include "../hw/include/bn_hw_bgs.h"
 
 namespace bn
 {
 
 size palette_bitmap_bg_ptr::dimensions()
 {
-    return size(hw::bgs::palette_bitmap_width(), hw::bgs::palette_bitmap_height());
+    return bitmap_bg::palette_size();
 }
 
 palette_bitmap_bg_ptr palette_bitmap_bg_ptr::create(const bg_palette_item& palette_item)
@@ -163,11 +163,15 @@ const bg_palette_ptr& palette_bitmap_bg_ptr::palette() const
 
 void palette_bitmap_bg_ptr::set_palette(const bg_palette_ptr& palette)
 {
+    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP bitmap backgrounds not supported");
+
     bgs_manager::set_bitmap_palette(palette);
 }
 
 void palette_bitmap_bg_ptr::set_palette(bg_palette_ptr&& palette)
 {
+    BN_ASSERT(palette.bpp() == bpp_mode::BPP_8, "4BPP bitmap backgrounds not supported");
+
     bgs_manager::set_bitmap_palette(move(palette));
 }
 

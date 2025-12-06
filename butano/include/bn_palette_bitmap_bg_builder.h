@@ -141,10 +141,7 @@ public:
      * @brief Returns the horizontal top-left position of the backgrounds to generate
      * (relative to their camera, if they are going to have one).
      */
-    [[nodiscard]] fixed top_left_x() const
-    {
-        return x();
-    }
+    [[nodiscard]] fixed top_left_x() const;
 
     /**
      * @brief Sets the horizontal top-left position of the backgrounds to generate
@@ -152,20 +149,13 @@ public:
      * @param top_left_x Horizontal top-left position of the backgrounds to generate.
      * @return Reference to this.
      */
-    palette_bitmap_bg_builder& set_top_left_x(fixed top_left_x)
-    {
-        set_x(top_left_x);
-        return *this;
-    }
+    palette_bitmap_bg_builder& set_top_left_x(fixed top_left_x);
 
     /**
      * @brief Returns the vertical top-left position of the backgrounds to generate
      * (relative to their camera, if they are going to have one).
      */
-    [[nodiscard]] fixed top_left_y() const
-    {
-        return y();
-    }
+    [[nodiscard]] fixed top_left_y() const;
 
     /**
      * @brief Sets the vertical top-left position of the backgrounds to generate
@@ -173,20 +163,13 @@ public:
      * @param top_left_y Vertical top-left position of the backgrounds to generate.
      * @return Reference to this.
      */
-    palette_bitmap_bg_builder& set_top_left_y(fixed top_left_y)
-    {
-        set_y(top_left_y);
-        return *this;
-    }
+    palette_bitmap_bg_builder& set_top_left_y(fixed top_left_y);
 
     /**
      * @brief Returns the top-left position of the backgrounds to generate
      * (relative to their camera, if they are going to have one).
      */
-    [[nodiscard]] fixed_point top_left_position() const
-    {
-        return position();
-    }
+    [[nodiscard]] fixed_point top_left_position() const;
 
     /**
      * @brief Sets the top-left position of the backgrounds to generate
@@ -195,11 +178,7 @@ public:
      * @param top_left_y Vertical top-left position of the backgrounds to generate.
      * @return Reference to this.
      */
-    palette_bitmap_bg_builder& set_top_left_position(fixed top_left_x, fixed top_left_y)
-    {
-        set_top_left_position(top_left_x, top_left_y);
-        return *this;
-    }
+    palette_bitmap_bg_builder& set_top_left_position(fixed top_left_x, fixed top_left_y);
 
     /**
      * @brief Sets the top-left position of the backgrounds to generate
@@ -207,11 +186,7 @@ public:
      * @param top_left_position Top-left position of the backgrounds to generate.
      * @return Reference to this.
      */
-    palette_bitmap_bg_builder& set_top_left_position(const fixed_point& top_left_position)
-    {
-        set_top_left_position(top_left_position);
-        return *this;
-    }
+    palette_bitmap_bg_builder& set_top_left_position(const fixed_point& top_left_position);
 
     /**
      * @brief Returns the rotation angle in degrees of the backgrounds to generate.

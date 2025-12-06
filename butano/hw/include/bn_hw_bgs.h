@@ -65,16 +65,6 @@ namespace bn::hw::bgs
         return 8;
     }
 
-    [[nodiscard]] constexpr int palette_bitmap_width()
-    {
-        return 240;
-    }
-
-    [[nodiscard]] constexpr int palette_bitmap_height()
-    {
-        return 160;
-    }
-
     inline void setup_regular(const regular_bg_builder& builder, uint16_t& cnt)
     {
         cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |

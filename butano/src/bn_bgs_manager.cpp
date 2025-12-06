@@ -10,6 +10,7 @@
 #include "bn_vector.h"
 #include "bn_display.h"
 #include "bn_sort_key.h"
+#include "bn_bitmap_bg.h"
 #include "bn_config_bgs.h"
 #include "bn_display_manager.h"
 #include "bn_bg_blocks_manager.h"
@@ -110,8 +111,8 @@ namespace
             position(builder.position()),
             affine_mat_attributes(
                     (builder.camera() ? position - builder.camera()->position() : position),
-                    palette_bitmap_bg_ptr::dimensions() / 2, builder.pivot_position(), builder.mat_attributes()),
-            half_dimensions(palette_bitmap_bg_ptr::dimensions() / 2),
+                    bitmap_bg::palette_size() / 2, builder.pivot_position(), builder.mat_attributes()),
+            half_dimensions(bitmap_bg::palette_size() / 2),
             bg_sort_key(builder.priority(), 0),
             camera(builder.release_camera()),
             blending_top_enabled(builder.blending_top_enabled()),

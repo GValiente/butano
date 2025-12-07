@@ -107,9 +107,18 @@ public:
     /**
      * @brief Fills the current page with the transparent color.
      */
-    void clear()
+    inline void clear()
     {
-        _bn::memory::unsafe_clear_half_words((_page_width * _page_height) / 2, _page);
+        _bn::memory::unsafe_clear_half_words(_page_size / 2, _page);
+    }
+
+    /**
+     * @brief Fills the current page with the given color.
+     * @param color_index Palette index of the color to fill the current page.
+     */
+    inline void fill(int color_index)
+    {
+        _bn::memory::unsafe_set_words(_quad8(color_index), _page_size / 4, _page);
     }
 
     /**
@@ -118,7 +127,7 @@ public:
      * @param y Vertical position of the pixel to plot.
      * @param color_index Palette index of the color to plot.
      */
-    void plot(int x, int y, uint8_t color_index)
+    inline void plot(int x, int y, int color_index)
     {
         uint16_t* dst = _page + (((y * _page_width) + x) >> 1);
 
@@ -133,13 +142,13 @@ public:
     }
 
     /**
-     * @brief Draws a colored horizontal line in the current page.
+     * @brief Draws an horizontal line in the current page.
      * @param x Horizontal position of the left pixel.
      * @param y Vertical position of the horizontal line.
      * @param width Horizontal line width in pixels.
-     * @param color_index Palette index of the color to plot.
+     * @param color_index Color palette index.
      */
-    void horizontal_line(int x, int y, int width, uint8_t color_index)
+    inline void horizontal_line(int x, int y, int width, int color_index)
     {
         auto dst_base = reinterpret_cast<uint8_t*>(_page);
         auto dst = reinterpret_cast<uint16_t*>(dst_base + (y * _page_width) + (x &~ 1));
@@ -167,16 +176,56 @@ public:
         }
     }
 
+    /**
+     * @brief Draws a vertical line in the current page.
+     * @param x Horizontal position of the vertical line.
+     * @param y Vertical position of the top pixel.
+     * @param height Vertical line height in pixels.
+     * @param color_index Color palette index.
+     */
+    inline void vertical_line(int x, int y, int height, int color_index)
+    {
+        auto dst_base = reinterpret_cast<uint8_t*>(_page);
+        auto dst = reinterpret_cast<uint16_t*>(dst_base + (y * _page_width) + (x &~ 1));
+
+        if(x & 1)
+        {
+            unsigned clr = color_index << 8;
+
+            while(height--)
+            {
+                *dst = (*dst & 0xFF) + clr;
+                dst += _half_page_width;
+            }
+        }
+        else
+        {
+            while(height--)
+            {
+                *dst = (*dst &~ 0xFF) + color_index;
+                dst += _half_page_width;
+            }
+        }
+    }
+
 private:
     static constexpr int _page_width = bitmap_bg::palette_width();
     static constexpr int _page_height = bitmap_bg::palette_height();
+    static constexpr int _page_size = _page_width * _page_height;
+    static constexpr int _half_page_width = _page_width / 2;
+    static constexpr int _half_page_height = _page_height / 2;
 
     palette_bitmap_bg_ptr _bg;
     uint16_t* _page;
 
-    [[nodiscard]] static uint16_t _dup8(uint8_t x)
+    [[nodiscard]] static inline uint16_t _dup8(int x)
     {
         return x | (x << 8);
+    }
+
+    [[nodiscard]] static inline unsigned _quad8(int x)
+    {
+        return x * 0x01010101;
     }
 };
 

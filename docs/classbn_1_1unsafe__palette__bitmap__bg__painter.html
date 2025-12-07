@@ -117,18 +117,29 @@
             </dt>
             <dd>Fills the current page with the transparent color.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a586ac019de0ed68d3f4f22f73623a56b" class="m-doc">plot</a>(</span><span class="m-doc-wrap">int x,
+              <span class="m-doc-wrap-bumper">void <a href="#aeba6d40ae2a11e0aa37aa15729268805" class="m-doc">fill</a>(</span><span class="m-doc-wrap">int color_index)</span>
+            </dt>
+            <dd>Fills the current page with the given color.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7e91fb12caf04485af504b04c8450293" class="m-doc">plot</a>(</span><span class="m-doc-wrap">int x,
               int y,
-              uint8_t color_index)</span>
+              int color_index)</span>
             </dt>
             <dd>Plots a pixel on the current page.</dd>
             <dt>
-              <span class="m-doc-wrap-bumper">void <a href="#a5f14fe493d076c030c99ede5034f2e36" class="m-doc">horizontal_line</a>(</span><span class="m-doc-wrap">int x,
+              <span class="m-doc-wrap-bumper">void <a href="#a725e7b3b51cee64398d020a491043038" class="m-doc">horizontal_line</a>(</span><span class="m-doc-wrap">int x,
               int y,
               int width,
-              uint8_t color_index)</span>
+              int color_index)</span>
             </dt>
-            <dd>Draws a colored horizontal line in the current page.</dd>
+            <dd>Draws an horizontal line in the current page.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7cee11c98625e63e2780728372907b7c" class="m-doc">vertical_line</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              int height,
+              int color_index)</span>
+            </dt>
+            <dd>Draws a vertical line in the current page.</dd>
           </dl>
         </section>
         <section>
@@ -214,11 +225,28 @@
             <p>Swaps the hidden frame buffer without waiting to the next <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</p>
 <p>Expect lack of vsync issues.</p>
           </div></section>
-          <section class="m-doc-details" id="a586ac019de0ed68d3f4f22f73623a56b"><div>
+          <section class="m-doc-details" id="aeba6d40ae2a11e0aa37aa15729268805"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />unsafe_palette_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a586ac019de0ed68d3f4f22f73623a56b" class="m-doc-self">plot</a>(</span><span class="m-doc-wrap">int x,
+              <span class="m-doc-wrap-bumper">void bn::<wbr />unsafe_palette_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aeba6d40ae2a11e0aa37aa15729268805" class="m-doc-self">fill</a>(</span><span class="m-doc-wrap">int color_index)</span></span>
+            </h3>
+            <p>Fills the current page with the given color.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">color_index</td>
+                  <td>Palette index of the color to fill the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7e91fb12caf04485af504b04c8450293"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />unsafe_palette_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7e91fb12caf04485af504b04c8450293" class="m-doc-self">plot</a>(</span><span class="m-doc-wrap">int x,
               int y,
-              uint8_t color_index)</span></span>
+              int color_index)</span></span>
             </h3>
             <p>Plots a pixel on the current page.</p>
             <table class="m-table m-fullwidth m-flat">
@@ -241,14 +269,14 @@
               </tbody>
             </table>
           </div></section>
-          <section class="m-doc-details" id="a5f14fe493d076c030c99ede5034f2e36"><div>
+          <section class="m-doc-details" id="a725e7b3b51cee64398d020a491043038"><div>
             <h3>
-              <span class="m-doc-wrap-bumper">void bn::<wbr />unsafe_palette_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5f14fe493d076c030c99ede5034f2e36" class="m-doc-self">horizontal_line</a>(</span><span class="m-doc-wrap">int x,
+              <span class="m-doc-wrap-bumper">void bn::<wbr />unsafe_palette_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a725e7b3b51cee64398d020a491043038" class="m-doc-self">horizontal_line</a>(</span><span class="m-doc-wrap">int x,
               int y,
               int width,
-              uint8_t color_index)</span></span>
+              int color_index)</span></span>
             </h3>
-            <p>Draws a colored horizontal line in the current page.</p>
+            <p>Draws an horizontal line in the current page.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -268,7 +296,39 @@
                 </tr>
                 <tr>
                   <td>color_index</td>
-                  <td>Palette index of the color to plot.</td>
+                  <td>Color palette index.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7cee11c98625e63e2780728372907b7c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />unsafe_palette_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7cee11c98625e63e2780728372907b7c" class="m-doc-self">vertical_line</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              int height,
+              int color_index)</span></span>
+            </h3>
+            <p>Draws a vertical line in the current page.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the vertical line.</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the top pixel.</td>
+                </tr>
+                <tr>
+                  <td>height</td>
+                  <td>Vertical line height in pixels.</td>
+                </tr>
+                <tr>
+                  <td>color_index</td>
+                  <td>Color palette index.</td>
                 </tr>
               </tbody>
             </table>

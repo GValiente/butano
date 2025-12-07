@@ -170,12 +170,12 @@ public:
     [[nodiscard]] uint16_t* page();
 
     /**
-     * @brief Swaps the hidden frame buffer in the next bn::core::update call.
+     * @brief Swaps the hidden frame buffer in the next core::update call.
      */
     void flip_page();
 
     /**
-     * @brief Swaps the hidden frame buffer without waiting to the next bn::core::update call.
+     * @brief Swaps the hidden frame buffer without waiting to the next core::update call.
      *
      * Expect lack of vsync issues.
      */

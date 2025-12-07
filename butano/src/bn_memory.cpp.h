@@ -105,6 +105,21 @@ void unsafe_clear_words(int words, void* destination)
     bn::hw::memory::set_words(0, words, destination);
 }
 
+void unsafe_set_bytes(uint8_t value, int bytes, void* destination)
+{
+    bn::hw::memory::set_bytes(value, bytes, destination);
+}
+
+void unsafe_set_half_words(uint16_t value, int half_words, void* destination)
+{
+    bn::hw::memory::set_half_words(value, half_words, destination);
+}
+
+void unsafe_set_words(unsigned value, int words, void* destination)
+{
+    bn::hw::memory::set_words(value, words, destination);
+}
+
 }
 
 

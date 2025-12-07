@@ -38,6 +38,12 @@ namespace _bn::memory
     void unsafe_clear_half_words(int half_words, void* destination);
 
     void unsafe_clear_words(int words, void* destination);
+
+    void unsafe_set_bytes(uint8_t value, int bytes, void* destination);
+
+    void unsafe_set_half_words(uint16_t value, int half_words, void* destination);
+
+    void unsafe_set_words(unsigned value, int words, void* destination);
 }
 
 /// @endcond

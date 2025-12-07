@@ -28,6 +28,7 @@ namespace
     {
 
     public:
+        void** bitmap_painter_page_ptr = nullptr;
         bool enabled_bgs[hw::bgs::count()] = {};
         fixed sprites_mosaic_horizontal_stretch;
         fixed sprites_mosaic_vertical_stretch;
@@ -164,6 +165,19 @@ void flip_bitmap_page_now()
 {
     flip_bitmap_page();
     hw::display::flip_bitmap_page();
+}
+
+void on_bitmap_painter_created(void** painter_page_ptr)
+{
+    static_data& data = data_ref();
+    BN_BASIC_ASSERT(! data.bitmap_painter_page_ptr, "There's an active bitmap painter.");
+
+    data.bitmap_painter_page_ptr = painter_page_ptr;
+}
+
+void on_bitmap_painter_destroyed()
+{
+    data_ref().bitmap_painter_page_ptr = nullptr;
 }
 
 bool sprites_visible()
@@ -1105,6 +1119,11 @@ void commit()
         {
             hw::display::commit_display(data.display_cnt);
             data.commit_display = false;
+
+            if(void** bitmap_painter_page_ptr = data.bitmap_painter_page_ptr)
+            {
+                *bitmap_painter_page_ptr = hw::display::hidden_bitmap_page();
+            }
         }
 
         hw::display::commit_mosaic(data.mosaic_cnt);

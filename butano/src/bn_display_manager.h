@@ -31,6 +31,10 @@ namespace bn::display_manager
 
     void flip_bitmap_page_now();
 
+    void on_bitmap_painter_created(void** painter_page_ptr);
+
+    void on_bitmap_painter_destroyed();
+
     [[nodiscard]] bool sprites_visible();
 
     void set_sprites_visible(bool visible);

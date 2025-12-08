@@ -143,18 +143,30 @@ public:
 
     /**
      * @brief Draws an horizontal line in the current page.
-     * @param x Horizontal position of the left pixel.
+     * @param x1 Horizontal position of the first pixel.
+     * @param x2 Horizontal position of the last pixel.
      * @param y Vertical position of the horizontal line.
-     * @param width Horizontal line width in pixels.
      * @param color_index Color palette index.
      */
-    inline void horizontal_line(int x, int y, int width, int color_index)
+    inline void horizontal_line(int x1, int x2, int y, int color_index)
     {
+        if(x2 == x1)
+        {
+            plot(x1, y, color_index);
+            return;
+        }
+
+        if(x2 < x1)
+        {
+            bn::swap(x1, x2);
+        }
+
         auto dst_base = reinterpret_cast<uint8_t*>(_page);
-        auto dst = reinterpret_cast<uint16_t*>(dst_base + (y * _page_width) + (x &~ 1));
+        auto dst = reinterpret_cast<uint16_t*>(dst_base + (y * _page_width) + (x1 &~ 1));
+        int width = x2 - x1 + 1;
 
         // Left unaligned pixel:
-        if(x & 1)
+        if(x1 & 1)
         {
             *dst = (*dst & 0xFF) + (color_index << 8);
             --width;
@@ -179,18 +191,30 @@ public:
     /**
      * @brief Draws a vertical line in the current page.
      * @param x Horizontal position of the vertical line.
-     * @param y Vertical position of the top pixel.
-     * @param height Vertical line height in pixels.
+     * @param y1 Vertical position of the first pixel.
+     * @param y2 Vertical position of the last pixel.
      * @param color_index Color palette index.
      */
-    inline void vertical_line(int x, int y, int height, int color_index)
+    inline void vertical_line(int x, int y1, int y2, int color_index)
     {
+        if(y2 == y1)
+        {
+            plot(x, y1, color_index);
+            return;
+        }
+
+        if(y2 < y1)
+        {
+            bn::swap(y1, y2);
+        }
+
         auto dst_base = reinterpret_cast<uint8_t*>(_page);
-        auto dst = reinterpret_cast<uint16_t*>(dst_base + (y * _page_width) + (x &~ 1));
+        auto dst = reinterpret_cast<uint16_t*>(dst_base + (y1 * _page_width) + (x &~ 1));
+        int height = y2 - y1 + 1;
 
         if(x & 1)
         {
-            unsigned clr = color_index << 8;
+            int clr = color_index << 8;
 
             while(height--)
             {
@@ -208,6 +232,104 @@ public:
         }
     }
 
+    inline void line(int x1, int y1, int x2, int y2, int color_index)
+    {
+        if(y1 == y2)
+        {
+            horizontal_line(x1, x2, y1, color_index);
+            return;
+        }
+
+        if(x1 == x2)
+        {
+            vertical_line(x1, y1, y2, color_index);
+            return;
+        }
+
+        auto dst_base = reinterpret_cast<uint8_t*>(_page);
+        auto addr = reinterpret_cast<unsigned>(dst_base + (y1 * _page_width) + x1);
+        unsigned mask = 255;
+        unsigned clr = color_index & mask;
+        clr |= clr << 8;
+
+        if(x1 & 1)
+        {
+            mask = ~mask;
+        }
+
+        // Normalization:
+        int dx, xstep;
+
+        if(x1 > x2)
+        {
+            xstep = -1;
+            dx = x1 - x2;
+        }
+        else
+        {
+            xstep = 1;
+            dx = x2 - x1;
+        }
+
+        int dy, ystep;
+
+        if(y1 > y2)
+        {
+            ystep = -_page_width;
+            dy = y1 - y2;
+        }
+        else
+        {
+            ystep = _page_width;
+            dy = y2 - y1;
+        }
+
+        // Drawing:
+
+        if(dx >= dy)
+        {
+            // Diagonal, slope <= 1:
+            int dd = (2 * dy) - dx;
+
+            for(int ii = dx; ii >= 0; ii--)
+            {
+                auto dstL = reinterpret_cast<uint16_t*>(addr - (mask >> 31));
+                *dstL = (*dstL &~ mask) | (clr & mask);
+
+                if(dd >= 0)
+                {
+                    dd -= 2 * dx;
+                    addr += ystep;
+                }
+
+                dd += 2 * dy;
+                addr += xstep;
+                mask = ~mask;
+            }
+        }
+        else
+        {
+            // Diagonal, slope > 1:
+            int dd = (2 * dx) - dy;
+
+            for(int ii = dy; ii >= 0; ii--)
+            {
+                auto dstL = reinterpret_cast<uint16_t*>(addr - (mask >> 31));
+                *dstL = (*dstL &~ mask) | (clr & mask);
+
+                if(dd >= 0)
+                {
+                    dd -= 2 * dy;
+                    addr += xstep;
+                    mask = ~mask;
+                }
+
+                dd += 2 * dx;
+                addr += ystep;
+            }
+        }
+    }
+
 private:
     static constexpr int _page_width = bitmap_bg::palette_width();
     static constexpr int _page_height = bitmap_bg::palette_height();
@@ -218,12 +340,12 @@ private:
     palette_bitmap_bg_ptr _bg;
     uint16_t* _page;
 
-    [[nodiscard]] static inline uint16_t _dup8(int x)
+    [[nodiscard]] static inline int _dup8(int x)
     {
         return x | (x << 8);
     }
 
-    [[nodiscard]] static inline unsigned _quad8(int x)
+    [[nodiscard]] static inline int _quad8(int x)
     {
         return x * 0x01010101;
     }

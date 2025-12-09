@@ -32,7 +32,7 @@
 #include "bn_bitmap_bg_attributes.cpp.h"
 #include "bn_palette_bitmap_bg_ptr.cpp.h"
 #include "bn_palette_bitmap_bg_builder.cpp.h"
-#include "bn_unsafe_palette_bitmap_bg_painter.cpp.h"
+#include "bn_palette_bitmap_bg_painter.cpp.h"
 
 namespace bn::bgs_manager
 {

@@ -179,6 +179,14 @@
             </dt>
             <dd>Draws a line in the current page without bounds checking.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a544c35630dd3a7bddf9c512aa220f15f" class="m-doc">line</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              int color_index)</span>
+            </dt>
+            <dd>Draws a line in the current page with bounds checking.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a5275e6779bb1a2d45905d316c3f9b25c" class="m-doc">unsafe_rectangle</a>(</span><span class="m-doc-wrap">int x1,
               int y1,
               int x2,
@@ -277,7 +285,7 @@
               <span class="m-doc-wrap-bumper">void bn::<wbr />palette_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a29ead1c5cd736a650d75c131d9531d3a" class="m-doc-self">flip_page_now</a>(</span><span class="m-doc-wrap">)</span></span>
             </h3>
             <p>Swaps the hidden frame buffer without waiting to the next <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</p>
-<p>Expect lack of vsync issues.</p>
+<p>Expect lack of vsync issues (screen tearing).</p>
           </div></section>
           <section class="m-doc-details" id="a1d0066b1b550457f8ef853feca8e557a"><div>
             <h3>
@@ -543,6 +551,43 @@
               int color_index)</span></span>
             </h3>
             <p>Draws a line in the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x1</td>
+                  <td>Horizontal position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a283a7f01e4a0fb74cf911a55438198af" class="m-doc">bitmap_bg::<wbr />palette_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y1</td>
+                  <td>Vertical position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#aa7321179283290ffafd85b6ea2d1db9c" class="m-doc">bitmap_bg::<wbr />palette_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>x2</td>
+                  <td>Horizontal position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a283a7f01e4a0fb74cf911a55438198af" class="m-doc">bitmap_bg::<wbr />palette_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y2</td>
+                  <td>Vertical position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#aa7321179283290ffafd85b6ea2d1db9c" class="m-doc">bitmap_bg::<wbr />palette_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color_index</td>
+                  <td>Color palette index.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a544c35630dd3a7bddf9c512aa220f15f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />palette_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a544c35630dd3a7bddf9c512aa220f15f" class="m-doc-self">line</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              int color_index)</span></span>
+            </h3>
+            <p>Draws a line in the current page with bounds checking.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>

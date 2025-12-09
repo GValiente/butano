@@ -66,6 +66,8 @@
         <section id="files">
           <h2><a href="#files">Files</a></h2>
           <dl class="m-doc">
+            <dt>file <a href="bn__clip__line_8h.html" class="m-doc">bn_clip_line.h</a></dt>
+            <dd></dd>
             <dt>file <a href="bn__fixed_8h.html" class="m-doc">bn_fixed.h</a></dt>
             <dd></dd>
             <dt>file <a href="bn__fixed__fwd_8h.html" class="m-doc">bn_fixed_fwd.h</a></dt>
@@ -204,6 +206,18 @@
         <section id="func-members">
           <h2><a href="#func-members">Functions</a></h2>
           <dl class="m-doc">
+            <dt>
+              <div class="m-doc-template">template&lt;typename Type&gt;</div>
+              <span class="m-doc-wrap-bumper">auto <a href="#ga60306f88c7238cfa0e4e5af1a543df22" class="m-doc">clip_line</a>(</span><span class="m-doc-wrap">Type x1,
+              Type y1,
+              Type x2,
+              Type y2,
+              Type clip_x,
+              Type clip_y,
+              Type clip_width,
+              Type clip_height) -&gt; optional&lt;array&lt;Type, 4&gt;&gt; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Clips a line to a rectangular area.</dd>
             <dt>
               <div class="m-doc-template">template&lt;typename Type&gt;</div>
               <span class="m-doc-wrap-bumper">auto <a href="#ga838914e9d067e7621300539acc2e291f" class="m-doc">abs</a>(</span><span class="m-doc-wrap">Type value) -&gt; Type <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -358,6 +372,69 @@
         </section>
         <section>
           <h2>Function documentation</h2>
+          <section class="m-doc-details" id="ga60306f88c7238cfa0e4e5af1a543df22"><div>
+            <h3>
+              <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__clip__line_8h.html">&lt;bn_clip_line.h&gt;</a></div>
+              <div class="m-doc-template">
+                template&lt;typename Type&gt;
+              </div>
+              <span class="m-doc-wrap-bumper">optional&lt;array&lt;Type, 4&gt;&gt; </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ga60306f88c7238cfa0e4e5af1a543df22" class="m-doc-self">clip_line</a>(</span><span class="m-doc-wrap">Type x1,
+              Type y1,
+              Type x2,
+              Type y2,
+              Type clip_x,
+              Type clip_y,
+              Type clip_width,
+              Type clip_height) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Clips a line to a rectangular area.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x1</td>
+                  <td>Horizontal position of the start point of the line.</td>
+                </tr>
+                <tr>
+                  <td>y1</td>
+                  <td>Vertical position of the start point of the line.</td>
+                </tr>
+                <tr>
+                  <td>x2</td>
+                  <td>Horizontal position of the end point of the line.</td>
+                </tr>
+                <tr>
+                  <td>y2</td>
+                  <td>Vertical position of the end point of the line.</td>
+                </tr>
+                <tr>
+                  <td>clip_x</td>
+                  <td>Horizontal position of the top-left point of the clipping rectangle.</td>
+                </tr>
+                <tr>
+                  <td>clip_y</td>
+                  <td>Vertical position of the top-left point of the clipping rectangle.</td>
+                </tr>
+                <tr>
+                  <td>clip_width</td>
+                  <td>Width of the clipping rectangle (&gt; 0).</td>
+                </tr>
+                <tr>
+                  <td>clip_height</td>
+                  <td>Height of the clipping rectangle (&gt; 0).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>An array with the clipped line coordinates in the form { x1, y1, x2, y2 } if at least part of the line is inside the rectangular clipping area; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Implementation provided by <a href="https://github.com/scivision/lineclipping-julia">https:/<wbr />/<wbr />github.com/<wbr />scivision/<wbr />lineclipping-julia</a></p>
+          </div></section>
           <section class="m-doc-details" id="ga838914e9d067e7621300539acc2e291f"><div>
             <h3>
               <div class="m-doc-include m-code m-inverted m-right-m m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__math_8h.html">&lt;bn_math.h&gt;</a></div>

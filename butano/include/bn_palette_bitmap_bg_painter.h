@@ -15,6 +15,7 @@
 
 #include "bn_memory.h"
 #include "bn_bitmap_bg.h"
+#include "bn_clip_line.h"
 #include "bn_palette_bitmap_bg_ptr.h"
 
 namespace bn
@@ -100,7 +101,7 @@ public:
     /**
      * @brief Swaps the hidden frame buffer without waiting to the next core::update call.
      *
-     * Expect lack of vsync issues.
+     * Expect lack of vsync issues (screen tearing).
      */
     void flip_page_now();
 
@@ -422,6 +423,25 @@ public:
                 dd += 2 * dx;
                 addr += ystep;
             }
+        }
+    }
+
+    /**
+     * @brief Draws a line in the current page with bounds checking.
+     * @param x1 Horizontal position of the first pixel [0..bitmap_bg::palette_width()).
+     * @param y1 Vertical position of the first pixel [0..bitmap_bg::palette_height()).
+     * @param x2 Horizontal position of the last pixel [0..bitmap_bg::palette_width()).
+     * @param y2 Vertical position of the last pixel [0..bitmap_bg::palette_height()).
+     * @param color_index Color palette index.
+     */
+    inline void line(int x1, int y1, int x2, int y2, int color_index)
+    {
+        optional<array<int, 4>> clip_result = clip_line(x1, y1, x2, y2, 0, 0, _page_width - 1, _page_height - 1);
+
+        if(const array<int, 4>* clip_coords_ptr = clip_result.get())
+        {
+            const array<int, 4>& clip_coords = *clip_coords_ptr;
+            unsafe_line(clip_coords[0], clip_coords[1], clip_coords[2], clip_coords[3], color_index);
         }
     }
 

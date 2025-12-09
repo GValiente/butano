@@ -15,6 +15,7 @@
  * @section changelog_21_0_0 21.0.0 (next release)
  *
  * * Palette bitmap backgrounds support.
+ * * bn::clip_line added.
  * * Sprite tiles are allocated at the end of VRAM.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> links updated.
  *

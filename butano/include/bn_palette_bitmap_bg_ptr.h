@@ -177,7 +177,7 @@ public:
     /**
      * @brief Swaps the hidden frame buffer without waiting to the next core::update call.
      *
-     * Expect lack of vsync issues.
+     * Expect lack of vsync issues (screen tearing).
      */
     void flip_page_now();
 

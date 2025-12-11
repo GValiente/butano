@@ -281,7 +281,8 @@
  *
  * @subsection faq_screen_pixels Can I directly manipulate screen pixels?
  *
- * Butano doesn't support bitmap video modes for now, so there's no easy way to do that.
+ * You can directly manipulate the pixels of bitmap backgrounds, but avoid them if you can,
+ * as they're much slower than tiled backgrounds.
  *
  *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?

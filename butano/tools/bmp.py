@@ -9,7 +9,7 @@ import struct
 
 class BMP:
 
-    def __init__(self, file_path):
+    def __init__(self, file_path, check_tile_size=True):
         self.width = None
         self.height = None
         self.colors_count = None
@@ -35,13 +35,22 @@ class BMP:
 
             self.width = read_int()
 
-            if self.width == 0 or self.width % 8 != 0:
+            if self.width <= 0:
                 raise ValueError('Invalid width: ' + str(self.width))
+
+            valid_width = 8 if check_tile_size else 4
+
+            if self.width % valid_width != 0:
+                raise ValueError('Invalid width: ' + str(self.width) +
+                                 ' (width must be divisible by ' + str(valid_width) + ')')
 
             self.height = read_int()
 
-            if self.height == 0 or self.height % 8 != 0:
+            if self.height <= 0:
                 raise ValueError('Invalid height: ' + str(self.height))
+
+            if check_tile_size and self.height % 8 != 0:
+                raise ValueError('Invalid height: ' + str(self.height) + ' (height must be divisible by 8)')
 
             file.read(2)
             bits_per_pixel = read_short()

@@ -1554,7 +1554,7 @@ class AffineBgTilesItem:
 class PaletteBitmapItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
-        self.__bmp = BMP(file_path)
+        self.__bmp = BMP(file_path, False)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path
@@ -1693,7 +1693,7 @@ class PaletteBitmapItem:
 class PaletteBitmapPixelsItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
-        self.__bmp = BMP(file_path)
+        self.__bmp = BMP(file_path, False)
         self.__file_path = file_path
         self.__file_name_no_ext = file_name_no_ext
         self.__build_folder_path = build_folder_path

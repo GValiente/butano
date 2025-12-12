@@ -17,6 +17,7 @@
 #include "bn_bitmap_bg.h"
 #include "bn_clip_line.h"
 #include "bn_palette_bitmap_bg_ptr.h"
+#include "bn_palette_bitmap_pixels_item.h"
 
 namespace bn
 {
@@ -538,6 +539,24 @@ public:
         }
     }
 
+    inline void unsafe_blit(const palette_bitmap_pixels_item& item, int x, int y)
+    {
+        BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
+
+        _blit_impl(item, x, y, 0, 0, item.dimensions().width(), item.dimensions().height());
+    }
+
+    inline void blit(const palette_bitmap_pixels_item& item, int x, int y)
+    {
+        BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
+
+        int item_x = 0;
+        int item_y = 0;
+        int blit_width = item.dimensions().width();
+        int blit_height = item.dimensions().height();
+        _blit_impl(item, x, y, item_x, item_y, blit_width, blit_height);
+    }
+
 private:
     static constexpr int _page_width = bitmap_bg::palette_width();
     static constexpr int _page_height = bitmap_bg::palette_height();
@@ -556,6 +575,21 @@ private:
     [[nodiscard]] static inline int _quad8(int x)
     {
         return x * 0x01010101;
+    }
+
+    inline void _blit_impl(const palette_bitmap_pixels_item& item, int page_x, int page_y, int item_x, int item_y,
+                           int blit_width, int blit_height)
+    {
+        int item_width = item.dimensions().width();
+        const uint8_t* src = item.pixels_ptr() + (item_y * item_width) + item_x;
+        uint8_t* dst = reinterpret_cast<uint8_t*>(_page) + (page_y * _page_width) + page_x;
+
+        while(blit_height--)
+        {
+            _bn::memory::unsafe_copy_bytes_vram(src, blit_width, dst);
+            src += item_width;
+            dst += _page_width;
+        }
     }
 };
 

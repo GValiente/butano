@@ -134,6 +134,12 @@
               Type&amp; destination_ref)</span>
             </dt>
             <dd>Clears (fills with zero) the memory of the given amount of elements from the object referenced by destination_ref.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1d41aa2a1955bbfaa6010c2abc2bb0ff" class="m-doc">vram_safe_copy</a>(</span><span class="m-doc-wrap">const void* source_ptr,
+              int bytes,
+              void* destination_ptr)</span>
+            </dt>
+            <dd>Copies the given amount of bytes from the object pointed by source_ptr to the object pointed by destination_ptr, ensuring that the copy works if the destination is in VRAM.</dd>
             <dt id="a1033abdf4ab05c747cb629ccbe1e4e36">
               <div class="m-doc-template">template&lt;typename Type, int Size&gt;</div>
               <span class="m-doc-wrap-bumper">void <a href="#a1033abdf4ab05c747cb629ccbe1e4e36" class="m-doc-self">clear</a>(</span><span class="m-doc-wrap">Type(&amp;array)[Size])</span>
@@ -357,6 +363,34 @@
                 </tr>
               </tbody>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="a1d41aa2a1955bbfaa6010c2abc2bb0ff"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />memory::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1d41aa2a1955bbfaa6010c2abc2bb0ff" class="m-doc-self">vram_safe_copy</a>(</span><span class="m-doc-wrap">const void* source_ptr,
+              int bytes,
+              void* destination_ptr)</span></span>
+            </h3>
+            <p>Copies the given amount of bytes from the object pointed by source_ptr to the object pointed by destination_ptr, ensuring that the copy works if the destination is in VRAM.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">source_ptr</td>
+                  <td>Const pointer to the memory location to copy from.</td>
+                </tr>
+                <tr>
+                  <td>bytes</td>
+                  <td>Number of bytes to copy.</td>
+                </tr>
+                <tr>
+                  <td>destination_ptr</td>
+                  <td>Pointer to the memory location to copy to.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>If the source and destination objects overlap, the behavior is undefined.</p>
           </div></section>
           <section class="m-doc-details" id="a34aa79c1304c93263598983351264f80"><div>
             <h3>

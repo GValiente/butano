@@ -17,6 +17,7 @@
  * * Palette bitmap backgrounds support.
  * * bn::clip_line added.
  * * Sprite tiles are allocated at the end of VRAM.
+ * * @ref faq_backgrounds_animated question improved.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> links updated.
  *
  *

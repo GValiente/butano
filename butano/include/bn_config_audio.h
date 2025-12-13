@@ -96,7 +96,7 @@
  *
  * Specifies the maximum number of active audio events per update.
  *
- * See https://blocksds.skylyrac.net/docs/maxmod/md_documentation_2using__song__events.html
+ * See https://blocksds.skylyrac.net/maxmod/md_documentation_2using__song__events.html
  * for more information about audio events.
  *
  * @ingroup music

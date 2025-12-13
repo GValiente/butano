@@ -29,7 +29,7 @@ class sprite_ptr;
 /**
  * @brief Creates sprite_ptr objects with custom attributes.
  *
- * If some of the attributes of the sprite to create differs from the default ones,
+ * If some of the attributes of the sprite to create differ from the default ones,
  * using this class improves performance.
  *
  * @ingroup sprite
@@ -779,4 +779,3 @@ private:
 }
 
 #endif
-

@@ -25,10 +25,7 @@ namespace bn
 class affine_bg_ptr;
 
 /**
- * @brief Creates affine_bg_map_ptr objects with custom attributes.
- *
- * If some of the attributes of the affine background to create differs from the default ones,
- * using this class improves performance.
+ * @brief Creates affine_bg_ptr objects with custom attributes.
  *
  * @ingroup affine_bg
  */
@@ -821,4 +818,3 @@ private:
 }
 
 #endif
-

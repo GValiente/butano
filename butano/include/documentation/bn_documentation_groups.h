@@ -82,7 +82,7 @@
 /**
  * @defgroup regular_bg Regular backgrounds
  *
- * Backgrounds which can't perform affine transformations.
+ * Tiled backgrounds which can't perform affine transformations.
  *
  * Also known as text backgrounds.
  *
@@ -92,11 +92,27 @@
 /**
  * @defgroup affine_bg Affine backgrounds
  *
- * Backgrounds which can perform affine transformations.
+ * Tiled backgrounds which can perform affine transformations.
  *
  * Also known as rotation backgrounds.
  *
  * @ingroup bg
+ */
+
+/**
+ * @defgroup bitmap_bg Bitmap backgrounds
+ *
+ * Backgrounds without tiles, with which video memory works like a width x height bitmap.
+ *
+ * @ingroup bg
+ */
+
+/**
+ * @defgroup palette_bitmap_bg Palette bitmap backgrounds
+ *
+ * Dual page bitmap backgrounds in which pixels are palette indexes.
+ *
+ * @ingroup bitmap_bg
  */
 
 /**
@@ -172,7 +188,7 @@
  * @defgroup music Music
  *
  * Module files (files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions) played with Direct Sound channels
- * thanks to <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>.
+ * thanks to <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>.
  *
  * @ingroup audio
  */
@@ -192,7 +208,7 @@
  * @defgroup sound Sound effects
  *
  * Waveform audio files (files with `*.wav` extension) sound effects played with Direct Sound channels
- * thanks to <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>.
+ * thanks to <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>.
  *
  * @ingroup audio
  */

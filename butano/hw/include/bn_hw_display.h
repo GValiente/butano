@@ -41,10 +41,15 @@ namespace bn::hw::display
         return 2;
     }
 
-    inline void set_display(int mode, bool show_sprites, const bool* enabled_bgs,
+    inline void set_display(int mode, bool bitmap_page_flipped, bool show_sprites, const bool* enabled_bgs,
                             const bool* enabled_inside_windows, uint16_t& display_cnt)
     {
         unsigned dispcnt = unsigned(mode) | DCNT_OBJ_1D;
+
+        if(bitmap_page_flipped)
+        {
+            dispcnt ^= DCNT_PAGE;
+        }
 
         if(show_sprites)
         {
@@ -73,6 +78,23 @@ namespace bn::hw::display
     inline void commit_display(uint16_t display_cnt)
     {
         REG_DISPCNT_U16 = display_cnt;
+    }
+
+    [[nodiscard]] inline uint16_t* hidden_bitmap_page()
+    {
+        uint16_t* result = reinterpret_cast<uint16_t*>(MEM_VRAM);
+
+        if(! (REG_DISPCNT_U16 & DCNT_PAGE))
+        {
+            result = reinterpret_cast<uint16_t*>(uint32_t(result) ^ VRAM_PAGE_SIZE);
+        }
+
+        return result;
+    }
+
+    inline void flip_bitmap_page()
+    {
+        REG_DISPCNT_U16 ^= DCNT_PAGE;
     }
 
     inline void set_mosaic(int sprites_horizontal_stretch, int sprites_vertical_stretch,

@@ -62,6 +62,7 @@ and [VGM player](https://github.com/copyrat90/gbadev-ja-test).
 * Pool containers provided by [ETL](https://www.etlcpp.com/).
 * Unique type ID generation without RTTI provided by [CTTI](https://github.com/Manu343726/ctti).
 * Stateless random number generator provided by [whisky](https://github.com/velipso/whisky).
+* Cohen–Sutherland line clipping provided by [scivision](https://github.com/scivision/lineclipping-julia).
 
 
 ## Contact and support

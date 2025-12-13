@@ -43,6 +43,8 @@ namespace bn::sprite_tiles_manager
 
     [[nodiscard]] int allocate_optional(int tiles_count, bpp_mode bpp);
 
+    [[nodiscard]] int allocate_first_half(bool optional);
+
     void increase_usages(int id);
 
     void decrease_usages(int id);

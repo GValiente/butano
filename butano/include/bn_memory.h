@@ -29,6 +29,8 @@ namespace _bn::memory
 {
     void unsafe_copy_bytes(const void* source, int bytes, void* destination);
 
+    void unsafe_copy_bytes_vram(const void* source, int bytes, void* destination);
+
     void unsafe_copy_half_words(const void* source, int half_words, void* destination);
 
     void unsafe_copy_words(const void* source, int words, void* destination);
@@ -38,6 +40,12 @@ namespace _bn::memory
     void unsafe_clear_half_words(int half_words, void* destination);
 
     void unsafe_clear_words(int words, void* destination);
+
+    void unsafe_set_bytes(uint8_t value, int bytes, void* destination);
+
+    void unsafe_set_half_words(uint16_t value, int half_words, void* destination);
+
+    void unsafe_set_words(unsigned value, int words, void* destination);
 }
 
 /// @endcond
@@ -256,6 +264,18 @@ namespace bn::memory
             }
         }
     }
+
+    /**
+     * @brief Copies the given amount of bytes from the object pointed by source_ptr to the object
+     * pointed by destination_ptr, ensuring that the copy works if the destination is in VRAM.
+     *
+     * If the source and destination objects overlap, the behavior is undefined.
+     *
+     * @param source_ptr Const pointer to the memory location to copy from.
+     * @param bytes Number of bytes to copy.
+     * @param destination_ptr Pointer to the memory location to copy to.
+     */
+    void vram_safe_copy(const void* source_ptr, int bytes, void* destination_ptr);
 
     /**
      * @brief Clears (fills with zero) the memory of the given array.

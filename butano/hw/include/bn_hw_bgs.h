@@ -8,6 +8,7 @@
 
 #include "bn_affine_bg_builder.h"
 #include "bn_regular_bg_builder.h"
+#include "bn_palette_bitmap_bg_builder.h"
 #include "bn_hw_bfn.h"
 #include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
@@ -74,6 +75,12 @@ namespace bn::hw::bgs
     {
         cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
                        (builder.mosaic_enabled() << 6) | (builder.wrapping_enabled() << 13) | BG_8BPP);
+    }
+
+    inline void setup_palette_bitmap(const palette_bitmap_bg_builder& builder, uint16_t& cnt)
+    {
+        cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
+                       (builder.mosaic_enabled() << 6) | BG_8BPP);
     }
 
     inline void set_tiles_cbb(int tiles_cbb, uint16_t& cnt)

@@ -16,14 +16,17 @@ namespace bn
 class size;
 class point;
 class camera_ptr;
+class bg_palette_ptr;
 class affine_bg_builder;
 class affine_bg_map_ptr;
 class regular_bg_builder;
 class regular_bg_map_ptr;
 class affine_bg_attributes;
+class bitmap_bg_attributes;
 class regular_bg_attributes;
 class affine_mat_attributes;
 class affine_bg_mat_attributes;
+class palette_bitmap_bg_builder;
 enum class bpp_mode : uint8_t;
 enum class green_swap_mode : uint8_t;
 
@@ -41,9 +44,13 @@ namespace bgs_manager
 
     [[nodiscard]] id_type create(affine_bg_builder&& builder);
 
+    [[nodiscard]] id_type create(palette_bitmap_bg_builder&& builder);
+
     [[nodiscard]] id_type create_optional(regular_bg_builder&& builder);
 
     [[nodiscard]] id_type create_optional(affine_bg_builder&& builder);
+
+    [[nodiscard]] id_type create_optional(palette_bitmap_bg_builder&& builder);
 
     void increase_usages(id_type id);
 
@@ -70,6 +77,12 @@ namespace bgs_manager
     void remove_regular_map(id_type id);
 
     void remove_affine_map(id_type id);
+
+    [[nodiscard]] const bg_palette_ptr& bitmap_palette();
+
+    void set_bitmap_palette(const bg_palette_ptr& palette);
+
+    void set_bitmap_palette(bg_palette_ptr&& palette);
 
     [[nodiscard]] const fixed_point& position(id_type id);
 
@@ -163,9 +176,13 @@ namespace bgs_manager
 
     [[nodiscard]] affine_bg_attributes affine_attributes(id_type id);
 
+    [[nodiscard]] bitmap_bg_attributes bitmap_attributes(id_type id);
+
     void set_regular_attributes(id_type id, const regular_bg_attributes& attributes);
 
     void set_affine_attributes(id_type id, const affine_bg_attributes& attributes);
+
+    void set_bitmap_attributes(id_type id, const bitmap_bg_attributes& attributes);
 
     [[nodiscard]] bool blending_top_enabled(id_type id);
 
@@ -213,6 +230,9 @@ namespace bgs_manager
                                                uint16_t* dest_ptr);
 
     void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes* attributes_ptr,
+                                              uint16_t* dest_ptr);
+
+    void fill_hblank_effect_bitmap_attributes(id_type id, const bitmap_bg_attributes* attributes_ptr,
                                               uint16_t* dest_ptr);
 
     void rebuild_handles();

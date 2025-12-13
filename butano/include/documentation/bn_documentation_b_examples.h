@@ -148,13 +148,19 @@
  *
  * Showcases multiple color palette effects.
  *
- * <td> **Flat polygons**
+ * <td> @ref palette_bitmap_bg
+ *
+ * @image html examples_palette_bitmap_bgs.png
+ *
+ * Shows how to use palette bitmap backgrounds with Butano.
+ *
+ * <tr><td> **Flat polygons**
  *
  * @image html examples_polygons.png
  *
  * Showcases flat polygons rendering with sprites.
  *
- * <tr><td> @ref profiler
+ * <td> @ref profiler
  *
  * @image html examples_profiler.png
  *
@@ -166,13 +172,13 @@
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <td> @ref random
+ * <tr><td> @ref random
  *
  * @image html examples_random.png
  *
  * Simple random number generation example.
  *
- * <tr><td> @ref rumble
+ * <td> @ref rumble
  *
  * @image html examples_rumble.png
  *
@@ -184,13 +190,13 @@
  *
  * Demonstrates usage of one affine matrix for multiple sprites.
  *
- * <td> @ref sprite
+ * <tr><td> @ref sprite
  *
  * @image html examples_sprites.png
  *
  * Simple sprites examples.
  *
- * <tr><td> @ref sram
+ * <td> @ref sram
  *
  * @image html examples_sram.png
  *
@@ -202,13 +208,13 @@
  *
  * Showcase of Butano sprite text rendering.
  *
- * <td> **Textured polygons**
+ * <tr><td> **Textured polygons**
  *
  * @image html examples_texture_polygons.png
  *
  * Showcases textured polygons rendering with sprites.
  *
- * <tr><td> @ref timer
+ * <td> @ref timer
  *
  * @image html examples_timer.png
  *
@@ -220,7 +226,7 @@
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <td> **World map**
+ * <tr><td> **World map**
  *
  * @image html examples_world_map.png
  *

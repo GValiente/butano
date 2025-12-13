@@ -281,7 +281,8 @@
  *
  * @subsection faq_screen_pixels Can I directly manipulate screen pixels?
  *
- * Butano doesn't support bitmap video modes for now, so there's no easy way to do that.
+ * You can directly manipulate the pixels of bitmap backgrounds, but avoid them if you can,
+ * as they're much slower than tiled backgrounds.
  *
  *
  * @subsection faq_tonc_general_notes Are there some more general notes on GBA programming out there?
@@ -585,13 +586,26 @@
  *
  * @subsection faq_backgrounds_animated How can I show a background with animated tiles?
  *
- * There are two ways, the easy one and the powerful one:
+ * There are multiple ways, from easy to powerful:
  * * If you only want to show some basic tile animation, such the water or the grass tiles in top-down RPGs,
  *   you can use one of these actions: bn::regular_bg_animate_action, bn::regular_bg_cached_animate_action,
  *   bn::affine_bg_animate_action and bn::affine_bg_cached_animate_action.
  *   The `regular_bgs` and `affine_bgs` examples show how to use some of them.
- * * If you want to show something more advanced, you need to manage the background map by yourself.
- *   The `dynamic_regular_bg` and `dynamic_affine_bg` examples show how to do it.
+ * * If you want to show something more advanced, like destructible tiles, you should first think if it's possible
+ *   to handle those tiles with sprites, because it's going to be easier than the following approaches.
+ * * If animation actions and extra sprites are not enough, you need to manage the background map by yourself.
+ *   The `dynamic_regular_bg` and `dynamic_affine_bg` examples show how to handle a dynamic map.
+ * * If you need to squeeze the GBA CPU as much as possible, you always can handle *everything* by yourself
+ *   by calling bn::regular_bg_tiles_ptr::allocate and bn::regular_bg_map_ptr::allocate
+ *   (or bn::affine_bg_tiles_ptr::allocate and bn::affine_bg_map_ptr::allocate).
+ *
+ * Some dynamic map performance tips:
+ * * You can improve animated tiles performance if you only update the tiles to animate in the visible area
+ *   of your "virtual" map.
+ * * bn::regular_bg_map_ptr::reload_cells_ref() and bn::affine_bg_map_ptr::reload_cells_ref() only copy
+ *   the visible map cells to VRAM if the map is big, so reload performance isn't affected by the map size.
+ * * bn::regular_bg_tiles_ptr::reload_tiles_ref() and bn::affine_bg_tiles_ptr::reload_tiles_ref() copy *all* tiles
+ *   to VRAM even if the map is big, so you should avoid calling them if the map has enough unique tiles.
  *
  *
  * @subsection faq_backgrounds_error_grit Why can't I import a regular background with 1024 or less tiles?
@@ -635,7 +649,7 @@
  *
  * @subsection faq_audio_music_crash Why the game crashes when some Direct Sound songs are played?
  *
- * By default, Butano uses the excellent <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>
+ * By default, Butano uses the excellent <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>
  * library for Direct Sound audio support.
  *
  * It provides impressive performance and support for lots of module music formats,
@@ -655,7 +669,7 @@
  *
  * @subsection faq_audio_music_wav Why can't I use a long *.wav file as music?
  *
- * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a> doesn't allow to play
+ * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> doesn't allow to play
  * long `*.wav` files as music, unfortunately.
  *
  * The maximum length of sound samples is also small, so if you try to play a long `*.wav` file as a sound effect,

@@ -485,6 +485,95 @@
  * @endcode
  *
  *
+ * @subsection import_palette_bitmap Palette bitmap
+ *
+ * An example of the `*.json` files required for palette bitmaps is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "palette_bitmap"
+ * }
+ * @endcode
+ *
+ * The fields for palette bitmaps are the following:
+ * * `"type"`: must be `"palette_bitmap"` for palette bitmaps.
+ * * `"colors_count"`: optional field which specifies the bitmap palette size [1..256].
+ * * `"pixels_compression"`: optional field which specifies the compression of the pixels data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
+ * * `"palette_compression"`: optional field which specifies the compression of the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
+ * * `"compression"`: optional field which specifies the compression of the pixels and the colors data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
+ *
+ * If the conversion process has finished successfully,
+ * a bn::palette_bitmap_item should have been generated in the `build` folder.
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_palette_bitmap_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to create a palette bitmap background and blit the pixels on it
+ * with only three lines of C++ code:
+ *
+ * @code{.cpp}
+ * #include "bn_palette_bitmap_items_image.h"
+ *
+ * bn::palette_bitmap_bg_ptr bg = bn::palette_bitmap_bg_ptr::create(bn::palette_bitmap_items::image.palette_item());
+ * bn::palette_bitmap_bg_painter painter(bg);
+ * painter.blit(bn::palette_bitmap_items::image.pixels_item(), 1, 2);
+ * @endcode
+ *
+ *
+ * @subsection import_palette_bitmap_pixels Palette bitmap pixels
+ *
+ * An example of the `*.json` files required for palette bitmap pixels is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "palette_bitmap_pixels"
+ * }
+ * @endcode
+ *
+ * The fields for palette bitmap pixels are the following:
+ * * `"type"`: must be `"palette_bitmap_pixels"` for palette bitmap pixels.
+ * * `"compression"`: optional field which specifies the compression of the pixels data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
+ *
+ * If the conversion process has finished successfully,
+ * a bn::palette_bitmap_pixels_item should have been generated in the `build` folder.
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_palette_bitmap_pixels_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to blit the pixels on a palette bitmap background with only two lines of C++ code:
+ *
+ * @code{.cpp}
+ * #include "bn_palette_bitmap_pixels_items_image.h"
+ *
+ * bn::palette_bitmap_bg_painter painter(bg);
+ * painter.blit(bn::palette_bitmap_pixels_items::image, 1, 2);
+ * @endcode
+ *
+ *
  * @subsection import_bg_palette Background palettes
  *
  * An example of the `*.json` files required for background palettes is the following:
@@ -531,7 +620,7 @@
  * and music files played with DMG channels go into the `dmg_audio` folder.
  *
  * By default, Direct Sound stuff is managed by the awesome
- * <a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>, so if you have an issue
+ * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>, so if you have an issue
  * with Direct Sound music or with sound effects, well, you know.
  *
  * DMG channels are handled by the also impressive <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>
@@ -546,7 +635,7 @@
  *
  * The required format for Direct Sound music is module files with `*.mod`, `*.xm`, `*.s3m` and `*.it` extensions.
  * If you're using <a href="https://github.com/stuij/apex-audio-system">Apex Audio System</a>
- * instead of the default audio backend (<a href="https://blocksds.skylyrac.net/docs/maxmod/index.html">Maxmod</a>),
+ * instead of the default audio backend (<a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>),
  * only module files with `*.mod` extension are allowed.
  *
  * By default Butano supports up to 16 music channels,

@@ -20,6 +20,7 @@ namespace bn
 
 class affine_bg_ptr;
 class regular_bg_ptr;
+class palette_bitmap_bg_ptr;
 
 /**
  * @brief Base window class.
@@ -72,31 +73,45 @@ public:
 
     /**
      * @brief Indicates if the specified background is shown in this window.
-     * @param regular_bg Regular BG to ask for.
+     * @param regular_bg regular_bg_ptr to ask for.
      * @return `true` if the specified background is shown in this window, otherwise `false`.
      */
     [[nodiscard]] bool show_bg(const regular_bg_ptr& regular_bg) const;
 
     /**
      * @brief Indicates if the specified background is shown in this window.
-     * @param affine_bg Affine BG to ask for.
+     * @param affine_bg affine_bg_ptr to ask for.
      * @return `true` if the specified background is shown in this window, otherwise `false`.
      */
     [[nodiscard]] bool show_bg(const affine_bg_ptr& affine_bg) const;
 
     /**
+     * @brief Indicates if the specified background is shown in this window.
+     * @param palette_bitmap_bg palette_bitmap_bg_ptr to ask for.
+     * @return `true` if the specified background is shown in this window, otherwise `false`.
+     */
+    [[nodiscard]] bool show_bg(const palette_bitmap_bg_ptr& palette_bitmap_bg) const;
+
+    /**
      * @brief Sets if the specified background must be shown in this window.
-     * @param regular_bg Regular BG to show or hide.
+     * @param regular_bg regular_bg_ptr to show or hide.
      * @param show `true` if the specified background must be shown in this window, otherwise `false`.
      */
     void set_show_bg(const regular_bg_ptr& regular_bg, bool show);
 
     /**
      * @brief Sets if the specified background must be shown in this window.
-     * @param affine_bg Affine BG to show or hide.
+     * @param affine_bg affine_bg_ptr to show or hide.
      * @param show `true` if the specified background must be shown in this window, otherwise `false`.
      */
     void set_show_bg(const affine_bg_ptr& affine_bg, bool show);
+
+    /**
+     * @brief Sets if the specified background must be shown in this window.
+     * @param palette_bitmap_bg palette_bitmap_bg_ptr to show or hide.
+     * @param show `true` if the specified background must be shown in this window, otherwise `false`.
+     */
+    void set_show_bg(const palette_bitmap_bg_ptr& palette_bitmap_bg, bool show);
 
     /**
      * @brief Indicates if sprites are shown in this window.

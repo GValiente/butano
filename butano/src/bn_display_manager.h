@@ -25,6 +25,16 @@ namespace bn::display_manager
 
     void set_mode(int mode);
 
+    [[nodiscard]] uint16_t* bitmap_page();
+
+    void flip_bitmap_page_later();
+
+    void flip_bitmap_page_now();
+
+    void on_bitmap_painter_created(void** painter_page_ptr);
+
+    void on_bitmap_painter_destroyed();
+
     [[nodiscard]] bool sprites_visible();
 
     void set_sprites_visible(bool visible);

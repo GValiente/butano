@@ -1551,6 +1551,239 @@ class AffineBgTilesItem:
             raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
 
 
+class PaletteBitmapItem:
+
+    def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
+        self.__bmp = BMP(file_path, False)
+        self.__file_path = file_path
+        self.__file_name_no_ext = file_name_no_ext
+        self.__build_folder_path = build_folder_path
+        self.__colors_count = parse_colors_count(info, self.__bmp)
+
+        try:
+            self.__pixels_compression = info['pixels_compression']
+            validate_compression(self.__pixels_compression)
+        except KeyError:
+            try:
+                self.__pixels_compression = info['compression']
+                validate_compression(self.__pixels_compression)
+            except KeyError:
+                self.__pixels_compression = 'none'
+
+        try:
+            self.__palette_compression = info['palette_compression']
+            validate_compression(self.__palette_compression)
+        except KeyError:
+            try:
+                self.__palette_compression = info['compression']
+                validate_compression(self.__palette_compression)
+            except KeyError:
+                self.__palette_compression = 'none'
+
+    def process(self, grit):
+        pixels_compression = self.__pixels_compression
+        palette_compression = self.__palette_compression
+
+        if pixels_compression.startswith('auto'):
+            test_huffman = pixels_compression == 'auto'
+            pixels_compression, file_size = self.__test_pixels_compression(grit, pixels_compression, 'none', None)
+            pixels_compression, file_size = self.__test_pixels_compression(grit, pixels_compression, 'run_length',
+                                                                           file_size)
+            pixels_compression, file_size = self.__test_pixels_compression(grit, pixels_compression, 'lz77', file_size)
+
+            if test_huffman:
+                pixels_compression, file_size = self.__test_pixels_compression(grit, pixels_compression, 'huffman',
+                                                                               file_size)
+
+        if palette_compression.startswith('auto'):
+            test_huffman = palette_compression == 'auto'
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'none', None)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'run_length',
+                                                                             file_size)
+            palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'lz77',
+                                                                             file_size)
+
+            if test_huffman:
+                palette_compression, file_size = self.__test_palette_compression(grit, palette_compression, 'huffman',
+                                                                                 file_size)
+
+        self.__execute_command(grit, pixels_compression, palette_compression)
+        return self.__write_header(pixels_compression, palette_compression, False)
+
+    def __test_pixels_compression(self, grit, best_pixels_compression, new_pixels_compression, best_file_size):
+        self.__execute_command(grit, new_pixels_compression, 'none')
+        new_file_size = self.__write_header(new_pixels_compression, 'none', True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_pixels_compression, new_file_size
+
+        return best_pixels_compression, best_file_size
+
+    def __test_palette_compression(self, grit, best_palette_compression, new_palette_compression, best_file_size):
+        self.__execute_command(grit, 'none', new_palette_compression)
+        new_file_size = self.__write_header('none', new_palette_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_palette_compression, new_file_size
+
+        return best_palette_compression, best_file_size
+
+    def __write_header(self, pixels_compression, palette_compression, skip_write):
+        name = self.__file_name_no_ext
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
+        header_file_path = self.__build_folder_path + '/bn_palette_bitmap_items_' + name + '.h'
+
+        with open(grit_file_path, 'r') as grit_file:
+            grit_data = grit_file.read()
+            grit_data = grit_data.replace('unsigned int', 'uint8_t')
+            grit_data = grit_data.replace('unsigned short', 'bn::color')
+
+            for grit_line in grit_data.splitlines():
+                if 'Total size:' in grit_line:
+                    total_size = int(grit_line.split()[-1])
+
+                    if skip_write:
+                        return total_size
+                    else:
+                        break
+
+        remove_file(grit_file_path)
+
+        width = self.__bmp.width
+        height = self.__bmp.height
+        grit_data = re.sub(r'Bitmap\[([0-9]+)]', 'Bitmap[' + str(width * height) + ']', grit_data)
+        grit_data = re.sub(r'Pal\[([0-9]+)]', 'Pal[' + str(self.__colors_count) + ']', grit_data)
+
+        with open(header_file_path, 'w') as header_file:
+            include_guard = 'BN_PALETTE_BITMAP_ITEMS_' + name.upper() + '_H'
+            header_file.write('#ifndef ' + include_guard + '\n')
+            header_file.write('#define ' + include_guard + '\n')
+            header_file.write('\n')
+            header_file.write('#include "bn_palette_bitmap_item.h"' + '\n')
+            header_file.write(grit_data)
+            header_file.write('\n')
+            header_file.write('namespace bn::palette_bitmap_items' + '\n')
+            header_file.write('{' + '\n')
+            header_file.write('    constexpr inline palette_bitmap_item ' + name + '(' + '\n            ' +
+                              'palette_bitmap_pixels_item(' + name + '_bn_gfxBitmap[0], size(' + str(width) + ', ' +
+                              str(height) + '), ' + compression_label(pixels_compression) + '), ' + '\n            ' +
+                              'bg_palette_item(span<const color>(' + name + '_bn_gfxPal, ' +
+                              str(self.__colors_count) + '), bpp_mode::BPP_8, ' +
+                              compression_label(palette_compression) + '));\n')
+            header_file.write('}' + '\n')
+            header_file.write('\n')
+            header_file.write('#endif' + '\n')
+            header_file.write('\n')
+
+        return total_size, header_file_path
+
+    def __execute_command(self, grit, tiles_compression, palette_compression):
+        command = [grit, self.__file_path, '-gb', '-gB8', '-pe' + str(self.__colors_count)]
+        append_compression_command('g', tiles_compression, command)
+        append_compression_command('p', palette_compression, command)
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
+        command = ' '.join(command)
+
+        try:
+            subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+
+
+class PaletteBitmapPixelsItem:
+
+    def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
+        self.__bmp = BMP(file_path, False)
+        self.__file_path = file_path
+        self.__file_name_no_ext = file_name_no_ext
+        self.__build_folder_path = build_folder_path
+
+        try:
+            self.__compression = info['compression']
+            validate_compression(self.__compression)
+        except KeyError:
+            self.__compression = 'none'
+
+    def process(self, grit):
+        compression = self.__compression
+
+        if compression.startswith('auto'):
+            test_huffman = compression == 'auto'
+            compression, file_size = self.__test_compression(grit, compression, 'none', None)
+            compression, file_size = self.__test_compression(grit, compression, 'run_length', file_size)
+            compression, file_size = self.__test_compression(grit, compression, 'lz77', file_size)
+
+            if test_huffman:
+                compression, file_size = self.__test_compression(grit, compression, 'huffman', file_size)
+
+        self.__execute_command(grit, compression)
+        return self.__write_header(compression, False)
+
+    def __test_compression(self, grit, best_compression, new_compression, best_file_size):
+        self.__execute_command(grit, new_compression)
+        new_file_size = self.__write_header(new_compression, True)
+
+        if best_file_size is None or new_file_size < best_file_size:
+            return new_compression, new_file_size
+
+        return best_compression, best_file_size
+
+    def __write_header(self, compression, skip_write):
+        name = self.__file_name_no_ext
+        grit_file_path = self.__build_folder_path + '/' + name + '_bn_gfx.h'
+        header_file_path = self.__build_folder_path + '/bn_palette_bitmap_pixels_items_' + name + '.h'
+
+        with open(grit_file_path, 'r') as grit_file:
+            grit_data = grit_file.read()
+            grit_data = grit_data.replace('unsigned int', 'uint8_t', 1)
+
+            for grit_line in grit_data.splitlines():
+                if 'Total size:' in grit_line:
+                    total_size = int(grit_line.split()[-1])
+
+                    if skip_write:
+                        return total_size
+                    else:
+                        break
+
+        remove_file(grit_file_path)
+
+        width = self.__bmp.width
+        height = self.__bmp.height
+        grit_data = re.sub(r'Bitmap\[([0-9]+)]', 'Bitmap[' + str(width * height) + ']', grit_data)
+
+        with open(header_file_path, 'w') as header_file:
+            include_guard = 'BN_PALETTE_BITMAP_PIXELS_ITEMS_' + name.upper() + '_H'
+            header_file.write('#ifndef ' + include_guard + '\n')
+            header_file.write('#define ' + include_guard + '\n')
+            header_file.write('\n')
+            header_file.write('#include "bn_palette_bitmap_pixels_item.h"' + '\n')
+            header_file.write(grit_data)
+            header_file.write('\n')
+            header_file.write('namespace bn::palette_bitmap_pixels_items' + '\n')
+            header_file.write('{' + '\n')
+            header_file.write('    constexpr inline palette_bitmap_pixels_item ' + name + '(' + '\n            ' +
+                              name + '_bn_gfxBitmap[0], size(' + str(width) + ', ' + str(height) + '), ' +
+                              compression_label(compression) + ');' + '\n')
+            header_file.write('}' + '\n')
+            header_file.write('\n')
+            header_file.write('#endif' + '\n')
+            header_file.write('\n')
+
+        return total_size, header_file_path
+
+    def __execute_command(self, grit, compression):
+        command = [grit, self.__file_path, '-gb', '-gB8', '-p!']
+        append_compression_command('g', compression, command)
+        command.append('-o' + self.__build_folder_path + '/' + self.__file_name_no_ext + '_bn_gfx')
+        command = ' '.join(command)
+
+        try:
+            subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise ValueError(grit + ' call failed (return code ' + str(e.returncode) + '): ' + str(e.output))
+
+
 class BgPaletteItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):
@@ -1690,6 +1923,10 @@ class GraphicsFileInfo:
                 item = AffineBgItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
             elif graphics_type == 'affine_bg_tiles':
                 item = AffineBgTilesItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
+            elif graphics_type == 'palette_bitmap':
+                item = PaletteBitmapItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
+            elif graphics_type == 'palette_bitmap_pixels':
+                item = PaletteBitmapPixelsItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
             elif graphics_type == 'bg_palette':
                 item = BgPaletteItem(self.__file_path, self.__file_name_no_ext, build_folder_path, info)
             else:

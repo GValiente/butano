@@ -85,6 +85,11 @@ namespace bn::hw::memory
         __aeabi_memcpy(destination, source, size_t(bytes));
     }
 
+    inline void copy_bytes_vram(const void* source, int bytes, void* destination)
+    {
+        tonccpy(destination, source, unsigned(bytes));
+    }
+
     inline void copy_half_words(const void* source, int half_words, void* destination)
     {
         __agbabi_memcpy2(destination, source, size_t(half_words) * 2);

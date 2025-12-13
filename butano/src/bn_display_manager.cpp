@@ -9,7 +9,6 @@
 #include "bn_mosaic_attributes.h"
 #include "bn_bgs_manager.h"
 #include "bn_sprites_manager.h"
-#include "../hw/include/bn_hw_bgs.h"
 #include "../hw/include/bn_hw_display.h"
 
 #include "bn_window.cpp.h"
@@ -29,6 +28,7 @@ namespace
     {
 
     public:
+        void** bitmap_painter_page_ptr = nullptr;
         bool enabled_bgs[hw::bgs::count()] = {};
         fixed sprites_mosaic_horizontal_stretch;
         fixed sprites_mosaic_vertical_stretch;
@@ -51,6 +51,7 @@ namespace
         uint8_t mode = 0;
         bool commit = true;
         bool commit_display = true;
+        bool bitmap_page_flipped = false;
         bool sprites_visible = true;
         bool green_swap_enabled = false;
         bool update_mosaic = true;
@@ -145,6 +146,38 @@ void set_mode(int mode)
         data.commit_display = true;
         data.commit = true;
     }
+}
+
+uint16_t* bitmap_page()
+{
+    return hw::display::hidden_bitmap_page();
+}
+
+void flip_bitmap_page_later()
+{
+    static_data& data = data_ref();
+    data.bitmap_page_flipped = ! data.bitmap_page_flipped;
+    data.commit_display = true;
+    data.commit = true;
+}
+
+void flip_bitmap_page_now()
+{
+    flip_bitmap_page_later();
+    hw::display::flip_bitmap_page();
+}
+
+void on_bitmap_painter_created(void** painter_page_ptr)
+{
+    static_data& data = data_ref();
+    BN_BASIC_ASSERT(! data.bitmap_painter_page_ptr, "There's an active bitmap painter.");
+
+    data.bitmap_painter_page_ptr = painter_page_ptr;
+}
+
+void on_bitmap_painter_destroyed()
+{
+    data_ref().bitmap_painter_page_ptr = nullptr;
 }
 
 bool sprites_visible()
@@ -1049,8 +1082,8 @@ void update()
 
         if(data.commit_display)
         {
-            hw::display::set_display(
-                    data.mode, data.sprites_visible, data.enabled_bgs, data.inside_windows_enabled, data.display_cnt);
+            hw::display::set_display(data.mode, data.bitmap_page_flipped, data.sprites_visible, data.enabled_bgs,
+                                     data.inside_windows_enabled, data.display_cnt);
         }
 
         if(data.update_mosaic)
@@ -1086,6 +1119,11 @@ void commit()
         {
             hw::display::commit_display(data.display_cnt);
             data.commit_display = false;
+
+            if(void** bitmap_painter_page_ptr = data.bitmap_painter_page_ptr)
+            {
+                *bitmap_painter_page_ptr = hw::display::hidden_bitmap_page();
+            }
         }
 
         hw::display::commit_mosaic(data.mosaic_cnt);

@@ -80,6 +80,11 @@ void unsafe_copy_bytes(const void* source, int bytes, void* destination)
     bn::hw::memory::copy_bytes(source, bytes, destination);
 }
 
+void unsafe_copy_bytes_vram(const void* source, int bytes, void* destination)
+{
+    bn::hw::memory::copy_bytes_vram(source, bytes, destination);
+}
+
 void unsafe_copy_half_words(const void* source, int half_words, void* destination)
 {
     bn::hw::memory::copy_half_words(source, half_words, destination);
@@ -103,6 +108,21 @@ void unsafe_clear_half_words(int half_words, void* destination)
 void unsafe_clear_words(int words, void* destination)
 {
     bn::hw::memory::set_words(0, words, destination);
+}
+
+void unsafe_set_bytes(uint8_t value, int bytes, void* destination)
+{
+    bn::hw::memory::set_bytes(value, bytes, destination);
+}
+
+void unsafe_set_half_words(uint16_t value, int half_words, void* destination)
+{
+    bn::hw::memory::set_half_words(value, half_words, destination);
+}
+
+void unsafe_set_words(unsigned value, int words, void* destination)
+{
+    bn::hw::memory::set_words(value, words, destination);
 }
 
 }
@@ -171,6 +191,15 @@ int used_rom()
 bool fast_ewram()
 {
     return hw::memory::fast_ewram();
+}
+
+void vram_safe_copy(const void* source_ptr, int bytes, void* destination_ptr)
+{
+    BN_BASIC_ASSERT(source_ptr, "Source is null");
+    BN_ASSERT(bytes >= 0, "Invalid bytes: ", bytes);
+    BN_BASIC_ASSERT(destination_ptr, "Destination is null");
+
+    bn::hw::memory::copy_bytes_vram(source_ptr, bytes, destination_ptr);
 }
 
 void set_bytes(uint8_t value, int bytes, void* destination_ptr)

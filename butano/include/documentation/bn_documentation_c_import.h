@@ -534,7 +534,7 @@
  *
  * bn::palette_bitmap_bg_ptr bg = bn::palette_bitmap_bg_ptr::create(bn::palette_bitmap_items::image.palette_item());
  * bn::palette_bitmap_bg_painter painter(bg);
- * painter.blit(bn::palette_bitmap_items::image.pixels_item(), 1, 2);
+ * painter.blit(16, 8, bn::palette_bitmap_items::image.pixels_item());
  * @endcode
  *
  *
@@ -570,7 +570,7 @@
  * #include "bn_palette_bitmap_pixels_items_image.h"
  *
  * bn::palette_bitmap_bg_painter painter(bg);
- * painter.blit(bn::palette_bitmap_pixels_items::image, 1, 2);
+ * painter.blit(16, 8, bn::palette_bitmap_pixels_items::image);
  * @endcode
  *
  *

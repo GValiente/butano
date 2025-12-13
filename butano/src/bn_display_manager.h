@@ -27,7 +27,7 @@ namespace bn::display_manager
 
     [[nodiscard]] uint16_t* bitmap_page();
 
-    void flip_bitmap_page();
+    void flip_bitmap_page_later();
 
     void flip_bitmap_page_now();
 

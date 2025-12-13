@@ -146,9 +146,9 @@ uint16_t* palette_bitmap_bg_ptr::page()
     return display_manager::bitmap_page();
 }
 
-void palette_bitmap_bg_ptr::flip_page()
+void palette_bitmap_bg_ptr::flip_page_later()
 {
-    display_manager::flip_bitmap_page();
+    display_manager::flip_bitmap_page_later();
 }
 
 void palette_bitmap_bg_ptr::flip_page_now()

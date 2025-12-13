@@ -13,6 +13,7 @@
  * @ingroup palette_bitmap_bg
  */
 
+#include "bn_point.h"
 #include "bn_memory.h"
 #include "bn_bitmap_bg.h"
 #include "bn_clip_line.h"
@@ -94,15 +95,15 @@ public:
     /**
      * @brief Swaps the hidden frame buffer in the next core::update call.
      */
-    void flip_page()
+    void flip_page_later()
     {
-        _bg.flip_page();
+        _bg.flip_page_later();
     }
 
     /**
      * @brief Swaps the hidden frame buffer without waiting to the next core::update call.
      *
-     * Expect lack of vsync issues (screen tearing).
+     * Expect lack of vsync issues like screen tearing.
      */
     void flip_page_now();
 
@@ -136,6 +137,16 @@ public:
     }
 
     /**
+     * @brief Returns the referenced color palette index without bounds checking.
+     * @param position Position of the color palette index.
+     * @return The referenced color palette index.
+     */
+    [[nodiscard]] inline int unsafe_get(const point& position) const
+    {
+        return unsafe_get(position.x(), position.y());
+    }
+
+    /**
      * @brief Returns the referenced color palette index with bounds checking.
      * @param x Horizontal position of the color palette index [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the color palette index [0..bitmap_bg::palette_height()).
@@ -151,6 +162,16 @@ public:
         }
 
         return result;
+    }
+
+    /**
+     * @brief Returns the referenced color palette index with bounds checking.
+     * @param position Position of the color palette index.
+     * @return The referenced color palette index.
+     */
+    [[nodiscard]] inline optional<int> get(const point& position) const
+    {
+        return get(position.x(), position.y());
     }
 
     /**
@@ -174,6 +195,16 @@ public:
     }
 
     /**
+     * @brief Plots a pixel on the current page without bounds checking.
+     * @param position Position of the pixel to plot.
+     * @param color_index Palette index of the color to plot.
+     */
+    inline void unsafe_plot(const point& position, int color_index)
+    {
+        unsafe_plot(position.x(), position.y(), color_index);
+    }
+
+    /**
      * @brief Plots a pixel on the current page with bounds checking.
      * @param x Horizontal position of the pixel to plot [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the pixel to plot [0..bitmap_bg::palette_height()).
@@ -185,6 +216,16 @@ public:
         {
             unsafe_plot(x, y, color_index);
         }
+    }
+
+    /**
+     * @brief Plots a pixel on the current page with bounds checking.
+     * @param position Position of the pixel to plot.
+     * @param color_index Palette index of the color to plot.
+     */
+    inline void plot(const point& position, int color_index)
+    {
+        plot(position.x(), position.y(), color_index);
     }
 
     /**
@@ -428,6 +469,17 @@ public:
     }
 
     /**
+     * @brief Draws a line in the current page without bounds checking.
+     * @param first Position of the first pixel.
+     * @param last Position of the last pixel.
+     * @param color_index Color palette index.
+     */
+    inline void unsafe_line(const point& first, const point& last, int color_index)
+    {
+        unsafe_line(first.x(), first.y(), last.x(), last.y(), color_index);
+    }
+
+    /**
      * @brief Draws a line in the current page with bounds checking.
      * @param x1 Horizontal position of the first pixel [0..bitmap_bg::palette_width()).
      * @param y1 Vertical position of the first pixel [0..bitmap_bg::palette_height()).
@@ -444,6 +496,17 @@ public:
             const array<int, 4>& clip_coords = *clip_coords_ptr;
             unsafe_line(clip_coords[0], clip_coords[1], clip_coords[2], clip_coords[3], color_index);
         }
+    }
+
+    /**
+     * @brief Draws a line in the current page with bounds checking.
+     * @param first Position of the first pixel.
+     * @param last Position of the last pixel.
+     * @param color_index Color palette index.
+     */
+    inline void line(const point& first, const point& last, int color_index)
+    {
+        line(first.x(), first.y(), last.x(), last.y(), color_index);
     }
 
     /**
@@ -516,6 +579,17 @@ public:
     }
 
     /**
+     * @brief Draws a filled rectangle in the current page without bounds checking.
+     * @param first Position of the first corner.
+     * @param last Position of the last corner.
+     * @param color_index Color palette index.
+     */
+    inline void unsafe_rectangle(const point& first, const point& last, int color_index)
+    {
+        unsafe_rectangle(first.x(), first.y(), last.x(), last.y(), color_index);
+    }
+
+    /**
      * @brief Draws a filled rectangle in the current page with bounds checking.
      * @param x1 Horizontal position of the first corner [0..bitmap_bg::palette_width()).
      * @param y1 Vertical position of the first corner [0..bitmap_bg::palette_height()).
@@ -539,22 +613,123 @@ public:
         }
     }
 
-    inline void unsafe_blit(const palette_bitmap_pixels_item& item, int x, int y)
+    /**
+     * @brief Draws a filled rectangle in the current page with bounds checking.
+     * @param first Position of the first corner.
+     * @param last Position of the last corner.
+     * @param color_index Color palette index.
+     */
+    inline void rectangle(const point& first, const point& last, int color_index)
     {
-        BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
-
-        _blit_impl(item, x, y, 0, 0, item.dimensions().width(), item.dimensions().height());
+        rectangle(first.x(), first.y(), last.x(), last.y(), color_index);
     }
 
-    inline void blit(const palette_bitmap_pixels_item& item, int x, int y)
+    /**
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are also copied.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param item Item to copy to the current page.
+     */
+    inline void unsafe_blit(int x, int y, const palette_bitmap_pixels_item& item)
     {
         BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
 
+        _blit_impl(x, y, 0, 0, item.dimensions().width(), item.dimensions().height(), item);
+    }
+
+    /**
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are also copied.
+     * @param position Position of the current page top-left corner.
+     * @param item Item to copy to the current page.
+     */
+    inline void unsafe_blit(const point& position, const palette_bitmap_pixels_item& item)
+    {
+        unsafe_blit(position.x(), position.y(), item);
+    }
+
+    /**
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param item Item to copy to the current page.
+     */
+    inline void blit(int x, int y, const palette_bitmap_pixels_item& item)
+    {
         int item_x = 0;
         int item_y = 0;
         int blit_width = item.dimensions().width();
         int blit_height = item.dimensions().height();
-        _blit_impl(item, x, y, item_x, item_y, blit_width, blit_height);
+
+        if(_crop_item(x, y, item_x, item_y, blit_width, blit_height))
+        {
+            BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
+
+            _blit_impl(x, y, item_x, item_y, blit_width, blit_height, item);
+        }
+    }
+
+    /**
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied.
+     * @param position Position of the current page top-left corner.
+     * @param item Item to copy to the current page.
+     */
+    inline void blit(const point& position, const palette_bitmap_pixels_item& item)
+    {
+        blit(position.x(), position.y(), item);
+    }
+
+    /**
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are skipped.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param item Item to copy to the current page.
+     */
+    inline void unsafe_draw(int x, int y, const palette_bitmap_pixels_item& item)
+    {
+        BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
+
+        _draw_impl(x, y, 0, 0, item.dimensions().width(), item.dimensions().height(), item);
+    }
+
+    /**
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are skipped.
+     * @param position Position of the current page top-left corner.
+     * @param item Item to copy to the current page.
+     */
+    inline void unsafe_draw(const point& position, const palette_bitmap_pixels_item& item)
+    {
+        unsafe_draw(position.x(), position.y(), item);
+    }
+
+    /**
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param item Item to copy to the current page.
+     */
+    inline void draw(int x, int y, const palette_bitmap_pixels_item& item)
+    {
+        int item_x = 0;
+        int item_y = 0;
+        int blit_width = item.dimensions().width();
+        int blit_height = item.dimensions().height();
+
+        if(_crop_item(x, y, item_x, item_y, blit_width, blit_height))
+        {
+            BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
+
+            _draw_impl(x, y, item_x, item_y, blit_width, blit_height, item);
+        }
+    }
+
+    /**
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped.
+     * @param position Position of the current page top-left corner.
+     * @param item Item to copy to the current page.
+     */
+    inline void draw(const point& position, const palette_bitmap_pixels_item& item)
+    {
+        draw(position.x(), position.y(), item);
     }
 
 private:
@@ -577,8 +752,53 @@ private:
         return x * 0x01010101;
     }
 
-    inline void _blit_impl(const palette_bitmap_pixels_item& item, int page_x, int page_y, int item_x, int item_y,
-                           int blit_width, int blit_height)
+    [[nodiscard]] static inline bool _crop_item(
+            int& x, int& y, int& item_x, int& item_y, int& blit_width, int& blit_height)
+    {
+        int x2 = x + blit_width - 1;
+        int y2 = y + blit_height - 1;
+        bool outside =
+                (x < 0 && x2 < 0) || (x >= _page_width && x2 >= _page_width) ||
+                (y < 0 && y2 < 0) || (y >= _page_height && y2 >= _page_height);
+
+        if(outside)
+        {
+            return false;
+        }
+
+        if(x < 0)
+        {
+            item_x -= x;
+            blit_width += x;
+            x = 0;
+        }
+
+        int right = x + blit_width - _page_width;
+
+        if(right > 0)
+        {
+            blit_width -= right;
+        }
+
+        if(y < 0)
+        {
+            item_y -= y;
+            blit_height += y;
+            y = 0;
+        }
+
+        int bottom = y + blit_height - _page_height;
+
+        if(bottom > 0)
+        {
+            blit_height -= bottom;
+        }
+
+        return true;
+    }
+
+    inline void _blit_impl(int page_x, int page_y, int item_x, int item_y, int blit_width, int blit_height,
+                           const palette_bitmap_pixels_item& item)
     {
         int item_width = item.dimensions().width();
         const uint8_t* src = item.pixels_ptr() + (item_y * item_width) + item_x;
@@ -589,6 +809,87 @@ private:
             _bn::memory::unsafe_copy_bytes_vram(src, blit_width, dst);
             src += item_width;
             dst += _page_width;
+        }
+    }
+
+    inline void _draw_impl(int page_x, int page_y, int item_x, int item_y, int blit_width, int blit_height,
+                           const palette_bitmap_pixels_item& item)
+    {
+        auto dst_base = reinterpret_cast<uint8_t*>(_page);
+        auto dst = reinterpret_cast<uint16_t*>(dst_base + (page_y * _page_width) + (page_x &~ 1));
+        int item_width = item.dimensions().width();
+
+        // Unaligned left:
+        if(page_x & 1)
+        {
+            const uint8_t* src = item.pixels_ptr() + (item_y * item_width) + item_x;
+            uint16_t* dst_l = dst;
+
+            for(int iy = 0; iy < blit_height; ++iy)
+            {
+                if(uint8_t src_x = *src)
+                {
+                    *dst_l = (*dst_l & 0xFF) | (src_x << 8);
+                }
+
+                src += item_width;
+                dst_l += _page_width / 2;
+            }
+
+            ++item_x;
+            --blit_width;
+            ++dst;
+        }
+
+        // Unaligned right:
+        if(blit_width & 1)
+        {
+            const uint8_t* src = item.pixels_ptr() + (item_y * item_width) + item_x + blit_width - 1;
+            uint16_t* dst_l = dst + (blit_width / 2);
+
+            for(int iy = 0; iy < blit_height; ++iy)
+            {
+                if(uint8_t src_x = *src)
+                {
+                    *dst_l = (*dst_l &~ 0xFF) | src_x;
+                }
+
+                src += item_width;
+                dst_l += _page_width / 2;
+            }
+
+            --blit_width;
+        }
+
+        if(blit_width)
+        {
+            // Center:
+            const uint8_t* src = item.pixels_ptr() + (item_y * item_width) + item_x;
+            uint16_t* dst_l = dst;
+            int ixl = blit_width / 2;
+
+            for(int iy = 0; iy < blit_height; ++iy)
+            {
+                const uint8_t* src_x = src;
+                uint16_t* dst_x = dst_l;
+
+                for(int ix = 0; ix < ixl; ++ix)
+                {
+                    uint8_t src_a = *src_x;
+                    ++src_x;
+
+                    uint8_t src_b = *src_x;
+                    ++src_x;
+
+                    uint8_t dst_a = src_a ? src_a : *dst_x & 0xFF;
+                    uint8_t dst_b = src_b ? src_b : *dst_x >> 8;
+                    *dst_x = dst_a | (dst_b << 8);
+                    ++dst_x;
+                }
+
+                src += item_width;
+                dst_l += _page_width / 2;
+            }
         }
     }
 };

@@ -153,7 +153,7 @@ uint16_t* bitmap_page()
     return hw::display::hidden_bitmap_page();
 }
 
-void flip_bitmap_page()
+void flip_bitmap_page_later()
 {
     static_data& data = data_ref();
     data.bitmap_page_flipped = ! data.bitmap_page_flipped;
@@ -163,7 +163,7 @@ void flip_bitmap_page()
 
 void flip_bitmap_page_now()
 {
-    flip_bitmap_page();
+    flip_bitmap_page_later();
     hw::display::flip_bitmap_page();
 }
 

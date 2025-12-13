@@ -232,6 +232,9 @@ namespace bgs_manager
     void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes* attributes_ptr,
                                               uint16_t* dest_ptr);
 
+    void fill_hblank_effect_bitmap_attributes(id_type id, const bitmap_bg_attributes* attributes_ptr,
+                                              uint16_t* dest_ptr);
+
     void rebuild_handles();
 
     void update();

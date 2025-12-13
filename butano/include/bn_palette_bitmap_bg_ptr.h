@@ -596,6 +596,25 @@ public:
     }
 
     /**
+     * @brief Exchanges the contents of this palette_bitmap_bg_ptr with those of the other one.
+     * @param other palette_bitmap_bg_ptr to exchange the contents with.
+     */
+    void swap(palette_bitmap_bg_ptr& other)
+    {
+        bn::swap(_handle, other._handle);
+    }
+
+    /**
+     * @brief Exchanges the contents of an palette_bitmap_bg_ptr with those of another one.
+     * @param a First palette_bitmap_bg_ptr to exchange the contents with.
+     * @param b Second palette_bitmap_bg_ptr to exchange the contents with.
+     */
+    friend void swap(palette_bitmap_bg_ptr& a, palette_bitmap_bg_ptr& b)
+    {
+        bn::swap(a._handle, b._handle);
+    }
+
+    /**
      * @brief Default equal operator.
      */
     [[nodiscard]] friend bool operator==(const palette_bitmap_bg_ptr& a, const palette_bitmap_bg_ptr& b) = default;

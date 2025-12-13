@@ -453,11 +453,20 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a4b1dace4c41ab869a0691de0e1b22f4e" class="m-doc-self">handle</a>(</span><span class="m-doc-wrap">) const -&gt; const void*</span>
             </dt>
             <dd>Returns the internal handle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae2dc5c4cc6815e3ef3376b8a74ecee8d" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> with those of the other one.</dd>
           </dl>
         </section>
         <section id="friends">
           <h2><a href="#friends">Friends</a></h2>
           <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a11029477530a9428a91f609e4827b410" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of an <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> with those of another one.</dd>
             <dt id="adaf91bd5a7939da3bb1ede71a7f09a21">
               <span class="m-doc-wrap-bumper">auto <a href="#adaf91bd5a7939da3bb1ede71a7f09a21" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; a,
               const <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span></span>
@@ -1110,6 +1119,45 @@
             </h3>
             <p>Returns the hardware ID assigned to this background or <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> if no hardware ID has been assigned.</p>
 <p>Normally you should not need to call this function, but it can be useful for messing with HDMA for example.</p><p>A background doesn&#x27;t have an assigned hardware ID if it is not visible.</p><p>Assigned hardware ID can change after calling this method if some properties of this background or others are updated.</p><p>Call this method at your own risk.</p>
+          </div></section>
+          <section class="m-doc-details" id="ae2dc5c4cc6815e3ef3376b8a74ecee8d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />palette_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae2dc5c4cc6815e3ef3376b8a74ecee8d" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a11029477530a9428a91f609e4827b410"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a11029477530a9428a91f609e4827b410" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of an <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1palette__bitmap__bg__ptr.html" class="m-doc">palette_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
         </section>
       </div>

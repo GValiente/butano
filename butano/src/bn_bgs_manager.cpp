@@ -1761,6 +1761,23 @@ void fill_hblank_effect_affine_attributes(id_type id, const affine_bg_attributes
     }
 }
 
+void fill_hblank_effect_bitmap_attributes(id_type id, const bitmap_bg_attributes* attributes_ptr, uint16_t* dest_ptr)
+{
+    auto item = static_cast<item_type*>(id);
+    uint16_t hw_cnt = item->hw_cnt;
+
+    for(int index = 0, limit = display::height(); index < limit; ++index)
+    {
+        const bitmap_bg_attributes& attributes = attributes_ptr[index];
+
+        uint16_t dest_hw_cnt = hw_cnt;
+        hw::bgs::set_priority(attributes.priority(), dest_hw_cnt);
+        hw::bgs::set_mosaic_enabled(attributes.mosaic_enabled(), dest_hw_cnt);
+        hw::bgs::set_green_swap_mode(attributes.green_swap_mode(), dest_hw_cnt);
+        dest_ptr[index] = dest_hw_cnt;
+    }
+}
+
 void rebuild_handles()
 {
     static_data& data = data_ref();

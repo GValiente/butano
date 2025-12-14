@@ -136,14 +136,16 @@ palette_bitmap_bg_ptr::~palette_bitmap_bg_ptr()
     }
 }
 
-const uint16_t* palette_bitmap_bg_ptr::page() const
+span<const uint16_t> palette_bitmap_bg_ptr::page() const
 {
-    return display_manager::bitmap_page();
+    uint16_t* ptr = display_manager::bitmap_page();
+    return span<const uint16_t>(ptr, (bitmap_bg::palette_width() * bitmap_bg::palette_height()) / 2);
 }
 
-uint16_t* palette_bitmap_bg_ptr::page()
+span<uint16_t> palette_bitmap_bg_ptr::page()
 {
-    return display_manager::bitmap_page();
+    uint16_t* ptr = display_manager::bitmap_page();
+    return span<uint16_t>(ptr, (bitmap_bg::palette_width() * bitmap_bg::palette_height()) / 2);
 }
 
 void palette_bitmap_bg_ptr::flip_page_later()

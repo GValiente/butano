@@ -13,6 +13,7 @@
  * @ingroup palette_bitmap_bg
  */
 
+#include "bn_span.h"
 #include "bn_optional.h"
 #include "bn_fixed_point.h"
 
@@ -160,14 +161,14 @@ public:
     ~palette_bitmap_bg_ptr();
 
     /**
-     * @brief Returns a pointer to the hidden frame buffer.
+     * @brief Returns a span of the hidden frame buffer.
      */
-    [[nodiscard]] const uint16_t* page() const;
+    [[nodiscard]] span<const uint16_t> page() const;
 
     /**
-     * @brief Returns a pointer to the hidden frame buffer.
+     * @brief Returns a span of the hidden frame buffer.
      */
-    [[nodiscard]] uint16_t* page();
+    [[nodiscard]] span<uint16_t> page();
 
     /**
      * @brief Swaps the hidden frame buffer in the next core::update call.

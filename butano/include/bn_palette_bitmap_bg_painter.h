@@ -77,19 +77,19 @@ public:
     }
 
     /**
-     * @brief Returns a pointer to the hidden frame buffer.
+     * @brief Returns a span of the hidden frame buffer.
      */
-    [[nodiscard]] const uint16_t* page() const
+    [[nodiscard]] span<const uint16_t> page() const
     {
-        return _page;
+        return span<const uint16_t>(_page, (bitmap_bg::palette_width() * bitmap_bg::palette_height()) / 2);
     }
 
     /**
-     * @brief Returns a pointer to the hidden frame buffer.
+     * @brief Returns a span of the hidden frame buffer.
      */
-    [[nodiscard]] uint16_t* page()
+    [[nodiscard]] span<uint16_t> page()
     {
-        return _page;
+        return span<uint16_t>(_page, (bitmap_bg::palette_width() * bitmap_bg::palette_height()) / 2);
     }
 
     /**

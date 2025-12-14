@@ -74,13 +74,13 @@ namespace bn::hw::bgs
     inline void setup_affine(const affine_bg_builder& builder, uint16_t& cnt)
     {
         cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
-                       (builder.mosaic_enabled() << 6) | (builder.wrapping_enabled() << 13) | BG_8BPP);
+                       (builder.mosaic_enabled() << 6) | (builder.wrapping_enabled() << 13));
     }
 
     inline void setup_palette_bitmap(const palette_bitmap_bg_builder& builder, uint16_t& cnt)
     {
         cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
-                       (builder.mosaic_enabled() << 6) | BG_8BPP);
+                       (builder.mosaic_enabled() << 6));
     }
 
     inline void set_tiles_cbb(int tiles_cbb, uint16_t& cnt)

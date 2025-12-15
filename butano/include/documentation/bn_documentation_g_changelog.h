@@ -18,6 +18,8 @@
  *   to see how to use them.
  * * bn::memory::vram_safe_copy added.
  * * bn::clip_line added.
+ * * `const` `vram` methods added for bn::regular_bg_tiles_ptr, bn::regular_bg_map_ptr,
+ *   bn::affine_bg_tiles_ptr, bn::affine_bg_map_ptr and bn::sprite_tiles_ptr.
  * * Sprite tiles are allocated at the end of VRAM.
  * * Affine backgrounds setup optimized.
  * * @ref faq_backgrounds_animated question improved.

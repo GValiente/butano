@@ -448,6 +448,12 @@ public:
      * @brief Returns the allocated memory in VRAM
      * if this affine_bg_map_cell was created with allocate or allocate_optional; bn::nullopt otherwise.
      */
+    [[nodiscard]] optional<span<const affine_bg_map_cell>> vram() const;
+
+    /**
+     * @brief Returns the allocated memory in VRAM
+     * if this affine_bg_map_cell was created with allocate or allocate_optional; bn::nullopt otherwise.
+     */
     [[nodiscard]] optional<span<affine_bg_map_cell>> vram();
 
     /**

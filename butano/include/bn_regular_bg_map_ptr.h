@@ -485,6 +485,12 @@ public:
      * @brief Returns the allocated memory in VRAM
      * if this regular_bg_map_cell was created with allocate or allocate_optional; bn::nullopt otherwise.
      */
+    [[nodiscard]] optional<span<const regular_bg_map_cell>> vram() const;
+
+    /**
+     * @brief Returns the allocated memory in VRAM
+     * if this regular_bg_map_cell was created with allocate or allocate_optional; bn::nullopt otherwise.
+     */
     [[nodiscard]] optional<span<regular_bg_map_cell>> vram();
 
     /**

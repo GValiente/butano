@@ -125,6 +125,19 @@ void regular_bg_tiles_ptr::reload_tiles_ref()
     bg_blocks_manager::reload(_handle);
 }
 
+optional<span<const tile>> regular_bg_tiles_ptr::vram() const
+{
+    optional<span<tile>> vram_opt = bg_blocks_manager::tiles_vram(_handle);
+    optional<span<const tile>> result;
+
+    if(span<tile>* vram = vram_opt.get())
+    {
+        result = span<const tile>(vram->data(), vram->size());
+    }
+
+    return result;
+}
+
 optional<span<tile>> regular_bg_tiles_ptr::vram()
 {
     return bg_blocks_manager::tiles_vram(_handle);

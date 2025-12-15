@@ -367,6 +367,19 @@ void affine_bg_map_ptr::set_palette(const bg_palette_item& palette_item)
     bg_blocks_manager::set_affine_map_palette(_handle, bg_palette_ptr::create(palette_item));
 }
 
+optional<span<const affine_bg_map_cell>> affine_bg_map_ptr::vram() const
+{
+    optional<span<affine_bg_map_cell>> vram_opt = bg_blocks_manager::affine_map_vram(_handle);
+    optional<span<const affine_bg_map_cell>> result;
+
+    if(span<affine_bg_map_cell>* vram = vram_opt.get())
+    {
+        result = span<const affine_bg_map_cell>(vram->data(), vram->size());
+    }
+
+    return result;
+}
+
 optional<span<affine_bg_map_cell>> affine_bg_map_ptr::vram()
 {
     return bg_blocks_manager::affine_map_vram(_handle);

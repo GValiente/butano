@@ -163,6 +163,19 @@ void sprite_tiles_ptr::reload_tiles_ref()
     sprite_tiles_manager::reload_tiles_ref(_handle);
 }
 
+optional<span<const tile>> sprite_tiles_ptr::vram() const
+{
+    optional<span<tile>> vram_opt = sprite_tiles_manager::vram(_handle);
+    optional<span<const tile>> result;
+
+    if(span<tile>* vram = vram_opt.get())
+    {
+        result = span<const tile>(vram->data(), vram->size());
+    }
+
+    return result;
+}
+
 optional<span<tile>> sprite_tiles_ptr::vram()
 {
     return sprite_tiles_manager::vram(_handle);

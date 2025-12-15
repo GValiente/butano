@@ -259,6 +259,12 @@ public:
      * @brief Returns the allocated memory in VRAM
      * if this sprite_tiles_ptr was created with allocate or allocate_optional; bn::nullopt otherwise.
      */
+    [[nodiscard]] optional<span<const tile>> vram() const;
+
+    /**
+     * @brief Returns the allocated memory in VRAM
+     * if this sprite_tiles_ptr was created with allocate or allocate_optional; bn::nullopt otherwise.
+     */
     [[nodiscard]] optional<span<tile>> vram();
 
     /**

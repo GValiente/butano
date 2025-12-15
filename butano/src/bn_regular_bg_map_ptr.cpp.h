@@ -424,6 +424,19 @@ void regular_bg_map_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tile
     bg_blocks_manager::set_regular_map_tiles_and_palette(_handle, move(*tiles_ptr), move(*palette_ptr));
 }
 
+optional<span<const regular_bg_map_cell>> regular_bg_map_ptr::vram() const
+{
+    optional<span<regular_bg_map_cell>> vram_opt = bg_blocks_manager::regular_map_vram(_handle);
+    optional<span<const regular_bg_map_cell>> result;
+
+    if(span<regular_bg_map_cell>* vram = vram_opt.get())
+    {
+        result = span<const regular_bg_map_cell>(vram->data(), vram->size());
+    }
+
+    return result;
+}
+
 optional<span<regular_bg_map_cell>> regular_bg_map_ptr::vram()
 {
     return bg_blocks_manager::regular_map_vram(_handle);

@@ -74,6 +74,9 @@ public:
 
     /**
      * @brief Returns a pointer to the referenced palette bitmap pixels.
+     *
+     * The pixels are not copied but referenced, so they should outlive the palette_bitmap_pixels_item
+     * to avoid dangling references.
      */
     [[nodiscard]] constexpr const uint8_t* pixels_ptr() const
     {
@@ -82,6 +85,9 @@ public:
 
     /**
      * @brief Returns the referenced palette bitmap pixels.
+     *
+     * The pixels are not copied but referenced, so they should outlive the palette_bitmap_pixels_item
+     * to avoid dangling references.
      */
     [[nodiscard]] constexpr const uint8_t& pixels_ref() const
     {
@@ -90,6 +96,9 @@ public:
 
     /**
      * @brief Returns the size in pixels of the referenced palette bitmap pixels.
+     *
+     * The pixels are not copied but referenced, so they should outlive the palette_bitmap_pixels_item
+     * to avoid dangling references.
      */
     [[nodiscard]] constexpr const size& dimensions() const
     {
@@ -98,10 +107,47 @@ public:
 
     /**
      * @brief Returns the number of referenced palette bitmap pixels.
+     *
+     * The pixels are not copied but referenced, so they should outlive the palette_bitmap_pixels_item
+     * to avoid dangling references.
      */
     [[nodiscard]] constexpr int pixels_count() const
     {
         return _dimensions.width() * _dimensions.height();
+    }
+
+    /**
+     * @brief Returns the index of the referenced pixel in the specified pixel coordinates.
+     *
+     * The pixels are not copied but referenced, so they should outlive the palette_bitmap_pixels_item
+     * to avoid dangling references.
+     *
+     * @param x Horizontal position of the palette bitmap pixel [0..dimensions().width()).
+     * @param y Vertical position of the palette bitmap pixel [0..dimensions().height()).
+     * @return The index of the referenced palette bitmap pixel.
+     */
+    [[nodiscard]] constexpr int pixel_index(int x, int y) const
+    {
+        int width = _dimensions.width();
+        BN_ASSERT(x >= 0 && x < width, "Invalid x: ", x, " - ", width);
+        BN_ASSERT(y >= 0 && y < _dimensions.height(), "Invalid y: ", y, " - ", _dimensions.height());
+        BN_BASIC_ASSERT(_compression == compression_type::NONE, "Compressed pixels not supported");
+
+        return (y * width) + x;
+    }
+
+    /**
+     * @brief Returns the index of the referenced pixel in the specified pixel coordinates.
+     *
+     * The pixels are not copied but referenced, so they should outlive the palette_bitmap_pixels_item
+     * to avoid dangling references.
+     *
+     * @param position Position of the palette bitmap pixel.
+     * @return The index of the referenced palette bitmap pixel.
+     */
+    [[nodiscard]] constexpr int pixel_index(const point& position) const
+    {
+        return pixel_index(position.x(), position.y());
     }
 
     /**
@@ -116,11 +162,7 @@ public:
      */
     [[nodiscard]] constexpr uint8_t pixel(int x, int y) const
     {
-        int width = _dimensions.width();
-        BN_ASSERT(x >= 0 && x < width, "Invalid x: ", x, " - ", width);
-        BN_ASSERT(y >= 0 && y < _dimensions.height(), "Invalid y: ", y, " - ", _dimensions.height());
-
-        return _pixels_ptr[(y * width) + x];
+        return _pixels_ptr[pixel_index(x, y)];
     }
 
     /**
@@ -134,7 +176,7 @@ public:
      */
     [[nodiscard]] constexpr uint8_t pixel(const point& position) const
     {
-        return pixel(position.x(), position.y());
+        return _pixels_ptr[pixel_index(position)];
     }
 
     /**

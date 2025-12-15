@@ -17,8 +17,8 @@
 #include "bn_memory.h"
 #include "bn_bitmap_bg.h"
 #include "bn_clip_line.h"
+#include "bn_palette_bitmap_roi.h"
 #include "bn_palette_bitmap_bg_ptr.h"
-#include "bn_palette_bitmap_pixels_item.h"
 
 namespace bn
 {
@@ -648,6 +648,32 @@ public:
     }
 
     /**
+     * @brief Copies the given region of interest to the current page without bounds checking.
+     * Transparent pixels are also copied.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param roi Region of interest to copy to the current page.
+     */
+    inline void unsafe_blit(int x, int y, const palette_bitmap_roi& roi)
+    {
+        const palette_bitmap_pixels_item& item_ref = roi.item_ref();
+        BN_BASIC_ASSERT(item_ref.compression() == compression_type::NONE, "Item is compressed");
+
+        _blit_impl(x, y, roi.x(), roi.y(), roi.width(), roi.height(), item_ref);
+    }
+
+    /**
+     * @brief Copies the given region of interest to the current page without bounds checking.
+     * Transparent pixels are also copied.
+     * @param position Position of the current page top-left corner.
+     * @param roi Region of interest to copy to the current page.
+     */
+    inline void unsafe_blit(const point& position, const palette_bitmap_roi& roi)
+    {
+        unsafe_blit(position.x(), position.y(), roi);
+    }
+
+    /**
      * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
@@ -660,7 +686,7 @@ public:
         int blit_width = item.dimensions().width();
         int blit_height = item.dimensions().height();
 
-        if(_crop_item(x, y, item_x, item_y, blit_width, blit_height))
+        if(_crop(x, y, item_x, item_y, blit_width, blit_height))
         {
             BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
 
@@ -676,6 +702,40 @@ public:
     inline void blit(const point& position, const palette_bitmap_pixels_item& item)
     {
         blit(position.x(), position.y(), item);
+    }
+
+    /**
+     * @brief Copies the given region of interest to the current page with bounds checking.
+     * Transparent pixels are also copied.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param roi Region of interest to copy to the current page.
+     */
+    inline void blit(int x, int y, const palette_bitmap_roi& roi)
+    {
+        int item_x = roi.x();
+        int item_y = roi.y();
+        int blit_width = roi.width();
+        int blit_height = roi.height();
+
+        if(_crop(x, y, item_x, item_y, blit_width, blit_height))
+        {
+            const palette_bitmap_pixels_item& item_ref = roi.item_ref();
+            BN_BASIC_ASSERT(item_ref.compression() == compression_type::NONE, "Item is compressed");
+
+            _blit_impl(x, y, item_x, item_y, blit_width, blit_height, item_ref);
+        }
+    }
+
+    /**
+     * @brief Copies the given region of interest to the current page with bounds checking.
+     * Transparent pixels are also copied.
+     * @param position Position of the current page top-left corner.
+     * @param roi Region of interest to copy to the current page.
+     */
+    inline void blit(const point& position, const palette_bitmap_roi& roi)
+    {
+        blit(position.x(), position.y(), roi);
     }
 
     /**
@@ -702,6 +762,32 @@ public:
     }
 
     /**
+     * @brief Copies the given region of interest to the current page without bounds checking.
+     * Transparent pixels are skipped.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param roi Region of interest to copy to the current page.
+     */
+    inline void unsafe_draw(int x, int y, const palette_bitmap_roi& roi)
+    {
+        const palette_bitmap_pixels_item& item_ref = roi.item_ref();
+        BN_BASIC_ASSERT(item_ref.compression() == compression_type::NONE, "Item is compressed");
+
+        _draw_impl(x, y, roi.x(), roi.y(), roi.width(), roi.height(), item_ref);
+    }
+
+    /**
+     * @brief Copies the given region of interest to the current page without bounds checking.
+     * Transparent pixels are skipped.
+     * @param position Position of the current page top-left corner.
+     * @param roi Region of interest to copy to the current page.
+     */
+    inline void unsafe_draw(const point& position, const palette_bitmap_roi& roi)
+    {
+        unsafe_draw(position.x(), position.y(), roi);
+    }
+
+    /**
      * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
@@ -714,7 +800,7 @@ public:
         int blit_width = item.dimensions().width();
         int blit_height = item.dimensions().height();
 
-        if(_crop_item(x, y, item_x, item_y, blit_width, blit_height))
+        if(_crop(x, y, item_x, item_y, blit_width, blit_height))
         {
             BN_BASIC_ASSERT(item.compression() == compression_type::NONE, "Item is compressed");
 
@@ -730,6 +816,40 @@ public:
     inline void draw(const point& position, const palette_bitmap_pixels_item& item)
     {
         draw(position.x(), position.y(), item);
+    }
+
+    /**
+     * @brief Copies the given region of interest to the current page with bounds checking.
+     * Transparent pixels are skipped.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param roi Region of interest to copy to the current page.
+     */
+    inline void draw(int x, int y, const palette_bitmap_roi& roi)
+    {
+        int item_x = roi.x();
+        int item_y = roi.y();
+        int blit_width = roi.width();
+        int blit_height = roi.height();
+
+        if(_crop(x, y, item_x, item_y, blit_width, blit_height))
+        {
+            const palette_bitmap_pixels_item& item_ref = roi.item_ref();
+            BN_BASIC_ASSERT(item_ref.compression() == compression_type::NONE, "Item is compressed");
+
+            _draw_impl(x, y, item_x, item_y, blit_width, blit_height, item_ref);
+        }
+    }
+
+    /**
+     * @brief Copies the given region of interest to the current page with bounds checking.
+     * Transparent pixels are skipped.
+     * @param position Position of the current page top-left corner.
+     * @param roi Region of interest to copy to the current page.
+     */
+    inline void draw(const point& position, const palette_bitmap_roi& roi)
+    {
+        draw(position.x(), position.y(), roi);
     }
 
 private:
@@ -752,7 +872,7 @@ private:
         return x * 0x01010101;
     }
 
-    [[nodiscard]] static inline bool _crop_item(
+    [[nodiscard]] static inline bool _crop(
             int& x, int& y, int& item_x, int& item_y, int& blit_width, int& blit_height)
     {
         int x2 = x + blit_width - 1;

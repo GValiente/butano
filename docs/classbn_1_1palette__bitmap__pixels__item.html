@@ -84,22 +84,31 @@
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-doc">
-            <dt id="ac1636e6752029dc35ce2fbb8ea732f0e">
-              <span class="m-doc-wrap-bumper">auto <a href="#ac1636e6752029dc35ce2fbb8ea732f0e" class="m-doc-self">pixels_ptr</a>(</span><span class="m-doc-wrap">) const -&gt; const uint8_t* <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac1636e6752029dc35ce2fbb8ea732f0e" class="m-doc">pixels_ptr</a>(</span><span class="m-doc-wrap">) const -&gt; const uint8_t* <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns a pointer to the referenced palette bitmap pixels.</dd>
-            <dt id="a50d33826b1bc2fb6b14b74b87375272d">
-              <span class="m-doc-wrap-bumper">auto <a href="#a50d33826b1bc2fb6b14b74b87375272d" class="m-doc-self">pixels_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const uint8_t&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a50d33826b1bc2fb6b14b74b87375272d" class="m-doc">pixels_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const uint8_t&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the referenced palette bitmap pixels.</dd>
-            <dt id="adcd4d5eb613516a84f05fe5dc15dab4a">
-              <span class="m-doc-wrap-bumper">auto <a href="#adcd4d5eb613516a84f05fe5dc15dab4a" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#adcd4d5eb613516a84f05fe5dc15dab4a" class="m-doc">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the size in pixels of the referenced palette bitmap pixels.</dd>
-            <dt id="a11b65ea180de345903374f7f2e8d9b6e">
-              <span class="m-doc-wrap-bumper">auto <a href="#a11b65ea180de345903374f7f2e8d9b6e" class="m-doc-self">pixels_count</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a11b65ea180de345903374f7f2e8d9b6e" class="m-doc">pixels_count</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
             </dt>
             <dd>Returns the number of referenced palette bitmap pixels.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1a39e1f43637989471acc30cf823ef9b" class="m-doc">pixel_index</a>(</span><span class="m-doc-wrap">int x,
+              int y) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the index of the referenced pixel in the specified pixel coordinates.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3052087ea7ecd1228004196cb72713a0" class="m-doc">pixel_index</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the index of the referenced pixel in the specified pixel coordinates.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a9bea6f865ab20dc03c3e26299fc076cc" class="m-doc">pixel</a>(</span><span class="m-doc-wrap">int x,
               int y) const -&gt; uint8_t <span class="m-label m-flat m-primary">constexpr</span></span>
@@ -179,6 +188,87 @@
                   <td>Compression type.</td>
                 </tr>
               </tbody>
+            </table>
+<p>The pixels are not copied but referenced, so they should outlive the <a href="classbn_1_1palette__bitmap__pixels__item.html" class="m-doc">palette_<wbr />bitmap_<wbr />pixels_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac1636e6752029dc35ce2fbb8ea732f0e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const uint8_t* bn::<wbr />palette_bitmap_pixels_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac1636e6752029dc35ce2fbb8ea732f0e" class="m-doc-self">pixels_ptr</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a pointer to the referenced palette bitmap pixels.</p>
+<p>The pixels are not copied but referenced, so they should outlive the <a href="classbn_1_1palette__bitmap__pixels__item.html" class="m-doc">palette_<wbr />bitmap_<wbr />pixels_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a50d33826b1bc2fb6b14b74b87375272d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const uint8_t&amp; bn::<wbr />palette_bitmap_pixels_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a50d33826b1bc2fb6b14b74b87375272d" class="m-doc-self">pixels_ref</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the referenced palette bitmap pixels.</p>
+<p>The pixels are not copied but referenced, so they should outlive the <a href="classbn_1_1palette__bitmap__pixels__item.html" class="m-doc">palette_<wbr />bitmap_<wbr />pixels_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="adcd4d5eb613516a84f05fe5dc15dab4a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; bn::<wbr />palette_bitmap_pixels_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#adcd4d5eb613516a84f05fe5dc15dab4a" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the size in pixels of the referenced palette bitmap pixels.</p>
+<p>The pixels are not copied but referenced, so they should outlive the <a href="classbn_1_1palette__bitmap__pixels__item.html" class="m-doc">palette_<wbr />bitmap_<wbr />pixels_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a11b65ea180de345903374f7f2e8d9b6e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />palette_bitmap_pixels_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a11b65ea180de345903374f7f2e8d9b6e" class="m-doc-self">pixels_count</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the number of referenced palette bitmap pixels.</p>
+<p>The pixels are not copied but referenced, so they should outlive the <a href="classbn_1_1palette__bitmap__pixels__item.html" class="m-doc">palette_<wbr />bitmap_<wbr />pixels_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1a39e1f43637989471acc30cf823ef9b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />palette_bitmap_pixels_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1a39e1f43637989471acc30cf823ef9b" class="m-doc-self">pixel_index</a>(</span><span class="m-doc-wrap">int x,
+              int y) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the index of the referenced pixel in the specified pixel coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the palette bitmap pixel [0..<a href="#adcd4d5eb613516a84f05fe5dc15dab4a" class="m-doc">dimensions()</a>.width()).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the palette bitmap pixel [0..<a href="#adcd4d5eb613516a84f05fe5dc15dab4a" class="m-doc">dimensions()</a>.height()).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The index of the referenced palette bitmap pixel.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The pixels are not copied but referenced, so they should outlive the <a href="classbn_1_1palette__bitmap__pixels__item.html" class="m-doc">palette_<wbr />bitmap_<wbr />pixels_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3052087ea7ecd1228004196cb72713a0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />palette_bitmap_pixels_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3052087ea7ecd1228004196cb72713a0" class="m-doc-self">pixel_index</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the index of the referenced pixel in the specified pixel coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the palette bitmap pixel.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The index of the referenced palette bitmap pixel.</td>
+                </tr>
+              </tfoot>
             </table>
 <p>The pixels are not copied but referenced, so they should outlive the <a href="classbn_1_1palette__bitmap__pixels__item.html" class="m-doc">palette_<wbr />bitmap_<wbr />pixels_<wbr />item</a> to avoid dangling references.</p>
           </div></section>

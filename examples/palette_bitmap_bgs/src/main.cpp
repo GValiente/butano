@@ -89,6 +89,33 @@ namespace
         }
     }
 
+    void palette_bitmap_bgs_rois_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Palette bitmap BGs RoIs", info_text_lines, text_generator);
+
+        bn::palette_bitmap_bg_ptr bg = bn::palette_bitmap_bg_ptr::create(
+                bn::palette_bitmap_items::face.palette_item());
+
+        const bn::palette_bitmap_pixels_item& item = bn::palette_bitmap_items::face.pixels_item();
+        bn::palette_bitmap_bg_painter painter(bg);
+        painter.clear();
+        painter.blit(112 - 36, 72, bn::palette_bitmap_roi(item, 16, 16, 16, 16));
+        painter.blit(112 - 12, 72, bn::palette_bitmap_roi(item, 32, 32, 16, 16));
+        painter.blit(112 + 12, 72, bn::palette_bitmap_roi(item, 48, 96, 16, 16));
+        painter.blit(112 + 36, 72, bn::palette_bitmap_roi(item, 96, 80, 16, 16));
+        painter.flip_page_later();
+
+        while(! bn::keypad::start_pressed())
+        {
+            info.update();
+            bn::core::update();
+        }
+    }
+
     [[nodiscard]] bn::palette_bitmap_bg_ptr create_bitmap_bg()
     {
         bn::palette_bitmap_bg_ptr bg = bn::palette_bitmap_bg_ptr::create(
@@ -826,6 +853,9 @@ int main()
         bn::core::update();
 
         palette_bitmap_bgs_painter_scene(text_generator);
+        bn::core::update();
+
+        palette_bitmap_bgs_rois_scene(text_generator);
         bn::core::update();
 
         palette_bitmap_bgs_visibility_scene(text_generator);

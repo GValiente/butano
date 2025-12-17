@@ -16,6 +16,7 @@
  *
  * * Palette bitmap backgrounds support. Check the `palette_bitmap_bgs` example and the @ref import_image import guide
  *   to see how to use them.
+ * * Dual page bitmap backgrounds support.
  * * bn::memory::vram_safe_copy added.
  * * bn::clip_line added.
  * * `const` `vram` methods added for bn::regular_bg_tiles_ptr, bn::regular_bg_map_ptr,

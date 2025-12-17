@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::dp_direct_bitmap_bg_ptr class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>dp_direct_bitmap_bg_ptr <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__dp__direct__bitmap__bg__ptr_8h.html">&lt;bn_dp_direct_bitmap_bg_ptr.h&gt;</a></div>
+        </h1>
+        <p>std::shared_ptr like smart pointer that retains shared ownership of a dual page direct bitmap background.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pub-static-methods">Public static functions</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>Several <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> objects may own the same background.</p><p>The background is released when the last remaining <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> owning it is destroyed.</p>
+        <section id="pub-static-methods">
+          <h2><a href="#pub-static-methods">Public static functions</a></h2>
+          <dl class="m-doc">
+            <dt id="a66e726bf12aef4799acac3563f0e5c7d">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a66e726bf12aef4799acac3563f0e5c7d" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1size.html" class="m-doc">size</a></span>
+            </dt>
+            <dd>Returns the size in pixels of the backgrounds.</dd>
+            <dt id="a634ffaa8db986b5df74630c52f07bd8c">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a634ffaa8db986b5df74630c52f07bd8c" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a43ca1fc4b09d4cd21be9d763e2776e5c" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>&amp; builder) -&gt; <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ac61f4c6b012656f2062ac93e38541f36" class="m-doc">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>&amp;&amp; builder) -&gt; <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>.</dd>
+            <dt id="a568bb94805b923aad90a191d1c5b1a9b">
+              <span class="m-doc-wrap-bumper">static auto <a href="#a568bb94805b923aad90a191d1c5b1a9b" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a52e00136475d79f5e661efc7b83e10e3" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>&amp; builder) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> reference.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a972f0cd038c18944159bac8f9db4a117" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>&amp;&amp; builder) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>.</dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a690c8cbd0a5dec75e5a121129779e356" class="m-doc">dp_direct_bitmap_bg_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Copy constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a1690c3d24a878f86e41c084664fb0842" class="m-doc">dp_direct_bitmap_bg_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move constructor.</dd>
+            <dt id="a604962d5e30b1b9ffe042e0d73022a62">
+              <span class="m-doc-wrap-bumper"><a href="#a604962d5e30b1b9ffe042e0d73022a62" class="m-doc-self">~dp_direct_bitmap_bg_ptr</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Releases the referenced background if no more <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> objects reference to it.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a99e70088fc7b59c3494515e73190272f" class="m-doc">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; other) -&gt; <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Copy assignment operator.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0460e042fc643644324b683467bb59e7" class="m-doc">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) -&gt; <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; <span class="m-label m-flat m-success">noexcept</span></span>
+            </dt>
+            <dd>Move assignment operator.</dd>
+            <dt id="ae5f6578f95dac63ffae1abbec4d475be">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae5f6578f95dac63ffae1abbec4d475be" class="m-doc-self">page</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;</span>
+            </dt>
+            <dd>Returns a span of the hidden frame buffer.</dd>
+            <dt id="a21bfa1e9336d01cedb0a088a135aa11f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a21bfa1e9336d01cedb0a088a135aa11f" class="m-doc-self">page</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;</span>
+            </dt>
+            <dd>Returns a span of the hidden frame buffer.</dd>
+            <dt id="af287f398be352020e0fd883a2a1ede36">
+              <span class="m-doc-wrap-bumper">void <a href="#af287f398be352020e0fd883a2a1ede36" class="m-doc-self">flip_page_later</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Swaps the hidden frame buffer in the next <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa56703529170439784d4217b68b47897" class="m-doc">flip_page_now</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Swaps the hidden frame buffer without waiting to the next <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</dd>
+            <dt id="a0b7b335ae987d87b94f855b59a3301ed">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0b7b335ae987d87b94f855b59a3301ed" class="m-doc-self">x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal position of the background (relative to its camera, if it has one).</dd>
+            <dt id="a32dcbe981720587c29ff52512d92853e">
+              <span class="m-doc-wrap-bumper">void <a href="#a32dcbe981720587c29ff52512d92853e" class="m-doc-self">set_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x)</span>
+            </dt>
+            <dd>Sets the horizontal position of the background (relative to its camera, if it has one).</dd>
+            <dt id="aee793ff651d0fa516255b8dbd21eea90">
+              <span class="m-doc-wrap-bumper">auto <a href="#aee793ff651d0fa516255b8dbd21eea90" class="m-doc-self">y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical position of the background (relative to its camera, if it has one).</dd>
+            <dt id="abc3451e956794293a54ba8c2365bff54">
+              <span class="m-doc-wrap-bumper">void <a href="#abc3451e956794293a54ba8c2365bff54" class="m-doc-self">set_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> y)</span>
+            </dt>
+            <dd>Sets the vertical position of the background (relative to its camera, if it has one).</dd>
+            <dt id="ac71a9422a646fc5ea2e47b6e0eb4a3ad">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac71a9422a646fc5ea2e47b6e0eb4a3ad" class="m-doc-self">position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp;</span>
+            </dt>
+            <dd>Returns the position of the background (relative to its camera, if it has one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a9caa8bee2131ee64f429b98d40158cfa" class="m-doc">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> y)</span>
+            </dt>
+            <dd>Sets the position of the background (relative to its camera, if it has one).</dd>
+            <dt id="a45b591628eb49256bb5a38e9c08483af">
+              <span class="m-doc-wrap-bumper">void <a href="#a45b591628eb49256bb5a38e9c08483af" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; position)</span>
+            </dt>
+            <dd>Sets the position of the background (relative to its camera, if it has one).</dd>
+            <dt id="a5377e01adc15f9fab3ceadb5c0d4cef0">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5377e01adc15f9fab3ceadb5c0d4cef0" class="m-doc-self">top_left_x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal top-left position of the background (relative to its camera, if it has one).</dd>
+            <dt id="a17ca9730fdb40c36018a23a844a954a3">
+              <span class="m-doc-wrap-bumper">void <a href="#a17ca9730fdb40c36018a23a844a954a3" class="m-doc-self">set_top_left_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_x)</span>
+            </dt>
+            <dd>Sets the horizontal top-left position of the background (relative to its camera, if it has one).</dd>
+            <dt id="a2a8e073f3ee91f7994d5f00e834bde77">
+              <span class="m-doc-wrap-bumper">auto <a href="#a2a8e073f3ee91f7994d5f00e834bde77" class="m-doc-self">top_left_y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical top-left position of the background (relative to its camera, if it has one).</dd>
+            <dt id="a749bb596dcb7c6ecfaf416866f6acbfb">
+              <span class="m-doc-wrap-bumper">void <a href="#a749bb596dcb7c6ecfaf416866f6acbfb" class="m-doc-self">set_top_left_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_y)</span>
+            </dt>
+            <dd>Sets the vertical top-left position of the background (relative to its camera, if it has one).</dd>
+            <dt id="a8dc2474dceb56025e32e8739385ef8fc">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8dc2474dceb56025e32e8739385ef8fc" class="m-doc-self">top_left_position</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a></span>
+            </dt>
+            <dd>Returns the top-left position of the background (relative to its camera, if it has one).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a26cd6f2f18f6cbe68a741f70f2846945" class="m-doc">set_top_left_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_x,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_y)</span>
+            </dt>
+            <dd>Sets the top-left position of the background (relative to its camera, if it has one).</dd>
+            <dt id="ab2bab2db79457c57d0ebe47a6025a909">
+              <span class="m-doc-wrap-bumper">void <a href="#ab2bab2db79457c57d0ebe47a6025a909" class="m-doc-self">set_top_left_position</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; top_left_position)</span>
+            </dt>
+            <dd>Sets the top-left position of the background (relative to its camera, if it has one).</dd>
+            <dt id="a670bf64d03a0d57f4ed13cc6873c568c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a670bf64d03a0d57f4ed13cc6873c568c" class="m-doc-self">rotation_angle</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the rotation angle in degrees of the background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#abf3c727531d1620bc55b208f8210d4d1" class="m-doc">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle)</span>
+            </dt>
+            <dd>Sets the rotation angle in degrees of the background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a3c35a5c95cc5ee5392e857caf0f3d913" class="m-doc">set_rotation_angle_safe</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle)</span>
+            </dt>
+            <dd>Sets the rotation angle in degrees of the background.</dd>
+            <dt id="ad1d8ef95a2c126884e4f208e5b737766">
+              <span class="m-doc-wrap-bumper">auto <a href="#ad1d8ef95a2c126884e4f208e5b737766" class="m-doc-self">horizontal_scale</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal scale of the background.</dd>
+            <dt id="afcb48f6c6b7b55c3d9fe01c9ed1054e4">
+              <span class="m-doc-wrap-bumper">void <a href="#afcb48f6c6b7b55c3d9fe01c9ed1054e4" class="m-doc-self">set_horizontal_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> horizontal_scale)</span>
+            </dt>
+            <dd>Sets the horizontal scale of the background.</dd>
+            <dt id="a6c8ebf7129fcbc624333422319ac59be">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6c8ebf7129fcbc624333422319ac59be" class="m-doc-self">vertical_scale</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical scale of the background.</dd>
+            <dt id="ac5604cd6aa6eb1d7484c07a669be808a">
+              <span class="m-doc-wrap-bumper">void <a href="#ac5604cd6aa6eb1d7484c07a669be808a" class="m-doc-self">set_vertical_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> vertical_scale)</span>
+            </dt>
+            <dd>Sets the vertical scale of the background.</dd>
+            <dt id="a286d06319551a6d6c5cd7c729f4b772e">
+              <span class="m-doc-wrap-bumper">void <a href="#a286d06319551a6d6c5cd7c729f4b772e" class="m-doc-self">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> scale)</span>
+            </dt>
+            <dd>Sets the scale of the background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#afa0e16562738d232a531c621e6050e94" class="m-doc">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> horizontal_scale,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> vertical_scale)</span>
+            </dt>
+            <dd>Sets the scale of the background.</dd>
+            <dt id="a50c8bcf95e01b5a95bf3362d338c740b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a50c8bcf95e01b5a95bf3362d338c740b" class="m-doc-self">horizontal_shear</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal shear of the background.</dd>
+            <dt id="ac9ba7d5077ab821b049715d7513c946e">
+              <span class="m-doc-wrap-bumper">void <a href="#ac9ba7d5077ab821b049715d7513c946e" class="m-doc-self">set_horizontal_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> horizontal_shear)</span>
+            </dt>
+            <dd>Sets the horizontal shear of the background.</dd>
+            <dt id="aeaf02d1262415fabb10c51860a5a5333">
+              <span class="m-doc-wrap-bumper">auto <a href="#aeaf02d1262415fabb10c51860a5a5333" class="m-doc-self">vertical_shear</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical shear of the background.</dd>
+            <dt id="ace20740234bc5ddce241d24afa8a0677">
+              <span class="m-doc-wrap-bumper">void <a href="#ace20740234bc5ddce241d24afa8a0677" class="m-doc-self">set_vertical_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> vertical_shear)</span>
+            </dt>
+            <dd>Sets the vertical shear of the background.</dd>
+            <dt id="a7088558c91da328848dfb1ac96e1e31c">
+              <span class="m-doc-wrap-bumper">void <a href="#a7088558c91da328848dfb1ac96e1e31c" class="m-doc-self">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> shear)</span>
+            </dt>
+            <dd>Sets the shear of the background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8663f60e23d3c7c3cc90188b4f7d4405" class="m-doc">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> horizontal_shear,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> vertical_shear)</span>
+            </dt>
+            <dd>Sets the shear of the background.</dd>
+            <dt id="a58e2dfc45541fccf45106c9d8166b76d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a58e2dfc45541fccf45106c9d8166b76d" class="m-doc-self">horizontal_flip</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this background is flipped in the horizontal axis or not.</dd>
+            <dt id="ab4f6864873ecf07a030198c19575060b">
+              <span class="m-doc-wrap-bumper">void <a href="#ab4f6864873ecf07a030198c19575060b" class="m-doc-self">set_horizontal_flip</a>(</span><span class="m-doc-wrap">bool horizontal_flip)</span>
+            </dt>
+            <dd>Sets if this background must be flipped in the horizontal axis or not.</dd>
+            <dt id="ae346235cba0b0290ddddeee11e4186b7">
+              <span class="m-doc-wrap-bumper">auto <a href="#ae346235cba0b0290ddddeee11e4186b7" class="m-doc-self">vertical_flip</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this background must be flipped in the vertical axis or not.</dd>
+            <dt id="ae2c1cc142a290e9092dc9dcec9a3b20b">
+              <span class="m-doc-wrap-bumper">void <a href="#ae2c1cc142a290e9092dc9dcec9a3b20b" class="m-doc-self">set_vertical_flip</a>(</span><span class="m-doc-wrap">bool vertical_flip)</span>
+            </dt>
+            <dd>Sets if this background must be flipped in the vertical axis or not.</dd>
+            <dt id="afb9f2d18ba3a682efc03479b0b60ed44">
+              <span class="m-doc-wrap-bumper">auto <a href="#afb9f2d18ba3a682efc03479b0b60ed44" class="m-doc-self">pivot_x</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the horizontal position of the affine transformations pivot point of this background.</dd>
+            <dt id="aed4f1e566da73f7dcda072de22079885">
+              <span class="m-doc-wrap-bumper">void <a href="#aed4f1e566da73f7dcda072de22079885" class="m-doc-self">set_pivot_x</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> pivot_x)</span>
+            </dt>
+            <dd>Sets the horizontal position of the affine transformations pivot point of this background.</dd>
+            <dt id="af7f193486970d70ad8218b12077641c1">
+              <span class="m-doc-wrap-bumper">auto <a href="#af7f193486970d70ad8218b12077641c1" class="m-doc-self">pivot_y</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a></span>
+            </dt>
+            <dd>Returns the vertical position of the affine transformations pivot point of this background.</dd>
+            <dt id="ace9dba7f5ec2687fd1d7f0583aca15e8">
+              <span class="m-doc-wrap-bumper">void <a href="#ace9dba7f5ec2687fd1d7f0583aca15e8" class="m-doc-self">set_pivot_y</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> pivot_y)</span>
+            </dt>
+            <dd>Sets the vertical position of the affine transformations pivot point of this background.</dd>
+            <dt id="a535ddaa489ca7e360c23aef52453c23b">
+              <span class="m-doc-wrap-bumper">auto <a href="#a535ddaa489ca7e360c23aef52453c23b" class="m-doc-self">pivot_position</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp;</span>
+            </dt>
+            <dd>Returns the position of the affine transformations pivot point of this background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a175eb7f446069905e226d9736cb53e16" class="m-doc">set_pivot_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> pivot_x,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> pivot_y)</span>
+            </dt>
+            <dd>Sets the position of the affine transformations pivot point of this background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a79671dd950e20afc0bbabd49c41ab61a" class="m-doc">set_pivot_position</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; pivot_position)</span>
+            </dt>
+            <dd>Sets the position of the affine transformations pivot point of this background.</dd>
+            <dt id="a5f06198ae1a0f97ebe188c0ca446b06c">
+              <span class="m-doc-wrap-bumper">auto <a href="#a5f06198ae1a0f97ebe188c0ca446b06c" class="m-doc-self">mat_attributes</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1affine__bg__mat__attributes.html" class="m-doc">affine_<wbr />bg_<wbr />mat_<wbr />attributes</a>&amp;</span>
+            </dt>
+            <dd>Returns the attributes of the position and the transformation matrix of this background.</dd>
+            <dt id="ad63555749b1ad71ddffd6aa6a37bc85f">
+              <span class="m-doc-wrap-bumper">void <a href="#ad63555749b1ad71ddffd6aa6a37bc85f" class="m-doc-self">set_mat_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__mat__attributes.html" class="m-doc">affine_<wbr />mat_<wbr />attributes</a>&amp; mat_attributes)</span>
+            </dt>
+            <dd>Sets the attributes of the affine transformation matrix of this background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a81e2978d18be19f0fafd01472f26ced1" class="m-doc">priority</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            </dt>
+            <dd>Returns the priority of the background relative to sprites and other backgrounds.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa62f04f3c69559137ea5af4687f6b2b4" class="m-doc">set_priority</a>(</span><span class="m-doc-wrap">int priority)</span>
+            </dt>
+            <dd>Sets the priority of the background relative to sprites and other backgrounds.</dd>
+            <dt id="a8bd104a44e46753448a8842eb6d1423e">
+              <span class="m-doc-wrap-bumper">auto <a href="#a8bd104a44e46753448a8842eb6d1423e" class="m-doc-self">mosaic_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if the mosaic effect must be applied to this background or not.</dd>
+            <dt id="ad59537d54dc03667a2e76b00bcd69721">
+              <span class="m-doc-wrap-bumper">void <a href="#ad59537d54dc03667a2e76b00bcd69721" class="m-doc-self">set_mosaic_enabled</a>(</span><span class="m-doc-wrap">bool mosaic_enabled)</span>
+            </dt>
+            <dd>Sets if the mosaic effect must be applied to this background or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0a143a89601d86e67f4ccdb266966fef" class="m-doc">blending_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if blending must be applied to this background or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af1664f603387f56b0d54a75e7fbe2459" class="m-doc">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span>
+            </dt>
+            <dd>Sets if blending must be applied to this background or not.</dd>
+            <dt id="a0a13e6f3a820dc1ab753b7922659fd3d">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0a13e6f3a820dc1ab753b7922659fd3d" class="m-doc-self">blending_top_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this background is part of the blending top layer or not.</dd>
+            <dt id="ac56843213eda44c77fc25ba940b9d5ac">
+              <span class="m-doc-wrap-bumper">void <a href="#ac56843213eda44c77fc25ba940b9d5ac" class="m-doc-self">set_blending_top_enabled</a>(</span><span class="m-doc-wrap">bool blending_top_enabled)</span>
+            </dt>
+            <dd>Sets if this background is part of the blending top layer or not.</dd>
+            <dt id="a02f590cbbd9cea53f0f167b2aa206493">
+              <span class="m-doc-wrap-bumper">auto <a href="#a02f590cbbd9cea53f0f167b2aa206493" class="m-doc-self">blending_bottom_enabled</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this background is part of the blending bottom layer or not.</dd>
+            <dt id="ac112e4256c675beec36f2fb50c9b1e54">
+              <span class="m-doc-wrap-bumper">void <a href="#ac112e4256c675beec36f2fb50c9b1e54" class="m-doc-self">set_blending_bottom_enabled</a>(</span><span class="m-doc-wrap">bool blending_bottom_enabled)</span>
+            </dt>
+            <dd>Sets if this background is part of the blending bottom layer or not.</dd>
+            <dt id="ac43599b4087f69c0d579422166c960b5">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac43599b4087f69c0d579422166c960b5" class="m-doc-self">green_swap_mode</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a></span>
+            </dt>
+            <dd>Indicates how this background must be displayed when green swap is enabled.</dd>
+            <dt id="a52525dc86987e640f4d248d8fd317006">
+              <span class="m-doc-wrap-bumper">void <a href="#a52525dc86987e640f4d248d8fd317006" class="m-doc-self">set_green_swap_mode</a>(</span><span class="m-doc-wrap"><a href="group__green__swap.html#ga6ed8f658483577341079c6a880231745" class="m-doc">bn::<wbr />green_swap_mode</a> green_swap_mode)</span>
+            </dt>
+            <dd>Sets how this background must be displayed when green swap is enabled.</dd>
+            <dt id="aa1b3d3e77ca76f583b0b99acab500251">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa1b3d3e77ca76f583b0b99acab500251" class="m-doc-self">visible</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this background must be committed to the GBA or not.</dd>
+            <dt id="a62779ee6889ffbc338dede52acb850e5">
+              <span class="m-doc-wrap-bumper">void <a href="#a62779ee6889ffbc338dede52acb850e5" class="m-doc-self">set_visible</a>(</span><span class="m-doc-wrap">bool visible)</span>
+            </dt>
+            <dd>Sets if this background must be committed to the GBA or not.</dd>
+            <dt id="a0a4f60a07a3a135665abc12fc5a4fa6f">
+              <span class="m-doc-wrap-bumper">auto <a href="#a0a4f60a07a3a135665abc12fc5a4fa6f" class="m-doc-self">visible_in_window</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1window.html" class="m-doc">window</a>&amp; window) const -&gt; bool</span>
+            </dt>
+            <dd>Indicates if this background is visible in the given window or not.</dd>
+            <dt id="ad1105f7392c3fe55b713a186ded4798c">
+              <span class="m-doc-wrap-bumper">void <a href="#ad1105f7392c3fe55b713a186ded4798c" class="m-doc-self">set_visible_in_window</a>(</span><span class="m-doc-wrap">bool visible,
+              <a href="classbn_1_1window.html" class="m-doc">window</a>&amp; window)</span>
+            </dt>
+            <dd>Sets if this background must be visible in the given window or not.</dd>
+            <dt id="a3faab9ef393939ac064ba6a2ae9636f3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3faab9ef393939ac064ba6a2ae9636f3" class="m-doc-self">camera</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;</span>
+            </dt>
+            <dd>Returns the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background (if any).</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7336cfd8e60950ef484bd6282aa824b8" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1812facaf3d18a5ca63c8aeba218bbe9" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#acea6fe6ff25627f35715b5c0ec29a16b" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp; camera)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac09ba0cd638d5932f18a49b0ef9e2e8a" class="m-doc">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;&amp; camera)</span>
+            </dt>
+            <dd>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background.</dd>
+            <dt id="a0d3c7f1970e823bcee927e1f87377f19">
+              <span class="m-doc-wrap-bumper">void <a href="#a0d3c7f1970e823bcee927e1f87377f19" class="m-doc-self">remove_camera</a>(</span><span class="m-doc-wrap">)</span>
+            </dt>
+            <dd>Removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background (if any).</dd>
+            <dt id="a1617acca2a8d65883783d2da8c461b92">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1617acca2a8d65883783d2da8c461b92" class="m-doc-self">attributes</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1bitmap__bg__attributes.html" class="m-doc">bitmap_<wbr />bg_<wbr />attributes</a></span>
+            </dt>
+            <dd>Returns the attributes to commit to the GBA for this background.</dd>
+            <dt id="a65d4b8a94a42feb9d0b0bbd72d0a6755">
+              <span class="m-doc-wrap-bumper">void <a href="#a65d4b8a94a42feb9d0b0bbd72d0a6755" class="m-doc-self">set_attributes</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1bitmap__bg__attributes.html" class="m-doc">bitmap_<wbr />bg_<wbr />attributes</a>&amp; attributes)</span>
+            </dt>
+            <dd>Sets the attributes to commit to the GBA for this background.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a87d60bde931a266d3f9189831e4884ef" class="m-doc">hw_id</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;int&gt;</span>
+            </dt>
+            <dd>Returns the hardware ID assigned to this background or <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> if no hardware ID has been assigned.</dd>
+            <dt id="aa50f06caab740d71c9266f123aa55af8">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa50f06caab740d71c9266f123aa55af8" class="m-doc-self">handle</a>(</span><span class="m-doc-wrap">) const -&gt; const void*</span>
+            </dt>
+            <dd>Returns the internal handle.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac590fdf19bfa483a78047ed532aaa9a7" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; other)</span>
+            </dt>
+            <dd>Exchanges the contents of this <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> with those of the other one.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aaca4603cb962f53e765e2a5b1fe3464b" class="m-doc">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; b)</span>
+            </dt>
+            <dd>Exchanges the contents of an <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> with those of another one.</dd>
+            <dt id="a93f59c78f0fbe4d081493425da46f119">
+              <span class="m-doc-wrap-bumper">auto <a href="#a93f59c78f0fbe4d081493425da46f119" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; a,
+              const <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a43ca1fc4b09d4cd21be9d763e2776e5c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a43ca1fc4b09d4cd21be9d763e2776e5c" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> reference.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> reference.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac61f4c6b012656f2062ac93e38541f36"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac61f4c6b012656f2062ac93e38541f36" class="m-doc-self">create</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>&amp;&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a52e00136475d79f5e661efc7b83e10e3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&gt; bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a52e00136475d79f5e661efc7b83e10e3" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> reference.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> reference.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a972f0cd038c18944159bac8f9db4a117"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&gt; bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a972f0cd038c18944159bac8f9db4a117" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>&amp;&amp; builder)</span></span>
+            </h3>
+            <p>Creates a <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> from a moved <a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">builder</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__builder.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />builder</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The requested <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a690c8cbd0a5dec75e5a121129779e356"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a690c8cbd0a5dec75e5a121129779e356" class="m-doc-self">dp_direct_bitmap_bg_ptr</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1690c3d24a878f86e41c084664fb0842"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1690c3d24a878f86e41c084664fb0842" class="m-doc-self">dp_direct_bitmap_bg_ptr</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a99e70088fc7b59c3494515e73190272f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a99e70088fc7b59c3494515e73190272f" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Copy assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to copy.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0460e042fc643644324b683467bb59e7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0460e042fc643644324b683467bb59e7" class="m-doc-self">operator=</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp;&amp; other) <span class="m-label m-success">noexcept</span></span></span>
+            </h3>
+            <p>Move assignment operator.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to move.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>Reference to this.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa56703529170439784d4217b68b47897"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa56703529170439784d4217b68b47897" class="m-doc-self">flip_page_now</a>(</span><span class="m-doc-wrap">)</span></span>
+            </h3>
+            <p>Swaps the hidden frame buffer without waiting to the next <a href="namespacebn_1_1core.html#aa849bfe482eb6964e3a29f9eba78f7b6" class="m-doc">core::<wbr />update</a> call.</p>
+<p>Expect lack of vsync issues like screen tearing.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9caa8bee2131ee64f429b98d40158cfa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9caa8bee2131ee64f429b98d40158cfa" class="m-doc-self">set_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> x,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> y)</span></span>
+            </h3>
+            <p>Sets the position of the background (relative to its camera, if it has one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the background (relative to its camera, if it has one).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the background (relative to its camera, if it has one).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a26cd6f2f18f6cbe68a741f70f2846945"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a26cd6f2f18f6cbe68a741f70f2846945" class="m-doc-self">set_top_left_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_x,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> top_left_y)</span></span>
+            </h3>
+            <p>Sets the top-left position of the background (relative to its camera, if it has one).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">top_left_x</td>
+                  <td>Horizontal top-left position of the background (relative to its camera, if it has one).</td>
+                </tr>
+                <tr>
+                  <td>top_left_y</td>
+                  <td>Vertical top-left position of the background (relative to its camera, if it has one).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="abf3c727531d1620bc55b208f8210d4d1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#abf3c727531d1620bc55b208f8210d4d1" class="m-doc-self">set_rotation_angle</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle)</span></span>
+            </h3>
+            <p>Sets the rotation angle in degrees of the background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rotation_angle</td>
+                  <td>Rotation angle in degrees, in the range [0..360].</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a3c35a5c95cc5ee5392e857caf0f3d913"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3c35a5c95cc5ee5392e857caf0f3d913" class="m-doc-self">set_rotation_angle_safe</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> rotation_angle)</span></span>
+            </h3>
+            <p>Sets the rotation angle in degrees of the background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">rotation_angle</td>
+                  <td>Rotation angle in degrees, in any range.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afa0e16562738d232a531c621e6050e94"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afa0e16562738d232a531c621e6050e94" class="m-doc-self">set_scale</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> horizontal_scale,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> vertical_scale)</span></span>
+            </h3>
+            <p>Sets the scale of the background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">horizontal_scale</td>
+                  <td>Horizontal scale.</td>
+                </tr>
+                <tr>
+                  <td>vertical_scale</td>
+                  <td>Vertical scale.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8663f60e23d3c7c3cc90188b4f7d4405"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8663f60e23d3c7c3cc90188b4f7d4405" class="m-doc-self">set_shear</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> horizontal_shear,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> vertical_shear)</span></span>
+            </h3>
+            <p>Sets the shear of the background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">horizontal_shear</td>
+                  <td>Horizontal shear.</td>
+                </tr>
+                <tr>
+                  <td>vertical_shear</td>
+                  <td>Vertical shear.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a175eb7f446069905e226d9736cb53e16"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a175eb7f446069905e226d9736cb53e16" class="m-doc-self">set_pivot_position</a>(</span><span class="m-doc-wrap"><a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> pivot_x,
+              <a href="namespacebn.html#a0de0484a51e353c5b48db21590f4dfc9" class="m-doc">fixed</a> pivot_y)</span></span>
+            </h3>
+            <p>Sets the position of the affine transformations pivot point of this background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pivot_x</td>
+                  <td>Horizontal position of the pivot point.</td>
+                </tr>
+                <tr>
+                  <td>pivot_y</td>
+                  <td>Vertical position of the pivot point.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a79671dd950e20afc0bbabd49c41ab61a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a79671dd950e20afc0bbabd49c41ab61a" class="m-doc-self">set_pivot_position</a>(</span><span class="m-doc-wrap">const <a href="namespacebn.html#a9d90d92eb951850d75801f5508fc8e90" class="m-doc">fixed_<wbr />point</a>&amp; pivot_position)</span></span>
+            </h3>
+            <p>Sets the position of the affine transformations pivot point of this background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">pivot_position</td>
+                  <td>Position of the pivot point.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a81e2978d18be19f0fafd01472f26ced1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a81e2978d18be19f0fafd01472f26ced1" class="m-doc-self">priority</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the priority of the background relative to sprites and other backgrounds.</p>
+<p>Backgrounds with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="aa62f04f3c69559137ea5af4687f6b2b4"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa62f04f3c69559137ea5af4687f6b2b4" class="m-doc-self">set_priority</a>(</span><span class="m-doc-wrap">int priority)</span></span>
+            </h3>
+            <p>Sets the priority of the background relative to sprites and other backgrounds.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">priority</td>
+                  <td>Priority in the range [0..3].</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Backgrounds with higher priority are drawn first (and therefore can be covered by later sprites and backgrounds).</p>
+          </div></section>
+          <section class="m-doc-details" id="a0a143a89601d86e67f4ccdb266966fef"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">bool bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0a143a89601d86e67f4ccdb266966fef" class="m-doc-self">blending_enabled</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Indicates if blending must be applied to this background or not.</p>
+<p>Blending is applied to this background by making it part of the blending top layer.</p>
+          </div></section>
+          <section class="m-doc-details" id="af1664f603387f56b0d54a75e7fbe2459"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af1664f603387f56b0d54a75e7fbe2459" class="m-doc-self">set_blending_enabled</a>(</span><span class="m-doc-wrap">bool blending_enabled)</span></span>
+            </h3>
+            <p>Sets if blending must be applied to this background or not.</p>
+<p>Blending is applied to this background by making it part of the blending top layer.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7336cfd8e60950ef484bd6282aa824b8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7336cfd8e60950ef484bd6282aa824b8" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to copy to this background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1812facaf3d18a5ca63c8aeba218bbe9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1812facaf3d18a5ca63c8aeba218bbe9" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&amp;&amp; camera)</span></span>
+            </h3>
+            <p>Sets the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td><a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to move to this background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="acea6fe6ff25627f35715b5c0ec29a16b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#acea6fe6ff25627f35715b5c0ec29a16b" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp; camera)</span></span>
+            </h3>
+            <p>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td>Optional <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to copy to this background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac09ba0cd638d5932f18a49b0ef9e2e8a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac09ba0cd638d5932f18a49b0ef9e2e8a" class="m-doc-self">set_camera</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a>&gt;&amp;&amp; camera)</span></span>
+            </h3>
+            <p>Sets or removes the <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> attached to this background.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">camera</td>
+                  <td>Optional <a href="classbn_1_1camera__ptr.html" class="m-doc">camera_<wbr />ptr</a> to move to this background.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a87d60bde931a266d3f9189831e4884ef"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;int&gt; bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a87d60bde931a266d3f9189831e4884ef" class="m-doc-self">hw_id</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the hardware ID assigned to this background or <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> if no hardware ID has been assigned.</p>
+<p>Normally you should not need to call this function, but it can be useful for messing with HDMA for example.</p><p>A background doesn&#x27;t have an assigned hardware ID if it is not visible.</p><p>Assigned hardware ID can change after calling this method if some properties of this background or others are updated.</p><p>Call this method at your own risk.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac590fdf19bfa483a78047ed532aaa9a7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />dp_direct_bitmap_bg_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac590fdf19bfa483a78047ed532aaa9a7" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; other)</span></span>
+            </h3>
+            <p>Exchanges the contents of this <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> with those of the other one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">other</td>
+                  <td><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaca4603cb962f53e765e2a5b1fe3464b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaca4603cb962f53e765e2a5b1fe3464b" class="m-doc-self">swap</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; a,
+              <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; b)</span></span>
+            </h3>
+            <p>Exchanges the contents of an <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> with those of another one.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">a</td>
+                  <td>First <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+                <tr>
+                  <td>b</td>
+                  <td>Second <a href="classbn_1_1dp__direct__bitmap__bg__ptr.html" class="m-doc">dp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a> to exchange the contents with.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.14.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

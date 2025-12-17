@@ -116,6 +116,30 @@
  */
 
 /**
+ * @defgroup direct_bitmap_bg Direct bitmap backgrounds
+ *
+ * Bitmap backgrounds in which pixels are colors.
+ *
+ * @ingroup bitmap_bg
+ */
+
+/**
+ * @defgroup sp_direct_bitmap_bg Single page direct bitmap backgrounds
+ *
+ * Direct bitmap backgrounds with a single page.
+ *
+ * @ingroup direct_bitmap_bg
+ */
+
+/**
+ * @defgroup dp_direct_bitmap_bg Dual page direct bitmap backgrounds
+ *
+ * Direct bitmap backgrounds with two pages.
+ *
+ * @ingroup direct_bitmap_bg
+ */
+
+/**
  * @defgroup sprite Sprites
  *
  * Small animated objects that can move freely from the background(s).

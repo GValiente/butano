@@ -6,9 +6,9 @@
 #ifndef BN_HW_BGS_H
 #define BN_HW_BGS_H
 
-#include "bn_affine_bg_builder.h"
-#include "bn_regular_bg_builder.h"
-#include "bn_palette_bitmap_bg_builder.h"
+#include "bn_bpp_mode.h"
+#include "bn_green_swap_mode.h"
+#include "bn_affine_mat_attributes.h"
 #include "bn_hw_bfn.h"
 #include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
@@ -65,22 +65,11 @@ namespace bn::hw::bgs
         return 8;
     }
 
-    inline void setup_regular(const regular_bg_builder& builder, uint16_t& cnt)
+    inline void setup(int priority, bn::green_swap_mode green_swap_mode, bool mosaic_enabled,
+                      bool wrapping_enabled, uint16_t& cnt)
     {
-        cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
-                       (builder.mosaic_enabled() << 6));
-    }
-
-    inline void setup_affine(const affine_bg_builder& builder, uint16_t& cnt)
-    {
-        cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
-                       (builder.mosaic_enabled() << 6) | (builder.wrapping_enabled() << 13));
-    }
-
-    inline void setup_palette_bitmap(const palette_bitmap_bg_builder& builder, uint16_t& cnt)
-    {
-        cnt = uint16_t(BG_PRIO(builder.priority()) | (int(builder.green_swap_mode()) << 4) |
-                       (builder.mosaic_enabled() << 6));
+        cnt = uint16_t(BG_PRIO(priority) | (int(green_swap_mode) << 4) | (mosaic_enabled << 6) |
+                       (wrapping_enabled << 13));
     }
 
     inline void set_tiles_cbb(int tiles_cbb, uint16_t& cnt)

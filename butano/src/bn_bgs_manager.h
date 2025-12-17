@@ -27,6 +27,7 @@ class regular_bg_attributes;
 class affine_mat_attributes;
 class affine_bg_mat_attributes;
 class palette_bitmap_bg_builder;
+class dp_direct_bitmap_bg_builder;
 enum class bpp_mode : uint8_t;
 enum class green_swap_mode : uint8_t;
 
@@ -46,11 +47,15 @@ namespace bgs_manager
 
     [[nodiscard]] id_type create(palette_bitmap_bg_builder&& builder);
 
+    [[nodiscard]] id_type create(dp_direct_bitmap_bg_builder&& builder);
+
     [[nodiscard]] id_type create_optional(regular_bg_builder&& builder);
 
     [[nodiscard]] id_type create_optional(affine_bg_builder&& builder);
 
     [[nodiscard]] id_type create_optional(palette_bitmap_bg_builder&& builder);
+
+    [[nodiscard]] id_type create_optional(dp_direct_bitmap_bg_builder&& builder);
 
     void increase_usages(id_type id);
 

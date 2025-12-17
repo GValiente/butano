@@ -46,6 +46,30 @@ namespace bn::bitmap_bg
     {
         return bn::size(palette_width(), palette_height());
     }
+
+    /**
+     * @brief Returns the width of dual page direct bitmap backgrounds in pixels (240).
+     */
+    [[nodiscard]] constexpr int dp_direct_width()
+    {
+        return hw::bitmap_bg::dp_direct_width();
+    }
+
+    /**
+     * @brief Returns the height of dual page direct bitmap backgrounds in pixels (160).
+     */
+    [[nodiscard]] constexpr int dp_direct_height()
+    {
+        return hw::bitmap_bg::dp_direct_height();
+    }
+
+    /**
+     * @brief Returns the size of dual page direct bitmap backgrounds in pixels (240x160).
+     */
+    [[nodiscard]] constexpr size dp_direct_size()
+    {
+        return bn::size(dp_direct_width(), dp_direct_height());
+    }
 }
 
 #endif

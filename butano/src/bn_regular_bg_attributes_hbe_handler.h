@@ -6,6 +6,7 @@
 #ifndef BN_REGULAR_BG_ATTRIBUTES_HBE_HANDLER_H
 #define BN_REGULAR_BG_ATTRIBUTES_HBE_HANDLER_H
 
+#include "bn_size.h"
 #include "bn_regular_bg_tiles_ptr.h"
 #include "bn_regular_bg_attributes.h"
 #include "bn_bgs_manager.h"

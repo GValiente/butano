@@ -35,6 +35,10 @@
 #include "bn_palette_bitmap_bg_builder.cpp.h"
 #include "bn_palette_bitmap_bg_painter.cpp.h"
 #include "bn_palette_bitmap_pixels_item.cpp.h"
+// #include "bn_direct_bitmap_item.cpp.h"
+#include "bn_dp_direct_bitmap_bg_ptr.cpp.h"
+#include "bn_dp_direct_bitmap_bg_builder.cpp.h"
+#include "bn_dp_direct_bitmap_bg_painter.cpp.h"
 
 namespace bn::bgs_manager
 {
@@ -85,7 +89,7 @@ namespace
                 visible_in_window = true;
             }
 
-            hw::bgs::setup_regular(builder, hw_cnt);
+            hw::bgs::setup(builder.priority(), builder.green_swap_mode(), builder.mosaic_enabled(), false, hw_cnt);
             update_regular_map();
         }
 
@@ -105,7 +109,8 @@ namespace
                 visible_in_window = true;
             }
 
-            hw::bgs::setup_affine(builder, hw_cnt);
+            hw::bgs::setup(builder.priority(), builder.green_swap_mode(), builder.mosaic_enabled(),
+                           builder.wrapping_enabled(), hw_cnt);
 
             [[maybe_unused]] bool affine_mat_attributes_updated = update_affine_map(true);
         }
@@ -130,7 +135,32 @@ namespace
                 visible_in_window = true;
             }
 
-            hw::bgs::setup_palette_bitmap(builder, hw_cnt);
+            hw::bgs::setup(builder.priority(), builder.green_swap_mode(), builder.mosaic_enabled(), false, hw_cnt);
+
+            [[maybe_unused]] bool affine_mat_attributes_updated = update_affine_map(true);
+        }
+
+        explicit item_type(dp_direct_bitmap_bg_builder&& builder) :
+            position(builder.position()),
+            affine_mat_attributes(
+                    (builder.camera() ? position - builder.camera()->position() : position),
+                    bitmap_bg::dp_direct_size() / 2, builder.pivot_position(), builder.mat_attributes()),
+            half_dimensions(bitmap_bg::dp_direct_size() / 2),
+            bg_sort_key(builder.priority(), 0),
+            camera(builder.release_camera()),
+            blending_top_enabled(builder.blending_top_enabled()),
+            blending_bottom_enabled(builder.blending_bottom_enabled()),
+            visible(builder.visible()),
+            big_map(false),
+            commit_big_map(false),
+            full_commit_big_map(false)
+        {
+            for(bool& visible_in_window : visible_in_windows)
+            {
+                visible_in_window = true;
+            }
+
+            hw::bgs::setup(builder.priority(), builder.green_swap_mode(), builder.mosaic_enabled(), false, hw_cnt);
 
             [[maybe_unused]] bool affine_mat_attributes_updated = update_affine_map(true);
         }
@@ -558,6 +588,19 @@ id_type create(palette_bitmap_bg_builder&& builder)
     return &item;
 }
 
+id_type create(dp_direct_bitmap_bg_builder&& builder)
+{
+    static_data& data = data_ref();
+    BN_BASIC_ASSERT(data.items_vector.empty(), "There are other BG items");
+
+    data.bitmap_affine_bg_tiles_handle = bg_blocks_manager::allocate_all_affine_tiles(false);
+    data.bitmap_sprite_tiles_handle = sprite_tiles_manager::allocate_first_half(false);
+
+    item_type& item = data.items_pool.create(move(builder));
+    _insert_item(item);
+    return &item;
+}
+
 id_type create_optional(regular_bg_builder&& builder)
 {
     static_data& data = data_ref();
@@ -642,6 +685,38 @@ id_type create_optional(palette_bitmap_bg_builder&& builder)
     data.bitmap_affine_bg_tiles_handle = affine_bg_tiles_handle;
     data.bitmap_sprite_tiles_handle = sprite_tiles_handle;
     data.bitmap_palette = move(palette);
+
+    item_type& item = data.items_pool.create(move(builder));
+    _insert_item(item);
+    return &item;
+}
+
+id_type create_optional(dp_direct_bitmap_bg_builder&& builder)
+{
+    static_data& data = data_ref();
+
+    if(! data.items_vector.empty())
+    {
+        return nullptr;
+    }
+
+    int affine_bg_tiles_handle = bg_blocks_manager::allocate_all_affine_tiles(true);
+
+    if(affine_bg_tiles_handle == -1)
+    {
+        return nullptr;
+    }
+
+    int sprite_tiles_handle = sprite_tiles_manager::allocate_first_half(true);
+
+    if(sprite_tiles_handle == -1)
+    {
+        bg_blocks_manager::decrease_usages(affine_bg_tiles_handle);
+        return nullptr;
+    }
+
+    data.bitmap_affine_bg_tiles_handle = affine_bg_tiles_handle;
+    data.bitmap_sprite_tiles_handle = sprite_tiles_handle;
 
     item_type& item = data.items_pool.create(move(builder));
     _insert_item(item);
@@ -1784,19 +1859,21 @@ void rebuild_handles()
 
     if(data.rebuild_handles)
     {
-        bool bitmap_palette = data.bitmap_palette.has_value();
-        int affine_bgs_count;
+        int display_mode;
         data.rebuild_handles = false;
         data.commit = true;
 
-        if(bitmap_palette)
+        if(data.bitmap_palette.has_value())
         {
-            affine_bgs_count = 1;
-            display_manager::set_mode(4);
+            display_mode = 4;
+        }
+        else if(data.bitmap_affine_bg_tiles_handle != -1)
+        {
+            display_mode = 5;
         }
         else
         {
-            affine_bgs_count = 0;
+            int affine_bgs_count = 0;
 
             for(item_type* item : data.items_vector)
             {
@@ -1808,15 +1885,16 @@ void rebuild_handles()
 
             BN_BASIC_ASSERT(affine_bgs_count <= hw::bgs::affine_count(), "Too many affine BGs on screen");
 
-            display_manager::set_mode(affine_bgs_count);
+            display_mode = affine_bgs_count;
         }
 
         int regular_id;
         int affine_id;
+        display_manager::set_mode(display_mode);
         display_manager::disable_all_bgs();
         display_manager::update_windows_visible_bgs();
 
-        switch(affine_bgs_count)
+        switch(display_mode)
         {
 
         case 0:
@@ -1824,14 +1902,14 @@ void rebuild_handles()
             affine_id = -1;
             break;
 
-        case 1:
-            regular_id = hw::bgs::count() - 3;
-            affine_id = hw::bgs::count() - 2;
+        case 2:
+            regular_id = -1;
+            affine_id = hw::bgs::count() - 1;
             break;
 
         default:
-            regular_id = -1;
-            affine_id = hw::bgs::count() - 1;
+            regular_id = hw::bgs::count() - 3;
+            affine_id = hw::bgs::count() - 2;
             break;
         }
 
@@ -1841,7 +1919,7 @@ void rebuild_handles()
             {
                 int id;
 
-                if(bitmap_palette || item->affine_map)
+                if(display_mode > 2 || item->affine_map)
                 {
                     id = affine_id;
                     --affine_id;

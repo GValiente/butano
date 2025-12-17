@@ -19,6 +19,16 @@ namespace bn::hw::bitmap_bg
     {
         return 160;
     }
+
+    [[nodiscard]] constexpr int dp_direct_width()
+    {
+        return 160;
+    }
+
+    [[nodiscard]] constexpr int dp_direct_height()
+    {
+        return 128;
+    }
 }
 
 #endif

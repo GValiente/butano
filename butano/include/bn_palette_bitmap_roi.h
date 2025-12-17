@@ -130,7 +130,7 @@ public:
     }
 
     /**
-     * @brief Returns the number of referenced palette bitmap pixels.
+     * @brief Returns the number of referenced pixels.
      */
     [[nodiscard]] constexpr int pixels_count() const
     {

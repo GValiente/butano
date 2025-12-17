@@ -35,7 +35,7 @@
 #include "bn_palette_bitmap_bg_builder.cpp.h"
 #include "bn_palette_bitmap_bg_painter.cpp.h"
 #include "bn_palette_bitmap_pixels_item.cpp.h"
-// #include "bn_direct_bitmap_item.cpp.h"
+#include "bn_direct_bitmap_item.cpp.h"
 #include "bn_dp_direct_bitmap_bg_ptr.cpp.h"
 #include "bn_dp_direct_bitmap_bg_builder.cpp.h"
 #include "bn_dp_direct_bitmap_bg_painter.cpp.h"

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::direct_bitmap_item class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>direct_bitmap_item <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__direct__bitmap__item_8h.html">&lt;bn_direct_bitmap_item.h&gt;</a></div>
+        </h1>
+        <p>Contains the required information to generate direct bitmaps.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+                <li><a href="#friends">Friends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+<p>The assets conversion tools generate an object of this type in the build folder for each *.bmp file with <code>direct_bitmap</code> type.</p><p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6911bd127df3a77e9129529ed3c61d8f" class="m-doc">direct_bitmap_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>&amp; colors_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a6bfad16548bfdd8e0cc02ef84c94f610" class="m-doc">direct_bitmap_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>&amp; colors_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a111a06946a84e34bd6310083b4a73bb7" class="m-doc">colors_ptr</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>* <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns a pointer to the referenced bitmap colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afe27279103f8ed981a9c5b4cda3c76bd" class="m-doc">colors_ref</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the referenced bitmap colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa6066e8486ed876254abdc1b70e5627e" class="m-doc">dimensions</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the size in pixels of the referenced bitmap.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a095bc8e94acc943a68a7f9d9e27fb3e6" class="m-doc">colors_count</a>(</span><span class="m-doc-wrap">) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the number of referenced colors.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a64f9943e70e2e06e914411a0b248212f" class="m-doc">color_index</a>(</span><span class="m-doc-wrap">int x,
+              int y) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the index of the referenced color in the specified pixel coordinates.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6bad4b94642adc3ecfeb468fdb858aed" class="m-doc">color_index</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const -&gt; int <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the index of the referenced color in the specified pixel coordinates.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ac9a22cb1624eb171d4d318a7f7a38ea5" class="m-doc">color</a>(</span><span class="m-doc-wrap">int x,
+              int y) const -&gt; <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the referenced bitmap color in the specified pixel coordinates.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a3ccd2871779c8d6e8d3e3191586bbda3" class="m-doc">color</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const -&gt; <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the referenced bitmap color in the specified pixel coordinates.</dd>
+            <dt id="a031a4703e82cc70b7b00defae44a8cd3">
+              <span class="m-doc-wrap-bumper">auto <a href="#a031a4703e82cc70b7b00defae44a8cd3" class="m-doc-self">compression</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Returns the compression type.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a1923fe46b0fd9c25bd496458838c6142" class="m-doc">decompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>&gt; decompressed_colors_ref) const -&gt; <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a></span>
+            </dt>
+            <dd>Decompresses the stored data in the colors referenced by decompressed_colors_ref.</dd>
+          </dl>
+        </section>
+        <section id="friends">
+          <h2><a href="#friends">Friends</a></h2>
+          <dl class="m-doc">
+            <dt id="ac27e89c1f1f16befb334c8a665fd2f1c">
+              <span class="m-doc-wrap-bumper">auto <a href="#ac27e89c1f1f16befb334c8a665fd2f1c" class="m-doc-self">operator==</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; a,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; b) -&gt; bool <span class="m-label m-flat m-info">defaulted</span> <span class="m-label m-flat m-primary">constexpr</span></span>
+            </dt>
+            <dd>Default equal operator.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a6911bd127df3a77e9129529ed3c61d8f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6911bd127df3a77e9129529ed3c61d8f" class="m-doc-self">direct_bitmap_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>&amp; colors_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors_ref</td>
+                  <td>Reference to the bitmap colors.</td>
+                </tr>
+                <tr>
+                  <td>dimensions</td>
+                  <td>Size in pixels of the referenced bitmap.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6bfad16548bfdd8e0cc02ef84c94f610"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6bfad16548bfdd8e0cc02ef84c94f610" class="m-doc-self">direct_bitmap_item</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>&amp; colors_ref,
+              const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; dimensions,
+              <a href="group__tool.html#gabe5512b25aeba41d12da5c555ed129ae" class="m-doc">compression_<wbr />type</a> compression) <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">colors_ref</td>
+                  <td>Reference to the bitmap colors.</td>
+                </tr>
+                <tr>
+                  <td>dimensions</td>
+                  <td>Size in pixels of the referenced bitmap.</td>
+                </tr>
+                <tr>
+                  <td>compression</td>
+                  <td>Compression type.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a111a06946a84e34bd6310083b4a73bb7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>* bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a111a06946a84e34bd6310083b4a73bb7" class="m-doc-self">colors_ptr</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns a pointer to the referenced bitmap colors.</p>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="afe27279103f8ed981a9c5b4cda3c76bd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>&amp; bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afe27279103f8ed981a9c5b4cda3c76bd" class="m-doc-self">colors_ref</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the referenced bitmap colors.</p>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="aa6066e8486ed876254abdc1b70e5627e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1size.html" class="m-doc">size</a>&amp; bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa6066e8486ed876254abdc1b70e5627e" class="m-doc-self">dimensions</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the size in pixels of the referenced bitmap.</p>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a095bc8e94acc943a68a7f9d9e27fb3e6"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a095bc8e94acc943a68a7f9d9e27fb3e6" class="m-doc-self">colors_count</a>(</span><span class="m-doc-wrap">) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the number of referenced colors.</p>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a64f9943e70e2e06e914411a0b248212f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a64f9943e70e2e06e914411a0b248212f" class="m-doc-self">color_index</a>(</span><span class="m-doc-wrap">int x,
+              int y) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the index of the referenced color in the specified pixel coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the bitmap color [0..<a href="#aa6066e8486ed876254abdc1b70e5627e" class="m-doc">dimensions()</a>.width()).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the bitmap color [0..<a href="#aa6066e8486ed876254abdc1b70e5627e" class="m-doc">dimensions()</a>.height()).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The index of the referenced bitmap color.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6bad4b94642adc3ecfeb468fdb858aed"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6bad4b94642adc3ecfeb468fdb858aed" class="m-doc-self">color_index</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the index of the referenced color in the specified pixel coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the bitmap color.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The index of the referenced bitmap color.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac9a22cb1624eb171d4d318a7f7a38ea5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac9a22cb1624eb171d4d318a7f7a38ea5" class="m-doc-self">color</a>(</span><span class="m-doc-wrap">int x,
+              int y) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the referenced bitmap color in the specified pixel coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the bitmap color [0..<a href="#aa6066e8486ed876254abdc1b70e5627e" class="m-doc">dimensions()</a>.width()).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the bitmap color [0..<a href="#aa6066e8486ed876254abdc1b70e5627e" class="m-doc">dimensions()</a>.height()).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced bitmap color.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a3ccd2871779c8d6e8d3e3191586bbda3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a3ccd2871779c8d6e8d3e3191586bbda3" class="m-doc-self">color</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const <span class="m-label m-primary">constexpr</span></span></span>
+            </h3>
+            <p>Returns the referenced bitmap color in the specified pixel coordinates.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the bitmap color.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced bitmap color.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>The colors are not copied but referenced, so they should outlive the <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a1923fe46b0fd9c25bd496458838c6142"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> bn::<wbr />direct_bitmap_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1923fe46b0fd9c25bd496458838c6142" class="m-doc-self">decompress</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a>&gt; decompressed_colors_ref) const</span></span>
+            </h3>
+            <p>Decompresses the stored data in the colors referenced by decompressed_colors_ref.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">decompressed_colors_ref</td>
+                  <td>Destination of the decompressed colors.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>An <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a> pointing to the decompressed colors.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>If the source and destination colors overlap, the behavior is undefined.</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.14.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

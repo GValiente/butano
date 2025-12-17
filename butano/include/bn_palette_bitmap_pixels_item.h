@@ -106,7 +106,7 @@ public:
     }
 
     /**
-     * @brief Returns the number of referenced palette bitmap pixels.
+     * @brief Returns the number of referenced pixels.
      *
      * The pixels are not copied but referenced, so they should outlive the palette_bitmap_pixels_item
      * to avoid dangling references.

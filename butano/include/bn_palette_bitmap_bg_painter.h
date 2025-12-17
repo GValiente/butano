@@ -81,7 +81,7 @@ public:
      */
     [[nodiscard]] span<const uint16_t> page() const
     {
-        return span<const uint16_t>(_page, (bitmap_bg::palette_width() * bitmap_bg::palette_height()) / 2);
+        return span<const uint16_t>(_page, (_page_width * _page_height) / 2);
     }
 
     /**
@@ -89,7 +89,7 @@ public:
      */
     [[nodiscard]] span<uint16_t> page()
     {
-        return span<uint16_t>(_page, (bitmap_bg::palette_width() * bitmap_bg::palette_height()) / 2);
+        return span<uint16_t>(_page, (_page_width * _page_height) / 2);
     }
 
     /**
@@ -126,8 +126,8 @@ public:
 
     /**
      * @brief Returns the referenced color palette index without bounds checking.
-     * @param x Horizontal position of the color palette index [0..bitmap_bg::palette_width()).
-     * @param y Vertical position of the color palette index [0..bitmap_bg::palette_height()).
+     * @param x Horizontal position in the current page [0..bitmap_bg::palette_width()).
+     * @param y Vertical position in the current page [0..bitmap_bg::palette_height()).
      * @return The referenced color palette index.
      */
     [[nodiscard]] inline int unsafe_get(int x, int y) const
@@ -138,7 +138,7 @@ public:
 
     /**
      * @brief Returns the referenced color palette index without bounds checking.
-     * @param position Position of the color palette index.
+     * @param position Position in the current page.
      * @return The referenced color palette index.
      */
     [[nodiscard]] inline int unsafe_get(const point& position) const
@@ -148,8 +148,8 @@ public:
 
     /**
      * @brief Returns the referenced color palette index with bounds checking.
-     * @param x Horizontal position of the color palette index [0..bitmap_bg::palette_width()).
-     * @param y Vertical position of the color palette index [0..bitmap_bg::palette_height()).
+     * @param x Horizontal position in the current page [0..bitmap_bg::palette_width()).
+     * @param y Vertical position in the current page [0..bitmap_bg::palette_height()).
      * @return The referenced color palette index.
      */
     [[nodiscard]] inline optional<int> get(int x, int y) const
@@ -166,7 +166,7 @@ public:
 
     /**
      * @brief Returns the referenced color palette index with bounds checking.
-     * @param position Position of the color palette index.
+     * @param position Position in the current page.
      * @return The referenced color palette index.
      */
     [[nodiscard]] inline optional<int> get(const point& position) const
@@ -530,8 +530,8 @@ public:
             bn::swap(y1, y2);
         }
 
-        unsigned width = x2 - x1;
-        unsigned height = y2 - y1;
+        unsigned width = x2 - x1 + 1;
+        unsigned height = y2 - y1 + 1;
         auto dst_base = reinterpret_cast<uint8_t*>(_page);
         auto dst = reinterpret_cast<uint16_t*>(dst_base + (y1 * _page_width) + (x1 &~ 1));
 

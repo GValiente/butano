@@ -9,7 +9,7 @@ import struct
 
 class BMP:
 
-    def __init__(self, file_path, check_tile_size=True):
+    def __init__(self, file_path, valid_width=8, valid_height=8, allow_direct=False):
         self.width = None
         self.height = None
         self.colors_count = None
@@ -38,8 +38,6 @@ class BMP:
             if self.width <= 0:
                 raise ValueError('Invalid width: ' + str(self.width))
 
-            valid_width = 8 if check_tile_size else 4
-
             if self.width % valid_width != 0:
                 raise ValueError('Invalid width: ' + str(self.width) +
                                  ' (width must be divisible by ' + str(valid_width) + ')')
@@ -49,14 +47,16 @@ class BMP:
             if self.height <= 0:
                 raise ValueError('Invalid height: ' + str(self.height))
 
-            if check_tile_size and self.height % 8 != 0:
-                raise ValueError('Invalid height: ' + str(self.height) + ' (height must be divisible by 8)')
+            if self.height % valid_height != 0:
+                raise ValueError('Invalid height: ' + str(self.height) +
+                                 ' (height must be divisible by ' + str(valid_height) + ')')
 
             file.read(2)
             bits_per_pixel = read_short()
 
             if bits_per_pixel != 4 and bits_per_pixel != 8:
-                raise ValueError('Invalid bits per pixel: ' + str(bits_per_pixel))
+                if not allow_direct or bits_per_pixel != 24:
+                    raise ValueError('Invalid bits per pixel: ' + str(bits_per_pixel))
 
             compression_method = read_int()
 
@@ -70,11 +70,14 @@ class BMP:
                 colors_count = 16
             else:
                 colors_count = int((self.__pixels_offset - self.__colors_offset) / 4)
+                valid_colors_count = 0 if allow_direct else 1
 
-                if colors_count < 1:
+                if colors_count < valid_colors_count:
                     raise ValueError('Invalid input colors count: ' + str(colors_count))
 
-                if colors_count <= 16:
+                if colors_count == 0:
+                    pass
+                elif colors_count <= 16:
                     colors_count = 16
                 else:
                     palette_colors_count = max(colors_count, 256)

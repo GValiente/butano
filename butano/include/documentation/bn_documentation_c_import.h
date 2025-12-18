@@ -485,7 +485,7 @@
  * @endcode
  *
  *
- * @subsection import_palette_bitmap Palette bitmap
+ * @subsection import_palette_bitmap Palette bitmaps
  *
  * An example of the `*.json` files required for palette bitmaps is the following:
  *
@@ -571,6 +571,42 @@
  *
  * bn::palette_bitmap_bg_painter painter(bg);
  * painter.blit(16, 8, bn::palette_bitmap_pixels_items::image);
+ * @endcode
+ *
+ *
+ * @subsection import_direct_bitmap Direct bitmaps
+ *
+ * An example of the `*.json` files required for direct bitmaps is the following:
+ *
+ * @code{.json}
+ * {
+ *     "type": "direct_bitmap"
+ * }
+ * @endcode
+ *
+ * The fields for direct bitmaps are the following:
+ * * `"type"`: must be `"direct_bitmap"` for direct bitmaps.
+ * * `"compression"`: optional field which specifies the compression of the data:
+ *   * `"none"`: uncompressed data (this is the default option).
+ *   * `"lz77"`: LZ77 compressed data.
+ *   * `"run_length"`: run-length compressed data.
+ *   * `"huffman"`: Huffman compressed data.
+ *   * `"auto"`: uses the option which gives the smallest data size.
+ *   * `"auto_no_huffman"`: uses the option which gives the smallest data size, excluding "huffman".
+ *
+ * If the conversion process has finished successfully,
+ * a bn::direct_bitmap_item should have been generated in the `build` folder.
+ *
+ * For example, from two files named `image.bmp` and `image.json`,
+ * a header file named `bn_direct_bitmap_items_image.h` is generated in the `build` folder.
+ *
+ * You can use this header to blit the bitmap on a direct bitmap background with only two lines of C++ code:
+ *
+ * @code{.cpp}
+ * #include "bn_direct_bitmap_items_image.h"
+ *
+ * bn::direct_bitmap_bg_painter painter(bg);
+ * painter.blit(16, 8, bn::direct_bitmap_items::image);
  * @endcode
  *
  *

@@ -240,6 +240,13 @@ void dp_direct_bitmap_bg_ptr::set_scale(fixed horizontal_scale, fixed vertical_s
     bgs_manager::set_scale(_handle, horizontal_scale, vertical_scale);
 }
 
+void dp_direct_bitmap_bg_ptr::expand()
+{
+    fixed horizontal_scale = fixed(display::width()) / bitmap_bg::dp_direct_width();
+    fixed vertical_scale = fixed(display::height()) / bitmap_bg::dp_direct_height();
+    bgs_manager::set_scale(_handle, horizontal_scale, vertical_scale);
+}
+
 fixed dp_direct_bitmap_bg_ptr::horizontal_shear() const
 {
     return bgs_manager::horizontal_shear(_handle);

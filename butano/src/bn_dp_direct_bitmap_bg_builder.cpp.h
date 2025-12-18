@@ -48,6 +48,14 @@ dp_direct_bitmap_bg_builder& dp_direct_bitmap_bg_builder::set_top_left_position(
     return set_position(from_top_left_position(top_left_position, bitmap_bg::dp_direct_size()));
 }
 
+dp_direct_bitmap_bg_builder& dp_direct_bitmap_bg_builder::expand()
+{
+    fixed horizontal_scale = fixed(display::width()) / bitmap_bg::dp_direct_width();
+    fixed vertical_scale = fixed(display::height()) / bitmap_bg::dp_direct_height();
+    _mat_attributes.set_scale(horizontal_scale, vertical_scale);
+    return *this;
+}
+
 dp_direct_bitmap_bg_builder& dp_direct_bitmap_bg_builder::set_priority(int priority)
 {
     BN_ASSERT(priority >= 0 && priority <= bgs::max_priority(), "Invalid priority: ", priority);

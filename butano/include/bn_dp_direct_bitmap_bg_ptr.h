@@ -271,6 +271,11 @@ public:
     void set_scale(fixed horizontal_scale, fixed vertical_scale);
 
     /**
+     * @brief Scales the background to fill the screen.
+     */
+    void expand();
+
+    /**
      * @brief Returns the horizontal shear of the background.
      */
     [[nodiscard]] fixed horizontal_shear() const;

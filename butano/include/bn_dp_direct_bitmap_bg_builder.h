@@ -250,6 +250,12 @@ public:
     }
 
     /**
+     * @brief Sets the scale of the backgrounds to generate to fill the screen.
+     * @return Reference to this.
+     */
+    dp_direct_bitmap_bg_builder& expand();
+
+    /**
      * @brief Returns the horizontal shear of the backgrounds to generate.
      */
     [[nodiscard]] fixed horizontal_shear() const

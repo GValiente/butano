@@ -64,7 +64,8 @@ span<const affine_bg_mat_attributes> palette_bitmap_bg_mat_attributes_hbe_ptr::a
     return _pa_hbe_ptr.attributes_ref();
 }
 
-void palette_bitmap_bg_mat_attributes_hbe_ptr::set_attributes_ref(const span<const affine_bg_mat_attributes>& attributes_ref)
+void palette_bitmap_bg_mat_attributes_hbe_ptr::set_attributes_ref(
+        const span<const affine_bg_mat_attributes>& attributes_ref)
 {
     _pa_hbe_ptr.set_attributes_ref(attributes_ref);
     _pb_hbe_ptr.set_attributes_ref(attributes_ref);

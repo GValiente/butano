@@ -45,7 +45,7 @@ public:
      * In other words, they are relative instead of absolute.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
+     * the sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
      *
      * @return The requested sprite_regular_second_attributes_hbe_ptr.
      */
@@ -64,7 +64,7 @@ public:
      * In other words, they are relative instead of absolute.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
+     * the sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
      *
      * @return The requested sprite_regular_second_attributes_hbe_ptr if it could be allocated;
      * bn::nullopt otherwise.
@@ -89,7 +89,7 @@ public:
      * In other words, they are relative instead of absolute.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
+     * the sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
      */
     [[nodiscard]] span<const sprite_regular_second_attributes> attributes_ref() const;
 
@@ -102,7 +102,7 @@ public:
      * In other words, they are relative instead of absolute.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
+     * the sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
      */
     void set_attributes_ref(const span<const sprite_regular_second_attributes>& attributes_ref);
 
@@ -114,7 +114,7 @@ public:
      * In other words, they are relative instead of absolute.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
+     * the sprite_regular_second_attributes_hbe_ptr to avoid dangling references.
      */
     void reload_attributes_ref();
 

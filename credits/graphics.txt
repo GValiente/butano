@@ -18,10 +18,19 @@
     License (CC0) http://creativecommons.org/publicdomain/zero/1.0/
     https://opengameart.org/content/dice-4
 
+- escaping_criticism.bmp
+    By Pere Borrell del Caso
+    Released into the public domain
+	https://commons.wikimedia.org/wiki/File:Escaping_criticism-by_pere_borrel_del_caso.png
+
 - GBA images
     By Evan-Amos
     Released into the public domain
 	https://commons.wikimedia.org/wiki/File:Nintendo-Game-Boy-Advance-Purple-FL.jpg
+
+- face.bmp
+    By Gustavo Valiente
+    Released into the public domain
 
 - everything else
     The assets in this repository are created at Sparklin Labs by Pixel-boy: https://twitter.com/2pblog1

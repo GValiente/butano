@@ -14,9 +14,10 @@
  *
  * @section changelog_21_0_0 21.0.0 (next release)
  *
- * * Palette bitmap backgrounds support. Check the `palette_bitmap_bgs` example and the @ref import_image import guide
- *   to see how to use them.
- * * Dual page direct bitmap backgrounds support.
+ * * Palette bitmap backgrounds support. Check the `palette_bitmap_bgs` example
+ *   and the @ref import_image import guide to see how to use them.
+ * * Dual page direct bitmap backgrounds support. Check the `dp_direct_bitmap_bgs` example
+ *   and the @ref import_image import guide to see how to use them.
  * * bn::memory::vram_safe_copy added.
  * * bn::clip_line added.
  * * `const` `vram` methods added for bn::regular_bg_tiles_ptr, bn::regular_bg_map_ptr,

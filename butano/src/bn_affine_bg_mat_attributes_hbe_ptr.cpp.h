@@ -12,12 +12,12 @@ affine_bg_mat_attributes_hbe_ptr affine_bg_mat_attributes_hbe_ptr::create(
         const affine_bg_ptr& bg, const span<const affine_bg_mat_attributes>& attributes_ref)
 {
     return affine_bg_mat_attributes_hbe_ptr(
-                affine_bg_pa_register_hbe_ptr::create(bg, attributes_ref),
-                affine_bg_pb_register_hbe_ptr::create(bg, attributes_ref),
-                affine_bg_pc_register_hbe_ptr::create(bg, attributes_ref),
-                affine_bg_pd_register_hbe_ptr::create(bg, attributes_ref),
-                affine_bg_dx_register_hbe_ptr::create(bg, attributes_ref),
-                affine_bg_dy_register_hbe_ptr::create(bg, attributes_ref));
+            affine_bg_pa_register_hbe_ptr::create(bg, attributes_ref),
+            affine_bg_pb_register_hbe_ptr::create(bg, attributes_ref),
+            affine_bg_pc_register_hbe_ptr::create(bg, attributes_ref),
+            affine_bg_pd_register_hbe_ptr::create(bg, attributes_ref),
+            affine_bg_dx_register_hbe_ptr::create(bg, attributes_ref),
+            affine_bg_dy_register_hbe_ptr::create(bg, attributes_ref));
 }
 
 optional<affine_bg_mat_attributes_hbe_ptr> affine_bg_mat_attributes_hbe_ptr::create_optional(

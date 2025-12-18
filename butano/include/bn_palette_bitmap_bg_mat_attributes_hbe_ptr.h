@@ -46,7 +46,7 @@ public:
      * with the attributes to set to the given palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
      *
      * @return The requested palette_bitmap_bg_mat_attributes_hbe_ptr.
      */
@@ -62,7 +62,7 @@ public:
      * with the attributes to set to the given palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
      *
      * @return The requested palette_bitmap_bg_mat_attributes_hbe_ptr if it could be allocated; bn::nullopt otherwise.
      */
@@ -103,7 +103,7 @@ public:
      * to set to the given palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
      */
     [[nodiscard]] span<const affine_bg_mat_attributes> attributes_ref() const;
 
@@ -112,7 +112,7 @@ public:
      * to set to the given palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
      */
     void set_attributes_ref(const span<const affine_bg_mat_attributes>& attributes_ref);
 
@@ -121,7 +121,7 @@ public:
      * in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_mat_attributes_hbe_ptr to avoid dangling references.
      */
     void reload_attributes_ref();
 

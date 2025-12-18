@@ -76,13 +76,19 @@
  *
  * Real time clock (RTC) showcase (if your cart has one).
  *
- * <td> **Dynamic affine background**
+ * <td> **Dual page direct bitmap BGs**
+ *
+ * @image html examples_dp_direct_bitmap_bgs.png
+ *
+ * Shows how to use dual page direct bitmap backgrounds with Butano.
+ *
+ * <tr><td> **Dynamic affine background**
  *
  * @image html examples_dynamic_affine_bg.png
  *
  * Basic dynamic affine background example.
  *
- * <tr><td> **Dynamic regular background**
+ * <td> **Dynamic regular background**
  *
  * @image html examples_dynamic_regular_bg.png
  *
@@ -94,13 +100,13 @@
  *
  * Shows how to call an external tool from the project's `Makefile`.
  *
- * <td> @ref green_swap
+ * <tr><td> @ref green_swap
  *
  * @image html examples_green_swap.png
  *
  * See how it looks this undocumented graphic effect.
  *
- * <tr><td> **HDMA palette**
+ * <td> **HDMA palette**
  *
  * @image html examples_hdma_palette.png
  *
@@ -112,13 +118,13 @@
  *
  * Simple keypad status demo.
  *
- * <td> @ref link
+ * <tr><td> @ref link
  *
  * @image html examples_link.png
  *
  * Multiplayer communication through a link cable.
  *
- * <tr><td> @ref log
+ * <td> @ref log
  *
  * @image html examples_log.png
  *
@@ -130,13 +136,13 @@
  *
  * Sprite against map collision example.
  *
- * <td> **Mode 7**
+ * <tr><td> **Mode 7**
  *
  * @image html examples_mode_7.png
  *
  * Basic SNES mode 7 like background example.
  *
- * <tr><td> @ref mosaic
+ * <td> @ref mosaic
  *
  * @image html examples_mosaic.png
  *
@@ -148,13 +154,13 @@
  *
  * Showcases multiple color palette effects.
  *
- * <td> @ref palette_bitmap_bg
+ * <tr><td> @ref palette_bitmap_bg
  *
  * @image html examples_palette_bitmap_bgs.png
  *
  * Shows how to use palette bitmap backgrounds with Butano.
  *
- * <tr><td> **Flat polygons**
+ * <td> **Flat polygons**
  *
  * @image html examples_polygons.png
  *
@@ -166,13 +172,13 @@
  *
  * Basic code blocks profiling.
  *
- * <td> @ref regular_bg
+ * <tr><td> @ref regular_bg
  *
  * @image html examples_regular_bgs.png
  *
  * Shows how to use regular backgrounds with Butano.
  *
- * <tr><td> @ref random
+ * <td> @ref random
  *
  * @image html examples_random.png
  *
@@ -184,13 +190,13 @@
  *
  * Vibration showcase (if your cart supports it).
  *
- * <td> @ref affine_mat "Sprite affine matrices"
+ * <tr><td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
  * Demonstrates usage of one affine matrix for multiple sprites.
  *
- * <tr><td> @ref sprite
+ * <td> @ref sprite
  *
  * @image html examples_sprites.png
  *
@@ -202,13 +208,13 @@
  *
  * SRAM reads and writes with Butano.
  *
- * <td> @ref text
+ * <tr><td> @ref text
  *
  * @image html examples_text.png
  *
  * Showcase of Butano sprite text rendering.
  *
- * <tr><td> **Textured polygons**
+ * <td> **Textured polygons**
  *
  * @image html examples_texture_polygons.png
  *
@@ -220,13 +226,13 @@
  *
  * Simple timer example.
  *
- * <td> @ref window
+ * <tr><td> @ref window
  *
  * @image html examples_windows.png
  *
  * Demonstrates usage of rectangle and sprite windows.
  *
- * <tr><td> **World map**
+ * <td> **World map**
  *
  * @image html examples_world_map.png
  *

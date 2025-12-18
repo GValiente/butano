@@ -42,7 +42,7 @@ public:
      * with the attributes to commit to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested affine_bg_pd_register_hbe_ptr.
      */
@@ -57,7 +57,7 @@ public:
      * to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested affine_bg_pd_register_hbe_ptr.
      */
@@ -73,7 +73,7 @@ public:
      * in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested affine_bg_pd_register_hbe_ptr if it could be allocated; bn::nullopt otherwise.
      */
@@ -88,7 +88,7 @@ public:
      * to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested affine_bg_pd_register_hbe_ptr if it could be allocated; bn::nullopt otherwise.
      */
@@ -108,7 +108,7 @@ public:
      * to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      */
     [[nodiscard]] span<const affine_bg_mat_attributes> attributes_ref() const;
 
@@ -117,7 +117,7 @@ public:
      * to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      */
     [[nodiscard]] span<const int16_t> values_ref() const;
 
@@ -126,7 +126,7 @@ public:
      * to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      */
     void set_attributes_ref(const span<const affine_bg_mat_attributes>& attributes_ref);
 
@@ -135,7 +135,7 @@ public:
      * to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      */
     void set_values_ref(const span<const int16_t>& values_ref);
 
@@ -144,7 +144,7 @@ public:
      * to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      */
     void reload_attributes_ref();
 
@@ -153,7 +153,7 @@ public:
      * to the fourth GBA register of an affine_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * affine_bg_pd_register_hbe_ptr to avoid dangling references.
+     * the affine_bg_pd_register_hbe_ptr to avoid dangling references.
      */
     void reload_values_ref();
 

@@ -44,7 +44,7 @@ public:
      * in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested sprite_affine_mat_pa_register_hbe_ptr.
      */
@@ -59,7 +59,7 @@ public:
      * to the first GBA register of a sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested sprite_affine_mat_pa_register_hbe_ptr.
      */
@@ -75,7 +75,7 @@ public:
      * in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested sprite_affine_mat_pa_register_hbe_ptr if it could be allocated;
      * bn::nullopt otherwise.
@@ -91,7 +91,7 @@ public:
      * to the first GBA register of a sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested sprite_affine_mat_pa_register_hbe_ptr if it could be allocated;
      * bn::nullopt otherwise.
@@ -112,7 +112,7 @@ public:
      * to the first GBA register of a sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      */
     [[nodiscard]] span<const affine_mat_attributes> attributes_ref() const;
 
@@ -121,7 +121,7 @@ public:
      * to the first GBA register of a sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      */
     [[nodiscard]] span<const int16_t> values_ref() const;
 
@@ -130,7 +130,7 @@ public:
      * to the first GBA register of a sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      */
     void set_attributes_ref(const span<const affine_mat_attributes>& attributes_ref);
 
@@ -139,7 +139,7 @@ public:
      * to the first GBA register of a sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      */
     void set_values_ref(const span<const int16_t>& values_ref);
 
@@ -148,7 +148,7 @@ public:
      * to the first GBA register of a sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      */
     void reload_attributes_ref();
 
@@ -157,7 +157,7 @@ public:
      * to the first GBA register of a sprite_affine_mat_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
+     * the sprite_affine_mat_pa_register_hbe_ptr to avoid dangling references.
      */
     void reload_values_ref();
 

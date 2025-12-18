@@ -43,7 +43,7 @@ public:
      * in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested palette_bitmap_bg_dx_register_hbe_ptr.
      */
@@ -58,7 +58,7 @@ public:
      * to the the fifth GBA register of a palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested palette_bitmap_bg_dx_register_hbe_ptr.
      */
@@ -74,7 +74,7 @@ public:
      * in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested palette_bitmap_bg_dx_register_hbe_ptr if it could be allocated; bn::nullopt otherwise.
      */
@@ -89,7 +89,7 @@ public:
      * to the the fifth GBA register of a palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      *
      * @return The requested palette_bitmap_bg_dx_register_hbe_ptr if it could be allocated; bn::nullopt otherwise.
      */
@@ -109,7 +109,7 @@ public:
      * to the the fifth GBA register of a palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      */
     [[nodiscard]] span<const affine_bg_mat_attributes> attributes_ref() const;
 
@@ -118,7 +118,7 @@ public:
      * to the the fifth GBA register of a palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      */
     [[nodiscard]] span<const int> values_ref() const;
 
@@ -127,7 +127,7 @@ public:
      * to the the fifth GBA register of a palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      */
     void set_attributes_ref(const span<const affine_bg_mat_attributes>& attributes_ref);
 
@@ -136,7 +136,7 @@ public:
      * to the the fifth GBA register of a palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      */
     void set_values_ref(const span<const int>& values_ref);
 
@@ -145,7 +145,7 @@ public:
      * to the the fifth GBA register of a palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The attributes are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      */
     void reload_attributes_ref();
 
@@ -154,7 +154,7 @@ public:
      * to the the fifth GBA register of a palette_bitmap_bg_ptr in each screen horizontal line.
      *
      * The values are not copied but referenced, so they should outlive
-     * palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
+     * the palette_bitmap_bg_dx_register_hbe_ptr to avoid dangling references.
      */
     void reload_values_ref();
 

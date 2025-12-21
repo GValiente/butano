@@ -190,7 +190,13 @@
  *
  * Vibration showcase (if your cart supports it).
  *
- * <tr><td> @ref affine_mat "Sprite affine matrices"
+ * <tr><td> **Single page direct bitmap BGs**
+ *
+ * @image html examples_sp_direct_bitmap_bgs.png
+ *
+ * Shows how to use single page direct bitmap backgrounds with Butano.
+ *
+ * <td> @ref affine_mat "Sprite affine matrices"
  *
  * @image html examples_sprite_affine_mats.png
  *
@@ -202,13 +208,13 @@
  *
  * Simple sprites examples.
  *
- * <td> @ref sram
+ * <tr><td> @ref sram
  *
  * @image html examples_sram.png
  *
  * SRAM reads and writes with Butano.
  *
- * <tr><td> @ref text
+ * <td> @ref text
  *
  * @image html examples_text.png
  *
@@ -220,13 +226,13 @@
  *
  * Showcases textured polygons rendering with sprites.
  *
- * <td> @ref timer
+ * <tr><td> @ref timer
  *
  * @image html examples_timer.png
  *
  * Simple timer example.
  *
- * <tr><td> @ref window
+ * <td> @ref window
  *
  * @image html examples_windows.png
  *

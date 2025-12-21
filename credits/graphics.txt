@@ -17,6 +17,11 @@
     By JamesWhite
     License (CC0) http://creativecommons.org/publicdomain/zero/1.0/
     https://opengameart.org/content/dice-4
+	
+- mr_and_mrs_andrews.bmp
+    By Thomas Gainsborough
+    Released into the public domain
+	https://commons.wikimedia.org/wiki/File:Thomas_Gainsborough_-_Mr_and_Mrs_Andrews.jpg
 
 - escaping_criticism.bmp
     By Pere Borrell del Caso

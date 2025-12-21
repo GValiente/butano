@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>bn::sp_direct_bitmap_bg_painter class | Butano Docs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <span id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">
+        <a href="https://github.com/GValiente/butano">Butano</a> <span class="m-breadcrumb">|</span> <a href="index.html" class="m-thin">Docs</a>
+      </span>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="modules.html">Modules</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="namespaces.html">Namespaces</a></li>
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          <span class="m-breadcrumb"><a href="namespacebn.html">bn</a>::<wbr/></span>sp_direct_bitmap_bg_painter <span class="m-thin">class</span>
+          <div class="m-doc-include m-code m-inverted m-text-right"><span class="cp">#include</span> <a class="cpf" href="bn__sp__direct__bitmap__bg__painter_8h.html">&lt;bn_sp_direct_bitmap_bg_painter.h&gt;</a></div>
+        </h1>
+        <p>Performs low-level painting on single page direct bitmap backgrounds.</p>
+        <nav class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
+                <li><a href="#pub-methods">Public functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a572f7dd75095c0dc9aadeea102149167" class="m-doc">sp_direct_bitmap_bg_painter</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sp__direct__bitmap__bg__ptr.html" class="m-doc">sp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; bg) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Class constructor.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper"><a href="#a68ddd25ae72a59aeb5230b0742437991" class="m-doc">sp_direct_bitmap_bg_painter</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sp__direct__bitmap__bg__ptr.html" class="m-doc">sp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp;&amp; bg) <span class="m-label m-flat m-info">explicit</span> </span>
+            </dt>
+            <dd>Class constructor.</dd>
+          </dl>
+        </section>
+        <section id="pub-methods">
+          <h2><a href="#pub-methods">Public functions</a></h2>
+          <dl class="m-doc">
+            <dt id="aa9d64069fb750e633254aa6d2d0096a8">
+              <span class="m-doc-wrap-bumper">auto <a href="#aa9d64069fb750e633254aa6d2d0096a8" class="m-doc-self">bg</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1sp__direct__bitmap__bg__ptr.html" class="m-doc">sp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the background modified by this painter.</dd>
+            <dt id="a3e3d00a9731edbbd04b7d4208a956d34">
+              <span class="m-doc-wrap-bumper">auto <a href="#a3e3d00a9731edbbd04b7d4208a956d34" class="m-doc-self">page</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1color.html" class="m-doc">color</a>&gt;</span>
+            </dt>
+            <dd>Returns a span of the hidden frame buffer.</dd>
+            <dt id="a00acf0af55655c30c007854bafd15648">
+              <span class="m-doc-wrap-bumper">auto <a href="#a00acf0af55655c30c007854bafd15648" class="m-doc-self">page</a>(</span><span class="m-doc-wrap">) -&gt; <a href="classbn_1_1span.html" class="m-doc">span</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;</span>
+            </dt>
+            <dd>Returns a span of the hidden frame buffer.</dd>
+            <dt id="af68661772f4268bf0603d764b4bb24bf">
+              <span class="m-doc-wrap-bumper">void <a href="#af68661772f4268bf0603d764b4bb24bf" class="m-doc-self">fill</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Fills the current page with the given color.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a5293950badb310ebaaabfa77ab6adedd" class="m-doc">unsafe_get</a>(</span><span class="m-doc-wrap">int x,
+              int y) const -&gt; <a href="classbn_1_1color.html" class="m-doc">color</a></span>
+            </dt>
+            <dd>Returns the referenced color without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aff98d0d1840b8d173df63305b99c230e" class="m-doc">unsafe_get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const -&gt; <a href="classbn_1_1color.html" class="m-doc">color</a></span>
+            </dt>
+            <dd>Returns the referenced color without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#afdf8a1176ae7a5428523e5903402bfb1" class="m-doc">get</a>(</span><span class="m-doc-wrap">int x,
+              int y) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;</span>
+            </dt>
+            <dd>Returns the referenced color with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a8364126f0af292e67b6e0223247ad8e8" class="m-doc">get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt;</span>
+            </dt>
+            <dd>Returns the referenced color with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a65ad80c8820ba5336260202a469584b0" class="m-doc">unsafe_plot</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Plots a pixel on the current page without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0b67fb57db734c47f4884c1ede330269" class="m-doc">unsafe_plot</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Plots a pixel on the current page without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aabffffedabed845517b0690d2014878b" class="m-doc">plot</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Plots a pixel on the current page with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad406326ec0b0d6bc3e69e2e091bf0d7c" class="m-doc">plot</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Plots a pixel on the current page with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ac00ab11efb122bcb4d4e09e701fd82d3" class="m-doc">unsafe_horizontal_line</a>(</span><span class="m-doc-wrap">int x1,
+              int x2,
+              int y,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws an horizontal line in the current page without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af21f8f3c1e899ffa0422225e8ca96820" class="m-doc">horizontal_line</a>(</span><span class="m-doc-wrap">int x1,
+              int x2,
+              int y,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws an horizontal line in the current page with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a590a69e42c5394d505f9a2f9106d96fd" class="m-doc">unsafe_vertical_line</a>(</span><span class="m-doc-wrap">int x,
+              int y1,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a vertical line in the current page without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a74a30cb0201ff384c07eb28e7ce0ad3b" class="m-doc">vertical_line</a>(</span><span class="m-doc-wrap">int x,
+              int y1,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a vertical line in the current page with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0b849cbf5a842ee2878fe81843336954" class="m-doc">unsafe_line</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a line in the current page without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae4b34aaf1bb702d595b65f8f8e248e09" class="m-doc">unsafe_line</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; first,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; last,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a line in the current page without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a971dc6906ebb603c4b4d484e57a8911a" class="m-doc">line</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a line in the current page with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a1c5882413a8ef0f6ac9129ab3f94c6b9" class="m-doc">line</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; first,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; last,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a line in the current page with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a4e64fae4cd4a448ee64093bb3d1a229b" class="m-doc">unsafe_rectangle</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a filled rectangle in the current page without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a26c4311ab1da1da7e10d1c282c24e7fa" class="m-doc">unsafe_rectangle</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; first,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; last,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a filled rectangle in the current page without bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a40d3afa7dde1f78a179eb9d8dd55c09e" class="m-doc">rectangle</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a filled rectangle in the current page with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af3ee0700e4fff84f4accc16c5741d5b5" class="m-doc">rectangle</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; first,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; last,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span>
+            </dt>
+            <dd>Draws a filled rectangle in the current page with bounds checking.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a0727818259adc571b3ef4c42e4993960" class="m-doc">unsafe_blit</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item)</span>
+            </dt>
+            <dd>Copies the given item to the current page without bounds checking. Transparent pixels are also copied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aaaba0108f80d20e64df4ad17c238e450" class="m-doc">unsafe_blit</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item)</span>
+            </dt>
+            <dd>Copies the given item to the current page without bounds checking. Transparent pixels are also copied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a24a1d777eb9fcf554b54f06c8c1e97f8" class="m-doc">unsafe_blit</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi)</span>
+            </dt>
+            <dd>Copies the given region of interest to the current page without bounds checking. Transparent pixels are also copied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a25b587d25e51900ec83d0448db5ef023" class="m-doc">unsafe_blit</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi)</span>
+            </dt>
+            <dd>Copies the given region of interest to the current page without bounds checking. Transparent pixels are also copied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ae43653d6cc688b3030140c045b18f8d0" class="m-doc">blit</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item)</span>
+            </dt>
+            <dd>Copies the given item to the current page with bounds checking. Transparent pixels are also copied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a8eef04ed6ac96330ed0997a1c4dd3c9e" class="m-doc">blit</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item)</span>
+            </dt>
+            <dd>Copies the given item to the current page with bounds checking. Transparent pixels are also copied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a5c7df20d41cd3143c50667543313cc5b" class="m-doc">blit</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi)</span>
+            </dt>
+            <dd>Copies the given region of interest to the current page with bounds checking. Transparent pixels are also copied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#ad7c57fd6acc5d1a488832c16a781b5eb" class="m-doc">blit</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi)</span>
+            </dt>
+            <dd>Copies the given region of interest to the current page with bounds checking. Transparent pixels are also copied.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aca471451514dbda13e29fe567ef17b9a" class="m-doc">unsafe_draw</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span>
+            </dt>
+            <dd>Copies the given item to the current page without bounds checking. Transparent pixels are skipped.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a7523f61c69f065657121d7787d25aabe" class="m-doc">unsafe_draw</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span>
+            </dt>
+            <dd>Copies the given item to the current page without bounds checking. Transparent pixels are skipped.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aa0a3ac251ad9da7dca4cac8ab5da40c1" class="m-doc">unsafe_draw</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span>
+            </dt>
+            <dd>Copies the given region of interest to the current page without bounds checking. Transparent pixels are skipped.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a68ee6cd8b2aae9e0cccf0adf2b57225b" class="m-doc">unsafe_draw</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span>
+            </dt>
+            <dd>Copies the given region of interest to the current page without bounds checking. Transparent pixels are skipped.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a91b380a9be58d2e4404ef397d2728624" class="m-doc">draw</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span>
+            </dt>
+            <dd>Copies the given item to the current page with bounds checking. Transparent pixels are skipped.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aaf45e9e2cf21118e77944788d1d613e3" class="m-doc">draw</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span>
+            </dt>
+            <dd>Copies the given item to the current page with bounds checking. Transparent pixels are skipped.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#aded217e47eed0d368d5e6fa9f6531fab" class="m-doc">draw</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span>
+            </dt>
+            <dd>Copies the given region of interest to the current page with bounds checking. Transparent pixels are skipped.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a461cd7d6bedbf3b182e1906f28815680" class="m-doc">draw</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span>
+            </dt>
+            <dd>Copies the given region of interest to the current page with bounds checking. Transparent pixels are skipped.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="a572f7dd75095c0dc9aadeea102149167"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a572f7dd75095c0dc9aadeea102149167" class="m-doc-self">sp_direct_bitmap_bg_painter</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1sp__direct__bitmap__bg__ptr.html" class="m-doc">sp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp; bg) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Class constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bg</td>
+                  <td>Single page direct bitmap background to be modified.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a68ddd25ae72a59aeb5230b0742437991"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"> bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a68ddd25ae72a59aeb5230b0742437991" class="m-doc-self">sp_direct_bitmap_bg_painter</a>(</span><span class="m-doc-wrap"><a href="classbn_1_1sp__direct__bitmap__bg__ptr.html" class="m-doc">sp_<wbr />direct_<wbr />bitmap_<wbr />bg_<wbr />ptr</a>&amp;&amp; bg) <span class="m-label m-info">explicit</span> </span></span>
+            </h3>
+            <p>Class constructor.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">bg</td>
+                  <td>Single page direct bitmap background to be modified.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5293950badb310ebaaabfa77ab6adedd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1color.html" class="m-doc">color</a> bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5293950badb310ebaaabfa77ab6adedd" class="m-doc-self">unsafe_get</a>(</span><span class="m-doc-wrap">int x,
+              int y) const</span></span>
+            </h3>
+            <p>Returns the referenced color without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position in the current page [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position in the current page [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced color.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aff98d0d1840b8d173df63305b99c230e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1color.html" class="m-doc">color</a> bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aff98d0d1840b8d173df63305b99c230e" class="m-doc-self">unsafe_get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const</span></span>
+            </h3>
+            <p>Returns the referenced color without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position in the current page.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced color.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="afdf8a1176ae7a5428523e5903402bfb1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#afdf8a1176ae7a5428523e5903402bfb1" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">int x,
+              int y) const</span></span>
+            </h3>
+            <p>Returns the referenced color with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position in the current page [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position in the current page [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced color.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8364126f0af292e67b6e0223247ad8e8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1color.html" class="m-doc">color</a>&gt; bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8364126f0af292e67b6e0223247ad8e8" class="m-doc-self">get</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position) const</span></span>
+            </h3>
+            <p>Returns the referenced color with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position in the current page.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>The referenced color.</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a65ad80c8820ba5336260202a469584b0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a65ad80c8820ba5336260202a469584b0" class="m-doc-self">unsafe_plot</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Plots a pixel on the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the pixel to plot [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the pixel to plot [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0b67fb57db734c47f4884c1ede330269"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0b67fb57db734c47f4884c1ede330269" class="m-doc-self">unsafe_plot</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Plots a pixel on the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the pixel to plot.</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aabffffedabed845517b0690d2014878b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aabffffedabed845517b0690d2014878b" class="m-doc-self">plot</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Plots a pixel on the current page with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the pixel to plot [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the pixel to plot [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad406326ec0b0d6bc3e69e2e091bf0d7c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad406326ec0b0d6bc3e69e2e091bf0d7c" class="m-doc-self">plot</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Plots a pixel on the current page with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the pixel to plot.</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ac00ab11efb122bcb4d4e09e701fd82d3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac00ab11efb122bcb4d4e09e701fd82d3" class="m-doc-self">unsafe_horizontal_line</a>(</span><span class="m-doc-wrap">int x1,
+              int x2,
+              int y,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws an horizontal line in the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x1</td>
+                  <td>Horizontal position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>x2</td>
+                  <td>Horizontal position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the horizontal line [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af21f8f3c1e899ffa0422225e8ca96820"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af21f8f3c1e899ffa0422225e8ca96820" class="m-doc-self">horizontal_line</a>(</span><span class="m-doc-wrap">int x1,
+              int x2,
+              int y,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws an horizontal line in the current page with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x1</td>
+                  <td>Horizontal position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>x2</td>
+                  <td>Horizontal position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the horizontal line [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a590a69e42c5394d505f9a2f9106d96fd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a590a69e42c5394d505f9a2f9106d96fd" class="m-doc-self">unsafe_vertical_line</a>(</span><span class="m-doc-wrap">int x,
+              int y1,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a vertical line in the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the vertical line [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y1</td>
+                  <td>Vertical position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y2</td>
+                  <td>Vertical position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a74a30cb0201ff384c07eb28e7ce0ad3b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a74a30cb0201ff384c07eb28e7ce0ad3b" class="m-doc-self">vertical_line</a>(</span><span class="m-doc-wrap">int x,
+              int y1,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a vertical line in the current page with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the vertical line [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y1</td>
+                  <td>Vertical position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y2</td>
+                  <td>Vertical position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0b849cbf5a842ee2878fe81843336954"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0b849cbf5a842ee2878fe81843336954" class="m-doc-self">unsafe_line</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a line in the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x1</td>
+                  <td>Horizontal position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y1</td>
+                  <td>Vertical position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>x2</td>
+                  <td>Horizontal position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y2</td>
+                  <td>Vertical position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae4b34aaf1bb702d595b65f8f8e248e09"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae4b34aaf1bb702d595b65f8f8e248e09" class="m-doc-self">unsafe_line</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; first,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; last,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a line in the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Position of the first pixel.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Position of the last pixel.</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a971dc6906ebb603c4b4d484e57a8911a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a971dc6906ebb603c4b4d484e57a8911a" class="m-doc-self">line</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a line in the current page with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x1</td>
+                  <td>Horizontal position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y1</td>
+                  <td>Vertical position of the first pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>x2</td>
+                  <td>Horizontal position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y2</td>
+                  <td>Vertical position of the last pixel [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a1c5882413a8ef0f6ac9129ab3f94c6b9"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1c5882413a8ef0f6ac9129ab3f94c6b9" class="m-doc-self">line</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; first,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; last,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a line in the current page with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Position of the first pixel.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Position of the last pixel.</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a4e64fae4cd4a448ee64093bb3d1a229b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4e64fae4cd4a448ee64093bb3d1a229b" class="m-doc-self">unsafe_rectangle</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a filled rectangle in the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x1</td>
+                  <td>Horizontal position of the first corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y1</td>
+                  <td>Vertical position of the first corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>x2</td>
+                  <td>Horizontal position of the last corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y2</td>
+                  <td>Vertical position of the last corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a26c4311ab1da1da7e10d1c282c24e7fa"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a26c4311ab1da1da7e10d1c282c24e7fa" class="m-doc-self">unsafe_rectangle</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; first,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; last,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a filled rectangle in the current page without bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Position of the first corner.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Position of the last corner.</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a40d3afa7dde1f78a179eb9d8dd55c09e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a40d3afa7dde1f78a179eb9d8dd55c09e" class="m-doc-self">rectangle</a>(</span><span class="m-doc-wrap">int x1,
+              int y1,
+              int x2,
+              int y2,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a filled rectangle in the current page with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x1</td>
+                  <td>Horizontal position of the first corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y1</td>
+                  <td>Vertical position of the first corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>x2</td>
+                  <td>Horizontal position of the last corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y2</td>
+                  <td>Vertical position of the last corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="af3ee0700e4fff84f4accc16c5741d5b5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af3ee0700e4fff84f4accc16c5741d5b5" class="m-doc-self">rectangle</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; first,
+              const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; last,
+              <a href="classbn_1_1color.html" class="m-doc">color</a> color)</span></span>
+            </h3>
+            <p>Draws a filled rectangle in the current page with bounds checking.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">first</td>
+                  <td>Position of the first corner.</td>
+                </tr>
+                <tr>
+                  <td>last</td>
+                  <td>Position of the last corner.</td>
+                </tr>
+                <tr>
+                  <td>color</td>
+                  <td>Color to plot.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a0727818259adc571b3ef4c42e4993960"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0727818259adc571b3ef4c42e4993960" class="m-doc-self">unsafe_blit</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Copies the given item to the current page without bounds checking. Transparent pixels are also copied.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td>Item to copy to the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaaba0108f80d20e64df4ad17c238e450"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaaba0108f80d20e64df4ad17c238e450" class="m-doc-self">unsafe_blit</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Copies the given item to the current page without bounds checking. Transparent pixels are also copied.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the current page top-left corner.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td>Item to copy to the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a24a1d777eb9fcf554b54f06c8c1e97f8"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a24a1d777eb9fcf554b54f06c8c1e97f8" class="m-doc-self">unsafe_blit</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi)</span></span>
+            </h3>
+            <p>Copies the given region of interest to the current page without bounds checking. Transparent pixels are also copied.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>roi</td>
+                  <td>Region of interest to copy to the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a25b587d25e51900ec83d0448db5ef023"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a25b587d25e51900ec83d0448db5ef023" class="m-doc-self">unsafe_blit</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi)</span></span>
+            </h3>
+            <p>Copies the given region of interest to the current page without bounds checking. Transparent pixels are also copied.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the current page top-left corner.</td>
+                </tr>
+                <tr>
+                  <td>roi</td>
+                  <td>Region of interest to copy to the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ae43653d6cc688b3030140c045b18f8d0"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae43653d6cc688b3030140c045b18f8d0" class="m-doc-self">blit</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Copies the given item to the current page with bounds checking. Transparent pixels are also copied.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td>Item to copy to the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a8eef04ed6ac96330ed0997a1c4dd3c9e"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a8eef04ed6ac96330ed0997a1c4dd3c9e" class="m-doc-self">blit</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item)</span></span>
+            </h3>
+            <p>Copies the given item to the current page with bounds checking. Transparent pixels are also copied.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the current page top-left corner.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td>Item to copy to the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a5c7df20d41cd3143c50667543313cc5b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a5c7df20d41cd3143c50667543313cc5b" class="m-doc-self">blit</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi)</span></span>
+            </h3>
+            <p>Copies the given region of interest to the current page with bounds checking. Transparent pixels are also copied.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>roi</td>
+                  <td>Region of interest to copy to the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="ad7c57fd6acc5d1a488832c16a781b5eb"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad7c57fd6acc5d1a488832c16a781b5eb" class="m-doc-self">blit</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi)</span></span>
+            </h3>
+            <p>Copies the given region of interest to the current page with bounds checking. Transparent pixels are also copied.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the current page top-left corner.</td>
+                </tr>
+                <tr>
+                  <td>roi</td>
+                  <td>Region of interest to copy to the current page.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aca471451514dbda13e29fe567ef17b9a"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aca471451514dbda13e29fe567ef17b9a" class="m-doc-self">unsafe_draw</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span></span>
+            </h3>
+            <p>Copies the given item to the current page without bounds checking. Transparent pixels are skipped.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td>Item to copy to the current page.</td>
+                </tr>
+                <tr>
+                  <td>transparent_color</td>
+                  <td>Color of the transparent pixels.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a7523f61c69f065657121d7787d25aabe"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7523f61c69f065657121d7787d25aabe" class="m-doc-self">unsafe_draw</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span></span>
+            </h3>
+            <p>Copies the given item to the current page without bounds checking. Transparent pixels are skipped.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the current page top-left corner.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td>Item to copy to the current page.</td>
+                </tr>
+                <tr>
+                  <td>transparent_color</td>
+                  <td>Color of the transparent pixels.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa0a3ac251ad9da7dca4cac8ab5da40c1"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa0a3ac251ad9da7dca4cac8ab5da40c1" class="m-doc-self">unsafe_draw</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span></span>
+            </h3>
+            <p>Copies the given region of interest to the current page without bounds checking. Transparent pixels are skipped.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>roi</td>
+                  <td>Region of interest to copy to the current page.</td>
+                </tr>
+                <tr>
+                  <td>transparent_color</td>
+                  <td>Color of the transparent pixels.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a68ee6cd8b2aae9e0cccf0adf2b57225b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a68ee6cd8b2aae9e0cccf0adf2b57225b" class="m-doc-self">unsafe_draw</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span></span>
+            </h3>
+            <p>Copies the given region of interest to the current page without bounds checking. Transparent pixels are skipped.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the current page top-left corner.</td>
+                </tr>
+                <tr>
+                  <td>roi</td>
+                  <td>Region of interest to copy to the current page.</td>
+                </tr>
+                <tr>
+                  <td>transparent_color</td>
+                  <td>Color of the transparent pixels.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a91b380a9be58d2e4404ef397d2728624"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a91b380a9be58d2e4404ef397d2728624" class="m-doc-self">draw</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span></span>
+            </h3>
+            <p>Copies the given item to the current page with bounds checking. Transparent pixels are skipped.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td>Item to copy to the current page.</td>
+                </tr>
+                <tr>
+                  <td>transparent_color</td>
+                  <td>Color of the transparent pixels.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aaf45e9e2cf21118e77944788d1d613e3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aaf45e9e2cf21118e77944788d1d613e3" class="m-doc-self">draw</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__item.html" class="m-doc">direct_<wbr />bitmap_<wbr />item</a>&amp; item,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span></span>
+            </h3>
+            <p>Copies the given item to the current page with bounds checking. Transparent pixels are skipped.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the current page top-left corner.</td>
+                </tr>
+                <tr>
+                  <td>item</td>
+                  <td>Item to copy to the current page.</td>
+                </tr>
+                <tr>
+                  <td>transparent_color</td>
+                  <td>Color of the transparent pixels.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aded217e47eed0d368d5e6fa9f6531fab"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aded217e47eed0d368d5e6fa9f6531fab" class="m-doc-self">draw</a>(</span><span class="m-doc-wrap">int x,
+              int y,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span></span>
+            </h3>
+            <p>Copies the given region of interest to the current page with bounds checking. Transparent pixels are skipped.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">x</td>
+                  <td>Horizontal position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a5c5c49b2a0447fbcc03d2c622ff5929a" class="m-doc">bitmap_bg::<wbr />sp_direct_width()</a>).</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Vertical position of the current page top-left corner [0..<a href="namespacebn_1_1bitmap__bg.html#a54be3abd716065210454d25b4963f923" class="m-doc">bitmap_bg::<wbr />sp_direct_height()</a>).</td>
+                </tr>
+                <tr>
+                  <td>roi</td>
+                  <td>Region of interest to copy to the current page.</td>
+                </tr>
+                <tr>
+                  <td>transparent_color</td>
+                  <td>Color of the transparent pixels.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="a461cd7d6bedbf3b182e1906f28815680"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />sp_direct_bitmap_bg_painter::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a461cd7d6bedbf3b182e1906f28815680" class="m-doc-self">draw</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1point.html" class="m-doc">point</a>&amp; position,
+              const <a href="classbn_1_1direct__bitmap__roi.html" class="m-doc">direct_<wbr />bitmap_<wbr />roi</a>&amp; roi,
+              <a href="classbn_1_1color.html" class="m-doc">bn::<wbr />color</a> transparent_color)</span></span>
+            </h3>
+            <p>Copies the given region of interest to the current page with bounds checking. Transparent pixels are skipped.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">position</td>
+                  <td>Position of the current page top-left corner.</td>
+                </tr>
+                <tr>
+                  <td>roi</td>
+                  <td>Region of interest to copy to the current page.</td>
+                </tr>
+                <tr>
+                  <td>transparent_color</td>
+                  <td>Color of the transparent pixels.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v2.js"></script>
+<script src="searchdata-v2.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>Butano Docs. Created with <a href="https://doxygen.org/">Doxygen</a> 1.14.0 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>

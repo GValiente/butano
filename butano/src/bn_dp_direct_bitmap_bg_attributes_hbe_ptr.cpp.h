@@ -45,7 +45,8 @@ span<const bitmap_bg_attributes> dp_direct_bitmap_bg_attributes_hbe_ptr::attribu
     return span<const bitmap_bg_attributes>(values_ptr, display::height());
 }
 
-void dp_direct_bitmap_bg_attributes_hbe_ptr::set_attributes_ref(const span<const bitmap_bg_attributes>& attributes_ref)
+void dp_direct_bitmap_bg_attributes_hbe_ptr::set_attributes_ref(
+        const span<const bitmap_bg_attributes>& attributes_ref)
 {
     hblank_effects_manager::set_values_ref(id(), attributes_ref.data(), attributes_ref.size());
 }
@@ -61,7 +62,8 @@ void dp_direct_bitmap_bg_attributes_hbe_ptr::swap(dp_direct_bitmap_bg_attributes
     _bg.swap(other._bg);
 }
 
-dp_direct_bitmap_bg_attributes_hbe_ptr::dp_direct_bitmap_bg_attributes_hbe_ptr(int id, dp_direct_bitmap_bg_ptr&& bg) :
+dp_direct_bitmap_bg_attributes_hbe_ptr::dp_direct_bitmap_bg_attributes_hbe_ptr(
+        int id, dp_direct_bitmap_bg_ptr&& bg) :
     hbe_ptr(id),
     _bg(move(bg))
 {

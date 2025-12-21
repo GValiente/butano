@@ -22,6 +22,7 @@ class affine_bg_ptr;
 class regular_bg_ptr;
 class palette_bitmap_bg_ptr;
 class dp_direct_bitmap_bg_ptr;
+class sp_direct_bitmap_bg_ptr;
 
 /**
  * @brief Base window class.
@@ -95,6 +96,13 @@ public:
 
     /**
      * @brief Indicates if the specified background is shown in this window.
+     * @param sp_direct_bitmap_bg sp_direct_bitmap_bg_ptr to ask for.
+     * @return `true` if the specified background is shown in this window, otherwise `false`.
+     */
+    [[nodiscard]] bool show_bg(const sp_direct_bitmap_bg_ptr& sp_direct_bitmap_bg) const;
+
+    /**
+     * @brief Indicates if the specified background is shown in this window.
      * @param dp_direct_bitmap_bg dp_direct_bitmap_bg_ptr to ask for.
      * @return `true` if the specified background is shown in this window, otherwise `false`.
      */
@@ -120,6 +128,13 @@ public:
      * @param show `true` if the specified background must be shown in this window, otherwise `false`.
      */
     void set_show_bg(const palette_bitmap_bg_ptr& palette_bitmap_bg, bool show);
+
+    /**
+     * @brief Sets if the specified background must be shown in this window.
+     * @param sp_direct_bitmap_bg sp_direct_bitmap_bg_ptr to show or hide.
+     * @param show `true` if the specified background must be shown in this window, otherwise `false`.
+     */
+    void set_show_bg(const sp_direct_bitmap_bg_ptr& sp_direct_bitmap_bg, bool show);
 
     /**
      * @brief Sets if the specified background must be shown in this window.

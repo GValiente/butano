@@ -16,6 +16,8 @@
  *
  * * Palette bitmap backgrounds support. Check the `palette_bitmap_bgs` example
  *   and the @ref import_image import guide to see how to use them.
+ * * Single page direct bitmap backgrounds support. Check the `sp_direct_bitmap_bgs` example
+ *   and the @ref import_image import guide to see how to use them.
  * * Dual page direct bitmap backgrounds support. Check the `dp_direct_bitmap_bgs` example
  *   and the @ref import_image import guide to see how to use them.
  * * bn::memory::vram_safe_copy added.

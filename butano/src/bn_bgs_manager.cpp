@@ -36,6 +36,8 @@
 #include "bn_palette_bitmap_bg_painter.cpp.h"
 #include "bn_palette_bitmap_pixels_item.cpp.h"
 #include "bn_direct_bitmap_item.cpp.h"
+#include "bn_sp_direct_bitmap_bg_ptr.cpp.h"
+#include "bn_sp_direct_bitmap_bg_builder.cpp.h"
 #include "bn_dp_direct_bitmap_bg_ptr.cpp.h"
 #include "bn_dp_direct_bitmap_bg_builder.cpp.h"
 #include "bn_dp_direct_bitmap_bg_painter.cpp.h"
@@ -121,6 +123,31 @@ namespace
                     (builder.camera() ? position - builder.camera()->position() : position),
                     bitmap_bg::palette_size() / 2, builder.pivot_position(), builder.mat_attributes()),
             half_dimensions(bitmap_bg::palette_size() / 2),
+            bg_sort_key(builder.priority(), 0),
+            camera(builder.release_camera()),
+            blending_top_enabled(builder.blending_top_enabled()),
+            blending_bottom_enabled(builder.blending_bottom_enabled()),
+            visible(builder.visible()),
+            big_map(false),
+            commit_big_map(false),
+            full_commit_big_map(false)
+        {
+            for(bool& visible_in_window : visible_in_windows)
+            {
+                visible_in_window = true;
+            }
+
+            hw::bgs::setup(builder.priority(), builder.green_swap_mode(), builder.mosaic_enabled(), false, hw_cnt);
+
+            [[maybe_unused]] bool affine_mat_attributes_updated = update_affine_map(true);
+        }
+
+        explicit item_type(sp_direct_bitmap_bg_builder&& builder) :
+            position(builder.position()),
+            affine_mat_attributes(
+                    (builder.camera() ? position - builder.camera()->position() : position),
+                    bitmap_bg::sp_direct_size() / 2, builder.pivot_position(), builder.mat_attributes()),
+            half_dimensions(bitmap_bg::sp_direct_size() / 2),
             bg_sort_key(builder.priority(), 0),
             camera(builder.release_camera()),
             blending_top_enabled(builder.blending_top_enabled()),
@@ -588,6 +615,19 @@ id_type create(palette_bitmap_bg_builder&& builder)
     return &item;
 }
 
+id_type create(sp_direct_bitmap_bg_builder&& builder)
+{
+    static_data& data = data_ref();
+    BN_BASIC_ASSERT(data.items_vector.empty(), "There are other BG items");
+
+    data.bitmap_affine_bg_tiles_handle = bg_blocks_manager::allocate_all_affine_tiles(false);
+    data.bitmap_sprite_tiles_handle = sprite_tiles_manager::allocate_first_half(false);
+
+    item_type& item = data.items_pool.create(move(builder));
+    _insert_item(item);
+    return &item;
+}
+
 id_type create(dp_direct_bitmap_bg_builder&& builder)
 {
     static_data& data = data_ref();
@@ -685,6 +725,38 @@ id_type create_optional(palette_bitmap_bg_builder&& builder)
     data.bitmap_affine_bg_tiles_handle = affine_bg_tiles_handle;
     data.bitmap_sprite_tiles_handle = sprite_tiles_handle;
     data.bitmap_palette = move(palette);
+
+    item_type& item = data.items_pool.create(move(builder));
+    _insert_item(item);
+    return &item;
+}
+
+id_type create_optional(sp_direct_bitmap_bg_builder&& builder)
+{
+    static_data& data = data_ref();
+
+    if(! data.items_vector.empty())
+    {
+        return nullptr;
+    }
+
+    int affine_bg_tiles_handle = bg_blocks_manager::allocate_all_affine_tiles(true);
+
+    if(affine_bg_tiles_handle == -1)
+    {
+        return nullptr;
+    }
+
+    int sprite_tiles_handle = sprite_tiles_manager::allocate_first_half(true);
+
+    if(sprite_tiles_handle == -1)
+    {
+        bg_blocks_manager::decrease_usages(affine_bg_tiles_handle);
+        return nullptr;
+    }
+
+    data.bitmap_affine_bg_tiles_handle = affine_bg_tiles_handle;
+    data.bitmap_sprite_tiles_handle = sprite_tiles_handle;
 
     item_type& item = data.items_pool.create(move(builder));
     _insert_item(item);
@@ -1869,7 +1941,14 @@ void rebuild_handles()
         }
         else if(data.bitmap_affine_bg_tiles_handle != -1)
         {
-            display_mode = 5;
+            if(data.items_vector[0]->half_dimensions.width() == bitmap_bg::sp_direct_width() / 2)
+            {
+                display_mode = 3;
+            }
+            else
+            {
+                display_mode = 5;
+            }
         }
         else
         {

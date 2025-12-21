@@ -48,7 +48,31 @@ namespace bn::bitmap_bg
     }
 
     /**
-     * @brief Returns the width of dual page direct bitmap backgrounds in pixels (240).
+     * @brief Returns the width of single page direct bitmap backgrounds in pixels (240).
+     */
+    [[nodiscard]] constexpr int sp_direct_width()
+    {
+        return hw::bitmap_bg::sp_direct_width();
+    }
+
+    /**
+     * @brief Returns the height of single page direct bitmap backgrounds in pixels (160).
+     */
+    [[nodiscard]] constexpr int sp_direct_height()
+    {
+        return hw::bitmap_bg::sp_direct_height();
+    }
+
+    /**
+     * @brief Returns the size of single page direct bitmap backgrounds in pixels (240x160).
+     */
+    [[nodiscard]] constexpr size sp_direct_size()
+    {
+        return bn::size(sp_direct_width(), sp_direct_height());
+    }
+
+    /**
+     * @brief Returns the width of dual page direct bitmap backgrounds in pixels (160).
      */
     [[nodiscard]] constexpr int dp_direct_width()
     {
@@ -56,7 +80,7 @@ namespace bn::bitmap_bg
     }
 
     /**
-     * @brief Returns the height of dual page direct bitmap backgrounds in pixels (160).
+     * @brief Returns the height of dual page direct bitmap backgrounds in pixels (128).
      */
     [[nodiscard]] constexpr int dp_direct_height()
     {
@@ -64,7 +88,7 @@ namespace bn::bitmap_bg
     }
 
     /**
-     * @brief Returns the size of dual page direct bitmap backgrounds in pixels (240x160).
+     * @brief Returns the size of dual page direct bitmap backgrounds in pixels (160x128).
      */
     [[nodiscard]] constexpr size dp_direct_size()
     {

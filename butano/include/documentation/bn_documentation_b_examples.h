@@ -13,7 +13,7 @@
  *
  * The examples assume that you have at least basic knowledge about:
  * * Modern C++ (Butano is based on modern C++ concepts like shared ownership, RAII, standard containers...).
- * * Old school 2D graphics (what are sprites, backgrounds, color palettes...).
+ * * Old school 2D graphics (what are sprites, backgrounds, color palettes, etc.).
  * * Basics of retro game development (at least to know that floating point usage is a no-no and things like that).
  *
  * Deep knowledge of GBA hardware is not required, as Butano wraps most of the functionality in its own classes.

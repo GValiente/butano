@@ -135,7 +135,7 @@ INLINE uint align(uint x, uint width);
 //\{
 
 // Base memcpy/set replacements.
-void *tonccpy(void *dst, const void *src, uint size);
+IWRAM_CODE void *tonccpy(void *dst, const void *src, uint size);
 
 void *__toncset(void *dst, u32 fill, uint size);
 INLINE void *toncset(void *dst, u8 src, uint count);

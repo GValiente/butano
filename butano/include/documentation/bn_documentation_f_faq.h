@@ -487,6 +487,15 @@
  * No :)
  *
  *
+ * @subsection faq_sprites_max_scale Is 2x the maximum scale for sprites?
+ *
+ * Yes. Well, the size of a sprite's canvas can only be doubled, so for example if you need to scale
+ * a sprite of 16x16 pixels more than 2x, you need to resize the image used to create the sprite to
+ * at least 32x32 pixels.
+ *
+ * It's a hardware limitation, Butano can't avoid it.
+ *
+ *
  * @subsection faq_sprites_scanline Why whenever I have too many sprites on screen, some of them get cut off?
  *
  * If you show too many sprites on screen (especially if they're rotated or scaled),

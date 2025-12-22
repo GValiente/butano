@@ -26,6 +26,7 @@
  *   bn::affine_bg_tiles_ptr, bn::affine_bg_map_ptr and bn::sprite_tiles_ptr.
  * * Sprite tiles are allocated at the end of VRAM.
  * * Affine backgrounds setup optimized.
+ * * @ref faq_sprites_max_scale question added to the @ref faq page.
  * * @ref faq_backgrounds_animated question improved.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> links updated.
  *

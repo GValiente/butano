@@ -625,7 +625,8 @@ public:
     }
 
     /**
-     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are also copied.
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are also copied,
+     * so it should be faster than palette_bitmap_bg_painter::unsafe_draw.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
      * @param item Item to copy to the current page.
@@ -638,7 +639,8 @@ public:
     }
 
     /**
-     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are also copied.
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are also copied,
+     * so it should be faster than palette_bitmap_bg_painter::unsafe_draw.
      * @param position Position of the current page top-left corner.
      * @param item Item to copy to the current page.
      */
@@ -649,7 +651,7 @@ public:
 
     /**
      * @brief Copies the given region of interest to the current page without bounds checking.
-     * Transparent pixels are also copied.
+     * Transparent pixels are also copied, so it should be faster than palette_bitmap_bg_painter::unsafe_draw.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
      * @param roi Region of interest to copy to the current page.
@@ -664,7 +666,7 @@ public:
 
     /**
      * @brief Copies the given region of interest to the current page without bounds checking.
-     * Transparent pixels are also copied.
+     * Transparent pixels are also copied, so it should be faster than palette_bitmap_bg_painter::unsafe_draw.
      * @param position Position of the current page top-left corner.
      * @param roi Region of interest to copy to the current page.
      */
@@ -674,7 +676,8 @@ public:
     }
 
     /**
-     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied.
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied,
+     * so it should be faster than palette_bitmap_bg_painter::draw.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
      * @param item Item to copy to the current page.
@@ -695,7 +698,8 @@ public:
     }
 
     /**
-     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied.
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied,
+     * so it should be faster than palette_bitmap_bg_painter::draw.
      * @param position Position of the current page top-left corner.
      * @param item Item to copy to the current page.
      */
@@ -706,7 +710,7 @@ public:
 
     /**
      * @brief Copies the given region of interest to the current page with bounds checking.
-     * Transparent pixels are also copied.
+     * Transparent pixels are also copied, so it should be faster than palette_bitmap_bg_painter::draw.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
      * @param roi Region of interest to copy to the current page.
@@ -729,7 +733,7 @@ public:
 
     /**
      * @brief Copies the given region of interest to the current page with bounds checking.
-     * Transparent pixels are also copied.
+     * Transparent pixels are also copied, so it should be faster than palette_bitmap_bg_painter::draw.
      * @param position Position of the current page top-left corner.
      * @param roi Region of interest to copy to the current page.
      */
@@ -739,7 +743,8 @@ public:
     }
 
     /**
-     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are skipped.
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are skipped,
+     * so it should be slower than palette_bitmap_bg_painter::unsafe_blit.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
      * @param item Item to copy to the current page.
@@ -752,7 +757,8 @@ public:
     }
 
     /**
-     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are skipped.
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are skipped,
+     * so it should be slower than palette_bitmap_bg_painter::unsafe_blit.
      * @param position Position of the current page top-left corner.
      * @param item Item to copy to the current page.
      */
@@ -763,7 +769,7 @@ public:
 
     /**
      * @brief Copies the given region of interest to the current page without bounds checking.
-     * Transparent pixels are skipped.
+     * Transparent pixels are skipped, so it should be slower than palette_bitmap_bg_painter::unsafe_blit.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
      * @param roi Region of interest to copy to the current page.
@@ -778,7 +784,7 @@ public:
 
     /**
      * @brief Copies the given region of interest to the current page without bounds checking.
-     * Transparent pixels are skipped.
+     * Transparent pixels are skipped, so it should be slower than palette_bitmap_bg_painter::unsafe_blit.
      * @param position Position of the current page top-left corner.
      * @param roi Region of interest to copy to the current page.
      */
@@ -788,7 +794,8 @@ public:
     }
 
     /**
-     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped.
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped,
+     * so it should be slower than palette_bitmap_bg_painter::blit.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
      * @param item Item to copy to the current page.
@@ -809,7 +816,8 @@ public:
     }
 
     /**
-     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped.
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped,
+     * so it should be slower than palette_bitmap_bg_painter::blit.
      * @param position Position of the current page top-left corner.
      * @param item Item to copy to the current page.
      */
@@ -820,7 +828,7 @@ public:
 
     /**
      * @brief Copies the given region of interest to the current page with bounds checking.
-     * Transparent pixels are skipped.
+     * Transparent pixels are skipped, so it should be slower than palette_bitmap_bg_painter::blit.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
      * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
      * @param roi Region of interest to copy to the current page.
@@ -843,7 +851,7 @@ public:
 
     /**
      * @brief Copies the given region of interest to the current page with bounds checking.
-     * Transparent pixels are skipped.
+     * Transparent pixels are skipped, so it should be slower than palette_bitmap_bg_painter::blit.
      * @param position Position of the current page top-left corner.
      * @param roi Region of interest to copy to the current page.
      */

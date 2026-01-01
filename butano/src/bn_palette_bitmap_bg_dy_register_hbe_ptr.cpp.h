@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2025 Gustavo Valiente gustavo.valiente@protonmail.com
+ * Copyright (c) 2020-2026 Gustavo Valiente gustavo.valiente@protonmail.com
  * zlib License, see LICENSE file.
  */
 

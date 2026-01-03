@@ -105,7 +105,10 @@ public:
      *
      * Expect lack of vsync issues like screen tearing.
      */
-    void flip_page_now();
+    void flip_page_now()
+    {
+        _bg.flip_page_now();
+    }
 
     /**
      * @brief Fills the current page with the transparent color.

@@ -165,6 +165,11 @@ void flip_bitmap_page_now()
 {
     flip_bitmap_page_later();
     hw::display::flip_bitmap_page();
+
+    if(void** bitmap_painter_page_ptr = data_ref().bitmap_painter_page_ptr)
+    {
+        *bitmap_painter_page_ptr = hw::display::hidden_bitmap_page();
+    }
 }
 
 void on_bitmap_painter_created(void** painter_page_ptr)

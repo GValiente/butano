@@ -57,10 +57,4 @@ palette_bitmap_bg_painter::~palette_bitmap_bg_painter()
     }
 }
 
-void palette_bitmap_bg_painter::flip_page_now()
-{
-    _bg.flip_page_now();
-    _page = display_manager::bitmap_page();
-}
-
 }

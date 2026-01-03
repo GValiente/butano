@@ -57,10 +57,4 @@ dp_direct_bitmap_bg_painter::~dp_direct_bitmap_bg_painter()
     }
 }
 
-void dp_direct_bitmap_bg_painter::flip_page_now()
-{
-    _bg.flip_page_now();
-    _page = reinterpret_cast<color*>(display_manager::bitmap_page());
-}
-
 }

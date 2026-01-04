@@ -26,6 +26,7 @@
 #include "bn_sprite_affine_second_attributes_hbe_ptr.h"
 #include "bn_sprite_regular_second_attributes_hbe_ptr.h"
 
+#include "bn_sprite_items_mask.h"
 #include "bn_sprite_items_ninja.h"
 #include "bn_sprite_items_caveman.h"
 #include "bn_sprite_items_red_sprite.h"
@@ -1098,6 +1099,56 @@ namespace
         }
     }
 
+    void sprite_mask_scene(bn::sprite_text_generator& text_generator)
+    {
+        bn::sprites::set_bg_sorting_enabled(false);
+
+        {
+            constexpr bn::string_view info_text_lines[] = {
+                "PAD: move sprite",
+                "",
+                "START: go to next scene",
+            };
+
+            common::info info("Sprites mask", info_text_lines, text_generator);
+
+            bn::regular_bg_ptr red_bg = bn::regular_bg_items::red_bg.create_bg(0, 0);
+            red_bg.set_priority(2);
+
+            bn::sprite_ptr blue_sprite = bn::sprite_items::blue_sprite.create_sprite(0, 16);
+            blue_sprite.set_z_order(-1);
+
+            bn::sprite_ptr mask_sprite = bn::sprite_items::mask.create_sprite(0, 0);
+            mask_sprite.set_bg_priority(2);
+
+            while(! bn::keypad::start_pressed())
+            {
+                if(bn::keypad::left_held())
+                {
+                    blue_sprite.set_x(bn::max(blue_sprite.x() - 1, bn::fixed(-26)));
+                }
+                else if(bn::keypad::right_held())
+                {
+                    blue_sprite.set_x(bn::min(blue_sprite.x() + 1, bn::fixed(26)));
+                }
+
+                if(bn::keypad::up_held())
+                {
+                    blue_sprite.set_y(bn::max(blue_sprite.y() - 1, bn::fixed(-20)));
+                }
+                else if(bn::keypad::down_held())
+                {
+                    blue_sprite.set_y(bn::min(blue_sprite.y() + 1, bn::fixed(20)));
+                }
+
+                info.update();
+                bn::core::update();
+            }
+        }
+
+        bn::sprites::set_bg_sorting_enabled(true);
+    }
+
     void sprite_builder_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
@@ -1225,6 +1276,9 @@ int main()
         bn::core::update();
 
         sprites_third_attributes_hbe_scene(text_generator);
+        bn::core::update();
+
+        sprite_mask_scene(text_generator);
         bn::core::update();
 
         sprite_builder_scene(text_generator);

@@ -81,6 +81,22 @@ namespace bn::sprites
     void set_visible(bool visible);
 
     /**
+     * @brief Indicates if sprites are sorted according to their priority relative to backgrounds or not.
+     *
+     * Disabling background sorting allows to create sprite masks.
+     */
+    [[nodiscard]] bool bg_sorting_enabled();
+
+    /**
+     * @brief Sets if sprites are sorted according to their priority relative to backgrounds or not.
+     *
+     * Disabling background sorting allows to create sprite masks.
+     *
+     * Background sorting can't be toggled with active sprites.
+     */
+    void set_bg_sorting_enabled(bool bg_sorting_enabled);
+
+    /**
      * @brief Indicates if the sprite layer is part of the blending bottom layer or not.
      */
     [[nodiscard]] bool blending_bottom_enabled();

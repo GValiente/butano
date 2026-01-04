@@ -1127,6 +1127,16 @@ void set_third_attributes(id_type id, const sprite_third_attributes& third_attri
     set_bg_priority(id, third_attributes.bg_priority());
 }
 
+bool bg_sorting_enabled()
+{
+    return data_ref().sorter.bg_sorting_enabled();
+}
+
+void set_bg_sorting_enabled(bool bg_sorting_enabled)
+{
+    data_ref().sorter.set_bg_sorting_enabled(bg_sorting_enabled);
+}
+
 int reserved_handles_count()
 {
     return data_ref().reserved_handles_count;

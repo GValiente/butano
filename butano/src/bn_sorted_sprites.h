@@ -54,10 +54,28 @@ namespace bn::sorted_sprites
             return _layer_ptrs;
         }
 
+        [[nodiscard]] bool bg_sorting_enabled() const
+        {
+            return ! _bg_sorting_disabled;
+        }
+
+        void set_bg_sorting_enabled(bool bg_sorting_enabled)
+        {
+            BN_BASIC_ASSERT(_layer_pool.empty(), "There are active sprites");
+
+            _bg_sorting_disabled = ! bg_sorting_enabled;
+        }
+
         void insert(sprites_manager_item& item)
         {
-            layers_type& layer_ptrs = _layer_ptrs;
             sort_key item_sort_key = item.sprite_sort_key;
+
+            if(_bg_sorting_disabled)
+            {
+                item_sort_key.set_priority(0);
+            }
+
+            layers_type& layer_ptrs = _layer_ptrs;
             layers_type::iterator layers_end = layer_ptrs.end();
             layers_type::iterator layers_it = lower_bound(layer_ptrs.begin(), layers_end, item_sort_key,
                     [](const layer& layer, sort_key sort_key) {
@@ -132,6 +150,7 @@ namespace bn::sorted_sprites
     private:
         pool<layer, BN_CFG_SPRITES_MAX_SORT_LAYERS> _layer_pool;
         layers_type _layer_ptrs;
+        bool _bg_sorting_disabled = false;
 
         [[nodiscard]] layer* _layer_ptr(int diff)
         {

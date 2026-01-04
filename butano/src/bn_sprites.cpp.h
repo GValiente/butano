@@ -31,6 +31,16 @@ void set_visible(bool visible)
     display_manager::set_sprites_visible(visible);
 }
 
+bool bg_sorting_enabled()
+{
+    return sprites_manager::bg_sorting_enabled();
+}
+
+void set_bg_sorting_enabled(bool bg_sorting_enabled)
+{
+    sprites_manager::set_bg_sorting_enabled(bg_sorting_enabled);
+}
+
 bool blending_bottom_enabled()
 {
     return display_manager::blending_bottom_sprites_enabled();

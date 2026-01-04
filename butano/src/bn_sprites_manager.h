@@ -185,6 +185,10 @@ namespace sprites_manager
 
     void set_third_attributes(id_type id, const sprite_third_attributes& third_attributes);
 
+    [[nodiscard]] bool bg_sorting_enabled();
+
+    void set_bg_sorting_enabled(bool bg_sorting_enabled);
+
     int reserved_handles_count();
 
     void set_reserved_handles_count(int reserved_handles_count);

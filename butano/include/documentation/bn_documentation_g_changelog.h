@@ -20,6 +20,8 @@
  *   and the @ref import_image import guide to see how to use them.
  * * Dual page direct bitmap backgrounds support. Check the `dp_direct_bitmap_bgs` example
  *   and the @ref import_image import guide to see how to use them.
+ * * bn::sprites::bg_sorting_enabled and bn::sprites::set_bg_sorting_enabled added.
+ *   Check the `sprites` example to see how to create sprite masks with them.
  * * bn::memory::vram_safe_copy added.
  * * bn::clip_line added.
  * * `const` `vram` methods added for bn::regular_bg_tiles_ptr, bn::regular_bg_map_ptr,

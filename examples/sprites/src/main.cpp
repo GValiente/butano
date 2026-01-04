@@ -1110,7 +1110,7 @@ namespace
                 "START: go to next scene",
             };
 
-            common::info info("Sprites mask", info_text_lines, text_generator);
+            common::info info("Sprite mask", info_text_lines, text_generator);
 
             bn::regular_bg_ptr red_bg = bn::regular_bg_items::red_bg.create_bg(0, 0);
             red_bg.set_priority(2);

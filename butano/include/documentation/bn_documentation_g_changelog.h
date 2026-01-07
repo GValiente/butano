@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_0_0 21.0.0 (next release)
+ * @section changelog_21_0_0 21.0.0
  *
  * * Palette bitmap backgrounds support. Check the `palette_bitmap_bgs` example
  *   and the @ref import_image import guide to see how to use them.

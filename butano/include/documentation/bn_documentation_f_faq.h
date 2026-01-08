@@ -639,6 +639,11 @@
  * the `dynamic_affine_bg` example for that.
  *
  *
+ * @subsection faq_backgrounds_metatiles Does Butano support metatiles?
+ *
+ * Metatiles (groups of regular tiles that together represent one single bigger tile) are not supported by Butano.
+ *
+ *
  * @subsection faq_backgrounds_hidden Does hiding a background make it count towards the total number of allowed backgrounds?
  *
  * Hidden backgrounds are not committed to the GBA, but they still take resources like color palettes and VRAM.

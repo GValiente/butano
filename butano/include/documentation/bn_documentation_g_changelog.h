@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_21_0_1 21.0.1 (next release)
+ *
+ * @ref faq_backgrounds_metatiles question added to the @ref faq page.
+ *
+ *
  * @section changelog_21_0_0 21.0.0
  *
  * * Palette bitmap backgrounds support. Check the `palette_bitmap_bgs` example

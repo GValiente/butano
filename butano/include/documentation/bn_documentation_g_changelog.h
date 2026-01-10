@@ -14,7 +14,8 @@
  *
  * @section changelog_21_0_1 21.0.1 (next release)
  *
- * @ref faq_backgrounds_metatiles question added to the @ref faq page.
+ * * @ref faq_backgrounds_metatiles question added to the @ref faq page.
+ * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> links updated.
  *
  *
  * @section changelog_21_0_0 21.0.0

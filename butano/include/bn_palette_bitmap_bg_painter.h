@@ -18,6 +18,7 @@
 #include "bn_bitmap_bg.h"
 #include "bn_clip_line.h"
 #include "bn_palette_bitmap_roi.h"
+#include "bn_palette_bitmap_item.h"
 #include "bn_palette_bitmap_bg_ptr.h"
 
 namespace bn
@@ -653,6 +654,30 @@ public:
     }
 
     /**
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are also copied,
+     * so it should be faster than palette_bitmap_bg_painter::unsafe_draw.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param item Item to copy to the current page.
+     */
+    inline void unsafe_blit(int x, int y, const palette_bitmap_item& item)
+    {
+        unsafe_blit(x, y, item.pixels_item());
+        _bg.set_palette(item.palette_item());
+    }
+
+    /**
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are also copied,
+     * so it should be faster than palette_bitmap_bg_painter::unsafe_draw.
+     * @param position Position of the current page top-left corner.
+     * @param item Item to copy to the current page.
+     */
+    inline void unsafe_blit(const point& position, const palette_bitmap_item& item)
+    {
+        unsafe_blit(position.x(), position.y(), item);
+    }
+
+    /**
      * @brief Copies the given region of interest to the current page without bounds checking.
      * Transparent pixels are also copied, so it should be faster than palette_bitmap_bg_painter::unsafe_draw.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
@@ -707,6 +732,30 @@ public:
      * @param item Item to copy to the current page.
      */
     inline void blit(const point& position, const palette_bitmap_pixels_item& item)
+    {
+        blit(position.x(), position.y(), item);
+    }
+
+    /**
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied,
+     * so it should be faster than palette_bitmap_bg_painter::draw.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param item Item to copy to the current page.
+     */
+    inline void blit(int x, int y, const palette_bitmap_item& item)
+    {
+        blit(x, y, item.pixels_item());
+        _bg.set_palette(item.palette_item());
+    }
+
+    /**
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are also copied,
+     * so it should be faster than palette_bitmap_bg_painter::draw.
+     * @param position Position of the current page top-left corner.
+     * @param item Item to copy to the current page.
+     */
+    inline void blit(const point& position, const palette_bitmap_item& item)
     {
         blit(position.x(), position.y(), item);
     }
@@ -771,6 +820,30 @@ public:
     }
 
     /**
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are skipped,
+     * so it should be slower than palette_bitmap_bg_painter::unsafe_blit.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param item Item to copy to the current page.
+     */
+    inline void unsafe_draw(int x, int y, const palette_bitmap_item& item)
+    {
+        unsafe_draw(x, y, item.pixels_item());
+        _bg.set_palette(item.palette_item());
+    }
+
+    /**
+     * @brief Copies the given item to the current page without bounds checking. Transparent pixels are skipped,
+     * so it should be slower than palette_bitmap_bg_painter::unsafe_blit.
+     * @param position Position of the current page top-left corner.
+     * @param item Item to copy to the current page.
+     */
+    inline void unsafe_draw(const point& position, const palette_bitmap_item& item)
+    {
+        unsafe_draw(position.x(), position.y(), item);
+    }
+
+    /**
      * @brief Copies the given region of interest to the current page without bounds checking.
      * Transparent pixels are skipped, so it should be slower than palette_bitmap_bg_painter::unsafe_blit.
      * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
@@ -825,6 +898,30 @@ public:
      * @param item Item to copy to the current page.
      */
     inline void draw(const point& position, const palette_bitmap_pixels_item& item)
+    {
+        draw(position.x(), position.y(), item);
+    }
+
+    /**
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped,
+     * so it should be slower than palette_bitmap_bg_painter::blit.
+     * @param x Horizontal position of the current page top-left corner [0..bitmap_bg::palette_width()).
+     * @param y Vertical position of the current page top-left corner [0..bitmap_bg::palette_height()).
+     * @param item Item to copy to the current page.
+     */
+    inline void draw(int x, int y, const palette_bitmap_item& item)
+    {
+        draw(x, y, item.pixels_item());
+        _bg.set_palette(item.palette_item());
+    }
+
+    /**
+     * @brief Copies the given item to the current page with bounds checking. Transparent pixels are skipped,
+     * so it should be slower than palette_bitmap_bg_painter::blit.
+     * @param position Position of the current page top-left corner.
+     * @param item Item to copy to the current page.
+     */
+    inline void draw(const point& position, const palette_bitmap_item& item)
     {
         draw(position.x(), position.y(), item);
     }

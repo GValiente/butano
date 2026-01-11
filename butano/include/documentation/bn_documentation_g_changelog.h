@@ -12,8 +12,11 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_0_1 21.0.1 (next release)
+ * @section changelog_21_1_0 21.1.0 (next release)
  *
+ * * bn::palette_bitmap_item overloads for bn::palette_bitmap_bg_painter::unsafe_blit,
+ *   bn::palette_bitmap_bg_painter::blit, bn::palette_bitmap_bg_painter::unsafe_draw and
+ *   bn::palette_bitmap_bg_painter::draw added.
  * * @ref faq_backgrounds_metatiles question added to the @ref faq page.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> links updated.
  *

@@ -47,7 +47,7 @@ as they answer most of the initial questions.
 
 ## Third party libraries
 
-Butano would have not been possible without these libraries:
+Butano would not have been possible without these libraries:
 
 * GBA hardware access and more provided by [Tonclib](https://www.coranac.com/projects/#tonc), 
 [Universal GBA Library](https://github.com/AntonioND/libugba) and [agbabi](https://github.com/felixjones/agbabi).

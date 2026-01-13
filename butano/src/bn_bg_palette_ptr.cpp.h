@@ -221,6 +221,11 @@ span<const color> bg_palette_ptr::colors() const
     return palettes_manager::bg_palettes_bank().colors(_id);
 }
 
+void bg_palette_ptr::set_colors(const span<const color>& colors)
+{
+    palettes_manager::bg_palettes_bank().set_colors(_id, colors);
+}
+
 void bg_palette_ptr::set_colors(const bg_palette_item& palette_item)
 {
     palettes_bank& bg_palettes_bank = palettes_manager::bg_palettes_bank();

@@ -14,6 +14,8 @@
  *
  * @section changelog_21_1_0 21.1.0 (next release)
  *
+ * * bn::span<const bn::color> overloads for bn::bg_palette_ptr::set_colors and
+ *   bn::sprite_palette_ptr::set_colors added.
  * * bn::palette_bitmap_item overloads for bn::palette_bitmap_bg_painter::unsafe_blit,
  *   bn::palette_bitmap_bg_painter::blit, bn::palette_bitmap_bg_painter::unsafe_draw and
  *   bn::palette_bitmap_bg_painter::draw added.

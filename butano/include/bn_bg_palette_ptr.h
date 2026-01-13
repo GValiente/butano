@@ -136,6 +136,12 @@ public:
 
     /**
      * @brief Sets the colors contained in this palette.
+     * @param colors Colors to copy to this palette.
+     */
+    void set_colors(const span<const color>& colors);
+
+    /**
+     * @brief Sets the colors contained in this palette.
      * @param palette_item bg_palette_item which references the colors to copy to this palette.
      */
     void set_colors(const bg_palette_item& palette_item);

@@ -166,6 +166,11 @@ through challenging platforming scenarios.
 
 ![](docs_tools/images/heartwrench_advance_title.png) ![](docs_tools/images/heartwrench_advance_gameplay.png)
 
+* [Bloxorz](https://nostabyte.itch.io/bloxorzgba): a complete port of the classic flash game Bloxorz 
+for the Game Boy Advance. 
+
+![](docs_tools/images/bloxorz_title.png) ![](docs_tools/images/bloxorz_gameplay.png)
+
 * [Bridge Quest](https://fixxiefixx.itch.io/bridge-quest): find the way to the desert, but beware, 
 because enemies and an evil tree boss will try to stop you!
 

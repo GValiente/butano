@@ -20,6 +20,7 @@
  *   bn::palette_bitmap_bg_painter::blit, bn::palette_bitmap_bg_painter::unsafe_draw and
  *   bn::palette_bitmap_bg_painter::draw added.
  * * @ref faq_backgrounds_metatiles question added to the @ref faq page.
+ * * <a href="https://nostabyte.itch.io/bloxorzgba">Bloxorz</a> added to `README.md`.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> links updated.
  *
  *

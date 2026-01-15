@@ -579,7 +579,7 @@
  * Try to avoid big backgrounds whenever possible, because they are slower CPU wise.
  *
  *
- * @subsection faq_backgrounds_regular_affine Why there are two types of backgrounds (regular and affine)?
+ * @subsection faq_backgrounds_regular_affine Why are there two types of backgrounds (regular and affine)?
  *
  * It seems it is always better to use affine backgrounds, since they can be rotated, scaled, etc.
  * and its size can be up to 1024x1024 pixels without becoming big backgrounds.
@@ -698,7 +698,7 @@
  * a tool that generates a `*.s3m` file from a long `*.wav` automatically.
  *
  *
- * @subsection faq_audio_music_missing_notes Why there are missing notes when playing some Direct Sound songs?
+ * @subsection faq_audio_music_missing_notes Why are there missing notes when playing some Direct Sound songs?
  *
  * If a song doesn't have more channels than the maximum number of active Direct Sound music channels
  * specified by @ref BN_CFG_AUDIO_MAX_MUSIC_CHANNELS, as before,

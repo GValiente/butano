@@ -617,6 +617,16 @@
  *   to VRAM even if the map is big, so you should avoid calling them if the map has enough unique tiles.
  *
  *
+ * @subsection faq_backgrounds_regular_wrapping How can I disable wrapping in a regular background?
+ *
+ * You can't, it's a hardware limitation (the GBA doesn't allow it).
+ *
+ * There are several workarounds, including:
+ * * Using a larger image with a transparent border around the background to keep the wrapping off-screen.
+ * * Using a window to mask away the background outside of a certain rectangular area on the screen.
+ * * Using an affine background, which allows to disable wrapping.
+ *
+ *
  * @subsection faq_backgrounds_error_grit Why can't I import a regular background with 1024 or less tiles?
  *
  * If you get this error when trying to import a regular background with 1024 or less tiles:

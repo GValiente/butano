@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_1_0 21.1.0 (next release)
+ * @section changelog_21_1_0 21.1.0
  *
  * * bn::span<const bn::color> overloads for bn::bg_palette_ptr::set_colors and
  *   bn::sprite_palette_ptr::set_colors added.

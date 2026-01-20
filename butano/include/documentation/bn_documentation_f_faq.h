@@ -617,6 +617,14 @@
  *   to VRAM even if the map is big, so you should avoid calling them if the map has enough unique tiles.
  *
  *
+ * @subsection faq_backgrounds_tiles_offset Why my dynamic map sometimes doesn't work as expected?
+ *
+ * If you don't want to have extra headaches when dealing with a map by yourself, remember to disable
+ * background tiles offset before creating the tiles used by the map with bn::bg_tiles::set_allow_offset.
+ *
+ * You can re-enable it after creating the tiles to improve VRAM usage again.
+ *
+ *
  * @subsection faq_backgrounds_regular_wrapping How can I disable wrapping in a regular background?
  *
  * You can't, it's a hardware limitation (the GBA doesn't allow it).

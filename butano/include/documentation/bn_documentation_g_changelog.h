@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_21_1_1 21.1.1 (next release)
+ *
+ * @ref faq_backgrounds_tiles_offset question added to the @ref faq page.
+ *
+ *
  * @section changelog_21_1_0 21.1.0
  *
  * * bn::span<const bn::color> overloads for bn::bg_palette_ptr::set_colors and

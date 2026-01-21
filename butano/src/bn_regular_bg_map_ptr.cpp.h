@@ -339,6 +339,11 @@ void regular_bg_map_ptr::set_tiles(regular_bg_tiles_ptr&& tiles)
 
 void regular_bg_map_ptr::set_tiles(const regular_bg_tiles_item& tiles_item)
 {
+    set_tiles(tiles_item, bg_blocks_manager::allow_tiles_offset());
+}
+
+void regular_bg_map_ptr::set_tiles(const regular_bg_tiles_item& tiles_item, bool allow_offset)
+{
     optional<regular_bg_tiles_ptr> tiles = tiles_item.find_tiles();
 
     if(regular_bg_tiles_ptr* tiles_ptr = tiles.get())
@@ -348,7 +353,7 @@ void regular_bg_map_ptr::set_tiles(const regular_bg_tiles_item& tiles_item)
     else
     {
         bg_blocks_manager::remove_regular_map_tiles(_handle);
-        bg_blocks_manager::set_regular_map_tiles(_handle, regular_bg_tiles_ptr::create(tiles_item));
+        bg_blocks_manager::set_regular_map_tiles(_handle, regular_bg_tiles_ptr::create(tiles_item, allow_offset));
     }
 }
 
@@ -394,8 +399,14 @@ void regular_bg_map_ptr::set_tiles_and_palette(regular_bg_tiles_ptr tiles, bg_pa
     bg_blocks_manager::set_regular_map_tiles_and_palette(_handle, move(tiles), move(palette));
 }
 
-void regular_bg_map_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tiles_item,
-                                               const bg_palette_item& palette_item)
+void regular_bg_map_ptr::set_tiles_and_palette(
+        const regular_bg_tiles_item& tiles_item, const bg_palette_item& palette_item)
+{
+    set_tiles_and_palette(tiles_item, bg_blocks_manager::allow_tiles_offset(), palette_item);
+}
+
+void regular_bg_map_ptr::set_tiles_and_palette(
+        const regular_bg_tiles_item& tiles_item, bool allow_tiles_offset, const bg_palette_item& palette_item)
 {
     optional<regular_bg_tiles_ptr> tiles = tiles_item.find_tiles();
     regular_bg_tiles_ptr* tiles_ptr = tiles.get();
@@ -403,7 +414,7 @@ void regular_bg_map_ptr::set_tiles_and_palette(const regular_bg_tiles_item& tile
     if(! tiles_ptr)
     {
         bg_blocks_manager::remove_regular_map_tiles(_handle);
-        tiles = regular_bg_tiles_ptr::create(tiles_item);
+        tiles = regular_bg_tiles_ptr::create(tiles_item, allow_tiles_offset);
         tiles_ptr = tiles.get();
     }
 

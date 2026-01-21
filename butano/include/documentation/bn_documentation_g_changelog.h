@@ -12,9 +12,10 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_1_1 21.1.1 (next release)
+ * @section changelog_21_2_0 21.2.0 (next release)
  *
- * @ref faq_backgrounds_tiles_offset question added to the @ref faq page.
+ * * Tiles offset can now be specified when creating bn::regular_bg_tiles_ptr and bn::affine_bg_tiles_ptr objects.
+ * * @ref faq_backgrounds_tiles_offset question added to the @ref faq page.
  *
  *
  * @section changelog_21_1_0 21.1.0

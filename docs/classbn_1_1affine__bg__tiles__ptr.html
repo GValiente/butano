@@ -78,7 +78,17 @@
             </dt>
             <dd>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references them.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a80359740cec109075922e42ff42f181f" class="m-doc">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              bool allow_offset) -&gt; <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a></span>
+            </dt>
+            <dd>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references them.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#ad4bd3b3d43f853cde64b31a589d753f3" class="m-doc">allocate</a>(</span><span class="m-doc-wrap">int tiles_count) -&gt; <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a></span>
+            </dt>
+            <dd>Creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a116ea3dbeca7b6fe8d3c7fc4fc4f8cab" class="m-doc">allocate</a>(</span><span class="m-doc-wrap">int tiles_count,
+              bool allow_offset) -&gt; <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a></span>
             </dt>
             <dd>Creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</dd>
             <dt>
@@ -86,7 +96,17 @@
             </dt>
             <dd>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references them.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#a78fb2b3fbd88dd26da706a0616384971" class="m-doc">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              bool allow_offset) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references them.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">static auto <a href="#aac950a5f1ee82bcd96eba843aa89d99e" class="m-doc">allocate_optional</a>(</span><span class="m-doc-wrap">int tiles_count) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">static auto <a href="#ac3c28d15d53b5629631d8888d3a7b50c" class="m-doc">allocate_optional</a>(</span><span class="m-doc-wrap">int tiles_count,
+              bool allow_offset) -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</dd>
           </dl>
@@ -227,6 +247,35 @@
                 </tr>
               </tfoot>
             </table>
+<p>Tiles offset is allowed to improve VRAM usage if <a href="namespacebn_1_1bg__tiles.html#adde429970403a7de42fbefd8f01a4e73" class="m-doc">bg_tiles::<wbr />allow_offset</a> says so. You should probably disable it if a dynamic map is going to use these tiles.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a80359740cec109075922e42ff42f181f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> bn::<wbr />affine_bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a80359740cec109075922e42ff42f181f" class="m-doc-self">create</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              bool allow_offset)</span></span>
+            </h3>
+            <p>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td><a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a> which references the tiles to search or handle.</td>
+                </tr>
+                <tr>
+                  <td>allow_offset</td>
+                  <td>Indicates if tiles offset is allowed to improve VRAM usage. You should probably disable it if a dynamic map is going to use these tiles.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references tiles_item.graphics_tiles_ref() if it has been found; otherwise it returns an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references them.</td>
+                </tr>
+              </tfoot>
+            </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="ad4bd3b3d43f853cde64b31a589d753f3"><div>
@@ -242,6 +291,35 @@
                 <tr>
                   <td style="width: 1%">tiles_count</td>
                   <td>Number of tiles to allocate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tiles offset is allowed to improve VRAM usage if <a href="namespacebn_1_1bg__tiles.html#adde429970403a7de42fbefd8f01a4e73" class="m-doc">bg_tiles::<wbr />allow_offset</a> says so. You should probably disable it if a dynamic map is going to use these tiles.</p>
+          </div></section>
+          <section class="m-doc-details" id="a116ea3dbeca7b6fe8d3c7fc4fc4f8cab"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> bn::<wbr />affine_bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a116ea3dbeca7b6fe8d3c7fc4fc4f8cab" class="m-doc-self">allocate</a>(</span><span class="m-doc-wrap">int tiles_count,
+              bool allow_offset)</span></span>
+            </h3>
+            <p>Creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_count</td>
+                  <td>Number of tiles to allocate.</td>
+                </tr>
+                <tr>
+                  <td>allow_offset</td>
+                  <td>Indicates if tiles offset is allowed to improve VRAM usage. You should probably disable it if a dynamic map is going to use these tiles.</td>
                 </tr>
               </tbody>
               <tfoot>
@@ -274,6 +352,35 @@
                 </tr>
               </tfoot>
             </table>
+<p>Tiles offset is allowed to improve VRAM usage if <a href="namespacebn_1_1bg__tiles.html#adde429970403a7de42fbefd8f01a4e73" class="m-doc">bg_tiles::<wbr />allow_offset</a> says so. You should probably disable it if a dynamic map is going to use these tiles.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a78fb2b3fbd88dd26da706a0616384971"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a78fb2b3fbd88dd26da706a0616384971" class="m-doc-self">create_optional</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              bool allow_offset)</span></span>
+            </h3>
+            <p>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references the given tiles. If it is not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td><a href="classbn_1_1affine__bg__tiles__item.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />item</a> which references the tiles to search or handle.</td>
+                </tr>
+                <tr>
+                  <td>allow_offset</td>
+                  <td>Indicates if tiles offset is allowed to improve VRAM usage. You should probably disable it if a dynamic map is going to use these tiles.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references tiles_item.graphics_tiles_ref() if it has been found; otherwise it returns an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references them if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="aac950a5f1ee82bcd96eba843aa89d99e"><div>
@@ -289,6 +396,35 @@
                 <tr>
                   <td style="width: 1%">tiles_count</td>
                   <td>Number of tiles to allocate.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tiles offset is allowed to improve VRAM usage if <a href="namespacebn_1_1bg__tiles.html#adde429970403a7de42fbefd8f01a4e73" class="m-doc">bg_tiles::<wbr />allow_offset</a> says so. You should probably disable it if a dynamic map is going to use these tiles.</p>
+          </div></section>
+          <section class="m-doc-details" id="ac3c28d15d53b5629631d8888d3a7b50c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">static <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ac3c28d15d53b5629631d8888d3a7b50c" class="m-doc-self">allocate_optional</a>(</span><span class="m-doc-wrap">int tiles_count,
+              bool allow_offset)</span></span>
+            </h3>
+            <p>Creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which references a chunk of VRAM tiles not visible on the screen.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_count</td>
+                  <td>Number of tiles to allocate.</td>
+                </tr>
+                <tr>
+                  <td>allow_offset</td>
+                  <td>Indicates if tiles offset is allowed to improve VRAM usage. You should probably disable it if a dynamic map is going to use these tiles.</td>
                 </tr>
               </tbody>
               <tfoot>

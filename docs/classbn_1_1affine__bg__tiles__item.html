@@ -113,7 +113,15 @@
             </dt>
             <dd>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4a868cea6517e0e1fc7fec513ed90114" class="m-doc">create_tiles</a>(</span><span class="m-doc-wrap">bool allow_offset) const -&gt; <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a></span>
+            </dt>
+            <dd>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a373256af0b87e083592c41c30c105c84" class="m-doc">create_tiles_optional</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
+            </dt>
+            <dd>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a28ab1cd48d5a6acb3d37d4e4dee2b756" class="m-doc">create_tiles_optional</a>(</span><span class="m-doc-wrap">bool allow_offset) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt;</span>
             </dt>
             <dd>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</dd>
           </dl>
@@ -229,6 +237,30 @@
                 </tr>
               </tfoot>
             </table>
+<p>Tiles offset is allowed to improve VRAM usage if <a href="namespacebn_1_1bg__tiles.html#adde429970403a7de42fbefd8f01a4e73" class="m-doc">bg_tiles::<wbr />allow_offset</a> says so. You should probably disable it if a dynamic map is going to use these tiles.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4a868cea6517e0e1fc7fec513ed90114"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> bn::<wbr />affine_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4a868cea6517e0e1fc7fec513ed90114" class="m-doc-self">create_tiles</a>(</span><span class="m-doc-wrap">bool allow_offset) const</span></span>
+            </h3>
+            <p>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">allow_offset</td>
+                  <td>Indicates if tiles offset is allowed to improve VRAM usage. You should probably disable it if a dynamic map is going to use these tiles.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles if they have been found; otherwise it returns an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</td>
+                </tr>
+              </tfoot>
+            </table>
 <p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="a373256af0b87e083592c41c30c105c84"><div>
@@ -240,6 +272,30 @@
               <tfoot>
                 <tr>
                   <th style="width: 1%">Returns</th>
+                  <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles if they have been found; otherwise it returns a new <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Tiles offset is allowed to improve VRAM usage if <a href="namespacebn_1_1bg__tiles.html#adde429970403a7de42fbefd8f01a4e73" class="m-doc">bg_tiles::<wbr />allow_offset</a> says so. You should probably disable it if a dynamic map is going to use these tiles.</p><p>The tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a28ab1cd48d5a6acb3d37d4e4dee2b756"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a>&gt; bn::<wbr />affine_bg_tiles_item::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a28ab1cd48d5a6acb3d37d4e4dee2b756" class="m-doc-self">create_tiles_optional</a>(</span><span class="m-doc-wrap">bool allow_offset) const</span></span>
+            </h3>
+            <p>Searches for an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles. If they are not found, it creates an <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">allow_offset</td>
+                  <td>Indicates if tiles offset is allowed to improve VRAM usage. You should probably disable it if a dynamic map is going to use these tiles.</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
                   <td><a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference the background tiles if they have been found; otherwise it returns a new <a href="classbn_1_1affine__bg__tiles__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />tiles_<wbr />ptr</a> which reference them if it could be allocated; <a href="namespacebn.html#a01f293535903e4c4777564a86a0f520b" class="m-doc">bn::<wbr />nullopt</a> otherwise.</td>
                 </tr>
               </tfoot>

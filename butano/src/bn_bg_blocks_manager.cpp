@@ -523,22 +523,25 @@ namespace
         bool is_affine;
         bool check_padding;
 
-        static create_data from_regular_tiles(const uint16_t* data_ptr, int half_words, bpp_mode bpp,
-                                              compression_type compression)
+        static create_data from_regular_tiles(
+                const uint16_t* data_ptr, int half_words, bpp_mode bpp, compression_type compression,
+                bool allow_offset)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
-            create_type create_type = data_ref().allow_tiles_offset ?
-                        create_type::REGULAR_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
+            create_type create_type = allow_offset ?
+                    create_type::REGULAR_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
 
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
                         create_type, bpp, compression, false, false, true };
         }
 
-        static create_data from_affine_tiles(const uint16_t* data_ptr, int half_words, compression_type compression)
+        static create_data from_affine_tiles(
+                const uint16_t* data_ptr, int half_words, compression_type compression,
+                bool allow_offset)
         {
             int blocks_count = _ceil_half_words_to_blocks(half_words);
-            create_type create_type = data_ref().allow_tiles_offset ?
-                        create_type::AFFINE_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
+            create_type create_type = allow_offset ?
+                    create_type::AFFINE_TILES_WITH_OFFSET : create_type::TILES_WITHOUT_OFFSET;
 
             return create_data{ data_ptr, blocks_count, half_words, 1, nullopt, nullopt, nullopt,
                         create_type, bpp_mode::BPP_8, compression, false, true, true };
@@ -1516,7 +1519,7 @@ int find_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_cell
     return _find_affine_map_impl(map_item, data_ptr, tiles, palette);
 }
 
-int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
+int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool allow_offset, bool optional)
 {
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
@@ -1527,7 +1530,7 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE REGULAR TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
-                     int(bpp), " - ", int(compression));
+                     int(bpp), " - ", int(compression), " - ", (allow_offset ? "allow offset" : "forbid offset"));
 
     int result = _find_tiles_impl(tiles_data, compression, half_words, false);
 
@@ -1536,7 +1539,7 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
         return result;
     }
 
-    result = _create_impl(create_data::from_regular_tiles(tiles_data, half_words, bpp, compression));
+    result = _create_impl(create_data::from_regular_tiles(tiles_data, half_words, bpp, compression, allow_offset));
 
     if(result >= 0)
     {
@@ -1565,7 +1568,7 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool optional)
     return result;
 }
 
-int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
+int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool allow_offset, bool optional)
 {
     const span<const tile>& tiles_ref = tiles_item.tiles_ref();
     auto tiles_data = reinterpret_cast<const uint16_t*>(tiles_ref.data());
@@ -1575,7 +1578,7 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - CREATE AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
                      tiles_data, " - ", tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
-                     int(compression));
+                     int(compression), " - ", (allow_offset ? "allow offset" : "forbid offset"));
 
     int result = _find_tiles_impl(tiles_data, compression, half_words, true);
 
@@ -1584,7 +1587,7 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool optional)
         return result;
     }
 
-    result = _create_impl(create_data::from_affine_tiles(tiles_data, half_words, compression));
+    result = _create_impl(create_data::from_affine_tiles(tiles_data, half_words, compression, allow_offset));
 
     if(result >= 0)
     {
@@ -1729,17 +1732,19 @@ int create_affine_map(const affine_bg_map_item& map_item, const affine_bg_map_ce
     return result;
 }
 
-int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
+int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool allow_offset, bool optional)
 {
     int half_words = _tiles_to_half_words(tiles_count);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE REGULAR TILES", (optional ? " OPTIONAL: " : ": "),
-                     tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp));
+                     tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ", int(bpp), " - ",
+                     (allow_offset ? "allow offset" : "forbid offset"));
 
     BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles_count, bpp),
               "Invalid tiles count: ", tiles_count, " - ", int(bpp));
 
-    int result = _allocate_impl(create_data::from_regular_tiles(nullptr, half_words, bpp, compression_type::NONE));
+    int result = _allocate_impl(
+            create_data::from_regular_tiles(nullptr, half_words, bpp, compression_type::NONE, allow_offset));
 
     if(result >= 0)
     {
@@ -1767,16 +1772,18 @@ int allocate_regular_tiles(int tiles_count, bpp_mode bpp, bool optional)
     return result;
 }
 
-int allocate_affine_tiles(int tiles_count, bool optional)
+int allocate_affine_tiles(int tiles_count, bool allow_offset, bool optional)
 {
     int half_words = _tiles_to_half_words(tiles_count);
 
     BN_BG_BLOCKS_LOG("bg_blocks_manager - ALLOCATE AFFINE TILES", (optional ? " OPTIONAL: " : ": "),
-                     tiles_count, " - ", _ceil_half_words_to_blocks(half_words));
+                     tiles_count, " - ", _ceil_half_words_to_blocks(half_words), " - ",
+                     (allow_offset ? "allow offset" : "forbid offset"));
 
     BN_ASSERT(affine_bg_tiles_item::valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
 
-    int result = _allocate_impl(create_data::from_affine_tiles(nullptr, half_words, compression_type::NONE));
+    int result = _allocate_impl(
+            create_data::from_affine_tiles(nullptr, half_words, compression_type::NONE, allow_offset));
 
     if(result >= 0)
     {

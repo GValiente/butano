@@ -425,9 +425,26 @@ public:
      *
      * The new background tiles must be compatible with the referenced color palette.
      *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if this map is dynamic (managed by yourself).
+     *
      * @param tiles_item It creates the new background tiles to reference.
      */
     void set_tiles(const regular_bg_tiles_item& tiles_item);
+
+    /**
+     * @brief Replaces the referenced tiles with a new tile set created with the given regular_bg_tiles_item.
+     *
+     * Before creating a new background tile set, the regular_bg_tiles_ptr referenced by this map is removed,
+     * so VRAM usage is reduced.
+     *
+     * The new background tiles must be compatible with the referenced color palette.
+     *
+     * @param tiles_item It creates the new background tiles to reference.
+     * @param allow_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it this map is dynamic (managed by yourself).
+     */
+    void set_tiles(const regular_bg_tiles_item& tiles_item, bool allow_offset);
 
     /**
      * @brief Returns the referenced color palette.
@@ -476,10 +493,28 @@ public:
      * Before creating new resources, the resources referenced by this map are removed,
      * so VRAM usage is reduced.
      *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if this map is dynamic (managed by yourself).
+     *
      * @param tiles_item It creates the new background tiles to reference.
      * @param palette_item It creates the color palette to reference.
      */
     void set_tiles_and_palette(const regular_bg_tiles_item& tiles_item, const bg_palette_item& palette_item);
+
+    /**
+     * @brief Replaces the referenced tiles and color palette
+     * with the created with the given regular_bg_tiles_item and bg_palette_item.
+     *
+     * Before creating new resources, the resources referenced by this map are removed,
+     * so VRAM usage is reduced.
+     *
+     * @param tiles_item It creates the new background tiles to reference.
+     * @param allow_tiles_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it this map is dynamic (managed by yourself).
+     * @param palette_item It creates the color palette to reference.
+     */
+    void set_tiles_and_palette(const regular_bg_tiles_item& tiles_item, bool allow_tiles_offset,
+                               const bg_palette_item& palette_item);
 
     /**
      * @brief Returns the allocated memory in VRAM

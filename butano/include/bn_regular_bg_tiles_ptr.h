@@ -54,6 +54,9 @@ public:
      * @brief Searches for a regular_bg_tiles_ptr which references the given tiles.
      * If it is not found, it creates a regular_bg_tiles_ptr which references them.
      *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     *
      * The tiles are not copied but referenced,
      * so they should outlive the regular_bg_tiles_ptr to avoid dangling references.
      *
@@ -62,6 +65,21 @@ public:
      * otherwise it returns a regular_bg_tiles_ptr which references them.
      */
     [[nodiscard]] static regular_bg_tiles_ptr create(const regular_bg_tiles_item& tiles_item);
+
+    /**
+     * @brief Searches for a regular_bg_tiles_ptr which references the given tiles.
+     * If it is not found, it creates a regular_bg_tiles_ptr which references them.
+     *
+     * The tiles are not copied but referenced,
+     * so they should outlive the regular_bg_tiles_ptr to avoid dangling references.
+     *
+     * @param tiles_item regular_bg_tiles_item which references the tiles to search or handle.
+     * @param allow_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     * @return regular_bg_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
+     * otherwise it returns a regular_bg_tiles_ptr which references them.
+     */
+    [[nodiscard]] static regular_bg_tiles_ptr create(const regular_bg_tiles_item& tiles_item, bool allow_offset);
 
     /// @cond DO_NOT_DOCUMENT
 
@@ -75,6 +93,10 @@ public:
 
     /**
      * @brief Creates a regular_bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
+     *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     *
      * @param tiles_count Number of tiles to allocate.
      * @param bpp Bits per pixel of the tiles to allocate.
      * @return regular_bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
@@ -82,8 +104,21 @@ public:
     [[nodiscard]] static regular_bg_tiles_ptr allocate(int tiles_count, bpp_mode bpp);
 
     /**
+     * @brief Creates a regular_bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
+     * @param tiles_count Number of tiles to allocate.
+     * @param bpp Bits per pixel of the tiles to allocate.
+     * @param allow_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     * @return regular_bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
+     */
+    [[nodiscard]] static regular_bg_tiles_ptr allocate(int tiles_count, bpp_mode bpp, bool allow_offset);
+
+    /**
      * @brief Searches for a regular_bg_tiles_ptr which references the given tiles.
      * If it is not found, it creates a regular_bg_tiles_ptr which references them.
+     *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if a dynamic map is going to use these tiles.
      *
      * The tiles are not copied but referenced,
      * so they should outlive the regular_bg_tiles_ptr to avoid dangling references.
@@ -94,6 +129,23 @@ public:
      * bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_tiles_ptr> create_optional(const regular_bg_tiles_item& tiles_item);
+
+    /**
+     * @brief Searches for a regular_bg_tiles_ptr which references the given tiles.
+     * If it is not found, it creates a regular_bg_tiles_ptr which references them.
+     *
+     * The tiles are not copied but referenced,
+     * so they should outlive the regular_bg_tiles_ptr to avoid dangling references.
+     *
+     * @param tiles_item regular_bg_tiles_item which references the tiles to search or handle.
+     * @param allow_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     * @return regular_bg_tiles_ptr which references tiles_item.graphics_tiles_ref() if it has been found;
+     * otherwise it returns a regular_bg_tiles_ptr which references them if it could be allocated;
+     * bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_tiles_ptr> create_optional(
+            const regular_bg_tiles_item& tiles_item, bool allow_offset);
 
     /// @cond DO_NOT_DOCUMENT
 
@@ -107,12 +159,28 @@ public:
 
     /**
      * @brief Creates a regular_bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
+     *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     *
      * @param tiles_count Number of tiles to allocate.
      * @param bpp Bits per pixel of the tiles to allocate.
      * @return regular_bg_tiles_ptr which references a chunk of VRAM tiles
      * not visible on the screen if it could be allocated; bn::nullopt otherwise.
      */
     [[nodiscard]] static optional<regular_bg_tiles_ptr> allocate_optional(int tiles_count, bpp_mode bpp);
+
+    /**
+     * @brief Creates a regular_bg_tiles_ptr which references a chunk of VRAM tiles not visible on the screen.
+     * @param tiles_count Number of tiles to allocate.
+     * @param bpp Bits per pixel of the tiles to allocate.
+     * @param allow_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     * @return regular_bg_tiles_ptr which references a chunk of VRAM tiles
+     * not visible on the screen if it could be allocated; bn::nullopt otherwise.
+     */
+    [[nodiscard]] static optional<regular_bg_tiles_ptr> allocate_optional(
+            int tiles_count, bpp_mode bpp, bool allow_offset);
 
     /**
      * @brief Copy constructor.

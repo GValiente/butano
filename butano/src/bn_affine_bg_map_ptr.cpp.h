@@ -334,6 +334,11 @@ void affine_bg_map_ptr::set_tiles(affine_bg_tiles_ptr&& tiles)
 
 void affine_bg_map_ptr::set_tiles(const affine_bg_tiles_item& tiles_item)
 {
+    set_tiles(tiles_item, bg_blocks_manager::allow_tiles_offset());
+}
+
+void affine_bg_map_ptr::set_tiles(const affine_bg_tiles_item& tiles_item, bool allow_offset)
+{
     optional<affine_bg_tiles_ptr> tiles = tiles_item.find_tiles();
 
     if(affine_bg_tiles_ptr* tiles_ptr = tiles.get())
@@ -343,7 +348,7 @@ void affine_bg_map_ptr::set_tiles(const affine_bg_tiles_item& tiles_item)
     else
     {
         bg_blocks_manager::remove_affine_map_tiles(_handle);
-        bg_blocks_manager::set_affine_map_tiles(_handle, affine_bg_tiles_ptr::create(tiles_item));
+        bg_blocks_manager::set_affine_map_tiles(_handle, affine_bg_tiles_ptr::create(tiles_item, allow_offset));
     }
 }
 

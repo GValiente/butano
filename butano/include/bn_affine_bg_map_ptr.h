@@ -413,9 +413,24 @@ public:
      * Before creating a new background tile set, the affine_bg_tiles_ptr referenced by this map is removed,
      * so VRAM usage is reduced.
      *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if this map is dynamic (managed by yourself).
+     *
      * @param tiles_item It creates the new background tiles to reference.
      */
     void set_tiles(const affine_bg_tiles_item& tiles_item);
+
+    /**
+     * @brief Replaces the referenced tiles with a new tile set created with the given affine_bg_tiles_item.
+     *
+     * Before creating a new background tile set, the affine_bg_tiles_ptr referenced by this map is removed,
+     * so VRAM usage is reduced.
+     *
+     * @param tiles_item It creates the new background tiles to reference.
+     * @param allow_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it this map is dynamic (managed by yourself).
+     */
+    void set_tiles(const affine_bg_tiles_item& tiles_item, bool allow_offset);
 
     /**
      * @brief Returns the referenced color palette.

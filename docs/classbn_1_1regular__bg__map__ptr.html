@@ -238,6 +238,11 @@
               <span class="m-doc-wrap-bumper">void <a href="#ae1d4adab17c6c715244c689b07e7992f" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item)</span>
             </dt>
             <dd>Replaces the referenced tiles with a new tile set created with the given <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a26a3eaaf84b28d077b987b17334df7e7" class="m-doc">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              bool allow_offset)</span>
+            </dt>
+            <dd>Replaces the referenced tiles with a new tile set created with the given <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>.</dd>
             <dt id="a62233a20ba43580823b7b6d2055fc5dd">
               <span class="m-doc-wrap-bumper">auto <a href="#a62233a20ba43580823b7b6d2055fc5dd" class="m-doc-self">palette</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1bg__palette__ptr.html" class="m-doc">bg_<wbr />palette_<wbr />ptr</a>&amp;</span>
             </dt>
@@ -261,6 +266,12 @@
             <dd>Sets the tiles and the color palette to reference.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#aa2bcd492323377361ab2ea3fe85c9b5d" class="m-doc">set_tiles_and_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              const <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
+            </dt>
+            <dd>Replaces the referenced tiles and color palette with the created with the given <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> and <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a80808e88c9f0d2d48ccfeca217c10e52" class="m-doc">set_tiles_and_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              bool allow_tiles_offset,
               const <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span>
             </dt>
             <dd>Replaces the referenced tiles and color palette with the created with the given <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> and <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</dd>
@@ -919,6 +930,29 @@
                 </tr>
               </tbody>
             </table>
+<p>Before creating a new background tile set, the <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> referenced by this map is removed, so VRAM usage is reduced.</p><p>The new background tiles must be compatible with the referenced color palette.</p><p>Tiles offset is allowed to improve VRAM usage if <a href="namespacebn_1_1bg__tiles.html#adde429970403a7de42fbefd8f01a4e73" class="m-doc">bg_tiles::<wbr />allow_offset</a> says so. You should probably disable it if this map is dynamic (managed by yourself).</p>
+          </div></section>
+          <section class="m-doc-details" id="a26a3eaaf84b28d077b987b17334df7e7"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />regular_bg_map_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a26a3eaaf84b28d077b987b17334df7e7" class="m-doc-self">set_tiles</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              bool allow_offset)</span></span>
+            </h3>
+            <p>Replaces the referenced tiles with a new tile set created with the given <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the new background tiles to reference.</td>
+                </tr>
+                <tr>
+                  <td>allow_offset</td>
+                  <td>Indicates if tiles offset is allowed to improve VRAM usage. You should probably disable it this map is dynamic (managed by yourself).</td>
+                </tr>
+              </tbody>
+            </table>
 <p>Before creating a new background tile set, the <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> referenced by this map is removed, so VRAM usage is reduced.</p><p>The new background tiles must be compatible with the referenced color palette.</p>
           </div></section>
           <section class="m-doc-details" id="a160655f5fb1e32e3e524faf1fcca4176"><div>
@@ -1011,6 +1045,34 @@
                 <tr>
                   <td style="width: 1%">tiles_item</td>
                   <td>It creates the new background tiles to reference.</td>
+                </tr>
+                <tr>
+                  <td>palette_item</td>
+                  <td>It creates the color palette to reference.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Before creating new resources, the resources referenced by this map are removed, so VRAM usage is reduced.</p><p>Tiles offset is allowed to improve VRAM usage if <a href="namespacebn_1_1bg__tiles.html#adde429970403a7de42fbefd8f01a4e73" class="m-doc">bg_tiles::<wbr />allow_offset</a> says so. You should probably disable it if this map is dynamic (managed by yourself).</p>
+          </div></section>
+          <section class="m-doc-details" id="a80808e88c9f0d2d48ccfeca217c10e52"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />regular_bg_map_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a80808e88c9f0d2d48ccfeca217c10e52" class="m-doc-self">set_tiles_and_palette</a>(</span><span class="m-doc-wrap">const <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a>&amp; tiles_item,
+              bool allow_tiles_offset,
+              const <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>&amp; palette_item)</span></span>
+            </h3>
+            <p>Replaces the referenced tiles and color palette with the created with the given <a href="classbn_1_1regular__bg__tiles__item.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />item</a> and <a href="classbn_1_1bg__palette__item.html" class="m-doc">bg_<wbr />palette_<wbr />item</a>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tiles_item</td>
+                  <td>It creates the new background tiles to reference.</td>
+                </tr>
+                <tr>
+                  <td>allow_tiles_offset</td>
+                  <td>Indicates if tiles offset is allowed to improve VRAM usage. You should probably disable it this map is dynamic (managed by yourself).</td>
                 </tr>
                 <tr>
                   <td>palette_item</td>

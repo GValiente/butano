@@ -45,13 +45,13 @@ namespace bn::bg_tiles
     [[nodiscard]] int available_blocks_count();
 
     /**
-     * @brief Specifies if tile offsets are allowed to improve VRAM usage when creating
+     * @brief Specifies if tiles offset is allowed to improve VRAM usage when creating
      * regular_bg_tiles_ptr and affine_bg_tiles_ptr objects.
      */
     [[nodiscard]] bool allow_offset();
 
     /**
-     * @brief Sets if tile offsets are allowed to improve VRAM usage when creating
+     * @brief Sets if tiles offset is allowed to improve VRAM usage when creating
      * regular_bg_tiles_ptr and affine_bg_tiles_ptr objects.
      */
     void set_allow_offset(bool allow_offset);

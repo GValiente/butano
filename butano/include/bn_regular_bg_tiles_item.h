@@ -137,6 +137,9 @@ public:
      * @brief Searches for a regular_bg_tiles_ptr which reference the background tiles.
      * If they are not found, it creates a regular_bg_tiles_ptr which reference them.
      *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     *
      * The tiles are not copied but referenced, so they should outlive the regular_bg_tiles_ptr
      * to avoid dangling references.
      *
@@ -144,6 +147,20 @@ public:
      * otherwise it returns a regular_bg_tiles_ptr which reference them.
      */
     [[nodiscard]] regular_bg_tiles_ptr create_tiles() const;
+
+    /**
+     * @brief Searches for a regular_bg_tiles_ptr which reference the background tiles.
+     * If they are not found, it creates a regular_bg_tiles_ptr which reference them.
+     *
+     * The tiles are not copied but referenced, so they should outlive the regular_bg_tiles_ptr
+     * to avoid dangling references.
+     *
+     * @param allow_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     * @return regular_bg_tiles_ptr which reference the background tiles if they have been found;
+     * otherwise it returns a regular_bg_tiles_ptr which reference them.
+     */
+    [[nodiscard]] regular_bg_tiles_ptr create_tiles(bool allow_offset) const;
 
     /// @cond DO_NOT_DOCUMENT
 
@@ -156,6 +173,9 @@ public:
      * @brief Searches for a regular_bg_tiles_ptr which reference the background tiles.
      * If they are not found, it creates a regular_bg_tiles_ptr which reference them.
      *
+     * Tiles offset is allowed to improve VRAM usage if bg_tiles::allow_offset says so.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     *
      * The tiles are not copied but referenced, so they should outlive the regular_bg_tiles_ptr
      * to avoid dangling references.
      *
@@ -164,6 +184,21 @@ public:
      * bn::nullopt otherwise.
      */
     [[nodiscard]] optional<regular_bg_tiles_ptr> create_tiles_optional() const;
+
+    /**
+     * @brief Searches for a regular_bg_tiles_ptr which reference the background tiles.
+     * If they are not found, it creates a regular_bg_tiles_ptr which reference them.
+     *
+     * The tiles are not copied but referenced, so they should outlive the regular_bg_tiles_ptr
+     * to avoid dangling references.
+     *
+     * @param allow_offset Indicates if tiles offset is allowed to improve VRAM usage.
+     * You should probably disable it if a dynamic map is going to use these tiles.
+     * @return regular_bg_tiles_ptr which reference the background tiles if they have been found;
+     * otherwise it returns a new regular_bg_tiles_ptr which reference them if it could be allocated;
+     * bn::nullopt otherwise.
+     */
+    [[nodiscard]] optional<regular_bg_tiles_ptr> create_tiles_optional(bool allow_offset) const;
 
     /// @cond DO_NOT_DOCUMENT
 

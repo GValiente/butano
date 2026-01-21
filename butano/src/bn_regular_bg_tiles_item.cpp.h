@@ -63,6 +63,11 @@ regular_bg_tiles_ptr regular_bg_tiles_item::create_tiles() const
     return regular_bg_tiles_ptr::create(*this);
 }
 
+regular_bg_tiles_ptr regular_bg_tiles_item::create_tiles(bool allow_offset) const
+{
+    return regular_bg_tiles_ptr::create(*this, allow_offset);
+}
+
 regular_bg_tiles_ptr regular_bg_tiles_item::create_new_tiles() const
 {
     return regular_bg_tiles_ptr::create(*this);
@@ -71,6 +76,11 @@ regular_bg_tiles_ptr regular_bg_tiles_item::create_new_tiles() const
 optional<regular_bg_tiles_ptr> regular_bg_tiles_item::create_tiles_optional() const
 {
     return regular_bg_tiles_ptr::create_optional(*this);
+}
+
+optional<regular_bg_tiles_ptr> regular_bg_tiles_item::create_tiles_optional(bool allow_offset) const
+{
+    return regular_bg_tiles_ptr::create_optional(*this, allow_offset);
 }
 
 optional<regular_bg_tiles_ptr> regular_bg_tiles_item::create_new_tiles_optional() const

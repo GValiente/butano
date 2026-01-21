@@ -71,6 +71,8 @@ If you spotted a bug, need a feature or have an awesome idea,
 the best you can do is to head over to the [issues page](https://github.com/GValiente/butano/issues), 
 to the [gbadev.net forums](https://forum.gbadev.net) or to the [gbadev Discord server](https://discord.gg/ctGSNxRkg2).
 
+If you want to support Butano, [check this](https://gvaliente.github.io/butano/faq.html#faq_donate).
+
 
 ## Licenses
 

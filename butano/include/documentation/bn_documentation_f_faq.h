@@ -59,7 +59,6 @@
  * * Make good bug reports.
  * * Help newbies.
  * * Show cool splash screens in your games to say they were made with Butano.
- * * Support it on <a href="https://patreon.com/GustavoValiente">Patreon</a>.
  *
  *
  * @section faq_programming Programming

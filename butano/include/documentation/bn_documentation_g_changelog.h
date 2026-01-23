@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_2_0 21.2.0 (next release)
+ * @section changelog_21_2_0 21.2.0
  *
  * * bn::regular_bg_tiles_item can contain more than 1024 tiles.
  * * bn::affine_bg_tiles_item can contain more than 256 tiles.

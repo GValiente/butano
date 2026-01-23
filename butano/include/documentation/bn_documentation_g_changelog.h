@@ -17,6 +17,7 @@
  * * bn::regular_bg_tiles_item can contain more than 1024 tiles.
  * * bn::affine_bg_tiles_item can contain more than 256 tiles.
  * * Tiles offset can now be specified when creating bn::regular_bg_tiles_ptr and bn::affine_bg_tiles_ptr objects.
+ * * bn::affine_bg_tiles_item::valid_tiles_count fixed.
  * * @ref faq_backgrounds_tiles_offset question added to the @ref faq page.
  *
  *

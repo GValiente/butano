@@ -47,7 +47,7 @@ public:
      */
     [[nodiscard]] constexpr static bool valid_tiles_count(int tiles_count)
     {
-        return tiles_count && tiles_count <= 256 * 2;
+        return tiles_count && (tiles_count % 2) == 0 && tiles_count <= 256 * 2;
     }
 
     /**

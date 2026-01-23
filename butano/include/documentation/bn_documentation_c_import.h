@@ -231,7 +231,7 @@
  *
  * @subsection import_regular_bg Regular backgrounds
  *
- * An image file can contain multiple regular backgrounds.
+ * An image file can contain multiple regular backgrounds. Each background can contain up to 1024 tiles.
  * The size of a small regular background (which are faster) must be 256x256, 256x512, 512x256 or 512x512 pixels.
  * Big regular backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
  *
@@ -318,8 +318,6 @@
  *
  * @subsection import_regular_bg_tiles Regular background tiles
  *
- * An image file can contain up to 1024 regular background tiles.
- *
  * An example of the `*.json` files required for regular background tiles is the following:
  *
  * @code{.json}
@@ -369,7 +367,7 @@
  *
  * @subsection import_affine_bg Affine backgrounds
  *
- * An image file can contain multiple affine backgrounds.
+ * An image file can contain multiple affine backgrounds. Each background can contain up to 256 tiles.
  * The size of a small affine background (which are faster) must be 128x128, 256x256, 512x512 or 1024x1024 pixels.
  * Big affine backgrounds are slower CPU wise, but can have any width or height multiple of 256 pixels.
  *
@@ -440,8 +438,6 @@
  *
  *
  * @subsection import_affine_bg_tiles Affine background tiles
- *
- * An image file can contain up to 256 affine background tiles.
  *
  * An example of the `*.json` files required for affine background tiles is the following:
  *

@@ -1025,10 +1025,6 @@ class RegularBgTilesItem:
                         except ValueError:
                             pass
 
-                    if tiles_count > 1024:
-                        raise ValueError('Regular BG tiles items with more than 1024 tiles not supported: ' +
-                                         str(tiles_count))
-
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])
 
@@ -1298,9 +1294,6 @@ class AffineBgItem:
                             break
                         except ValueError:
                             pass
-
-                    if tiles_count > 256:
-                        raise ValueError('Affine BGs with more than 256 tiles not supported: ' + str(tiles_count))
 
                 if 'Total size:' in grit_line:
                     total_size = int(grit_line.split()[-1])

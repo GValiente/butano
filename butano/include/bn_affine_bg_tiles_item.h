@@ -75,7 +75,7 @@ public:
         _tiles_ref(tiles_ref),
         _compression(compression)
     {
-        BN_ASSERT(valid_tiles_count(tiles_ref.size()), "Invalid tiles count: ", _tiles_ref.size());
+        BN_BASIC_ASSERT(! tiles_ref.empty(), "There are no tiles");
     }
 
     /**

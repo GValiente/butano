@@ -85,8 +85,8 @@ public:
         _bpp(bpp),
         _compression(compression)
     {
-        BN_ASSERT(valid_tiles_count(tiles_ref.size(), bpp),
-                  "Invalid tiles count: ", _tiles_ref.size(), " - ", int(bpp));
+        BN_BASIC_ASSERT(_valid_tiles_count(tiles_ref.size(), bpp),
+                        "Invalid tiles count: ", _tiles_ref.size(), " - ", int(bpp));
     }
 
     /**
@@ -223,6 +223,16 @@ private:
     span<const tile> _tiles_ref;
     bpp_mode _bpp;
     compression_type _compression;
+
+    [[nodiscard]] constexpr static bool _valid_tiles_count(int tiles_count, bpp_mode bpp)
+    {
+        if(bpp == bpp_mode::BPP_8)
+        {
+            return tiles_count && (tiles_count % 2) == 0;
+        }
+
+        return tiles_count;
+    }
 };
 
 }

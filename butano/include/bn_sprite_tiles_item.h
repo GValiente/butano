@@ -126,13 +126,12 @@ public:
         _compression(uint8_t(compression)),
         _bpp(uint8_t(bpp))
     {
+        int tiles_size = tiles_ref.size();
         BN_ASSERT(graphics_count > 0 && graphics_count < 65536, "Invalid graphics count: ", graphics_count);
-        BN_ASSERT(graphics_count <= tiles_ref.size(),
-                  "Invalid tiles or graphics count: ", tiles_ref.size(), " - ", graphics_count);
-        BN_ASSERT(tiles_ref.size() % graphics_count == 0,
-                  "Invalid tiles or graphics count: ", tiles_ref.size(), " - ", graphics_count);
+        BN_ASSERT(tiles_size % graphics_count == 0,
+                  "Invalid tiles or graphics count: ", tiles_size, " - ", graphics_count);
 
-        int tcpg = tiles_ref.size() / graphics_count;
+        int tcpg = tiles_size / graphics_count;
         BN_ASSERT(valid_tiles_count(tcpg, bpp), "Invalid tiles count per graphic: ", tcpg, " - ", int(bpp));
 
         _tiles_count_per_graphic = uint8_t(tcpg);

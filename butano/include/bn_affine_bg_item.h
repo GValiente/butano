@@ -80,6 +80,8 @@ public:
         _map_item(map_item)
     {
         BN_ASSERT(palette_item.bpp() == bpp_mode::BPP_8, "BPP_4 palettes are not supported");
+        BN_ASSERT(affine_bg_tiles_item::valid_tiles_count(tiles_item.tiles_ref().size()),
+                  "Invalid tiles count: ", tiles_item.tiles_ref().size());
     }
 
     /**

@@ -1539,6 +1539,9 @@ int create_regular_tiles(const regular_bg_tiles_item& tiles_item, bool allow_off
         return result;
     }
 
+    BN_ASSERT(regular_bg_tiles_item::valid_tiles_count(tiles_count, bpp),
+              "Invalid tiles count: ", tiles_count, " - ", int(bpp));
+
     result = _create_impl(create_data::from_regular_tiles(tiles_data, half_words, bpp, compression, allow_offset));
 
     if(result >= 0)
@@ -1586,6 +1589,8 @@ int create_affine_tiles(const affine_bg_tiles_item& tiles_item, bool allow_offse
     {
         return result;
     }
+
+    BN_ASSERT(affine_bg_tiles_item::valid_tiles_count(tiles_count), "Invalid tiles count: ", tiles_count);
 
     result = _create_impl(create_data::from_affine_tiles(tiles_data, half_words, compression, allow_offset));
 

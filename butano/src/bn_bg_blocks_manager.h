@@ -118,6 +118,8 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] int palette_offset(int id);
 
+    [[nodiscard]] bpp_mode bpp(int id);
+
     [[nodiscard]] compression_type compression(int id);
 
     [[nodiscard]] optional<span<const tile>> tiles_ref(int id);

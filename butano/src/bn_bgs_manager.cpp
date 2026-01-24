@@ -1793,7 +1793,7 @@ void update_affine_map_tiles_cbb(int map_id, int tiles_cbb)
     }
 }
 
-void update_regular_map_palette_bpp(int map_id, bpp_mode bpp)
+void update_regular_map_bpp(int map_id, bpp_mode bpp)
 {
     for(item_type* item : data_ref().items_vector)
     {

@@ -341,7 +341,7 @@ public:
     [[nodiscard]] bool big() const;
 
     /**
-     * @brief Returns the bits per pixel of the referenced color palette.
+     * @brief Returns the bits per pixel of the referenced map.
      */
     [[nodiscard]] bpp_mode bpp() const;
 

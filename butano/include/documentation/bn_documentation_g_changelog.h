@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_21_3_0 21.3.0 (next release)
+ *
+ * bn::regular_bg_tiles_ptr::bpp added.
+ *
+ *
  * @section changelog_21_2_0 21.2.0
  *
  * * bn::regular_bg_tiles_item can contain more than 1024 tiles.

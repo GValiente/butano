@@ -284,7 +284,7 @@ bool regular_bg_map_ptr::big() const
 
 bpp_mode regular_bg_map_ptr::bpp() const
 {
-    return palette().bpp();
+    return bg_blocks_manager::bpp(_handle);
 }
 
 int regular_bg_map_ptr::tiles_offset() const
@@ -374,7 +374,7 @@ void regular_bg_map_ptr::set_palette(bg_palette_ptr&& palette)
 
 void regular_bg_map_ptr::set_palette(const bg_palette_item& palette_item)
 {
-    if(palette_item.bpp() == bpp_mode::BPP_4 || bpp() == bpp_mode::BPP_4)
+    if(palette_item.bpp() == bpp_mode::BPP_4)
     {
         optional<bg_palette_ptr> palette = palette_item.find_palette();
 
@@ -423,7 +423,7 @@ void regular_bg_map_ptr::set_tiles_and_palette(
 
     if(! palette_ptr)
     {
-        if(palette_item.bpp() == bpp_mode::BPP_4 || bpp() == bpp_mode::BPP_4)
+        if(palette_item.bpp() == bpp_mode::BPP_4)
         {
             bg_blocks_manager::remove_map_palette(_handle);
         }

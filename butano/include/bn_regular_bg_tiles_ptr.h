@@ -237,6 +237,11 @@ public:
     [[nodiscard]] int tiles_count() const;
 
     /**
+     * @brief Returns the bits per pixel of the referenced tiles.
+     */
+    [[nodiscard]] bpp_mode bpp() const;
+
+    /**
      * @brief Returns the compression of the referenced tiles.
      */
     [[nodiscard]] compression_type compression() const;

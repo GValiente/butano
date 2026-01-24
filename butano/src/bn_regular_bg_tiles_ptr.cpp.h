@@ -127,6 +127,11 @@ int regular_bg_tiles_ptr::tiles_count() const
     return bg_blocks_manager::tiles_count(_handle);
 }
 
+bpp_mode regular_bg_tiles_ptr::bpp() const
+{
+    return bg_blocks_manager::bpp(_handle);
+}
+
 compression_type regular_bg_tiles_ptr::compression() const
 {
     return bg_blocks_manager::compression(_handle);

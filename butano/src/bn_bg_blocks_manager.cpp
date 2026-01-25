@@ -2030,7 +2030,8 @@ affine_bg_big_map_canvas_size affine_big_map_canvas_size(int id)
 
 int regular_tiles_offset(int id)
 {
-    return _tiles_offset(id, data_ref().items.item(id).bpp());
+    const item_type& item = data_ref().items.item(id);
+    return _tiles_offset(item.start_block, item.bpp());
 }
 
 int regular_map_tiles_offset(int id)
@@ -2040,7 +2041,8 @@ int regular_map_tiles_offset(int id)
 
 int affine_tiles_offset(int id)
 {
-    return _tiles_offset(id, bpp_mode::BPP_8);
+    const item_type& item = data_ref().items.item(id);
+    return _tiles_offset(item.start_block, bpp_mode::BPP_8);
 }
 
 int affine_map_tiles_offset(int id)

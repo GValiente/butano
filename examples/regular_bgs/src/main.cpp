@@ -12,8 +12,10 @@
 #include "bn_bg_palettes.h"
 #include "bn_regular_bg_actions.h"
 #include "bn_regular_bg_builder.h"
+#include "bn_regular_bg_tiles_ptr.h"
 #include "bn_regular_bg_attributes.h"
 #include "bn_sprite_text_generator.h"
+#include "bn_regular_bg_map_cell_info.h"
 #include "bn_regular_bg_animate_actions.h"
 #include "bn_regular_bg_position_hbe_ptr.h"
 #include "bn_regular_bg_attributes_hbe_ptr.h"
@@ -23,8 +25,10 @@
 #include "bn_regular_bg_items_blue.h"
 #include "bn_regular_bg_items_green.h"
 #include "bn_regular_bg_items_dragon.h"
+#include "bn_regular_bg_items_puddle.h"
 #include "bn_regular_bg_items_yellow.h"
 #include "bn_bg_palette_items_dragon_alt.h"
+#include "bn_regular_bg_tiles_items_water.h"
 
 #include "common_info.h"
 #include "common_variable_8x16_sprite_font.h"
@@ -229,6 +233,41 @@ namespace
         while(! bn::keypad::start_pressed())
         {
             action.update();
+            info.update();
+            bn::core::update();
+        }
+    }
+
+    void regular_bgs_animated_tiles_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Regular BGs animated tiles", info_text_lines, text_generator);
+
+        bn::regular_bg_ptr puddle_bg = bn::regular_bg_items::puddle.create_bg(0, 0);
+        bn::regular_bg_tiles_ptr puddle_tiles = puddle_bg.tiles();
+
+        const bn::span<const bn::tile>& water_tiles = bn::regular_bg_tiles_items::water.tiles_ref();
+        bn::regular_bg_map_cell water_cell = bn::regular_bg_items::puddle.map_item().cell(16, 16);
+        int water_tile_index = bn::regular_bg_map_cell_info(water_cell).tile_index();
+        int pending_frames = 1;
+        int counter = 0;
+
+        while(! bn::keypad::start_pressed())
+        {
+            --pending_frames;
+
+            if(! pending_frames)
+            {
+                pending_frames = 16;
+                counter = (counter + 1) % 4;
+
+                const bn::tile& water_tile = water_tiles[counter * 1]; // 4bpp
+                puddle_tiles.overwrite_tile(water_tile_index, water_tile);
+            }
+
             info.update();
             bn::core::update();
         }
@@ -532,6 +571,9 @@ int main()
         bn::core::update();
 
         regular_bgs_animation_actions_scene(text_generator);
+        bn::core::update();
+
+        regular_bgs_animated_tiles_scene(text_generator);
         bn::core::update();
 
         regular_bgs_priority_scene(text_generator);

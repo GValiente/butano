@@ -14,21 +14,25 @@
 #include "bn_affine_bg_ptr.h"
 #include "bn_affine_bg_builder.h"
 #include "bn_affine_bg_actions.h"
+#include "bn_affine_bg_tiles_ptr.h"
 #include "bn_affine_bg_attributes.h"
 #include "bn_sprite_text_generator.h"
+#include "bn_affine_bg_map_cell_info.h"
 #include "bn_affine_bg_mat_attributes.h"
 #include "bn_affine_bg_animate_actions.h"
 #include "bn_affine_bg_attributes_hbe_ptr.h"
-#include "bn_affine_bg_pivot_position_hbe_ptr.h"
 #include "bn_affine_bg_mat_attributes_hbe_ptr.h"
+#include "bn_affine_bg_pivot_position_hbe_ptr.h"
 
 #include "bn_sprite_items_pivot.h"
 #include "bn_sprite_items_turtle.h"
 #include "bn_affine_bg_items_red.h"
 #include "bn_affine_bg_items_blue.h"
 #include "bn_affine_bg_items_face.h"
+#include "bn_affine_bg_items_puddle.h"
 #include "bn_affine_bg_items_red_small.h"
 #include "bn_affine_bg_items_blue_small.h"
+#include "bn_affine_bg_tiles_items_water.h"
 
 #include "common_info.h"
 #include "common_variable_8x16_sprite_font.h"
@@ -555,6 +559,41 @@ namespace
         }
     }
 
+    void affine_bgs_animated_tiles_scene(bn::sprite_text_generator& text_generator)
+    {
+        constexpr bn::string_view info_text_lines[] = {
+            "START: go to next scene",
+        };
+
+        common::info info("Affine BGs animated tiles", info_text_lines, text_generator);
+
+        bn::affine_bg_ptr puddle_bg = bn::affine_bg_items::puddle.create_bg(0, 0);
+        bn::affine_bg_tiles_ptr puddle_tiles = puddle_bg.tiles();
+
+        const bn::span<const bn::tile>& water_tiles = bn::affine_bg_tiles_items::water.tiles_ref();
+        bn::affine_bg_map_cell water_cell = bn::affine_bg_items::puddle.map_item().cell(16, 16);
+        int water_tile_index = bn::affine_bg_map_cell_info(water_cell).tile_index();
+        int pending_frames = 1;
+        int counter = 0;
+
+        while(! bn::keypad::start_pressed())
+        {
+            --pending_frames;
+
+            if(! pending_frames)
+            {
+                pending_frames = 16;
+                counter = (counter + 1) % 4;
+
+                const bn::tile& water_tile = water_tiles[counter * 2]; // 8bpp
+                puddle_tiles.overwrite_tile(water_tile_index, water_tile);
+            }
+
+            info.update();
+            bn::core::update();
+        }
+    }
+
     void affine_bgs_mat_attributes_hbe_scene(bn::sprite_text_generator& text_generator)
     {
         constexpr bn::string_view info_text_lines[] = {
@@ -965,6 +1004,9 @@ int main()
         bn::core::update();
 
         affine_bgs_animation_actions_scene(text_generator);
+        bn::core::update();
+
+        affine_bgs_animated_tiles_scene(text_generator);
         bn::core::update();
 
         affine_bgs_mat_attributes_hbe_scene(text_generator);

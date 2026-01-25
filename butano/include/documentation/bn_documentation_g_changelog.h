@@ -18,6 +18,7 @@
  *   @ref BN_CFG_BG_BLOCKS_MAX_OVERWRITE_TILES added.
  * * bn::regular_bg_tiles_ptr::bpp added.
  * * bn::regular_bg_tiles_ptr::offset and bn::affine_bg_tiles_ptr::offset added.
+ * * Animated tiles scene added to `regular_bgs` and `affine_bgs` examples.
  * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> added to `README.md`.
  *
  *

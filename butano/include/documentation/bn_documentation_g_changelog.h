@@ -14,7 +14,8 @@
  *
  * @section changelog_21_3_0 21.3.0 (next release)
  *
- * bn::regular_bg_tiles_ptr::bpp added.
+ * * bn::regular_bg_tiles_ptr::bpp added.
+ * * bn::regular_bg_tiles_ptr::offset and bn::affine_bg_tiles_ptr::offset added.
  *
  *
  * @section changelog_21_2_0 21.2.0

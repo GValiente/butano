@@ -126,6 +126,11 @@ int affine_bg_tiles_ptr::tiles_count() const
     return bg_blocks_manager::tiles_count(_handle);
 }
 
+int affine_bg_tiles_ptr::offset() const
+{
+    return bg_blocks_manager::affine_tiles_offset(_handle);
+}
+
 compression_type affine_bg_tiles_ptr::compression() const
 {
     return bg_blocks_manager::compression(_handle);

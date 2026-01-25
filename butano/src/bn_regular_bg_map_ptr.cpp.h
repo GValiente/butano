@@ -289,7 +289,7 @@ bpp_mode regular_bg_map_ptr::bpp() const
 
 int regular_bg_map_ptr::tiles_offset() const
 {
-    return bg_blocks_manager::regular_tiles_offset(_handle);
+    return bg_blocks_manager::regular_map_tiles_offset(_handle);
 }
 
 int regular_bg_map_ptr::palette_banks_offset() const

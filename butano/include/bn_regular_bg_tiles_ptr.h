@@ -242,6 +242,11 @@ public:
     [[nodiscard]] bpp_mode bpp() const;
 
     /**
+     * @brief Returns how many tiles to offset in the cells of a map using these tiles before writing them in VRAM.
+     */
+    [[nodiscard]] int offset() const;
+
+    /**
      * @brief Returns the compression of the referenced tiles.
      */
     [[nodiscard]] compression_type compression() const;

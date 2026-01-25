@@ -289,7 +289,7 @@ affine_bg_big_map_canvas_size affine_bg_map_ptr::big_canvas_size() const
 
 int affine_bg_map_ptr::tiles_offset() const
 {
-    return bg_blocks_manager::affine_tiles_offset(_handle);
+    return bg_blocks_manager::affine_map_tiles_offset(_handle);
 }
 
 compression_type affine_bg_map_ptr::compression() const

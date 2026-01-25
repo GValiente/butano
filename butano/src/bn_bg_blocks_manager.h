@@ -114,7 +114,11 @@ namespace bn::bg_blocks_manager
 
     [[nodiscard]] int regular_tiles_offset(int id);
 
+    [[nodiscard]] int regular_map_tiles_offset(int id);
+
     [[nodiscard]] int affine_tiles_offset(int id);
+
+    [[nodiscard]] int affine_map_tiles_offset(int id);
 
     [[nodiscard]] int palette_offset(int id);
 

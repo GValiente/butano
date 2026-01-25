@@ -81,6 +81,19 @@ namespace
         return result;
     }
 
+    [[nodiscard]] constexpr int _tiles_offset(int tiles_start_block, bpp_mode bpp)
+    {
+        int offset_blocks_count = tiles_start_block % hw::bg_blocks::tiles_alignment_blocks_count();
+        int result = _blocks_to_tiles(offset_blocks_count);
+
+        if(bpp == bpp_mode::BPP_8)
+        {
+            result /= 2;
+        }
+
+        return result;
+    }
+
     void _hw_commit(const uint16_t* source_ptr, compression_type compression, int count, bool use_dma,
                     uint16_t* destination_ptr)
     {
@@ -254,23 +267,12 @@ namespace
 
         [[nodiscard]] int regular_tiles_offset() const
         {
-            int tiles_start_block = regular_tiles->id();
-            int offset_blocks_count = tiles_start_block % hw::bg_blocks::tiles_alignment_blocks_count();
-            int result = _blocks_to_tiles(offset_blocks_count);
-
-            if(bpp() == bpp_mode::BPP_8)
-            {
-                result /= 2;
-            }
-
-            return result;
+            return _tiles_offset(regular_tiles->id(), bpp());
         }
 
         [[nodiscard]] int affine_tiles_offset() const
         {
-            int tiles_start_block = affine_tiles->id();
-            int offset_blocks_count = tiles_start_block % hw::bg_blocks::tiles_alignment_blocks_count();
-            return _blocks_to_tiles(offset_blocks_count) / 2;
+            return _tiles_offset(affine_tiles->id(), bpp_mode::BPP_8);
         }
 
         [[nodiscard]] int palette_offset() const
@@ -2028,10 +2030,20 @@ affine_bg_big_map_canvas_size affine_big_map_canvas_size(int id)
 
 int regular_tiles_offset(int id)
 {
+    return _tiles_offset(id, data_ref().items.item(id).bpp());
+}
+
+int regular_map_tiles_offset(int id)
+{
     return data_ref().items.item(id).regular_tiles_offset();
 }
 
 int affine_tiles_offset(int id)
+{
+    return _tiles_offset(id, bpp_mode::BPP_8);
+}
+
+int affine_map_tiles_offset(int id)
 {
     return data_ref().items.item(id).affine_tiles_offset();
 }
@@ -2296,7 +2308,7 @@ void set_regular_map_tiles(int id, regular_bg_tiles_ptr&& tiles)
         if(const regular_bg_tiles_ptr* item_regular_tiles = item.regular_tiles.get())
         {
             old_tiles_cbb = item_regular_tiles->cbb();
-            old_tiles_offset = item.regular_tiles_offset();
+            old_tiles_offset = item_regular_tiles->offset();
         }
         else
         {
@@ -2334,7 +2346,7 @@ void set_affine_map_tiles(int id, affine_bg_tiles_ptr&& tiles)
         if(const affine_bg_tiles_ptr* item_affine_tiles = item.affine_tiles.get())
         {
             old_tiles_cbb = item_affine_tiles->cbb();
-            old_tiles_offset = item.affine_tiles_offset();
+            old_tiles_offset = item_affine_tiles->offset();
         }
         else
         {
@@ -2389,23 +2401,20 @@ void set_regular_map_palette(int id, bg_palette_ptr&& palette)
         BN_BASIC_ASSERT(palette.bpp() == item.bpp(),
                         "Palette BPP does not match map BPP: ", int(palette.bpp()), " - ", int(item.bpp()));
 
-        int old_tiles_offset;
         int old_palette_offset;
 
         if(item.palette)
         {
-            old_tiles_offset = item.regular_tiles_offset();
             old_palette_offset = item.palette_offset();
         }
         else
         {
-            old_tiles_offset = -1;
             old_palette_offset = -1;
         }
 
         item.palette = move(palette);
 
-        if(item.regular_tiles_offset() != old_tiles_offset || item.palette_offset() != old_palette_offset)
+        if(item.palette_offset() != old_palette_offset)
         {
             item.commit = true;
             data.check_commit = true;

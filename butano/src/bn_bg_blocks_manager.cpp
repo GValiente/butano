@@ -2004,6 +2004,29 @@ void decrease_usages(int id)
         item.regular_tiles.reset();
         item.affine_tiles.reset();
         item.palette.reset();
+
+        if(item.is_tiles)
+        {
+            if(int overwrite_tile_items_count = data.overwrite_tile_items_count)
+            {
+                overwrite_tile_item_type* overwrite_tile_items = data.overwrite_tile_items;
+
+                for(int index = 0; index < overwrite_tile_items_count; )
+                {
+                    if(overwrite_tile_items[index].item_id == id)
+                    {
+                        bn::swap(overwrite_tile_items[index], overwrite_tile_items[overwrite_tile_items_count - 1]);
+                        --overwrite_tile_items_count;
+                    }
+                    else
+                    {
+                        ++index;
+                    }
+                }
+
+                data.overwrite_tile_items_count = overwrite_tile_items_count;
+            }
+        }
     }
 
     BN_BG_BLOCKS_LOG_STATUS();
@@ -3037,8 +3060,6 @@ void update()
         auto iterator = previous_iterator;
         ++iterator;
 
-        overwrite_tile_item_type* overwrite_tile_items = data.overwrite_tile_items;
-        int overwrite_tile_items_count = data.overwrite_tile_items_count;
         int commit_uncompressed_items_count = 0;
         int commit_compressed_items_count = 0;
 
@@ -3049,26 +3070,12 @@ void update()
 
             if(item_status == status_type::TO_REMOVE)
             {
-                int item_id = iterator.id();
                 item.data = nullptr;
                 item.width = 0;
                 item.height = 0;
                 item.set_status(status_type::FREE);
                 item.commit = false;
                 data.free_blocks_count += item.blocks_count;
-
-                for(int index = 0; index < overwrite_tile_items_count; )
-                {
-                    if(overwrite_tile_items[index].item_id == item_id)
-                    {
-                        bn::swap(overwrite_tile_items[index], overwrite_tile_items[overwrite_tile_items_count - 1]);
-                        --overwrite_tile_items_count;
-                    }
-                    else
-                    {
-                        ++index;
-                    }
-                }
 
                 auto next_iterator = iterator;
                 ++next_iterator;
@@ -3116,7 +3123,6 @@ void update()
 
         data.to_commit_uncompressed_items_count = commit_uncompressed_items_count;
         data.to_commit_compressed_items_count = commit_compressed_items_count;
-        data.overwrite_tile_items_count = overwrite_tile_items_count;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }

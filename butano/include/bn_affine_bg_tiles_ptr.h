@@ -271,7 +271,8 @@ public:
      * so they should outlive the affine_bg_tiles_ptr to avoid dangling references.
      *
      * @param tile_index Index of the tile to overwrite.
-     * @param tiles_ref Reference to the new tile data.
+     * @param tiles_ref Reference to the new tile data. It must point to two tiles, because an affine tile
+     * counts as two bn::tile objects.
      */
     void overwrite_tile(int tile_index, const tile& tiles_ref);
 

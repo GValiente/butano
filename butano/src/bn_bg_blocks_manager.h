@@ -142,6 +142,8 @@ namespace bn::bg_blocks_manager
 
     void reload(int id);
 
+    void overwrite_tile(int id, int tile_index, const tile& tiles_ref);
+
     [[nodiscard]] const regular_bg_tiles_ptr& regular_map_tiles(int id);
 
     [[nodiscard]] const affine_bg_tiles_ptr& affine_map_tiles(int id);

@@ -151,6 +151,11 @@ void affine_bg_tiles_ptr::reload_tiles_ref()
     bg_blocks_manager::reload(_handle);
 }
 
+void affine_bg_tiles_ptr::overwrite_tile(int tile_index, const tile& tiles_ref)
+{
+    bg_blocks_manager::overwrite_tile(_handle, tile_index, tiles_ref);
+}
+
 optional<span<const tile>> affine_bg_tiles_ptr::vram() const
 {
     optional<span<tile>> vram_opt = bg_blocks_manager::tiles_vram(_handle);

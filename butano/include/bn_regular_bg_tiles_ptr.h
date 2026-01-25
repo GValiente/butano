@@ -276,6 +276,17 @@ public:
     void reload_tiles_ref();
 
     /**
+     * @brief Overwrites a single tile.
+     *
+     * Remember that the tiles are not copied but referenced,
+     * so they should outlive the regular_bg_tiles_ptr to avoid dangling references.
+     *
+     * @param tile_index Index of the tile to overwrite.
+     * @param tiles_ref Reference to the new tile data.
+     */
+    void overwrite_tile(int tile_index, const tile& tiles_ref);
+
+    /**
      * @brief Returns the allocated memory in VRAM
      * if this regular_bg_tiles_ptr was created with allocate or allocate_optional; bn::nullopt otherwise.
      */

@@ -14,6 +14,8 @@
  *
  * @section changelog_21_3_0 21.3.0 (next release)
  *
+ * * bn::regular_bg_tiles_ptr::overwrite_tile, bn::affine_bg_tiles_ptr::overwrite_tile and
+ *   @ref BN_CFG_BG_BLOCKS_MAX_OVERWRITE_TILES added.
  * * bn::regular_bg_tiles_ptr::bpp added.
  * * bn::regular_bg_tiles_ptr::offset and bn::affine_bg_tiles_ptr::offset added.
  * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> added to `README.md`.

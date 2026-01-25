@@ -39,6 +39,7 @@ namespace bn::bg_blocks_manager
 namespace
 {
     static_assert(BN_CFG_BG_BLOCKS_MAX_ITEMS > 0 && BN_CFG_BG_BLOCKS_MAX_ITEMS <= hw::bg_tiles::blocks_count());
+    static_assert(BN_CFG_BG_BLOCKS_MAX_OVERWRITE_TILES > 0);
 
 
     #if BN_CFG_LOG_ENABLED
@@ -173,6 +174,7 @@ namespace
 
 
     constexpr int max_items = BN_CFG_BG_BLOCKS_MAX_ITEMS;
+    constexpr int max_overwrite_tile_items = BN_CFG_BG_BLOCKS_MAX_OVERWRITE_TILES;
     constexpr int max_list_items = max_items + 1;
 
 
@@ -418,6 +420,17 @@ namespace
     };
 
 
+    class overwrite_tile_item_type
+    {
+
+    public:
+        const uint16_t* source_ptr;
+        uint16_t tile_index;
+        uint8_t item_id;
+        uint8_t words_count;
+    };
+
+
     class affine_bg_big_map_canvas_info
     {
 
@@ -481,11 +494,13 @@ namespace
         items_list items;
         alignas(int) uint8_t to_commit_uncompressed_items_array[max_items];
         alignas(int) uint8_t to_commit_compressed_items_array[max_items];
+        overwrite_tile_item_type overwrite_tile_items[max_overwrite_tile_items];
         affine_bg_big_map_canvas_info new_affine_big_map_canvas_info;
         int free_blocks_count = 0;
         int to_remove_blocks_count = 0;
         int to_commit_uncompressed_items_count = 0;
         int to_commit_compressed_items_count = 0;
+        int overwrite_tile_items_count = 0;
         bool allow_tiles_offset = true;
         bool check_commit = false;
         bool delay_commit = false;
@@ -2280,6 +2295,29 @@ void reload(int id)
     BN_BG_BLOCKS_LOG_STATUS();
 }
 
+void overwrite_tile(int id, int tile_index, const tile& tiles_ref)
+{
+    static_data& data = data_ref();
+    item_type& item = data.items.item(id);
+    BN_ASSERT(tile_index >= 0 && tile_index < item.tiles_count(),
+              "Invalid tile index: ", tile_index, " - ", item.tiles_count());
+    BN_BASIC_ASSERT(data.overwrite_tile_items_count < max_overwrite_tile_items,
+                    "There's no space for more overwritten tiles");
+
+    auto source_ptr = reinterpret_cast<const uint16_t*>(&tiles_ref);
+    unsigned words_count = sizeof(tile) / 4;
+
+    if(item.bpp() == bpp_mode::BPP_8)
+    {
+        tile_index *= 2;
+        words_count *= 2;
+    }
+
+    overwrite_tile_item_type& overwrite_tile_item = data.overwrite_tile_items[data.overwrite_tile_items_count];
+    ++data.overwrite_tile_items_count;
+    overwrite_tile_item = { source_ptr, uint16_t(tile_index), uint8_t(id), uint8_t(words_count) };
+}
+
 const regular_bg_tiles_ptr& regular_map_tiles(int id)
 {
     const item_type& item = data_ref().items.item(id);
@@ -2999,6 +3037,8 @@ void update()
         auto iterator = previous_iterator;
         ++iterator;
 
+        overwrite_tile_item_type* overwrite_tile_items = data.overwrite_tile_items;
+        int overwrite_tile_items_count = data.overwrite_tile_items_count;
         int commit_uncompressed_items_count = 0;
         int commit_compressed_items_count = 0;
 
@@ -3009,12 +3049,26 @@ void update()
 
             if(item_status == status_type::TO_REMOVE)
             {
+                int item_id = iterator.id();
                 item.data = nullptr;
                 item.width = 0;
                 item.height = 0;
                 item.set_status(status_type::FREE);
                 item.commit = false;
                 data.free_blocks_count += item.blocks_count;
+
+                for(int index = 0; index < overwrite_tile_items_count; )
+                {
+                    if(overwrite_tile_items[index].item_id == item_id)
+                    {
+                        bn::swap(overwrite_tile_items[index], overwrite_tile_items[overwrite_tile_items_count - 1]);
+                        --overwrite_tile_items_count;
+                    }
+                    else
+                    {
+                        ++index;
+                    }
+                }
 
                 auto next_iterator = iterator;
                 ++next_iterator;
@@ -3062,6 +3116,7 @@ void update()
 
         data.to_commit_uncompressed_items_count = commit_uncompressed_items_count;
         data.to_commit_compressed_items_count = commit_compressed_items_count;
+        data.overwrite_tile_items_count = overwrite_tile_items_count;
 
         BN_BG_BLOCKS_LOG_STATUS();
     }
@@ -3088,6 +3143,34 @@ void commit_uncompressed(bool use_dma)
         data.to_commit_uncompressed_items_count = 0;
 
         BN_BG_BLOCKS_LOG_STATUS();
+    }
+
+    if(int overwrite_tile_items_count = data.overwrite_tile_items_count)
+    {
+        data.overwrite_tile_items_count = 0;
+
+        if(use_dma)
+        {
+            for(int index = 0; index < overwrite_tile_items_count; ++index)
+            {
+                const overwrite_tile_item_type& tile_item = data.overwrite_tile_items[index];
+                const item_type& item = data.items.item(tile_item.item_id);
+                uint16_t* destination_ptr = hw::bg_blocks::vram(item.start_block);
+                destination_ptr += tile_item.tile_index * (sizeof(tile) / 2);
+                hw::dma::copy_words(tile_item.source_ptr, tile_item.words_count, destination_ptr);
+            }
+        }
+        else
+        {
+            for(int index = 0; index < overwrite_tile_items_count; ++index)
+            {
+                const overwrite_tile_item_type& tile_item = data.overwrite_tile_items[index];
+                const item_type& item = data.items.item(tile_item.item_id);
+                uint16_t* destination_ptr = hw::bg_blocks::vram(item.start_block);
+                destination_ptr += tile_item.tile_index * (sizeof(tile) / 2);
+                hw::memory::copy_words(tile_item.source_ptr, tile_item.words_count, destination_ptr);
+            }
+        }
     }
 }
 

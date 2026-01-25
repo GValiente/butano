@@ -179,6 +179,11 @@
               <span class="m-doc-wrap-bumper">void <a href="#a9a2a97c5c9368de1e73cf2504978df87" class="m-doc-self">reload_tiles_ref</a>(</span><span class="m-doc-wrap">)</span>
             </dt>
             <dd>Uploads the referenced tiles to VRAM again to make visible the possible changes in them.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a19d6500ee41428f2430847a1828e3315" class="m-doc">overwrite_tile</a>(</span><span class="m-doc-wrap">int tile_index,
+              const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&amp; tiles_ref)</span>
+            </dt>
+            <dd>Overwrites a single tile.</dd>
             <dt id="a53b35075997e3a6dff055ef4e80e6518">
               <span class="m-doc-wrap-bumper">auto <a href="#a53b35075997e3a6dff055ef4e80e6518" class="m-doc-self">vram</a>(</span><span class="m-doc-wrap">) const -&gt; <a href="classbn_1_1optional.html" class="m-doc">optional</a>&lt;<a href="classbn_1_1span.html" class="m-doc">span</a>&lt;const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&gt;&gt;</span>
             </dt>
@@ -564,6 +569,29 @@
               </tbody>
             </table>
 <p>Remember that the background tiles system does not support multiple <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> items referencing to the same tiles.</p><p>Remember also that the tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
+          </div></section>
+          <section class="m-doc-details" id="a19d6500ee41428f2430847a1828e3315"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />regular_bg_tiles_ptr::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a19d6500ee41428f2430847a1828e3315" class="m-doc-self">overwrite_tile</a>(</span><span class="m-doc-wrap">int tile_index,
+              const <a href="classbn_1_1tile.html" class="m-doc">tile</a>&amp; tiles_ref)</span></span>
+            </h3>
+            <p>Overwrites a single tile.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">tile_index</td>
+                  <td>Index of the tile to overwrite.</td>
+                </tr>
+                <tr>
+                  <td>tiles_ref</td>
+                  <td>Reference to the new tile data.</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Remember that the tiles are not copied but referenced, so they should outlive the <a href="classbn_1_1regular__bg__tiles__ptr.html" class="m-doc">regular_<wbr />bg_<wbr />tiles_<wbr />ptr</a> to avoid dangling references.</p>
           </div></section>
           <section class="m-doc-details" id="abe2b8c814189dd63fd9f562b6694ff5c"><div>
             <h3>

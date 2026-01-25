@@ -27,6 +27,18 @@
 #endif
 
 /**
+ * @def BN_CFG_BG_BLOCKS_MAX_OVERWRITE_TILES
+ *
+ * Specifies the maximum number of background tiles that can be overwritten with
+ * bn::regular_bg_tiles_ptr::overwrite_tile and bn::affine_bg_tiles_ptr::overwrite_tile.
+ *
+ * @ingroup bg
+ */
+#ifndef BN_CFG_BG_BLOCKS_MAX_OVERWRITE_TILES
+    #define BN_CFG_BG_BLOCKS_MAX_OVERWRITE_TILES 32
+#endif
+
+/**
  * @def BN_CFG_BG_BLOCKS_LOG_ENABLED
  *
  * Specifies if the background blocks manager must be logged in detail or not.

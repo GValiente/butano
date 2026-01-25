@@ -597,9 +597,10 @@
  *
  * There are multiple ways, from easy to powerful:
  * * If you only want to show some basic tile animation, such the water or the grass tiles in top-down RPGs,
- *   you can use one of these actions: bn::regular_bg_animate_action, bn::regular_bg_cached_animate_action,
+ *   you can use bn::regular_bg_tiles_ptr::overwrite_tile and bn::affine_bg_tiles_ptr::overwrite_tile.
+ *   You also can use one of these actions: bn::regular_bg_animate_action, bn::regular_bg_cached_animate_action,
  *   bn::affine_bg_animate_action and bn::affine_bg_cached_animate_action.
- *   The `regular_bgs` and `affine_bgs` examples show how to use some of them.
+ *   The `regular_bgs` and `affine_bgs` examples show how to use the overwrite tile methods and some of these actions.
  * * If you want to show something more advanced, like destructible tiles, you should first think if it's possible
  *   to handle those tiles with sprites, because it's going to be easier than the following approaches.
  * * If animation actions and extra sprites are not enough, you need to manage the background map by yourself.

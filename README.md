@@ -22,8 +22,8 @@ and [Varooom 3D](#made-with-butano-varooom-3d)) are provided with this project.
 
 ## Supported platforms
 
-Butano is built on top of the [devkitARM](https://devkitpro.org/) toolchain, so it supports Windows, 
-macOS and Unix-like platforms.
+Butano is built on top of [devkitARM](https://devkitpro.org/) or [Wonderful Toolchain](https://wonderful.asie.pl/), 
+so it supports Windows, macOS and Unix-like platforms.
 
 
 ## What's new

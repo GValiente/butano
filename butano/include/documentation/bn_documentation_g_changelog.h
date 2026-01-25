@@ -16,6 +16,7 @@
  *
  * * bn::regular_bg_tiles_ptr::bpp added.
  * * bn::regular_bg_tiles_ptr::offset and bn::affine_bg_tiles_ptr::offset added.
+ * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> added to `README.md`.
  *
  *
  * @section changelog_21_2_0 21.2.0

@@ -11,7 +11,7 @@
  *
  * @tableofcontents
  *
- * Importing your graphic and audio files into a GBA game can be annoying,
+ * Importing your graphic, audio and generic data files into a GBA game can be annoying,
  * but with Butano and this guide you will be good to go.
  *
  * GBA ROMs by themselves don't include a file system, so you can't put a couple of `*.bmp` files into a folder
@@ -24,7 +24,7 @@
  * * Inserts it into the ROM.
  * * Creates a C++ header into the `build` folder containing the required information to use the assets with ease.
  *
- * Let's see how to import image and audio files.
+ * Let's see how to import image, audio and generic data files.
  *
  *
  * @section import_image Images
@@ -749,6 +749,28 @@
  * #include "bn_sound_items.h"
  *
  * bn::sound_items::sfx.play();
+ * @endcode
+ *
+ *
+ * @section import_generic_data Generic data
+ *
+ * Generic data files go into the folder specified by the `DATA` variable of the `Makefile` of your project.
+ *
+ * If the conversion process has finished successfully, for each `*.bin` file
+ * a header file should have been generated in the `build` folder.
+ *
+ * For example, from a file named `generic_data.bin`,
+ * a header file named `generic_data_bin.h` is generated in the `build` folder.
+ *
+ * You can use this header to use the data in the `generic_data.bin` file:
+ *
+ * @code{.cpp}
+ * #include "generic_data_bin.h"
+ *
+ * if(generic_data_bin_size)
+ * {
+ *     BN_LOG(generic_data_bin[0]);
+ * }
  * @endcode
  */
 

@@ -19,6 +19,8 @@
  * * bn::regular_bg_tiles_ptr::bpp added.
  * * bn::regular_bg_tiles_ptr::offset and bn::affine_bg_tiles_ptr::offset added.
  * * Animated tiles scene added to `regular_bgs` and `affine_bgs` examples.
+ * * bn::core callbacks documentation improved.
+ * * @ref import_generic_data section added to the import guide.
  * * @ref faq_backgrounds_animated question improved.
  * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> added to `README.md`.
  *

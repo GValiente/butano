@@ -32,7 +32,6 @@ namespace
 {
     static_assert(BN_CFG_SPRITE_TILES_MAX_ITEMS > 0 &&
                   BN_CFG_SPRITE_TILES_MAX_ITEMS <= hw::sprite_tiles::tiles_count());
-    static_assert(power_of_two(BN_CFG_SPRITE_TILES_MAX_ITEMS));
 
 
     #if BN_CFG_LOG_ENABLED
@@ -44,6 +43,17 @@ namespace
 
     constexpr int max_items = BN_CFG_SPRITE_TILES_MAX_ITEMS;
     constexpr int max_list_items = max_items + 2;
+    constexpr int max_map_items = [](){
+        int minimum = max_items * 2;
+        int result = 2;
+
+        while(result < minimum)
+        {
+            result *= 2;
+        }
+
+        return result;
+    }();
 
 
     enum class status_type
@@ -266,7 +276,7 @@ namespace
 
     public:
         items_list items;
-        unordered_map<const tile*, int, max_items * 2, hasher> items_map;
+        unordered_map<const tile*, int, max_map_items, hasher> items_map;
         vector<uint16_t, max_items> free_items;
         vector<uint16_t, max_items> to_remove_items;
         vector<uint16_t, max_items> to_commit_uncompressed_items;

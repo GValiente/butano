@@ -46,9 +46,19 @@ namespace
     constexpr int max_commands = BN_CFG_AUDIO_MAX_COMMANDS;
     static_assert(max_commands > 2, "Invalid max audio commands");
 
-    constexpr int max_sound_channels = BN_CFG_AUDIO_MAX_SOUND_CHANNELS;
-    static_assert(max_sound_channels > 0, "Invalid max sound channels");
-    static_assert(power_of_two(max_sound_channels), "Invalid max sound channels");
+    static_assert(BN_CFG_AUDIO_MAX_SOUND_CHANNELS > 0, "Invalid max sound channels");
+
+    constexpr int max_sound_map_items = [](){
+        int minimum = BN_CFG_AUDIO_MAX_SOUND_CHANNELS * 2;
+        int result = 2;
+
+        while(result < minimum)
+        {
+            result *= 2;
+        }
+
+        return result;
+    }();
 
 
     class set_audio_mixing_rate
@@ -531,7 +541,7 @@ namespace
 
     public:
         command_data command_datas[max_commands];
-        unordered_map<unsigned, sound_data_type, max_sound_channels * 2, identity_hasher> sound_map;
+        unordered_map<unsigned, sound_data_type, max_sound_map_items, identity_hasher> sound_map;
         fixed music_volume;
         fixed music_tempo;
         fixed music_pitch;

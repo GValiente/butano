@@ -19,6 +19,7 @@
  * * bn::regular_bg_tiles_ptr::bpp added.
  * * bn::regular_bg_tiles_ptr::offset and bn::affine_bg_tiles_ptr::offset added.
  * * @ref BN_CFG_AUDIO_MAX_SOUND_CHANNELS and @ref BN_CFG_SPRITE_TILES_MAX_ITEMS no longer have to be a power of two.
+ * * VGM music wave sample fixed (thanks yeon!).
  * * Animated tiles scene added to `regular_bgs` and `affine_bgs` examples.
  * * bn::core callbacks documentation improved.
  * * @ref import_generic_data section added to the import guide.

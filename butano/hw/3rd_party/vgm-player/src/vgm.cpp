@@ -6,6 +6,7 @@
 //---------------------------------------------------------------------------
 typedef unsigned char u8;
 typedef unsigned int u32;
+typedef volatile unsigned char vu8;
 #define REG_BASE 0x04000000
 
 //---------------------------------------------------------------------------
@@ -55,40 +56,42 @@ void VgmStop(void)
 	Vgm.id = VGM_ID_STOP;
 
 	// REG_SOUNDCNT
-	*(u8*)(REG_BASE + 0x84) = 0x00;
+	*(vu8*)(REG_BASE + 0x84) = 0x00;
 
 	// ch1
-	*(u8*)(REG_BASE + 0x60) = 0x00;
-	*(u8*)(REG_BASE + 0x62) = 0x00;
-	*(u8*)(REG_BASE + 0x63) = 0x00;
-	*(u8*)(REG_BASE + 0x64) = 0x00;
-	*(u8*)(REG_BASE + 0x65) = 0x00;
+	*(vu8*)(REG_BASE + 0x60) = 0x00;
+	*(vu8*)(REG_BASE + 0x62) = 0x00;
+	*(vu8*)(REG_BASE + 0x63) = 0x08;
+	*(vu8*)(REG_BASE + 0x64) = 0x00;
+	*(vu8*)(REG_BASE + 0x65) = 0x80;
 
 	// ch2
-	*(u8*)(REG_BASE + 0x68) = 0x00;
-	*(u8*)(REG_BASE + 0x69) = 0x00;
-	*(u8*)(REG_BASE + 0x6c) = 0x00;
-	*(u8*)(REG_BASE + 0x6d) = 0x00;
+	*(vu8*)(REG_BASE + 0x68) = 0x00;
+	*(vu8*)(REG_BASE + 0x69) = 0x08;
+	*(vu8*)(REG_BASE + 0x6c) = 0x00;
+	*(vu8*)(REG_BASE + 0x6d) = 0x80;
 
 	// ch3
 	for(u32 i=0; i<0x10; i++)
 	{
-		*(u8*)(REG_BASE + 0x90 + i) = 0;
+		*(vu8*)(REG_BASE + 0x90 + i) = 0x00;
 	}
-	*(u8*)(REG_BASE + 0x70) = 0x00;
-	*(u8*)(REG_BASE + 0x72) = 0x00;
-	*(u8*)(REG_BASE + 0x74) = 0x80;
+	*(vu8*)(REG_BASE + 0x70) = 0x00;
+	*(vu8*)(REG_BASE + 0x72) = 0x00;
+	*(vu8*)(REG_BASE + 0x73) = 0x00;
+	*(vu8*)(REG_BASE + 0x74) = 0x00;
+	*(vu8*)(REG_BASE + 0x75) = 0x00;
 
 	// ch4
-	*(u8*)(REG_BASE + 0x78) = 0x00;
-	*(u8*)(REG_BASE + 0x79) = 0x00;
-	*(u8*)(REG_BASE + 0x7c) = 0x00;
-	*(u8*)(REG_BASE + 0x7d) = 0x00;
+	*(vu8*)(REG_BASE + 0x78) = 0x00;
+	*(vu8*)(REG_BASE + 0x79) = 0x08;
+	*(vu8*)(REG_BASE + 0x7c) = 0x00;
+	*(vu8*)(REG_BASE + 0x7d) = 0x80;
 
 	// REG_SOUNDCNT
-	*(u8*)(REG_BASE + 0x80) = 0x77;
-	*(u8*)(REG_BASE + 0x81) = 0xff;
-	*(u8*)(REG_BASE + 0x84) = 0x80;
+	*(vu8*)(REG_BASE + 0x80) = 0x77;
+	*(vu8*)(REG_BASE + 0x81) = 0xff;
+	*(vu8*)(REG_BASE + 0x84) = 0x80;
 }
 //---------------------------------------------------------------------------
 bool VgmIntrVblank(void)
@@ -111,7 +114,7 @@ bool VgmIntrVblank(void)
 		{
 			u8 adr = *Vgm.pCur++;
 			u8 dat = *Vgm.pCur++;
-			*(u8*)(REG_BASE + adr) = dat;
+			*(vu8*)(REG_BASE + adr) = dat;
 
 			continue;
 		}

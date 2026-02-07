@@ -175,10 +175,6 @@ class VgmFile:
             if data[p] == 0xB3:
                 d2 = data[p + 1]
 
-                converted += data[p : p + 3]
-                p += 3
-                fputc_cnt += 3
-
                 # GBA patch
 
                 # wave adr?
@@ -186,6 +182,10 @@ class VgmFile:
                     # add REG_SOUND3CNT_L = 0x40;
                     converted += b"\xb3\x70\x40"
                     fputc_cnt += 3
+
+                converted += data[p : p + 3]
+                p += 3
+                fputc_cnt += 3
 
                 continue
 

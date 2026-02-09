@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_3_0 21.3.0 (next release)
+ * @section changelog_21_3_0 21.3.0
  *
  * * bn::regular_bg_tiles_ptr::overwrite_tile, bn::affine_bg_tiles_ptr::overwrite_tile and
  *   @ref BN_CFG_BG_BLOCKS_MAX_OVERWRITE_TILES added.

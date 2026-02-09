@@ -692,9 +692,9 @@
  * The required format for DMG music is module files with `*.mod`, `*.s3m` and `*.vgm` extensions.
  *
  * The recommended way to generate `*.vgm` compatible files is to use
- * <a href="https://github.com/SuperDisk/hUGETracker">hUGETracker 1.01</a> with timer based tempo disabled:
+ * <a href="https://github.com/tildearrow/furnace">Furnace tracker</a>.
  *
- * @image html import_hugetracker.png
+ * @image html import_furnace.png
  *
  * If the conversion process has finished successfully,
  * a bn::dmg_music_item should have been generated in the `build` folder.

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-# vgm2gba
-# SPDX-License-Identifier: CC0-1.0
-#
-# Original C code  by akkera102
-# Port to Python   by copyrat90
+# SPDX-FileCopyrightText: Copyright 2023-2025 akkera102
+# SPDX-FileCopyrightText: Copyright 2023-2026 copyrat90
+# SPDX-License-Identifier: 0BSD
+
+from typing import Optional
 
 
 class VgmFormatError(Exception):
@@ -12,30 +12,28 @@ class VgmFormatError(Exception):
 
 
 class VgmFile:
-    def __init__(self, data):
+    def __init__(self, data: bytearray):
         self.data = data
 
         # validate header
-        if data[0:3] != b"Vgm":
+        if bytes(data[0:3]) != b"Vgm":
             raise VgmFormatError("vgm ident")
-        if data[8:10] != b"\x61\x01" or data[0x10:0x12] != b"\x00\x00":
+        if bytes(data[8:10]) != b"\x61\x01" or bytes(data[0x10:0x12]) != b"\x00\x00":
             raise VgmFormatError("not version 1.61")
-        if data[0x80:0x84] != b"\x00\x00\x40\x00":
+        if bytes(data[0x80:0x84]) != b"\x00\x00\x40\x00":
             raise VgmFormatError("not use Game Boy")
 
         # convert reg
-        p = 0xC0
+        p = 0x34 + int.from_bytes(data[0x34:0x38], byteorder="little")
         while data[p] != 0x66:  # end of mark
-            # ignore 0x00
-            if data[p] == 0x00:
-                p += 1
-                continue
-
             # wait: 0x61 nn nn
             if data[p] == 0x61:
                 p += 3
                 continue
             elif 0x62 <= data[p] <= 0x63:
+                p += 1
+                continue
+            elif 0x70 <= data[p] <= 0x7F:
                 p += 1
                 continue
 
@@ -93,14 +91,12 @@ class VgmFile:
 
                 dat = data[p + 1]
 
-                if adr == 0x70:  # NR 30
-                    dat = dat & 0x80
-                if adr == 0x73:  # NR 32
-                    dat = dat & 0x60
-                if adr == 0x80 and dat & 0x08 != 0:  # NR 50
-                    print("Warning: no use GBA bit. NR 50(FF24) Right Flag.")
-                if adr == 0x80 and dat & 0x80 != 0:  # NR 50
-                    print("Warning: no use GBA bit. NR 50(FF24) Left Flag.")
+                # hugeTracker generates VGMs that has incorrect `0xFF` writes for NR 30,
+                # which messes up the Ch3 bank bits on the GBA.
+                #
+                # This hack fixes this issue so that hugeTracker VGMs can be played correctly.
+                if adr == 0x70 and dat == 0xFF:
+                    dat = 0x80
 
                 data[p] = adr
                 p += 1
@@ -110,11 +106,11 @@ class VgmFile:
 
             raise VgmFormatError(f"Commands. offset 0x{p:02x} = 0x{data[p]:02x}")
 
-    def write_binary(self, output_path):
+    def write_binary(self, output_path: str):
         with open(output_path, "wb") as file:
             file.write(self.__get_converted_data())
 
-    def write_c_array(self, output_path, c_array_identifier):
+    def write_c_array(self, output_path: str, c_array_identifier: str):
         converted = self.__get_converted_data()
 
         with open(output_path, "w") as file:
@@ -143,7 +139,7 @@ class VgmFile:
 
         print(f"VgmLoopOffset: 0x{loop_vgm:02x}")
 
-        p = 0xC0
+        p = 0x34 + int.from_bytes(data[0x34:0x38], byteorder="little")
         fputc_cnt = 0
 
         while data[p] != 0x66:  # end of mark
@@ -154,13 +150,8 @@ class VgmFile:
                 loop_bin = fputc_cnt
                 is_loop = True
 
-            # ignore 0x00
-            if data[p] == 0x00:
-                p += 1
-                continue
-
             # wait: 0x61 nn nn
-            if 0x61 <= data[p] <= 0x63:
+            if 0x61 <= data[p] <= 0x63 or 0x70 <= data[p] <= 0x7F:
                 # GBA side use vblank
                 converted += b"\x61"
                 fputc_cnt += 1
@@ -173,16 +164,6 @@ class VgmFile:
 
             # write reg: 0xb3 aa dd
             if data[p] == 0xB3:
-                d2 = data[p + 1]
-
-                # GBA patch
-
-                # wave adr?
-                if 0x90 <= d2 <= 0x9F:
-                    # add REG_SOUND3CNT_L = 0x40;
-                    converted += b"\xb3\x70\x40"
-                    fputc_cnt += 3
-
                 converted += data[p : p + 3]
                 p += 3
                 fputc_cnt += 3
@@ -209,7 +190,7 @@ class VgmFile:
         return converted
 
 
-def convert_file_binary(vgm_path, output_path):
+def convert_file_binary(vgm_path: str, output_path: str):
     with open(vgm_path, "rb") as file:
         file_byte_array = bytearray(file.read())
 
@@ -217,7 +198,9 @@ def convert_file_binary(vgm_path, output_path):
     vgm.write_binary(output_path)
 
 
-def convert_file_c_array(vgm_path, output_path, c_array_identifier=None):
+def convert_file_c_array(
+    vgm_path: str, output_path: str, c_array_identifier: Optional[str] = None
+):
     if not c_array_identifier:
         import os
 
@@ -235,18 +218,18 @@ if __name__ == "__main__":
     import argparse
     import sys
 
-    print("vgm2gba - convert hUGETracker VGM")
-    print("This program is distributed under the CC0-1.0")
+    print("advgm_converter - convert Furnace VGM")
+    print("This program is distributed under the 0BSD")
     print()
     print("Original C code  by akkera102")
     print("Port to Python   by copyrat90")
     print()
 
     parser = argparse.ArgumentParser(
-        description="convert hUGETracker VGM files into VGM Player binary format."
+        description="convert Furnace VGM files into advgm binary format."
     )
     parser.add_argument(
-        "--input", default=None, required=True, help="input hUGETracker VGM file path"
+        "--input", default=None, required=True, help="input Furnace VGM file path"
     )
     parser.add_argument(
         "--output", default=None, required=False, help="output file path"

@@ -7,7 +7,7 @@
 
 #include "bn_assert.h"
 #include "bn_dmg_music_type.h"
-#include "../3rd_party/vgm-player/include/vgm.h"
+#include "../3rd_party/advgm/include/advgm.h"
 
 extern "C"
 {
@@ -29,7 +29,7 @@ namespace
 
     public:
         #if BN_CFG_ASSERT_ENABLED
-            unsigned vgm_offset_play = 0;
+            uint32_t vgm_offset_play = 0;
         #endif
         uint16_t control_value = 0;
         bn::dmg_music_type music_type = dmg_music_type::GBT_PLAYER;
@@ -78,7 +78,7 @@ void disable()
     }
     else
     {
-        return VgmActive();
+        return advgm_playing();
     }
 }
 
@@ -92,7 +92,7 @@ void stop_music()
     }
     else
     {
-        VgmStop();
+        advgm_stop();
     }
 
     data.music_paused = false;
@@ -117,7 +117,7 @@ void play_music(const void* song, dmg_music_type type, int speed, bool loop)
     {
         BN_ASSERT(speed == 1, "Speed change not supported by the VGM player: ", speed);
 
-        VgmPlay(static_cast<const uint8_t*>(song), loop);
+        advgm_play(static_cast<const uint8_t*>(song), loop);
     }
 
     data.music_paused = false;
@@ -133,7 +133,7 @@ void pause_music()
     }
     else
     {
-        VgmPause();
+        advgm_pause();
     }
 
     data.music_paused = true;
@@ -149,7 +149,7 @@ void resume_music()
     }
     else
     {
-        VgmResume();
+        advgm_resume();
     }
 
     data.music_paused = false;
@@ -163,7 +163,7 @@ void music_position(int& pattern, int& row)
     }
     else
     {
-        pattern = int(VgmGetOffsetPlay());
+        pattern = int(advgm_get_music_offset());
         row = 0;
     }
 }
@@ -178,7 +178,7 @@ void set_music_position(int pattern, int row)
     {
         BN_BASIC_ASSERT(! row, "Invalid row: ", row);
 
-        VgmSetOffsetPlay(unsigned(pattern));
+        advgm_set_music_offset(uint32_t(pattern));
     }
 }
 
@@ -205,13 +205,13 @@ void commit()
     else
     {
         #if BN_CFG_ASSERT_ENABLED
-            if(! data.vgm_commit_failed && ! VgmIntrVblank())
+            if(! data.vgm_commit_failed && ! advgm_vblank_callback())
             {
                 data.vgm_commit_failed = true;
-                data.vgm_offset_play = VgmGetOffsetPlay();
+                data.vgm_offset_play = advgm_get_music_offset();
             }
         #else
-            VgmIntrVblank();
+            advgm_vblank_callback();
         #endif
     }
 }

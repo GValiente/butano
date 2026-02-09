@@ -656,7 +656,7 @@
  * with Direct Sound music or with sound effects, well, you know.
  *
  * DMG channels are handled by the also impressive <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>
- * and <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>,
+ * and <a href="https://github.com/copyrat90/advgm">advgm</a>,
  * so if you have issues with DMG music, you know where to go.
  *
  * A really nice application for editing audio files

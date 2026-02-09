@@ -223,7 +223,7 @@
  * Module files (files with `*.mod` and `*.s3m` extensions) played with DMG channels
  * thanks to <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>
  * and VGM audio files (files with `*.vgm` extension) played with DMG channels
- * thanks to <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>.
+ * thanks to <a href="https://github.com/copyrat90/advgm">advgm</a>.
  *
  * @ingroup audio
  */

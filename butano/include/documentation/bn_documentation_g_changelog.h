@@ -12,6 +12,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_21_4_0 21.4.0 (next release)
+ *
+ * <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a> replaced with
+ * <a href="https://github.com/copyrat90/advgm">advgm</a>.
+ *
+ *
  * @section changelog_21_3_0 21.3.0
  *
  * * bn::regular_bg_tiles_ptr::overwrite_tile, bn::affine_bg_tiles_ptr::overwrite_tile and

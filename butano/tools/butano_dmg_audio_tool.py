@@ -58,7 +58,7 @@ class DmgAudioFileInfo:
             elif self.__file_name_ext == '.s3m':
                 self.__execute_s3m2gbt_command(output_tag, output_file_path)
             else:
-                file_size = self.__execute_vgm2gba_command(output_tag, output_file_path)
+                file_size = self.__execute_advgm_converter_command(output_tag, output_file_path)
                 music_type = 'VGM'
 
             header_file_path = self.__write_header(build_folder_path, output_tag, music_type)
@@ -99,14 +99,14 @@ class DmgAudioFileInfo:
             sys.stdout = sys.__stdout__
             raise
 
-    def __execute_vgm2gba_command(self, output_tag, output_file_path):
+    def __execute_advgm_converter_command(self, output_tag, output_file_path):
         import io
-        from vgm2gba import vgm2gba
+        from advgm import advgm_converter
 
         sys.stdout = io.StringIO()
 
         try:
-            vgm2gba.convert_file_c_array(self.__file_path, output_file_path, output_tag)
+            advgm_converter.convert_file_c_array(self.__file_path, output_file_path, output_tag)
             sys.stdout = sys.__stdout__
 
             total_size = -1

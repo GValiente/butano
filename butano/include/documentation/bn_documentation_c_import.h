@@ -656,7 +656,7 @@
  * with Direct Sound music or with sound effects, well, you know.
  *
  * DMG channels are handled by the also impressive <a href="https://github.com/AntonioND/gbt-player">GBT Player</a>
- * and <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a>,
+ * and <a href="https://github.com/copyrat90/advgm">advgm</a>,
  * so if you have issues with DMG music, you know where to go.
  *
  * A really nice application for editing audio files
@@ -692,6 +692,11 @@
  * The required format for DMG music is module files with `*.mod`, `*.s3m` and `*.vgm` extensions.
  *
  * The recommended way to generate `*.vgm` compatible files is to use
+ * <a href="https://github.com/tildearrow/furnace">Furnace</a>:
+ *
+ * @image html import_furnace.png
+ *
+ * You should also be able to generate `*.vgm` compatible files with
  * <a href="https://github.com/SuperDisk/hUGETracker">hUGETracker 1.01</a> with timer based tempo disabled:
  *
  * @image html import_hugetracker.png

@@ -53,7 +53,7 @@ Butano would not have been possible without these libraries:
 [Universal GBA Library](https://github.com/AntonioND/libugba) and [agbabi](https://github.com/felixjones/agbabi).
 * Music and sound effects provided by [Maxmod](https://blocksds.skylyrac.net/maxmod/index.html), 
 [Apex Audio System](https://github.com/stuij/apex-audio-system), [GBT Player](https://github.com/AntonioND/gbt-player)
-and [VGM player](https://github.com/copyrat90/gbadev-ja-test).
+and [advgm](https://github.com/copyrat90/advgm).
 * Fast number to string conversion provided by [posprintf](http://danposluns.com/danposluns/gbadev/posprintf/index.html).
 * Fast math routines provided by [gba-modern](https://github.com/JoaoBaptMG/gba-modern) and
 [Universal GBA Library](https://github.com/AntonioND/libugba).

@@ -7,7 +7,7 @@
 
 #include "bn_assert.h"
 #include "bn_dmg_music_type.h"
-#include "../3rd_party/vgm-player/include/vgm.h"
+#include "../3rd_party/advgm/include/advgm.h"
 
 extern "C"
 {
@@ -35,7 +35,7 @@ namespace
         bn::dmg_music_type music_type = dmg_music_type::GBT_PLAYER;
         bool music_paused = false;
         #if BN_CFG_ASSERT_ENABLED
-            bool vgm_commit_failed = false;
+            bool advgm_vblank_callback_failed = false;
         #endif
     };
 
@@ -78,7 +78,7 @@ void disable()
     }
     else
     {
-        return VgmActive();
+        return advgm_playing();
     }
 }
 
@@ -92,7 +92,7 @@ void stop_music()
     }
     else
     {
-        VgmStop();
+        advgm_stop();
     }
 
     data.music_paused = false;
@@ -115,9 +115,9 @@ void play_music(const void* song, dmg_music_type type, int speed, bool loop)
     }
     else
     {
-        BN_ASSERT(speed == 1, "Speed change not supported by the VGM player: ", speed);
+        BN_ASSERT(speed == 1, "Speed change not supported by advgm: ", speed);
 
-        VgmPlay(static_cast<const uint8_t*>(song), loop);
+        advgm_play(static_cast<const uint8_t*>(song), loop);
     }
 
     data.music_paused = false;
@@ -133,7 +133,7 @@ void pause_music()
     }
     else
     {
-        VgmPause();
+        advgm_pause();
     }
 
     data.music_paused = true;
@@ -149,7 +149,7 @@ void resume_music()
     }
     else
     {
-        VgmResume();
+        advgm_resume();
     }
 
     data.music_paused = false;
@@ -163,7 +163,7 @@ void music_position(int& pattern, int& row)
     }
     else
     {
-        pattern = int(VgmGetOffsetPlay());
+        pattern = int(advgm_get_music_offset());
         row = 0;
     }
 }
@@ -178,7 +178,7 @@ void set_music_position(int pattern, int row)
     {
         BN_BASIC_ASSERT(! row, "Invalid row: ", row);
 
-        VgmSetOffsetPlay(unsigned(pattern));
+        advgm_set_music_offset(unsigned(pattern));
     }
 }
 
@@ -190,7 +190,7 @@ void set_music_volume(fixed left_volume, fixed right_volume)
     }
     else
     {
-        BN_ERROR("Volume change not supported by the VGM player");
+        BN_ERROR("Volume change not supported by advgm");
     }
 }
 
@@ -205,13 +205,13 @@ void commit()
     else
     {
         #if BN_CFG_ASSERT_ENABLED
-            if(! data.vgm_commit_failed && ! VgmIntrVblank())
+            if(! data.advgm_vblank_callback_failed && ! advgm_vblank_callback())
             {
-                data.vgm_commit_failed = true;
-                data.vgm_offset_play = VgmGetOffsetPlay();
+                data.advgm_vblank_callback_failed = true;
+                data.vgm_offset_play = advgm_get_music_offset();
             }
         #else
-            VgmIntrVblank();
+            advgm_vblank_callback();
         #endif
     }
 }
@@ -219,7 +219,8 @@ void commit()
 void check_commit_result()
 {
     #if BN_CFG_ASSERT_ENABLED
-        BN_BASIC_ASSERT(! data_ref().vgm_commit_failed, "VGM commit failed: ", data_ref().vgm_offset_play);
+        BN_BASIC_ASSERT(! data_ref().advgm_vblank_callback_failed,
+                        "advgm V-Blank callback failed: ", data_ref().vgm_offset_play);
     #endif
 }
 

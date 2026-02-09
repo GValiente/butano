@@ -43,5 +43,5 @@ endif
 
 ifeq ($(strip $(DMGAUDIOBACKEND)),default)
 	BNSOURCES	+=	$(LIBBUTANOABS)/hw/3rd_party/gbt-player/src \
-					$(LIBBUTANOABS)/hw/3rd_party/vgm-player/src
+					$(LIBBUTANOABS)/hw/3rd_party/advgm/src
 endif

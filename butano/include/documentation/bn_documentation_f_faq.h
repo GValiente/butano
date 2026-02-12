@@ -511,6 +511,13 @@
  * Metasprites (groups of regular sprites that together represent one single bigger sprite) are not supported by Butano.
  *
  *
+ * @subsection faq_sprites_draw_tiles How can I draw on top of sprite tiles?
+ *
+ * Butano doesn't provide an easy way to do it, so you have to allocate tiles in VRAM with
+ * bn::sprite_tiles_ptr::allocate and draw on the the allocated tiles returned by bn::sprite_tiles_ptr::vram.
+ * Remember that you can't write to VRAM in byte-sized chunks.
+ *
+ *
  * @subsection faq_sprites_hidden Does hiding a sprite make it count towards the total number of allowed sprites?
  *
  * Hidden sprites are not committed to the GBA, but they still take resources like color palettes and VRAM.
@@ -616,6 +623,14 @@
  *   the visible map cells to VRAM if the map is big, so reload performance isn't affected by the map size.
  * * bn::regular_bg_tiles_ptr::reload_tiles_ref() and bn::affine_bg_tiles_ptr::reload_tiles_ref() copy *all* tiles
  *   to VRAM even if the map is big, so you should avoid calling them if the map has enough unique tiles.
+ *
+ *
+ * @subsection faq_backgrounds_draw_tiles How can I draw on top of background tiles?
+ *
+ * Butano doesn't provide an easy way to do it, so you have to allocate tiles in VRAM with
+ * bn::regular_bg_tiles_ptr::allocate or bn::affine_bg_tiles_ptr::allocate and draw on the the allocated tiles
+ * returned by bn::regular_bg_tiles_ptr::vram or bn::affine_bg_tiles_ptr::vram. Remember that you can't
+ * write to VRAM in byte-sized chunks.
  *
  *
  * @subsection faq_backgrounds_tiles_offset Why my dynamic map sometimes doesn't work as expected?

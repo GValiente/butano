@@ -14,8 +14,9 @@
  *
  * @section changelog_21_4_0 21.4.0 (next release)
  *
- * <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a> replaced with
- * <a href="https://github.com/copyrat90/advgm">advgm</a>.
+ * * <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a> replaced with
+ *   <a href="https://github.com/copyrat90/advgm">advgm</a>.
+ * * @ref faq_sprites_draw_tiles and @ref faq_backgrounds_draw_tiles questions added to the @ref faq page.
  *
  *
  * @section changelog_21_3_0 21.3.0

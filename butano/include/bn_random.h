@@ -68,7 +68,7 @@ public:
      * @brief Returns a random signed integer in the range [0..limit), updating its internal seed in the process.
      *
      * It's possible that the output will be biased towards smaller numbers due to
-     * <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.
+     * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.
      *
      * random::get_unbiased_int can be used to avoid modulo bias.
      *
@@ -86,7 +86,7 @@ public:
      * @brief Returns a random bn::fixed in the range [0..limit), updating its internal seed in the process.
      *
      * It's possible that the output will be biased towards smaller numbers due to
-     * <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.
+     * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.
      *
      * random::get_unbiased_fixed can be used to avoid modulo bias.
      *
@@ -104,7 +104,7 @@ public:
      * @brief Returns a random signed integer in the range [minimum..limit), updating its internal seed in the process.
      *
      * It's possible that the output will be biased towards smaller numbers due to
-     * <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.
+     * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.
      *
      * random::get_unbiased_int can be used to avoid modulo bias.
      *
@@ -124,7 +124,7 @@ public:
      * @brief Returns a random bn::fixed in the range [minimum..limit), updating its internal seed in the process.
      *
      * It's possible that the output will be biased towards smaller numbers due to
-     * <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.
+     * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>.
      *
      * random::get_unbiased_fixed can be used to avoid modulo bias.
      *
@@ -144,7 +144,7 @@ public:
      * @brief Returns a random signed integer in the range [0..limit), updating its internal seed in the process.
      *
      * This implementation avoids
-     * <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>,
+     * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>,
      * so it's less likely that the output will be biased towards smaller numbers.
      *
      * @param limit Returned value is lower than this value.
@@ -161,7 +161,7 @@ public:
      * @brief Returns a random bn::fixed in the range [0..limit), updating its internal seed in the process.
      *
      * This implementation avoids
-     * <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>,
+     * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>,
      * so it's less likely that the output will be biased towards smaller numbers.
      *
      * @param limit Returned value is lower than this value.
@@ -178,7 +178,7 @@ public:
      * @brief Returns a random signed integer in the range [minimum..limit), updating its internal seed in the process.
      *
      * This implementation avoids
-     * <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>,
+     * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>,
      * so it's less likely that the output will be biased towards smaller numbers.
      *
      * @param minimum Returned value is greater or equal than this value.
@@ -197,7 +197,7 @@ public:
      * @brief Returns a random bn::fixed in the range [minimum..limit), updating its internal seed in the process.
      *
      * This implementation avoids
-     * <a href="https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>,
+     * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">modulo bias</a>,
      * so it's less likely that the output will be biased towards smaller numbers.
      *
      * @param minimum Returned value is greater or equal than this value.

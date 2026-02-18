@@ -17,6 +17,8 @@
  * * <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a> replaced with
  *   <a href="https://github.com/copyrat90/advgm">advgm</a>.
  * * @ref faq_sprites_draw_tiles and @ref faq_backgrounds_draw_tiles questions added to the @ref faq page.
+ * * <a href="https://web.archive.org/web/20201205020502/https://research.kudelskisecurity.com/2020/07/28/the-definitive-guide-to-modulo-bias-and-how-to-avoid-it/">Modulo bias</a>
+ *   links fixed.
  *
  *
  * @section changelog_21_3_0 21.3.0

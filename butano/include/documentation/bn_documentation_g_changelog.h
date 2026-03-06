@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_4_0 21.4.0 (next release)
+ * @section changelog_21_4_0 21.4.0
  *
  * * <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a> replaced with
  *   <a href="https://github.com/copyrat90/advgm">advgm</a>.

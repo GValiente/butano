@@ -174,6 +174,12 @@ void mmVBlank(void);
 ///     Pointer to your VBlank handler.
 void mmSetVBlankHandler(mm_voidfunc function);
 
+/// Returns the VBlank handler previously installed by the user.
+///
+/// @return
+///     Function pointer to the VBlank handler currently installed.
+mm_voidfunc mmGetVBlankHandler(void);
+
 /// Install handler to receive song events.
 ///
 /// Use this function to receive song events. Song events occur in two
@@ -190,6 +196,12 @@ void mmSetVBlankHandler(mm_voidfunc function);
 /// @param handler
 ///     Function pointer to event handler.
 void mmSetEventHandler(mm_callback handler);
+
+/// Returns the event handler previously installed by the user.
+///
+/// @return
+///     Function pointer to the event handler currently installed.
+mm_callback mmGetEventHandler(void);
 
 /// This is the main routine-function that processes music and updates the sound
 /// output.

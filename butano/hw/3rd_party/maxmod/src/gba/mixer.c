@@ -124,6 +124,12 @@ void mmSetVBlankHandler(mm_voidfunc function)
     mm_vblank_function = function;
 }
 
+// Get function to be called during the vblank IRQ
+mm_voidfunc mmGetVBlankHandler(void)
+{
+    return mm_vblank_function;
+}
+
 // Initialize mixer
 void mmMixerInit(mm_gba_system *setup)
 {

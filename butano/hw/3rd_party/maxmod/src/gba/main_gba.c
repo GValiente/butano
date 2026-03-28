@@ -17,9 +17,10 @@
 #include "../core/player_types.h"
 #include "mixer.h"
 
+#define DEFAULT_MIXLEN MM_MIXLEN_16KHZ
+
 // Buffer that holds the mixed data
-#define mixlen MM_MIXLEN_16KHZ // 16 KHz
-static uint32_t mixbuffer[mixlen / sizeof(uint32_t)];
+static uint32_t default_mixbuffer[DEFAULT_MIXLEN / sizeof(uint32_t)];
 
 // Address of soundbank in memory/rom
 msl_head *mp_solution;
@@ -78,7 +79,7 @@ bool mmInitDefault(mm_addr soundbank, mm_word number_of_channels)
 
     // Allocate buffer
     size_t size_of_channel = sizeof(mm_module_channel) + sizeof(mm_active_channel) + sizeof(mm_mixer_channel);
-    size_t size_of_buffer = mixlen + (number_of_channels * size_of_channel);
+    size_t size_of_buffer = DEFAULT_MIXLEN + (number_of_channels * size_of_channel);
 
     mm_init_default_buffer = calloc(1, size_of_buffer);
     if (mm_init_default_buffer == NULL)
@@ -88,7 +89,7 @@ bool mmInitDefault(mm_addr soundbank, mm_word number_of_channels)
     mm_addr wave_memory, module_channels, active_channels, mixing_channels;
 
     wave_memory = mm_init_default_buffer;
-    module_channels = (mm_addr)(((uintptr_t)wave_memory) + mixlen);
+    module_channels = (mm_addr)(((uintptr_t)wave_memory) + DEFAULT_MIXLEN);
     active_channels = (mm_addr)(((uintptr_t)module_channels) + (number_of_channels * sizeof(mm_module_channel)));
     mixing_channels = (mm_addr)(((uintptr_t)active_channels) + (number_of_channels * sizeof(mm_active_channel)));
 
@@ -100,7 +101,7 @@ bool mmInitDefault(mm_addr soundbank, mm_word number_of_channels)
         .module_channels = module_channels,
         .active_channels = active_channels,
         .mixing_channels = mixing_channels,
-        .mixing_memory = (mm_addr)&mixbuffer[0],
+        .mixing_memory = (mm_addr)&default_mixbuffer[0],
         .wave_memory = wave_memory,
         .soundbank = soundbank
     };

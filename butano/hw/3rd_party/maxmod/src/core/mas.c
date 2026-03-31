@@ -96,6 +96,12 @@ void mmSetEventHandler(mm_callback handler)
     mmCallback = handler;
 }
 
+// Get function for handling playback events
+mm_callback mmGetEventHandler(void)
+{
+    return mmCallback;
+}
+
 // Set BPM. bpm = 32..255
 // Input r5 = layer, r0 = bpm
 static void mpp_setbpm(mpl_layer_information *layer_info, mm_word bpm)
@@ -1807,6 +1813,8 @@ IWRAM_CODE void mppProcessTick(void)
         act_ch++;
     }
 
+    mm_word songtick_callback_param = mpp_clayer | layer->tick << 8 | layer->row << 16 | layer->position << 24;
+
     // This is the inlined code of mppProcessTick_incframe()
 
     mm_word new_tick = layer->tick + 1;
@@ -1816,7 +1824,7 @@ IWRAM_CODE void mppProcessTick(void)
     {
         // Continue current row
         layer->tick = new_tick;
-        return;
+        goto mppt_POST_TICK;
     }
 
     if (layer->fpattdelay != 0)
@@ -1831,7 +1839,7 @@ IWRAM_CODE void mppProcessTick(void)
         {
             // Continue current row
             layer->tick = 0;
-            return;
+            goto mppt_POST_TICK;
         }
     }
 
@@ -1843,11 +1851,11 @@ IWRAM_CODE void mppProcessTick(void)
         layer->pattjump = 255;
 
         if (layer->pattjump_row == 0)
-            return;
+            goto mppt_POST_TICK;
 
         mpph_FastForward(layer, layer->pattjump_row);
         layer->pattjump_row = 0;
-        return;
+        goto mppt_POST_TICK;
     }
 
     if (layer->ploop_jump != 0)
@@ -1855,7 +1863,7 @@ IWRAM_CODE void mppProcessTick(void)
         layer->ploop_jump = 0;
         layer->row = layer->ploop_row;
         layer->pattread = layer->ploop_adr;
-        return;
+        goto mppt_POST_TICK;
     }
 
     int new_row = layer->row + 1;
@@ -1863,11 +1871,16 @@ IWRAM_CODE void mppProcessTick(void)
     {
         // If they are different, continue playing this pattern
         layer->row = new_row;
-        return;
+        goto mppt_POST_TICK;
     }
 
     // Advance position
     mpp_setposition(layer, layer->position + 1);
+
+mppt_POST_TICK:
+
+    if (mmCallback != NULL)
+        mmCallback(MMCB_SONGTICK, songtick_callback_param);
 }
 
 // Note: This is also used for panning slide

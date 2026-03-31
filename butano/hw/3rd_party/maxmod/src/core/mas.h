@@ -37,6 +37,7 @@ extern mm_word mm_num_ach;
 extern mm_module_channel mm_schannels[MP_SCHANNELS];
 
 void mmSetEventHandler(mm_callback);
+mm_callback mmGetEventHandler(void);
 
 void mmSetResolution(mm_word);
 void mmPulse(void);

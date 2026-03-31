@@ -54,7 +54,7 @@ typedef void            *mm_reg;    ///< Hardware register (pointer)
 /// Audio modes for the DS system. Pass to mmSelectMode().
 typedef enum
 {
-    MM_MODE_A, ///< Selects the full-hardware audio mode.
+    MM_MODE_A, ///< Selects the full-hardware audio mode (default mode).
     MM_MODE_B, ///< Selects the interpolated audio mode.
     MM_MODE_C  ///< Selects the extended mixing audio mode.
 } mm_mode_enum;
@@ -495,6 +495,13 @@ enum
 /// available channels. On GBA, the user decides how many channels are available
 /// when calling `mmInit()` or `mmInitDefault()`.
 #define MMCB_SONGERROR      0x2C
+
+/// A tick has been processed by a song.
+///
+/// Param contains the layer in the bottom 8 bits, tick in the next 8 bits,
+/// row in the next 8 bits, and the sequence position in the top 8 bits
+/// (layer | tick << 8 | row << 16 | position << 24).
+#define MMCB_SONGTICK       0x2D
 
 // ***************************************************************************
 /// @}

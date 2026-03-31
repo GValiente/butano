@@ -18,8 +18,13 @@ class VgmFile:
         # validate header
         if bytes(data[0:3]) != b"Vgm":
             raise VgmFormatError("vgm ident")
-        if bytes(data[8:10]) != b"\x61\x01" or bytes(data[0x10:0x12]) != b"\x00\x00":
-            raise VgmFormatError("not version 1.61")
+        if bytes(data[0x10:0x12]) != b"\x00\x00" or (
+            bytes(data[8:10]) != b"\x61\x01"
+            and bytes(data[8:10]) != b"\x70\x01"
+            and bytes(data[8:10]) != b"\x71\x01"
+            and bytes(data[8:10]) != b"\x72\x01"
+        ):
+            raise VgmFormatError("unsupported vgm version")
         if bytes(data[0x80:0x84]) != b"\x00\x00\x40\x00":
             raise VgmFormatError("not use Game Boy")
 

@@ -33,11 +33,11 @@ void advgm_set_master_volume(advgm_master_volume master_volume);
 advgm_master_volume advgm_get_master_volume(void);
 
 /// @brief Updates the advgm playback.
-/// This should be called once for each vblank interrupt.
+/// This should be called once for each frame.
 ///
 /// @return Whether the music command was properly processed or not.
 /// If this ever returns `false`, it's either you set the invalid music offset, or a bug in the advgm itself.
-bool advgm_vblank_callback(void);
+bool advgm_update(void);
 
 /// @brief Starts playing the provided music.
 /// @param music Pointer to a music.

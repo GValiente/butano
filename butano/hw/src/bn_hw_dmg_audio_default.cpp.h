@@ -35,7 +35,7 @@ namespace
         bn::dmg_music_type music_type = dmg_music_type::GBT_PLAYER;
         bool music_paused = false;
         #if BN_CFG_ASSERT_ENABLED
-            bool advgm_vblank_callback_failed = false;
+            bool advgm_update_failed = false;
         #endif
     };
 
@@ -205,13 +205,13 @@ void commit()
     else
     {
         #if BN_CFG_ASSERT_ENABLED
-            if(! data.advgm_vblank_callback_failed && ! advgm_vblank_callback())
+            if(! data.advgm_update_failed && ! advgm_update())
             {
-                data.advgm_vblank_callback_failed = true;
+                data.advgm_update_failed = true;
                 data.vgm_offset_play = advgm_get_music_offset();
             }
         #else
-            advgm_vblank_callback();
+            advgm_update();
         #endif
     }
 }
@@ -219,8 +219,8 @@ void commit()
 void check_commit_result()
 {
     #if BN_CFG_ASSERT_ENABLED
-        BN_BASIC_ASSERT(! data_ref().advgm_vblank_callback_failed,
-                        "advgm V-Blank callback failed: ", data_ref().vgm_offset_play);
+        BN_BASIC_ASSERT(! data_ref().advgm_update_failed,
+                        "advgm update failed: ", data_ref().vgm_offset_play);
     #endif
 }
 

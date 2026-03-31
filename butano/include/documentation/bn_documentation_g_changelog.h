@@ -12,6 +12,12 @@
  * @tableofcontents
  *
  *
+ * @section changelog_21_5_0 21.5.0 (next release)
+ *
+ * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> updated to 1.19.1.
+ * * <a href="https://github.com/copyrat90/advgm">advgm</a> updated to 0.2.0.
+ *
+ *
  * @section changelog_21_4_0 21.4.0
  *
  * * <a href="https://github.com/copyrat90/gbadev-ja-test">VGM player</a> replaced with

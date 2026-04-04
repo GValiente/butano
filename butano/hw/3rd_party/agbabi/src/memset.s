@@ -19,49 +19,6 @@
     .arm
     .align 2
 
-    .section .iwram.__aeabi_memclr, "ax", %progbits
-    .global __aeabi_memclr
-    .type __aeabi_memclr, %function
-__aeabi_memclr:
-    mov     r2, #0
-    b       __aeabi_memset
-
-    .global __aeabi_memclr8
-    .type __aeabi_memclr8, %function
-__aeabi_memclr8:
-    .global __aeabi_memclr4
-    .type __aeabi_memclr4, %function
-__aeabi_memclr4:
-    mov     r2, #0
-    b       __agbabi_wordset4
-
-    .section .iwram.__aeabi_memset, "ax", %progbits
-    .global __aeabi_memset
-    .type __aeabi_memset, %function
-__aeabi_memset:
-    @ < 8 bytes probably won't be aligned: go byte-by-byte
-    cmp     r1, #8
-    blt     __agbabi_memset1
-
-    @ Copy head to align to next word
-    rsb     r3, r0, #4
-    joaobapt_test r3
-    strbmi  r2, [r0], #1
-    submi   r1, r1, #1
-    strbcs  r2, [r0], #1
-    strbcs  r2, [r0], #1
-    subcs   r1, r1, #2
-
-    .global __aeabi_memset8
-    .type __aeabi_memset8, %function
-__aeabi_memset8:
-    .global __aeabi_memset4
-    .type __aeabi_memset4, %function
-__aeabi_memset4:
-    lsl     r2, r2, #24
-    orr     r2, r2, r2, lsr #8
-    orr     r2, r2, r2, lsr #16
-
     .global __agbabi_wordset4
     .type __agbabi_wordset4, %function
 __agbabi_wordset4:
@@ -116,16 +73,4 @@ __agbabi_memset1:
     subs    r1, r1, #1
     strbge  r2, [r0], #1
     bgt     __agbabi_memset1
-    bx      lr
-
-    .section .iwram.memset, "ax", %progbits
-    .global memset
-    .type memset, %function
-memset:
-    mov     r3, r1
-    mov     r1, r2
-    mov     r2, r3
-    push    {r0, lr}
-    bl      __aeabi_memset
-    pop     {r0, lr}
     bx      lr

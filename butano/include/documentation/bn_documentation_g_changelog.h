@@ -14,6 +14,8 @@
  *
  * @section changelog_21_5_0 21.5.0 (next release)
  *
+ * * Multiplications, divisions and memory operations like `memcpy` and `memset` optimized thanks to
+ *   <a href="https://github.com/felixjones/stdgba">stdgba</a>.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> updated to 1.19.1.
  * * <a href="https://github.com/copyrat90/advgm">advgm</a> updated to 0.2.0.
  *

@@ -33,6 +33,7 @@ BNSOURCES	:=	$(LIBBUTANOABS)/src $(LIBBUTANOABS)/hw/src \
 				$(LIBBUTANOABS)/hw/3rd_party/libugba/src \
 				$(LIBBUTANOABS)/hw/3rd_party/posprintf/src \
 				$(LIBBUTANOABS)/hw/3rd_party/agbabi/src \
+				$(LIBBUTANOABS)/hw/3rd_party/stdgba/src \
 				$(LIBBUTANOABS)/hw/3rd_party/gba-modern/src \
 				$(LIBBUTANOABS)/hw/3rd_party/cult-of-gba-bios/src
 

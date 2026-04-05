@@ -47,7 +47,7 @@ public:
 
         ptr = bn::malloc(12);
         BN_ASSERT(ptr);
-        BN_ASSERT(bn::memory::used_alloc_ewram() == 20);
+        BN_ASSERT(bn::memory::used_alloc_ewram() == 24);
 
         bn::free(ptr);
         BN_ASSERT(bn::memory::used_alloc_ewram() == 0);

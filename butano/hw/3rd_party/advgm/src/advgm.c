@@ -4,15 +4,16 @@
 
 #include "../include/advgm.h"
 
-#include "advgm_hardware.h"
+#include "../include/advgm_hardware.h"
 
 #include <stddef.h>
 
 enum advgm_music_cmd_t
 {
-    ADVGM_MUSIC_CMD_WAIT_FOR_VBLANK = 0x61,
-    ADVGM_MUSIC_CMD_END_MARK = 0x66,
-    ADVGM_MUSIC_CMD_WRITE_REG = 0xB3,
+    ADVGM_MUSIC_CMD_END_MARK = 0x00,
+    ADVGM_MUSIC_CMD_WAIT_FOR_VBLANK = 0x01,
+
+    // Write to registers at command offset for [0x60..0x9F]
 };
 
 typedef struct advgm_player_t
@@ -50,15 +51,39 @@ bool advgm_update(void)
 
     for (;;)
     {
-        uint8_t command = *player.next_fetch_pos++;
+        const uint8_t command = *player.next_fetch_pos++;
 
         switch (command)
         {
         case ADVGM_MUSIC_CMD_WAIT_FOR_VBLANK:
             return true;
 
-        case ADVGM_MUSIC_CMD_WRITE_REG: {
-            const uint8_t offset = *player.next_fetch_pos++;
+        case ADVGM_MUSIC_CMD_END_MARK: {
+            if (!player.loop)
+            {
+                advgm_stop();
+                return true;
+            }
+
+            uint32_t loop_pos = *player.next_fetch_pos++;
+            loop_pos |= *player.next_fetch_pos++ << 8;
+            loop_pos |= *player.next_fetch_pos++ << 16;
+            loop_pos |= *player.next_fetch_pos++ << 24;
+
+            player.next_fetch_pos = player.music + loop_pos;
+            continue;
+        }
+
+        // Write to register at command offset for [0x60..0x9F]
+        default: {
+            const uint8_t offset = command;
+
+            if (offset < ADVGM_OFFSET_SND1SWEEP || offset > ADVGM_OFFSET_WAVE_RAM3_H + 1)
+            {
+                advgm_stop();
+                return false;
+            }
+
             uint8_t data = *player.next_fetch_pos++;
 
             // Ignore Ch3 bank switching done by music commands
@@ -84,25 +109,6 @@ bool advgm_update(void)
 
             continue;
         }
-
-        case ADVGM_MUSIC_CMD_END_MARK: {
-            if (!player.loop)
-            {
-                advgm_stop();
-                return true;
-            }
-
-            uint32_t loop_pos = *player.next_fetch_pos++;
-            loop_pos |= *player.next_fetch_pos++ << 8;
-            loop_pos |= *player.next_fetch_pos++ << 16;
-            loop_pos |= *player.next_fetch_pos++ << 24;
-
-            player.next_fetch_pos = player.music + loop_pos;
-            continue;
-        }
-
-        default:
-            return false;
         }
     }
 }

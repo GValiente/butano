@@ -21,8 +21,8 @@
 #define ADVGM_EWRAM_DATA __attribute__((section(".ewram_data")))
 #define ADVGM_EWRAM_CODE __attribute__((section(".ewram_code"), long_call))
 
-// Registers
-// ---------------
+// I/O Registers Definitions
+// =========================
 
 #define ADVGM_MEM_IO_ADDR (0x04000000)
 #define ADVGM_MEM_IO ((void*)ADVGM_MEM_IO_ADDR)
@@ -35,6 +35,9 @@
 #define ADVGM_PTR_REG_16(r) ((volatile uint16_t*)(ADVGM_MEM_IO_ADDR + (r)))
 #define ADVGM_PTR_REG_32(r) ((volatile uint32_t*)(ADVGM_MEM_IO_ADDR + (r)))
 
+//------------------------------------------
+
+// Sound Registers
 #define ADVGM_OFFSET_SND1SWEEP (0x060) // R/W
 #define ADVGM_OFFSET_SND1CNT (0x062)   // R/W
 #define ADVGM_OFFSET_SND1FREQ (0x064)  // R/W
@@ -63,6 +66,23 @@
 #define ADVGM_OFFSET_WAVE_RAM3 (0x09C)   // R/W
 #define ADVGM_OFFSET_WAVE_RAM3_L (0x09C) // R/W
 #define ADVGM_OFFSET_WAVE_RAM3_H (0x09E) // R/W
+
+// Timer Registers
+#define ADVGM_OFFSET_TM0D (0x100)   // R/W
+#define ADVGM_OFFSET_TM0CNT (0x102) // R/W
+#define ADVGM_OFFSET_TM1D (0x104)   // R/W
+#define ADVGM_OFFSET_TM1CNT (0x106) // R/W
+#define ADVGM_OFFSET_TM2D (0x108)   // R/W
+#define ADVGM_OFFSET_TM2CNT (0x10A) // R/W
+#define ADVGM_OFFSET_TM3D (0x10C)   // R/W
+#define ADVGM_OFFSET_TM3CNT (0x10E) // R/W
+
+// Interrupt Control
+#define ADVGM_OFFSET_IE (0x200)  // R/W
+#define ADVGM_OFFSET_IF (0x202)  // R/W
+#define ADVGM_OFFSET_IME (0x208) // R/W
+
+//------------------------------------------
 
 #define ADVGM_REG_SND1SWEEP ADVGM_REG_16(ADVGM_OFFSET_SND1SWEEP) // Sound 1 Sweep control
 #define ADVGM_REG_SND1CNT ADVGM_REG_16(ADVGM_OFFSET_SND1CNT)     // Sound 1 Length, wave duty and envelope control
@@ -93,7 +113,23 @@
 #define ADVGM_REG_WAVE_RAM3_L ADVGM_REG_16(ADVGM_OFFSET_WAVE_RAM3_L) // Sound 3 samples 24-27
 #define ADVGM_REG_WAVE_RAM3_H ADVGM_REG_16(ADVGM_OFFSET_WAVE_RAM3_H) // Sound 3 samples 28-31
 
-// Register values
+#define ADVGM_REG_TM0D ADVGM_REG_16(ADVGM_OFFSET_TM0D)     // Timer 0 data
+#define ADVGM_REG_TM0CNT ADVGM_REG_16(ADVGM_OFFSET_TM0CNT) // Timer 0 control
+#define ADVGM_REG_TM1D ADVGM_REG_16(ADVGM_OFFSET_TM1D)     // Timer 1 data
+#define ADVGM_REG_TM1CNT ADVGM_REG_16(ADVGM_OFFSET_TM1CNT) // Timer 1 control
+#define ADVGM_REG_TM2D ADVGM_REG_16(ADVGM_OFFSET_TM2D)     // Timer 2 data
+#define ADVGM_REG_TM2CNT ADVGM_REG_16(ADVGM_OFFSET_TM2CNT) // Timer 2 control
+#define ADVGM_REG_TM3D ADVGM_REG_16(ADVGM_OFFSET_TM3D)     // Timer 3 data
+#define ADVGM_REG_TM3CNT ADVGM_REG_16(ADVGM_OFFSET_TM3CNT) // Timer 3 control
+
+#define ADVGM_REG_IE ADVGM_REG_16(ADVGM_OFFSET_IE)   // Interrupt Enable
+#define ADVGM_REG_IF ADVGM_REG_16(ADVGM_OFFSET_IF)   // Interrupt Fired
+#define ADVGM_REG_IME ADVGM_REG_16(ADVGM_OFFSET_IME) // Interrupt Master Enable
+
+// Per-register fields definitions
+// ===============================
+
+// Sound Registers
 // ---------------
 
 // SND1SWEEP (NR10) (SOUND1CNT_L)
@@ -292,5 +328,49 @@
 #define ADVGM_SNDBIAS_SAMPLE_RATE_65KHZ (1 << 14)
 #define ADVGM_SNDBIAS_SAMPLE_RATE_131KHZ (2 << 14)
 #define ADVGM_SNDBIAS_SAMPLE_RATE_262KHZ (3 << 14) // Best for PSG channels 1-4
+
+// Timer Registers
+// ---------------
+
+// TM0CNT, TM1CNT, TM2CNT, TM3CNT
+
+#define ADVGM_TMxCNT_PRESCALER_F_DIV_1 (0 << 0)
+#define ADVGM_TMxCNT_PRESCALER_F_DIV_64 (1 << 0)
+#define ADVGM_TMxCNT_PRESCALER_F_DIV_256 (2 << 0)
+#define ADVGM_TMxCNT_PRESCALER_F_DIV_1024 (3 << 0)
+
+#define ADVGM_TMxCNT_STANDALONE (0 << 2)
+#define ADVGM_TMxCNT_CASCADE (1 << 2) // Not used in TM0CNT
+
+#define ADVGM_TMxCNT_IRQ_DISABLE (0 << 6)
+#define ADVGM_TMxCNT_IRQ_ENABLE (1 << 6)
+
+#define ADVGM_TMxCNT_STOP (0 << 7)
+#define ADVGM_TMxCNT_START (1 << 7)
+
+// Interrupt Control
+// -----------------
+
+// IE, IF
+
+#define ADVGM_IRQF_VBLANK (1 << 0)
+#define ADVGM_IRQF_HBLANK (1 << 1)
+#define ADVGM_IRQF_VCOUNT (1 << 2)
+#define ADVGM_IRQF_TIMER0 (1 << 3)
+#define ADVGM_IRQF_TIMER1 (1 << 4)
+#define ADVGM_IRQF_TIMER2 (1 << 5)
+#define ADVGM_IRQF_TIMER3 (1 << 6)
+#define ADVGM_IRQF_SERIAL (1 << 7)
+#define ADVGM_IRQF_DMA0 (1 << 8)
+#define ADVGM_IRQF_DMA1 (1 << 9)
+#define ADVGM_IRQF_DMA2 (1 << 10)
+#define ADVGM_IRQF_DMA3 (1 << 11)
+#define ADVGM_IRQF_KEYPAD (1 << 12)
+#define ADVGM_IRQF_GAMEPAK (1 << 13)
+
+// IME
+
+#define ADVGM_IME_DISABLE (0 << 0)
+#define ADVGM_IME_ENABLE (1 << 0)
 
 #endif // ADVGM_HARDWARE_H

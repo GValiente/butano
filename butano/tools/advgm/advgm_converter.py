@@ -31,7 +31,7 @@ class VgmFile:
         # convert reg
         p = 0x34 + int.from_bytes(data[0x34:0x38], byteorder="little")
         while data[p] != 0x66:  # end of mark
-            # wait: 0x61 nn nn
+            # wait: 0x62
             if data[p] == 0x61:
                 p += 3
                 continue
@@ -155,12 +155,12 @@ class VgmFile:
                 loop_bin = fputc_cnt
                 is_loop = True
 
-            # wait: 0x61 nn nn
+            # wait: 0x62
             if 0x61 <= data[p] <= 0x63 or 0x70 <= data[p] <= 0x7F:
                 # GBA side use vblank
-                converted += b"\x61"
+                converted += b"\x01"
                 fputc_cnt += 1
-                # ignore param
+                # ignore param: 0x61 nn nn
                 if data[p] == 0x61:
                     p += 3
                 else:
@@ -169,9 +169,9 @@ class VgmFile:
 
             # write reg: 0xb3 aa dd
             if data[p] == 0xB3:
-                converted += data[p : p + 3]
+                converted += data[p + 1 : p + 3]
                 p += 3
-                fputc_cnt += 3
+                fputc_cnt += 2
 
                 continue
 
@@ -180,17 +180,12 @@ class VgmFile:
         if not is_loop:
             print("Warning: loop offset not found")
 
-        # write end of mark
-        converted += data[p].to_bytes(1, byteorder="little")
+        # write end mark
+        converted += b"\x00"
         p += 1
 
         # write loop offset
         converted += loop_bin.to_bytes(4, byteorder="little")
-
-        # zero padding
-        pad = len(converted) & 0xF
-        if pad != 0:
-            converted += b"\x00" * (0x10 - pad)
 
         return converted
 

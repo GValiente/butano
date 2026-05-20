@@ -160,6 +160,8 @@ void* best_fit_allocator::realloc(void* ptr, size_type new_bytes)
 
     BN_ASSERT(new_bytes >= 0, "Invalid new bytes: ", new_bytes);
 
+    new_bytes = _aligned_bytes(new_bytes);
+
     uint8_t* item_ptr = static_cast<uint8_t*>(ptr) - _sizeof_used_item;
     auto item = reinterpret_cast<item_type*>(item_ptr);
     size_type old_bytes = item->size - _sizeof_used_item;

@@ -16,6 +16,7 @@
  *
  * * <a href="https://github.com/copyrat90/advgm">advgm</a> updated to 0.3.0. Remember to rebuild your project
  *   after updating.
+ * * bn::best_fit_allocator::realloc alignment fixed.
  * * bn::best_fit_allocator::calloc overflow fixed.
  *
  *

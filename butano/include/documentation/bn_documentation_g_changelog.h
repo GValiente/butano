@@ -14,8 +14,9 @@
  *
  * @section changelog_21_6_0 21.6.0 (next release)
  *
- * <a href="https://github.com/copyrat90/advgm">advgm</a> updated to 0.3.0. Remember to rebuild your project
- * after updating.
+ * * <a href="https://github.com/copyrat90/advgm">advgm</a> updated to 0.3.0. Remember to rebuild your project
+ *   after updating.
+ * * bn::best_fit_allocator::calloc overflow fixed.
  *
  *
  * @section changelog_21_5_1 21.5.1

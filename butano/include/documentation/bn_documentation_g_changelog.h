@@ -18,6 +18,7 @@
  *   after updating.
  * * bn::best_fit_allocator::realloc alignment fixed.
  * * bn::best_fit_allocator::calloc overflow fixed.
+ * * bn::best_fit_allocator::realloc documentation improved.
  *
  *
  * @section changelog_21_5_1 21.5.1

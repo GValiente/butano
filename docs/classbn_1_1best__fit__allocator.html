@@ -268,7 +268,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>If ptr was not previously allocated by alloc, calloc or realloc, the behavior is undefined.</p><p>On success, the original pointer ptr is invalidated and any access to it is undefined behavior (even if reallocation was in-place).</p><p>To avoid a memory leak, the returned pointer must be deallocated with free.</p>
+<p>Keep in mind that the existing area pointed to by ptr is never expanded or contracted.</p><p>If ptr was not previously allocated by alloc, calloc or realloc, the behavior is undefined.</p><p>On success, the original pointer ptr is invalidated and any access to it is undefined behavior (even if reallocation was in-place).</p><p>To avoid a memory leak, the returned pointer must be deallocated with free.</p>
           </div></section>
           <section class="m-doc-details" id="a135bd5c9d1c7643b6a87fa2d5f00ef85"><div>
             <h3>

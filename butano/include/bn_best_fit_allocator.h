@@ -131,6 +131,8 @@ public:
      * @brief Reallocates the given storage.
      * @param ptr Pointer to the storage to reallocate.
      *
+     * Keep in mind that the existing area pointed to by ptr is never expanded or contracted.
+     *
      * If ptr was not previously allocated by alloc, calloc or realloc, the behavior is undefined.
      *
      * @param new_bytes New size in bytes of the reallocated storage.

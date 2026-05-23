@@ -1217,22 +1217,23 @@ fixed sound_speed(uint16_t handle)
 
 void set_sound_speed(uint16_t handle, fixed speed)
 {
-    sound_data_type* handle_sound_data = sound_data(handle);
-    BN_BASIC_ASSERT(handle_sound_data, "Sound is not active: ", handle);
-
-    fixed handle_speed = handle_sound_data->speed;
-
-    if(speed != handle_speed)
+    if(sound_data_type* handle_sound_data = sound_data(handle))
     {
-        handle_sound_data->speed = speed;
+        fixed handle_speed = handle_sound_data->speed;
 
-        static_data& data = data_ref();
-        int commands = data.commands_count;
-        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+        if(speed != handle_speed)
+        {
+            handle_sound_data->speed = speed;
 
-        data.command_codes[commands] = SOUND_SET_SPEED;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_speed_command(handle, handle_speed, speed);
-        data.commands_count = commands + 1;
+            static_data& data = data_ref();
+            int commands = data.commands_count;
+            BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+
+            data.command_codes[commands] = SOUND_SET_SPEED;
+            ::new(static_cast<void*>(data.command_datas + commands)) set_sound_speed_command(
+                    handle, handle_speed, speed);
+            data.commands_count = commands + 1;
+        }
     }
 }
 
@@ -1246,20 +1247,20 @@ fixed sound_panning(uint16_t handle)
 
 void set_sound_panning(uint16_t handle, fixed panning)
 {
-    sound_data_type* handle_sound_data = sound_data(handle);
-    BN_BASIC_ASSERT(handle_sound_data, "Sound is not active: ", handle);
-
-    if(panning != handle_sound_data->panning)
+    if(sound_data_type* handle_sound_data = sound_data(handle))
     {
-        handle_sound_data->panning = panning;
+        if(panning != handle_sound_data->panning)
+        {
+            handle_sound_data->panning = panning;
 
-        static_data& data = data_ref();
-        int commands = data.commands_count;
-        BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
+            static_data& data = data_ref();
+            int commands = data.commands_count;
+            BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
 
-        data.command_codes[commands] = SOUND_SET_PANNING;
-        ::new(static_cast<void*>(data.command_datas + commands)) set_sound_panning_command(handle, panning);
-        data.commands_count = commands + 1;
+            data.command_codes[commands] = SOUND_SET_PANNING;
+            ::new(static_cast<void*>(data.command_datas + commands)) set_sound_panning_command(handle, panning);
+            data.commands_count = commands + 1;
+        }
     }
 }
 

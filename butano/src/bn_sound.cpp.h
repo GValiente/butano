@@ -77,6 +77,101 @@ sound_handle play_with_priority(int priority, sound_item item, fixed volume, fix
     return sound_handle_generator().generate(handle_id);
 }
 
+optional<sound_handle> play_optional(sound_item item)
+{
+    optional<sound_handle> result;
+    int handle_id = audio_manager::play_sound_optional(0, item);
+
+    if(handle_id >= 0)
+    {
+        result = sound_handle_generator().generate(uint16_t(handle_id));
+    }
+
+    return result;
+}
+
+optional<sound_handle> play_optional(sound_item item, fixed volume)
+{
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+
+    optional<sound_handle> result;
+    int handle_id = audio_manager::play_sound_optional(0, item, volume, 1, 0);
+
+    if(handle_id >= 0)
+    {
+        result = sound_handle_generator().generate(uint16_t(handle_id));
+    }
+
+    return result;
+}
+
+optional<sound_handle> play_optional(sound_item item, fixed volume, fixed speed, fixed panning)
+{
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_BASIC_ASSERT(speed >= 0 && speed <= 64, "Speed range is [0..64]: ", speed);
+    BN_BASIC_ASSERT(panning >= -1 && panning <= 1, "Panning range is [-1..1]: ", panning);
+
+    optional<sound_handle> result;
+    int handle_id = audio_manager::play_sound_optional(0, item, volume, speed, panning);
+
+    if(handle_id >= 0)
+    {
+        result = sound_handle_generator().generate(uint16_t(handle_id));
+    }
+
+    return result;
+}
+
+optional<sound_handle> play_with_priority_optional(int priority, sound_item item)
+{
+    BN_BASIC_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
+
+    optional<sound_handle> result;
+    int handle_id = audio_manager::play_sound_optional(priority, item);
+
+    if(handle_id >= 0)
+    {
+        result = sound_handle_generator().generate(uint16_t(handle_id));
+    }
+
+    return result;
+}
+
+optional<sound_handle> play_with_priority_optional(int priority, sound_item item, fixed volume)
+{
+    BN_BASIC_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+
+    optional<sound_handle> result;
+    int handle_id = audio_manager::play_sound_optional(priority, item, volume, 1, 0);
+
+    if(handle_id >= 0)
+    {
+        result = sound_handle_generator().generate(uint16_t(handle_id));
+    }
+
+    return result;
+}
+
+optional<sound_handle> play_with_priority_optional(
+        int priority, sound_item item, fixed volume, fixed speed, fixed panning)
+{
+    BN_BASIC_ASSERT(priority >= -32767 && priority <= 32767, "Priority range is [-32767..32767]: ", priority);
+    BN_BASIC_ASSERT(volume >= 0 && volume <= 1, "Volume range is [0..1]: ", volume);
+    BN_BASIC_ASSERT(speed >= 0 && speed <= 64, "Speed range is [0..64]: ", speed);
+    BN_BASIC_ASSERT(panning >= -1 && panning <= 1, "Panning range is [-1..1]: ", panning);
+
+    optional<sound_handle> result;
+    int handle_id = audio_manager::play_sound_optional(priority, item, volume, speed, panning);
+
+    if(handle_id >= 0)
+    {
+        result = sound_handle_generator().generate(uint16_t(handle_id));
+    }
+
+    return result;
+}
+
 void stop_all()
 {
     audio_manager::stop_all_sounds();

@@ -576,6 +576,35 @@ namespace
     {
         return *reinterpret_cast<static_data*>(data_buffer);
     }
+
+    [[nodiscard]] uint16_t play_sound_impl(int priority, int commands, bn::sound_item item, static_data& data)
+    {
+        uint16_t handle = data.new_sound_handle;
+        data.sound_map[handle].init(item, 1, 0);
+        data.new_sound_handle = handle + 1;
+
+        data.command_codes[commands] = SOUND_PLAY;
+        ::new(static_cast<void*>(data.command_datas + commands)) play_sound_command(priority, item.id(), handle);
+        data.commands_count = commands + 1;
+
+        return handle;
+    }
+
+    [[nodiscard]] uint16_t play_sound_ex_impl(
+            int priority, int commands, bn::sound_item item, fixed volume, fixed speed, fixed panning,
+            static_data& data)
+    {
+        uint16_t handle = data.new_sound_handle;
+        data.sound_map[handle].init(item, speed, panning);
+        data.new_sound_handle = handle + 1;
+
+        data.command_codes[commands] = SOUND_PLAY_EX;
+        ::new(static_cast<void*>(data.command_datas + commands)) play_sound_ex_command(
+                priority, item.id(), handle, volume, speed, panning);
+        data.commands_count = commands + 1;
+
+        return handle;
+    }
 }
 
 void init()
@@ -1103,15 +1132,7 @@ uint16_t play_sound(int priority, bn::sound_item item)
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
     BN_BASIC_ASSERT(! data.sound_map.full(), "No more sound handles available");
 
-    uint16_t handle = data.new_sound_handle;
-    data.sound_map[handle].init(item, 1, 0);
-    data.new_sound_handle = handle + 1;
-
-    data.command_codes[commands] = SOUND_PLAY;
-    ::new(static_cast<void*>(data.command_datas + commands)) play_sound_command(priority, item.id(), handle);
-    data.commands_count = commands + 1;
-
-    return handle;
+    return play_sound_impl(priority, commands, item, data);
 }
 
 uint16_t play_sound(int priority, bn::sound_item item, fixed volume, fixed speed, fixed panning)
@@ -1121,16 +1142,33 @@ uint16_t play_sound(int priority, bn::sound_item item, fixed volume, fixed speed
     BN_BASIC_ASSERT(commands < max_commands, "No more audio commands available");
     BN_BASIC_ASSERT(! data.sound_map.full(), "No more sound handles available");
 
-    uint16_t handle = data.new_sound_handle;
-    data.sound_map[handle].init(item, speed, panning);
-    data.new_sound_handle = handle + 1;
+    return play_sound_ex_impl(priority, commands, item, volume, speed, panning, data);
+}
 
-    data.command_codes[commands] = SOUND_PLAY_EX;
-    ::new(static_cast<void*>(data.command_datas + commands)) play_sound_ex_command(
-            priority, item.id(), handle, volume, speed, panning);
-    data.commands_count = commands + 1;
+int play_sound_optional(int priority, bn::sound_item item)
+{
+    static_data& data = data_ref();
+    int commands = data.commands_count;
 
-    return handle;
+    if(commands < max_commands && ! data.sound_map.full())
+    {
+        return play_sound_impl(priority, commands, item, data);
+    }
+
+    return -1;
+}
+
+int play_sound_optional(int priority, bn::sound_item item, fixed volume, fixed speed, fixed panning)
+{
+    static_data& data = data_ref();
+    int commands = data.commands_count;
+
+    if(commands < max_commands && ! data.sound_map.full())
+    {
+        return play_sound_ex_impl(priority, commands, item, volume, speed, panning, data);
+    }
+
+    return -1;
 }
 
 void stop_sound(uint16_t handle)

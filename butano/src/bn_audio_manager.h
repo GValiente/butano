@@ -128,6 +128,10 @@ namespace bn::audio_manager
 
     [[nodiscard]] uint16_t play_sound(int priority, sound_item item, fixed volume, fixed speed, fixed panning);
 
+    [[nodiscard]] int play_sound_optional(int priority, sound_item item);
+
+    [[nodiscard]] int play_sound_optional(int priority, sound_item item, fixed volume, fixed speed, fixed panning);
+
     void stop_sound(uint16_t handle);
 
     void release_sound(uint16_t handle);

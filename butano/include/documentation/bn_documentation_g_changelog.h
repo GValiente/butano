@@ -14,6 +14,7 @@
  *
  * @section changelog_21_6_0 21.6.0 (next release)
  *
+ * * bn::sound::play_optional and bn::sound::play_with_priority_optional added.
  * * <a href="https://github.com/copyrat90/advgm">advgm</a> updated to 0.3.0. Remember to rebuild your project
  *   after updating.
  * * bn::best_fit_allocator::realloc alignment fixed.

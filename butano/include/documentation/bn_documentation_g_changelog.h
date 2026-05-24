@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_6_0 21.6.0 (next release)
+ * @section changelog_21_6_0 21.6.0
  *
  * * bn::sound::play_optional and bn::sound::play_with_priority_optional added.
  * * bn::sound_handle::set_speed and bn::sound_handle::set_panning don't crash with inactive sounds.

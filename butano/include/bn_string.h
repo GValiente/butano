@@ -850,6 +850,18 @@ public:
     }
 
     /**
+     * @brief Resizes the istring without filling new characters or replacing the old null character.
+     * @param count New size.
+     */
+    constexpr void unsafe_resize(size_type count)
+    {
+        BN_ASSERT(count >= 0 && count <= _max_size, "Invalid count: ", count, " - ", _max_size);
+
+        _data[count] = 0;
+        _size = count;
+    }
+
+    /**
      * @brief Resizes the istring to a size less or equal than the previous one.
      * @param count New size.
      */

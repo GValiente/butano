@@ -5,13 +5,33 @@
 
 #include "bn_sstream.h"
 
-#include "bn_array.h"
 #include "bn_string.h"
 #include "bn_string_view.h"
 #include "../hw/include/bn_hw_text.h"
 
 namespace bn
 {
+
+namespace
+{
+    constexpr int buffer_size = 24;
+
+    template<typename Type>
+    void _append_number(Type value, istring& string)
+    {
+        if(string.available() >= buffer_size)
+        {
+            int size = hw::text::parse(value, string.end());
+            string.unsafe_resize(string.size() + size);
+        }
+        else
+        {
+            alignas(int) char buffer[buffer_size];
+            int size = hw::text::parse(value, buffer);
+            string.append(buffer, size);
+        }
+    }
+}
 
 ostringstream::ostringstream(istring_base& string) :
     _string(static_cast<istring*>(&string))
@@ -108,53 +128,39 @@ void ostringstream::append(const char* char_array_ptr, int char_array_size)
 
 void ostringstream::append(int value)
 {
-    array<char, 32> buffer;
-    int size = hw::text::parse(value, buffer);
-    _string->append(buffer.data(), size);
+    _append_number(value, *_string);
 }
 
 void ostringstream::append(long value)
 {
-    array<char, 32> buffer;
-    int size = hw::text::parse(value, buffer);
-    _string->append(buffer.data(), size);
+    _append_number(value, *_string);
 }
 
 void ostringstream::append(int64_t value)
 {
-    array<char, 32> buffer;
-    int size = hw::text::parse(value, buffer);
-    _string->append(buffer.data(), size);
+    _append_number(value, *_string);
 }
 
 void ostringstream::append(unsigned value)
 {
-    array<char, 32> buffer;
-    int size = hw::text::parse(value, buffer);
-    _string->append(buffer.data(), size);
+    _append_number(value, *_string);
 }
 
 void ostringstream::append(unsigned long value)
 {
-    array<char, 32> buffer;
-    int size = hw::text::parse(value, buffer);
-    _string->append(buffer.data(), size);
+    _append_number(value, *_string);
 }
 
 void ostringstream::append(uint64_t value)
 {
-    array<char, 32> buffer;
-    int size = hw::text::parse(value, buffer);
-    _string->append(buffer.data(), size);
+    _append_number(value, *_string);
 }
 
 void ostringstream::append(const void* ptr)
 {
     if(ptr)
     {
-        array<char, 32> buffer;
-        int size = hw::text::parse(ptr, buffer);
-        _string->append(buffer.data(), size);
+        _append_number(ptr, *_string);
     }
     else
     {
@@ -170,7 +176,7 @@ void ostringstream::swap(ostringstream& other)
 
 void ostringstream::_append_fraction(unsigned fraction_result, int fraction_digits)
 {
-    array<char, 32> buffer;
+    alignas(int) char buffer[buffer_size];
     int fraction_size = hw::text::parse(fraction_result, buffer);
     istring& string = *_string;
     string.append('.');
@@ -180,7 +186,7 @@ void ostringstream::_append_fraction(unsigned fraction_result, int fraction_digi
         string.append('0');
     }
 
-    string.append(buffer.data(), fraction_size);
+    string.append(buffer, fraction_size);
 }
 
 }

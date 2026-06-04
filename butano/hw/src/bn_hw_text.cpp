@@ -20,13 +20,13 @@ namespace bn::hw::text
 namespace
 {
     template<typename Type>
-    [[nodiscard]] int _to_string(Type value, char* output_data)
+    [[nodiscard]] int _to_string(Type value, char* output)
     {
         if(value < 0)
         {
-            *output_data = '-';
-            ++output_data;
-            return _to_string(-value, output_data) + 1;
+            *output = '-';
+            ++output;
+            return _to_string(-value, output) + 1;
         }
 
         array<char, 16> extra_array;
@@ -42,14 +42,14 @@ namespace
         }
         while(value >= 500000000);
 
-        posprintf(output_data, "%l", long(value));
+        posprintf(output, "%l", long(value));
 
-        int size = string_view(output_data).size();
+        int size = string_view(output).size();
         int extra_size = current_extra_data - extra_data;
 
         for(int index = extra_size - 1; index >= 0; --index)
         {
-            output_data[size] = extra_data[index];
+            output[size] = extra_data[index];
             ++size;
         }
 
@@ -57,152 +57,145 @@ namespace
     }
 }
 
-int parse(int value, array<char, 32>& output)
+int parse(int value, char* output)
 {
-    char* output_data = output.data();
     int abs_value = abs(value);
     int size;
 
     if(abs_value < 65536)
     {
-        posprintf(output_data, "%d", value);
-        size = string_view(output_data).size();
+        posprintf(output, "%d", value);
+        size = string_view(output).size();
     }
     else if(abs_value < 500000000)
     {
-        posprintf(output_data, "%l", long(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%l", long(value));
+        size = string_view(output).size();
     }
     else
     {
-        size = _to_string(value, output_data);
+        size = _to_string(value, output);
     }
 
     return size;
 }
 
-int parse(long value, array<char, 32>& output)
+int parse(long value, char* output)
 {
-    char* output_data = output.data();
     long abs_value = abs(value);
     int size;
 
     if(abs_value < 65536)
     {
-        posprintf(output_data, "%d", int(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%d", int(value));
+        size = string_view(output).size();
     }
     else if(abs_value < 500000000)
     {
-        posprintf(output_data, "%l", value);
-        size = string_view(output_data).size();
+        posprintf(output, "%l", value);
+        size = string_view(output).size();
     }
     else
     {
-        size = _to_string(value, output_data);
+        size = _to_string(value, output);
     }
 
     return size;
 }
 
-int parse(int64_t value, array<char, 32>& output)
+int parse(int64_t value, char* output)
 {
-    char* output_data = output.data();
     int64_t abs_value = abs(value);
     int size;
 
     if(abs_value < 65536)
     {
-        posprintf(output_data, "%d", int(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%d", int(value));
+        size = string_view(output).size();
     }
     else if(abs_value < 500000000)
     {
-        posprintf(output_data, "%l", long(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%l", long(value));
+        size = string_view(output).size();
     }
     else
     {
-        size = _to_string(value, output_data);
+        size = _to_string(value, output);
     }
 
     return size;
 }
 
-int parse(unsigned value, array<char, 32>& output)
+int parse(unsigned value, char* output)
 {
-    char* output_data = output.data();
     int size;
 
     if(value < 65536)
     {
-        posprintf(output_data, "%d", int(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%d", int(value));
+        size = string_view(output).size();
     }
     else if(value < 500000000)
     {
-        posprintf(output_data, "%l", long(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%l", long(value));
+        size = string_view(output).size();
     }
     else
     {
-        size = _to_string(value, output_data);
+        size = _to_string(value, output);
     }
 
     return size;
 }
 
-int parse(unsigned long value, array<char, 32>& output)
+int parse(unsigned long value, char* output)
 {
-    char* output_data = output.data();
     int size;
 
     if(value < 65536)
     {
-        posprintf(output_data, "%d", int(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%d", int(value));
+        size = string_view(output).size();
     }
     else if(value < 500000000)
     {
-        posprintf(output_data, "%l", long(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%l", long(value));
+        size = string_view(output).size();
     }
     else
     {
-        size = _to_string(value, output_data);
+        size = _to_string(value, output);
     }
 
     return size;
 }
 
-int parse(uint64_t value, array<char, 32>& output)
+int parse(uint64_t value, char* output)
 {
-    char* output_data = output.data();
     int size;
 
     if(value < 65536)
     {
-        posprintf(output_data, "%d", int(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%d", int(value));
+        size = string_view(output).size();
     }
     else if(value < 500000000)
     {
-        posprintf(output_data, "%l", long(value));
-        size = string_view(output_data).size();
+        posprintf(output, "%l", long(value));
+        size = string_view(output).size();
     }
     else
     {
-        size = _to_string(value, output_data);
+        size = _to_string(value, output);
     }
 
     return size;
 }
 
-int parse(const void* ptr, array<char, 32>& output)
+int parse(const void* ptr, char* output)
 {
-    char* output_data = output.data();
-    posprintf(output_data, "0x%x", ptr);
-    return string_view(output_data).size();
+    posprintf(output, "0x%x", ptr);
+    return string_view(output).size();
 }
 
 }

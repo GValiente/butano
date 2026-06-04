@@ -353,7 +353,7 @@
         void show_args(const char* condition_msg, const char* file, const char* function, int line,
                        const Arg& arg)
         {
-            char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
+            alignas(int) char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);
             bn::ostringstream string_stream(istring);
             string_stream.append(arg);
@@ -364,7 +364,7 @@
         void show_args(const char* condition_msg, const char* file, const char* function, int line,
                        const Arg1& arg1, const Arg2& arg2)
         {
-            char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
+            alignas(int) char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);
             bn::ostringstream string_stream(istring);
             string_stream.append(arg1);
@@ -376,7 +376,7 @@
         void show_args(const char* condition_msg, const char* file, const char* function, int line,
                        const Args&... args)
         {
-            char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
+            alignas(int) char istring_buffer[BN_CFG_ASSERT_BUFFER_SIZE];
             bn::istring_base istring(istring_buffer);
             bn::ostringstream string_stream(istring);
             string_stream.append_args(args...);

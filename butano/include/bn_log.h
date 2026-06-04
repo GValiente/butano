@@ -83,7 +83,7 @@ namespace bn
     #define BN_LOG(...) \
         do \
         { \
-            char _bn_string[BN_CFG_LOG_MAX_SIZE]; \
+            alignas(int) char _bn_string[BN_CFG_LOG_MAX_SIZE]; \
             bn::istring_base _bn_istring(_bn_string); \
             bn::ostringstream _bn_string_stream(_bn_istring); \
             _bn_string_stream.append_args(__VA_ARGS__); \
@@ -93,7 +93,7 @@ namespace bn
     #define BN_LOG_LEVEL(level, ...) \
         do \
         { \
-            char _bn_string[BN_CFG_LOG_MAX_SIZE]; \
+            alignas(int) char _bn_string[BN_CFG_LOG_MAX_SIZE]; \
             bn::istring_base _bn_istring(_bn_string); \
             bn::ostringstream _bn_string_stream(_bn_istring); \
             _bn_string_stream.append_args(__VA_ARGS__); \

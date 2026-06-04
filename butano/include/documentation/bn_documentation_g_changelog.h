@@ -16,6 +16,7 @@
  *
  * * bn::istring::unsafe_resize added.
  * * bn::ostringstream::append with numbers optimized.
+ * * Logging and assert messages building optimized.
  *
  *
  * @section changelog_21_6_0 21.6.0

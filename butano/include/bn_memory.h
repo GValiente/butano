@@ -227,7 +227,7 @@ namespace bn::memory
     template<typename Type>
     void clear(int elements, Type& destination_ref)
     {
-        static_assert(is_trivial<Type>(), "Type is not trivial");
+        static_assert(is_trivially_default_constructible_v<Type> && is_trivially_copyable_v<Type>, "Type is not trivial");
         BN_ASSERT(elements >= 0, "Invalid elements: ", elements);
 
         if constexpr(sizeof(Type) == 4)

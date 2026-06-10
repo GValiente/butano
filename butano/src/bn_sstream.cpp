@@ -14,9 +14,7 @@ namespace bn
 
 namespace
 {
-    constexpr int buffer_size = 24;
-
-    template<typename Type>
+    template<int buffer_size, typename Type>
     void _append_number(Type value, istring& string)
     {
         if(string.available() >= buffer_size)
@@ -128,39 +126,39 @@ void ostringstream::append(const char* char_array_ptr, int char_array_size)
 
 void ostringstream::append(int value)
 {
-    _append_number(value, *_string);
+    _append_number<12>(value, *_string);
 }
 
 void ostringstream::append(long value)
 {
-    _append_number(value, *_string);
+    _append_number<12>(value, *_string);
 }
 
 void ostringstream::append(int64_t value)
 {
-    _append_number(value, *_string);
+    _append_number<24>(value, *_string);
 }
 
 void ostringstream::append(unsigned value)
 {
-    _append_number(value, *_string);
+    _append_number<12>(value, *_string);
 }
 
 void ostringstream::append(unsigned long value)
 {
-    _append_number(value, *_string);
+    _append_number<12>(value, *_string);
 }
 
 void ostringstream::append(uint64_t value)
 {
-    _append_number(value, *_string);
+    _append_number<24>(value, *_string);
 }
 
 void ostringstream::append(const void* ptr)
 {
     if(ptr)
     {
-        _append_number(ptr, *_string);
+        _append_number<12>(ptr, *_string);
     }
     else
     {
@@ -176,7 +174,7 @@ void ostringstream::swap(ostringstream& other)
 
 void ostringstream::_append_fraction(unsigned fraction_result, int fraction_digits)
 {
-    alignas(int) char buffer[buffer_size];
+    alignas(int) char buffer[12];
     int fraction_size = hw::text::parse(fraction_result, buffer);
     istring& string = *_string;
     string.append('.');

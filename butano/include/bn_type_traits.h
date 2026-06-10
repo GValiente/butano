@@ -27,6 +27,9 @@ namespace bn
     using std::is_trivial;
     using std::is_trivial_v;
 
+    using std::is_trivially_default_constructible;
+    using std::is_trivially_default_constructible_v;
+
     using std::is_trivially_copyable;
     using std::is_trivially_copyable_v;
 

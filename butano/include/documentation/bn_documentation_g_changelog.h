@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_7_0 21.7.0 (next release)
+ * @section changelog_21_7_0 21.7.0
  *
  * * bn::istring::unsafe_resize added.
  * * bn::ostringstream::append with numbers optimized.

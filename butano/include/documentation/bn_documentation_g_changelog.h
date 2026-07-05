@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_7_1 21.7.1 (next release)
+ * @section changelog_21_7_1 21.7.1
  *
  * Standard containers swap maximum size check fixed (thanks yeon!).
  *

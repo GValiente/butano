@@ -679,7 +679,7 @@ public:
         if(this != &other)
         {
             BN_ASSERT(size() <= other.max_size(), "Invalid size: ", size(), " - ", other.max_size());
-            BN_ASSERT(max_size() <= other.size(), "Invalid max size: ", max_size(), " - ", other.size());
+            BN_ASSERT(max_size() >= other.size(), "Invalid max size: ", max_size(), " - ", other.size());
 
             iforward_list* min_list;
             iforward_list* max_list;

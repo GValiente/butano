@@ -1263,7 +1263,7 @@ public:
         if(_data != other._data)
         {
             BN_ASSERT(_size <= other.max_size(), "Invalid size: ", _size, " - ", other.max_size());
-            BN_ASSERT(max_size() <= other._size, "Invalid max size: ", max_size(), " - ", other._size);
+            BN_ASSERT(max_size() >= other._size, "Invalid max size: ", max_size(), " - ", other._size);
 
             ideque* min_deque;
             ideque* max_deque;

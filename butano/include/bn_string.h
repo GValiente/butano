@@ -882,7 +882,7 @@ public:
         if(_data != other._data)
         {
             BN_ASSERT(_size <= other._max_size, "Invalid size: ", _size, " - ", other._max_size);
-            BN_ASSERT(_max_size <= other._size, "Invalid max size: ", _max_size, " - ", other._size);
+            BN_ASSERT(_max_size >= other._size, "Invalid max size: ", _max_size, " - ", other._size);
 
             pointer min_data = nullptr;
             pointer max_data = nullptr;

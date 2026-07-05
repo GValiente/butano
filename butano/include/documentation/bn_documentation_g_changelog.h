@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_21_7_1 21.7.1 (next release)
+ *
+ * Standard containers swap maximum size check fixed (thanks yeon!).
+ *
+ *
  * @section changelog_21_7_0 21.7.0
  *
  * * bn::istring::unsafe_resize added.

@@ -155,6 +155,11 @@ for the likes of the Natural History Museum, NASA and even the FBI!
 
 ![](docs_tools/images/lro_title.png) ![](docs_tools/images/lro_gameplay.png)
 
+* [Dare to Square](https://dare-to-square.com): your ship crashed in an unknown galaxy. Reunite with your friends 
+and work together to find your way home!
+
+![](docs_tools/images/dare_to_square_title.png) ![](docs_tools/images/dare_to_square_gameplay.png)
+
 * [Sleep Paradox](https://staticlinkage.itch.io/sleep-paradox): as student Fredericko you'll explore the school,
 leveling up as you fight through the hordes, searching for some kind of answer to what is going on.
 

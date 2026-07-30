@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_21_7_2 21.7.2 (next release)
+ *
+ * <a href="https://dare-to-square.com">Dare to Square</a> added to `README.md`.
+ *
+ *
  * @section changelog_21_7_1 21.7.1
  *
  * Standard containers swap maximum size check fixed (thanks yeon!).

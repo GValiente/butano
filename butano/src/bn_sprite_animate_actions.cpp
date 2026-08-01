@@ -121,6 +121,13 @@ void isprite_animate_action::set_current_index(int current_index)
     _sprite_ref->set_tiles(*_tiles_item_ref, graphics_indexes[current_index]);
 }
 
+int isprite_animate_action::current_graphics_index() const
+{
+    BN_ASSERT(! done(), "Action is done");
+
+    return graphics_indexes().data()[_current_graphics_indexes_index];
+}
+
 void isprite_animate_action::_set_refs(
         sprite_ptr& sprite, sprite_tiles_item& tiles_item, ivector<uint16_t>& graphics_indexes)
 {
@@ -257,6 +264,13 @@ void isprite_cached_animate_action::set_current_index(int current_index)
     }
 
     _sprite_ref->set_tiles(tiles_list[current_index]);
+}
+
+const sprite_tiles_ptr& isprite_cached_animate_action::current_tiles() const
+{
+    BN_ASSERT(! done(), "Action is done");
+
+    return tiles_list().data()[_current_tiles_list_index];
 }
 
 void isprite_cached_animate_action::_set_refs(sprite_ptr& sprite, ivector<sprite_tiles_ptr>& tiles_list)

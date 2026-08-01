@@ -141,6 +141,8 @@ public:
     /**
      * @brief Returns the current index of the given graphics_indexes
      * (not the current index of the tile set to reference in the given tiles_item).
+     *
+     * This index is the one to be used on the next tiles change. It can be out of bounds if the action is done.
      */
     [[nodiscard]] int current_index() const
     {
@@ -155,11 +157,10 @@ public:
 
     /**
      * @brief Returns the current index of the tile set to reference in the given tiles_item.
+     *
+     * This index is the one to be used on the next tiles change.
      */
-    [[nodiscard]] int current_graphics_index() const
-    {
-        return graphics_indexes()[_current_graphics_indexes_index];
-    }
+    [[nodiscard]] int current_graphics_index() const;
 
 protected:
     /// @cond DO_NOT_DOCUMENT
@@ -573,6 +574,8 @@ public:
 
     /**
      * @brief Returns the current index of the given tile sets.
+     *
+     * This index is the one to be used on the next tiles change. It can be out of bounds if the action is done.
      */
     [[nodiscard]] int current_index() const
     {
@@ -586,11 +589,10 @@ public:
 
     /**
      * @brief Returns the current tile set.
+     *
+     * This tile set is the one to be used on the next tiles change.
      */
-    [[nodiscard]] const sprite_tiles_ptr& current_tiles() const
-    {
-        return tiles_list()[_current_tiles_list_index];
-    }
+    [[nodiscard]] const sprite_tiles_ptr& current_tiles() const;
 
 protected:
     /// @cond DO_NOT_DOCUMENT

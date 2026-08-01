@@ -12,9 +12,14 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_7_2 21.7.2 (next release)
+ * @section changelog_21_8_0 21.8.0 (next release)
  *
- * <a href="https://dare-to-square.com">Dare to Square</a> added to `README.md`.
+ * * bn::sprite_animate_action::current_graphics_index and bn::sprite_cached_animate_action::current_tiles
+ *   asserts improved.
+ * * bn::sprite_animate_action::current_index, bn::sprite_animate_action::current_graphics_index,
+ *   bn::sprite_cached_animate_action::current_index and bn::sprite_cached_animate_action::current_tiles
+ *   documentation improved.
+ * * <a href="https://dare-to-square.com">Dare to Square</a> added to `README.md`.
  *
  *
  * @section changelog_21_7_1 21.7.1

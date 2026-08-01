@@ -138,6 +138,11 @@
             </dt>
             <dd>Sets the current index of the given graphics_indexes (not the current index of the tile set to reference in the given tiles_item).</dd>
             <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a142e4fed4b156a2ec7a8788fb1d8bbc3" class="m-doc">set_current_index</a>(</span><span class="m-doc-wrap">int current_index,
+              bool update_sprite_now)</span>
+            </dt>
+            <dd>Sets the current index of the given graphics_indexes (not the current index of the tile set to reference in the given tiles_item).</dd>
+            <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#ad3864441605b63a39cec3094b14971fe" class="m-doc">current_graphics_index</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
             </dt>
             <dd>Returns the current index of the tile set to reference in the given tiles_item.</dd>
@@ -197,6 +202,28 @@
             </h3>
             <p>Returns the current index of the given graphics_indexes (not the current index of the tile set to reference in the given tiles_item).</p>
 <p>This index is the one to be used on the next tiles change. It can be out of bounds if the action is done.</p>
+          </div></section>
+          <section class="m-doc-details" id="a142e4fed4b156a2ec7a8788fb1d8bbc3"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />isprite_animate_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a142e4fed4b156a2ec7a8788fb1d8bbc3" class="m-doc-self">set_current_index</a>(</span><span class="m-doc-wrap">int current_index,
+              bool update_sprite_now)</span></span>
+            </h3>
+            <p>Sets the current index of the given graphics_indexes (not the current index of the tile set to reference in the given tiles_item).</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">current_index</td>
+                  <td>New index of the given graphics_indexes.</td>
+                </tr>
+                <tr>
+                  <td>update_sprite_now</td>
+                  <td>Specifies if the sprite must be updated now or on the next tiles change.</td>
+                </tr>
+              </tbody>
+            </table>
           </div></section>
           <section class="m-doc-details" id="ad3864441605b63a39cec3094b14971fe"><div>
             <h3>

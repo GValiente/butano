@@ -93,7 +93,7 @@ void isprite_animate_action::set_next_change_updates(int next_change_updates)
     _current_wait_updates = next_change_updates;
 }
 
-void isprite_animate_action::set_current_index(int current_index)
+void isprite_animate_action::set_current_index(int current_index, bool update_sprite_now)
 {
     const ivector<uint16_t>& graphics_indexes = this->graphics_indexes();
     int num_graphics_indexes = graphics_indexes.size();
@@ -118,7 +118,10 @@ void isprite_animate_action::set_current_index(int current_index)
         }
     }
 
-    _sprite_ref->set_tiles(*_tiles_item_ref, graphics_indexes[current_index]);
+    if(update_sprite_now)
+    {
+        _sprite_ref->set_tiles(*_tiles_item_ref, graphics_indexes[current_index]);
+    }
 }
 
 int isprite_animate_action::current_graphics_index() const
@@ -238,7 +241,7 @@ void isprite_cached_animate_action::set_next_change_updates(int next_change_upda
     _current_wait_updates = next_change_updates;
 }
 
-void isprite_cached_animate_action::set_current_index(int current_index)
+void isprite_cached_animate_action::set_current_index(int current_index, bool update_sprite_now)
 {
     const ivector<sprite_tiles_ptr>& tiles_list = this->tiles_list();
     int tiles_list_size = tiles_list.size();
@@ -263,7 +266,10 @@ void isprite_cached_animate_action::set_current_index(int current_index)
         }
     }
 
-    _sprite_ref->set_tiles(tiles_list[current_index]);
+    if(update_sprite_now)
+    {
+        _sprite_ref->set_tiles(tiles_list[current_index]);
+    }
 }
 
 const sprite_tiles_ptr& isprite_cached_animate_action::current_tiles() const

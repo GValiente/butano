@@ -153,7 +153,18 @@ public:
      * @brief Sets the current index of the given graphics_indexes
      * (not the current index of the tile set to reference in the given tiles_item).
      */
-    void set_current_index(int current_index);
+    void set_current_index(int current_index)
+    {
+        set_current_index(current_index, true);
+    }
+
+    /**
+     * @brief Sets the current index of the given graphics_indexes
+     * (not the current index of the tile set to reference in the given tiles_item).
+     * @param current_index New index of the given graphics_indexes.
+     * @param update_sprite_now Specifies if the sprite must be updated now or on the next tiles change.
+     */
+    void set_current_index(int current_index, bool update_sprite_now);
 
     /**
      * @brief Returns the current index of the tile set to reference in the given tiles_item.
@@ -585,7 +596,17 @@ public:
     /**
      * @brief Sets the current index of the given tile sets.
      */
-    void set_current_index(int current_index);
+    void set_current_index(int current_index)
+    {
+        set_current_index(current_index, true);
+    }
+
+    /**
+     * @brief Sets the current index of the given tile sets.
+     * @param current_index New index of the given tile sets.
+     * @param update_sprite_now Specifies if the sprite must be updated now or on the next tiles change.
+     */
+    void set_current_index(int current_index, bool update_sprite_now);
 
     /**
      * @brief Returns the current tile set.

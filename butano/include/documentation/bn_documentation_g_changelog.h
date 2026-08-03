@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_8_0 21.8.0 (next release)
+ * @section changelog_21_8_0 21.8.0
  *
  * * bn::sprite_animate_action::set_current_index and bn::sprite_cached_animate_action::set_current_index
  *   allow to update their sprite on the next tiles change.

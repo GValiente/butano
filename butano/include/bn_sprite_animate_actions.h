@@ -206,7 +206,7 @@ private:
 template<int MaxSize>
 class sprite_animate_action : public isprite_animate_action
 {
-    static_assert(MaxSize > 1);
+    static_assert(MaxSize > 0);
 
 public:
     /**
@@ -652,7 +652,7 @@ private:
 template<int MaxSize>
 class sprite_cached_animate_action : public isprite_cached_animate_action
 {
-    static_assert(MaxSize > 1);
+    static_assert(MaxSize > 0);
 
 public:
     /**

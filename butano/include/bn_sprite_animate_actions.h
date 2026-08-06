@@ -139,6 +139,11 @@ public:
     }
 
     /**
+     * @brief Specifies if the action must be updated forever or not.
+     */
+    void set_update_forever(bool forever);
+
+    /**
      * @brief Returns the current index of the given graphics_indexes
      * (not the current index of the tile set to reference in the given tiles_item).
      *
@@ -582,6 +587,11 @@ public:
     {
         return _forever;
     }
+
+    /**
+     * @brief Specifies if the action must be updated forever or not.
+     */
+    void set_update_forever(bool forever);
 
     /**
      * @brief Returns the current index of the given tile sets.

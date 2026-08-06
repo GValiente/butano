@@ -93,6 +93,13 @@ void isprite_animate_action::set_next_change_updates(int next_change_updates)
     _current_wait_updates = next_change_updates;
 }
 
+void isprite_animate_action::set_update_forever(bool forever)
+{
+    BN_ASSERT(! done(), "Action is done");
+
+    _forever = forever;
+}
+
 void isprite_animate_action::set_current_index(int current_index, bool update_sprite_now)
 {
     const ivector<uint16_t>& graphics_indexes = this->graphics_indexes();
@@ -239,6 +246,13 @@ void isprite_cached_animate_action::set_next_change_updates(int next_change_upda
               "Invalid next change updates: ", next_change_updates, " - ", _wait_updates);
 
     _current_wait_updates = next_change_updates;
+}
+
+void isprite_cached_animate_action::set_update_forever(bool forever)
+{
+    BN_ASSERT(! done(), "Action is done");
+
+    _forever = forever;
 }
 
 void isprite_cached_animate_action::set_current_index(int current_index, bool update_sprite_now)

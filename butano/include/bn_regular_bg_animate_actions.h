@@ -110,6 +110,11 @@ public:
     }
 
     /**
+     * @brief Sets the number of times the action must be updated before the next map change.
+     */
+    void set_next_change_updates(int next_change_updates);
+
+    /**
      * @brief Returns the regular_bg_map_item used to create the new map to use by the given regular_bg_ptr.
      */
     [[nodiscard]] const regular_bg_map_item& map_item() const
@@ -134,13 +139,44 @@ public:
     }
 
     /**
+     * @brief Specifies if the action must be updated forever or not.
+     */
+    void set_update_forever(bool forever);
+
+    /**
      * @brief Returns the current index of the given map_indexes
      * (not the current index of the map to reference in the given map_item).
+     *
+     * This index is the one to be used on the next map change. It can be out of bounds if the action is done.
      */
     [[nodiscard]] int current_index() const
     {
         return _current_map_indexes_index;
     }
+
+    /**
+     * @brief Sets the current index of the given map_indexes
+     * (not the current index of the map to reference in the given map_item).
+     */
+    void set_current_index(int current_index)
+    {
+        set_current_index(current_index, true);
+    }
+
+    /**
+     * @brief Sets the current index of the given map_indexes
+     * (not the current index of the map to reference in the given map_item).
+     * @param current_index New index of the given map_indexes.
+     * @param update_bg_now Specifies if the background must be updated now or on the next map change.
+     */
+    void set_current_index(int current_index, bool update_bg_now);
+
+    /**
+     * @brief Returns the current index of the map to reference in the given map_item.
+     *
+     * This index is the one to be used on the next map change.
+     */
+    [[nodiscard]] int current_map_index() const;
 
 protected:
     /// @cond DO_NOT_DOCUMENT
@@ -175,7 +211,7 @@ private:
 template<int MaxSize>
 class regular_bg_animate_action : public iregular_bg_animate_action
 {
-    static_assert(MaxSize > 1);
+    static_assert(MaxSize > 0);
 
 public:
     /**
@@ -542,6 +578,11 @@ public:
     }
 
     /**
+     * @brief Sets the number of times the action must be updated before the next map change.
+     */
+    void set_next_change_updates(int next_change_updates);
+
+    /**
      * @brief Returns the maps to use by the given regular_bg_ptr.
      */
     [[nodiscard]] const ivector<regular_bg_map_ptr>& maps() const
@@ -558,12 +599,41 @@ public:
     }
 
     /**
+     * @brief Specifies if the action must be updated forever or not.
+     */
+    void set_update_forever(bool forever);
+
+    /**
      * @brief Returns the current index of the given maps.
+     *
+     * This index is the one to be used on the next map change. It can be out of bounds if the action is done.
      */
     [[nodiscard]] int current_index() const
     {
         return _current_map_index;
     }
+
+    /**
+     * @brief Sets the current index of the given maps.
+     */
+    void set_current_index(int current_index)
+    {
+        set_current_index(current_index, true);
+    }
+
+    /**
+     * @brief Sets the current index of the given maps.
+     * @param current_index New index of the given maps.
+     * @param update_bg_now Specifies if the background must be updated now or on the next map change.
+     */
+    void set_current_index(int current_index, bool update_bg_now);
+
+    /**
+     * @brief Returns the current map.
+     *
+     * This map is the one to be used on the next map change.
+     */
+    [[nodiscard]] const regular_bg_map_ptr& current_map() const;
 
 protected:
     /// @cond DO_NOT_DOCUMENT
@@ -601,7 +671,7 @@ private:
 template<int MaxSize>
 class regular_bg_cached_animate_action : public iregular_bg_cached_animate_action
 {
-    static_assert(MaxSize > 1);
+    static_assert(MaxSize > 0);
 
 public:
     /**

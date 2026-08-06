@@ -14,8 +14,9 @@
  *
  * @section changelog_21_9_0 21.9.0 (next release)
  *
- * * bn::sprite_animate_action::set_update_forever and bn::sprite_cached_animate_action::set_update_forever added.
- * * bn::sprite_animate_action and bn::sprite_cached_animate_action support a single graphics index.
+ * * bn::sprite_animate_action::set_update_forever and bn::sprite_cached_animate_action::set_update_forever
+ * * bn::sprite_animate_action and bn::sprite_cached_animate_action support a single graphics index. added.
+ * * Background animate actions have the same features as sprite animate actions.
  *
  *
  * @section changelog_21_8_0 21.8.0

@@ -113,6 +113,10 @@
               <span class="m-doc-wrap-bumper">auto <a href="#a2d6a8743a6978c4c5d28d05766e7e861" class="m-doc-self">next_change_updates</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
             </dt>
             <dd>Returns the number of times the action must be updated before the next map change.</dd>
+            <dt id="a66a688a784c639d2b4d71e3f373c0de1">
+              <span class="m-doc-wrap-bumper">void <a href="#a66a688a784c639d2b4d71e3f373c0de1" class="m-doc-self">set_next_change_updates</a>(</span><span class="m-doc-wrap">int next_change_updates)</span>
+            </dt>
+            <dd>Sets the number of times the action must be updated before the next map change.</dd>
             <dt id="a6a8b2bdea0b04725aa3e455d44243aac">
               <span class="m-doc-wrap-bumper">auto <a href="#a6a8b2bdea0b04725aa3e455d44243aac" class="m-doc-self">maps</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1ivector.html" class="m-doc">ivector</a>&lt;<a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&gt;&amp;</span>
             </dt>
@@ -121,10 +125,27 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ac10ae2328a45674bf0a2f4161cde150a" class="m-doc-self">update_forever</a>(</span><span class="m-doc-wrap">) const -&gt; bool</span>
             </dt>
             <dd>Indicates if the action can be updated forever or not.</dd>
-            <dt id="a79025ac1613ab39ece8d41795420233c">
-              <span class="m-doc-wrap-bumper">auto <a href="#a79025ac1613ab39ece8d41795420233c" class="m-doc-self">current_index</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
+            <dt id="abfa55c130e1b794ae92c31a3e1445019">
+              <span class="m-doc-wrap-bumper">void <a href="#abfa55c130e1b794ae92c31a3e1445019" class="m-doc-self">set_update_forever</a>(</span><span class="m-doc-wrap">bool forever)</span>
+            </dt>
+            <dd>Specifies if the action must be updated forever or not.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a79025ac1613ab39ece8d41795420233c" class="m-doc">current_index</a>(</span><span class="m-doc-wrap">) const -&gt; int</span>
             </dt>
             <dd>Returns the current index of the given maps.</dd>
+            <dt id="a7c7d39a25e54b6c54300992cb25c6e13">
+              <span class="m-doc-wrap-bumper">void <a href="#a7c7d39a25e54b6c54300992cb25c6e13" class="m-doc-self">set_current_index</a>(</span><span class="m-doc-wrap">int current_index)</span>
+            </dt>
+            <dd>Sets the current index of the given maps.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#af3dcc525e84e3f0c5661f6c786139fcd" class="m-doc">set_current_index</a>(</span><span class="m-doc-wrap">int current_index,
+              bool update_bg_now)</span>
+            </dt>
+            <dd>Sets the current index of the given maps.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa4dc278bcab10c936a010d840775ae3b" class="m-doc">current_map</a>(</span><span class="m-doc-wrap">) const -&gt; const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp;</span>
+            </dt>
+            <dd>Returns the current map.</dd>
           </dl>
         </section>
         <section>
@@ -174,6 +195,42 @@
                 </tr>
               </tfoot>
             </table>
+          </div></section>
+          <section class="m-doc-details" id="a79025ac1613ab39ece8d41795420233c"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">int bn::<wbr />iaffine_bg_cached_animate_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a79025ac1613ab39ece8d41795420233c" class="m-doc-self">current_index</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the current index of the given maps.</p>
+<p>This index is the one to be used on the next map change. It can be out of bounds if the action is done.</p>
+          </div></section>
+          <section class="m-doc-details" id="af3dcc525e84e3f0c5661f6c786139fcd"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void bn::<wbr />iaffine_bg_cached_animate_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af3dcc525e84e3f0c5661f6c786139fcd" class="m-doc-self">set_current_index</a>(</span><span class="m-doc-wrap">int current_index,
+              bool update_bg_now)</span></span>
+            </h3>
+            <p>Sets the current index of the given maps.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">current_index</td>
+                  <td>New index of the given maps.</td>
+                </tr>
+                <tr>
+                  <td>update_bg_now</td>
+                  <td>Specifies if the background must be updated now or on the next map change.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div></section>
+          <section class="m-doc-details" id="aa4dc278bcab10c936a010d840775ae3b"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">const <a href="classbn_1_1affine__bg__map__ptr.html" class="m-doc">affine_<wbr />bg_<wbr />map_<wbr />ptr</a>&amp; bn::<wbr />iaffine_bg_cached_animate_action::<wbr /></span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa4dc278bcab10c936a010d840775ae3b" class="m-doc-self">current_map</a>(</span><span class="m-doc-wrap">) const</span></span>
+            </h3>
+            <p>Returns the current map.</p>
+<p>This map is the one to be used on the next map change.</p>
           </div></section>
         </section>
       </div>

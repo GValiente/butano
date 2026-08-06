@@ -84,6 +84,59 @@ void iregular_bg_animate_action::set_wait_updates(int wait_updates)
     }
 }
 
+void iregular_bg_animate_action::set_next_change_updates(int next_change_updates)
+{
+    BN_ASSERT(next_change_updates >= 0 && next_change_updates <= _wait_updates,
+              "Invalid next change updates: ", next_change_updates, " - ", _wait_updates);
+
+    _current_wait_updates = next_change_updates;
+}
+
+void iregular_bg_animate_action::set_update_forever(bool forever)
+{
+    BN_ASSERT(! forever || ! done(), "Action is done");
+
+    _forever = forever;
+}
+
+void iregular_bg_animate_action::set_current_index(int current_index, bool update_bg_now)
+{
+    const ivector<uint16_t>& map_indexes = this->map_indexes();
+    int num_map_indexes = map_indexes.size();
+
+    if(_forever)
+    {
+        BN_ASSERT(current_index >= 0 && current_index < num_map_indexes,
+                  "Invalid current index: ", current_index, " - ", num_map_indexes);
+
+        _current_map_indexes_index = current_index;
+    }
+    else
+    {
+        BN_ASSERT(current_index >= 0 && current_index <= num_map_indexes,
+                  "Invalid current index: ", current_index, " - ", num_map_indexes);
+
+        _current_map_indexes_index = current_index;
+
+        if(current_index == num_map_indexes)
+        {
+            --current_index;
+        }
+    }
+
+    if(update_bg_now)
+    {
+        _regular_bg_ref->set_map(*_map_item_ref, map_indexes[current_index]);
+    }
+}
+
+int iregular_bg_animate_action::current_map_index() const
+{
+    BN_ASSERT(! done(), "Action is done");
+
+    return map_indexes().data()[_current_map_indexes_index];
+}
+
 void iregular_bg_animate_action::_set_refs(
         regular_bg_ptr& regular_bg, regular_bg_map_item& map_item, ivector<uint16_t>& map_indexes)
 {
@@ -102,7 +155,7 @@ void iregular_bg_animate_action::_assign(const iregular_bg_animate_action& other
 
 void iregular_bg_animate_action::_assign_map_indexes(const span<const uint16_t>& map_indexes)
 {
-    BN_ASSERT(map_indexes.size() > 1 && map_indexes.size() <= _map_indexes_ref->max_size(),
+    BN_ASSERT(map_indexes.size() && map_indexes.size() <= _map_indexes_ref->max_size(),
               "Invalid map indexes count: ", map_indexes.size());
 
     for(uint16_t map_index : map_indexes)
@@ -113,7 +166,7 @@ void iregular_bg_animate_action::_assign_map_indexes(const span<const uint16_t>&
 
 void iregular_bg_animate_action::_assign_map_indexes(const ivector<uint16_t>& map_indexes)
 {
-    BN_ASSERT(map_indexes.size() > 1 && map_indexes.size() <= _map_indexes_ref->max_size(),
+    BN_ASSERT(map_indexes.size() && map_indexes.size() <= _map_indexes_ref->max_size(),
               "Invalid map indexes count: ", map_indexes.size());
 
     *_map_indexes_ref = map_indexes;
@@ -186,6 +239,59 @@ void iregular_bg_cached_animate_action::set_wait_updates(int wait_updates)
     }
 }
 
+void iregular_bg_cached_animate_action::set_next_change_updates(int next_change_updates)
+{
+    BN_ASSERT(next_change_updates >= 0 && next_change_updates <= _wait_updates,
+              "Invalid next change updates: ", next_change_updates, " - ", _wait_updates);
+
+    _current_wait_updates = next_change_updates;
+}
+
+void iregular_bg_cached_animate_action::set_update_forever(bool forever)
+{
+    BN_ASSERT(! forever || ! done(), "Action is done");
+
+    _forever = forever;
+}
+
+void iregular_bg_cached_animate_action::set_current_index(int current_index, bool update_bg_now)
+{
+    const ivector<regular_bg_map_ptr>& maps = this->maps();
+    int maps_size = maps.size();
+
+    if(_forever)
+    {
+        BN_ASSERT(current_index >= 0 && current_index < maps_size,
+                  "Invalid current index: ", current_index, " - ", maps_size);
+
+        _current_map_index = current_index;
+    }
+    else
+    {
+        BN_ASSERT(current_index >= 0 && current_index <= maps_size,
+                  "Invalid current index: ", current_index, " - ", maps_size);
+
+        _current_map_index = current_index;
+
+        if(current_index == maps_size)
+        {
+            --current_index;
+        }
+    }
+
+    if(update_bg_now)
+    {
+        _regular_bg_ref->set_map(maps[current_index]);
+    }
+}
+
+const regular_bg_map_ptr& iregular_bg_cached_animate_action::current_map() const
+{
+    BN_ASSERT(! done(), "Action is done");
+
+    return maps().data()[_current_map_index];
+}
+
 void iregular_bg_cached_animate_action::_set_refs(regular_bg_ptr& regular_bg, ivector<regular_bg_map_ptr>& maps)
 {
     _regular_bg_ref = &regular_bg;
@@ -203,7 +309,7 @@ void iregular_bg_cached_animate_action::_assign(const iregular_bg_cached_animate
 void iregular_bg_cached_animate_action::_assign_map_indexes(
         const regular_bg_map_item& map_item, const span<const uint16_t>& map_indexes)
 {
-    BN_ASSERT(map_indexes.size() > 1 && map_indexes.size() <= _maps_ref->max_size(),
+    BN_ASSERT(map_indexes.size() && map_indexes.size() <= _maps_ref->max_size(),
               "Invalid map indexes count: ", map_indexes.size(), " - ", _maps_ref->max_size());
 
     const regular_bg_tiles_ptr& tiles = _regular_bg_ref->tiles();
@@ -217,7 +323,7 @@ void iregular_bg_cached_animate_action::_assign_map_indexes(
 
 void iregular_bg_cached_animate_action::_assign_maps(span<regular_bg_map_ptr> maps)
 {
-    BN_ASSERT(maps.size() > 1 && maps.size() <= _maps_ref->max_size(),
+    BN_ASSERT(maps.size() && maps.size() <= _maps_ref->max_size(),
               "Invalid maps count: ", maps.size(), " - ", _maps_ref->max_size());
 
     for(regular_bg_map_ptr& map : maps)
@@ -228,7 +334,7 @@ void iregular_bg_cached_animate_action::_assign_maps(span<regular_bg_map_ptr> ma
 
 void iregular_bg_cached_animate_action::_assign_maps(const ivector<regular_bg_map_ptr>& maps)
 {
-    BN_ASSERT(maps.size() > 1 && maps.size() <= _maps_ref->max_size(),
+    BN_ASSERT(maps.size() && maps.size() <= _maps_ref->max_size(),
               "Invalid maps count: ", maps.size(), " - ", _maps_ref->max_size());
 
     *_maps_ref = maps;
@@ -236,7 +342,7 @@ void iregular_bg_cached_animate_action::_assign_maps(const ivector<regular_bg_ma
 
 void iregular_bg_cached_animate_action::_assign_maps(ivector<regular_bg_map_ptr>&& maps)
 {
-    BN_ASSERT(maps.size() > 1 && maps.size() <= _maps_ref->max_size(),
+    BN_ASSERT(maps.size() && maps.size() <= _maps_ref->max_size(),
               "Invalid maps count: ", maps.size(), " - ", _maps_ref->max_size());
 
     *_maps_ref = move(maps);

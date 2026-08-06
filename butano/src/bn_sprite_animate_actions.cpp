@@ -95,7 +95,7 @@ void isprite_animate_action::set_next_change_updates(int next_change_updates)
 
 void isprite_animate_action::set_update_forever(bool forever)
 {
-    BN_ASSERT(! done(), "Action is done");
+    BN_ASSERT(! forever || ! done(), "Action is done");
 
     _forever = forever;
 }
@@ -250,7 +250,7 @@ void isprite_cached_animate_action::set_next_change_updates(int next_change_upda
 
 void isprite_cached_animate_action::set_update_forever(bool forever)
 {
-    BN_ASSERT(! done(), "Action is done");
+    BN_ASSERT(! forever || ! done(), "Action is done");
 
     _forever = forever;
 }

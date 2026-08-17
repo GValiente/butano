@@ -390,7 +390,8 @@ void regular_bg_map_ptr::set_palette(const bg_palette_item& palette_item)
     }
     else
     {
-        bg_blocks_manager::set_regular_map_palette(_handle, bg_palette_ptr::create(palette_item));
+        bg_blocks_manager::remove_map_palette(_handle);
+        bg_blocks_manager::set_regular_map_palette(_handle, bg_palette_ptr::create_new(palette_item));
     }
 }
 

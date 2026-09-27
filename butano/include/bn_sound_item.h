@@ -14,6 +14,7 @@
  * @ingroup tool
  */
 
+#include "bn_optional.h"
 #include "bn_sound_handle.h"
 
 namespace bn
@@ -73,6 +74,30 @@ public:
     sound_handle play(fixed volume, fixed speed, fixed panning) const;
 
     /**
+     * @brief Plays the sound effect specified by this item with default settings.
+     *
+     * Default settings are volume = 1, speed = 1 and panning = 0.
+     * @return Sound effect handle if it could be played; bn::nullopt otherwise.
+     */
+    optional<sound_handle> play_optional() const;
+
+    /**
+     * @brief Plays the sound effect specified by this item.
+     * @param volume Volume level, in the range [0..1].
+     * @return Sound effect handle if it could be played; bn::nullopt otherwise.
+     */
+    optional<sound_handle> play_optional(fixed volume) const;
+
+    /**
+     * @brief Plays the sound effect specified by this item.
+     * @param volume Volume level, in the range [0..1].
+     * @param speed Playback rate, in the range [0..64].
+     * @param panning Panning level, in the range [-1..1].
+     * @return Sound effect handle if it could be played; bn::nullopt otherwise.
+     */
+    optional<sound_handle> play_optional(fixed volume, fixed speed, fixed panning) const;
+
+    /**
      * @brief Plays the sound effect specified by this item with default settings and the given priority.
      *
      * If too many sound effects are being played at the same time,
@@ -110,6 +135,45 @@ public:
      * @return Sound effect handle.
      */
     sound_handle play_with_priority(int priority, fixed volume, fixed speed, fixed panning) const;
+
+    /**
+     * @brief Plays the sound effect specified by this item with default settings and the given priority.
+     *
+     * If too many sound effects are being played at the same time,
+     * sound effects with higher priority are discarded later.
+     *
+     * Default settings are volume = 1, speed = 1 and panning = 0.
+     *
+     * @param priority Priority in the range [-32767..32767].
+     * @return Sound effect handle if it could be played; bn::nullopt otherwise.
+     */
+    optional<sound_handle> play_with_priority_optional(int priority) const;
+
+    /**
+     * @brief Plays the sound effect specified by this item with the given priority.
+     *
+     * If too many sound effects are being played at the same time,
+     * sound effects with higher priority are discarded later.
+     *
+     * @param priority Priority in the range [-32767..32767].
+     * @param volume Volume level, in the range [0..1].
+     * @return Sound effect handle if it could be played; bn::nullopt otherwise.
+     */
+    optional<sound_handle> play_with_priority_optional(int priority, fixed volume) const;
+
+    /**
+     * @brief Plays the sound effect specified by this item with the given priority.
+     *
+     * If too many sound effects are being played at the same time,
+     * sound effects with higher priority are discarded later.
+     *
+     * @param priority Priority in the range [-32767..32767].
+     * @param volume Volume level, in the range [0..1].
+     * @param speed Playback rate, in the range [0..64].
+     * @param panning Panning level, in the range [-1..1].
+     * @return Sound effect handle if it could be played; bn::nullopt otherwise.
+     */
+    optional<sound_handle> play_with_priority_optional(int priority, fixed volume, fixed speed, fixed panning) const;
 
     /**
      * @brief Default equal operator.

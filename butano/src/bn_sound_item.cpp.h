@@ -25,6 +25,21 @@ sound_handle sound_item::play(fixed volume, fixed speed, fixed panning) const
     return sound::play(*this, volume, speed, panning);
 }
 
+optional<sound_handle> sound_item::play_optional() const
+{
+    return sound::play_optional(*this);
+}
+
+optional<sound_handle> sound_item::play_optional(fixed volume) const
+{
+    return sound::play_optional(*this, volume);
+}
+
+optional<sound_handle> sound_item::play_optional(fixed volume, fixed speed, fixed panning) const
+{
+    return sound::play_optional(*this, volume, speed, panning);
+}
+
 sound_handle sound_item::play_with_priority(int priority) const
 {
     return sound::play_with_priority(priority, *this);
@@ -38,6 +53,22 @@ sound_handle sound_item::play_with_priority(int priority, fixed volume) const
 sound_handle sound_item::play_with_priority(int priority, fixed volume, fixed speed, fixed panning) const
 {
     return sound::play_with_priority(priority, *this, volume, speed, panning);
+}
+
+optional<sound_handle> sound_item::play_with_priority_optional(int priority) const
+{
+    return sound::play_with_priority_optional(priority, *this);
+}
+
+optional<sound_handle> sound_item::play_with_priority_optional(int priority, fixed volume) const
+{
+    return sound::play_with_priority_optional(priority, *this, volume);
+}
+
+optional<sound_handle> sound_item::play_with_priority_optional(
+        int priority, fixed volume, fixed speed, fixed panning) const
+{
+    return sound::play_with_priority_optional(priority, *this, volume, speed, panning);
 }
 
 }

@@ -12,9 +12,10 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_9_1 21.9.1 (next release)
+ * @section changelog_21_10_0 21.10.0 (next release)
  *
- * @ref changelog fixed.
+ * * bn::sound_item::play_optional and bn::sound_item::play_with_priority_optional added.
+ * * @ref changelog fixed.
  *
  *
  * @section changelog_21_9_0 21.9.0

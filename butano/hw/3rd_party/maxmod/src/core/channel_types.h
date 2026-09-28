@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2021-2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2021-2026, Antonio Niño Díaz
 // Copyright (c) 2023, Lorenzooone (lollo.lollo.rbiz@gmail.com)
 
 #ifndef MM_CORE_CHANNEL_TYPES_H__
@@ -180,7 +180,7 @@ static_assert(sizeof(mm_mixer_channel) == 16);
 
 #ifdef __GBA__
 
-// A GBA mixer channel is active if "src & (1 << 31)" is zero.
+// A mixer channel is active if "src & MIXCH_GBA_SRC_STOPPED" is zero.
 typedef struct {
     uintptr_t   src;
     mm_word     read; // Fixed point 20.12. See MP_SAMPFRAC
@@ -199,6 +199,24 @@ typedef struct {
 // Make sure that the size matches the assembly code
 static_assert(sizeof(mm_mixer_channel) == 16);
 static_assert(sizeof(mm_mixer_channel) == MM_SIZEOF_MIXCH);
+
+#endif // __GBA__
+
+#ifdef __HEADLESS__
+
+// A mixer channel is active if "src & MIXCH_HEADLESS_SRC_STOPPED" is zero
+typedef struct {
+    uintptr_t   src;
+    mm_word     read; // Fixed point 20.12. See MP_SAMPFRAC
+    mm_byte     vol;
+    mm_byte     pan;
+    mm_word     freq;
+} mm_mixer_channel;
+
+// Fractionary part of the sample read offset
+#define MP_SAMPFRAC             12
+
+#define MIXCH_HEADLESS_SRC_STOPPED   (1ull << ((sizeof(uintptr_t) * 8) - 1))
 
 #endif // __GBA__
 

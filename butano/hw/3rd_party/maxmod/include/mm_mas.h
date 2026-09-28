@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2025, Antonio Niño Díaz
 
 /****************************************************************************
  *                                                          __              *
  *                ____ ___  ____ __  ______ ___  ____  ____/ /              *
- *               / __ `__ \/ __ `/ |/ / __ `__ \/ __ \/ __  /               *
+ *               / __ '__ \/ __ '/ |/ / __ '__ \/ __ \/ __  /               *
  *              / / / / / / /_/ />  </ / / / / / /_/ / /_/ /                *
  *             /_/ /_/ /_/\__,_/_/|_/_/ /_/ /_/\____/\__,_/                 *
  *                                                                          *
@@ -35,22 +35,38 @@ typedef struct tmm_mas_prefix
     mm_byte     reserved[2]; // Unused
 } mm_mas_prefix;
 
+MM_STATIC_ASSERT(mm_mas_prefix, 8)
+
 #define MAS_TYPE_SONG       0
 #define MAS_TYPE_SAMPLE_GBA 1
 #define MAS_TYPE_SAMPLE_NDS 2
 
 typedef struct tmm_mas_head
 {
+#ifdef MM_MMUTIL_DEVKITPRO_COMPAT
     mm_byte     order_count; // TODO: mmutil always exports 200. This is unused.
     mm_byte     instr_count;
     mm_byte     sampl_count;
     mm_byte     pattn_count;
+#else
+    mm_hword    order_count; // TODO: mmutil always exports 200. This is unused.
+    mm_hword    instr_count;
+    mm_hword    sampl_count;
+    mm_hword    pattn_count; // TODO: This is unused
+#endif
     mm_byte     flags;
     mm_byte     global_volume;
+#ifdef MM_MMUTIL_DEVKITPRO_COMPAT
     mm_byte     initial_speed;
     mm_byte     initial_tempo;
     mm_byte     repeat_position;
     mm_byte     reserved[3];
+#else
+    mm_hword    initial_speed;
+    mm_hword    initial_tempo;
+    mm_hword    repeat_position;
+    mm_byte     reserved[4];
+#endif
     mm_byte     channel_volume[32];
     mm_byte     channel_panning[32];
     mm_byte     sequence[200];
@@ -61,6 +77,12 @@ typedef struct tmm_mas_head
     // ::sample info table
     // ::pattern table
 } mm_mas_head;
+
+#ifdef MM_MMUTIL_DEVKITPRO_COMPAT
+MM_STATIC_ASSERT(mm_mas_head, 276)
+#else
+MM_STATIC_ASSERT(mm_mas_head, 284)
+#endif
 
 #define MAS_HEADER_FLAG_LINK_GXX    (1 << 0) // Shared Gxx
 #define MAS_HEADER_FLAG_OLD_EFFECTS (1 << 1) // TODO: Unused flag
@@ -99,6 +121,8 @@ typedef struct tmm_mas_instrument
 
 } mm_mas_instrument;
 
+MM_STATIC_ASSERT(mm_mas_instrument, 12)
+
 #define MAS_INSTR_FLAG_VOL_ENV_EXISTS   (1 << 0) // Volume envelope exists
 #define MAS_INSTR_FLAG_PAN_ENV_EXISTS   (1 << 1) // Panning envelope exists
 #define MAS_INSTR_FLAG_PITCH_ENV_EXISTS (1 << 2) // Pitch envelope exists
@@ -113,6 +137,8 @@ typedef struct
     mm_hword    range : 9; // 1 to 511
 }
 mm_mas_envelope_node;
+
+MM_STATIC_ASSERT(mm_mas_envelope_node, 4)
 
 typedef struct tmm_mas_envelope
 {
@@ -129,6 +155,8 @@ typedef struct tmm_mas_envelope
 
     // ::envelope nodes
 } mm_mas_envelope;
+
+MM_STATIC_ASSERT(mm_mas_envelope, 8)
 
 typedef struct tmm_mas_sample_info
 {
@@ -149,6 +177,8 @@ typedef struct tmm_mas_sample_info
     // ::sample may follow
 } mm_mas_sample_info;
 
+MM_STATIC_ASSERT(mm_mas_sample_info, 12)
+
 typedef struct tmm_mas_pattern
 {
     mm_byte     row_count; // Number of rows of the pattern
@@ -157,6 +187,8 @@ typedef struct tmm_mas_pattern
 
     // ::pattern data
 } mm_mas_pattern;
+
+MM_STATIC_ASSERT(mm_mas_pattern, 1)
 
 typedef struct tmm_mas_gba_sample
 {
@@ -170,6 +202,8 @@ typedef struct tmm_mas_gba_sample
 
     // ::8-bit sample data
 } mm_mas_gba_sample;
+
+MM_STATIC_ASSERT(mm_mas_gba_sample, 12)
 
 typedef struct tmm_mas_ds_sample
 {
@@ -188,6 +222,8 @@ typedef struct tmm_mas_ds_sample
 
     // ::sample data
 } mm_mas_ds_sample;
+
+MM_STATIC_ASSERT(mm_mas_ds_sample, 16)
 
 #define MM_SFORMAT_8BIT         0 // 8 bit
 #define MM_SFORMAT_16BIT        1 // 16 bit

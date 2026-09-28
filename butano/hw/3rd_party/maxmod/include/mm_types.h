@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2025-2026, Antonio Niño Díaz
 
 /****************************************************************************
  *                                                          __              *
  *                ____ ___  ____ __  ______ ___  ____  ____/ /              *
- *               / __ `__ \/ __ `/ |/ / __ `__ \/ __ \/ __  /               *
+ *               / __ '__ \/ __ '/ |/ / __ '__ \/ __ \/ __  /               *
  *              / / / / / / /_/ />  </ / / / / / /_/ / /_/ /                *
  *             /_/ /_/ /_/\__,_/_/|_/_/ /_/ /_/\____/\__,_/                 *
  *                                                                          *
@@ -25,6 +25,7 @@
 extern "C" {
 #endif
 
+#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -33,23 +34,37 @@ extern "C" {
 /// @{
 // ***************************************************************************
 
-typedef unsigned int    mm_word;    ///< Generic unsigned 32-bit value
-typedef signed int      mm_sword;   ///< Generic signed 32-bit value
-typedef unsigned short  mm_hword;   ///< Generic unsigned 16-bit value
-typedef signed short    mm_shword;  ///< Generic signed 16-bit value
-typedef unsigned char   mm_byte;    ///< Generic unsigned 8-bit value
-typedef signed char     mm_sbyte;   ///< Generic signed 8-bit value
+typedef uint32_t mm_word;    ///< Generic unsigned 32-bit value
+typedef int32_t  mm_sword;   ///< Generic signed 32-bit value
+typedef uint16_t mm_hword;   ///< Generic unsigned 16-bit value
+typedef int16_t  mm_shword;  ///< Generic signed 16-bit value
+typedef uint8_t  mm_byte;    ///< Generic unsigned 8-bit value
+typedef int8_t   mm_sbyte;   ///< Generic signed 8-bit value
+
+/// Used to pack structs that must have the defined layout without padding
+#define MM_PACKED __attribute__((packed))
+
+/// Used to verify that the size of a type or variable is the expected one.
+/// This used to verify the sizes of MAS and MSL types.
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L // C11
+#define MM_STATIC_ASSERT(name, size) static_assert(sizeof(name) == (size));
+#else
+#define MM_STATIC_ASSERT(name, size)
+#endif
 
 /// Sound effect handle.
 ///
 /// Returned by mmEffect() and mmEffectEx(). May be used to modify a sound
 /// effect while it is playing.
-typedef unsigned short  mm_sfxhand;
+typedef uint16_t mm_sfxhand;
 
-typedef unsigned char   mm_bool;    ///< Boolean. Non-zero = true, zero = false.
+/// This value represents an invalid mm_sfxhand value.
+#define MM_SFXHAND_INVALID 0
 
-typedef void            *mm_addr;   ///< Memory address (pointer)
-typedef void            *mm_reg;    ///< Hardware register (pointer)
+typedef bool mm_bool;    ///< Boolean. Non-zero = true, zero = false.
+
+typedef void *mm_addr;   ///< Memory address (pointer)
+typedef void *mm_reg;    ///< Hardware register (pointer)
 
 /// Audio modes for the DS system. Pass to mmSelectMode().
 typedef enum
@@ -486,7 +501,8 @@ enum
 
 /// There has been an error while playing the song.
 ///
-/// The value of param is MM_MAIN or MM_JINGLE, depending on the song that has
+/// The value of param is: `layer | tick << 8 | row << 16 | position << 24`
+/// The layer can be MM_MAIN or MM_JINGLE, depending on the song that has
 /// had the error.
 ///
 /// At the moment, the only way this event can be triggered is if Maxmod is

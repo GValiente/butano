@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2021-2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2021-2026, Antonio Niño Díaz
 
 #include <string.h>
 
@@ -9,6 +9,8 @@
 #include <maxmod.h>
 #elif defined(__NDS__)
 #include <maxmod7.h>
+#elif defined(__HEADLESS__)
+#include <maxmod_headless.h>
 #endif
 
 #include <mm_mas.h>
@@ -24,6 +26,9 @@
 #elif defined(__NDS__)
 #include "../ds/arm7/main_ds7.h"
 #include "../ds/arm7/mixer.h"
+#elif defined(__HEADLESS__)
+#include "../headless/main_headless.h"
+#include "../headless/mixer.h"
 #endif
 
 #define releaseLevel    200
@@ -126,7 +131,7 @@ mm_sfxhand mmEffect(mm_word sample_ID)
 mm_sfxhand mmEffectEx(mm_sound_effect *sound)
 {
     if (sound->id >= mmGetSampleCount())
-        return 0;
+        return MM_SFXHAND_INVALID;
 
     int sfx_channel = -1;
     int mix_channel = NO_CHANNEL_AVAILABLE;
@@ -158,12 +163,12 @@ mm_sfxhand mmEffectEx(mm_sound_effect *sound)
 
         sfx_channel = mme_get_free_sfx_channel();
         if (sfx_channel < 0)
-            return 0;
+            return MM_SFXHAND_INVALID;
 
         // Allocate new mixer channel
         mix_channel = mmAllocChannel();
         if (mix_channel == NO_CHANNEL_AVAILABLE)
-            return 0;
+            return MM_SFXHAND_INVALID;
 
         sfx_count = mm_sfx_counter;
 
@@ -198,7 +203,7 @@ mm_sfxhand mmEffectEx(mm_sound_effect *sound)
     // Setup mixer channel
     // -------------------
 
-#if defined(__GBA__)
+#if defined(__GBA__) || defined(__HEADLESS__)
 
     mm_mixer_channel *mix_ch = &mm_mix_channels[mix_channel];
 
@@ -240,7 +245,7 @@ mm_sfxhand mmEffectEx(mm_sound_effect *sound)
             mix_ch->key_on = 0;
             mix_ch->samp = 0;
             mix_ch->tpan = 0;
-            return 0;
+            return MM_SFXHAND_INVALID;
         }
 
         // Turn this into a main RAM address from an offset
@@ -312,7 +317,7 @@ void mmEffectVolume(mm_sfxhand handle, mm_word volume)
     if (mix_channel < 0)
         return;
 
-#if defined(__GBA__)
+#if defined(__GBA__) || defined(__HEADLESS__)
     int shift = 10; // Divide by 1024
 #elif defined(__NDS__)
     int shift = 2; // Divide by 4
@@ -403,15 +408,16 @@ void mmEffectCancelAll(void)
         memset(act_ch, 0, sizeof(mm_active_channel));
 
         // Disabled mixer channel. Disabled status differs between systems.
-#ifdef __NDS__
+#if defined(__GBA__)
+        mix_ch->src = MIXCH_GBA_SRC_STOPPED;
+#elif defined(__HEADLESS__)
+        mix_ch->src = MIXCH_HEADLESS_SRC_STOPPED;
+#elif defined(__NDS__)
         mix_ch->key_on = 0;
         mix_ch->samp = 0;
         // Setting the panning isn't really needed, but it helps the compiler
         // optimize all 3 accesses into one single 32-bit write.
         mix_ch->tpan = 0;
-#endif
-#ifdef __GBA__
-        mix_ch->src = MIXCH_GBA_SRC_STOPPED;
 #endif
     }
 }
@@ -438,6 +444,8 @@ void mmUpdateEffects(void)
         mm_mixer_channel *mix_ch = &mm_mix_channels[mix_channel];
 #if defined(__GBA__)
         if ((mix_ch->src & MIXCH_GBA_SRC_STOPPED) == 0)
+#elif defined(__HEADLESS__)
+        if ((mix_ch->src & MIXCH_HEADLESS_SRC_STOPPED) == 0)
 #elif defined(__NDS__)
         if (mix_ch->samp != 0)
 #endif

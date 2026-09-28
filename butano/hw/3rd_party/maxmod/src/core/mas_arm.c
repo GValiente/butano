@@ -1,26 +1,34 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2021-2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2021-2026, Antonio Niño Díaz
 // Copyright (c) 2023, Lorenzooone (lollo.lollo.rbiz@gmail.com)
 
 #include <stddef.h>
 
+#if defined(__GBA__)
 #include <maxmod.h>
+#elif defined(__NDS__)
+#include <maxmod7.h>
+#elif defined(__HEADLESS__)
+#include <maxmod_headless.h>
+#endif
+
 #include <mm_mas.h>
 
 #include "channel_types.h"
 #include "mas.h"
 #include "player_types.h"
 
+#if defined(__GBA__)
 #define ARM_CODE   __attribute__((target("arm")))
-
-#ifdef __NDS__
-#define IWRAM_CODE
-#endif
-
-#ifdef __GBA__
 #define IWRAM_CODE __attribute__((section(".iwram"), long_call))
+#elif defined(__NDS__)
+#define ARM_CODE   __attribute__((target("arm")))
+#define IWRAM_CODE
+#elif defined(__HEADLESS__)
+#define ARM_CODE
+#define IWRAM_CODE
 #endif
 
 #define COMPR_FLAG_NOTE     (1 << 0)
@@ -303,7 +311,7 @@ mm_byte mmChannelStartACHN(mm_module_channel *module_channel, mm_active_channel 
     else
     {
         // Read notemap entry
-        mm_hword *note_map = (mm_hword*)(((mm_word)instrument) + instrument->note_map_offset);
+        mm_hword *note_map = (mm_hword*)(((uintptr_t)instrument) + instrument->note_map_offset);
         mm_hword notemap_entry = note_map[module_channel->pnoter];
 
         // Write note value

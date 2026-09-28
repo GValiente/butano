@@ -11,7 +11,7 @@ include $(DEVKITARM)/gba_rules
 
 BN_TOOLCHAIN_CFLAGS	:=	-DBN_EWRAM_BSS_SECTION=\".sbss\" -DBN_IWRAM_START=__iwram_start__ \
 						-DBN_IWRAM_TOP=__iwram_top -DBN_IWRAM_END=__fini_array_end -DBN_ROM_START=__text_start \
-						-DBN_ROM_END=__rom_end__ -DBN_TOOLCHAIN_TAG=\"DKA\"
+						-DBN_ROM_END=__rom_end__ -DBN_TOOLCHAIN_TAG=\"DKA\" -DMM_MMUTIL_DEVKITPRO_COMPAT
 BN_GRIT				:=	grit
 BN_MMUTIL			:=	mmutil
 

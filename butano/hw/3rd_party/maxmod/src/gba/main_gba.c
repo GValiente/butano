@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2021-2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2021-2026, Antonio Niño Díaz
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -61,9 +61,11 @@ bool mmInit(mm_gba_system *setup)
     mmSetJingleVolume(0x400);
     mmSetEffectsVolume(0x400);
 
-    mmSetModuleTempo(0x400);
+    mmSetModuleTempo(1024);
+    mmSetModulePitch(1024);
 
-    mmSetModulePitch(0x400);
+    mmSetJingleTempo(1024);
+    mmSetJinglePitch(1024);
 
     mmResetEffects();
 
@@ -121,6 +123,9 @@ bool mmEnd(void)
 
     mmMixerEnd();
 
+    mmModuleCount = 0;
+    mmSampleCount = 0;
+
     if (mm_init_default_buffer)
     {
         free(mm_init_default_buffer);
@@ -137,76 +142,63 @@ void mmFrame(void)
         return;
 
     // Update effects
-
     mmUpdateEffects();
 
-    // Update sub layer
-    // Sub layer has 60hz accuracy
-
-    mppUpdateSub();
-
-    // Update main layer and mix samples.
-    // Main layer is sample-accurate.
-
-    // Copy channels
-    mpp_channels = mm_pchannels;
-
-    // Copy #channels
-    mpp_nchannels = mm_num_mch;
-
-    // layer=0 (main)
-    mpp_clayer = MM_MAIN;
-
-    // Copy layer pointer
-    mpp_layerp = &mmLayerMain; // mpp_layerA
-
-    // Check if main layer is active.
-    // Skip processing if disabled (and just mix samples)
-    if (mpp_layerp->isplaying == 0)
-    {
-        // Main layer isn't active, mix full amount
-        mmMixerMix(mm_mixlen);
-        return;
-    }
-
-    // mixlen is divisible by 2
-    int remaining_len = mm_mixlen;
+    // Note: mm_mixlen is divisible by 2
+    mm_sword remaining_samples = mm_mixlen;
 
     while (1)
     {
-        // Get samples/tick
-        int sample_num = mpp_layerp->tickrate;
+        // Check which of the two layers will have a tick first. If one of them
+        // has reached a tick, process it.
 
-        // Get sample count
-        int sampcount = mpp_layerp->sampcount;
+        mm_sword samples_to_next_event = 0x7FFFFFFF;
 
-        // Calc tickrate-counter
-        sample_num -= sampcount;
+        if (mmLayerMain.isplaying)
+        {
+            mm_sword samples_to_next_tick_main = mmLayerMain.samples_per_tick
+                                               - mmLayerMain.samples_elapsed;
+            if (samples_to_next_tick_main <= 0)
+            {
+                // mmLayerMain.samples_per_tick may change in mppProcessTickMain()
+                mppProcessTickMain();
+                mmLayerMain.samples_elapsed = 0;
+                samples_to_next_tick_main = mmLayerMain.samples_per_tick;
+            }
 
-        if (sample_num < 0)
-            sample_num = 0;
+            samples_to_next_event = samples_to_next_tick_main;
+        }
 
-        if (sample_num >= remaining_len)
-            break; // Mix remaining samples
+        if (mmLayerSub.isplaying)
+        {
+            mm_sword samples_to_next_tick_sub = mmLayerSub.samples_per_tick
+                                              - mmLayerSub.samples_elapsed;
+            if (samples_to_next_tick_sub <= 0)
+            {
+                // mmLayerSub.samples_per_tick may change in mppProcessTickSub()
+                mppProcessTickSub();
+                mmLayerSub.samples_elapsed = 0;
+                samples_to_next_tick_sub = mmLayerSub.samples_per_tick;
+            }
 
-        // Mix and process tick
+            if (samples_to_next_tick_sub < samples_to_next_event)
+                samples_to_next_event = samples_to_next_tick_sub;
+        }
 
-        // Reset sample counter
-        mpp_layerp->sampcount = 0;
+        // Process samples until next event (or until the end of the buffer)
 
-        // subtract from #samples to mix
-        remaining_len -= sample_num;
+        if (samples_to_next_event > remaining_samples)
+            samples_to_next_event = remaining_samples;
 
-        mmMixerMix(sample_num); // mix samples
+        mmMixerMix(samples_to_next_event);
+        mmLayerMain.samples_elapsed += samples_to_next_event;
+        mmLayerSub.samples_elapsed += samples_to_next_event;
 
-        mppProcessTick();
+        remaining_samples -= samples_to_next_event;
+
+        if (remaining_samples == 0)
+            break;
     }
-
-    // Add samples remaining to SAMPCOUNT and mix more samples
-
-    mpp_layerp->sampcount += remaining_len;
-
-    mmMixerMix(remaining_len);
 }
 
 mm_word mmGetModuleCount(void)
@@ -217,4 +209,34 @@ mm_word mmGetModuleCount(void)
 mm_word mmGetSampleCount(void)
 {
     return mmSampleCount;
+}
+
+// -----------------------------------------------------------------------------
+
+mm_word *mppGetSampleNameList(void)
+{
+    mm_word *offset = (mm_word *)&(mp_solution->sampleTable[mmSampleCount + mmModuleCount]);
+
+    mm_word dictOffset = *offset;
+    if (dictOffset == 0xFFFFFFFF)
+        return NULL;
+
+    msl_names_dictionary *dict = (void *)(dictOffset + (uintptr_t)mp_solution);
+    uintptr_t address = (uintptr_t)dict + sizeof(msl_names_dictionary);
+
+    return (mm_word *)address;
+}
+
+mm_word *mppGetModuleNameList(void)
+{
+    mm_word *offset = (mm_word *)&(mp_solution->sampleTable[mmSampleCount + mmModuleCount]);
+
+    mm_word dictOffset = *offset;
+    if (dictOffset == 0xFFFFFFFF)
+        return NULL;
+
+    msl_names_dictionary *dict = (void *)(dictOffset + (uintptr_t)mp_solution);
+    uintptr_t address = (uintptr_t)dict + sizeof(msl_names_dictionary) + dict->samplesDictSize;
+
+    return (mm_word *)address;
 }

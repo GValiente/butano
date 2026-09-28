@@ -1,15 +1,21 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2021-2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2021-2026, Antonio Niño Díaz
 
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 
+#if defined(__GBA__)
 #include <maxmod.h>
-#include <mm_mas.h>
-#include <mm_msl.h>
+#elif defined(__NDS__)
+#include <maxmod7.h>
+#elif defined(__HEADLESS__)
+#include <maxmod_headless.h>
+#else
+#error "Unknown platform"
+#endif
 
 #include "channel_types.h"
 #include "mas.h"
@@ -21,14 +27,15 @@
 #elif defined(__NDS__)
 #include "../ds/arm7/main_ds7.h"
 #include "../ds/arm7/mixer.h"
-#endif
-
-#ifdef __NDS__
-#define IWRAM_CODE
+#elif defined(__HEADLESS__)
+#include "headless/main_headless.h"
+#include "headless/mixer.h"
 #endif
 
 #ifdef __GBA__
 #define IWRAM_CODE __attribute__((section(".iwram"), long_call))
+#else
+#define IWRAM_CODE
 #endif
 
 #define S3M_FREQ_DIVIDER        57268224 // (s3m,xm,it)
@@ -70,11 +77,13 @@ mpl_layer_information *mpp_layerp;
 // Pointer to channel array during processing.
 mm_module_channel *mpp_channels;
 
-// Master tempo scaler.
-static mm_word mm_mastertempo;
+// Master tempo and pitch scalers for the main module
+static mm_word mm_master_module_tempo; // 512 to 2048 (1024 = 100%)
+static mm_word mm_master_module_pitch;
 
-// Master pitch scaler.
-mm_word mm_masterpitch;
+// Master tempo and pitch scalers for the jingle
+static mm_word mm_master_jingle_tempo; // 512 to 2048 (1024 = 100%)
+static mm_word mm_master_jingle_pitch;
 
 // Number of channels allocated for current layer being processed
 mm_byte mpp_nchannels;
@@ -108,47 +117,36 @@ static void mpp_setbpm(mpl_layer_information *layer_info, mm_word bpm)
 {
     layer_info->bpm = bpm;
 
-#if defined(__GBA__)
-
+    mm_word scaler;
     if (mpp_clayer == MM_MAIN)
-    {
-        // Multiply by master tempo
-        mm_word tempo = (mm_mastertempo * bpm) >> 10;
-
-        // Samples per tick ~= mixfreq / (bpm / 2.5) ~= mixfreq * 2.5 / bpm
-        mm_word rate = mm_bpmdv / tempo;
-
-        // Make it a multiple of two
-        rate &= ~1;
-
-        layer_info->tickrate = rate;
-    }
+        scaler = mm_master_module_tempo;
     else
-    {
-        // SUB LAYER, time using vsync (rate = (bpm / 2.5) / 59.7)
+        scaler = mm_master_jingle_tempo;
 
-        layer_info->tickrate = (bpm << 15) / 149;
-    }
+#if defined(__GBA__) || defined(__HEADLESS__)
+
+    // Multiply by master tempo
+    mm_word tempo = (scaler * bpm) >> 10;
+
+    // Samples per tick ~= mixfreq / (bpm / 2.5) ~= mixfreq * 2.5 / bpm
+    mm_word rate = mm_bpmdv / tempo;
+
+    // Make it a multiple of two
+    rate &= ~1;
+
+    layer_info->samples_per_tick = rate;
 
 #elif defined(__NDS__)
 
     // vsync = ~59.8261 HZ (says GBATEK)
     // divider = hz * 2.5 * 64
 
-    if (mpp_clayer == MM_MAIN)
-    {
-        // Multiply by master tempo
-        bpm = bpm * mm_mastertempo;
-        bpm <<= 16 + 6 - 10;
-    }
-    else
-    {
-        bpm <<= 16 + 6;
-    }
+    // Multiply by master tempo (it has a fractionary part of 10 bits)
+    uint64_t temp = (bpm * scaler) << (16 + 6 - 10);
 
     // using 60hz vsync for timing
     // Should this be better approximated?!
-    layer_info->tickrate = (bpm / mpp_resolution) >> 1;
+    layer_info->tickrate = (temp / mpp_resolution) >> 1;
 
 #endif
 }
@@ -166,9 +164,9 @@ static void mpp_suspend(mm_layer_type layer)
         if ((act_ch->flags & (MCAF_SUB | MCAF_EFFECT)) != (layer << 6))
             continue;
 
-#ifdef __GBA__
+#if defined(__GBA__) || defined(__HEADLESS__)
         mix_ch->freq = 0;
-#else
+#elif defined(__NDS__)
         mix_ch->freq = 0;
         mix_ch->vol = 0;
 #endif
@@ -251,7 +249,7 @@ void mmSetJingleVolume(mm_word volume)
 
 static void mpps_backdoor(mm_word id, mm_pmode mode, mm_layer_type layer)
 {
-#if defined(__GBA__)
+#if defined(__GBA__) || defined(__HEADLESS__)
     // In the MSL format, the module table goes right after the sample table,
     // but the size of both isn't fixed. We need to calculate the start of the
     // module table by checking how big the sample table is.
@@ -317,15 +315,16 @@ static void mpp_resetchannels(mm_module_channel *channels,
         memset(act_ch, 0, sizeof(mm_active_channel));
 
         // Disabled mixer channel. Disabled status differs between systems.
-#ifdef __NDS__
+#if defined(__NDS__)
         mix_ch->key_on = 0;
         mix_ch->samp = 0;
         // Setting the panning isn't really needed, but it helps the compiler
         // optimize all 3 accesses into one single 32-bit write.
         mix_ch->tpan = 0;
-#endif
-#ifdef __GBA__
+#elif defined(__GBA__)
         mix_ch->src = MIXCH_GBA_SRC_STOPPED;
+#elif defined(__HEADLESS__)
+        mix_ch->src = MIXCH_HEADLESS_SRC_STOPPED;
 #endif
     }
 }
@@ -468,11 +467,30 @@ void mmSetModuleTempo(mm_word tempo)
     if (tempo < min)
         tempo = min;
 
-    mm_mastertempo = tempo;
+    mm_master_module_tempo = tempo;
     mpp_clayer = MM_MAIN;
 
     if (mmLayerMain.bpm != 0)
        mpp_setbpm(&mmLayerMain, mmLayerMain.bpm);
+}
+
+void mmSetJingleTempo(mm_word tempo)
+{
+    // Clamp value: 512->2048
+
+    mm_word max = 2048;
+    if (tempo > max)
+        tempo = max;
+
+    mm_word min = 512;
+    if (tempo < min)
+        tempo = min;
+
+    mm_master_jingle_tempo = tempo;
+    mpp_clayer = MM_JINGLE;
+
+    if (mmLayerSub.bpm != 0)
+       mpp_setbpm(&mmLayerSub, mmLayerSub.bpm);
 }
 
 // Reset pattern variables
@@ -577,7 +595,22 @@ void mmSetModulePitch(mm_word pitch)
     if (pitch < min)
         pitch = min;
 
-    mm_masterpitch = pitch;
+    mm_master_module_pitch = pitch;
+}
+
+void mmSetJinglePitch(mm_word pitch)
+{
+    // Clamp value: 512->2048
+
+    mm_word max = 2048;
+    if (pitch > max)
+        pitch = max;
+
+    mm_word min = 512;
+    if (pitch < min)
+        pitch = min;
+
+    mm_master_jingle_pitch = pitch;
 }
 
 #ifdef __NDS__
@@ -595,40 +628,6 @@ void mmSetResolution(mm_word divider)
     if (mmLayerSub.bpm != 0)
        mpp_setbpm(&mmLayerSub, mmLayerSub.bpm);
 }
-
-#endif
-
-#ifdef __GBA__
-
-// Update sub-module/jingle, this is bad for some reason...
-void mppUpdateSub(void)
-{
-    if (mmLayerSub.isplaying == 0)
-        return;
-
-    mpp_channels = mm_schannels;
-    mpp_nchannels = MP_SCHANNELS;
-    mpp_clayer = MM_JINGLE;
-    mpp_layerp = &mmLayerSub;
-
-    mm_word tickrate = mmLayerSub.tickrate;
-    mm_word tickfrac = mmLayerSub.tickfrac;
-
-    tickfrac = tickfrac + (tickrate << 1);
-    mmLayerSub.tickfrac = tickfrac;
-
-    tickfrac >>= 16;
-
-    while (tickfrac > 0)
-    {
-        mppProcessTick();
-        tickfrac--;
-    }
-}
-
-#endif
-
-#ifdef __NDS__
 
 // Update module layer
 static void mppUpdateLayer(mpl_layer_information *layer)
@@ -696,7 +695,7 @@ IWRAM_CODE void mpp_Channel_NewNote(mm_module_channel *module_channel, mpl_layer
     else if (dct == 1) // DCT Note
     {
         // Get pattern note and translate to real note with note/sample map
-        mm_hword *note_map = (mm_hword*)(((mm_word)instrument) + instrument->note_map_offset);
+        mm_hword *note_map = (mm_hword*)(((uintptr_t)instrument) + instrument->note_map_offset);
         mm_byte note = note_map[module_channel->note - 1] & 0xFF;
 
         // Compare it with the last note
@@ -706,7 +705,7 @@ IWRAM_CODE void mpp_Channel_NewNote(mm_module_channel *module_channel, mpl_layer
     else if (dct == 2) // DCT Sample
     {
         // Get pattern note and translate to real sample with note/sample map
-        mm_hword *note_map = (mm_hword*)(((mm_word)instrument) + instrument->note_map_offset);
+        mm_hword *note_map = (mm_hword*)(((uintptr_t)instrument) + instrument->note_map_offset);
         mm_byte sample = note_map[module_channel->note - 1] >> 8;
 
         // Compare it with achn's sample
@@ -1589,7 +1588,11 @@ static void mpph_FastForward(mpl_layer_information *layer, mm_word rows_to_skip)
             mppStop();
 
             if (mmCallback != NULL)
-                mmCallback(MMCB_SONGERROR, mpp_clayer);
+            {
+                mm_word param = mpp_clayer | (layer->tick << 8) | (layer->row << 16) |
+                                (layer->position << 24);
+                mmCallback(MMCB_SONGERROR, param);
+            }
 
             break;
         }
@@ -1762,7 +1765,11 @@ IWRAM_CODE void mppProcessTick(void)
             mppStop();
 
             if (mmCallback != NULL)
-                mmCallback(MMCB_SONGERROR, mpp_clayer);
+            {
+                mm_word param = mpp_clayer | (layer->tick << 8) | (layer->row << 16) |
+                                (layer->position << 24);
+                mmCallback(MMCB_SONGERROR, param);
+            }
 
             return;
         }
@@ -1813,7 +1820,8 @@ IWRAM_CODE void mppProcessTick(void)
         act_ch++;
     }
 
-    mm_word songtick_callback_param = mpp_clayer | layer->tick << 8 | layer->row << 16 | layer->position << 24;
+    mm_word songtick_callback_param = mpp_clayer | (layer->tick << 8) |
+                                      (layer->row << 16) | (layer->position << 24);
 
     // This is the inlined code of mppProcessTick_incframe()
 
@@ -1881,6 +1889,26 @@ mppt_POST_TICK:
 
     if (mmCallback != NULL)
         mmCallback(MMCB_SONGTICK, songtick_callback_param);
+}
+
+void mppProcessTickMain(void)
+{
+    mpp_channels = mm_pchannels; // Copy channels pointer
+    mpp_nchannels = mm_num_mch; // Copy #channels
+    mpp_clayer = MM_MAIN;
+    mpp_layerp = &mmLayerMain; // Copy layer pointer
+
+    mppProcessTick();
+}
+
+void mppProcessTickSub(void)
+{
+    mpp_channels = mm_schannels;
+    mpp_nchannels = MP_SCHANNELS;
+    mpp_clayer = MM_JINGLE;
+    mpp_layerp = &mmLayerSub;
+
+    mppProcessTick();
 }
 
 // Note: This is also used for panning slide
@@ -2504,6 +2532,9 @@ static void mppe_SetTempo(mm_word param, mpl_layer_information *layer)
 
         int bpm = layer->bpm + (param & 0xF);
 
+        // Slide up/down are only supported in IT, where the BPM are a 8-bit
+        // value. In IT the BPM is a 16-bit value but IT doesn't support the
+        // slide commands.
         if (bpm > 255)
             bpm = 255;
 
@@ -3276,11 +3307,11 @@ static mm_mixer_channel *mpp_Update_ACHN_notest_update_mix(mpl_layer_information
     if (sample->msl_id == 0xFFFF)
     {
         // The sample has been provided
-#ifdef __GBA__
+#if defined(__GBA__) || defined(__HEADLESS__)
         mm_mas_gba_sample *gba_sample = (mm_mas_gba_sample *)&(sample->data[0]);
 
         mix_ch->src = (uintptr_t)&(gba_sample->data[0]);
-#else
+#elif defined(__NDS__)
         mm_mas_ds_sample *ds_sample = (mm_mas_ds_sample *)&(sample->data[0]);
 
         mix_ch->samp = ((mm_word)ds_sample) - 0x2000000;
@@ -3291,15 +3322,15 @@ static mm_mixer_channel *mpp_Update_ACHN_notest_update_mix(mpl_layer_information
     else
     {
         // Get sample from solution
-#ifdef __GBA__
+#if defined(__GBA__) || defined(__HEADLESS__)
         msl_head *head = mp_solution;
-        mm_word sample_offset = (mm_word)head->sampleTable[sample->msl_id];
+        uintptr_t sample_offset = (uintptr_t)head->sampleTable[sample->msl_id];
 
         mm_byte *sample_addr = ((mm_byte *)mp_solution) + sample_offset;
         mm_mas_gba_sample *gba_sample = (mm_mas_gba_sample *)(sample_addr + sizeof(mm_mas_prefix));
 
         mix_ch->src = (uintptr_t)(&(gba_sample->data[0]));
-#else
+#elif defined(__NDS__)
         mm_word source = mmSampleBank[sample->msl_id];
         source &= 0xFFFFFF; // Mask out counter value
 
@@ -3322,9 +3353,9 @@ static mm_mixer_channel *mpp_Update_ACHN_notest_update_mix(mpl_layer_information
     // The GBA only supports 8-bit samples, so we can do the final calculation
     // here. The DS supports 8 and 16-bit samples, so we need to do the final
     // calculation in mmMix() when the note starts.
-#ifdef __GBA__
+#if defined(__GBA__) || defined(__HEADLESS__)
     mix_ch->read = ((mm_word)mpp_vars.sampoff) << (MP_SAMPFRAC + 8);
-#else
+#elif defined(__NDS__)
     mix_ch->read = mpp_vars.sampoff;
 #endif
 
@@ -3358,12 +3389,14 @@ static mm_word mpp_Update_ACHN_notest_set_pitch_volume(mpl_layer_information *la
         mm_word value = ((period >> 8) * (speed << 2)) >> 8;
 
         if (mpp_clayer == MM_MAIN)
-            value = (value * mm_masterpitch) >> 10;
+            value = (value * mm_master_module_pitch) >> 10;
+        else
+            value = (value * mm_master_jingle_pitch) >> 10;
 
-#ifdef __GBA__
+#if defined(__GBA__) || defined(__HEADLESS__)
         const mm_word scale = (4096 * 65536) / 15768;
         mix_ch->freq = (scale * value) >> 16;
-#else
+#elif defined(__NDS__)
         mix_ch->freq = (MIXER_SCALE * value) >> (16 + 1);
 #endif
     }
@@ -3376,12 +3409,14 @@ static mm_word mpp_Update_ACHN_notest_set_pitch_volume(mpl_layer_information *la
             mm_word value = MOD_FREQ_DIVIDER_PAL / period;
 
             if (mpp_clayer == MM_MAIN)
-                value = (value * mm_masterpitch) >> 10;
+                value = (value * mm_master_module_pitch) >> 10;
+            else
+                value = (value * mm_master_jingle_pitch) >> 10;
 
-#ifdef __GBA__
+#if defined(__GBA__) || defined(__HEADLESS__)
             const mm_word scale = (4096 * 65536) / 15768;
             mix_ch->freq = (scale * value) >> 16;
-#else
+#elif defined(__NDS__)
             mix_ch->freq = (MIXER_SCALE * value) >> (16 + 1);
 #endif
         }
@@ -3463,9 +3498,11 @@ mppt_achn_not_audible:
     // Stop channel
     // ------------
 
-#ifdef __GBA__
+#if defined(__GBA__)
     mix_ch->src = MIXCH_GBA_SRC_STOPPED;
-#else
+#elif defined(__HEADLESS__)
+    mix_ch->src = MIXCH_HEADLESS_SRC_STOPPED;
+#elif defined(__NDS__)
     mix_ch->samp = 0;
     mix_ch->tpan = 0;
     mix_ch->key_on = 0;
@@ -3485,10 +3522,13 @@ mppt_achn_audible:
     mix_ch->vol = volume;
 
     // Check if mixer channel has ended
-#ifdef __GBA__
+#if defined(__GBA__)
     if (mix_ch->src & MIXCH_GBA_SRC_STOPPED)
     {
-#else
+#elif defined(__HEADLESS__)
+    if (mix_ch->src & MIXCH_HEADLESS_SRC_STOPPED)
+    {
+#elif defined(__NDS__)
     if (mix_ch->samp == 0)
     {
 #endif
@@ -3501,9 +3541,11 @@ mppt_achn_audible:
         // TODO: This isn't required because we've just checked if the mixer
         // channel is stopped
         // Stop mixer channel
-#ifdef __GBA__
+#if defined(__GBA__)
         mix_ch->src = MIXCH_GBA_SRC_STOPPED;
-#else
+#elif defined(__HEADLESS__)
+        mix_ch->src = MIXCH_HEADLESS_SRC_STOPPED;
+#elif defined(__NDS__)
         mix_ch->samp = 0;
         mix_ch->tpan = 0;
         mix_ch->key_on = 0;
@@ -3524,12 +3566,10 @@ mppt_achn_audible:
     else if (newpan > 255)
         newpan = 255;
 
-#ifdef __NDS__
-    mix_ch->tpan = newpan >> 1;
-#endif
-
-#ifdef __GBA__
+#if defined(__GBA__) || defined(__HEADLESS__)
     mix_ch->pan = newpan;
+#elif defined(__NDS__)
+    mix_ch->tpan = newpan >> 1;
 #endif
 
     return;
@@ -3540,7 +3580,7 @@ mm_word mpp_Update_ACHN_notest(mpl_layer_information *layer, mm_active_channel *
 {
     // TODO: This variable was left uninitialized in the original assembly code,
     // so this was the actual result of that code.
-    mm_mixer_channel *mix_ch = (mm_mixer_channel *)ch;
+    mm_mixer_channel *mix_ch = (mm_mixer_channel *)(uintptr_t)ch;
 
     // ------------------------------------------------------------------------
     // Process Envelope

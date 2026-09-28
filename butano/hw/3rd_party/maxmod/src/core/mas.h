@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2021-2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2021-2025, Antonio Niño Díaz
 
 #ifndef MM_CORE_MAS_H__
 #define MM_CORE_MAS_H__
@@ -42,7 +42,10 @@ mm_callback mmGetEventHandler(void);
 void mmSetResolution(mm_word);
 void mmPulse(void);
 void mppUpdateSub(void);
+
 void mppProcessTick(void);
+void mppProcessTickMain(void);
+void mppProcessTickSub(void);
 
 mm_word mmAllocChannel(void);
 void mmUpdateChannel_T0(mm_module_channel*, mpl_layer_information*, mm_byte);

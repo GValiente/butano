@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2025-2026, Antonio Niño Díaz
 
 /****************************************************************************
  *                                                          __              *
  *                ____ ___  ____ __  ______ ___  ____  ____/ /              *
- *               / __ `__ \/ __ `/ |/ / __ `__ \/ __ \/ __  /               *
+ *               / __ '__ \/ __ '/ |/ / __ '__ \/ __ \/ __  /               *
  *              / / / / / / /_/ />  </ / / / / / /_/ / /_/ /                *
  *             /_/ /_/ /_/\__,_/_/|_/_/ /_/ /_/\____/\__,_/                 *
  *                                                                          *
@@ -25,13 +25,25 @@ extern "C" {
 
 #include <mm_types.h>
 
-typedef struct tmslheaddata
+typedef struct MM_PACKED tmslheaddata
 {
     mm_hword    sampleCount;
     mm_hword    moduleCount;
     mm_word     reserved[2]; // This contains the string "*maxmod*"
 }
 msl_head_data;
+
+MM_STATIC_ASSERT(msl_head_data, 12)
+
+typedef struct
+{
+    mm_word    samplesDictSize; // In bytes
+    mm_word    modulesDictSize; // In bytes
+    mm_byte    dict[];
+}
+msl_names_dictionary;
+
+MM_STATIC_ASSERT(msl_names_dictionary, 8)
 
 /// This structure represents a sound bank file.
 ///
@@ -51,12 +63,15 @@ typedef struct tmslhead
     msl_head_data   head_data;
 
     // The table of samples is followed by the list of modules. They are both
-    // variable-length, so you need to check head_data.sampleCOunt to know where
+    // variable-length, so you need to check head_data.sampleCount to know where
     // the module table starts.
-    mm_addr         sampleTable[]; // [sampleCount]
-    //mm_addr         moduleTable[moduleCount];
+    mm_word         sampleTable[]; // [sampleCount]
+    //mm_word         moduleTable[moduleCount];
+    //mm_word         namesDictionaryOffset; // 0xFFFFFFFF = Not present
 }
 msl_head;
+
+MM_STATIC_ASSERT(msl_head, 12)
 
 #ifdef __cplusplus
 }

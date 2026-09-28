@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2021-2025, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2021-2025, Antonio Niño Díaz
 
 #ifndef MM_CORE_PLAYER_TYPES_H__
 #define MM_CORE_PLAYER_TYPES_H__
@@ -14,9 +14,9 @@ typedef struct {
     mm_byte     position;   // Module sequence position
     mm_byte     nrows;      // Number of rows in current pattern
     mm_byte     global_volume; // Global volume multiplier
-    mm_byte     speed;      // Speed of module (ticks / row)
+    mm_hword    speed;      // Speed of module (ticks / row)
     mm_byte     isplaying;  // Module is active
-    mm_byte     bpm;        // Tempo of module
+    mm_hword    bpm;        // Tempo of module
     mm_word    *insttable;  // Table of offsets (from mm_mas_head base) to instrument data
     mm_word    *samptable;  // Table of offsets (from mm_mas_head base) to sample data
     mm_word    *patttable;  // Table of offsets (from mm_mas_head base) to pattern data
@@ -35,10 +35,13 @@ typedef struct {
     mm_byte     ploop_jump;
     mm_byte     valid;
 
-    mm_hword    tickrate;  // 1.15 fixed point OR sample count
     union {
-        mm_hword    sampcount; // sample timing
-        mm_hword    tickfrac;  // vsync  timing 0.16 fixed point
+        mm_hword    tickrate;         // sample count (NDS)
+        mm_hword    samples_per_tick; // sample count between ticks (GBA, headless)
+    };
+    union {
+        mm_hword    tickfrac;         // vsync timing 0.16 fixed point (NDS)
+        mm_hword    samples_elapsed;  // samples processed since the last tick (GBA, headless)
     };
 
     mm_byte     mode;

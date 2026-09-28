@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: ISC
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
-// Copyright (c) 2021, Antonio Niño Díaz (antonio_nd@outlook.com)
+// Copyright (c) 2021, Antonio Niño Díaz
 
 #ifndef MM_GBA_MIXER_H
 #define MM_GBA_MIXER_H

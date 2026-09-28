@@ -2,6 +2,8 @@
 //
 // Copyright (c) 2008, Mukunda Johnson (mukunda@maxmod.org)
 
+#ifndef MM_GBA_MIXER_IN_C
+
 // timer freq = 2^24 / mixfreq
 // mixlen ~= mixfreq * 0.01673
 // recommended mixing frequencies: 5734, 7884, 10512, 13379, 15768, 18157,
@@ -844,3 +846,5 @@ mmMix_Remainder:
 #undef rsampb
 
 .end
+
+#endif // MM_GBA_MIXER_IN_C

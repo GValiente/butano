@@ -34,10 +34,11 @@
  *   <a href="https://devkitpro.org/">devkitARM</a>.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>'s conversion tool provided by
  *   <a href="https://blocksds.skylyrac.net">BlocksDS</a> is more robust, so using Butano with
- *   <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> could make your song work.
+ *   <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> could make your songs work.
  *
- * If you want to use <a href="https://devkitpro.org/">devkitARM</a>, go to @ref getting_started_dka.
- * If you want to use <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>, go to @ref getting_started_wt.
+ * So:
+ * * If you want to use <a href="https://devkitpro.org/">devkitARM</a>, go to @ref getting_started_dka.
+ * * If you want to use <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>, go to @ref getting_started_wt.
  */
 
 #endif

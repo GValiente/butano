@@ -16,10 +16,7 @@
  *
  * @section getting_started_wt_supported_platforms Supported platforms
  *
- * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> supports Windows and Unix-like platforms.
- *
- * If you want to develop on macOS, you should try to use a Linux virtual machine or
- * @ref getting_started "devkitARM" instead.
+ * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> supports Windows, macOS and Unix-like platforms.
  *
  *
  * @section getting_started_wt_emulator GBA emulator

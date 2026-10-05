@@ -156,8 +156,9 @@
  *
  * They usually go away with a full rebuild of your project (`make clean` before `make`).
  *
- * Also make sure you update <a href="https://devkitpro.org/">devkitARM</a> when you update Butano,
- * since some Butano features don't work with older devkitARM releases.
+ * Also make sure you update <a href="https://devkitpro.org/">devkitARM</a>
+ * or <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> when you update Butano, since some Butano features
+ * don't work with older releases.
  *
  *
  * @subsection faq_destroy_ptr How to destroy sprites and backgrounds?

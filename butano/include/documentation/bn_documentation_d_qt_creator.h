@@ -38,7 +38,8 @@
  * @section qt_creator_compilers Compilers
  *
  * Once you have Qt Creator installed, add <a href="https://devkitpro.org/">devkitARM</a>
- * GCC and G++ compilers from `Tools -> Options -> Kits -> Compilers`:
+ * or <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> GCC and G++ compilers
+ * from `Tools -> Options -> Kits -> Compilers`:
  *
  * @image html qt_creator/qt_1.png
  *
@@ -47,8 +48,8 @@
  *
  * @section qt_creator_kit Kit
  *
- * Add a new kit with the previous <a href="https://devkitpro.org/">devkitARM</a> compilers from
- * `Tools -> Options -> Kits -> Kits`:
+ * Add a new kit with the previous <a href="https://devkitpro.org/">devkitARM</a>
+ * or <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> compilers from `Tools -> Options -> Kits -> Kits`:
  *
  * @image html qt_creator/qt_3.png
  *

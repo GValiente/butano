@@ -19,7 +19,7 @@
  * Butano is built on top of the <a href="https://devkitpro.org/">devkitARM</a> toolchain,
  * so it supports Windows, macOS and Unix-like platforms.
  *
- * There's also experimental support for <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>.
+ * There's also support for <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>.
  * If you want to try it, go to @ref getting_started_wt.
  *
  *

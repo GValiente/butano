@@ -9,8 +9,6 @@
 /**
  * @page getting_started_wt Getting started with Wonderful Toolchain
  *
- * Downloading Butano and building their games and examples is easy and doesn't take too much time, pinky promise.
- *
  * @tableofcontents
  *
  *

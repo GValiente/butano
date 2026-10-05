@@ -3,60 +3,45 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef BN_DOCUMENTATION_GETTING_STARTED_WT_H
-#define BN_DOCUMENTATION_GETTING_STARTED_WT_H
+#ifndef BN_DOCUMENTATION_GETTING_STARTED_DKA_H
+#define BN_DOCUMENTATION_GETTING_STARTED_DKA_H
 
 /**
- * @page getting_started_wt Getting started with Wonderful Toolchain
+ * @page getting_started_dka Getting started with devkitARM
  *
  * Downloading Butano and building their games and examples is easy and doesn't take too much time, pinky promise.
  *
  * @tableofcontents
  *
  *
- * @section getting_started_wt_supported_platforms Supported platforms
+ * @section getting_started_dka_supported_platforms Supported platforms
  *
- * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> supports Windows, macOS and Unix-like platforms.
- *
- *
- * @section getting_started_wt_emulator GBA emulator
- *
- * Before anything, it is convenient to have a GBA emulator at hand,
- * so you don't have to test in real hardware each change you make in your project.
- *
- * For developing GBA games, <a href="https://mgba.io">mGBA</a>,
- * <a href="https://github.com/nba-emu/NanoBoyAdvance">NanoBoyAdvance</a>,
- * <a href="https://github.com/SourMesen/Mesen2">Mesen</a> and the debug version of
- * <a href="https://problemkaputt.de/gba.htm">No$gba</a> are recommended.
+ * <a href="https://devkitpro.org/">devkitARM</a> supports Windows, macOS and Unix-like platforms.
  *
  *
- * @section getting_started_wt_wt Wonderful Toolchain
+ * @section getting_started_dka_devkitARM devkitARM
  *
- * The next step is to download and install <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>
- * using <a href="https://wonderful.asie.pl/docs/getting-started/">this tutorial</a>.
+ * The first step is to download and install devkitARM
+ * from <a href="https://devkitpro.org/wiki/Getting_Started">devkitPro</a>:
+ * * Install the `GBA Development` component.
+ * * Install **all members** in the `gba-dev` group if the installer asks for which members to install.
+ * * Make sure that **with the system console (not with the MSYS2 one)** you are able to build and run
+ *   some of the examples located in `/path/to/devkitpro/examples/gba`:
+ *   * By default, devkitARM is installed in `C:\devkitPro\` on Windows and in `/opt/devkitpro/` on Ubuntu.
+ *   * To build a devkitARM example, open the system console, `cd` to the folder of the example you want to build
+ *     and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
+ *   * In particular, you should build and run the Maxmod example located in
+ *     `/path/to/devkitpro/examples/gba/audio/maxmod` before going on. Maybe you're going to need
+ *     to copy the example folder to another place to avoid having permission issues when building it.
  *
- * From now on, this guide assumes a Windows environment, but the steps to take for Unix-like platforms
- * should be similar.
+ * @image html devkitpro.png
  *
- * @image html wt_installer.png
+ * @image html devkitpro_ubuntu.png
  *
- * Once installed, open the Wonderful Toolchain Shell and run the following commands,
- * accepting the default options when prompted:
- *
- * @code{.cpp}
- * pacman -S make
- * wf-pacman -Syu wf-tools
- * wf-pacman -Syu wf-tools
- * wf-config repo enable blocksds
- * wf-pacman -Syu
- * wf-pacman -S target-gba
- * wf-pacman -S blocksds-toolchain
- * @endcode
- *
- * @image html wt_pacman.png
+ * @image html devkitpro_maxmod.png
  *
  *
- * @section getting_started_wt_python Python
+ * @section getting_started_dka_python Python
  *
  * To execute some of the tools needed to include image and audio files in your project,
  * you are going to need <a href="https://www.python.org/">Python</a>.
@@ -67,40 +52,43 @@
  * @image html python_windows.png
  *
  * Both Python 2 and Python 3 are supported for now, but Python 2 is not going to be supported for too long.
- * Make sure you can execute Python from the Wonderful Toolchain Shell:
+ * Make sure you can execute Python from the system console:
  *
- * @image html wt_python.png
+ * @image html python.png
+ *
+ * @image html python_ubuntu.png
  *
  * If you have an Ubuntu/Debian based system with `python3` instead of `python`, you can:
  * * Specify `python3` as the Python interpreter path in the `Makefile` of the project you are trying to build.
  * * Install `python-is-python3`: `sudo apt-get install python-is-python3`.
  *
  *
- * @section getting_started_wt_butano Butano
+ * @section getting_started_dka_butano Butano
  *
  * Download or clone the latest Butano release from <a href="https://github.com/GValiente/butano">GitHub</a>
  * and put it in a path without spaces or anything weird, please.
  *
  *
- * @section getting_started_wt_examples Butano examples
+ * @section getting_started_dka_examples Butano examples
  *
  * Butano contains multiple @ref examples "examples" of most aspects of the engine.
  *
  * Make sure that you are able to build and run some of them:
  * * They are located in `/path/to/butano/examples/`.
- * * To build a Butano example, open the Wonderful Toolchain Shell, `cd` to the folder of the example
- *   you want to build and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
- *
- * @image html wt_example_1.png
+ * * As with <a href="https://devkitpro.org/">devkitARM</a> examples, to build a Butano example,
+ *   open the system console (not the MSYS2 one), `cd` to the folder of the example you want to build
+ *   and type `make -j8` if your CPU has 8 cores, `make -j16` if it has 16 and so on.
  *
  * When trying to build the `sprites` example, if everything went as expected,
  * a `sprites.gba` file should have been generated in the `sprites` folder,
  * and the system console should show something like this:
  *
- * @image html wt_example_2.png
+ * @image html example_build.png
+ *
+ * @image html example_build_ubuntu.png
  *
  *
- * @section getting_started_wt_template Make your own GBA game!
+ * @section getting_started_dka_template Make your own GBA game!
  *
  * If you were able to build and run some examples, congrats! Now you can make your own GBA game with Butano.
  * To do that:

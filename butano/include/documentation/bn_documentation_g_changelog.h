@@ -16,6 +16,16 @@
  *
  * * bn::sound_item::play_optional and bn::sound_item::play_with_priority_optional added.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> updated.
+ * * <a href="https://drkylstein.itch.io/a-betty-and-claude-cartoon">A Betty and Claude Cartoon</a>,
+ *   <a href="https://fralacticus.itch.io/ounfo-tan-sispann">Ounfò Tan Sispann</a>,
+ *   <a href="https://daretosquare.itch.io/dare-to-doku">Dare to Doku</a>,
+ *   <a href="https://saraitakemoto.itch.io/pinball-galaxy-demo-ver">Pinball Galaxy</a>,
+ *   <a href="https://coffeepasta.itch.io/witchxbullet">Witch×Bullet</a>,
+ *   <a href="https://nostabyte.itch.io/xo89">xo89</a>,
+ *   <a href="https://lipucka.itch.io/mordoboy-gba">MORDOBOY</a>,
+ *   <a href="https://stuck-pixel-studio.itch.io/knock-time">Knock Time</a>,
+ *   <a href="https://ticolol.itch.io/doom-escaping">Doom Escaping</a> and
+ *   <a href="https://rodrigocard.itch.io/aurora-mission">Aurora Mission</a> added to `README.md`.
  * * @ref changelog fixed.
  *
  *

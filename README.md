@@ -134,6 +134,11 @@ the world as a cat, meet new people, learn new languages, face difficult foes an
 
 ![](docs_tools/images/feline_title.png) ![](docs_tools/images/feline_gameplay.png)
 
+* [A Betty and Claude Cartoon](https://drkylstein.itch.io/a-betty-and-claude-cartoon): play as outlaw duo 
+Betty Squeaker and Claude Burrow as they try to get away from the cops and make it to the state border.
+
+![](docs_tools/images/betty_and_claude_title.png) ![](docs_tools/images/betty_and_claude_gameplay.png)
+
 * [Symbol★Merged](https://copyrat90.itch.io/sym-merged): a puzzle platformer game where you can merge 
 items (symbols) in hands, and use the superpower of the merged symbol.
 
@@ -148,6 +153,11 @@ tries to survive the extreme climate of a post-apocalyptic desert while collecti
 with story and create modes.
 
 ![](docs_tools/images/notenogram_title.png) ![](docs_tools/images/notenogram_gameplay.png)
+
+* [Ounfò Tan Sispann](https://fralacticus.itch.io/ounfo-tan-sispann): forewarning: this experience harbors 
+disquieting scenes and a stiffing atmosphere.
+
+![](docs_tools/images/ounfo_tan_sispann_title.png) ![](docs_tools/images/ounfo_tan_sispann_gameplay.png)
 
 * [LRO - Luggage Retrieval Officer](https://foopod.itch.io/lro) ([working source code](https://github.com/GValiente/lro)): 
 you will work your way to being a highly ranked member off staff, retrieving important missing luggage
@@ -174,6 +184,11 @@ through challenging platforming scenarios.
 
 ![](docs_tools/images/heartwrench_advance_title.png) ![](docs_tools/images/heartwrench_advance_gameplay.png)
 
+* [Dare to Doku](https://daretosquare.itch.io/dare-to-doku): a 'star battle' puzzle game for GBA set in the setting of
+[Dare to Square](https://dare-to-square.com).
+
+![](docs_tools/images/dare_to_doku_title.png) ![](docs_tools/images/dare_to_doku_gameplay.png)
+
 * [Bloxorz](https://nostabyte.itch.io/bloxorzgba): a complete port of the classic flash game Bloxorz 
 for the Game Boy Advance. 
 
@@ -198,6 +213,16 @@ a boy who wakes up on a new, happy day to go to school.
 
 ![](docs_tools/images/happy_dawn_gameplay.png)
 
+* [Pinball Galaxy](https://saraitakemoto.itch.io/pinball-galaxy-demo-ver): use the flippers and nudges to aim 
+for various targets and keep the ball from falling, all while racking up points.
+
+![](docs_tools/images/pinball_galaxy_title.png) ![](docs_tools/images/pinball_galaxy_gameplay.png)
+
+* [Witch×Bullet](https://coffeepasta.itch.io/witchxbullet): play as school girls and save the world from being 
+consumed by darkness.
+
+![](docs_tools/images/witchxbullet_title.png) ![](docs_tools/images/witchxbullet_gameplay.png)
+
 * [Space Evangelion](https://fixxiefixx.itch.io/space-evangelion): you play as an angel fighting evil beeings in space.
 
 ![](docs_tools/images/space_evangelion_title.png) ![](docs_tools/images/space_evangelion_gameplay.png)
@@ -207,6 +232,11 @@ build up a powerful spellbook and take on many enemies, gather owls and upgrades
 and money and defeat the final boss to win!
 
 ![](docs_tools/images/knight_owls_title.png) ![](docs_tools/images/knight_owls_gameplay.png)
+
+* [xo89](https://nostabyte.itch.io/xo89): your job is to pilot a mining drone that harvests the resources 
+from this planet and sell them.
+
+![](docs_tools/images/xo89_title.png) ![](docs_tools/images/xo89_gameplay.png)
 
 * [Collie Defense](https://xvayan.itch.io/collie-defense): you're a Border Collie and you need to protect 
 your flock of sheep!
@@ -222,9 +252,19 @@ Detective Alex Monroe in his new adventure where he solves a murder mystery, whi
 
 ![](docs_tools/images/sips_gameplay.png)
 
+* [MORDOBOY](https://lipucka.itch.io/mordoboy-gba): The Dudes™ are attacking! Strike them down!
+
+![](docs_tools/images/mordoboy_title.png) ![](docs_tools/images/mordoboy_gameplay.png)
+
 * [Work Life](https://jeffzzq.itch.io/work-life): visual novel focusing on relationships in a modern workplace.
 
 ![](docs_tools/images/work_life_title.png) ![](docs_tools/images/work_life_gameplay.png)
+
+* [Knock Time](https://stuck-pixel-studio.itch.io/knock-time): play as a boxer on a mission through the chaotic 
+streets of Venezuela to rescue your journalist brother, who was kidnapped by a network of corrupt police officers 
+following a protest.
+
+![](docs_tools/images/knock_time_title.png) ![](docs_tools/images/knock_time_gameplay.png)
 
 * [Bata Dubnos](https://fralacticus.itch.io/bata-dubnos): shoot the possessed portrait faces and ???
 
@@ -234,6 +274,17 @@ Detective Alex Monroe in his new adventure where he solves a murder mystery, whi
 and commit industrial sabotage!
 
 ![](docs_tools/images/sys_crusher_title.png) ![](docs_tools/images/sys_crusher_gameplay.png)
+
+* [Doom Escaping](https://ticolol.itch.io/doom-escaping): inspired by Hotline Miami, in this game you navigate 
+through a "digital" maze where AI-driven agents try to prevent you from leaving an endless loop.
+
+![](docs_tools/images/doom_escaping_title.png) ![](docs_tools/images/doom_escaping_gameplay.png)
+
+* [Aurora Mission](https://rodrigocard.itch.io/aurora-mission): Aurora is on a mission to explore a strange planet 
+and uncover its mysteries. Equipped with a jetpack and an energy machine gun, she will face monsters and challenges 
+across the open map.
+
+![](docs_tools/images/aurora_mission_title.png) ![](docs_tools/images/aurora_mission_gameplay.png)
 
 * [Nuclear Love](https://foopod.itch.io/nuclear-love): have fun getting to know other survivors in this dating-show, 
 who knows, maybe you might find your future Mr. or Mrs Right?

@@ -30,11 +30,11 @@
  * Butano can be built on top of <a href="https://devkitpro.org/">devkitARM</a>
  * or <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>. Both are compatible with the same operating systems
  * (Windows, macOS and Unix-like platforms), so the differences between them aren't that big:
- * * <a href="https://problemkaputt.de/gba.htm">No$gba</a>'s exception system with `*.elf` files only works with
- *   <a href="https://devkitpro.org/">devkitARM</a>.
+ * * <a href="https://problemkaputt.de/gba.htm">No$gba</a>'s @ref nocashgba_exception "exception system"
+ *   with `*.elf` files only works with <a href="https://devkitpro.org/">devkitARM</a>.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a>'s conversion tool provided by
  *   <a href="https://blocksds.skylyrac.net">BlocksDS</a> is more robust, so using Butano with
- *   <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> could make your songs work.
+ *   <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> could improve the playback of your songs.
  *
  * So:
  * * If you want to use <a href="https://devkitpro.org/">devkitARM</a>, go to @ref getting_started_dka.

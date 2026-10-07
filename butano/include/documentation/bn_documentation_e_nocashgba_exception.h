@@ -56,8 +56,8 @@
  * }
  * @endcode
  *
- * If we build the project and we run the `*.elf` file with No$gba, it should stop the execution
- * and display the following warning:
+ * If we build the project and run the `*.elf` file with No$gba, it should stop the execution and display
+ * the following warning:
  *
  * @image html nocashgba/nocashgba_1.png
  *

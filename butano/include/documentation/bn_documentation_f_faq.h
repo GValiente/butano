@@ -741,6 +741,12 @@
  * You can use <a href="https://openmpt.org/">OpenMPT</a> to do that.
  *
  *
+ * @subsection faq_audio_duplicated_samples If two songs share a sample, is it stored twice in ROM?
+ *
+ * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> should be able to deduplicate the same samples
+ * across different songs.
+ *
+ *
  * @subsection faq_audio_quality How can I improve Direct Sound audio quality?
  *
  * If you have some free CPU left, you can increase Direct Sound audio mixing rate to improve its quality.

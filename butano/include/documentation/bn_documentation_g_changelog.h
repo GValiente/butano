@@ -17,6 +17,7 @@
  * * bn::sound_item::play_optional and bn::sound_item::play_with_priority_optional added.
  * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> updated.
  * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> documentation improved.
+ * * @ref faq_audio_duplicated_samples question added to the @ref faq page.
  * * <a href="https://drkylstein.itch.io/a-betty-and-claude-cartoon">A Betty and Claude Cartoon</a>,
  *   <a href="https://fralacticus.itch.io/ounfo-tan-sispann">Ounfò Tan Sispann</a>,
  *   <a href="https://daretosquare.itch.io/dare-to-doku">Dare to Doku</a>,

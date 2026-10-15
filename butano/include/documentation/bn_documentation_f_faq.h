@@ -41,6 +41,12 @@
  * <a href="https://github.com/GValiente/butano/blob/master/credits">the credits folder</a>.
  *
  *
+ * @subsection faq_ai Has Butano been made with the help of AI?
+ *
+ * Butano itself doesn't contain any AI-generated code. I'm not 100% sure about third party libraries,
+ * but I think they're AI-free too. If you think a third party library contains AI code, please let me know.
+ *
+ *
  * @subsection faq_multiboot Is it possible to use Butano to create multiboot games?
  *
  * It is possible, but not recommended as Butano footprint is too big for multiboot stuff,

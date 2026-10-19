@@ -11,8 +11,6 @@
 #include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
 
-#include "bn_log.h"
-
 namespace bn::hw::sprites
 {
     using handle_type = OBJ_ATTR;

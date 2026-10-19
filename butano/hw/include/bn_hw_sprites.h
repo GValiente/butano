@@ -11,6 +11,8 @@
 #include "bn_hw_dma.h"
 #include "bn_hw_memory.h"
 
+#include "bn_log.h"
+
 namespace bn::hw::sprites
 {
     using handle_type = OBJ_ATTR;
@@ -44,12 +46,21 @@ namespace bn::hw::sprites
                                               bool mosaic_enabled, bool blending_enabled, bool window_enabled,
                                               bool fade_enabled)
     {
-        if(fade_enabled)
-        {
-            blending_enabled = ! blending_enabled;
-        }
+        int mode;  
+        if(window_enabled)  
+        {  
+            mode = 2;              // obj window — bit 11  
+        }  
+        else  
+        {  
+            if(fade_enabled)  
+            {  
+                blending_enabled = ! blending_enabled;  
+            }  
+            mode = blending_enabled ? 1 : 0;  
+        }  
 
-        return (y & 255) | view_mode | (blending_enabled << 10) | (window_enabled << 11) | (mosaic_enabled << 12) |
+        return (y & 255) | view_mode | (mode << 10) | (mosaic_enabled << 12) |
                 (int(bpp) << 13) | (int(shape) << 14);
     }
 
@@ -301,6 +312,7 @@ namespace bn::hw::sprites
         if(blending_enabled)
         {
             sprite.attr0 |= ATTR0_BLEND;
+            sprite.attr0 &= ~ATTR0_WINDOW;
         }
         else
         {
@@ -318,6 +330,7 @@ namespace bn::hw::sprites
         if(window_enabled)
         {
             sprite.attr0 |= ATTR0_WINDOW;
+            sprite.attr0 &= ~ATTR0_BLEND;
         }
         else
         {

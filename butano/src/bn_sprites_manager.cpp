@@ -853,10 +853,11 @@ void set_blending_enabled(id_type id, bool blending_enabled)
     if(blending_enabled != item->blending_enabled)
     {
         hw::sprites::handle_type& handle = item->handle;
-        BN_BASIC_ASSERT(! blending_enabled || ! hw::sprites::window_enabled(handle),
+        bool window_enabled = hw::sprites::window_enabled(handle);
+        BN_BASIC_ASSERT(! blending_enabled || ! window_enabled,
                         "Blending and window can't be enabled at the same time");
 
-        hw::sprites::set_blending_enabled(blending_enabled, display_manager::blending_fade_enabled(), handle);
+        hw::sprites::set_gfx_mode(blending_enabled, window_enabled, display_manager::blending_fade_enabled(), handle);
         item->blending_enabled = blending_enabled;
         _update_indexes_to_commit(*item);
     }
@@ -875,10 +876,11 @@ void set_window_enabled(id_type id, bool window_enabled)
 
     if(window_enabled != hw::sprites::window_enabled(handle))
     {
-        BN_BASIC_ASSERT(! window_enabled || ! item->blending_enabled,
+        bool blending_enabled = item->blending_enabled;
+        BN_BASIC_ASSERT(! window_enabled || ! blending_enabled,
                         "Blending and window can't be enabled at the same time");
 
-        hw::sprites::set_window_enabled(window_enabled, handle);
+        hw::sprites::set_gfx_mode(blending_enabled, window_enabled, display_manager::blending_fade_enabled(), handle);
         _update_indexes_to_commit(*item);
     }
 }
@@ -1187,7 +1189,8 @@ void reload_blending()
         {
             for(item_type& item : layer.items())
             {
-                hw::sprites::set_blending_enabled(item.blending_enabled, fade_enabled, item.handle);
+                bool window_enabled = hw::sprites::window_enabled(item.handle);
+                hw::sprites::set_gfx_mode(item.blending_enabled, window_enabled, fade_enabled, item.handle);
             }
         }
     }
@@ -1197,7 +1200,8 @@ void reload_blending()
         {
             for(item_type& item : layer.items())
             {
-                hw::sprites::set_blending_enabled(item.blending_enabled, fade_enabled, item.handle);
+                bool window_enabled = hw::sprites::window_enabled(item.handle);
+                hw::sprites::set_gfx_mode(item.blending_enabled, window_enabled, fade_enabled, item.handle);
                 _always_update_indexes_to_commit(item);
             }
         }

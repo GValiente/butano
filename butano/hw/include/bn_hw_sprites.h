@@ -38,19 +38,29 @@ namespace bn::hw::sprites
         {
             return reinterpret_cast<handle_type*>(MEM_OAM);
         }
+
+        [[nodiscard]] inline int generate_gfx_mode(bool blending_enabled, bool window_enabled, bool fade_enabled)
+        {
+            if(window_enabled)
+            {
+                return 2;
+            }
+
+            if(fade_enabled)
+            {
+                blending_enabled = ! blending_enabled;
+            }
+
+            return blending_enabled ? 1 : 0;
+        }
     }
 
     [[nodiscard]] inline int first_attributes(int y, sprite_shape shape, bpp_mode bpp, int view_mode,
                                               bool mosaic_enabled, bool blending_enabled, bool window_enabled,
                                               bool fade_enabled)
     {
-        if(fade_enabled)
-        {
-            blending_enabled = ! blending_enabled;
-        }
-
-        return (y & 255) | view_mode | (blending_enabled << 10) | (window_enabled << 11) | (mosaic_enabled << 12) |
-                (int(bpp) << 13) | (int(shape) << 14);
+        int gfx_mode = generate_gfx_mode(blending_enabled, window_enabled, fade_enabled);
+        return (y & 255) | view_mode | (gfx_mode << 10) | (mosaic_enabled << 12) | (int(bpp) << 13) | (int(shape) << 14);
     }
 
     [[nodiscard]] inline int second_attributes(int x, sprite_size size, bool horizontal_flip, bool vertical_flip)
@@ -291,38 +301,16 @@ namespace bn::hw::sprites
         }
     }
 
-    inline void set_blending_enabled(bool blending_enabled, bool fade_enabled, handle_type& sprite)
-    {
-        if(fade_enabled)
-        {
-            blending_enabled = ! blending_enabled;
-        }
-
-        if(blending_enabled)
-        {
-            sprite.attr0 |= ATTR0_BLEND;
-        }
-        else
-        {
-            sprite.attr0 &= ~ATTR0_BLEND;
-        }
-    }
-
     [[nodiscard]] inline bool window_enabled(const handle_type& sprite)
     {
         return sprite.attr0 & ATTR0_WINDOW;
     }
 
-    inline void set_window_enabled(bool window_enabled, handle_type& sprite)
+    inline void set_gfx_mode(bool blending_enabled, bool window_enabled, bool fade_enabled, handle_type& sprite)
     {
-        if(window_enabled)
-        {
-            sprite.attr0 |= ATTR0_WINDOW;
-        }
-        else
-        {
-            sprite.attr0 &= ~ATTR0_WINDOW;
-        }
+        int gfx_mode = generate_gfx_mode(blending_enabled, window_enabled, fade_enabled);
+        sprite.attr0 &= ~(3 << 10);
+        sprite.attr0 |= gfx_mode << 10;
     }
 
     inline void commit(const handle_type& sprites_ref, int offset, int count, bool use_dma)

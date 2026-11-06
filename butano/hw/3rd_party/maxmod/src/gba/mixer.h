@@ -6,30 +6,35 @@
 #ifndef MM_GBA_MIXER_H
 #define MM_GBA_MIXER_H
 
-#include "../core/channel_types.h"
+#include <assert.h>
 
-#define REG_SOUNDCNT_L  *(volatile uint16_t *)0x4000080
-#define REG_SOUNDCNT_H  *(volatile uint16_t *)0x4000082
-#define REG_SOUNDCNT_X  *(volatile uint16_t *)0x4000084
+#include <maxmod.h>
+#include <mm_types.h>
 
-#define REG_TM0CNT      *(volatile uint32_t *)0x4000100
+// Alias used by common code
+typedef mm_mas_gba_sample mm_mas_platform_sample;
 
-#define REG_DMA1SAD     *(volatile uint32_t *)0x40000BC
-#define REG_DMA1DAD     *(volatile uint32_t *)0x40000C0
-#define REG_DMA1CNT     *(volatile uint32_t *)0x40000C4
-#define REG_DMA1CNT_H   *(volatile uint16_t *)0x40000C6
+// A mixer channel is active if "src & MIXCH_GBA_SRC_STOPPED" is zero.
+typedef struct {
+    uintptr_t   src;
+    mm_word     read; // Fixed point 20.12. See MP_SAMPFRAC
+    mm_byte     vol;
+    mm_byte     pan;
+    mm_byte     unused_0;
+    mm_byte     unused_1;
+    mm_word     freq;
+} mm_mixer_channel;
 
-#define REG_DMA2SAD     *(volatile uint32_t *)0x40000C8
-#define REG_DMA2DAD     *(volatile uint32_t *)0x40000CC
-#define REG_DMA2CNT     *(volatile uint32_t *)0x40000D0
-#define REG_DMA2CNT_H   *(volatile uint16_t *)0x40000D2
+// Fractionary part of the sample read offset
+#define MP_SAMPFRAC             12
 
-#define REG_DMA3SAD     *(volatile uint32_t *)0x40000D4
-#define REG_DMA3DAD     *(volatile uint32_t *)0x40000D8
-#define REG_DMA3CNT     *(volatile uint32_t *)0x40000DC
+#define MIXER_SCALE             ((4096 * 65536) / 15768)
 
-#define REG_SGFIFOA     (volatile uint32_t *)0x40000A0
-#define REG_SGFIFOB     (volatile uint32_t *)0x40000A4
+#define MIXCH_GBA_SRC_STOPPED   (1u << ((sizeof(uintptr_t) * 8) - 1))
+
+// Make sure that the size matches the assembly code
+static_assert(sizeof(mm_mixer_channel) == 16);
+static_assert(sizeof(mm_mixer_channel) == MM_SIZEOF_MIXCH);
 
 extern mm_mixer_channel *mm_mix_channels;
 extern mm_word mm_mixlen;
@@ -38,7 +43,50 @@ extern mm_word mm_bpmdv;
 
 void mmMixerInit(mm_gba_system* setup);
 void mmMixerMix(mm_word samples_count);
-void mmMixerSetRead(int channel, mm_word value);
 void mmMixerEnd(void);
+
+static inline bool mmMixerChannelIsActive(mm_mixer_channel *mix_ch)
+{
+    if (mix_ch->src & MIXCH_GBA_SRC_STOPPED)
+        return false;
+
+    return true;
+}
+
+static inline void mmMixerChannelStop(mm_mixer_channel *mix_ch)
+{
+    mix_ch->src = MIXCH_GBA_SRC_STOPPED;
+}
+
+static inline void mmMixerChannelSetPan(mm_mixer_channel *mix_ch, mm_word pan)
+{
+    mix_ch->pan = pan;
+}
+
+static inline void mmMixerChannelPlaySample(mm_mixer_channel *mix_ch,
+                                            mm_mas_gba_sample *sample)
+{
+    mix_ch->src = (uintptr_t)&(sample->data[0]);
+}
+
+static inline void mmMixerChannelSetSampleOffset(mm_mixer_channel *mix_ch,
+                                                 mm_word offset)
+{
+    // GBA soundbanks only support 8-bit samples, so we don't have to worry
+    // about having different shifts for 8-bit or 16-bit samples.
+    mix_ch->read = offset << MP_SAMPFRAC;
+}
+
+// Volume is a 16-bit value (0 to 65535)
+static inline void mmMixerChannelSetVolume(mm_mixer_channel *mix_ch,
+                                           mm_word volume)
+{
+    mix_ch->vol = volume >> 8; // GBA mixer channels use 8-bit values
+}
+
+static inline void mmMixerChannelSuspend(mm_mixer_channel *mix_ch)
+{
+    mix_ch->freq = 0;
+}
 
 #endif // MM_GBA_MIXER_H

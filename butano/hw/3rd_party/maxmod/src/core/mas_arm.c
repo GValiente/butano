@@ -39,9 +39,10 @@
 #define GLISSANDO_EFFECT            7
 #define GLISSANDO_IT_VOLCMD_START   193
 #define GLISSANDO_IT_VOLCMD_END     202
-#define GLISSANDO_MX_VOLCMD_START   0xF0
-#define GLISSANDO_MX_VOLCMD_END     0xFF
+#define GLISSANDO_XM_VOLCMD_START   0xF0
+#define GLISSANDO_XM_VOLCMD_END     0xFF
 
+#define NOTE_NUM        120 // Valid notes go from 0 to 119
 #define NOTE_CUT        254
 #define NOTE_OFF        255
 
@@ -50,7 +51,7 @@
 // Bitmask to select which hardware/software channels are free to use
 mm_word mm_ch_mask;
 
-static const mm_byte note_table_oct[] =
+static const mm_byte note_table_oct[NOTE_NUM / 4] =
 {
     0, 0, 0,
     1, 1, 1,
@@ -64,7 +65,7 @@ static const mm_byte note_table_oct[] =
     9, 9, 9
 };
 
-static const mm_byte note_table_mod[] =
+static const mm_byte note_table_mod[NOTE_NUM] =
 {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
@@ -75,11 +76,11 @@ static const mm_byte note_table_mod[] =
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-    0
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 };
 
 // LUT for amiga periods.
-static const mm_hword ST3_FREQTABLE[] =
+static const mm_hword ST3_FREQTABLE[12] =
 {
     // More accurate scalars
     1712 * 8, 1616 * 8, 1524 * 8, 1440 * 8, 1356 * 8, 1280 * 8,
@@ -95,7 +96,7 @@ static const mm_hword ST3_FREQTABLE[] =
 // LUT for linear periods. Values are 16.16 bit
 // https://ftp.modland.com/pub/documents/format_documentation/Impulse%20Tracker%20v2.04%20(.it).html
 __attribute__((aligned (4))) // Align to 4 bytes so that we can read 2 hwords in one read
-static const mm_hword IT_PitchTable[] =
+static const mm_hword IT_PitchTable[NOTE_NUM * 2] =
 {
     2048, 0,   2170, 0,   2299, 0,   2435, 0,   2580, 0,   2734, 0,
     2896, 0,   3069, 0,   3251, 0,   3444, 0,   3649, 0,   3866, 0, // C-0 > B-0
@@ -215,6 +216,8 @@ IWRAM_CODE ARM_CODE mm_bool mmReadPattern(mpl_layer_information *mpp_layer)
                 pattern_flags |= MF_NOTECUT;
             else if (note == NOTE_OFF)
                 pattern_flags |= MF_NOTEOFF;
+            else if (note >= NOTE_NUM) // This is a note fade
+                pattern_flags |= MF_NOTECUT; // TODO: Implement note fade
             else
                 module_channel->pnoter = note;
         }
@@ -370,9 +373,9 @@ mmUpdateChannel_T0(mm_module_channel *module_channel, mpl_layer_information *mpp
     if (module_channel->flags & MF_HASFX)
     {
         // Test for 'SDx' (note delay). Don't start channel if delayed
-        //if (module_channel->effect == 19)
+        //if (module_channel->effect == MAS_FX_EXTENDED)
         //{
-        //    if ((module_channel->param >> 4) == 0xD)
+        //    if ((module_channel->param >> 4) == MAS_FX_EXT_NOTE_DELAY)
         //        goto dont_start_Channel;
         //}
 
@@ -395,16 +398,16 @@ mmUpdateChannel_T0(mm_module_channel *module_channel, mpl_layer_information *mpp
 
     if (mpp_layer->flags & MAS_HEADER_FLAG_XM_MODE) // XM effects
     {
-        // Glissando is 193..202
-        if ((module_channel->volcmd < GLISSANDO_IT_VOLCMD_START) ||
-            (module_channel->volcmd > GLISSANDO_IT_VOLCMD_END))
+        // Glissando is Fx
+        if ((module_channel->volcmd < GLISSANDO_XM_VOLCMD_START) /* ||
+            (module_channel->volcmd > GLISSANDO_XM_VOLCMD_END)*/ )
             goto start_channel;
     }
     else // IT effects
     {
-        // Glissando is Fx
-        if ((module_channel->volcmd < GLISSANDO_MX_VOLCMD_START) /* ||
-            (module_channel->volcmd > GLISSANDO_MX_VOLCMD_END)*/ )
+        // Glissando is 193..202
+        if ((module_channel->volcmd < GLISSANDO_IT_VOLCMD_START) ||
+            (module_channel->volcmd > GLISSANDO_IT_VOLCMD_END))
             goto start_channel;
     }
 
@@ -454,6 +457,12 @@ channel_started:
 
     if (module_channel->flags & MF_DVOL)
     {
+        // TODO: When a note is played, if there is no default panning in the
+        // sample or instrument, it should be taken from the initial channel
+        // settings. Sample panning has priority over instrument panning, and it
+        // has priority over channel panning. However, this is all overwriten by
+        // any effect found in the same row as the note.
+
         if (module_channel->inst)
         {
             // Get instrument pointer
@@ -463,10 +472,21 @@ channel_started:
             module_channel->bflags &= ~MCH_BFLAGS_NNA_MASK;
             module_channel->bflags |= MCH_BFLAGS_NNA_SET(instrument->nna);
 
+            // Instrument envelopes may start enabled or disabled
             if (instrument->env_flags & MAS_INSTR_FLAG_VOL_ENV_ENABLED)
                 act_ch->flags |= MCAF_VOLENV;
             else
                 act_ch->flags &= ~MCAF_VOLENV;
+
+            if (instrument->env_flags & MAS_INSTR_FLAG_PAN_ENV_ENABLED)
+                act_ch->flags |= MCAF_PANENV;
+            else
+                act_ch->flags &= ~MCAF_PANENV;
+
+            if (instrument->env_flags & MAS_INSTR_FLAG_PITCH_ENV_ENABLED)
+                act_ch->flags |= MCAF_PITCHENV;
+            else
+                act_ch->flags &= ~MCAF_PITCHENV;
 
             // The MSB determines if we need to set a new panning value
             if (instrument->panning & 0x80)
@@ -572,7 +592,14 @@ void mmUpdateChannel_TN(mm_module_channel *module_channel, mpl_layer_information
 
     if (mpp_vars.notedelay)
     {
-        act_ch->flags |= MCAF_UPDATED;
+        // We need to explicitly stop the note if we detect that it won't be
+        // triggered due to the speed being too high. If we don't stop it, it
+        // can be triggered by other things by mistake.
+        if (mpp_vars.notedelay >= mpp_layer->speed)
+            act_ch->volume = 0;
+        else
+            act_ch->flags |= MCAF_UPDATED;
+
         return;
     }
 

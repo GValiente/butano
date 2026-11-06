@@ -23,13 +23,13 @@
 static uint32_t default_mixbuffer[DEFAULT_MIXLEN / sizeof(uint32_t)];
 
 // Address of soundbank in memory/rom
-msl_head *mp_solution;
+static msl_head *mp_solution;
 
 // Number of modules in sound bank
-mm_word mmModuleCount;
+static mm_word mmModuleCount;
 
 // Number of samples in sound bank
-mm_word mmSampleCount;
+static mm_word mmSampleCount;
 
 // Pointer to buffer allocated by mmInitDefault()
 static mm_addr mm_init_default_buffer = NULL;
@@ -40,6 +40,9 @@ static bool mm_initialized = false;
 // Initialize maxmod
 bool mmInit(mm_gba_system *setup)
 {
+    if (mm_initialized)
+        return false;
+
     mp_solution = setup->soundbank;
 
     mmSampleCount = mp_solution->head_data.sampleCount;
@@ -76,6 +79,9 @@ bool mmInit(mm_gba_system *setup)
 
 bool mmInitDefault(mm_addr soundbank, mm_word number_of_channels)
 {
+    if (mm_initialized)
+        return false;
+
     if (number_of_channels > 32)
         return false;
 
@@ -119,6 +125,9 @@ bool mmInitDefault(mm_addr soundbank, mm_word number_of_channels)
 
 bool mmEnd(void)
 {
+    if (!mm_initialized)
+        return false;
+
     mm_initialized = false;
 
     mmMixerEnd();
@@ -140,9 +149,6 @@ void mmFrame(void)
 {
     if (!mm_initialized)
         return;
-
-    // Update effects
-    mmUpdateEffects();
 
     // Note: mm_mixlen is divisible by 2
     mm_sword remaining_samples = mm_mixlen;
@@ -199,6 +205,15 @@ void mmFrame(void)
         if (remaining_samples == 0)
             break;
     }
+
+    // This checks which SFXs have ended and it clears the active channel and
+    // SFX channel associated to them. It's better to update it after mixing so
+    // that we know which SFXs have ended right away (with mmEffectActive())
+    // instead of having a frame of delay.
+    //
+    // Note that mmEffectCancel() clears the active and SFX channels as well, so
+    // mmFrame() is always called with the SFX state up to date.
+    mmUpdateEffects();
 }
 
 mm_word mmGetModuleCount(void)
@@ -209,6 +224,34 @@ mm_word mmGetModuleCount(void)
 mm_word mmGetSampleCount(void)
 {
     return mmSampleCount;
+}
+
+mm_mas_gba_sample *mmGetSampleAddress(mm_word id)
+{
+    uintptr_t sampleOffset = (uintptr_t)mp_solution->sampleTable[id];
+
+    uintptr_t sample_addr = ((uintptr_t)mp_solution) + sampleOffset;
+
+    // The pointers in sampleTank are pointers to MAS file objects. We need to
+    // skip the header of the MAS file to get the pointer to the sample data.
+    // Normally there is more data after the header, but a MAS file generated
+    // from a WAV file only has the header and a sample.
+    return (mm_mas_gba_sample *)(sample_addr + sizeof(mm_mas_prefix));
+}
+
+uintptr_t mmGetModuleAddress(mm_word id)
+{
+    // In the MSL format, the module table goes right after the sample table,
+    // but the size of both isn't fixed. We need to calculate the start of the
+    // module table by checking how big the sample table is.
+    mm_hword sampleCount = mp_solution->head_data.sampleCount;
+    mm_word *moduleTable = (mm_word *)&(mp_solution->sampleTable[sampleCount]);
+
+    // Calculate the address of the module now that we have the module table. It
+    // represents offsets inside the soundbank.
+    uintptr_t moduleAddress = ((uintptr_t)mp_solution) + moduleTable[id];
+
+    return moduleAddress;
 }
 
 // -----------------------------------------------------------------------------
@@ -222,7 +265,7 @@ mm_word *mppGetSampleNameList(void)
         return NULL;
 
     msl_names_dictionary *dict = (void *)(dictOffset + (uintptr_t)mp_solution);
-    uintptr_t address = (uintptr_t)dict + sizeof(msl_names_dictionary);
+    uintptr_t address = ((uintptr_t)dict) + sizeof(msl_names_dictionary);
 
     return (mm_word *)address;
 }
@@ -236,7 +279,7 @@ mm_word *mppGetModuleNameList(void)
         return NULL;
 
     msl_names_dictionary *dict = (void *)(dictOffset + (uintptr_t)mp_solution);
-    uintptr_t address = (uintptr_t)dict + sizeof(msl_names_dictionary) + dict->samplesDictSize;
+    uintptr_t address = ((uintptr_t)dict) + sizeof(msl_names_dictionary) + dict->samplesDictSize;
 
     return (mm_word *)address;
 }

@@ -249,16 +249,10 @@ typedef struct t_mmdssample
 /// sample source.
 typedef struct t_mmsoundeffect
 {
-    union
-    {
-        /// ID of sample to be played. Values are defined in the soundbank
-        /// header.
-        mm_word         id;
-
-        /// Address of external sample, must be in main RAM. The ID is ignored
-        /// if this entry is used. This field isn't valid in GBA systems.
-        mm_ds_sample    *sample;
-    };
+    /// ID of sample to be played. Values are defined in the soundbank
+    /// header. 0x0000 to 0xFFFE (0xFFFF is invalid). This value is only used if
+    /// 'sample' is NULL.
+    mm_hword    id;
 
     /// Playback rate. 6.10 fixed point number. (1024 = original sound)
     mm_hword    rate;
@@ -272,6 +266,10 @@ typedef struct t_mmsoundeffect
 
     /// Panning level. Ranges from 0 (far-left) to 255 (far-right).
     mm_byte     panning;
+
+    /// Address of a sample that isn't in the soundbank. The ID is ignored if
+    /// this entry is not NULL.
+    const void *sample;
 
 } mm_sound_effect;
 

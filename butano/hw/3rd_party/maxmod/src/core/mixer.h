@@ -8,7 +8,7 @@
 
 #include <mm_types.h>
 
-void mmMixerSetVolume(int channel, mm_word volume);
+void mmMixerSetVolume(int channel, mm_word volume); // 16-bit volume (0 to 65535)
 void mmMixerSetPan(int channel, mm_byte panning);
 void mmMixerSetFreq(int channel, mm_word rate);
 void mmMixerMulFreq(int channel, mm_word factor);

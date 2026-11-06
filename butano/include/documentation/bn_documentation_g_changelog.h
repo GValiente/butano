@@ -15,7 +15,8 @@
  * @section changelog_21_10_0 21.10.0 (next release)
  *
  * * bn::sound_item::play_optional and bn::sound_item::play_with_priority_optional added.
- * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> updated.
+ * * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> updated to 1.25.0. If you're using
+ *   <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a>, remember to update it and rebuild your project.
  * * Sprites GFX mode setup fixed (thanks JK0JK!).
  * * <a href="https://wonderful.asie.pl/">Wonderful Toolchain</a> documentation improved.
  * * @ref faq_ai and @ref faq_audio_duplicated_samples questions added to the @ref faq page.

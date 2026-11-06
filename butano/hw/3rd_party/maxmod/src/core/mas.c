@@ -164,12 +164,7 @@ static void mpp_suspend(mm_layer_type layer)
         if ((act_ch->flags & (MCAF_SUB | MCAF_EFFECT)) != (layer << 6))
             continue;
 
-#if defined(__GBA__) || defined(__HEADLESS__)
-        mix_ch->freq = 0;
-#elif defined(__NDS__)
-        mix_ch->freq = 0;
-        mix_ch->vol = 0;
-#endif
+        mmMixerChannelSuspend(mix_ch);
     }
 }
 
@@ -249,43 +244,30 @@ void mmSetJingleVolume(mm_word volume)
 
 static void mpps_backdoor(mm_word id, mm_pmode mode, mm_layer_type layer)
 {
-#if defined(__GBA__) || defined(__HEADLESS__)
-    // In the MSL format, the module table goes right after the sample table,
-    // but the size of both isn't fixed. We need to calculate the start of the
-    // module table by checking how big the sample table is.
-    mm_hword sampleCount = mp_solution->head_data.sampleCount;
-    mm_word *moduleTable = (mm_word *)&(mp_solution->sampleTable[sampleCount]);
-
-    // Calculate the address of the module now that we have the module table. It
-    // represents offsets inside the soundbank.
-    uintptr_t moduleAddress = (uintptr_t)mp_solution + moduleTable[id];
-
-    // Play this module
-    mmPlayMAS(moduleAddress, mode, layer);
-#elif defined(__NDS__)
-    mm_word address = (mm_word)mmModuleBank[id];
+    uintptr_t address = mmGetModuleAddress(id);
     if (address == 0)
         return;
 
     // This address is a pointer to a MAS file that contains the module data.
     mmPlayMAS(address, mode, layer);
-#endif
 }
 
-void mmStart(mm_word id, mm_pmode mode)
+mm_word mmStart(mm_word id, mm_pmode mode)
 {
     if (id >= mmGetModuleCount())
-        return;
+        return 0;
 
     mpps_backdoor(id, mode, MM_MAIN);
+    return 1;
 }
 
-void mmJingleStart(mm_word module_ID, mm_pmode mode)
+mm_word mmJingleStart(mm_word module_ID, mm_pmode mode)
 {
     if (module_ID >= mmGetModuleCount())
-        return;
+        return 0;
 
     mpps_backdoor(module_ID, mode, MM_JINGLE);
+    return 1;
 }
 
 // Reset channel data, and any active channels linked to the layer.
@@ -315,17 +297,7 @@ static void mpp_resetchannels(mm_module_channel *channels,
         memset(act_ch, 0, sizeof(mm_active_channel));
 
         // Disabled mixer channel. Disabled status differs between systems.
-#if defined(__NDS__)
-        mix_ch->key_on = 0;
-        mix_ch->samp = 0;
-        // Setting the panning isn't really needed, but it helps the compiler
-        // optimize all 3 accesses into one single 32-bit write.
-        mix_ch->tpan = 0;
-#elif defined(__GBA__)
-        mix_ch->src = MIXCH_GBA_SRC_STOPPED;
-#elif defined(__HEADLESS__)
-        mix_ch->src = MIXCH_HEADLESS_SRC_STOPPED;
-#endif
+        mmMixerChannelStop(mix_ch);
     }
 }
 
@@ -672,6 +644,13 @@ static mm_active_channel *mpp_Channel_GetACHN(mm_module_channel *channel)
 // Process new note
 IWRAM_CODE void mpp_Channel_NewNote(mm_module_channel *module_channel, mpl_layer_information *layer)
 {
+    // If a retrigger waveform has been selected, reset vibrato/tremolo position
+    // whenever a new note starts.
+    if ((module_channel->vibtype & MAS_WAVE_CONTINUE) == 0)
+        module_channel->vibpos = 0;
+    if ((module_channel->tremtype & MAS_WAVE_CONTINUE) == 0)
+        module_channel->trempos = 0;
+
     if (module_channel->inst == 0)
         return;
 
@@ -1265,27 +1244,30 @@ mm_word mpp_Process_VolumeCommand(mpl_layer_information *layer,
                 channel->volume = volume;
             }
         }
-        else if (volcmd < 0xC0) // Vibrato : mppuv_xm_vibrato
+        else if (volcmd < 0xC0) // Set vibrato speed or depth
         {
-            // Sets speed or depth
-
             if (tick == 0)
                 return period;
 
-            if (volcmd < 0xB0) // mppuv_xm_vibspd
+            if (volcmd < 0xB0) // Set vibrato speed
             {
                 volcmd = (volcmd - 0xA0) << 2;
                 if (volcmd != 0)
                     channel->vibspd = volcmd;
+
+                // FT2 doesn't run vibrato effect when setting the speed in the
+                // volume command. You need to have a 400 or 600 effect in the
+                // same row if you want to apply the vibrato effect.
+                return period;
             }
-            else // mppuv_xm_vibdepth
+            else // Set vibrato depth
             {
                 volcmd = (volcmd - 0xB0) << 3;
                 if (volcmd != 0)
                     channel->vibdep = volcmd;
-            }
 
-            return mppe_DoVibrato(period, channel, layer);
+                return mppe_DoVibrato(period, channel, layer);
+            }
         }
         else if (volcmd < 0xD0) // Panning : mppuv_xm_panning
         {
@@ -1457,7 +1439,7 @@ mm_word mpp_Process_VolumeCommand(mpl_layer_information *layer,
             if (tick == 0)
                 return period;
 
-            mm_word r0;
+            mm_word new_period;
 
             if (volcmd >= 115) // F: mppuv_porta_up
             {
@@ -1468,7 +1450,7 @@ mm_word mpp_Process_VolumeCommand(mpl_layer_information *layer,
 
                 channel->memory[MPP_IT_PORTA] = volcmd;
 
-                r0 = mpph_PitchSlide_Up(channel->period, volcmd, layer);
+                new_period = mpph_PitchSlide_Up(channel->period, volcmd, layer);
             }
             else // E: mppuv_porta_down
             {
@@ -1479,14 +1461,16 @@ mm_word mpp_Process_VolumeCommand(mpl_layer_information *layer,
 
                 channel->memory[MPP_IT_PORTA] = volcmd;
 
-                r0 = mpph_PitchSlide_Down(channel->period, volcmd, layer);
+                new_period = mpph_PitchSlide_Down(channel->period, volcmd, layer);
             }
 
-            mm_word r1 = channel->period;
+            int old_period = channel->period;
 
-            channel->period = period;
+            channel->period = new_period;
 
-            return period + r0 - r1;
+            int delta = new_period - old_period;
+
+            return period + delta;
         }
         else if (volcmd <= 192) // P: Panning : mppuv_panning
         {
@@ -1543,7 +1527,7 @@ mm_word mpp_Process_VolumeCommand(mpl_layer_information *layer,
                 return mppe_glis_backdoor(mem, period, act_ch, channel, layer);
             }
         }
-        else if (volcmd <= 212) // H: Vibrato (Speed) : mppuv_vibrato
+        else if (volcmd <= 212) // H: Vibrato (Depth) : mppuv_vibrato
         {
             // VCMD vibrato uses the same memory as effects Hxx/Uxx.
 
@@ -1553,13 +1537,17 @@ mm_word mpp_Process_VolumeCommand(mpl_layer_information *layer,
             // Set speed
 
             volcmd = volcmd - 203;
+
             if (volcmd != 0)
             {
-                volcmd = volcmd << 2;
-                channel->vibspd = volcmd;
+                mm_word depth = volcmd * 4;
+
+                // if (OldEffects)
+                //     depth <<= 1;
+                channel->vibdep = depth << layer->oldeffects;
             }
 
-            return mppe_DoVibrato(volcmd, channel, layer);
+            return mppe_DoVibrato(period, channel, layer);
         }
     }
 
@@ -1605,6 +1593,9 @@ static void mpph_FastForward(mpl_layer_information *layer, mm_word rows_to_skip)
 
 void mmSetPositionEx(mm_word position, mm_word row)
 {
+    if (mmActive() == 0)
+        return;
+
     // TODO: This was commented out in the original code. If it is uncommented,
     // all channels will be reseted when setting the position. If not, the
     // channels will keep playing and they will only be silenced when the notes
@@ -1836,7 +1827,10 @@ IWRAM_CODE void mppProcessTick(void)
     }
 
     if (layer->fpattdelay != 0)
+    {
         layer->fpattdelay--;
+        goto mppt_POST_TICK;
+    }
 
     // Otherwise clear the tick count and advance to next row
 
@@ -1911,18 +1905,20 @@ void mppProcessTickSub(void)
     mppProcessTick();
 }
 
-// Note: This is also used for panning slide
+// Note: This could also be used for panning slide
 static mm_word mpph_VolumeSlide(int volume, mm_word param, mm_word tick, int max_volume,
                                 mpl_layer_information *layer)
 {
     if (layer->flags & MAS_HEADER_FLAG_XM_MODE) // mpph_vs_XM
     {
+        // This is used for MOD and XM
+
         if (tick != 0)
         {
-            int r3 = param >> 4;
-            int r1 = param & 0xF;
+            int x = param >> 4;
+            int y = param & 0xF;
 
-            int new_val = volume + r3 - r1;
+            int new_val = volume + x - y;
 
             if (new_val > max_volume)
                 new_val = max_volume;
@@ -1936,7 +1932,11 @@ static mm_word mpph_VolumeSlide(int volume, mm_word param, mm_word tick, int max
     }
     else // mpph_vs_IT
     {
-        if (param == 0xF)
+        // This is used for S3M and IT
+
+        // D0F and DF0 slide on every tick
+
+        if (param == 0x0F) // D0F
         {
             volume -= 0xF;
             if (volume < 0)
@@ -1945,11 +1945,8 @@ static mm_word mpph_VolumeSlide(int volume, mm_word param, mm_word tick, int max
             return volume;
         }
 
-        if (param == 0xF0)
+        if (param == 0xF0) // DF0
         {
-            if (tick != 0)
-                return volume;
-
             volume += 0xF;
             if (volume > max_volume)
                 return max_volume;
@@ -1957,7 +1954,9 @@ static mm_word mpph_VolumeSlide(int volume, mm_word param, mm_word tick, int max
             return volume;
         }
 
-        if ((param & 0xF) == 0) // Test for Dx0 : mpph_vs_add
+        // Dx0 and D0x only on ticks after 0
+
+        if ((param & 0xF) == 0) // Dx0 : mpph_vs_add
         {
             if (tick == 0)
                 return volume;
@@ -1969,7 +1968,7 @@ static mm_word mpph_VolumeSlide(int volume, mm_word param, mm_word tick, int max
             return volume;
         }
 
-        if ((param >> 4) == 0) // Test for D0x : mpph_vs_sub
+        if ((param >> 4) == 0) // D0x : mpph_vs_sub
         {
             if (tick == 0)
                 return volume;
@@ -1981,11 +1980,12 @@ static mm_word mpph_VolumeSlide(int volume, mm_word param, mm_word tick, int max
             return volume;
         }
 
-        // Fine slides now... only slide on tick 0
+        // DxF and DFx are fine slides. Only slide on tick 0
+
         if (tick != 0)
             return volume;
 
-        if ((param & 0xF) == 0xF) // Test for DxF
+        if ((param & 0xF) == 0xF) // DxF
         {
             volume += param >> 4;
             if (volume > max_volume)
@@ -1994,7 +1994,7 @@ static mm_word mpph_VolumeSlide(int volume, mm_word param, mm_word tick, int max
             return volume;
         }
 
-        if ((param >> 4) == 0xF) // Test for DFx
+        if ((param >> 4) == 0xF) // DFx
         {
             volume -= param & 0xF;
             if (volume < 0)
@@ -2032,6 +2032,42 @@ static const mm_sbyte mpp_TABLE_FineSineData[] = {
     -24, -23, -22, -20, -19, -17, -16, -14, -12, -11,  -9,  -8,  -6,  -5,  -3,  -2,
 };
 
+static mm_sbyte mpp_GetWaveformSample(mm_word type, mm_byte position)
+{
+    switch (type & 7) // Bit 3 is just "continue" mode
+    {
+        case MAS_WAVE_SINE:
+            // We don't need to clamp anything because "position" is a byte
+            return mpp_TABLE_FineSineData[position];
+
+        case MAS_WAVE_DOWN_RAMP_BROKEN:
+            if (position < 128)
+                return position >> 1;
+            else
+                return 64 - (position >> 1);
+
+        case MAS_WAVE_DOWN_RAMP_OFFSET:
+            return 64 - (((position - 128) & 0xFF) >> 1);
+
+        case MAS_WAVE_DOWN_RAMP_NORMAL:
+            // Position goes from 0 to 255 so this goes from 64 to -63
+            return 64 - (position >> 1);
+
+        case MAS_WAVE_SQUARE_FULL:
+            return (position < 128) ? 64 : -64;
+
+        case MAS_WAVE_SQUARE_HALF:
+            return (position < 128) ? 64 : 0;
+
+        case MAS_WAVE_RANDOM:
+            // TODO: Implement this in a nicer way?
+            return mpp_TABLE_FineSineData[(position * 0x1234) & 255];
+
+        default:
+            return 0;
+    }
+}
+
 static mm_word mppe_DoVibrato(mm_word period, mm_module_channel *channel,
                               mpl_layer_information *layer)
 {
@@ -2047,7 +2083,7 @@ static mm_word mppe_DoVibrato(mm_word period, mm_module_channel *channel,
         position = channel->vibpos;
     }
 
-    mm_sword value = mpp_TABLE_FineSineData[position];
+    mm_sword value = mpp_GetWaveformSample(channel->vibtype, position);
     mm_sword depth = channel->vibdep;
 
     value = (value * depth) >> 8;
@@ -2086,6 +2122,25 @@ static void mppe_PatternBreak(mm_word param, mpl_layer_information *layer)
 {
     if (layer->tick != 0)
         return;
+
+    // This effect behaves in different ways depending on the module type:
+    //
+    // - MOD, XM and IT: A jump to a row higher than the limit of the following
+    //   pattern is treated like a jump to row 0.
+    // - S3M: Jumps to row over the limit of the next pattern are ignored.
+    //
+    // The solution is to handle S3M as a special case in mmutil and have Maxmod
+    // behave like MOD/XM/IT.
+    //
+    // - mmutil can detect affected pattern breaks in MOD files because patterns
+    //   have a fixed size of 64 rows. It replaces them by jumps to row 0.
+    // - mmutil can't tell if a jump will be affected or not in XM or IT because
+    //   pattern sizes can be changed.
+    // - mmutil can detect affected jumps in S3M files because S3M has a fixed
+    //   size of 64 rows, so it can remove them from the song.
+    //
+    // And so, Maxmod only needs to handle invalid jumps as in XM/IT (which is
+    // also valid for MOD, but not used).
 
     layer->pattjump_row = param;
 
@@ -2132,7 +2187,7 @@ static mm_word mppe_Portamento(mm_word param, mm_word period,
 
     mm_word new_period;
 
-    if (channel->effect == 5) // 5 = portamento down
+    if (channel->effect == MAS_FX_PORTAMENTO_DOWN)
     {
         // Slide down
         if (is_fine)
@@ -2293,6 +2348,41 @@ static mm_word mppe_Vibrato(mm_word param, mm_word period, mm_module_channel *ch
     }
 
     return period;
+}
+
+// EFFECT Ixy: Tremor
+static void mppe_Tremor(mm_word param, mm_module_channel *channel,
+                        mpl_layer_information *layer)
+{
+    // channel->fxmem is set to 0 whenever a new instrument is used, so the
+    // Tremor effect is restarted at that point. Otherwise, the counter remains
+    // unchanged.
+
+    // Note: This needs to be updated every tick
+    (void)layer;
+
+    mm_word target;
+
+    if (channel->bflags & MCH_BFLAGS_TREMOR)
+        target = param & 0xF;
+    else
+        target = param >> 4;
+
+    mm_word mem = channel->fxmem;
+    if (mem <= target)
+    {
+        mem++;
+    }
+    else
+    {
+        mem = 1;
+        channel->bflags ^= MCH_BFLAGS_TREMOR; // | MCH_BFLAGS_CUT_VOLUME;
+    }
+
+    channel->fxmem = mem;
+
+    if (channel->bflags & MCH_BFLAGS_TREMOR) // Mute note if needed
+        mpp_vars.volplus = -64;
 }
 
 // EFFECT Jxy: Arpeggio
@@ -2486,23 +2576,17 @@ static void mppe_Tremolo(mm_word param, mm_module_channel *channel, mpl_layer_in
 
     if (layer->tick != 0)
     {
-        // Get sine position
-        mm_word position = channel->fxmem;
-
-        mm_word speed = param >> 4;
-        // Mask out SPEED, multiply by 4 to compensate for larger sine table
-        position += speed * 4;
-
-        // Save (value & 255)
-        channel->fxmem = position;
+        // Mask out SPEED, multiply by 4 to compensate for larger waveform table
+        mm_word speed = (param >> 4) * 4;
+        channel->trempos += speed;
     }
 
-    mm_word position = channel->fxmem; // Get sine position
-    mm_sword sine = mpp_TABLE_FineSineData[position]; // Load sine table value
+    mm_byte position = channel->trempos; // Get waveform position
+    mm_sword value = mpp_GetWaveformSample(channel->tremtype, position);
 
     mm_word depth = param & 0xF;
 
-    mm_sword result = (sine * depth) >> 6; // Sine * depth / 64
+    mm_sword result = (value * depth) >> 6; // Sine * depth / 64
 
     if (layer->flags & MAS_HEADER_FLAG_XM_MODE)
         result >>= 1;
@@ -2580,11 +2664,9 @@ static void mppe_SetGlobalVolume(mm_word param, mpl_layer_information *layer)
     if (layer->tick != 0)
         return;
 
-    mm_word mask = MAS_HEADER_FLAG_XM_MODE | MAS_HEADER_FLAG_OLD_MODE;
-
     mm_word maxvol;
 
-    if (layer->flags & mask)
+    if (layer->flags & MAS_HEADER_FLAG_XM_MODE)
         maxvol = 64;
     else
         maxvol = 128;
@@ -2665,12 +2747,22 @@ static void mppex_OldRetrig(mm_word param, mm_active_channel *act_ch,
     }
 }
 
+static void mppex_VibForm(mm_word param, mm_module_channel *channel)
+{
+    channel->vibtype = param & 0xF;
+}
+
+static void mppex_TremForm(mm_word param, mm_module_channel *channel)
+{
+    channel->tremtype = param & 0xF;
+}
+
 static void mppex_FPattDelay(mm_word param, mpl_layer_information *layer)
 {
     if (layer->tick != 0)
         return;
 
-    layer->fpattdelay = param & 0xF;
+    layer->fpattdelay += param & 0xF;
 }
 
 static void mppex_InstControl(mm_word param, mm_active_channel *act_ch,
@@ -2681,27 +2773,55 @@ static void mppex_InstControl(mm_word param, mm_active_channel *act_ch,
 
     mm_word subparam = param & 0xF;
 
-    if (subparam <= 2) // mppex_ic_pastnotes
+    switch (subparam)
     {
-        // TODO
-    }
-    else if (subparam <= 6) // mppex_ic_nna
-    {
-        // Overwrite NNA
-        channel->bflags &= ~MCH_BFLAGS_NNA_MASK;
-        channel->bflags |= MCH_BFLAGS_NNA_SET(subparam - 3);
-    }
-    else if (subparam <= 8) // mppex_ic_envelope
-    {
-        if (act_ch != NULL)
-        {
-            int val = subparam - 7; // val can be 0 or 1
+        case 0x0: // Past Note Cut
+        case 0x1: // Past Note Off
+        case 0x2: // Past Note Fade
+            // TODO
+            break;
 
-            if (val)
-                act_ch->flags |= MCAF_VOLENV;
-            else
+        case 0x3: // NNA Note Cut
+        case 0x4: // NNA Note Continue
+        case 0x5: // NNA Note Off
+        case 0x6: // NNA Note Fade
+            // Overwrite NNA
+            channel->bflags &= ~MCH_BFLAGS_NNA_MASK;
+            channel->bflags |= MCH_BFLAGS_NNA_SET(subparam - 3);
+            break;
+
+        case 0x7: // Volume Envelope Off
+            if (act_ch != NULL)
                 act_ch->flags &= ~MCAF_VOLENV;
-        }
+            break;
+
+        case 0x8: // Volume Envelope On
+            if (act_ch != NULL)
+                act_ch->flags |= MCAF_VOLENV;
+            break;
+
+        case 0x9: // Panning Envelope Off
+            if (act_ch != NULL)
+                act_ch->flags &= ~MCAF_PANENV;
+            break;
+
+        case 0xA: // Panning Envelope On
+            if (act_ch != NULL)
+                act_ch->flags |= MCAF_PANENV;
+            break;
+
+        case 0xB: // Pitch Envelope Off
+            if (act_ch != NULL)
+                act_ch->flags &= ~MCAF_PITCHENV;
+            break;
+
+        case 0xC: // Pitch Envelope On
+            if (act_ch != NULL)
+                act_ch->flags |= MCAF_PITCHENV;
+            break;
+
+        default: // 0xD, 0xE, 0xF are unused
+            break;
     }
 }
 
@@ -2796,53 +2916,52 @@ static void mppe_Extended(mm_word param, mm_active_channel *act_ch,
 
     switch (subcmd)
     {
-        case 0x0: // S0x
+        case MAS_FX_EXT_FINE_VOL_SLIDE_UP: // S0x
             mppex_XM_FVolSlideUp(param, channel, layer);
             break;
-        case 0x1: // S1x
+        case MAS_FX_EXT_FINE_VOL_SLIDE_DOWN: // S1x
             mppex_XM_FVolSlideDown(param, channel, layer);
             break;
-        case 0x2: // S2x
+        case MAS_FX_EXT_OLD_RETRIGGER: // S2x
             mppex_OldRetrig(param, act_ch, channel, layer);
             break;
-        case 0x3: // S3x
-            // mppex_VibForm
+        case MAS_FX_EXT_VIBRATO_WAVEFORM: // S3x
+            mppex_VibForm(param, channel);
             break;
-        case 0x4: // S4x
-            // mppex_TremForm
+        case MAS_FX_EXT_TREMOLO_WAVEFORM: // S4x
+            mppex_TremForm(param, channel);
             break;
-        case 0x5: // S5x
+        case MAS_FX_EXT_PANBRELLO_WAVEFORM: // S5x
             // mppex_PanbForm
             break;
-
-        case 0x6: // S6x
+        case MAS_FX_EXT_FINE_PATTERN_DELAY: // S6x
             mppex_FPattDelay(param, layer);
             break;
-        case 0x7: // S7x
+        case MAS_FX_EXT_INSTRUMENT_CONTROL: // S7x
             mppex_InstControl(param, act_ch, channel, layer);
             break;
-        case 0x8: // S8x
+        case MAS_FX_EXT_SET_PANNING: // S8x
             mppex_SetPanning(param, channel);
             break;
-        case 0x9: // S9x
+        case MAS_FX_EXT_SOUND_CONTROL: // S9x
             mppex_SoundControl(param);
             break;
-        case 0xA: // SAx
+        case MAS_FX_EXT_HIGH_OFFSET: // SAx
             // mppex_HighOffset
             break;
-        case 0xB: // SBx
+        case MAS_FX_EXT_PATTERN_LOOP: // SBx
             mppex_PatternLoop(param, layer);
             break;
-        case 0xC: // SCx
+        case MAS_FX_EXT_NOTE_CUT: // SCx
             mppex_NoteCut(param, channel, layer);
             break;
-        case 0xD: // SDx
+        case MAS_FX_EXT_NOTE_DELAY: // SDx
             mppex_NoteDelay(param, layer);
             break;
-        case 0xE: // SEx
+        case MAS_FX_EXT_PATTERN_DELAY: // SEx
             mppex_PatternDelay(param, layer);
             break;
-        case 0xF: // SFx
+        case MAS_FX_EXT_SONG_MESSAGE: // SFx
             mppex_SongMessage(param, layer);
             break;
 
@@ -2852,7 +2971,7 @@ static void mppe_Extended(mm_word param, mm_active_channel *act_ch,
 }
 
 // =============================================================================
-//                      XM EFFECTS (NOT AVAILABLE IN IT)
+//                    MOD/XM EFFECTS NOT AVAILABLE IN S3M/IT
 // =============================================================================
 
 // EFFECT 0xx: Set Volume
@@ -2898,27 +3017,24 @@ static void mppe_EnvelopePos(mm_word param, mm_active_channel *act_ch,
 static void mppe_OldTremor(mm_word param, mm_module_channel *channel,
                            mpl_layer_information *layer)
 {
-    if (layer->tick == 0)
-        return;
+    // channel->fxmem is set to 0 whenever a new instrument is used, so the
+    // Tremor effect is restarted at that point. Otherwise, the counter remains
+    // unchanged.
 
-    int mem = channel->fxmem;
-    if (mem == 0) // Old
+    if (layer->tick != 0)
     {
-        channel->fxmem = mem - 1;
+        mppe_Tremor(param, channel, layer);
     }
-    else // New
+    else
     {
-        channel->bflags ^= MCH_BFLAGS_TREMOR | MCH_BFLAGS_CUT_VOLUME;
-
-        if (channel->bflags & MCH_BFLAGS_CUT_VOLUME)
-            channel->fxmem = (param >> 4) + 1;
-        else
-            channel->fxmem = (param & 0xF) + 1;
+        if (channel->bflags & MCH_BFLAGS_TREMOR) // Mute note if needed
+            mpp_vars.volplus = -64;
     }
-
-    if ((channel->bflags & MCH_BFLAGS_CUT_VOLUME) == 0) // Cut note
-        mpp_vars.volplus = -64;
 }
+
+// =============================================================================
+//                              GLOBAL EFFECT HANDLER
+// =============================================================================
 
 // Process pattern effect
 mm_word mpp_Process_Effect(mpl_layer_information *layer, mm_active_channel *act_ch,
@@ -2932,121 +3048,128 @@ mm_word mpp_Process_Effect(mpl_layer_information *layer, mm_active_channel *act_
 
     mm_word effect = channel->effect;
 
+    // The effects in this list follow the IT order. All S3M effects can be
+    // translated 1:1 to IT effects. However, there are some effects in MOD and
+    // XM files that aren't present in IT files. They are placed at the end of
+    // this list.
     switch (effect)
     {
-        case 0:
+        case MAS_FX_NONE:
             // No effect
             return period;
 
-        case 1:
+        case MAS_FX_SET_SPEED:
             mppe_SetSpeed(param, layer);
             return period;
 
-        case 2:
+        case MAS_FX_POSITION_JUMP:
             mppe_PositionJump(param, layer);
             return period;
 
-        case 3:
+        case MAS_FX_PATTERN_BREAK:
             mppe_PatternBreak(param, layer);
             return period;
 
-        case 4:
+        case MAS_FX_VOLUME_SLIDE:
             mppe_VolumeSlide(param, channel, layer);
             return period;
 
-        case 5:
-        case 6:
+        case MAS_FX_PORTAMENTO_DOWN:
+        case MAS_FX_PORTAMENTO_UP:
             return mppe_Portamento(param, period, channel, layer);
 
-        case 7:
+        case MAS_FX_GLISSANDO:
             return mppe_Glissando(param, period, act_ch, channel, layer);
 
-        case 8:
+        case MAS_FX_VIBRATO:
             return mppe_Vibrato(param, period, channel, layer);
 
-        case 9: // Tremor
-            // TODO: This isn't implemented. Would it work with the OldTremor code?
+        case MAS_FX_TREMOR:
+            mppe_Tremor(param, channel, layer);
             return period;
 
-        case 10:
+        case MAS_FX_ARPEGGIO:
             return mppe_Arpeggio(param, period, act_ch, channel, layer);
 
-        case 11:
+        case MAS_FX_VIBRATO_VOLUME:
             return mppe_VibratoVolume(param, period, channel, layer);
 
-        case 12:
+        case MAS_FX_PORTA_VOLUME:
             return mppe_PortaVolume(param, period, act_ch, channel, layer);
 
-        case 13:
+        case MAS_FX_CHANNEL_VOLUME:
             mppe_ChannelVolume(param, channel, layer);
             return period;
 
-        case 14:
+        case MAS_FX_CHANNEL_VOLUME_SLIDE:
             mppe_ChannelVolumeSlide(param, channel, layer);
             return period;
 
-        case 15:
+        case MAS_FX_SAMPLE_OFFSET:
             mppe_SampleOffset(param, layer);
             return period;
 
-        case 16: // Panning slide
+        case MAS_FX_PANNING_SLIDE: // Panning slide
             // TODO
             //mppe_PanningSlide(param, channel, layer);
             return period;
 
-        case 17:
+        case MAS_FX_RETRIGGER:
             mppe_Retrigger(param, act_ch, channel);
             return period;
 
-        case 18:
+        case MAS_FX_TREMOLO:
             mppe_Tremolo(param, channel, layer);
             return period;
 
-        case 19:
+        case MAS_FX_EXTENDED:
             mppe_Extended(param, act_ch, channel, layer);
             return period;
 
-        case 20:
+        case MAS_FX_SET_TEMPO:
             mppe_SetTempo(param, layer);
             return period;
 
-        case 21:
+        case MAS_FX_FINE_VIBRATO:
             return mppe_FineVibrato(param, period, channel, layer);
 
-        case 22:
+        case MAS_FX_SET_GLOBAL_VOLUME:
             mppe_SetGlobalVolume(param, layer);
             return period;
 
-        case 23:
+        case MAS_FX_GLOBAL_VOLUME_SLIDE:
             mppe_GlobalVolumeSlide(param, layer);
             return period;
 
-        case 24:
+        case MAS_FX_SET_PANNING:
             mppe_SetPanning(param, channel, layer);
             return period;
 
-        case 25: // Panbrello
+        case MAS_FX_PANBRELLO: // Panbrello
             // TODO
             return period;
 
-        case 26: // Set Filter
+        case MAS_FX_SET_FILTER: // Set Filter
             // TODO: Not supported
             return period;
 
-        case 27:
+        // The following effects are only present in MOD and XM files and don't
+        // fit in the effects present in IT files.
+
+        case MAS_FX_XM_SET_VOLUME: // Cxx effect (Set Volume) of MOD and XM files
             mppe_SetVolume(param, channel, layer);
             return period;
 
-        case 28:
+        case MAS_FX_XM_KEY_OFF: // Kxx effect (Key Off) of XM files
             mppe_KeyOff(param, act_ch, layer);
             return period;
 
-        case 29: // Envelope Pos
+        case MAS_FX_XM_ENVELOPE_POS: // Lxx effect (Set envelope position) of XM files
             // TODO
             //mppe_EnvelopePos(param, act_ch, layer);
             return period;
 
-        case 30:
+        case MAS_FX_XM_TREMOR: // Txx effect (Tremor) of XM files
             mppe_OldTremor(param, channel, layer);
             return period;
 
@@ -3203,31 +3326,56 @@ mppt_has_volenv:
 
     if (instrument->env_flags & MAS_INSTR_FLAG_PAN_ENV_EXISTS)
     {
-        mm_word value_mul_64;
         mm_mas_envelope *env = (mm_mas_envelope *)env_ptr;
-
         env_ptr += env_ptr[0];
 
-        mpph_ProcessEnvelope(&act_ch->envc_pan, &act_ch->envn_pan, env, act_ch, &value_mul_64);
+        mm_word value_mul_64;
+
+        if (act_ch->flags & MCAF_PANENV)
+        {
+            mpph_ProcessEnvelope(&act_ch->envc_pan, &act_ch->envn_pan, env, act_ch, &value_mul_64);
+        }
+        else
+        {
+            // mpp_vars.panplus is cleared between updates, so we need to
+            // recalculate the current value of the envelope. However, we need
+            // to use temporary values that will get updated (instead of the
+            // real ones) so that the envelope doesn't advance.
+            mm_hword envc = act_ch->envc_pan;
+            mm_byte envn = act_ch->envn_pan;
+
+            mpph_ProcessEnvelope(&envc, &envn, env, act_ch, &value_mul_64);
+        }
 
         mpp_vars.panplus += (value_mul_64 >> 4) - 128;
     }
 
     if (instrument->env_flags & MAS_INSTR_FLAG_PITCH_ENV_EXISTS)
     {
-        mm_word value_mul_64;
         mm_mas_envelope *env = (mm_mas_envelope *)env_ptr;
 
         if (env->is_filter == 0)
         {
-            mpph_ProcessEnvelope(&act_ch->envc_pic, &act_ch->envn_pic, env, act_ch, &value_mul_64);
+            if (act_ch->flags & MCAF_PITCHENV)
+            {
+                mm_word value_mul_64;
 
-            mm_sword value = (value_mul_64 >> 3) - 256;
+                mpph_ProcessEnvelope(&act_ch->envc_pic, &act_ch->envn_pic, env, act_ch, &value_mul_64);
 
-            if (value < 0)
-                period = mpph_LinearPitchSlide_Down(period, -value, layer);
+                mm_sword value = (value_mul_64 >> 3) - 256;
+
+                if (value < 0)
+                    period = mpph_LinearPitchSlide_Down(period, -value, layer);
+                else
+                    period = mpph_LinearPitchSlide_Up(period, value, layer);
+            }
             else
-                period = mpph_LinearPitchSlide_Up(period, value, layer);
+            {
+                // The current pitch of the channel is preserved between
+                // updates, so we don't need to check the state of the envelope
+                // every time.
+            }
+
         }
     }
 
@@ -3269,7 +3417,7 @@ static mm_word mpp_Update_ACHN_notest_auto_vibrato(mpl_layer_information *layer,
         act_ch->avib_pos = (act_ch->avib_pos + sample->av_speed) & 0xFF;
 
         // Load table value at the current position
-        mm_sword slide_val = mpp_TABLE_FineSineData[act_ch->avib_pos];
+        mm_sword slide_val = mpp_GetWaveformSample(sample->av_type, act_ch->avib_pos);
 
         slide_val = (slide_val * new_depth) >> 23;
 
@@ -3306,58 +3454,23 @@ static mm_mixer_channel *mpp_Update_ACHN_notest_update_mix(mpl_layer_information
 
     if (sample->msl_id == 0xFFFF)
     {
-        // The sample has been provided
-#if defined(__GBA__) || defined(__HEADLESS__)
-        mm_mas_gba_sample *gba_sample = (mm_mas_gba_sample *)&(sample->data[0]);
-
-        mix_ch->src = (uintptr_t)&(gba_sample->data[0]);
-#elif defined(__NDS__)
-        mm_mas_ds_sample *ds_sample = (mm_mas_ds_sample *)&(sample->data[0]);
-
-        mix_ch->samp = ((mm_word)ds_sample) - 0x2000000;
-        mix_ch->tpan = 0;
-        mix_ch->key_on = 1;
-#endif
+        // The sample has been provided. This only happens when playing MAS
+        // files that don't belong to a MSL.
+        mm_mas_platform_sample *plat_sample = (mm_mas_platform_sample *)&(sample->data[0]);
+        mmMixerChannelPlaySample(mix_ch, plat_sample);
     }
     else
     {
-        // Get sample from solution
-#if defined(__GBA__) || defined(__HEADLESS__)
-        msl_head *head = mp_solution;
-        uintptr_t sample_offset = (uintptr_t)head->sampleTable[sample->msl_id];
-
-        mm_byte *sample_addr = ((mm_byte *)mp_solution) + sample_offset;
-        mm_mas_gba_sample *gba_sample = (mm_mas_gba_sample *)(sample_addr + sizeof(mm_mas_prefix));
-
-        mix_ch->src = (uintptr_t)(&(gba_sample->data[0]));
-#elif defined(__NDS__)
-        mm_word source = mmSampleBank[sample->msl_id];
-        source &= 0xFFFFFF; // Mask out counter value
-
-        // The pointers in mmSampleBank are pointers to MAS file objects. We
-        // need to skip the header of the MAS file to get the pointer to the
-        // sample data. Normally there is more data after the header, but a MAS
-        // file generated from a WAV file only has the header and a sample.
-        source += sizeof(mm_mas_prefix);
-
-        mix_ch->samp = source;
-        mix_ch->tpan = 0;
-        mix_ch->key_on = 1;
-#endif
+        // Get sample from solution. This is what happens when playing MAS files
+        // from inside a MSL file.
+        mm_mas_platform_sample *plat_sample = mmGetSampleAddress(sample->msl_id);
+        mmMixerChannelPlaySample(mix_ch, plat_sample);
     }
 
     // "sampoff" is the sample offset specified as an effect in the module. It
     // expects the player to skip "256 * xx" samples, where "xx" is the value
     // passed in the effect.
-    //
-    // The GBA only supports 8-bit samples, so we can do the final calculation
-    // here. The DS supports 8 and 16-bit samples, so we need to do the final
-    // calculation in mmMix() when the note starts.
-#if defined(__GBA__) || defined(__HEADLESS__)
-    mix_ch->read = ((mm_word)mpp_vars.sampoff) << (MP_SAMPFRAC + 8);
-#elif defined(__NDS__)
-    mix_ch->read = mpp_vars.sampoff;
-#endif
+     mmMixerChannelSetSampleOffset(mix_ch, (mm_word)mpp_vars.sampoff << 8);
 
 mppt_achn_nostart:
 
@@ -3394,8 +3507,7 @@ static mm_word mpp_Update_ACHN_notest_set_pitch_volume(mpl_layer_information *la
             value = (value * mm_master_jingle_pitch) >> 10;
 
 #if defined(__GBA__) || defined(__HEADLESS__)
-        const mm_word scale = (4096 * 65536) / 15768;
-        mix_ch->freq = (scale * value) >> 16;
+        mix_ch->freq = (MIXER_SCALE * value) >> 16;
 #elif defined(__NDS__)
         mix_ch->freq = (MIXER_SCALE * value) >> (16 + 1);
 #endif
@@ -3414,8 +3526,7 @@ static mm_word mpp_Update_ACHN_notest_set_pitch_volume(mpl_layer_information *la
                 value = (value * mm_master_jingle_pitch) >> 10;
 
 #if defined(__GBA__) || defined(__HEADLESS__)
-            const mm_word scale = (4096 * 65536) / 15768;
-            mix_ch->freq = (scale * value) >> 16;
+            mix_ch->freq = (MIXER_SCALE * value) >> 16;
 #elif defined(__NDS__)
             mix_ch->freq = (MIXER_SCALE * value) >> (16 + 1);
 #endif
@@ -3443,28 +3554,17 @@ static mm_word mpp_Update_ACHN_notest_set_pitch_volume(mpl_layer_information *la
     mm_byte global_volume = layer->global_volume;
     if (layer->flags & MAS_HEADER_FLAG_XM_MODE)
         global_volume <<= 1; // XM mode global volume is only 0->64, shift to 0->128
+
     vol = (vol * global_volume) >> 10;
-
     vol = (vol * act_ch->fade) >> 10;
-
-    vol *= layer->volume;
-
-#ifdef __NDS__
-    vol = vol >> (19 - 3 - 5);  // (19 - 3) (new 16-bit levels!)
-
-    if (vol > 65535) // Clip values over 65535 // 2047
+    vol = (vol * layer->volume) >> 11;
+    // 'vol' is now a 16-bit value
+    if (vol > 65535)
         vol = 65535;
 
-    act_ch->fvol = vol >> 8; // 3 (new 16-bit levels!)
-#else
-    vol = vol >> 19;
+    act_ch->fvol = vol >> 8; // The active channel expects 8-bit
 
-    if (vol > 255) // Clip values over 255
-        vol = 255;
-
-    act_ch->fvol = vol;
-#endif
-
+    // Return a 16-bit volume
     return vol;
 }
 
@@ -3498,15 +3598,7 @@ mppt_achn_not_audible:
     // Stop channel
     // ------------
 
-#if defined(__GBA__)
-    mix_ch->src = MIXCH_GBA_SRC_STOPPED;
-#elif defined(__HEADLESS__)
-    mix_ch->src = MIXCH_HEADLESS_SRC_STOPPED;
-#elif defined(__NDS__)
-    mix_ch->samp = 0;
-    mix_ch->tpan = 0;
-    mix_ch->key_on = 0;
-#endif
+    mmMixerChannelStop(mix_ch);
 
     if (act_ch->type == ACHN_FOREGROUND)
     {
@@ -3519,19 +3611,12 @@ mppt_achn_not_audible:
 
 mppt_achn_audible:
 
-    mix_ch->vol = volume;
+    mmMixerChannelSetVolume(mix_ch, volume);
 
     // Check if mixer channel has ended
-#if defined(__GBA__)
-    if (mix_ch->src & MIXCH_GBA_SRC_STOPPED)
+
+    if (!mmMixerChannelIsActive(mix_ch))
     {
-#elif defined(__HEADLESS__)
-    if (mix_ch->src & MIXCH_HEADLESS_SRC_STOPPED)
-    {
-#elif defined(__NDS__)
-    if (mix_ch->samp == 0)
-    {
-#endif
         if (act_ch->type == ACHN_FOREGROUND)
         {
             // Stop channel if channel ended
@@ -3540,16 +3625,7 @@ mppt_achn_audible:
 
         // TODO: This isn't required because we've just checked if the mixer
         // channel is stopped
-        // Stop mixer channel
-#if defined(__GBA__)
-        mix_ch->src = MIXCH_GBA_SRC_STOPPED;
-#elif defined(__HEADLESS__)
-        mix_ch->src = MIXCH_HEADLESS_SRC_STOPPED;
-#elif defined(__NDS__)
-        mix_ch->samp = 0;
-        mix_ch->tpan = 0;
-        mix_ch->key_on = 0;
-#endif
+        mmMixerChannelStop(mix_ch);
 
         act_ch->type = ACHN_DISABLED;
         return;
@@ -3566,13 +3642,7 @@ mppt_achn_audible:
     else if (newpan > 255)
         newpan = 255;
 
-#if defined(__GBA__) || defined(__HEADLESS__)
-    mix_ch->pan = newpan;
-#elif defined(__NDS__)
-    mix_ch->tpan = newpan >> 1;
-#endif
-
-    return;
+    mmMixerChannelSetPan(mix_ch, newpan);
 }
 
 mm_word mpp_Update_ACHN_notest(mpl_layer_information *layer, mm_active_channel *act_ch,

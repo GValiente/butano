@@ -396,6 +396,7 @@ optional<uint16_t> play_sound(int priority, int id, fixed volume, fixed speed, f
         sound_effect.handle = 0;
         sound_effect.volume = mm_byte(_hw_sound_volume(volume));
         sound_effect.panning = mm_byte(_hw_sound_panning(panning));
+        sound_effect.sample = nullptr;
 
         uint16_t handle = mmEffectEx(&sound_effect);
         _add_sound_to_queue(priority, handle);

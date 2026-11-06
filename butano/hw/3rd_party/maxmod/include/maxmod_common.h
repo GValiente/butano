@@ -50,8 +50,8 @@ extern "C" {
 ///     Name of the sample to search.
 ///
 /// @return
-///     Sample ID, or 0xFFFFFF if it isn't found.
-mm_word mmGetSampleIdByName(const char *name);
+///     Sample ID, or -1 if it isn't found.
+mm_sword mmGetSampleIdByName(const char *name);
 
 /// Get the ID of the module with the provided name.
 ///
@@ -69,8 +69,8 @@ mm_word mmGetSampleIdByName(const char *name);
 ///     Name of the module to search.
 ///
 /// @return
-///     Module ID, or 0xFFFFFF if it isn't found.
-mm_word mmGetModuleIdByName(const char *name);
+///     Module ID, or -1 if it isn't found.
+mm_sword mmGetModuleIdByName(const char *name);
 
 /// Get the name of the sample with the provided ID.
 ///
@@ -93,8 +93,9 @@ mm_word mmGetModuleIdByName(const char *name);
 ///     Sample ID.
 ///
 /// @return
-///     Sample name, or NULL it isn't found or there is no defined name.
-const char *mmGetSampleNameById(mm_word id);
+///     Sample name, or NULL it isn't found or there is no defined name. Don't
+///     try to free it with `free()`.
+const char *mmGetSampleNameById(mm_sword id);
 
 /// Get the name of the module with the provided ID.
 ///
@@ -111,8 +112,9 @@ const char *mmGetSampleNameById(mm_word id);
 ///     Module ID.
 ///
 /// @return
-///     Module name, or NULL it isn't found or there is no defined name.
-const char *mmGetModuleNameById(mm_word id);
+///     Module name, or NULL it isn't found or there is no defined name. Don't
+///     try to free it with `free()`.
+const char *mmGetModuleNameById(mm_sword id);
 #endif // !(defined(__NDS__) && defined(ARM7))
 
 // ***************************************************************************
@@ -134,7 +136,14 @@ const char *mmGetModuleNameById(mm_word id);
 /// @param mode
 ///     Mode of playback. Can be MM_PLAY_LOOP (play and loop until stopped
 ///     manually) or MM_PLAY_ONCE (play until end).
+///
+/// @return
+///     Non-zero on success, zero on error.
+#if defined(__NDS__) && defined(ARM9)
 void mmStart(mm_word module_ID, mm_pmode mode);
+#else
+mm_word mmStart(mm_word module_ID, mm_pmode mode);
+#endif
 
 /// Pauses playback of the active module.
 ///
@@ -321,7 +330,14 @@ void mmPlayMAS(uintptr_t address, mm_word mode, mm_word layer);
 /// @param mode
 ///     Mode of playback. Can be MM_PLAY_LOOP (play and loop until stopped
 ///     manually) or MM_PLAY_ONCE (play until end).
+///
+/// @return
+///     Non-zero on success, zero on error.
+#if defined(__NDS__) && defined(ARM9)
 void mmJingleStart(mm_word module_ID, mm_pmode mode);
+#else
+mm_word mmJingleStart(mm_word module_ID, mm_pmode mode);
+#endif
 
 /// Plays a jingle.
 ///
@@ -462,7 +478,14 @@ mm_bool mmEffectActive(mm_sfxhand handle);
 ///     Sound effect handle received from mmEffect() or mmEffectEx().
 /// @param volume
 ///     New volume level. Ranges from 0 (silent) to 255 (normal).
+///
+/// @return
+///     Non-zero on success, zero on error.
+#if defined(__NDS__) && defined(ARM9)
 void mmEffectVolume(mm_sfxhand handle, mm_word volume);
+#else
+mm_word mmEffectVolume(mm_sfxhand handle, mm_word volume);
+#endif
 
 /// Changes the panning of a sound effect.
 ///
@@ -470,7 +493,14 @@ void mmEffectVolume(mm_sfxhand handle, mm_word volume);
 ///     Sound effect handle received from mmEffect() or mmEffectEx().
 /// @param panning
 ///     New panning level. Ranges from 0 (left) to 255 (right).
+///
+/// @return
+///     Non-zero on success, zero on error.
+#if defined(__NDS__) && defined(ARM9)
 void mmEffectPanning(mm_sfxhand handle, mm_byte panning);
+#else
+mm_word mmEffectPanning(mm_sfxhand handle, mm_byte panning);
+#endif
 
 /// Changes the playback rate for a sound effect.
 ///
@@ -485,7 +515,14 @@ void mmEffectPanning(mm_sfxhand handle, mm_byte panning);
 ///     Sound effect handle received from mmEffect() or mmEffectEx().
 /// @param rate
 ///     New playback rate.
+///
+/// @return
+///     Non-zero on success, zero on error.
+#if defined(__NDS__) && defined(ARM9)
 void mmEffectRate(mm_sfxhand handle, mm_word rate);
+#else
+mm_word mmEffectRate(mm_sfxhand handle, mm_word rate);
+#endif
 
 /// Scales the rate of the sound effect by a certain factor.
 ///
@@ -493,7 +530,14 @@ void mmEffectRate(mm_sfxhand handle, mm_word rate);
 ///     Sound effect handle received from mmEffect() or mmEffectEx().
 /// @param factor
 ///     6.10 fixed point factor.
+///
+/// @return
+///     Non-zero on success, zero on error.
+#if defined(__NDS__) && defined(ARM9)
 void mmEffectScaleRate(mm_sfxhand handle, mm_word factor);
+#else
+mm_word mmEffectScaleRate(mm_sfxhand handle, mm_word factor);
+#endif
 
 /// Stops a sound effect. The handle will be invalidated.
 ///
@@ -525,7 +569,14 @@ mm_word mmEffectCancel(mm_sfxhand handle);
 ///
 /// @param handle
 ///     Sound effect handle received from mmEffect() or mmEffectEx().
+///
+/// @return
+///     Non-zero on success, zero on error.
+#if defined(__NDS__) && defined(ARM9)
 void mmEffectRelease(mm_sfxhand handle);
+#else
+mm_word mmEffectRelease(mm_sfxhand handle);
+#endif
 
 /// Set master volume scale for effect playback.
 ///

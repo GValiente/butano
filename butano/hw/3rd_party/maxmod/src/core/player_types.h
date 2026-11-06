@@ -45,24 +45,20 @@ typedef struct {
     };
 
     mm_byte     mode;
-    mm_byte     reserved2;
     mm_word     mch_update;
     mm_hword    volume;
-    mm_hword    reserved3;
 } mpl_layer_information;
 
 // Active Information
 // ------------------
 
 typedef struct {
-    mm_word     reserved;
     mm_byte    *pattread_p;
     mm_byte     afvol;
     mm_byte     sampoff;
     mm_sbyte    volplus;
     mm_byte     notedelay;
     mm_hword    panplus;
-    mm_hword    reserved2;
 } mpv_active_information;
 
 #endif // MM_CORE_PLAYER_TYPES_H__

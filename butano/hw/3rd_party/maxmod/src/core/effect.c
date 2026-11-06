@@ -118,6 +118,7 @@ mm_sfxhand mmEffect(mm_word sample_ID)
     mm_sound_effect effect =
     {
         .id = sample_ID,
+        .sample = NULL,
         .rate = 1024,
         .handle = 0,
         .volume = 255,
@@ -203,80 +204,70 @@ mm_sfxhand mmEffectEx(mm_sound_effect *sound)
     // Setup mixer channel
     // -------------------
 
-#if defined(__GBA__) || defined(__HEADLESS__)
-
     mm_mixer_channel *mix_ch = &mm_mix_channels[mix_channel];
 
-    // Set sample data address
+    mm_mas_platform_sample *plat_sample;
 
-    msl_head *head = mp_solution;
-    uintptr_t sample_offset = (uintptr_t)head->sampleTable[sound->id & 0xFFFF];
-    mm_byte *sample_addr = ((mm_byte *)mp_solution) + sample_offset;
-    mm_mas_gba_sample *sample = (mm_mas_gba_sample *)(sample_addr + sizeof(mm_mas_prefix));
-
-    mix_ch->src = (uintptr_t)(&(sample->data[0]));
-
-    // set pitch to original * pitch
-    mix_ch->freq = (sound->rate * sample->default_frequency) >> (10 - 2);
-
-    // reset read position
-    mix_ch->read = 0;
-
-    mix_ch->vol = (sound->volume * mm_sfx_mastervolume) >> 10;
-    mix_ch->pan = sound->panning;
-
-#elif defined(__NDS__)
-
-    mm_mixer_channel *mix_ch = &mm_mix_channels[mix_channel];
-
-    // Set sample data address
-
-    mm_word source = (mm_word)sound->sample;
-
-    if (source < 0x10000) // If external sample, skip this
+    // If the sample pointer is NULL, use the MSL ID.
+    if (sound->sample == NULL)
     {
-        // This is using an ID number
-
-        source = mmSampleBank[source];
-        source &= 0xFFFFFF; // Mask out counter value
-
-        if (source == 0)
+        // The sound effect is using an ID number, get the corresponding address
+        // of the sample in main RAM.
+        plat_sample = mmGetSampleAddress(sound->id);
+        if (plat_sample == NULL)
         {
-            mix_ch->key_on = 0;
-            mix_ch->samp = 0;
-            mix_ch->tpan = 0;
+            mmMixerChannelStop(mix_ch);
             return MM_SFXHAND_INVALID;
         }
+    }
+    else // The sound effect is using an arbitrary address with a MAS file
+    {
+        // Always skip the MAS prefix
+        uintptr_t head_address = (uintptr_t)sound->sample + sizeof(mm_mas_prefix);
 
-        // Turn this into a main RAM address from an offset
-        source += 0x2000000;
+        // The pointer must be aligned to at least 4 bytes
+        if ((head_address & 3) != 0)
+            return MM_SFXHAND_INVALID;
 
-        // The pointers in mmSampleBank are pointers to MAS file objects. We
-        // need to skip the header of the MAS file to get the pointer to the
-        // sample data. Normally there is more data after the header, but a MAS
-        // file generated from a WAV file only has the header and a sample.
-        source += sizeof(mm_mas_prefix);
+        mm_mas_head *head = (mm_mas_head *)head_address;
+
+        // Check that the MAS file only contains samples
+        if ((head->order_count > 0) || (head->instr_count > 0) || (head->pattn_count > 0))
+            return MM_SFXHAND_INVALID;
+
+        // For now, only mono sound effects are supported
+        // TODO: Support MAS files with 2 samples and play them as stereo
+        if (head->sampl_count != 1)
+            return MM_SFXHAND_INVALID;
+
+        uintptr_t sample_address = head_address + head->tables[0];
+
+        const mm_mas_sample_info *sample_info = (const mm_mas_sample_info *)sample_address;
+
+        // Make sure that the sample data is after the sample info struct
+        if (sample_info->msl_id != 0xFFFF)
+            return MM_SFXHAND_INVALID;
+
+        plat_sample = (mm_mas_platform_sample *)&(sample_info->data[0]);
     }
 
-    mix_ch->key_on = 0;
-    mix_ch->samp = source;
-
-    mm_mas_ds_sample *sample = (mm_mas_ds_sample *)source;
-
-    // Set pitch to original * pitch
-    mix_ch->freq = (sound->rate * sample->default_frequency) >> 10;
-
-    // Clear sample offset
-    mix_ch->read = 0;
-
-    // Set panning | start bit
-    mix_ch->tpan = sound->panning >> 1;
-    mix_ch->key_on = 1;
-
-    // Set volume
-    mix_ch->vol = (sound->volume * mm_sfx_mastervolume) >> 2;
-
+    // set pitch to original * pitch
+#if defined(__GBA__) || defined(__HEADLESS__)
+    mix_ch->freq = (sound->rate * plat_sample->default_frequency) >> (10 - 2);
+#elif defined(__NDS__)
+    mix_ch->freq = (sound->rate * plat_sample->default_frequency) >> 10;
 #endif
+
+    // Always play sound effects from the start
+    mmMixerChannelSetSampleOffset(mix_ch, 0);
+
+    // Save the start of the waveform and enable the channel
+    mmMixerChannelPlaySample(mix_ch, plat_sample);
+
+    mmMixerChannelSetVolume(mix_ch, (sound->volume * mm_sfx_mastervolume) >> 2);
+
+    // Set some sound settings
+    mmMixerChannelSetPan(mix_ch, sound->panning);
 
     return handle;
 }
@@ -291,13 +282,15 @@ void mmSetEffectsVolume(mm_word volume)
 }
 
 // Set effect panning (0..255)
-void mmEffectPanning(mm_sfxhand handle, mm_byte panning)
+mm_word mmEffectPanning(mm_sfxhand handle, mm_byte panning)
 {
     int mix_channel = mme_get_mix_channel_index(handle);
     if (mix_channel < 0)
-        return;
+        return 0;
 
     mmMixerSetPan(mix_channel, panning);
+
+    return 1;
 }
 
 // Indicates if a sound effect is active or not
@@ -311,41 +304,42 @@ mm_bool mmEffectActive(mm_sfxhand handle)
 }
 
 // Set effect volume (0..255)
-void mmEffectVolume(mm_sfxhand handle, mm_word volume)
+mm_word mmEffectVolume(mm_sfxhand handle, mm_word volume)
 {
     int mix_channel = mme_get_mix_channel_index(handle);
     if (mix_channel < 0)
-        return;
+        return 0;
 
-#if defined(__GBA__) || defined(__HEADLESS__)
-    int shift = 10; // Divide by 1024
-#elif defined(__NDS__)
-    int shift = 2; // Divide by 4
-#endif
+    if (volume > 255)
+        volume = 255;
 
-    volume = (volume * mm_sfx_mastervolume) >> shift;
+    mmMixerSetVolume(mix_channel, (volume * mm_sfx_mastervolume) >> 2);
 
-    mmMixerSetVolume(mix_channel, volume);
+    return 1;
 }
 
 // Set effect playback rate
-void mmEffectRate(mm_sfxhand handle, mm_word rate)
+mm_word mmEffectRate(mm_sfxhand handle, mm_word rate)
 {
     int mix_channel = mme_get_mix_channel_index(handle);
     if (mix_channel < 0)
-        return;
+        return 0;
 
     mmMixerSetFreq(mix_channel, rate);
+
+    return 1;
 }
 
 // Scale sampling rate by 6.10 factor
-void mmEffectScaleRate(mm_sfxhand handle, mm_word factor)
+mm_word mmEffectScaleRate(mm_sfxhand handle, mm_word factor)
 {
     int mix_channel = mme_get_mix_channel_index(handle);
     if (mix_channel < 0)
-        return;
+        return 0;
 
     mmMixerMulFreq(mix_channel, factor);
+
+    return 1;
 }
 
 // Stop sound effect
@@ -370,11 +364,11 @@ mm_word mmEffectCancel(mm_sfxhand handle)
 }
 
 // Release sound effect (allow interruption)
-void mmEffectRelease(mm_sfxhand handle)
+mm_word mmEffectRelease(mm_sfxhand handle)
 {
     int mix_channel = mme_get_mix_channel_index(handle);
     if (mix_channel < 0)
-        return;
+        return 0;
 
     // Release achannel
     mm_active_channel *act_ch = &mm_achannels[mix_channel];
@@ -383,6 +377,8 @@ void mmEffectRelease(mm_sfxhand handle)
 
     mm_word sfx_channel = (handle & 0xFF) - 1;
     mme_clear_sfx_channel(sfx_channel);
+
+    return 1;
 }
 
 // Stop all sound effects
@@ -407,22 +403,14 @@ void mmEffectCancelAll(void)
         // Clear achannel data to zero
         memset(act_ch, 0, sizeof(mm_active_channel));
 
-        // Disabled mixer channel. Disabled status differs between systems.
-#if defined(__GBA__)
-        mix_ch->src = MIXCH_GBA_SRC_STOPPED;
-#elif defined(__HEADLESS__)
-        mix_ch->src = MIXCH_HEADLESS_SRC_STOPPED;
-#elif defined(__NDS__)
-        mix_ch->key_on = 0;
-        mix_ch->samp = 0;
-        // Setting the panning isn't really needed, but it helps the compiler
-        // optimize all 3 accesses into one single 32-bit write.
-        mix_ch->tpan = 0;
-#endif
+        // Disable mixer channel. Disabled status differs between systems.
+        mmMixerChannelStop(mix_ch);
     }
 }
 
-// Update sound effects
+// This looks for any sound effect that has ended and it clears its associated
+// active channel and SFX channel. Then, it updates the mask of available SFX
+// channels.
 void mmUpdateEffects(void)
 {
     // Keep track of the channels that are still active after the update
@@ -442,13 +430,7 @@ void mmUpdateEffects(void)
         // Test if channel is still active
 
         mm_mixer_channel *mix_ch = &mm_mix_channels[mix_channel];
-#if defined(__GBA__)
-        if ((mix_ch->src & MIXCH_GBA_SRC_STOPPED) == 0)
-#elif defined(__HEADLESS__)
-        if ((mix_ch->src & MIXCH_HEADLESS_SRC_STOPPED) == 0)
-#elif defined(__NDS__)
-        if (mix_ch->samp != 0)
-#endif
+        if (mmMixerChannelIsActive(mix_ch))
         {
             new_bitmask |= (1 << i);
             continue;

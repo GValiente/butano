@@ -9,3 +9,13 @@ any platform.
 - [Documentation](https://blocksds.skylyrac.net/maxmod/index.html)
 
 Please, report issues [here](https://codeberg.org/blocksds/sdk/issues).
+
+## Testing
+
+To run the tests, do:
+
+```sh
+cmake -B build
+cmake --build build -j$(nproc --all)
+ctest --test-dir build
+```

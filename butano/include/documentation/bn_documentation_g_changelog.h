@@ -12,6 +12,11 @@
  * @tableofcontents
  *
  *
+ * @section changelog_21_10_1 21.10.1 (next release)
+ *
+ * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> pan/pitch envelopes fixed.
+ *
+ *
  * @section changelog_21_10_0 21.10.0
  *
  * * bn::sound_item::play_optional and bn::sound_item::play_with_priority_optional added.

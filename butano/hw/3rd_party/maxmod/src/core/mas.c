@@ -3331,7 +3331,11 @@ mppt_has_volenv:
 
         mm_word value_mul_64;
 
+#ifdef MM_MMUTIL_DEVKITPRO_COMPAT
+        if (true)
+#else
         if (act_ch->flags & MCAF_PANENV)
+#endif
         {
             mpph_ProcessEnvelope(&act_ch->envc_pan, &act_ch->envn_pan, env, act_ch, &value_mul_64);
         }
@@ -3356,7 +3360,11 @@ mppt_has_volenv:
 
         if (env->is_filter == 0)
         {
+#ifdef MM_MMUTIL_DEVKITPRO_COMPAT
+            if (true)
+#else
             if (act_ch->flags & MCAF_PITCHENV)
+#endif
             {
                 mm_word value_mul_64;
 

@@ -12,7 +12,7 @@
  * @tableofcontents
  *
  *
- * @section changelog_21_10_1 21.10.1 (next release)
+ * @section changelog_21_10_1 21.10.1
  *
  * <a href="https://blocksds.skylyrac.net/maxmod/index.html">Maxmod</a> pan/pitch envelopes fixed.
  *

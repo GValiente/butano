@@ -1,3 +1,6 @@
+- music from the games stored in the games folder
+    check their credits folders
+
 - battle_clean.it
 	By Spring in collaboration with VinsCool
 	Licensed under the CC0 license

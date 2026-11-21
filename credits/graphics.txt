@@ -1,3 +1,6 @@
+- graphics from the games stored in the games folder
+    check their credits folders
+
 - butano images
     By Sun Ladder
     Licensed under the Creative Commons Attribution-Share Alike 3.0 Unported license
